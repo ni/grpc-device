@@ -368,17 +368,17 @@ namespace nidaqmx_grpc {
 {
     MonikerReadAnalogF64Data* function_data = static_cast<MonikerReadAnalogF64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto fill_mode = function_data->fill_mode;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     response->mutable_read_array()->Resize(array_size_in_samps, 0);
-    auto read_array = response->mutable_read_array()->mutable_data();
+    float64* read_array = response->mutable_read_array()->mutable_data();
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadAnalogF64(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -394,7 +394,7 @@ namespace nidaqmx_grpc {
     {
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -408,12 +408,12 @@ namespace nidaqmx_grpc {
 {
     MonikerReadAnalogScalarF64Data* function_data = static_cast<MonikerReadAnalogScalarF64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
-        
-float64 value {};
+    float64 value {};
+
     auto status = library->ReadAnalogScalarF64(task, timeout, &value, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -428,7 +428,7 @@ float64 value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -442,16 +442,16 @@ float64 value {};
 {
     MonikerReadBinaryI16Data* function_data = static_cast<MonikerReadBinaryI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto fill_mode = function_data->fill_mode;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     std::vector<int16> read_array(array_size_in_samps);
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadBinaryI16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -485,7 +485,7 @@ float64 value {};
               return x;
           });
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -499,17 +499,17 @@ float64 value {};
 {
     MonikerReadBinaryI32Data* function_data = static_cast<MonikerReadBinaryI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto fill_mode = function_data->fill_mode;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     response->mutable_read_array()->Resize(array_size_in_samps, 0);
-    auto read_array = reinterpret_cast<int32*>(response->mutable_read_array()->mutable_data());
+    int32* read_array = reinterpret_cast<int32*>(response->mutable_read_array()->mutable_data());
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadBinaryI32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -525,7 +525,7 @@ float64 value {};
     {
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -539,16 +539,16 @@ float64 value {};
 {
     MonikerReadBinaryU16Data* function_data = static_cast<MonikerReadBinaryU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto fill_mode = function_data->fill_mode;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     std::vector<uInt16> read_array(array_size_in_samps);
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadBinaryU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -582,7 +582,7 @@ float64 value {};
               return x;
           });
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -596,17 +596,17 @@ float64 value {};
 {
     MonikerReadBinaryU32Data* function_data = static_cast<MonikerReadBinaryU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto fill_mode = function_data->fill_mode;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     response->mutable_read_array()->Resize(array_size_in_samps, 0);
-    auto read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+    uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadBinaryU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -622,7 +622,7 @@ float64 value {};
     {
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -636,16 +636,16 @@ float64 value {};
 {
     MonikerReadCounterF64Data* function_data = static_cast<MonikerReadCounterF64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     response->mutable_read_array()->Resize(array_size_in_samps, 0);
-    auto read_array = response->mutable_read_array()->mutable_data();
+    float64* read_array = response->mutable_read_array()->mutable_data();
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadCounterF64(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -661,7 +661,7 @@ float64 value {};
     {
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -675,17 +675,17 @@ float64 value {};
 {
     MonikerReadCounterF64ExData* function_data = static_cast<MonikerReadCounterF64ExData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto fill_mode = function_data->fill_mode;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     response->mutable_read_array()->Resize(array_size_in_samps, 0);
-    auto read_array = response->mutable_read_array()->mutable_data();
+    float64* read_array = response->mutable_read_array()->mutable_data();
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadCounterF64Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -701,7 +701,7 @@ float64 value {};
     {
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -715,12 +715,12 @@ float64 value {};
 {
     MonikerReadCounterScalarF64Data* function_data = static_cast<MonikerReadCounterScalarF64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
-        
-float64 value {};
+    float64 value {};
+
     auto status = library->ReadCounterScalarF64(task, timeout, &value, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -735,7 +735,7 @@ float64 value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -749,12 +749,12 @@ float64 value {};
 {
     MonikerReadCounterScalarU32Data* function_data = static_cast<MonikerReadCounterScalarU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
-        
-uInt32 value {};
+    uInt32 value {};
+
     auto status = library->ReadCounterScalarU32(task, timeout, &value, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -769,7 +769,7 @@ uInt32 value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -783,16 +783,16 @@ uInt32 value {};
 {
     MonikerReadCounterU32Data* function_data = static_cast<MonikerReadCounterU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     response->mutable_read_array()->Resize(array_size_in_samps, 0);
-    auto read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+    uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadCounterU32(task, num_samps_per_chan, timeout, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -808,7 +808,7 @@ uInt32 value {};
     {
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -822,17 +822,17 @@ uInt32 value {};
 {
     MonikerReadCounterU32ExData* function_data = static_cast<MonikerReadCounterU32ExData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto fill_mode = function_data->fill_mode;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     response->mutable_read_array()->Resize(array_size_in_samps, 0);
-    auto read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+    uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadCounterU32Ex(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -848,7 +848,7 @@ uInt32 value {};
     {
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -862,12 +862,12 @@ uInt32 value {};
 {
     MonikerReadDigitalScalarU32Data* function_data = static_cast<MonikerReadDigitalScalarU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
-        
-uInt32 value {};
+    uInt32 value {};
+
     auto status = library->ReadDigitalScalarU32(task, timeout, &value, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -882,7 +882,7 @@ uInt32 value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -896,16 +896,16 @@ uInt32 value {};
 {
     MonikerReadDigitalU16Data* function_data = static_cast<MonikerReadDigitalU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto fill_mode = function_data->fill_mode;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     std::vector<uInt16> read_array(array_size_in_samps);
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadDigitalU16(task, num_samps_per_chan, timeout, fill_mode, read_array.data(), array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -939,7 +939,7 @@ uInt32 value {};
               return x;
           });
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -953,17 +953,17 @@ uInt32 value {};
 {
     MonikerReadDigitalU32Data* function_data = static_cast<MonikerReadDigitalU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto timeout = function_data->timeout;
     auto fill_mode = function_data->fill_mode;
     auto array_size_in_samps = function_data->array_size_in_samps;
     auto reserved = function_data->reserved;
-
-    int32 samps_per_chan_read = {};        
     response->mutable_read_array()->Resize(array_size_in_samps, 0);
-    auto read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+    uInt32* read_array = reinterpret_cast<uInt32*>(response->mutable_read_array()->mutable_data());
+    int32 samps_per_chan_read {};
+
     auto status = library->ReadDigitalU32(task, num_samps_per_chan, timeout, fill_mode, read_array, array_size_in_samps, &samps_per_chan_read, reserved);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -979,7 +979,7 @@ uInt32 value {};
     {
       response->set_status(status);
       response->set_samps_per_chan_read(samps_per_chan_read);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -993,11 +993,11 @@ uInt32 value {};
 {
     MonikerWaitForNextSampleClockData* function_data = static_cast<MonikerWaitForNextSampleClockData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto timeout = function_data->timeout;
-        
-bool32 is_late {};
+    bool32 is_late {};
+
     auto status = library->WaitForNextSampleClock(task, timeout, &is_late);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -1012,7 +1012,7 @@ bool32 is_late {};
     {
       response->set_status(status);
       response->set_is_late(is_late);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1026,32 +1026,24 @@ bool32 is_late {};
 {
     MonikerWriteAnalogF64Data* function_data = static_cast<MonikerWriteAnalogF64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
 
-    int32 samps_per_chan_written = {};        
     ArrayDoubleData arraydoubledata_message;
-    packedData.UnpackTo(&arraydoubledata_message);
+    packedData.UnpackTo(&arraydoubledata_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arraydoubledata_message.value();
     auto write_array = const_cast<const float64*>(arraydoubledata_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_written(samps_per_chan_written);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1059,24 +1051,18 @@ bool32 is_late {};
 {
     MonikerWriteAnalogScalarF64Data* function_data = static_cast<MonikerWriteAnalogScalarF64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
-        
+
     DoubleData doubledata_message;
-    packedData.UnpackTo(&doubledata_message);
+    packedData.UnpackTo(&doubledata_message); // TODO: should unpack to function_data->mutable_request()
     auto value = doubledata_message.value();
 
     auto status = library->WriteAnalogScalarF64(task, auto_start, timeout, value, reserved);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1084,17 +1070,17 @@ bool32 is_late {};
 {
     MonikerWriteBinaryI16Data* function_data = static_cast<MonikerWriteBinaryI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
 
-    int32 samps_per_chan_written = {};        
     ArrayI16Data arrayi16data_message;
-    packedData.UnpackTo(&arrayi16data_message);
+    packedData.UnpackTo(&arrayi16data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayi16data_message.value();
     auto write_array = std::vector<int16>();
@@ -1113,15 +1099,7 @@ bool32 is_late {};
       });
 
     auto status = library->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_written(samps_per_chan_written);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1129,32 +1107,24 @@ bool32 is_late {};
 {
     MonikerWriteBinaryI32Data* function_data = static_cast<MonikerWriteBinaryI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
 
-    int32 samps_per_chan_written = {};        
     ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message);
+    packedData.UnpackTo(&arrayi32data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayi32data_message.value();
     auto write_array = reinterpret_cast<const int32*>(arrayi32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_written(samps_per_chan_written);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1162,17 +1132,17 @@ bool32 is_late {};
 {
     MonikerWriteBinaryU16Data* function_data = static_cast<MonikerWriteBinaryU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
 
-    int32 samps_per_chan_written = {};        
     ArrayU16Data arrayu16data_message;
-    packedData.UnpackTo(&arrayu16data_message);
+    packedData.UnpackTo(&arrayu16data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayu16data_message.value();
     auto write_array = std::vector<uInt16>();
@@ -1191,15 +1161,7 @@ bool32 is_late {};
       });
 
     auto status = library->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_written(samps_per_chan_written);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1207,32 +1169,24 @@ bool32 is_late {};
 {
     MonikerWriteBinaryU32Data* function_data = static_cast<MonikerWriteBinaryU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
 
-    int32 samps_per_chan_written = {};        
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
+    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayu32data_message.value();
     auto write_array = reinterpret_cast<const uInt32*>(arrayu32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_written(samps_per_chan_written);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1240,24 +1194,18 @@ bool32 is_late {};
 {
     MonikerWriteDigitalScalarU32Data* function_data = static_cast<MonikerWriteDigitalScalarU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
-        
+
     U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message);
+    packedData.UnpackTo(&u32data_message); // TODO: should unpack to function_data->mutable_request()
     auto value = u32data_message.value();
 
     auto status = library->WriteDigitalScalarU32(task, auto_start, timeout, value, reserved);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1265,17 +1213,17 @@ bool32 is_late {};
 {
     MonikerWriteDigitalU16Data* function_data = static_cast<MonikerWriteDigitalU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
 
-    int32 samps_per_chan_written = {};        
     ArrayU16Data arrayu16data_message;
-    packedData.UnpackTo(&arrayu16data_message);
+    packedData.UnpackTo(&arrayu16data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayu16data_message.value();
     auto write_array = std::vector<uInt16>();
@@ -1294,15 +1242,7 @@ bool32 is_late {};
       });
 
     auto status = library->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_written(samps_per_chan_written);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1310,32 +1250,24 @@ bool32 is_late {};
 {
     MonikerWriteDigitalU32Data* function_data = static_cast<MonikerWriteDigitalU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto task = function_data->task;
     auto num_samps_per_chan = function_data->num_samps_per_chan;
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
 
-    int32 samps_per_chan_written = {};        
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
+    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayu32data_message.value();
     auto write_array = reinterpret_cast<const uInt32*>(arrayu32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samps_per_chan_written));
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForTaskHandle(context, status, task);
-      }
-      response->set_status(status);
-      response->set_samps_per_chan_written(samps_per_chan_written);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -14531,16 +14463,16 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadAnalogF64Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->fill_mode = fill_mode;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadAnalogF64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -14592,11 +14524,11 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadAnalogScalarF64Data>();
-            data->task = task;
+      data->task = task;
       data->timeout = timeout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadAnalogScalarF64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -14695,16 +14627,16 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadBinaryI16Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->fill_mode = fill_mode;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBinaryI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -14795,16 +14727,16 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadBinaryI32Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->fill_mode = fill_mode;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBinaryI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -14903,16 +14835,16 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadBinaryU16Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->fill_mode = fill_mode;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBinaryU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15003,16 +14935,16 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadBinaryU32Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->fill_mode = fill_mode;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBinaryU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15071,15 +15003,15 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadCounterF64Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterF64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15170,16 +15102,16 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadCounterF64ExData>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->fill_mode = fill_mode;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterF64Ex", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15231,11 +15163,11 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadCounterScalarF64Data>();
-            data->task = task;
+      data->task = task;
       data->timeout = timeout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterScalarF64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15287,11 +15219,11 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadCounterScalarU32Data>();
-            data->task = task;
+      data->task = task;
       data->timeout = timeout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterScalarU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15350,15 +15282,15 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadCounterU32Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15449,16 +15381,16 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadCounterU32ExData>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->fill_mode = fill_mode;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterU32Ex", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15790,11 +15722,11 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadDigitalScalarU32Data>();
-            data->task = task;
+      data->task = task;
       data->timeout = timeout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadDigitalScalarU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15893,16 +15825,16 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadDigitalU16Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->fill_mode = fill_mode;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadDigitalU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15993,16 +15925,16 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerReadDigitalU32Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->timeout = timeout;
       data->fill_mode = fill_mode;
       data->array_size_in_samps = array_size_in_samps;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->data.mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+
+      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadDigitalU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -20530,10 +20462,10 @@ bool32 is_late {};
       float64 timeout = request->timeout();
 
       auto data = std::make_unique<MonikerWaitForNextSampleClockData>();
-            data->task = task;
+      data->task = task;
       data->timeout = timeout;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWaitForNextSampleClock", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -20687,14 +20619,14 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerWriteAnalogF64Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->auto_start = auto_start;
       data->timeout = timeout;
       data->data_layout = data_layout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteAnalogF64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -20747,12 +20679,12 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerWriteAnalogScalarF64Data>();
-            data->task = task;
+      data->task = task;
       data->auto_start = auto_start;
       data->timeout = timeout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteAnalogScalarF64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -20859,14 +20791,14 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerWriteBinaryI16Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->auto_start = auto_start;
       data->timeout = timeout;
       data->data_layout = data_layout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteBinaryI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -20956,14 +20888,14 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerWriteBinaryI32Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->auto_start = auto_start;
       data->timeout = timeout;
       data->data_layout = data_layout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteBinaryI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -21070,14 +21002,14 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerWriteBinaryU16Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->auto_start = auto_start;
       data->timeout = timeout;
       data->data_layout = data_layout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteBinaryU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -21167,14 +21099,14 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerWriteBinaryU32Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->auto_start = auto_start;
       data->timeout = timeout;
       data->data_layout = data_layout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteBinaryU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -21495,12 +21427,12 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerWriteDigitalScalarU32Data>();
-            data->task = task;
+      data->task = task;
       data->auto_start = auto_start;
       data->timeout = timeout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteDigitalScalarU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -21607,14 +21539,14 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerWriteDigitalU16Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->auto_start = auto_start;
       data->timeout = timeout;
       data->data_layout = data_layout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteDigitalU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -21704,14 +21636,14 @@ bool32 is_late {};
       auto reserved = nullptr;
 
       auto data = std::make_unique<MonikerWriteDigitalU32Data>();
-            data->task = task;
+      data->task = task;
       data->num_samps_per_chan = num_samps_per_chan;
       data->auto_start = auto_start;
       data->timeout = timeout;
       data->data_layout = data_layout;
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteDigitalU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());

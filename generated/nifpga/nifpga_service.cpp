@@ -479,12 +479,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayBoolData* function_data = static_cast<MonikerReadArrayBoolData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     std::vector<NiFpga_Bool> array(size, NiFpga_Bool());
+
     auto status = library->ReadArrayBool(session, indicator, array.data(), size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -499,7 +499,7 @@ namespace nifpga_grpc {
     {
       response->set_status(status);
       convert_to_grpc(array, response->mutable_array());
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -513,13 +513,13 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayDblData* function_data = static_cast<MonikerReadArrayDblData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     response->mutable_array()->Resize(size, 0);
-    auto array = response->mutable_array()->mutable_data();
+    double* array = response->mutable_array()->mutable_data();
+
     auto status = library->ReadArrayDbl(session, indicator, array, size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -532,7 +532,7 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -546,12 +546,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayI16Data* function_data = static_cast<MonikerReadArrayI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     std::vector<int16_t> array(size);
+
     auto status = library->ReadArrayI16(session, indicator, array.data(), size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -582,7 +582,7 @@ namespace nifpga_grpc {
           [&](auto x) {
               return x;
           });
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -596,13 +596,13 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayI32Data* function_data = static_cast<MonikerReadArrayI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     response->mutable_array()->Resize(size, 0);
-    auto array = response->mutable_array()->mutable_data();
+    int32_t* array = response->mutable_array()->mutable_data();
+
     auto status = library->ReadArrayI32(session, indicator, array, size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -615,7 +615,7 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -629,13 +629,13 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayI64Data* function_data = static_cast<MonikerReadArrayI64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     response->mutable_array()->Resize(size, 0);
-    auto array = response->mutable_array()->mutable_data();
+    int64_t* array = response->mutable_array()->mutable_data();
+
     auto status = library->ReadArrayI64(session, indicator, array, size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -648,7 +648,7 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -662,12 +662,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayI8Data* function_data = static_cast<MonikerReadArrayI8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     std::vector<int8_t> array(size);
+
     auto status = library->ReadArrayI8(session, indicator, array.data(), size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -698,7 +698,7 @@ namespace nifpga_grpc {
           [&](auto x) {
               return x;
           });
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -712,13 +712,13 @@ namespace nifpga_grpc {
 {
     MonikerReadArraySglData* function_data = static_cast<MonikerReadArraySglData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     response->mutable_array()->Resize(size, 0);
-    auto array = response->mutable_array()->mutable_data();
+    float* array = response->mutable_array()->mutable_data();
+
     auto status = library->ReadArraySgl(session, indicator, array, size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -731,7 +731,7 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -745,12 +745,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayU16Data* function_data = static_cast<MonikerReadArrayU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     std::vector<uint16_t> array(size);
+
     auto status = library->ReadArrayU16(session, indicator, array.data(), size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -781,7 +781,7 @@ namespace nifpga_grpc {
           [&](auto x) {
               return x;
           });
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -795,13 +795,13 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayU32Data* function_data = static_cast<MonikerReadArrayU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     response->mutable_array()->Resize(size, 0);
-    auto array = response->mutable_array()->mutable_data();
+    uint32_t* array = response->mutable_array()->mutable_data();
+
     auto status = library->ReadArrayU32(session, indicator, array, size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -814,7 +814,7 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -828,13 +828,13 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayU64Data* function_data = static_cast<MonikerReadArrayU64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     response->mutable_array()->Resize(size, 0);
-    auto array = response->mutable_array()->mutable_data();
+    uint64_t* array = response->mutable_array()->mutable_data();
+
     auto status = library->ReadArrayU64(session, indicator, array, size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -847,7 +847,7 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -861,12 +861,12 @@ namespace nifpga_grpc {
 {
     MonikerReadArrayU8Data* function_data = static_cast<MonikerReadArrayU8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
     auto size = function_data->size;
-        
     std::vector<uint8_t> array(size);
+
     auto status = library->ReadArrayU8(session, indicator, array.data(), size);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -897,7 +897,7 @@ namespace nifpga_grpc {
           [&](auto x) {
               return x;
           });
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -911,11 +911,11 @@ namespace nifpga_grpc {
 {
     MonikerReadBoolData* function_data = static_cast<MonikerReadBoolData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-NiFpga_Bool value {};
+    NiFpga_Bool value {};
+
     auto status = library->ReadBool(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -930,7 +930,7 @@ NiFpga_Bool value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -944,11 +944,11 @@ NiFpga_Bool value {};
 {
     MonikerReadDblData* function_data = static_cast<MonikerReadDblData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-double value {};
+    double value {};
+
     auto status = library->ReadDbl(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -963,7 +963,7 @@ double value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -977,11 +977,11 @@ double value {};
 {
     MonikerReadI16Data* function_data = static_cast<MonikerReadI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-int16_t value {};
+    int16_t value {};
+
     auto status = library->ReadI16(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -996,7 +996,7 @@ int16_t value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1010,11 +1010,11 @@ int16_t value {};
 {
     MonikerReadI32Data* function_data = static_cast<MonikerReadI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-int32_t value {};
+    int32_t value {};
+
     auto status = library->ReadI32(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -1029,7 +1029,7 @@ int32_t value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1043,11 +1043,11 @@ int32_t value {};
 {
     MonikerReadI64Data* function_data = static_cast<MonikerReadI64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-int64_t value {};
+    int64_t value {};
+
     auto status = library->ReadI64(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -1062,7 +1062,7 @@ int64_t value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1076,11 +1076,11 @@ int64_t value {};
 {
     MonikerReadI8Data* function_data = static_cast<MonikerReadI8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-int8_t value {};
+    int8_t value {};
+
     auto status = library->ReadI8(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -1095,7 +1095,7 @@ int8_t value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1109,11 +1109,11 @@ int8_t value {};
 {
     MonikerReadSglData* function_data = static_cast<MonikerReadSglData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-float value {};
+    float value {};
+
     auto status = library->ReadSgl(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -1128,7 +1128,7 @@ float value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1142,11 +1142,11 @@ float value {};
 {
     MonikerReadU16Data* function_data = static_cast<MonikerReadU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-uint16_t value {};
+    uint16_t value {};
+
     auto status = library->ReadU16(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -1161,7 +1161,7 @@ uint16_t value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1175,11 +1175,11 @@ uint16_t value {};
 {
     MonikerReadU32Data* function_data = static_cast<MonikerReadU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-uint32_t value {};
+    uint32_t value {};
+
     auto status = library->ReadU32(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -1194,7 +1194,7 @@ uint32_t value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1208,11 +1208,11 @@ uint32_t value {};
 {
     MonikerReadU64Data* function_data = static_cast<MonikerReadU64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-uint64_t value {};
+    uint64_t value {};
+
     auto status = library->ReadU64(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -1227,7 +1227,7 @@ uint64_t value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1241,11 +1241,11 @@ uint64_t value {};
 {
     MonikerReadU8Data* function_data = static_cast<MonikerReadU8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto indicator = function_data->indicator;
-        
-uint8_t value {};
+    uint8_t value {};
+
     auto status = library->ReadU8(session, indicator, &value);
 
     /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
@@ -1260,7 +1260,7 @@ uint8_t value {};
     {
       response->set_status(status);
       response->set_value(value);
-      packedData.PackFrom(function_data->data);
+      packedData.PackFrom(*response);
     }
     else
     {
@@ -1274,25 +1274,19 @@ uint8_t value {};
 {
     MonikerWriteArrayBoolData* function_data = static_cast<MonikerWriteArrayBoolData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayBoolData arraybooldata_message;
-    packedData.UnpackTo(&arraybooldata_message);
+    packedData.UnpackTo(&arraybooldata_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arraybooldata_message.value();
     std::vector<NiFpga_Bool> array(data_array.begin(), data_array.end());
     auto size = data_array.size();
 
     auto status = library->WriteArrayBool(session, control, array.data(), size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1300,25 +1294,19 @@ uint8_t value {};
 {
     MonikerWriteArrayDblData* function_data = static_cast<MonikerWriteArrayDblData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayDoubleData arraydoubledata_message;
-    packedData.UnpackTo(&arraydoubledata_message);
+    packedData.UnpackTo(&arraydoubledata_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arraydoubledata_message.value();
     auto array = const_cast<double*>(arraydoubledata_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArrayDbl(session, control, array, size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1326,12 +1314,12 @@ uint8_t value {};
 {
     MonikerWriteArrayI16Data* function_data = static_cast<MonikerWriteArrayI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message);
+    packedData.UnpackTo(&arrayi32data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayi32data_message.value();
     auto array = std::vector<int16_t>();
@@ -1350,13 +1338,7 @@ uint8_t value {};
       });
 
     auto status = library->WriteArrayI16(session, control, array.data(), size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1364,25 +1346,19 @@ uint8_t value {};
 {
     MonikerWriteArrayI32Data* function_data = static_cast<MonikerWriteArrayI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message);
+    packedData.UnpackTo(&arrayi32data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayi32data_message.value();
     auto array = const_cast<int32_t*>(arrayi32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArrayI32(session, control, array, size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1390,25 +1366,19 @@ uint8_t value {};
 {
     MonikerWriteArrayI64Data* function_data = static_cast<MonikerWriteArrayI64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayI64Data arrayi64data_message;
-    packedData.UnpackTo(&arrayi64data_message);
+    packedData.UnpackTo(&arrayi64data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayi64data_message.value();
     auto array = const_cast<int64_t*>(arrayi64data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArrayI64(session, control, array, size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1416,12 +1386,12 @@ uint8_t value {};
 {
     MonikerWriteArrayI8Data* function_data = static_cast<MonikerWriteArrayI8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message);
+    packedData.UnpackTo(&arrayi32data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayi32data_message.value();
     auto array = std::vector<int8_t>();
@@ -1440,13 +1410,7 @@ uint8_t value {};
       });
 
     auto status = library->WriteArrayI8(session, control, array.data(), size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1454,25 +1418,19 @@ uint8_t value {};
 {
     MonikerWriteArraySglData* function_data = static_cast<MonikerWriteArraySglData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayFloatData arrayfloatdata_message;
-    packedData.UnpackTo(&arrayfloatdata_message);
+    packedData.UnpackTo(&arrayfloatdata_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayfloatdata_message.value();
     auto array = const_cast<float*>(arrayfloatdata_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArraySgl(session, control, array, size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1480,12 +1438,12 @@ uint8_t value {};
 {
     MonikerWriteArrayU16Data* function_data = static_cast<MonikerWriteArrayU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
+    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayu32data_message.value();
     auto array = std::vector<uint16_t>();
@@ -1504,13 +1462,7 @@ uint8_t value {};
       });
 
     auto status = library->WriteArrayU16(session, control, array.data(), size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1518,25 +1470,19 @@ uint8_t value {};
 {
     MonikerWriteArrayU32Data* function_data = static_cast<MonikerWriteArrayU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
+    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayu32data_message.value();
     auto array = const_cast<uint32_t*>(arrayu32data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArrayU32(session, control, array, size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1544,25 +1490,19 @@ uint8_t value {};
 {
     MonikerWriteArrayU64Data* function_data = static_cast<MonikerWriteArrayU64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayU64Data arrayu64data_message;
-    packedData.UnpackTo(&arrayu64data_message);
+    packedData.UnpackTo(&arrayu64data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayu64data_message.value();
     auto array = const_cast<uint64_t*>(arrayu64data_message.value().data());
     auto size = data_array.size();
 
     auto status = library->WriteArrayU64(session, control, array, size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1570,12 +1510,12 @@ uint8_t value {};
 {
     MonikerWriteArrayU8Data* function_data = static_cast<MonikerWriteArrayU8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
+    packedData.UnpackTo(&arrayu32data_message); // TODO: should unpack to function_data->mutable_request()
     
     auto data_array = arrayu32data_message.value();
     auto array = std::vector<uint8_t>();
@@ -1594,13 +1534,7 @@ uint8_t value {};
       });
 
     auto status = library->WriteArrayU8(session, control, array.data(), size);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1608,22 +1542,16 @@ uint8_t value {};
 {
     MonikerWriteBoolData* function_data = static_cast<MonikerWriteBoolData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     BoolData booldata_message;
-    packedData.UnpackTo(&booldata_message);
+    packedData.UnpackTo(&booldata_message); // TODO: should unpack to function_data->mutable_request()
     auto value = booldata_message.value();
 
     auto status = library->WriteBool(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1631,22 +1559,16 @@ uint8_t value {};
 {
     MonikerWriteDblData* function_data = static_cast<MonikerWriteDblData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     DoubleData doubledata_message;
-    packedData.UnpackTo(&doubledata_message);
+    packedData.UnpackTo(&doubledata_message); // TODO: should unpack to function_data->mutable_request()
     auto value = doubledata_message.value();
 
     auto status = library->WriteDbl(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1654,12 +1576,12 @@ uint8_t value {};
 {
     MonikerWriteI16Data* function_data = static_cast<MonikerWriteI16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     I32Data i32data_message;
-    packedData.UnpackTo(&i32data_message);
+    packedData.UnpackTo(&i32data_message); // TODO: should unpack to function_data->mutable_request()
     auto value = i32data_message.value();
     if (value < std::numeric_limits<int16_t>::min() || value > std::numeric_limits<int16_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype int16_t");
@@ -1667,13 +1589,7 @@ uint8_t value {};
     }
 
     auto status = library->WriteI16(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1681,22 +1597,16 @@ uint8_t value {};
 {
     MonikerWriteI32Data* function_data = static_cast<MonikerWriteI32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     I32Data i32data_message;
-    packedData.UnpackTo(&i32data_message);
+    packedData.UnpackTo(&i32data_message); // TODO: should unpack to function_data->mutable_request()
     auto value = i32data_message.value();
 
     auto status = library->WriteI32(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1704,22 +1614,16 @@ uint8_t value {};
 {
     MonikerWriteI64Data* function_data = static_cast<MonikerWriteI64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     I64Data i64data_message;
-    packedData.UnpackTo(&i64data_message);
+    packedData.UnpackTo(&i64data_message); // TODO: should unpack to function_data->mutable_request()
     auto value = i64data_message.value();
 
     auto status = library->WriteI64(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1727,12 +1631,12 @@ uint8_t value {};
 {
     MonikerWriteI8Data* function_data = static_cast<MonikerWriteI8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     I32Data i32data_message;
-    packedData.UnpackTo(&i32data_message);
+    packedData.UnpackTo(&i32data_message); // TODO: should unpack to function_data->mutable_request()
     auto value = i32data_message.value();
     if (value < std::numeric_limits<int8_t>::min() || value > std::numeric_limits<int8_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype int8_t");
@@ -1740,13 +1644,7 @@ uint8_t value {};
     }
 
     auto status = library->WriteI8(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1754,22 +1652,16 @@ uint8_t value {};
 {
     MonikerWriteSglData* function_data = static_cast<MonikerWriteSglData*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     FloatData floatdata_message;
-    packedData.UnpackTo(&floatdata_message);
+    packedData.UnpackTo(&floatdata_message); // TODO: should unpack to function_data->mutable_request()
     auto value = floatdata_message.value();
 
     auto status = library->WriteSgl(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1777,12 +1669,12 @@ uint8_t value {};
 {
     MonikerWriteU16Data* function_data = static_cast<MonikerWriteU16Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message);
+    packedData.UnpackTo(&u32data_message); // TODO: should unpack to function_data->mutable_request()
     auto value = u32data_message.value();
     if (value < std::numeric_limits<uint16_t>::min() || value > std::numeric_limits<uint16_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint16_t");
@@ -1790,13 +1682,7 @@ uint8_t value {};
     }
 
     auto status = library->WriteU16(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1804,22 +1690,16 @@ uint8_t value {};
 {
     MonikerWriteU32Data* function_data = static_cast<MonikerWriteU32Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message);
+    packedData.UnpackTo(&u32data_message); // TODO: should unpack to function_data->mutable_request()
     auto value = u32data_message.value();
 
     auto status = library->WriteU32(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1827,22 +1707,16 @@ uint8_t value {};
 {
     MonikerWriteU64Data* function_data = static_cast<MonikerWriteU64Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     U64Data u64data_message;
-    packedData.UnpackTo(&u64data_message);
+    packedData.UnpackTo(&u64data_message); // TODO: should unpack to function_data->mutable_request()
     auto value = u64data_message.value();
 
     auto status = library->WriteU64(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -1850,12 +1724,12 @@ uint8_t value {};
 {
     MonikerWriteU8Data* function_data = static_cast<MonikerWriteU8Data*>(data);
     auto library = function_data->library;
-    auto response = function_data->data.mutable_response();
+    auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
-        
+
     U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message);
+    packedData.UnpackTo(&u32data_message); // TODO: should unpack to function_data->mutable_request()
     auto value = u32data_message.value();
     if (value < std::numeric_limits<uint8_t>::min() || value > std::numeric_limits<uint8_t>::max()) {
       std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint8_t");
@@ -1863,13 +1737,7 @@ uint8_t value {};
     }
 
     auto status = library->WriteU8(session, control, value);
-    /* TODO context is unavailable to return error the proper way. Also error API is member of service class, this function is not.
-    ::grpc::ServerContext* context = NULL;
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
-      }
-      response->set_status(status);
-    */
+
     return ::grpc::Status::OK;
 }
 
@@ -2419,13 +2287,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayBoolData>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayBool", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2477,13 +2345,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayDblData>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayDbl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2543,13 +2411,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayI16Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2601,13 +2469,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayI32Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2659,13 +2527,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayI64Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2725,13 +2593,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayI8Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2783,13 +2651,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArraySglData>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArraySgl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2849,13 +2717,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayU16Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2907,13 +2775,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayU32Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2965,13 +2833,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayU64Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3031,13 +2899,13 @@ uint8_t value {};
       size_t size = request->size();
 
       auto data = std::make_unique<MonikerReadArrayU8Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
-      data->data.mutable_response()->mutable_array()->Reserve(request->size());
-      data->data.mutable_response()->mutable_array()->Resize(request->size(), 0);
+
+      data->mutable_response()->mutable_array()->Reserve(request->size());
+      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3087,10 +2955,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadBoolData>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBool", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3140,10 +3008,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadDblData>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadDbl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3544,10 +3412,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadI16Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3597,10 +3465,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadI32Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3650,10 +3518,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadI64Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3703,10 +3571,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadI8Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadI8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3756,10 +3624,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadSglData>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadSgl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3809,10 +3677,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadU16Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3862,10 +3730,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadU32Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3915,10 +3783,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadU64Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -3968,10 +3836,10 @@ uint8_t value {};
       uint32_t indicator = request->indicator();
 
       auto data = std::make_unique<MonikerReadU8Data>();
-            data->session = session;
+      data->session = session;
       data->indicator = indicator;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadU8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4363,10 +4231,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayBoolData>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayBool", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4416,10 +4284,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayDblData>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayDbl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4486,10 +4354,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayI16Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4539,10 +4407,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayI32Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4592,10 +4460,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayI64Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4662,10 +4530,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayI8Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayI8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4715,10 +4583,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArraySglData>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArraySgl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4785,10 +4653,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayU16Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4838,10 +4706,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayU32Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4891,10 +4759,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayU64Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -4961,10 +4829,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteArrayU8Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteArrayU8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5013,10 +4881,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteBoolData>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteBool", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5065,10 +4933,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteDblData>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteDbl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5502,10 +5370,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteI16Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5554,10 +5422,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteI32Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5606,10 +5474,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteI64Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5667,10 +5535,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteI8Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteI8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5719,10 +5587,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteSglData>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteSgl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5780,10 +5648,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteU16Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5832,10 +5700,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteU32Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5884,10 +5752,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteU64Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -5945,10 +5813,10 @@ uint8_t value {};
       uint32_t control = request->control();
 
       auto data = std::make_unique<MonikerWriteU8Data>();
-            data->session = session;
+      data->session = session;
       data->control = control;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
-      
+
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteU8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());

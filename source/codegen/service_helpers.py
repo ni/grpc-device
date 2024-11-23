@@ -734,14 +734,3 @@ def get_c_api_name(function_name) -> str:
         base_name = function_name[len("Begin") :]
         return f"{base_name}"
     return f"{function_name}"
-
-
-def is_secondary_streaming_param(param, first_streaming_param) -> bool:
-    """Check if a parameter is a secondry streaming type parameter."""
-    return param.get("is_streaming_type", False) and param["name"] != first_streaming_param["name"]
-
-
-def get_output_streaming_params_to_define(parameters, first_streaming_param) -> List[dict]:
-    """Get the list of output streaming parameters that need to be defined."""
-    output_params = [p for p in parameters if common_helpers.is_output_parameter(p)]
-    return [p for p in output_params if is_secondary_streaming_param(p, first_streaming_param)]
