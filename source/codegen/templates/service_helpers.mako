@@ -480,8 +480,8 @@ ${initialize_input_param(function_name, param, parameters)}\
 <%
   grpc_field_name = common_helpers.get_grpc_field_name(param)
 %>\
-      data->mutable_response()->mutable_${grpc_field_name}()->Reserve(request->${size_param_name}());
-      data->mutable_response()->mutable_${grpc_field_name}()->Resize(request->${size_param_name}(), 0);
+      data->response.mutable_${grpc_field_name}()->Reserve(request->${size_param_name}());
+      data->response.mutable_${grpc_field_name}()->Resize(request->${size_param_name}(), 0);
 % endif
 % endfor
 </%def>

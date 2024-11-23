@@ -2292,8 +2292,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayBool", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2350,8 +2350,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayDbl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2416,8 +2416,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2474,8 +2474,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2532,8 +2532,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2598,8 +2598,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayI8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2656,8 +2656,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArraySgl", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2722,8 +2722,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2780,8 +2780,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2838,8 +2838,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -2904,8 +2904,8 @@ namespace nifpga_grpc {
       data->size = size;
       data->library = std::shared_ptr<NiFpgaLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_array()->Reserve(request->size());
-      data->mutable_response()->mutable_array()->Resize(request->size(), 0);
+      data->response.mutable_array()->Reserve(request->size());
+      data->response.mutable_array()->Resize(request->size(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadArrayU8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());

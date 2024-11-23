@@ -14471,8 +14471,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadAnalogF64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -14635,8 +14635,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBinaryI16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -14735,8 +14735,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBinaryI32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -14843,8 +14843,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBinaryU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -14943,8 +14943,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadBinaryU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15010,8 +15010,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterF64", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15110,8 +15110,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterF64Ex", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15289,8 +15289,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15389,8 +15389,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadCounterU32Ex", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15833,8 +15833,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadDigitalU16", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -15933,8 +15933,8 @@ namespace nidaqmx_grpc {
       data->reserved = reserved;
       data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
 
-      data->mutable_response()->mutable_read_array()->Reserve(request->array_size_in_samps());
-      data->mutable_response()->mutable_read_array()->Resize(request->array_size_in_samps(), 0);
+      data->response.mutable_read_array()->Reserve(request->array_size_in_samps());
+      data->response.mutable_read_array()->Resize(request->array_size_in_samps(), 0);
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerReadDigitalU32", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
