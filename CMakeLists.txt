@@ -906,6 +906,42 @@ if(USE_NILRT_LEGACY_TOOLCHAIN)
     target_compile_definitions(SystemTestsRunner PRIVATE FS_EXPERIMENTAL)
 endif()
 
+add_executable(NiDaqmxClient 
+"source/tests/daqmx-client/fpga_daqmx_client.cc"
+"${service_output_dir}/nidaqmx/nidaqmx_client.cpp"
+"${proto_srcs_dir}/nidaqmx.pb.cc"
+"${proto_srcs_dir}/nidaqmx.grpc.pb.cc"
+"source/server/data_moniker_service.cpp"
+"source/server/feature_toggles.cpp"
+${nidevice_proto_srcs}
+${session_proto_srcs}
+${session_grpc_srcs}
+${data_moniker_proto_srcs}
+${data_moniker_grpc_srcs}
+)
+
+target_include_directories(NiDaqmxClient
+    PRIVATE "${service_output_dir}"
+    PRIVATE "${service_output_dir}/nidaqmx"
+    PRIVATE "source/tests/daqmx-client"
+    PRIVATE "third_party/grpc"
+    "./third_party/grpc-sideband/src"
+)
+
+target_link_libraries(NiDaqmxClient
+    ${server_lib_deps}
+    Threads::Threads
+)
+
+# Ignore the use of deprecated functions in test code
+target_compile_definitions(NiDaqmxClient
+    PRIVATE _CRT_SECURE_NO_WARNINGS _WINSOCK_DEPRECATED_NO_WARNINGS)
+
+if(USE_NILRT_LEGACY_TOOLCHAIN)
+    target_link_libraries(NiDaqmxClient stdc++fs)
+    target_compile_definitions(NiDaqmxClient PRIVATE FS_EXPERIMENTAL)
+endif()
+
 
 # Hook up different google test runners to CTest
 # add_test( NAME UnitTests COMMAND UnitTestsRunner )
