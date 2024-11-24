@@ -128,15 +128,6 @@ void WriteLatencyData(const std::string& dataName, TimeVector::iterator begin, T
     cout << endl;
 }
 
-void Foo(uint64_t sideband_token, nidevice_grpc::Session* daqmx_read_task)
-{ 
-    return;
-}
-
-void FooInt(uint64_t sideband_token, int daqmx_read_task)
-{ 
-    return;
-}
 void ThreadRunSidebandLoop(uint64_t sideband_token, NiDAQmx::Stub* stub, nidevice_grpc::Session* daqmx_read_task)
 {   
 #ifndef _WIN32
@@ -236,7 +227,7 @@ void DoSidebandStreamTest(const StubPtr& daqmx_client, ni::data_monikers::DataMo
     // Create the AO task and get the write moniker
     nidevice_grpc::Session daqmx_write_task;
     auto write_task_response = create_task(daqmx_client, "", nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
-    daqmx_read_task.CopyFrom(write_task_response.task());
+    daqmx_write_task.CopyFrom(write_task_response.task());
     create_ao_voltage_chan(daqmx_client, daqmx_write_task, "PXI1Slot8/ao0", "", -10.0, 10.0, DAQmx_Val_Volts, "");
     cfg_samp_clk_timing(daqmx_client, daqmx_write_task, "/PXI1Slot6/ai/SampleClock", DAQ_FREQUENCY, DAQmx_Val_Rising, DAQmx_Val_HWTimedSinglePoint, 1); //changed 10000 to 1000
 
