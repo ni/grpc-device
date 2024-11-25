@@ -48,6 +48,14 @@ enum DaqTestToRun
     DAQ_STREAM_SIDEBAND_READ_WRITE_ARRAY
 };
 
+enum DaqDataTypesToTest
+{
+    DAQ_U64,
+    DAQ_U64_Array
+};
+
+string DataTypes[] = {"U64", "U64_Array"};
+
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 string GetOption(int argc, char** argv, string option)
@@ -298,6 +306,55 @@ void PrintArray(const ArrayDoubleData& data)
     std::cout << "]" << std::endl;
 }
 
+void CopyDataToWrite(ni::data_monikers::MonikerValues *moniker_values, DaqDataTypesToTest dataType)
+{
+    switch(dataType)
+    {
+        case DaqDataTypesToTest::DAQ_U64:
+            throw std::logic_error("Function not yet implemented");
+        case DaqDataTypesToTest::DAQ_U64_Array:
+            {
+                ArrayDoubleData daqmx_write_values;
+                int array_size = 1;
+                daqmx_write_values.mutable_value()->Reserve(array_size);
+                daqmx_write_values.mutable_value()->Resize(array_size, 0);
+
+                double* data_to_write = daqmx_write_values.mutable_value()->mutable_data();
+                for(int i=0; i<array_size; i++)
+                {
+                    *(data_to_write + i) = i*100;
+                }
+                std::cout << "Writing data..." << std::endl;
+                PrintArray(daqmx_write_values);
+                moniker_values->add_values()->PackFrom(daqmx_write_values);
+            }
+            break;
+        default:
+            throw std::logic_error("Data type \"" + DataTypes[dataType] + "\" not supported.");
+            break;
+    }
+}
+
+void HandleReadResponse(const google::protobuf::Any& read_message, DaqDataTypesToTest dataType)
+{
+    switch(dataType)
+    {
+        case DaqDataTypesToTest::DAQ_U64:
+            throw std::logic_error("Function not yet implemented");
+        case DaqDataTypesToTest::DAQ_U64_Array:
+            {
+                ArrayDoubleData daqmx_read_values;
+                read_message.UnpackTo(&daqmx_read_values);
+                std::cout << "Read data..." << std::endl;
+                PrintArray(daqmx_read_values);
+            }
+            break;
+        default:
+            throw std::logic_error("Data type \"" + DataTypes[dataType] + "\" not supported.");
+            break;
+    }
+}
+
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 void DoDaqStreamReadWriteArray(const StubPtr& daqmx_client, ni::data_monikers::DataMoniker::Stub& moniker_service)
@@ -326,34 +383,20 @@ void DoDaqStreamReadWriteArray(const StubPtr& daqmx_client, ni::data_monikers::D
         // moniker_list->set_is_initial_write(true);
         stream->Write(write_request);
 
-        ArrayDoubleData daqmx_write_values;
-        int array_size = 10;
-        daqmx_write_values.mutable_value()->Reserve(array_size);
-        daqmx_write_values.mutable_value()->Resize(array_size, 0);
-
-        double* data_to_write = daqmx_write_values.mutable_value()->mutable_data();
-        for(int i=0; i<array_size; i++)
-        {
-            *(data_to_write + i) = i*100;
-        }
-        std::cout << "Writing data..." << std::endl;
-        PrintArray(daqmx_write_values);
-
         // Write data
         ni::data_monikers::MonikerWriteRequest write_data_request;
         auto moniker_values = write_data_request.mutable_data();
-        moniker_values->add_values()->PackFrom(daqmx_write_values);
+        CopyDataToWrite(moniker_values, DaqDataTypesToTest::DAQ_U64_Array);
+
         stream->Write(write_data_request);
 
         std::this_thread::sleep_for(10us);
 
         // Read data
-        ArrayDoubleData daqmx_read_values;
         ni::data_monikers::MonikerReadResponse read_data_result;
         stream->Read(&read_data_result);
-        read_data_result.data().values(0).UnpackTo(&daqmx_read_values);
-        std::cout << "Read data..." << std::endl;
-        PrintArray(daqmx_write_values);
+        google::protobuf::Any read_message = read_data_result.data().values(0);
+        HandleReadResponse(read_message, DaqDataTypesToTest::DAQ_U64_Array);
 
         stream->WritesDone();
 
@@ -398,34 +441,20 @@ void DoIndependentStreamReadWriteArray(const StubPtr& daqmx_client, ni::data_mon
         read_request.mutable_read_monikers()->AddAllocated(daqmx_read_moniker);
         auto read_stream = moniker_service.StreamRead(&read_stream_context, read_request);
 
-        ArrayDoubleData daqmx_write_values;
-        int array_size = 10;
-        daqmx_write_values.mutable_value()->Reserve(array_size);
-        daqmx_write_values.mutable_value()->Resize(array_size, 0);
-
-        double* data_to_write = daqmx_write_values.mutable_value()->mutable_data();
-        for(int i=0; i<array_size; i++)
-        {
-            *(data_to_write + i) = i*100;
-        }
-        std::cout << "Writing data..." << std::endl;
-        PrintArray(daqmx_write_values);
-
         // Write data
         ni::data_monikers::MonikerWriteRequest write_data_request;
         auto moniker_values = write_data_request.mutable_data();
-        moniker_values->add_values()->PackFrom(daqmx_write_values);
+        CopyDataToWrite(moniker_values, DaqDataTypesToTest::DAQ_U64_Array);
+
         write_stream->Write(write_data_request);
 
         std::this_thread::sleep_for(10us);
 
         // Read data
-        ArrayDoubleData daqmx_read_values;
         ni::data_monikers::MonikerReadResponse read_data_result;
         read_stream->Read(&read_data_result);
-        read_data_result.data().values(0).UnpackTo(&daqmx_read_values);
-        std::cout << "Read data..." << std::endl;
-        PrintArray(daqmx_write_values);
+        google::protobuf::Any read_message = read_data_result.data().values(0);
+        HandleReadResponse(read_message, DAQ_U64_Array);
 
         write_stream->WritesDone();
         read_stream_context.TryCancel();
@@ -534,44 +563,44 @@ int main(int argc, char **argv)
     {
         // case DaqTestToRun::DAQ_READ:
         //     // example which reads from indicators of different datatypes
-        //     cout << endl << ">> Simple read from DAQmx <<" << endl;
+        //     cout << endl << ">> " << "1: Simple read from DAQmx <<" << endl;
         //     cout << "--------------------------------------" << endl << endl;
         //     DoDaqRead(stub);
         //     break;
 
         // case DaqTestToRun::DAQ_LOOP_READ_WRITE:
         //     // example which reads from indicators in a loop
-        //     cout << endl << ">> Simple read loop from DAQmx <<" << endl;
+        //     cout << endl << ">> " << "2: Simple read loop from DAQmx <<" << endl;
         //     cout << "--------------------------------------" << endl << endl;
         //     DoDaqReadWriteInLoop(stub);
         //     break;
 
         // case DaqTestToRun::DAQ_STREAM_READ:
-        //     cout << endl << ">> Stream read from DAQmx <<" << endl;
+        //     cout << endl << ">> " << "3: Stream read from DAQmx <<" << endl;
         //     cout << "--------------------------------------" << endl << endl;
         //     DoDaqStreamRead(stub, moniker_service);
         //     break;
 
         // case DaqTestToRun::DAQ_STREAM_READ_WRITE:
-        //     cout << endl << ">> Stream read/write from DAQmx <<" << endl;
+        //     cout << endl << ">> " << "4: Stream read/write from DAQmx <<" << endl;
         //     cout << "--------------------------------------" << endl << endl;
         //     DoDaqStreamReadWrite(stub, moniker_service);
         //     break;
 
         case DaqTestToRun::DAQ_STREAM_READ_WRITE_ARRAY:
-            cout << endl << ">> Stream read/write array from DAQmx <<" << endl;
+            cout << endl << ">> " << "5: Stream read/write array from DAQmx <<" << endl;
             cout << "--------------------------------------" << endl << endl;
             DoDaqStreamReadWriteArray(stub, moniker_service);
             break;
 
         case DaqTestToRun::DAQ_STREAM_INDEPENDENT_READ_WRITE_ARRAY:
-            cout << endl << ">> Independent Stream read/write array from DAQmx <<" << endl;
+            cout << endl << ">> " << "6: Independent Stream read/write array from DAQmx <<" << endl;
             cout << "--------------------------------------" << endl << endl;
             DoIndependentStreamReadWriteArray(stub, moniker_service);
             break;
 
         case DaqTestToRun::DAQ_STREAM_SIDEBAND_READ_WRITE_ARRAY:
-            cout << endl << ">> Sideband Stream read/write array from DAQmx <<" << endl;
+            cout << endl << ">> " << "7: Sideband Stream read/write array from DAQmx <<" << endl;
             cout << "--------------------------------------" << endl << endl;
             DoSidebandStreamTest(stub, moniker_service);
             break;
