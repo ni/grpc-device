@@ -130,140 +130,154 @@ void WriteLatencyData(const std::string& dataName, TimeVector::iterator begin, T
 
 void ThreadRunSidebandLoop(uint64_t sideband_token, NiDAQmx::Stub* stub, nidevice_grpc::Session* daqmx_read_task)
 {   
+    try
+    {
 #ifndef _WIN32
-    cpu_set_t cpuSet;
-    CPU_ZERO(&cpuSet);
-    CPU_SET(10, &cpuSet);
-    CPU_SET(11, &cpuSet);
-    pid_t threadId = syscall(SYS_gettid);
-    auto result = sched_setaffinity(threadId, sizeof(cpu_set_t), &cpuSet);
+        cpu_set_t cpuSet;
+        CPU_ZERO(&cpuSet);
+        CPU_SET(10, &cpuSet);
+        CPU_SET(11, &cpuSet);
+        pid_t threadId = syscall(SYS_gettid);
+        auto result = sched_setaffinity(threadId, sizeof(cpu_set_t), &cpuSet);
 #endif
 
-    std::unique_ptr<NiDAQmx::Stub> daqmx_client(stub);
-    ArrayDoubleData daqmx_write_values;
-    BoolData daqmx_is_late;
-    std::cout << "Start sideband thread" << std::endl;
+        std::unique_ptr<NiDAQmx::Stub> daqmx_client(stub);
+        ArrayDoubleData daqmx_write_values;
+        BoolData daqmx_is_late;
+        std::cout << "Start sideband thread" << std::endl;
 
-    daqmx_write_values.mutable_value()->Reserve(1);
-    daqmx_write_values.mutable_value()->Resize(1, 0);
+        daqmx_write_values.mutable_value()->Reserve(1);
+        daqmx_write_values.mutable_value()->Resize(1, 0);
 
-    auto io_times = new TimeVector{};
+        auto io_times = new TimeVector{};
 
-    char* initialBlock = new char[1024 * 1024];
-    google::protobuf::Arena arena(initialBlock, 1024 * 1024);
-	nidaqmx_grpc::experimental::client::start_task(daqmx_client, *daqmx_read_task);
-    for (int x = 0; x < NUM_ITERATIONS; ++x)
-    {
-        std::cout << "Starting iteration " << x << " of " << NUM_ITERATIONS << std::endl;
-        auto start = std::chrono::steady_clock::now();
-     
-        // Write data
-        auto write_data_request = google::protobuf::Arena::CreateMessage<ni::data_monikers::SidebandWriteRequest>(&arena);
-        if (write_data_request->GetArena() != &arena)
+        char* initialBlock = new char[1024 * 1024];
+        google::protobuf::Arena arena(initialBlock, 1024 * 1024);
+        nidaqmx_grpc::experimental::client::start_task(daqmx_client, *daqmx_read_task);
+        for (int x = 0; x < NUM_ITERATIONS; ++x)
         {
-            std::cout << "No Arena" << std::endl;
+            std::cout << "Starting iteration " << x << " of " << NUM_ITERATIONS << std::endl;
+            auto start = std::chrono::steady_clock::now();
+        
+            // Write data
+            auto write_data_request = google::protobuf::Arena::CreateMessage<ni::data_monikers::SidebandWriteRequest>(&arena);
+            if (write_data_request->GetArena() != &arena)
+            {
+                std::cout << "No Arena" << std::endl;
+            }
+            auto moniker_values = write_data_request->mutable_values();
+            moniker_values->add_values()->PackFrom(daqmx_write_values);     
+            if (!WriteSidebandMessage(sideband_token, *write_data_request))
+            {
+                break;
+            }
+            std::cout << "Wrote some data" << std::endl;
+    
+            // Read data      
+            auto read_result = google::protobuf::Arena::CreateMessage<ni::data_monikers::SidebandReadResponse>(&arena);
+            auto daqmx_read_values = google::protobuf::Arena::CreateMessage<ArrayDoubleData>(&arena);
+            if (!ReadSidebandMessage(sideband_token, read_result))
+            {
+                break;
+            }
+            std::cout << "Read sideband message " << std::endl;
+            read_result->values().values(0).UnpackTo(daqmx_read_values); //1 will be channeldata
+            arena.Reset();
+            auto end = std::chrono::steady_clock::now();        
+            (*io_times)[x] = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+            
+            std::this_thread::sleep_for(std::chrono::microseconds(950));
         }
-        auto moniker_values = write_data_request->mutable_values();
-        moniker_values->add_values()->PackFrom(daqmx_write_values);     
-        if (!WriteSidebandMessage(sideband_token, *write_data_request))
-        {
-            break;
-        }
-        std::cout << "Wrote some data" << std::endl;
- 
-        // Read data      
-        auto read_result = google::protobuf::Arena::CreateMessage<ni::data_monikers::SidebandReadResponse>(&arena);
-		auto daqmx_read_values = google::protobuf::Arena::CreateMessage<ArrayDoubleData>(&arena);
-		if (!ReadSidebandMessage(sideband_token, read_result))
-        {
-            break;
-        }
-        std::cout << "Read sideband message " << std::endl;
-        read_result->values().values(0).UnpackTo(daqmx_read_values); //1 will be channeldata
-        arena.Reset();
-        auto end = std::chrono::steady_clock::now();        
-        (*io_times)[x] = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
-		
-		std::this_thread::sleep_for(std::chrono::microseconds(950));
+
+        std::cout << "Teardown" << std::endl;
+        ni::data_monikers::SidebandWriteRequest cancel_request;
+        cancel_request.set_cancel(true);
+        WriteSidebandMessage(sideband_token, cancel_request);
+        CloseSidebandData(sideband_token);
+
+        auto firstLoop = (*io_times).begin() + 1;
+        WriteLatencyData("IO Times", firstLoop, (*io_times).end());
+        // I think we need to release here since the client api requires a unique_tr to be passed in but unique_ptr is not copyable so we can't pass it in
+        // a thread proc. So I am passing a rw pointer to this, creating a unique_ptr in here and releasing the ownership so that the pointer is not deleted
+        // in this thread proc as the pointer is still needed to make function calls later from the main thread. 
+        daqmx_client.release();
     }
-
-    std::cout << "Teardown" << std::endl;
-    ni::data_monikers::SidebandWriteRequest cancel_request;
-    cancel_request.set_cancel(true);
-    WriteSidebandMessage(sideband_token, cancel_request);
-    CloseSidebandData(sideband_token);
-
-    auto firstLoop = (*io_times).begin() + 1;
-    WriteLatencyData("IO Times", firstLoop, (*io_times).end());
-    // I think we need to release here since the client api requires a unique_tr to be passed in but unique_ptr is not copyable so we can't pass it in
-    // a thread proc. So I am passing a rw pointer to this, creating a unique_ptr in here and releasing the ownership so that the pointer is not deleted
-    // in this thread proc as the pointer is still needed to make function calls later from the main thread. 
-    daqmx_client.release();
+    catch (grpc_driver_error e)
+    {
+        std::cout << "Driver error: " << e.StatusCode() << std::endl << "Message: " << e.what() << std::endl;
+    }
 }
 
 void DoSidebandStreamTest(const StubPtr& daqmx_client, ni::data_monikers::DataMoniker::Stub& moniker_service)
 {
-    // NiFpga_Session fpga_session;
-    auto start = std::chrono::steady_clock::now();
 
-    NiFpga_Status fpga_status = 0;
+    try {
+        // NiFpga_Session fpga_session;
+        auto start = std::chrono::steady_clock::now();
 
-    // TODO: Check status for fpga/daqmx calls
-	double DAQ_FREQUENCY = 1000.0;
-    nidevice_grpc::Session daqmx_read_task;
+        NiFpga_Status fpga_status = 0;
 
-    // daqmx_client.ResetDevice("PXI1Slot3"); // TODO: sagrahar 10O Oct commented out, verify later if we need it
-    // Create the AI task and get the read moniker
-    auto read_task_response = create_task(daqmx_client, "", nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
-    daqmx_read_task.CopyFrom(read_task_response.task());
-    create_ai_voltage_chan(daqmx_client, daqmx_read_task, "PXI1Slot6/ai0", "", DAQmx_Val_Cfg_Default, -10.0, 10.0, DAQmx_Val_Volts, "");
-    cfg_samp_clk_timing(daqmx_client, daqmx_read_task, "", DAQ_FREQUENCY, DAQmx_Val_Rising, DAQmx_Val_HWTimedSinglePoint, 1000); // Changing rate to 1000 for HW_TimedSinglePoint
-    set_read_attribute_int32(daqmx_client, daqmx_read_task, READ_ATTRIBUTE_WAIT_MODE, READ_INT32_WAIT_MODE_POLL);
+        // TODO: Check status for fpga/daqmx calls
+        double DAQ_FREQUENCY = 1000.0;
+        nidevice_grpc::Session daqmx_read_task;
+
+        // daqmx_client.ResetDevice("PXI1Slot3"); // TODO: sagrahar 10O Oct commented out, verify later if we need it
+        // Create the AI task and get the read moniker
+        auto read_task_response = create_task(daqmx_client, "", nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+        daqmx_read_task.CopyFrom(read_task_response.task());
+        create_ai_voltage_chan(daqmx_client, daqmx_read_task, "PXI1Slot6/ai0", "", DAQmx_Val_Cfg_Default, -10.0, 10.0, DAQmx_Val_Volts, "");
+        cfg_samp_clk_timing(daqmx_client, daqmx_read_task, "", DAQ_FREQUENCY, DAQmx_Val_Rising, DAQmx_Val_HWTimedSinglePoint, 1000); // Changing rate to 1000 for HW_TimedSinglePoint
+        set_read_attribute_int32(daqmx_client, daqmx_read_task, READ_ATTRIBUTE_WAIT_MODE, READ_INT32_WAIT_MODE_POLL);
 
     // daqmx_client.BeginWaitForNextSampleClock(daqmx_read_task, 10.0, daqmx_wait_moniker);
     auto begin_read_analog_f64_response = begin_read_analog_f64(daqmx_client, daqmx_read_task, 1, 10.0, DAQmx_Val_GroupByChannel, 1); // Changing 1000 to 1 for the HW timed single point
     auto daqmx_read_moniker = new ni::data_monikers::Moniker(begin_read_analog_f64_response.moniker());
 
-    // Create the AO task and get the write moniker
-    nidevice_grpc::Session daqmx_write_task;
-    auto write_task_response = create_task(daqmx_client, "", nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
-    daqmx_write_task.CopyFrom(write_task_response.task());
-    create_ao_voltage_chan(daqmx_client, daqmx_write_task, "PXI1Slot8/ao0", "", -10.0, 10.0, DAQmx_Val_Volts, "");
-    cfg_samp_clk_timing(daqmx_client, daqmx_write_task, "/PXI1Slot6/ai/SampleClock", DAQ_FREQUENCY, DAQmx_Val_Rising, DAQmx_Val_HWTimedSinglePoint, 1); //changed 10000 to 1000
+        // Create the AO task and get the write moniker
+        nidevice_grpc::Session daqmx_write_task;
+        auto write_task_response = create_task(daqmx_client, "", nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+        daqmx_write_task.CopyFrom(write_task_response.task());
+        create_ao_voltage_chan(daqmx_client, daqmx_write_task, "PXI1Slot8/ao0", "", -10.0, 10.0, DAQmx_Val_Volts, "");
+        cfg_samp_clk_timing(daqmx_client, daqmx_write_task, "/PXI1Slot6/ai/SampleClock", DAQ_FREQUENCY, DAQmx_Val_Rising, DAQmx_Val_HWTimedSinglePoint, 1); //changed 10000 to 1000
 
-    auto begin_write_analog_f64_response = begin_write_analog_f64(daqmx_client, daqmx_write_task, 1, true, -1, true); // Changing 1000 to 1 for the HW timed single point
-    auto daqmx_write_moniker = new ni::data_monikers::Moniker(begin_write_analog_f64_response.moniker());
-    std::cout << "DAQmx setup complete" << std::endl;
+        auto begin_write_analog_f64_response = begin_write_analog_f64(daqmx_client, daqmx_write_task, 1, true, -1, true); // Changing 1000 to 1 for the HW timed single point
+        auto daqmx_write_moniker = new ni::data_monikers::Moniker(begin_write_analog_f64_response.moniker());
+        std::cout << "DAQmx setup complete" << std::endl;
 
-    // Setup the read / write stream
-    ClientContext moniker_context;
-    ni::data_monikers::BeginMonikerSidebandStreamRequest sideband_request;
-    ni::data_monikers::BeginMonikerSidebandStreamResponse sideband_response;
-	
-    sideband_request.set_strategy(ni::data_monikers::SidebandStrategy::SOCKETS_LOW_LATENCY);
-    sideband_request.mutable_monikers()->mutable_read_monikers()->AddAllocated(daqmx_read_moniker);
-    sideband_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(daqmx_write_moniker);
+        // Setup the read / write stream
+        ClientContext moniker_context;
+        ni::data_monikers::BeginMonikerSidebandStreamRequest sideband_request;
+        ni::data_monikers::BeginMonikerSidebandStreamResponse sideband_response;
+        
+        sideband_request.set_strategy(ni::data_monikers::SidebandStrategy::SOCKETS_LOW_LATENCY);
+        sideband_request.mutable_monikers()->mutable_read_monikers()->AddAllocated(daqmx_read_moniker);
+        sideband_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(daqmx_write_moniker);
 
 
-    std::cout << "Setup monikers complete" << std::endl;
-    auto status = moniker_service.BeginSidebandStream(&moniker_context, sideband_request, &sideband_response);
-    if(!status.ok()) {
-        std::cout << "ERROR BeginSidebandStream: (" << status.error_code() << ") " << status.error_message() << std::endl;
+        std::cout << "Setup monikers complete" << std::endl;
+        auto status = moniker_service.BeginSidebandStream(&moniker_context, sideband_request, &sideband_response);
+        if(!status.ok()) {
+            std::cout << "ERROR BeginSidebandStream: (" << status.error_code() << ") " << status.error_message() << std::endl;
+        }
+
+        auto sideband_token = InitClientSidebandData(sideband_response);
+        std::cout << "InitClientSidebandData complete with token " << sideband_token << std::endl;
+
+        // Now steam writes and reads
+        std::thread* thread = new std::thread(ThreadRunSidebandLoop, sideband_token, daqmx_client.get(), &daqmx_read_task);
+        thread->join();
+
+        std::cout << "Cleaning up." << std::endl;
+
+        stop_task(daqmx_client, daqmx_read_task);
+        clear_task(daqmx_client, daqmx_read_task);
+        stop_task(daqmx_client, daqmx_write_task);
+        clear_task(daqmx_client, daqmx_write_task);
     }
-
-    auto sideband_token = InitClientSidebandData(sideband_response);
-    std::cout << "InitClientSidebandData complete with token " << sideband_token << std::endl;
-
-    // Now steam writes and reads
-    std::thread* thread = new std::thread(ThreadRunSidebandLoop, sideband_token, daqmx_client.get(), &daqmx_read_task);
-    thread->join();
-
-    std::cout << "Cleaning up." << std::endl;
-
-    stop_task(daqmx_client, daqmx_read_task);
-    clear_task(daqmx_client, daqmx_read_task);
-    stop_task(daqmx_client, daqmx_write_task);
-    clear_task(daqmx_client, daqmx_write_task);
+    catch (grpc_driver_error e)
+    {
+        std::cout << "Driver error: " << e.StatusCode() << std::endl << "Message: " << e.what() << std::endl;
+    }
 }
 
 //---------------------------------------------------------------------
