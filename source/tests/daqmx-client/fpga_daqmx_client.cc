@@ -35,6 +35,21 @@ using namespace nidaqmx_grpc::experimental::client;
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+enum DaqTestToRun
+{
+    // There are some unused cases here. But that is just to match test case numbers for fpga_client
+    DAQ_INVALID = 0,
+    DAQ_READ,
+    DAQ_LOOP_READ_WRITE,
+    DAQ_STREAM_READ,
+    DAQ_STREAM_READ_WRITE,
+    DAQ_STREAM_READ_WRITE_ARRAY,
+    DAQ_STREAM_INDEPENDENT_READ_WRITE_ARRAY,
+    DAQ_STREAM_SIDEBAND_READ_WRITE_ARRAY
+};
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
 string GetOption(int argc, char** argv, string option)
 {
     for(int i=0; i<argc; ++i)
@@ -91,6 +106,26 @@ shared_ptr<grpc::ChannelCredentials> CreateCredentials(int argc, char **argv)
         creds = grpc::InsecureChannelCredentials();
     }
     return creds;
+}
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+DaqTestToRun GetTestToRun(int argc, char **argv)
+{
+    shared_ptr<grpc::ChannelCredentials> creds;
+    auto test_to_run = GetOption(argc, argv, "--test");
+    if (test_to_run.empty())
+    {
+        return DaqTestToRun::DAQ_STREAM_INDEPENDENT_READ_WRITE_ARRAY;
+    }
+    else
+    {
+        std::stringstream ss;
+        int test;
+        ss << test_to_run;
+        ss >> test;
+        return static_cast<DaqTestToRun>(test);
+    }
 }
 
 void check_status(NiFpga_Status status, const std::string& func)
@@ -415,13 +450,56 @@ int main(int argc, char **argv)
     }
 
     auto creds = CreateCredentials(argc, argv);
+    auto test_run = GetTestToRun(argc, argv);
     std::cout << "Starting..." << std::endl;
 
     StubPtr stub = std::make_unique<NiDAQmx::Stub>(grpc::CreateChannel(target_str, creds));
     ni::data_monikers::DataMoniker::Stub moniker_service(grpc::CreateChannel(target_str, creds));
 
     std::cout << "Established client connections" << std::endl;
-    // DoSidebandStreamTest(stub, moniker_service);
-    DoIndependentStreamReadWriteArray(stub, moniker_service);
+    switch(test_run)
+    {
+        // case DaqTestToRun::DAQ_READ:
+        //     // example which reads from indicators of different datatypes
+        //     cout << endl << ">> Simple read from DAQmx <<" << endl << endl;
+        //     DoDaqRead(client);
+        //     break;
+
+        // case DaqTestToRun::DAQ_LOOP_READ_WRITE:
+        //     // example which reads from indicators in a loop
+        //     cout << endl << ">> Simple read loop from DAQmx <<" << endl << endl;
+        //     DoDaqReadWriteInLoop(client);
+        //     break;
+
+        // case DaqTestToRun::DAQ_STREAM_READ:
+        //     cout << endl << ">> Stream read from DAQmx <<" << endl << endl;
+        //     DoDaqStreamRead(client, moniker_service);
+        //     break;
+
+        // case DaqTestToRun::DAQ_STREAM_READ_WRITE:
+        //     cout << endl << ">> Stream read/write from DAQmx <<" << endl << endl;
+        //     DoDaqStreamReadWrite(client, moniker_service);
+        //     break;
+
+        // case DaqTestToRun::DAQ_STREAM_READ_WRITE_ARRAY:
+        //     cout << endl << ">> Stream read/write array from DAQmx <<" << endl << endl;
+        //     DoDaqStreamReadWriteArray(client, moniker_service);
+        //     break;
+
+        case DaqTestToRun::DAQ_STREAM_INDEPENDENT_READ_WRITE_ARRAY:
+            cout << endl << ">> Independent Stream read/write array from DAQmx <<" << endl << endl;
+            DoIndependentStreamReadWriteArray(stub, moniker_service);
+            break;
+
+        case DaqTestToRun::DAQ_STREAM_SIDEBAND_READ_WRITE_ARRAY:
+            cout << endl << ">> Sideband Stream read/write array from DAQmx <<" << endl << endl;
+            DoSidebandStreamTest(stub, moniker_service);
+            break;
+
+        case DaqTestToRun::DAQ_INVALID:
+        default:
+            cout << endl << ">> Invalid test option <<" << endl << endl;
+            break;
+    }
     return 0;
 }
