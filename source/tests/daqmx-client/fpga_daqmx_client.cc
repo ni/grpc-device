@@ -298,10 +298,82 @@ void PrintArray(const ArrayDoubleData& data)
     std::cout << "]" << std::endl;
 }
 
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
+void DoDaqStreamReadWriteArray(const StubPtr& daqmx_client, ni::data_monikers::DataMoniker::Stub& moniker_service)
+{
+    try {
+        auto start = std::chrono::steady_clock::now();
+
+        NiFpga_Status fpga_status = 0;
+        nidevice_grpc::Session daqmx_read_task;
+        nidevice_grpc::Session daqmx_write_task;
+        ni::data_monikers::Moniker* daqmx_read_moniker;
+        ni::data_monikers::Moniker* daqmx_write_moniker;
+
+        SetupDaqmxReadWriteTasks(daqmx_client, &daqmx_read_task, &daqmx_write_task, &daqmx_read_moniker, &daqmx_write_moniker);
+
+        // Setup the read/write stream
+        ClientContext stream_context;
+        auto stream = moniker_service.StreamReadWrite(&stream_context);
+
+        // First write to the stream with the monikers
+        ni::data_monikers::MonikerWriteRequest write_request;
+        auto moniker_list = write_request.mutable_monikers();
+        moniker_list->mutable_read_monikers()->AddAllocated(daqmx_write_moniker);
+        moniker_list->mutable_write_monikers()->AddAllocated(daqmx_read_moniker);
+        // Tell the stream that we are going to write then read
+        // moniker_list->set_is_initial_write(true);
+        stream->Write(write_request);
+
+        ArrayDoubleData daqmx_write_values;
+        int array_size = 10;
+        daqmx_write_values.mutable_value()->Reserve(array_size);
+        daqmx_write_values.mutable_value()->Resize(array_size, 0);
+
+        double* data_to_write = daqmx_write_values.mutable_value()->mutable_data();
+        for(int i=0; i<array_size; i++)
+        {
+            *(data_to_write + i) = i*100;
+        }
+        std::cout << "Writing data..." << std::endl;
+        PrintArray(daqmx_write_values);
+
+        // Write data
+        ni::data_monikers::MonikerWriteRequest write_data_request;
+        auto moniker_values = write_data_request.mutable_data();
+        moniker_values->add_values()->PackFrom(daqmx_write_values);
+        stream->Write(write_data_request);
+
+        std::this_thread::sleep_for(10us);
+
+        // Read data
+        ArrayDoubleData daqmx_read_values;
+        ni::data_monikers::MonikerReadResponse read_data_result;
+        stream->Read(&read_data_result);
+        read_data_result.data().values(0).UnpackTo(&daqmx_read_values);
+        std::cout << "Read data..." << std::endl;
+        PrintArray(daqmx_write_values);
+
+        stream->WritesDone();
+
+        CleanupDaqmxTasks(daqmx_client, daqmx_read_task, daqmx_write_task);
+
+        auto end = std::chrono::steady_clock::now();
+        auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);
+        std::cout << "NiDaqmx calls took " << elapsed.count() / 100 << " microseconds." << std::endl;
+    }
+    catch (grpc_driver_error e)
+    {
+        std::cout << "Driver error: " << e.StatusCode() << std::endl << "Message: " << e.what() << std::endl;
+    }
+}
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
 void DoIndependentStreamReadWriteArray(const StubPtr& daqmx_client, ni::data_monikers::DataMoniker::Stub& moniker_service)
 {
     try {
-        // NiFpga_Session fpga_session;
         auto start = std::chrono::steady_clock::now();
 
         NiFpga_Status fpga_status = 0;
@@ -370,10 +442,11 @@ void DoIndependentStreamReadWriteArray(const StubPtr& daqmx_client, ni::data_mon
     }
 }
 
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
 void DoSidebandStreamTest(const StubPtr& daqmx_client, ni::data_monikers::DataMoniker::Stub& moniker_service)
 {
     try {
-        // NiFpga_Session fpga_session;
         auto start = std::chrono::steady_clock::now();
 
         NiFpga_Status fpga_status = 0;
@@ -461,38 +534,45 @@ int main(int argc, char **argv)
     {
         // case DaqTestToRun::DAQ_READ:
         //     // example which reads from indicators of different datatypes
-        //     cout << endl << ">> Simple read from DAQmx <<" << endl << endl;
-        //     DoDaqRead(client);
+        //     cout << endl << ">> Simple read from DAQmx <<" << endl;
+        //     cout << "--------------------------------------" << endl << endl;
+        //     DoDaqRead(stub);
         //     break;
 
         // case DaqTestToRun::DAQ_LOOP_READ_WRITE:
         //     // example which reads from indicators in a loop
-        //     cout << endl << ">> Simple read loop from DAQmx <<" << endl << endl;
-        //     DoDaqReadWriteInLoop(client);
+        //     cout << endl << ">> Simple read loop from DAQmx <<" << endl;
+        //     cout << "--------------------------------------" << endl << endl;
+        //     DoDaqReadWriteInLoop(stub);
         //     break;
 
         // case DaqTestToRun::DAQ_STREAM_READ:
-        //     cout << endl << ">> Stream read from DAQmx <<" << endl << endl;
-        //     DoDaqStreamRead(client, moniker_service);
+        //     cout << endl << ">> Stream read from DAQmx <<" << endl;
+        //     cout << "--------------------------------------" << endl << endl;
+        //     DoDaqStreamRead(stub, moniker_service);
         //     break;
 
         // case DaqTestToRun::DAQ_STREAM_READ_WRITE:
-        //     cout << endl << ">> Stream read/write from DAQmx <<" << endl << endl;
-        //     DoDaqStreamReadWrite(client, moniker_service);
+        //     cout << endl << ">> Stream read/write from DAQmx <<" << endl;
+        //     cout << "--------------------------------------" << endl << endl;
+        //     DoDaqStreamReadWrite(stub, moniker_service);
         //     break;
 
-        // case DaqTestToRun::DAQ_STREAM_READ_WRITE_ARRAY:
-        //     cout << endl << ">> Stream read/write array from DAQmx <<" << endl << endl;
-        //     DoDaqStreamReadWriteArray(client, moniker_service);
-        //     break;
+        case DaqTestToRun::DAQ_STREAM_READ_WRITE_ARRAY:
+            cout << endl << ">> Stream read/write array from DAQmx <<" << endl;
+            cout << "--------------------------------------" << endl << endl;
+            DoDaqStreamReadWriteArray(stub, moniker_service);
+            break;
 
         case DaqTestToRun::DAQ_STREAM_INDEPENDENT_READ_WRITE_ARRAY:
-            cout << endl << ">> Independent Stream read/write array from DAQmx <<" << endl << endl;
+            cout << endl << ">> Independent Stream read/write array from DAQmx <<" << endl;
+            cout << "--------------------------------------" << endl << endl;
             DoIndependentStreamReadWriteArray(stub, moniker_service);
             break;
 
         case DaqTestToRun::DAQ_STREAM_SIDEBAND_READ_WRITE_ARRAY:
-            cout << endl << ">> Sideband Stream read/write array from DAQmx <<" << endl << endl;
+            cout << endl << ">> Sideband Stream read/write array from DAQmx <<" << endl;
+            cout << "--------------------------------------" << endl << endl;
             DoSidebandStreamTest(stub, moniker_service);
             break;
 
