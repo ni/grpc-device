@@ -1204,24 +1204,24 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
 
 
-def filter_moniker_streaming_functions(functions, functions_to_generate):
+def filter_moniker_streaming_functions(functions: dict, functions_to_generate: List[str]) -> List[str]:
     """Return streaming functions that need to be generated."""
     return [
         name for name in functions_to_generate if is_moniker_streaming_function(functions[name])
     ]
 
 
-def is_moniker_streaming_function(function):
+def is_moniker_streaming_function(function: dict) -> bool:
     """Whether this function is for streaming data through moniker."""
     return function.get("is_streaming_api", False)
 
 
-def get_data_moniker_function_name(function_name):
+def get_data_moniker_function_name(function_name: str) -> str:
     """Return the corresponding moniker function name for the given C API function."""
     return function_name.replace("Begin", "Moniker")
 
 
-def get_data_moniker_struct_name(begin_function_name):
+def get_data_moniker_struct_name(begin_function_name: str) -> str:
     """Return the Moniker function name.
 
     Input expected is Begin* streaming API name.
@@ -1229,7 +1229,7 @@ def get_data_moniker_struct_name(begin_function_name):
     return f"{begin_function_name.replace('Begin', 'Moniker')}Data"
 
 
-def get_data_moniker_request_message_type(begin_function_name):
+def get_data_moniker_request_message_type(begin_function_name: str) -> str:
     """Return the request message type for Moniker functions.
 
     Input expected is Begin* streaming API name.
@@ -1237,7 +1237,7 @@ def get_data_moniker_request_message_type(begin_function_name):
     return f"{begin_function_name.replace('Begin', '')}StreamingRequest"
 
 
-def get_data_moniker_response_message_type(begin_function_name):
+def get_data_moniker_response_message_type(begin_function_name: str) -> str:
     """Return the response message type for Moniker functions.
 
     Input expected is Begin* streaming API name.
@@ -1245,7 +1245,7 @@ def get_data_moniker_response_message_type(begin_function_name):
     return f"{begin_function_name.replace('Begin', '')}StreamingResponse"
 
 
-def get_data_moniker_function_parameters(function):
+def get_data_moniker_function_parameters(function: dict) -> tuple[List[dict], List[dict]]:
     """Return moniker function parameters split into input/output.
 
     Input expected is equivalent non-streaming function.
@@ -1261,12 +1261,12 @@ def get_data_moniker_function_parameters(function):
     return (input_parameters, output_parameters)
 
 
-def is_function_in_streaming_functions(function_name, streaming_functions_to_generate):
+def is_function_in_streaming_functions(function_name: str, streaming_functions_to_generate: List[str]):
     """Check if a function name is in the streaming functions to generate."""
     return function_name in streaming_functions_to_generate
 
 
-def _is_streaming_param_input_array(streaming_param):
+def _is_streaming_param_input_array(streaming_param: dict) -> bool:
     """Check if the streaming parameter is an input array."""
     return (
         streaming_param
@@ -1275,7 +1275,7 @@ def _is_streaming_param_input_array(streaming_param):
     )
 
 
-def get_non_streaming_input_parameters(parameters):
+def get_non_streaming_input_parameters(parameters: List[dict]) -> List[dict]:
     """Determine if a parameter should be passed from Begin streaming API to Moniker function."""
     streaming_param = get_first_streaming_parameter(parameters)
     params = []

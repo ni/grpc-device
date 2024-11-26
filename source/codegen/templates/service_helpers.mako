@@ -313,7 +313,6 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   non_streaming_function_name = function_name.replace("Begin", "")
   non_streaming_function_parameters = functions[non_streaming_function_name]['parameters']
   arg_string = service_helpers.create_args(non_streaming_function_parameters)
-  c_api_name = service_helpers.get_c_api_name(function_name)
   output_parameters = [p for p in non_streaming_function_parameters if common_helpers.is_output_parameter(p)]
 %>\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
@@ -327,7 +326,7 @@ ${initialize_output_params(output_parameters)}\
 ${streaming_handle_in_direction(streaming_param)}\
     % endif
 
-    auto status = library->${c_api_name}(${arg_string});
+    auto status = library->${non_streaming_function_name}(${arg_string});
 
 ${populate_moniker_response_for_out_functions(output_parameters, streaming_param)}\
     return ::grpc::Status::OK;
