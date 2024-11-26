@@ -25769,7 +25769,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
+                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',

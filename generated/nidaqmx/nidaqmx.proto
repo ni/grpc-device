@@ -11058,12 +11058,12 @@ message BeginWriteCtrFreqResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteCtrFreqStreamingRequest {
+message MonikerWriteCtrFreqRequest {
   repeated double frequency = 1;
   repeated double duty_cycle = 2;
 }
 
-message WriteCtrFreqStreamingResponse {
+message MonikerWriteCtrFreqResponse {
   int32 status = 1;
   int32 num_samps_per_chan_written = 2;
 }
@@ -11091,12 +11091,12 @@ message BeginWriteCtrFreqScalarResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteCtrFreqScalarStreamingRequest {
+message MonikerWriteCtrFreqScalarRequest {
   double frequency = 1;
   double duty_cycle = 2;
 }
 
-message WriteCtrFreqScalarStreamingResponse {
+message MonikerWriteCtrFreqScalarResponse {
   int32 status = 1;
 }
 
@@ -11134,12 +11134,12 @@ message BeginWriteCtrTicksResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteCtrTicksStreamingRequest {
+message MonikerWriteCtrTicksRequest {
   repeated uint32 high_ticks = 1;
   repeated uint32 low_ticks = 2;
 }
 
-message WriteCtrTicksStreamingResponse {
+message MonikerWriteCtrTicksResponse {
   int32 status = 1;
   int32 num_samps_per_chan_written = 2;
 }
@@ -11167,12 +11167,12 @@ message BeginWriteCtrTicksScalarResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteCtrTicksScalarStreamingRequest {
+message MonikerWriteCtrTicksScalarRequest {
   uint32 high_ticks = 1;
   uint32 low_ticks = 2;
 }
 
-message WriteCtrTicksScalarStreamingResponse {
+message MonikerWriteCtrTicksScalarResponse {
   int32 status = 1;
 }
 
@@ -11210,12 +11210,12 @@ message BeginWriteCtrTimeResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteCtrTimeStreamingRequest {
+message MonikerWriteCtrTimeRequest {
   repeated double high_time = 1;
   repeated double low_time = 2;
 }
 
-message WriteCtrTimeStreamingResponse {
+message MonikerWriteCtrTimeResponse {
   int32 status = 1;
   int32 num_samps_per_chan_written = 2;
 }
@@ -11243,12 +11243,12 @@ message BeginWriteCtrTimeScalarResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteCtrTimeScalarStreamingRequest {
+message MonikerWriteCtrTimeScalarRequest {
   double high_time = 1;
   double low_time = 2;
 }
 
-message WriteCtrTimeScalarStreamingResponse {
+message MonikerWriteCtrTimeScalarResponse {
   int32 status = 1;
 }
 
@@ -11285,11 +11285,11 @@ message BeginWriteDigitalLinesResponse {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteDigitalLinesStreamingRequest {
+message MonikerWriteDigitalLinesRequest {
   bytes write_array = 1;
 }
 
-message WriteDigitalLinesStreamingResponse {
+message MonikerWriteDigitalLinesResponse {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
 }
@@ -11441,11 +11441,11 @@ message BeginWriteDigitalU8Response {
   ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteDigitalU8StreamingRequest {
+message MonikerWriteDigitalU8Request {
   bytes write_array = 1;
 }
 
-message WriteDigitalU8StreamingResponse {
+message MonikerWriteDigitalU8Response {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
 }
@@ -11472,15 +11472,14 @@ message BeginWriteRawRequest {
 
 message BeginWriteRawResponse {
   int32 status = 1;
-  int32 samps_per_chan_written = 2;
-  ni.data_monikers.Moniker moniker = 3;
+  ni.data_monikers.Moniker moniker = 2;
 }
 
-message WriteRawStreamingRequest {
+message MonikerWriteRawRequest {
   bytes write_array = 1;
 }
 
-message WriteRawStreamingResponse {
+message MonikerWriteRawResponse {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
 }
