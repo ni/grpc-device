@@ -17,6 +17,7 @@ namespace nidevice_grpc {
 static const char* kDefaultFilename = "server_config.json";
 static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
+static const char* kSidebandAddressJsonKey = "sideband_address";
 static const char* kSidebandPortJsonKey = "sideband_port";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
@@ -100,6 +101,12 @@ std::string ServerConfigurationParser::parse_address() const
 {
   auto address = parse_bind_address() + ":" + std::to_string(parse_port());
   return address;
+}
+
+std::string ServerConfigurationParser::parse_sideband_address() const
+{
+  auto it = config_file_.find(kSidebandAddressJsonKey);
+  return it != config_file_.end() ? it->get<std::string>() : "";
 }
 
 std::string ServerConfigurationParser::parse_server_cert() const
