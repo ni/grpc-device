@@ -431,6 +431,11 @@ ${set_response_values(output_parameters=output_parameters, init_method=false)}\
       ## But that needs `context` parameter which is not available in Moniker functions.
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
+% else:
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
 % endif
 </%def>
 

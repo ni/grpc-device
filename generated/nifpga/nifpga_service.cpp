@@ -1063,6 +1063,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayBool(session, control, array.data(), size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1083,6 +1087,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayDbl(session, control, array, size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1115,6 +1123,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayI16(session, control, array.data(), size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1135,6 +1147,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayI32(session, control, array, size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1155,6 +1171,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayI64(session, control, array, size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1187,6 +1207,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayI8(session, control, array.data(), size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1207,6 +1231,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArraySgl(session, control, array, size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1239,6 +1267,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayU16(session, control, array.data(), size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1259,6 +1291,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayU32(session, control, array, size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1279,6 +1315,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayU64(session, control, array, size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1311,6 +1351,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteArrayU8(session, control, array.data(), size);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1328,6 +1372,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteBool(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1345,6 +1393,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteDbl(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1366,6 +1418,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteI16(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1383,6 +1439,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteI32(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1400,6 +1460,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteI64(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1421,6 +1485,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteI8(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1438,6 +1506,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteSgl(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1459,6 +1531,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteU16(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1476,6 +1552,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteU32(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1493,6 +1573,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteU64(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1514,6 +1598,10 @@ namespace nifpga_grpc {
 
     auto status = library->WriteU8(session, control, value);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 

@@ -862,6 +862,10 @@ namespace nidaqmx_grpc {
 
     auto status = library->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -881,6 +885,10 @@ namespace nidaqmx_grpc {
 
     auto status = library->WriteAnalogScalarF64(task, auto_start, timeout, value, reserved);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -918,6 +926,10 @@ namespace nidaqmx_grpc {
 
     auto status = library->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -943,6 +955,10 @@ namespace nidaqmx_grpc {
 
     auto status = library->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -980,6 +996,10 @@ namespace nidaqmx_grpc {
 
     auto status = library->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1005,6 +1025,10 @@ namespace nidaqmx_grpc {
 
     auto status = library->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1024,6 +1048,10 @@ namespace nidaqmx_grpc {
 
     auto status = library->WriteDigitalScalarU32(task, auto_start, timeout, value, reserved);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1061,6 +1089,10 @@ namespace nidaqmx_grpc {
 
     auto status = library->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
@@ -1086,6 +1118,10 @@ namespace nidaqmx_grpc {
 
     auto status = library->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
     return ::grpc::Status::OK;
 }
 
