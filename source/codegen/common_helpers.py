@@ -1292,3 +1292,11 @@ def get_non_streaming_input_parameters(parameters: List[dict]) -> List[dict]:
             else:
                 params.append(param)
     return params
+
+
+def extend_input_params_with_size_params(input_parameters: List[dict], function_metadata: dict):
+    """Return the input_parameters list with size parameters added to it."""
+    for param in input_parameters:
+        size_param_name = get_size_param(param)
+        size_param = [p for p in function_metadata["parameters"] if p["name"] == size_param_name]
+        input_parameters.extend(size_param)

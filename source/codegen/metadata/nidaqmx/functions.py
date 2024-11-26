@@ -24771,8 +24771,10 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'frequency',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -24781,8 +24783,10 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'dutyCycle',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -24791,7 +24795,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
+                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'numSampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -24814,7 +24820,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrFreqScalar': {
         'calling_convention': 'StdCall',
@@ -24852,7 +24859,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
+                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'frequency',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -24861,7 +24870,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
+                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'dutyCycle',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -24882,7 +24893,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrTicks': {
         'calling_convention': 'StdCall',
@@ -24941,8 +24953,10 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayU32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'highTicks',
                 'python_data_type': 'int',
                 'python_type_annotation': 'List[int]',
@@ -24951,8 +24965,10 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayU32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'lowTicks',
                 'python_data_type': 'int',
                 'python_type_annotation': 'List[int]',
@@ -24961,7 +24977,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
+                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'numSampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -24984,7 +25002,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrTicksScalar': {
         'calling_convention': 'StdCall',
@@ -25022,6 +25041,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
+                'grpc_streaming_type': 'U32Data',
+                'is_streaming_type': True,
                 'name': 'highTicks',
                 'python_data_type': 'int',
                 'type': 'uInt32'
@@ -25029,6 +25050,8 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
+                'grpc_streaming_type': 'U32Data',
+                'is_streaming_type': True,
                 'name': 'lowTicks',
                 'python_data_type': 'int',
                 'type': 'uInt32'
@@ -25048,7 +25071,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrTime': {
         'calling_convention': 'StdCall',
@@ -25107,8 +25131,10 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'highTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -25117,8 +25143,10 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'lowTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -25127,7 +25155,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
+                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'numSampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25150,7 +25180,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrTimeScalar': {
         'calling_convention': 'StdCall',
@@ -25188,7 +25219,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
+                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'highTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -25197,7 +25230,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
+                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'lowTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -25218,7 +25253,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteDigitalLines': {
         'calling_convention': 'StdCall',
@@ -25277,8 +25313,10 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.bool',
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayU8Data',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'writeArray',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25288,7 +25326,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
+                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25311,7 +25351,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteDigitalScalarU32': {
         'calling_convention': 'StdCall',
@@ -25630,8 +25671,10 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint8',
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayU8Data',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'writeArray',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25641,7 +25684,9 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
+                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25664,7 +25709,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteRaw': {
         'calling_convention': 'StdCall',
@@ -25712,7 +25758,9 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.generic',
                 'direction': 'in',
+                'grpc_streaming_type': 'ArrayU8Data',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'writeArray',
                 'python_data_type': 'dynamic',
                 'python_type_annotation': 'dynamic',
@@ -25744,7 +25792,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'no',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteToTEDSFromArray': {
         'calling_convention': 'StdCall',

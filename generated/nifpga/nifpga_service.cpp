@@ -1054,12 +1054,10 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayBoolData arraybooldata_message;
-    packedData.UnpackTo(&arraybooldata_message);
-    
-    auto data_array = arraybooldata_message.value();
-    std::vector<NiFpga_Bool> array(data_array.begin(), data_array.end());
-    auto size = data_array.size();
+    WriteArrayBoolStreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array = convert_from_grpc<NiFpga_Bool>(request->array());
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayBool(session, control, array.data(), size);
 
@@ -1078,12 +1076,10 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayDoubleData arraydoubledata_message;
-    packedData.UnpackTo(&arraydoubledata_message);
-    
-    auto data_array = arraydoubledata_message.value();
-    auto array = const_cast<double*>(arraydoubledata_message.value().data());
-    auto size = data_array.size();
+    WriteArrayDblStreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array = const_cast<double*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayDbl(session, control, array, size);
 
@@ -1102,24 +1098,27 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message);
-    
-    auto data_array = arrayi32data_message.value();
-    auto array = std::vector<int16_t>();
-    auto size = data_array.size();
-    array.reserve(size);
-    std::transform(
-      data_array.begin(),
-      data_array.end(),
-      std::back_inserter(array),
-      [](auto x) {
-        if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
-          std::string message("value " + std::to_string(x) + " doesn't fit in datatype int16_t");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
-        return static_cast<int16_t>(x);
-      });
+    WriteArrayI16StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array_raw = request->array();
+      auto array = std::vector<int16_t>();
+      array.reserve(array_raw.size());
+      std::transform(
+        array_raw.begin(),
+        array_raw.end(),
+        std::back_inserter(array),
+        [](auto x) {
+              if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int16_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int16_t>(x);
+        });
+
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayI16(session, control, array.data(), size);
 
@@ -1138,12 +1137,10 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message);
-    
-    auto data_array = arrayi32data_message.value();
-    auto array = const_cast<int32_t*>(arrayi32data_message.value().data());
-    auto size = data_array.size();
+    WriteArrayI32StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array = const_cast<int32_t*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayI32(session, control, array, size);
 
@@ -1162,12 +1159,10 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayI64Data arrayi64data_message;
-    packedData.UnpackTo(&arrayi64data_message);
-    
-    auto data_array = arrayi64data_message.value();
-    auto array = const_cast<int64_t*>(arrayi64data_message.value().data());
-    auto size = data_array.size();
+    WriteArrayI64StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array = const_cast<int64_t*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayI64(session, control, array, size);
 
@@ -1186,24 +1181,27 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message);
-    
-    auto data_array = arrayi32data_message.value();
-    auto array = std::vector<int8_t>();
-    auto size = data_array.size();
-    array.reserve(size);
-    std::transform(
-      data_array.begin(),
-      data_array.end(),
-      std::back_inserter(array),
-      [](auto x) {
-        if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
-          std::string message("value " + std::to_string(x) + " doesn't fit in datatype int8_t");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
-        return static_cast<int8_t>(x);
-      });
+    WriteArrayI8StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array_raw = request->array();
+      auto array = std::vector<int8_t>();
+      array.reserve(array_raw.size());
+      std::transform(
+        array_raw.begin(),
+        array_raw.end(),
+        std::back_inserter(array),
+        [](auto x) {
+              if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int8_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int8_t>(x);
+        });
+
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayI8(session, control, array.data(), size);
 
@@ -1222,12 +1220,10 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayFloatData arrayfloatdata_message;
-    packedData.UnpackTo(&arrayfloatdata_message);
-    
-    auto data_array = arrayfloatdata_message.value();
-    auto array = const_cast<float*>(arrayfloatdata_message.value().data());
-    auto size = data_array.size();
+    WriteArraySglStreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array = const_cast<float*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArraySgl(session, control, array, size);
 
@@ -1246,24 +1242,27 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
-    
-    auto data_array = arrayu32data_message.value();
-    auto array = std::vector<uint16_t>();
-    auto size = data_array.size();
-    array.reserve(size);
-    std::transform(
-      data_array.begin(),
-      data_array.end(),
-      std::back_inserter(array),
-      [](auto x) {
-        if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
-          std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint16_t");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
-        return static_cast<uint16_t>(x);
-      });
+    WriteArrayU16StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array_raw = request->array();
+      auto array = std::vector<uint16_t>();
+      array.reserve(array_raw.size());
+      std::transform(
+        array_raw.begin(),
+        array_raw.end(),
+        std::back_inserter(array),
+        [](auto x) {
+              if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uint16_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uint16_t>(x);
+        });
+
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayU16(session, control, array.data(), size);
 
@@ -1282,12 +1281,10 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
-    
-    auto data_array = arrayu32data_message.value();
-    auto array = const_cast<uint32_t*>(arrayu32data_message.value().data());
-    auto size = data_array.size();
+    WriteArrayU32StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array = const_cast<uint32_t*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayU32(session, control, array, size);
 
@@ -1306,12 +1303,10 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayU64Data arrayu64data_message;
-    packedData.UnpackTo(&arrayu64data_message);
-    
-    auto data_array = arrayu64data_message.value();
-    auto array = const_cast<uint64_t*>(arrayu64data_message.value().data());
-    auto size = data_array.size();
+    WriteArrayU64StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array = const_cast<uint64_t*>(request->array().data());
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayU64(session, control, array, size);
 
@@ -1330,24 +1325,27 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
-    
-    auto data_array = arrayu32data_message.value();
-    auto array = std::vector<uint8_t>();
-    auto size = data_array.size();
-    array.reserve(size);
-    std::transform(
-      data_array.begin(),
-      data_array.end(),
-      std::back_inserter(array),
-      [](auto x) {
-        if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
-          std::string message("value " + std::to_string(x) + " doesn't fit in datatype uint8_t");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
-        return static_cast<uint8_t>(x);
-      });
+    WriteArrayU8StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto array_raw = request->array();
+      auto array = std::vector<uint8_t>();
+      array.reserve(array_raw.size());
+      std::transform(
+        array_raw.begin(),
+        array_raw.end(),
+        std::back_inserter(array),
+        [](auto x) {
+              if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uint8_t");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uint8_t>(x);
+        });
+
+      size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayU8(session, control, array.data(), size);
 
@@ -1366,9 +1364,9 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    BoolData booldata_message;
-    packedData.UnpackTo(&booldata_message);
-    auto value = booldata_message.value();
+    WriteBoolStreamingRequest* request;
+    packedData.UnpackTo(request);
+      NiFpga_Bool value = request->value();
 
     auto status = library->WriteBool(session, control, value);
 
@@ -1387,9 +1385,9 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    DoubleData doubledata_message;
-    packedData.UnpackTo(&doubledata_message);
-    auto value = doubledata_message.value();
+    WriteDblStreamingRequest* request;
+    packedData.UnpackTo(request);
+      double value = request->value();
 
     auto status = library->WriteDbl(session, control, value);
 
@@ -1408,13 +1406,18 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    I32Data i32data_message;
-    packedData.UnpackTo(&i32data_message);
-    auto value = i32data_message.value();
-    if (value < std::numeric_limits<int16_t>::min() || value > std::numeric_limits<int16_t>::max()) {
-      std::string message("value " + std::to_string(value) + " doesn't fit in datatype int16_t");
-      throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
+    WriteI16StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto value_raw = request->value();
+      if (value_raw < std::numeric_limits<int16_t>::min() || value_raw > std::numeric_limits<int16_t>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(value_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int16_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto value = static_cast<int16_t>(value_raw);
+
 
     auto status = library->WriteI16(session, control, value);
 
@@ -1433,9 +1436,9 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    I32Data i32data_message;
-    packedData.UnpackTo(&i32data_message);
-    auto value = i32data_message.value();
+    WriteI32StreamingRequest* request;
+    packedData.UnpackTo(request);
+      int32_t value = request->value();
 
     auto status = library->WriteI32(session, control, value);
 
@@ -1454,9 +1457,9 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    I64Data i64data_message;
-    packedData.UnpackTo(&i64data_message);
-    auto value = i64data_message.value();
+    WriteI64StreamingRequest* request;
+    packedData.UnpackTo(request);
+      int64_t value = request->value();
 
     auto status = library->WriteI64(session, control, value);
 
@@ -1475,13 +1478,18 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    I32Data i32data_message;
-    packedData.UnpackTo(&i32data_message);
-    auto value = i32data_message.value();
-    if (value < std::numeric_limits<int8_t>::min() || value > std::numeric_limits<int8_t>::max()) {
-      std::string message("value " + std::to_string(value) + " doesn't fit in datatype int8_t");
-      throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
+    WriteI8StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto value_raw = request->value();
+      if (value_raw < std::numeric_limits<int8_t>::min() || value_raw > std::numeric_limits<int8_t>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(value_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("int8_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto value = static_cast<int8_t>(value_raw);
+
 
     auto status = library->WriteI8(session, control, value);
 
@@ -1500,9 +1508,9 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    FloatData floatdata_message;
-    packedData.UnpackTo(&floatdata_message);
-    auto value = floatdata_message.value();
+    WriteSglStreamingRequest* request;
+    packedData.UnpackTo(request);
+      float value = request->value();
 
     auto status = library->WriteSgl(session, control, value);
 
@@ -1521,13 +1529,18 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message);
-    auto value = u32data_message.value();
-    if (value < std::numeric_limits<uint16_t>::min() || value > std::numeric_limits<uint16_t>::max()) {
-      std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint16_t");
-      throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
+    WriteU16StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto value_raw = request->value();
+      if (value_raw < std::numeric_limits<uint16_t>::min() || value_raw > std::numeric_limits<uint16_t>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(value_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uint16_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto value = static_cast<uint16_t>(value_raw);
+
 
     auto status = library->WriteU16(session, control, value);
 
@@ -1546,9 +1559,9 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message);
-    auto value = u32data_message.value();
+    WriteU32StreamingRequest* request;
+    packedData.UnpackTo(request);
+      uint32_t value = request->value();
 
     auto status = library->WriteU32(session, control, value);
 
@@ -1567,9 +1580,9 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    U64Data u64data_message;
-    packedData.UnpackTo(&u64data_message);
-    auto value = u64data_message.value();
+    WriteU64StreamingRequest* request;
+    packedData.UnpackTo(request);
+      uint64_t value = request->value();
 
     auto status = library->WriteU64(session, control, value);
 
@@ -1588,13 +1601,18 @@ namespace nifpga_grpc {
     auto session = function_data->session;
     auto control = function_data->control;
 
-    U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message);
-    auto value = u32data_message.value();
-    if (value < std::numeric_limits<uint8_t>::min() || value > std::numeric_limits<uint8_t>::max()) {
-      std::string message("value " + std::to_string(value) + " doesn't fit in datatype uint8_t");
-      throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
+    WriteU8StreamingRequest* request;
+    packedData.UnpackTo(request);
+      auto value_raw = request->value();
+      if (value_raw < std::numeric_limits<uint8_t>::min() || value_raw > std::numeric_limits<uint8_t>::max()) {
+          std::string message("value ");
+          message.append(std::to_string(value_raw));
+          message.append(" doesn't fit in datatype ");
+          message.append("uint8_t");
+          throw nidevice_grpc::ValueOutOfRangeException(message);
+      }
+      auto value = static_cast<uint8_t>(value_raw);
+
 
     auto status = library->WriteU8(session, control, value);
 
