@@ -227,6 +227,18 @@ enums = {
             }
         ]
     },
+    'CalkitManagerCalkitTrlReferencePlane': {
+        'values': [
+            {
+                'name': 'THRU',
+                'value': 0
+            },
+            {
+                'name': 'REFLECT',
+                'value': 1
+            }
+        ]
+    },
     'CorrectionCalibrationCalkitType': {
         'values': [
             {
@@ -248,6 +260,10 @@ enums = {
             {
                 'name': 'SOLT',
                 'value': 1
+            },
+            {
+                'name': 'TRL',
+                'value': 2
             }
         ]
     },
@@ -312,6 +328,30 @@ enums = {
         ]
     },
     'CorrectionPortExtensionEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'CorrectionPortExtensionLoss1Enabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'CorrectionPortExtensionLoss2Enabled': {
         'values': [
             {
                 'name': 'FALSE',
@@ -465,6 +505,18 @@ enums = {
             }
         ]
     },
+    'MarkerMode': {
+        'values': [
+            {
+                'name': 'CONTINUOUS',
+                'value': 0
+            },
+            {
+                'name': 'DISCRETE',
+                'value': 1
+            }
+        ]
+    },
     'MarkerPeakSearchExcursionEnabled': {
         'values': [
             {
@@ -518,6 +570,18 @@ enums = {
             {
                 'name': 'NEXT_RIGHT_PEAK',
                 'value': 6
+            },
+            {
+                'name': 'TARGET',
+                'value': 7
+            },
+            {
+                'name': 'NEXT_LEFT_TARGET',
+                'value': 8
+            },
+            {
+                'name': 'NEXT_RIGHT_TARGET',
+                'value': 9
             }
         ]
     },
