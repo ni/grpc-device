@@ -1204,7 +1204,9 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
 
 
-def filter_moniker_streaming_functions(functions: dict, functions_to_generate: List[str]) -> List[str]:
+def filter_moniker_streaming_functions(
+    functions: dict, functions_to_generate: List[str]
+) -> List[str]:
     """Return streaming functions that need to be generated."""
     return [
         name for name in functions_to_generate if is_moniker_streaming_function(functions[name])
@@ -1261,7 +1263,9 @@ def get_data_moniker_function_parameters(function: dict) -> tuple[List[dict], Li
     return (input_parameters, output_parameters)
 
 
-def is_function_in_streaming_functions(function_name: str, streaming_functions_to_generate: List[str]):
+def is_function_in_streaming_functions(
+    function_name: str, streaming_functions_to_generate: List[str]
+):
     """Check if a function name is in the streaming functions to generate."""
     return function_name in streaming_functions_to_generate
 
