@@ -350,6 +350,38 @@ attributes = {
         'name': 'CORRECTION_INTERPOLATION_ENABLED',
         'type': 'int32'
     },
+    13631577: {
+        'access': 'read-write',
+        'enum': 'CorrectionPortExtensionLoss1Enabled',
+        'name': 'CORRECTION_PORT_EXTENSION_LOSS1_ENABLED',
+        'type': 'int32'
+    },
+    13631578: {
+        'access': 'read-write',
+        'name': 'CORRECTION_PORT_EXTENSION_LOSS1_FREQUENCY',
+        'type': 'float64'
+    },
+    13631579: {
+        'access': 'read-write',
+        'name': 'CORRECTION_PORT_EXTENSION_LOSS1',
+        'type': 'float64'
+    },
+    13631580: {
+        'access': 'read-write',
+        'enum': 'CorrectionPortExtensionLoss2Enabled',
+        'name': 'CORRECTION_PORT_EXTENSION_LOSS2_ENABLED',
+        'type': 'int32'
+    },
+    13631581: {
+        'access': 'read-write',
+        'name': 'CORRECTION_PORT_EXTENSION_LOSS2_FREQUENCY',
+        'type': 'float64'
+    },
+    13631582: {
+        'access': 'read-write',
+        'name': 'CORRECTION_PORT_EXTENSION_LOSS2',
+        'type': 'float64'
+    },
     13633536: {
         'access': 'read-write',
         'name': 'CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY',

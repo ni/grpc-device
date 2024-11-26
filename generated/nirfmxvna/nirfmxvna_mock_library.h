@@ -101,10 +101,14 @@ class NiRFmxVNAMockLibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   MOCK_METHOD(int32, CalkitManagerCalkitGetCalibrationElementIDs, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calibrationElementIDs[]), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitGetConnectorIDs, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char connectorIDs[]), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitGetDescription, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitDescription[]), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitGetLRLLineAutoChar, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* autoCharacterizationEnabled), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitGetTRLReferencePlane, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32* referencePlane), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitGetVersion, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitVersion[]), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitRemoveCalibrationElement, (niRFmxInstrHandle instrumentHandle, char selectorString[], char calibrationElementID[]), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitRemoveConnector, (niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorID[]), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitSetDescription, (niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitDescription[]), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitSetLRLLineAutoChar, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 autoCharacterizationEnabled), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitSetTRLReferencePlane, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referencePlane), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitSetVersion, (niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitVersion[]), (override));
   MOCK_METHOD(int32, CalkitManagerCreateCalkit, (niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[]), (override));
   MOCK_METHOD(int32, CalkitManagerExportCalkit, (niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[], char calkitFilePath[]), (override));
@@ -169,10 +173,12 @@ class NiRFmxVNAMockLibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   MOCK_METHOD(int32, Initiate, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]), (override));
   MOCK_METHOD(int32, LoadDataToMeasurementMemoryFromFile, (niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char memoryDataName[]), (override));
   MOCK_METHOD(int32, MarkerCfgDataSource, (niRFmxInstrHandle instrumentHandle, char selectorString[], char dataSource[]), (override));
+  MOCK_METHOD(int32, MarkerCfgMode, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerMode), (override));
   MOCK_METHOD(int32, MarkerCfgNumberOfMarkers, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers), (override));
   MOCK_METHOD(int32, MarkerCfgPeakSearchExcursion, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 peakExcursionEnabled, float64 peakExcursion), (override));
   MOCK_METHOD(int32, MarkerCfgPeakSearchThreshold, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 thresholdEnabled, float64 threshold), (override));
   MOCK_METHOD(int32, MarkerCfgReferenceMarker, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referenceMarker), (override));
+  MOCK_METHOD(int32, MarkerCfgTargetValue, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 targetValue), (override));
   MOCK_METHOD(int32, MarkerCfgType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType), (override));
   MOCK_METHOD(int32, MarkerCfgX, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerX), (override));
   MOCK_METHOD(int32, MarkerCfgY, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 markerY1, float64 markerY2), (override));
