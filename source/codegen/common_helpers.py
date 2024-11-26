@@ -3,7 +3,7 @@
 import os
 import re
 from collections import defaultdict, namedtuple
-from typing import Any, Dict, List, NamedTuple, Optional
+from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 
 _NIDEVICE_COMMON_MESSAGE_TYPES = (
     "nidevice_grpc.NIComplexNumber",
@@ -1247,7 +1247,7 @@ def get_data_moniker_response_message_type(begin_function_name: str) -> str:
     return f"{begin_function_name.replace('Begin', '')}StreamingResponse"
 
 
-def get_data_moniker_function_parameters(function: dict) -> tuple[List[dict], List[dict]]:
+def get_data_moniker_function_parameters(function: dict) -> Tuple[List[dict], List[dict]]:
     """Return moniker function parameters split into input/output.
 
     Input expected is equivalent non-streaming function.
