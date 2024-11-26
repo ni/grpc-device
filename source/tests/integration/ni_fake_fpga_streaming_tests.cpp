@@ -133,8 +133,8 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_scalar)
   for (int i = 0; i < 5; i++)
   {
     // Read data
-    nifpga_grpc::I32Data read_value_i32;
-    nifpga_grpc::I64Data read_value_i64;
+    nifpga_grpc::ReadI32StreamingResponse read_value_i32;
+    nifpga_grpc::ReadI64StreamingResponse read_value_i64;
 
     ni::data_monikers::MonikerReadResponse read_result;
     stream->Read(&read_result);
@@ -181,18 +181,18 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_Array)
 
   for (int i = 0; i < 5; i++) {
     // Read data
-    nifpga_grpc::ArrayI32Data read_values_i32;
-    nifpga_grpc::ArrayI64Data read_values_i64;
+    nifpga_grpc::ReadArrayI32StreamingResponse read_values_i32;
+    nifpga_grpc::ReadArrayI64StreamingResponse read_values_i64;
 
     ni::data_monikers::MonikerReadResponse read_result;
     stream->Read(&read_result);
 
     read_result.data().values(0).UnpackTo(&read_values_i32);
     read_result.data().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i32.value(), SizeIs(10));
-    ASSERT_THAT(read_values_i32.value(), ElementsAreArray(data_int_i32));
-    ASSERT_THAT(read_values_i64.value(), SizeIs(9));
-    ASSERT_THAT(read_values_i64.value(), ElementsAreArray(data_int_i64));
+    ASSERT_THAT(read_values_i32.array(), SizeIs(10));
+    ASSERT_THAT(read_values_i32.array(), ElementsAreArray(data_int_i32));
+    ASSERT_THAT(read_values_i64.array(), SizeIs(9));
+    ASSERT_THAT(read_values_i64.array(), ElementsAreArray(data_int_i64));
   }
 
   moniker_context.TryCancel();
@@ -319,18 +319,18 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
 
     write_stream->Write(write_data_request);
 
-    nifpga_grpc::ArrayI32Data read_values_i32;
-    nifpga_grpc::ArrayI64Data read_values_i64;
+    nifpga_grpc::ReadArrayI32StreamingResponse read_values_i32;
+    nifpga_grpc::ReadArrayI64StreamingResponse read_values_i64;
 
     ni::data_monikers::MonikerReadResponse read_result;
     write_stream->Read(&read_result);
 
     read_result.data().values(0).UnpackTo(&read_values_i32);
     read_result.data().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i32.value(), SizeIs(read_size_i32));
-    ASSERT_THAT(read_values_i32.value(), ElementsAreArray(read_data_int32));
-    ASSERT_THAT(read_values_i64.value(), SizeIs(read_size_i64));
-    ASSERT_THAT(read_values_i64.value(), ElementsAreArray(read_data_int64));
+    ASSERT_THAT(read_values_i32.array(), SizeIs(read_size_i32));
+    ASSERT_THAT(read_values_i32.array(), ElementsAreArray(read_data_int32));
+    ASSERT_THAT(read_values_i64.array(), SizeIs(read_size_i64));
+    ASSERT_THAT(read_values_i64.array(), ElementsAreArray(read_data_int64));
   }
 
   write_stream->WritesDone();
@@ -405,18 +405,18 @@ TEST_F(NiFakeFpgaStreamingTests, DISABLED_SidebandStreamReadWrite_Array)
 
     WriteSidebandMessage(sideband_token, write_data_request);
 
-    nifpga_grpc::ArrayI32Data read_values_i32;
-    nifpga_grpc::ArrayI64Data read_values_i64;
+    nifpga_grpc::ReadArrayI32StreamingResponse read_values_i32;
+    nifpga_grpc::ReadArrayI64StreamingResponse read_values_i64;
 
     ni::data_monikers::SidebandReadResponse read_result;
     ReadSidebandMessage(sideband_token, &read_result);
 
     read_result.values().values(0).UnpackTo(&read_values_i32);
     read_result.values().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i32.value(), SizeIs(10));
-    ASSERT_THAT(read_values_i32.value(), ElementsAreArray(data_int32));
-    ASSERT_THAT(read_values_i64.value(), SizeIs(9));
-    ASSERT_THAT(read_values_i64.value(), ElementsAreArray(data_int64));
+    ASSERT_THAT(read_values_i32.array(), SizeIs(10));
+    ASSERT_THAT(read_values_i32.array(), ElementsAreArray(data_int32));
+    ASSERT_THAT(read_values_i64.array(), SizeIs(9));
+    ASSERT_THAT(read_values_i64.array(), ElementsAreArray(data_int64));
   }
 
   ni::data_monikers::SidebandWriteRequest cancel_request;
