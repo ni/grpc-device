@@ -1887,6 +1887,25 @@ mod_acc_fetch_df4avg_trace(const StubPtr& stub, const nidevice_grpc::Session& in
   return response;
 }
 
+ModAccFetchEVMPerSymbolTraceResponse
+mod_acc_fetch_evm_per_symbol_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchEVMPerSymbolTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchEVMPerSymbolTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchEVMPerSymbolTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchFrequencyErrorBRResponse
 mod_acc_fetch_frequency_error_br(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
