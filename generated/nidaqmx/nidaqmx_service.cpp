@@ -401,93 +401,8 @@ namespace nidaqmx_grpc {
      float64 timeout;
      int32 data_layout;
      bool32* reserved;
-     nidaqmx_grpc::MonikerWriteBinaryU32Request request;
-     nidaqmx_grpc::MonikerWriteBinaryU32Response response;
-     std::shared_ptr<NiDAQmxLibraryInterface> library;
-  };
-
-  struct MonikerWriteCtrFreqData
-  {
-     TaskHandle task;
-     int32 num_samps_per_chan;
-     bool32 auto_start;
-     float64 timeout;
-     int32 data_layout;
-     bool32* reserved;
-     nidaqmx_grpc::MonikerWriteCtrFreqRequest request;
-     nidaqmx_grpc::MonikerWriteCtrFreqResponse response;
-     std::shared_ptr<NiDAQmxLibraryInterface> library;
-  };
-
-  struct MonikerWriteCtrFreqScalarData
-  {
-     TaskHandle task;
-     bool32 auto_start;
-     float64 timeout;
-     bool32* reserved;
-     nidaqmx_grpc::MonikerWriteCtrFreqScalarRequest request;
-     nidaqmx_grpc::MonikerWriteCtrFreqScalarResponse response;
-     std::shared_ptr<NiDAQmxLibraryInterface> library;
-  };
-
-  struct MonikerWriteCtrTicksData
-  {
-     TaskHandle task;
-     int32 num_samps_per_chan;
-     bool32 auto_start;
-     float64 timeout;
-     int32 data_layout;
-     bool32* reserved;
-     nidaqmx_grpc::MonikerWriteCtrTicksRequest request;
-     nidaqmx_grpc::MonikerWriteCtrTicksResponse response;
-     std::shared_ptr<NiDAQmxLibraryInterface> library;
-  };
-
-  struct MonikerWriteCtrTicksScalarData
-  {
-     TaskHandle task;
-     bool32 auto_start;
-     float64 timeout;
-     bool32* reserved;
-     nidaqmx_grpc::MonikerWriteCtrTicksScalarRequest request;
-     nidaqmx_grpc::MonikerWriteCtrTicksScalarResponse response;
-     std::shared_ptr<NiDAQmxLibraryInterface> library;
-  };
-
-  struct MonikerWriteCtrTimeData
-  {
-     TaskHandle task;
-     int32 num_samps_per_chan;
-     bool32 auto_start;
-     float64 timeout;
-     int32 data_layout;
-     bool32* reserved;
-     nidaqmx_grpc::MonikerWriteCtrTimeRequest request;
-     nidaqmx_grpc::MonikerWriteCtrTimeResponse response;
-     std::shared_ptr<NiDAQmxLibraryInterface> library;
-  };
-
-  struct MonikerWriteCtrTimeScalarData
-  {
-     TaskHandle task;
-     bool32 auto_start;
-     float64 timeout;
-     bool32* reserved;
-     nidaqmx_grpc::MonikerWriteCtrTimeScalarRequest request;
-     nidaqmx_grpc::MonikerWriteCtrTimeScalarResponse response;
-     std::shared_ptr<NiDAQmxLibraryInterface> library;
-  };
-
-  struct MonikerWriteDigitalLinesData
-  {
-     TaskHandle task;
-     int32 num_samps_per_chan;
-     bool32 auto_start;
-     float64 timeout;
-     int32 data_layout;
-     bool32* reserved;
-     nidaqmx_grpc::MonikerWriteDigitalLinesRequest request;
-     nidaqmx_grpc::MonikerWriteDigitalLinesResponse response;
+     nidaqmx_grpc::WriteBinaryU32StreamingRequest request;
+     nidaqmx_grpc::WriteBinaryU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -523,33 +438,8 @@ namespace nidaqmx_grpc {
      float64 timeout;
      int32 data_layout;
      bool32* reserved;
-     nidaqmx_grpc::MonikerWriteDigitalU32Request request;
-     nidaqmx_grpc::MonikerWriteDigitalU32Response response;
-     std::shared_ptr<NiDAQmxLibraryInterface> library;
-  };
-
-  struct MonikerWriteDigitalU8Data
-  {
-     TaskHandle task;
-     int32 num_samps_per_chan;
-     bool32 auto_start;
-     float64 timeout;
-     int32 data_layout;
-     bool32* reserved;
-     nidaqmx_grpc::MonikerWriteDigitalU8Request request;
-     nidaqmx_grpc::MonikerWriteDigitalU8Response response;
-     std::shared_ptr<NiDAQmxLibraryInterface> library;
-  };
-
-  struct MonikerWriteRawData
-  {
-     TaskHandle task;
-     int32 num_samps;
-     bool32 auto_start;
-     float64 timeout;
-     bool32* reserved;
-     nidaqmx_grpc::MonikerWriteRawRequest request;
-     nidaqmx_grpc::MonikerWriteRawResponse response;
+     nidaqmx_grpc::WriteDigitalU32StreamingRequest request;
+     nidaqmx_grpc::WriteDigitalU32StreamingResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 

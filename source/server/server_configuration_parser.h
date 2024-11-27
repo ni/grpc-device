@@ -41,6 +41,7 @@ class ServerConfigurationParser {
   std::string parse_server_key() const;
   std::string parse_root_cert() const;
   int parse_max_message_size() const;
+  int parse_sideband_port() const;
   FeatureToggles parse_feature_toggles() const;
   FeatureToggles::CodeReadiness parse_code_readiness() const;
 
@@ -103,6 +104,7 @@ class ServerConfigurationParser {
   std::string parse_key_from_security_section(const char* key) const;
   std::string parse_bind_address() const;
   int parse_port() const;
+  int parse_port_with_key(const std::string& key) const;
 
   std::string config_file_path_;
   nlohmann::json config_file_;
