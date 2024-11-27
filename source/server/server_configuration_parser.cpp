@@ -18,6 +18,7 @@ static const char* kDefaultFilename = "server_config.json";
 static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
 static const char* kSidebandAddressJsonKey = "sideband_address";
+static const char* kSidebandPortJsonKey = "sideband_port";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
@@ -141,6 +142,11 @@ int ServerConfigurationParser::parse_max_message_size() const
   return UNLIMITED_MAX_MESSAGE_SIZE;
 }
 
+int ServerConfigurationParser::parse_sideband_port() const
+{
+  return parse_port_with_key(kSidebandPortJsonKey);
+}
+
 FeatureToggles ServerConfigurationParser::parse_feature_toggles() const
 {
   FeatureToggleConfigurationMap map;
@@ -254,9 +260,14 @@ std::string ServerConfigurationParser::parse_bind_address() const
 
 int ServerConfigurationParser::parse_port() const
 {
+  return parse_port_with_key(kPortJsonKey);
+}
+
+int ServerConfigurationParser::parse_port_with_key(const std::string& key) const
+{
   int parsed_port = -1;
 
-  auto it = config_file_.find(kPortJsonKey);
+  auto it = config_file_.find(key);
   if (it != config_file_.end()) {
     try {
       parsed_port = it->get<int>();
