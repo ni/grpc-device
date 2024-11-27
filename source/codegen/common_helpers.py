@@ -1236,7 +1236,7 @@ def get_data_moniker_request_message_type(begin_function_name: str) -> str:
 
     Input expected is Begin* streaming API name.
     """
-    return f"{begin_function_name.replace('Begin', '')}StreamingRequest"
+    return f"{begin_function_name.replace('Begin', 'Moniker')}Request"
 
 
 def get_data_moniker_response_message_type(begin_function_name: str) -> str:
@@ -1244,7 +1244,7 @@ def get_data_moniker_response_message_type(begin_function_name: str) -> str:
 
     Input expected is Begin* streaming API name.
     """
-    return f"{begin_function_name.replace('Begin', '')}StreamingResponse"
+    return f"{begin_function_name.replace('Begin', 'Moniker')}Response"
 
 
 def get_data_moniker_function_parameters(function: dict) -> Tuple[List[dict], List[dict]]:

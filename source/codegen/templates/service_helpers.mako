@@ -459,8 +459,13 @@ ${set_response_values(output_parameters=output_parameters, init_method=false)}\
   grpc_field_name = common_helpers.get_grpc_field_name(param)
   size_param_name = service_helpers.get_size_param_name(param)
 %>\
+% if common_helpers.is_string_arg(param):
+      data->response.mutable_${grpc_field_name}()->reserve(request->${size_param_name}());
+      data->response.mutable_${grpc_field_name}()->resize(request->${size_param_name}(), 0);
+% else:
       data->response.mutable_${grpc_field_name}()->Reserve(request->${size_param_name}());
       data->response.mutable_${grpc_field_name}()->Resize(request->${size_param_name}(), 0);
+% endif
 % endfor
 </%def>
 
