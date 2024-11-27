@@ -23,7 +23,6 @@ static const char* kInvalidFeatureToggleMessage = "Feature Toggles must be speci
 static const char* kInvalidCodeReadinessMessage = "code_readiness must be a string in [Release, RestrictedRelease, NextRelease, RestrictedNextRelease, Incomplete, Prototype].\n\n";
 static const char* kDefaultAddress = "[::]";
 constexpr int UNLIMITED_MAX_MESSAGE_SIZE = -1;
-constexpr int DEFAULT_SIDEBAND_PORT = 50055;
 
 class ServerConfigurationParser {
  public:
@@ -105,6 +104,7 @@ class ServerConfigurationParser {
   std::string parse_key_from_security_section(const char* key) const;
   std::string parse_bind_address() const;
   int parse_port() const;
+  int parse_port_with_key(const std::string& key) const;
 
   std::string config_file_path_;
   nlohmann::json config_file_;

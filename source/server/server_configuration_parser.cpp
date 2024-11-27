@@ -144,17 +144,7 @@ int ServerConfigurationParser::parse_max_message_size() const
 
 int ServerConfigurationParser::parse_sideband_port() const
 {
-  auto sideband_port = config_file_.find(kSidebandPortJsonKey);
-  if (sideband_port != config_file_.end()) {
-    try {
-      return sideband_port->get<int>();
-    }
-    catch (const nlohmann::json::type_error& ex) {
-      throw InvalidMaxMessageSizeException(ex.what());
-    }
-  }
-
-  return DEFAULT_SIDEBAND_PORT;
+  return parse_port_with_key(kSidebandPortJsonKey);
 }
 
 FeatureToggles ServerConfigurationParser::parse_feature_toggles() const
@@ -270,9 +260,14 @@ std::string ServerConfigurationParser::parse_bind_address() const
 
 int ServerConfigurationParser::parse_port() const
 {
+  return parse_port_with_key(kPortJsonKey);
+}
+
+int ServerConfigurationParser::parse_port_with_key(const std::string& key) const
+{
   int parsed_port = -1;
 
-  auto it = config_file_.find(kPortJsonKey);
+  auto it = config_file_.find(key);
   if (it != config_file_.end()) {
     try {
       parsed_port = it->get<int>();
