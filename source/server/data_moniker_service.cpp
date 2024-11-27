@@ -168,6 +168,7 @@ Status DataMonikerService::BeginSidebandStream(ServerContext* context, const Beg
 
   char identifier[32] = {};
   InitOwnerSidebandData(strategy, bufferSize, identifier);
+  std::string identifierString(identifier);
   
   response->set_strategy(request->strategy());
   response->set_sideband_identifier(identifier);
@@ -179,7 +180,7 @@ Status DataMonikerService::BeginSidebandStream(ServerContext* context, const Beg
   auto readers = new EndpointList();
   InitiateMonikerList(request->monikers(), readers, writers);
 
-  auto thread = new std::thread(RunSidebandReadWriteLoop, identifier, strategy, readers, writers);
+  auto thread = new std::thread(RunSidebandReadWriteLoop, identifierString, strategy, readers, writers);
   thread->detach();
 
   return Status::OK;
