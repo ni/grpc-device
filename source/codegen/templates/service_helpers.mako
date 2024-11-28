@@ -323,7 +323,8 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 ${initialize_moniker_input_parameters(moniker_input_parameters)}\
 ${initialize_output_params(output_parameters)}\
     % if streaming_param and streaming_param['direction'] == 'in':
-${streaming_handle_in_direction(functions, function_name)}\
+    auto request = &function_data->request;
+${streaming_handle_in_direction(request, functions, function_name)}\
     % endif
 
     auto status = library->${non_streaming_function_name}(${arg_string});
@@ -349,14 +350,14 @@ ${initialize_moniker_struct(struct_name, moniker_input_parameters, output_parame
       return ::grpc::Status::OK;\
 </%def>
 
-<%def name="streaming_handle_in_direction(functions, begin_function_name)">
+<%def name="streaming_handle_in_direction(request, functions, begin_function_name)">
 <%
   request_message_type = common_helpers.get_data_moniker_request_message_type(begin_function_name)
   non_streaming_function_name = begin_function_name.replace("Begin", "")
   input_parameters, output_parameters = common_helpers.get_data_moniker_function_parameters(functions[non_streaming_function_name])
   common_helpers.extend_input_params_with_size_params(input_parameters, functions[non_streaming_function_name])\
 %>\
-    ${request_message_type}* request;
+    ##${request_message_type}* request;
     packedData.UnpackTo(request);
 ${initialize_input_params(non_streaming_function_name, input_parameters)}\
 </%def>

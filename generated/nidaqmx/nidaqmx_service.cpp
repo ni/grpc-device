@@ -1491,8 +1491,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteAnalogF64Request* request;
     packedData.UnpackTo(request);
       auto write_array = const_cast<const float64*>(request->write_array().data());
 
@@ -1514,8 +1514,8 @@ namespace nidaqmx_grpc {
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
+    auto request = &function_data->request;
 
-    MonikerWriteAnalogScalarF64Request* request;
     packedData.UnpackTo(request);
       float64 value = request->value();
 
@@ -1540,8 +1540,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteBinaryI16Request* request;
     packedData.UnpackTo(request);
       auto write_array_raw = request->write_array();
       auto write_array = std::vector<int16>();
@@ -1583,8 +1583,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteBinaryI32Request* request;
     packedData.UnpackTo(request);
       auto write_array = reinterpret_cast<const int32*>(request->write_array().data());
 
@@ -1609,8 +1609,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteBinaryU16Request* request;
     packedData.UnpackTo(request);
       auto write_array_raw = request->write_array();
       auto write_array = std::vector<uInt16>();
@@ -1652,8 +1652,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteBinaryU32Request* request;
     packedData.UnpackTo(request);
       auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
 
@@ -1678,8 +1678,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 num_samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteCtrFreqRequest* request;
     packedData.UnpackTo(request);
       auto frequency = const_cast<const float64*>(request->frequency().data());
       auto duty_cycle = const_cast<const float64*>(request->duty_cycle().data());
@@ -1702,8 +1702,8 @@ namespace nidaqmx_grpc {
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
+    auto request = &function_data->request;
 
-    MonikerWriteCtrFreqScalarRequest* request;
     packedData.UnpackTo(request);
       float64 frequency = request->frequency();
       float64 duty_cycle = request->duty_cycle();
@@ -1729,8 +1729,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 num_samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteCtrTicksRequest* request;
     packedData.UnpackTo(request);
       auto high_ticks = reinterpret_cast<const uInt32*>(request->high_ticks().data());
       auto low_ticks = reinterpret_cast<const uInt32*>(request->low_ticks().data());
@@ -1753,8 +1753,8 @@ namespace nidaqmx_grpc {
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
+    auto request = &function_data->request;
 
-    MonikerWriteCtrTicksScalarRequest* request;
     packedData.UnpackTo(request);
       uInt32 high_ticks = request->high_ticks();
       uInt32 low_ticks = request->low_ticks();
@@ -1780,8 +1780,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 num_samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteCtrTimeRequest* request;
     packedData.UnpackTo(request);
       auto high_time = const_cast<const float64*>(request->high_time().data());
       auto low_time = const_cast<const float64*>(request->low_time().data());
@@ -1804,8 +1804,8 @@ namespace nidaqmx_grpc {
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
+    auto request = &function_data->request;
 
-    MonikerWriteCtrTimeScalarRequest* request;
     packedData.UnpackTo(request);
       float64 high_time = request->high_time();
       float64 low_time = request->low_time();
@@ -1831,8 +1831,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteDigitalLinesRequest* request;
     packedData.UnpackTo(request);
       const uInt8* write_array = (const uInt8*)request->write_array().c_str();
 
@@ -1854,8 +1854,8 @@ namespace nidaqmx_grpc {
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
+    auto request = &function_data->request;
 
-    MonikerWriteDigitalScalarU32Request* request;
     packedData.UnpackTo(request);
       uInt32 value = request->value();
 
@@ -1880,8 +1880,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteDigitalU16Request* request;
     packedData.UnpackTo(request);
       auto write_array_raw = request->write_array();
       auto write_array = std::vector<uInt16>();
@@ -1923,8 +1923,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteDigitalU32Request* request;
     packedData.UnpackTo(request);
       auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
 
@@ -1949,8 +1949,8 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteDigitalU8Request* request;
     packedData.UnpackTo(request);
       const uInt8* write_array = (const uInt8*)request->write_array().c_str();
 
@@ -1974,8 +1974,8 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    MonikerWriteRawRequest* request;
     packedData.UnpackTo(request);
       const uInt8* write_array = (const uInt8*)request->write_array().c_str();
 

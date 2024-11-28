@@ -1053,8 +1053,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayBoolRequest* request;
     packedData.UnpackTo(request);
       auto array = convert_from_grpc<NiFpga_Bool>(request->array());
       size_t size = static_cast<size_t>(request->array().size());
@@ -1075,8 +1075,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayDblRequest* request;
     packedData.UnpackTo(request);
       auto array = const_cast<double*>(request->array().data());
       size_t size = static_cast<size_t>(request->array().size());
@@ -1097,8 +1097,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayI16Request* request;
     packedData.UnpackTo(request);
       auto array_raw = request->array();
       auto array = std::vector<int16_t>();
@@ -1136,8 +1136,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayI32Request* request;
     packedData.UnpackTo(request);
       auto array = const_cast<int32_t*>(request->array().data());
       size_t size = static_cast<size_t>(request->array().size());
@@ -1158,8 +1158,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayI64Request* request;
     packedData.UnpackTo(request);
       auto array = const_cast<int64_t*>(request->array().data());
       size_t size = static_cast<size_t>(request->array().size());
@@ -1180,8 +1180,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayI8Request* request;
     packedData.UnpackTo(request);
       auto array_raw = request->array();
       auto array = std::vector<int8_t>();
@@ -1219,8 +1219,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArraySglRequest* request;
     packedData.UnpackTo(request);
       auto array = const_cast<float*>(request->array().data());
       size_t size = static_cast<size_t>(request->array().size());
@@ -1241,8 +1241,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayU16Request* request;
     packedData.UnpackTo(request);
       auto array_raw = request->array();
       auto array = std::vector<uint16_t>();
@@ -1280,8 +1280,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayU32Request* request;
     packedData.UnpackTo(request);
       auto array = const_cast<uint32_t*>(request->array().data());
       size_t size = static_cast<size_t>(request->array().size());
@@ -1302,8 +1302,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayU64Request* request;
     packedData.UnpackTo(request);
       auto array = const_cast<uint64_t*>(request->array().data());
       size_t size = static_cast<size_t>(request->array().size());
@@ -1324,8 +1324,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteArrayU8Request* request;
     packedData.UnpackTo(request);
       auto array_raw = request->array();
       auto array = std::vector<uint8_t>();
@@ -1363,8 +1363,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteBoolRequest* request;
     packedData.UnpackTo(request);
       NiFpga_Bool value = request->value();
 
@@ -1384,8 +1384,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteDblRequest* request;
     packedData.UnpackTo(request);
       double value = request->value();
 
@@ -1405,8 +1405,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteI16Request* request;
     packedData.UnpackTo(request);
       auto value_raw = request->value();
       if (value_raw < std::numeric_limits<int16_t>::min() || value_raw > std::numeric_limits<int16_t>::max()) {
@@ -1435,8 +1435,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteI32Request* request;
     packedData.UnpackTo(request);
       int32_t value = request->value();
 
@@ -1456,8 +1456,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteI64Request* request;
     packedData.UnpackTo(request);
       int64_t value = request->value();
 
@@ -1477,8 +1477,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteI8Request* request;
     packedData.UnpackTo(request);
       auto value_raw = request->value();
       if (value_raw < std::numeric_limits<int8_t>::min() || value_raw > std::numeric_limits<int8_t>::max()) {
@@ -1507,8 +1507,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteSglRequest* request;
     packedData.UnpackTo(request);
       float value = request->value();
 
@@ -1528,8 +1528,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteU16Request* request;
     packedData.UnpackTo(request);
       auto value_raw = request->value();
       if (value_raw < std::numeric_limits<uint16_t>::min() || value_raw > std::numeric_limits<uint16_t>::max()) {
@@ -1558,8 +1558,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteU32Request* request;
     packedData.UnpackTo(request);
       uint32_t value = request->value();
 
@@ -1579,8 +1579,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteU64Request* request;
     packedData.UnpackTo(request);
       uint64_t value = request->value();
 
@@ -1600,8 +1600,8 @@ namespace nifpga_grpc {
     auto response = &function_data->response;
     auto session = function_data->session;
     auto control = function_data->control;
+    auto request = &function_data->request;
 
-    MonikerWriteU8Request* request;
     packedData.UnpackTo(request);
       auto value_raw = request->value();
       if (value_raw < std::numeric_limits<uint8_t>::min() || value_raw > std::numeric_limits<uint8_t>::max()) {
