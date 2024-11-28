@@ -1,20 +1,21 @@
-#include <gtest/gtest.h>
-#include "../generated/nifpga/nifpga_client.h"
-#include <nifpga.grpc.pb.h>
-#include <google/protobuf/stubs/port.h>
-#include <grpcpp/server_builder.h>
-#include <grpcpp/client_context.h>
-#include <register_all_services.h>
-#include <NiFpga.h>
-#include <server/session_resource_repository.h>
 #include <../generated/nifpga/nifpga_mock_library.h>
-#include <nifpga/nifpga_service.h>
-#include <server/data_moniker_service.h>
-#include <sideband_grpc.h>
-#include <nifpga.pb.h>
-#include <nifpga.grpc.pb.h>
+#include <NiFpga.h>
 #include <gmock/gmock-spec-builders.h>
+#include <google/protobuf/stubs/port.h>
+#include <grpcpp/client_context.h>
+#include <grpcpp/server_builder.h>
+#include <gtest/gtest.h>
+#include <nifpga.grpc.pb.h>
+#include <nifpga.pb.h>
+#include <nifpga/nifpga_service.h>
+#include <register_all_services.h>
+#include <server/data_moniker_service.h>
+#include <server/session_resource_repository.h>
+#include <sideband_grpc.h>
+
 #include <thread>
+
+#include "../generated/nifpga/nifpga_client.h"
 
 namespace ni {
 namespace tests {
@@ -42,22 +43,22 @@ class NiFakeFpgaStreamingTests : public ::testing::Test {
   std::atomic<bool> shutdown_{false};
 
  public:
-    NiFakeFpgaStreamingTests()
-    {
-        session_repository_ = std::make_shared<nidevice_grpc::SessionRepository>();
-        library_ = std::make_shared<ni::tests::unit::NiFpgaMockLibrary>();
-        auto ni_fpga_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<NiFpga_Session>>(session_repository_);
-        fpgaService_ = std::make_shared<nifpga_grpc::NiFpgaService>(library_, ni_fpga_session_repository, FeatureToggles({}, CodeReadiness::kNextRelease));
-        moniker_service_ = std::make_shared<ni::data_monikers::DataMonikerService>();
-        server_ = start_server();
-        nifpga_grpc::RegisterMonikerEndpoints();
-        stub_ = nifpga_grpc::NiFpga::NewStub(server_->InProcessChannel(::grpc::ChannelArguments()));
-        moniker_service_stub_ = ni::data_monikers::DataMoniker::NewStub(server_->InProcessChannel(::grpc::ChannelArguments()));
-        Mock::AllowLeak(library_.get());
+  NiFakeFpgaStreamingTests()
+  {
+    session_repository_ = std::make_shared<nidevice_grpc::SessionRepository>();
+    library_ = std::make_shared<ni::tests::unit::NiFpgaMockLibrary>();
+    auto ni_fpga_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<NiFpga_Session>>(session_repository_);
+    fpgaService_ = std::make_shared<nifpga_grpc::NiFpgaService>(library_, ni_fpga_session_repository, FeatureToggles({}, CodeReadiness::kNextRelease));
+    moniker_service_ = std::make_shared<ni::data_monikers::DataMonikerService>();
+    server_ = start_server();
+    nifpga_grpc::RegisterMonikerEndpoints();
+    stub_ = nifpga_grpc::NiFpga::NewStub(server_->InProcessChannel(::grpc::ChannelArguments()));
+    moniker_service_stub_ = ni::data_monikers::DataMoniker::NewStub(server_->InProcessChannel(::grpc::ChannelArguments()));
+    Mock::AllowLeak(library_.get());
 
-        // TODO: Implement sideband socket thread when we could support testing sideband streaming inprocess
-        // sideband_socket_thread_ = new std::thread(RunSidebandSocketsAccept, "localhost", 50055);
-    }
+    // TODO: Implement sideband socket thread when we could support testing sideband streaming inprocess
+    // sideband_socket_thread_ = new std::thread(RunSidebandSocketsAccept, "localhost", 50055);
+  }
 
   virtual ~NiFakeFpgaStreamingTests()
   {
@@ -86,7 +87,6 @@ class NiFakeFpgaStreamingTests : public ::testing::Test {
   {
     return library_;
   }
-
 
   std::unique_ptr<::grpc::Server> start_server()
   {
@@ -130,11 +130,10 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_scalar)
 
   auto stream = moniker_stub().get()->StreamRead(&moniker_context, read_requests);
 
-  for (int i = 0; i < 5; i++)
-  {
+  for (int i = 0; i < 5; i++) {
     // Read data
-    nifpga_grpc::I32Data read_value_i32;
-    nifpga_grpc::I64Data read_value_i64;
+    nifpga_grpc::MonikerReadI32Response read_value_i32;
+    nifpga_grpc::MonikerReadI64Response read_value_i64;
 
     ni::data_monikers::MonikerReadResponse read_result;
     stream->Read(&read_result);
@@ -171,7 +170,6 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_Array)
   auto begin_read_i64_response = nifpga_grpc::experimental::client::begin_read_array_i64(stub(), *session, 0, 9);
   auto read_moniker_i64 = new ni::data_monikers::Moniker(begin_read_i64_response.moniker());
 
-
   grpc::ClientContext moniker_context;
   ni::data_monikers::MonikerList read_requests;
   read_requests.mutable_read_monikers()->AddAllocated(read_moniker_i32);
@@ -181,25 +179,25 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_Array)
 
   for (int i = 0; i < 5; i++) {
     // Read data
-    nifpga_grpc::ArrayI32Data read_values_i32;
-    nifpga_grpc::ArrayI64Data read_values_i64;
+    nifpga_grpc::MonikerReadArrayI32Response read_values_i32;
+    nifpga_grpc::MonikerReadArrayI64Response read_values_i64;
 
     ni::data_monikers::MonikerReadResponse read_result;
     stream->Read(&read_result);
 
     read_result.data().values(0).UnpackTo(&read_values_i32);
     read_result.data().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i32.value(), SizeIs(10));
-    ASSERT_THAT(read_values_i32.value(), ElementsAreArray(data_int_i32));
-    ASSERT_THAT(read_values_i64.value(), SizeIs(9));
-    ASSERT_THAT(read_values_i64.value(), ElementsAreArray(data_int_i64));
+    ASSERT_THAT(read_values_i32.array(), SizeIs(10));
+    ASSERT_THAT(read_values_i32.array(), ElementsAreArray(data_int_i32));
+    ASSERT_THAT(read_values_i64.array(), SizeIs(9));
+    ASSERT_THAT(read_values_i64.array(), ElementsAreArray(data_int_i64));
   }
 
   moniker_context.TryCancel();
 }
 
 TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
-{   
+{
   // create some setup for writing
   auto session = std::make_unique<nidevice_grpc::Session>();
   std::vector<pb::int32> data_int_i32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
@@ -227,7 +225,6 @@ TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
   write_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(write_moniker_i32);
   write_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(write_moniker_i64);
 
-
   auto write_stream = moniker_stub().get()->StreamWrite(&moniker_context);
   write_stream->Write(write_request);
 
@@ -244,7 +241,6 @@ TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
     write_data_request.mutable_data()->add_values()->PackFrom(write_values_array_i64);
 
     write_stream->Write(write_data_request);
- 
   }
 
   write_stream->WritesDone();
@@ -264,7 +260,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
 
   // Set expectation on the mocked fpga lib method.
   EXPECT_CALL(*library(), WriteArrayI32(_, control, _, write_size_i32))
-      .With(Args<2,3>(ElementsAreArray(write_data_int32)))
+      .With(Args<2, 3>(ElementsAreArray(write_data_int32)))
       .WillRepeatedly(::testing::Return(0));
   EXPECT_CALL(*library(), WriteArrayI64(_, control, _, write_size_i64))
       .With(Args<2, 3>(ElementsAreArray(write_data_int64)))
@@ -288,7 +284,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
   auto begin_write_i64_response = nifpga_grpc::experimental::client::begin_write_array_i64(stub(), *session, control);
   auto write_moniker_i64 = new ni::data_monikers::Moniker(begin_write_i64_response.moniker());
 
-    // Dont worry about deleting read_moniker_i32 and read_moniker_i64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
+  // Dont worry about deleting read_moniker_i32 and read_moniker_i64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
   auto begin_read_i32_array__response = nifpga_grpc::experimental::client::begin_read_array_i32(stub(), *session, 0, read_data_int32.size());
   auto read_moniker_i32 = new ni::data_monikers::Moniker(begin_read_i32_array__response.moniker());
   auto begin_read_i64_response = nifpga_grpc::experimental::client::begin_read_array_i64(stub(), *session, 0, read_data_int64.size());
@@ -300,7 +296,6 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
   write_request.mutable_monikers()->mutable_read_monikers()->AddAllocated(read_moniker_i64);
   write_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(write_moniker_i32);
   write_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(write_moniker_i64);
-
 
   auto write_stream = moniker_stub().get()->StreamReadWrite(&moniker_context);
   write_stream->Write(write_request);
@@ -319,18 +314,18 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
 
     write_stream->Write(write_data_request);
 
-    nifpga_grpc::ArrayI32Data read_values_i32;
-    nifpga_grpc::ArrayI64Data read_values_i64;
+    nifpga_grpc::MonikerReadArrayI32Response read_values_i32;
+    nifpga_grpc::MonikerReadArrayI64Response read_values_i64;
 
     ni::data_monikers::MonikerReadResponse read_result;
     write_stream->Read(&read_result);
 
     read_result.data().values(0).UnpackTo(&read_values_i32);
     read_result.data().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i32.value(), SizeIs(read_size_i32));
-    ASSERT_THAT(read_values_i32.value(), ElementsAreArray(read_data_int32));
-    ASSERT_THAT(read_values_i64.value(), SizeIs(read_size_i64));
-    ASSERT_THAT(read_values_i64.value(), ElementsAreArray(read_data_int64));
+    ASSERT_THAT(read_values_i32.array(), SizeIs(read_size_i32));
+    ASSERT_THAT(read_values_i32.array(), ElementsAreArray(read_data_int32));
+    ASSERT_THAT(read_values_i64.array(), SizeIs(read_size_i64));
+    ASSERT_THAT(read_values_i64.array(), ElementsAreArray(read_data_int64));
   }
 
   write_stream->WritesDone();
@@ -405,18 +400,18 @@ TEST_F(NiFakeFpgaStreamingTests, DISABLED_SidebandStreamReadWrite_Array)
 
     WriteSidebandMessage(sideband_token, write_data_request);
 
-    nifpga_grpc::ArrayI32Data read_values_i32;
-    nifpga_grpc::ArrayI64Data read_values_i64;
+    nifpga_grpc::MonikerReadArrayI32Response read_values_i32;
+    nifpga_grpc::MonikerReadArrayI64Response read_values_i64;
 
     ni::data_monikers::SidebandReadResponse read_result;
     ReadSidebandMessage(sideband_token, &read_result);
 
     read_result.values().values(0).UnpackTo(&read_values_i32);
     read_result.values().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i32.value(), SizeIs(10));
-    ASSERT_THAT(read_values_i32.value(), ElementsAreArray(data_int32));
-    ASSERT_THAT(read_values_i64.value(), SizeIs(9));
-    ASSERT_THAT(read_values_i64.value(), ElementsAreArray(data_int64));
+    ASSERT_THAT(read_values_i32.array(), SizeIs(10));
+    ASSERT_THAT(read_values_i32.array(), ElementsAreArray(data_int32));
+    ASSERT_THAT(read_values_i64.array(), SizeIs(9));
+    ASSERT_THAT(read_values_i64.array(), ElementsAreArray(data_int64));
   }
 
   ni::data_monikers::SidebandWriteRequest cancel_request;

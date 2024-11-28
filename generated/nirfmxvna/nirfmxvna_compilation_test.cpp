@@ -427,6 +427,16 @@ int32 CalkitManagerCalkitGetDescription(niRFmxInstrHandle instrumentHandle, char
   return RFmxVNA_CalkitManagerCalkitGetDescription(instrumentHandle, selectorString, arraySize, calkitDescription);
 }
 
+int32 CalkitManagerCalkitGetLRLLineAutoChar(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* autoCharacterizationEnabled)
+{
+  return RFmxVNA_CalkitManagerCalkitGetLRLLineAutoChar(instrumentHandle, selectorString, autoCharacterizationEnabled);
+}
+
+int32 CalkitManagerCalkitGetTRLReferencePlane(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* referencePlane)
+{
+  return RFmxVNA_CalkitManagerCalkitGetTRLReferencePlane(instrumentHandle, selectorString, referencePlane);
+}
+
 int32 CalkitManagerCalkitGetVersion(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitVersion[])
 {
   return RFmxVNA_CalkitManagerCalkitGetVersion(instrumentHandle, selectorString, arraySize, calkitVersion);
@@ -445,6 +455,16 @@ int32 CalkitManagerCalkitRemoveConnector(niRFmxInstrHandle instrumentHandle, cha
 int32 CalkitManagerCalkitSetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitDescription[])
 {
   return RFmxVNA_CalkitManagerCalkitSetDescription(instrumentHandle, selectorString, calkitDescription);
+}
+
+int32 CalkitManagerCalkitSetLRLLineAutoChar(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 autoCharacterizationEnabled)
+{
+  return RFmxVNA_CalkitManagerCalkitSetLRLLineAutoChar(instrumentHandle, selectorString, autoCharacterizationEnabled);
+}
+
+int32 CalkitManagerCalkitSetTRLReferencePlane(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referencePlane)
+{
+  return RFmxVNA_CalkitManagerCalkitSetTRLReferencePlane(instrumentHandle, selectorString, referencePlane);
 }
 
 int32 CalkitManagerCalkitSetVersion(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitVersion[])
@@ -767,6 +787,11 @@ int32 MarkerCfgDataSource(niRFmxInstrHandle instrumentHandle, char selectorStrin
   return RFmxVNA_MarkerCfgDataSource(instrumentHandle, selectorString, dataSource);
 }
 
+int32 MarkerCfgMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerMode)
+{
+  return RFmxVNA_MarkerCfgMode(instrumentHandle, selectorString, markerMode);
+}
+
 int32 MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers)
 {
   return RFmxVNA_MarkerCfgNumberOfMarkers(instrumentHandle, selectorString, numberOfMarkers);
@@ -785,6 +810,11 @@ int32 MarkerCfgPeakSearchThreshold(niRFmxInstrHandle instrumentHandle, char sele
 int32 MarkerCfgReferenceMarker(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referenceMarker)
 {
   return RFmxVNA_MarkerCfgReferenceMarker(instrumentHandle, selectorString, referenceMarker);
+}
+
+int32 MarkerCfgTargetValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 targetValue)
+{
+  return RFmxVNA_MarkerCfgTargetValue(instrumentHandle, selectorString, targetValue);
 }
 
 int32 MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType)

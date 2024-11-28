@@ -36,6 +36,7 @@ struct ServerConfiguration {
   std::string server_key;
   std::string root_cert;
   int max_message_size;
+  int sideband_port;
   nidevice_grpc::FeatureToggles feature_toggles;
 };
 
@@ -50,6 +51,7 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
     config.config_file_path = server_config_parser.get_config_file_path();
     config.server_address = server_config_parser.parse_address();
     config.sideband_address = server_config_parser.parse_sideband_address();
+    config.sideband_port = server_config_parser.parse_sideband_port();
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
     config.root_cert = server_config_parser.parse_root_cert();
@@ -113,7 +115,7 @@ static void RunServer(const ServerConfiguration& config)
     }
     server = builder.BuildAndStart();
     if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
-      sideband_manager.start_sideband_threads(config.sideband_address.c_str(), 50055);
+      sideband_manager.start_sideband_threads(config.sideband_address.c_str(), config.sideband_port);
     }
   }
 

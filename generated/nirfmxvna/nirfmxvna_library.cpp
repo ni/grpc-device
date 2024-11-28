@@ -111,10 +111,14 @@ NiRFmxVNALibrary::NiRFmxVNALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.CalkitManagerCalkitGetCalibrationElementIDs = reinterpret_cast<CalkitManagerCalkitGetCalibrationElementIDsPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetCalibrationElementIDs"));
   function_pointers_.CalkitManagerCalkitGetConnectorIDs = reinterpret_cast<CalkitManagerCalkitGetConnectorIDsPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetConnectorIDs"));
   function_pointers_.CalkitManagerCalkitGetDescription = reinterpret_cast<CalkitManagerCalkitGetDescriptionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetDescription"));
+  function_pointers_.CalkitManagerCalkitGetLRLLineAutoChar = reinterpret_cast<CalkitManagerCalkitGetLRLLineAutoCharPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetLRLLineAutoChar"));
+  function_pointers_.CalkitManagerCalkitGetTRLReferencePlane = reinterpret_cast<CalkitManagerCalkitGetTRLReferencePlanePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetTRLReferencePlane"));
   function_pointers_.CalkitManagerCalkitGetVersion = reinterpret_cast<CalkitManagerCalkitGetVersionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitGetVersion"));
   function_pointers_.CalkitManagerCalkitRemoveCalibrationElement = reinterpret_cast<CalkitManagerCalkitRemoveCalibrationElementPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitRemoveCalibrationElement"));
   function_pointers_.CalkitManagerCalkitRemoveConnector = reinterpret_cast<CalkitManagerCalkitRemoveConnectorPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitRemoveConnector"));
   function_pointers_.CalkitManagerCalkitSetDescription = reinterpret_cast<CalkitManagerCalkitSetDescriptionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitSetDescription"));
+  function_pointers_.CalkitManagerCalkitSetLRLLineAutoChar = reinterpret_cast<CalkitManagerCalkitSetLRLLineAutoCharPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitSetLRLLineAutoChar"));
+  function_pointers_.CalkitManagerCalkitSetTRLReferencePlane = reinterpret_cast<CalkitManagerCalkitSetTRLReferencePlanePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitSetTRLReferencePlane"));
   function_pointers_.CalkitManagerCalkitSetVersion = reinterpret_cast<CalkitManagerCalkitSetVersionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitSetVersion"));
   function_pointers_.CalkitManagerCreateCalkit = reinterpret_cast<CalkitManagerCreateCalkitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCreateCalkit"));
   function_pointers_.CalkitManagerExportCalkit = reinterpret_cast<CalkitManagerExportCalkitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerExportCalkit"));
@@ -179,10 +183,12 @@ NiRFmxVNALibrary::NiRFmxVNALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("RFmxVNA_Initiate"));
   function_pointers_.LoadDataToMeasurementMemoryFromFile = reinterpret_cast<LoadDataToMeasurementMemoryFromFilePtr>(shared_library_->get_function_pointer("RFmxVNA_LoadDataToMeasurementMemoryFromFile"));
   function_pointers_.MarkerCfgDataSource = reinterpret_cast<MarkerCfgDataSourcePtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgDataSource"));
+  function_pointers_.MarkerCfgMode = reinterpret_cast<MarkerCfgModePtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgMode"));
   function_pointers_.MarkerCfgNumberOfMarkers = reinterpret_cast<MarkerCfgNumberOfMarkersPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgNumberOfMarkers"));
   function_pointers_.MarkerCfgPeakSearchExcursion = reinterpret_cast<MarkerCfgPeakSearchExcursionPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgPeakSearchExcursion"));
   function_pointers_.MarkerCfgPeakSearchThreshold = reinterpret_cast<MarkerCfgPeakSearchThresholdPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgPeakSearchThreshold"));
   function_pointers_.MarkerCfgReferenceMarker = reinterpret_cast<MarkerCfgReferenceMarkerPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgReferenceMarker"));
+  function_pointers_.MarkerCfgTargetValue = reinterpret_cast<MarkerCfgTargetValuePtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgTargetValue"));
   function_pointers_.MarkerCfgType = reinterpret_cast<MarkerCfgTypePtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgType"));
   function_pointers_.MarkerCfgX = reinterpret_cast<MarkerCfgXPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgX"));
   function_pointers_.MarkerCfgY = reinterpret_cast<MarkerCfgYPtr>(shared_library_->get_function_pointer("RFmxVNA_MarkerCfgY"));
@@ -910,6 +916,22 @@ int32 NiRFmxVNALibrary::CalkitManagerCalkitGetDescription(niRFmxInstrHandle inst
   return function_pointers_.CalkitManagerCalkitGetDescription(instrumentHandle, selectorString, arraySize, calkitDescription);
 }
 
+int32 NiRFmxVNALibrary::CalkitManagerCalkitGetLRLLineAutoChar(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* autoCharacterizationEnabled)
+{
+  if (!function_pointers_.CalkitManagerCalkitGetLRLLineAutoChar) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitGetLRLLineAutoChar.");
+  }
+  return function_pointers_.CalkitManagerCalkitGetLRLLineAutoChar(instrumentHandle, selectorString, autoCharacterizationEnabled);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitGetTRLReferencePlane(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* referencePlane)
+{
+  if (!function_pointers_.CalkitManagerCalkitGetTRLReferencePlane) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitGetTRLReferencePlane.");
+  }
+  return function_pointers_.CalkitManagerCalkitGetTRLReferencePlane(instrumentHandle, selectorString, referencePlane);
+}
+
 int32 NiRFmxVNALibrary::CalkitManagerCalkitGetVersion(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char calkitVersion[])
 {
   if (!function_pointers_.CalkitManagerCalkitGetVersion) {
@@ -940,6 +962,22 @@ int32 NiRFmxVNALibrary::CalkitManagerCalkitSetDescription(niRFmxInstrHandle inst
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitSetDescription.");
   }
   return function_pointers_.CalkitManagerCalkitSetDescription(instrumentHandle, selectorString, calkitDescription);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitSetLRLLineAutoChar(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 autoCharacterizationEnabled)
+{
+  if (!function_pointers_.CalkitManagerCalkitSetLRLLineAutoChar) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitSetLRLLineAutoChar.");
+  }
+  return function_pointers_.CalkitManagerCalkitSetLRLLineAutoChar(instrumentHandle, selectorString, autoCharacterizationEnabled);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitSetTRLReferencePlane(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 referencePlane)
+{
+  if (!function_pointers_.CalkitManagerCalkitSetTRLReferencePlane) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitSetTRLReferencePlane.");
+  }
+  return function_pointers_.CalkitManagerCalkitSetTRLReferencePlane(instrumentHandle, selectorString, referencePlane);
 }
 
 int32 NiRFmxVNALibrary::CalkitManagerCalkitSetVersion(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitVersion[])
@@ -1454,6 +1492,14 @@ int32 NiRFmxVNALibrary::MarkerCfgDataSource(niRFmxInstrHandle instrumentHandle, 
   return function_pointers_.MarkerCfgDataSource(instrumentHandle, selectorString, dataSource);
 }
 
+int32 NiRFmxVNALibrary::MarkerCfgMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerMode)
+{
+  if (!function_pointers_.MarkerCfgMode) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgMode.");
+  }
+  return function_pointers_.MarkerCfgMode(instrumentHandle, selectorString, markerMode);
+}
+
 int32 NiRFmxVNALibrary::MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers)
 {
   if (!function_pointers_.MarkerCfgNumberOfMarkers) {
@@ -1484,6 +1530,14 @@ int32 NiRFmxVNALibrary::MarkerCfgReferenceMarker(niRFmxInstrHandle instrumentHan
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgReferenceMarker.");
   }
   return function_pointers_.MarkerCfgReferenceMarker(instrumentHandle, selectorString, referenceMarker);
+}
+
+int32 NiRFmxVNALibrary::MarkerCfgTargetValue(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 targetValue)
+{
+  if (!function_pointers_.MarkerCfgTargetValue) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_MarkerCfgTargetValue.");
+  }
+  return function_pointers_.MarkerCfgTargetValue(instrumentHandle, selectorString, targetValue);
 }
 
 int32 NiRFmxVNALibrary::MarkerCfgType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerType)

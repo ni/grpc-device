@@ -2,6 +2,7 @@
     "address": "[::1]",
     "port": 31763,
     "sideband_address": "[::1]",
+    "sideband_port": 50055,
     "security" : {
        "server_cert": "",
        "server_key": "",

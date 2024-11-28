@@ -60,6 +60,14 @@ enums = {
             {
                 'name': 'NS_29',
                 'value': 2
+            },
+            {
+                'name': 'STANDARD_REL_16',
+                'value': 3
+            },
+            {
+                'name': 'STANDARD_REL_18',
+                'value': 4
             }
         ]
     },

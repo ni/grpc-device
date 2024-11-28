@@ -26,7 +26,7 @@
       add_session_snippet = f'add_session(grpc_device_session_name, init_lambda, cleanup_lambda, {session_behavior_param_name}, &{session_initialized_param_name})'
 %>\
 ${initialize_input_params(function_name, parameters)}
-${initialize_output_params(output_parameters_to_initialize)}\
+${initialize_output_params(output_parameters_to_initialize, indent_level=1)}\
       auto init_lambda = [&] () {
 ## If the session is not returned, it's an output param and need to be declared before calling.
 % if not service_helpers.is_session_returned_from_function(parameters):
@@ -64,7 +64,7 @@ ${populate_response(function_data=function_data, parameters=parameters, init_met
   initiating_driver_c_name = f'{initiating_driver_input_var_name}_grpc_session'
 %>\
 ${initialize_input_params(function_name, parameters)}
-${initialize_output_params(output_parameters_to_initialize)}\
+${initialize_output_params(output_parameters_to_initialize, indent_level=1)}\
       auto initiating_session_name = ${initiating_driver_c_name}.name();
       auto init_lambda = [&] () {
         ${cross_driver_dep.resource_handle_type} ${session_output_var_name};
@@ -98,9 +98,7 @@ ${call_library_method(
 ${populate_error_check(function_data, parameters, indent_level=1)}\
         ${size_param['type']} ${common_helpers.get_cpp_local_name(size_param)} = status;
 
-<%block filter="common_helpers.indent(1)">\
-${initialize_output_params(output_parameters)}\
-</%block>\
+${initialize_output_params(output_parameters, indent_level=2)}\
 ${call_library_method(
   function_name=function_name,
   function_data=function_data,
@@ -129,7 +127,7 @@ ${populate_response(function_data=function_data, parameters=parameters, indent_l
   scalar_output_parameters = [p for p in output_parameters if p not in array_output_parameters]
 %>\
 ${initialize_input_params(function_name, non_ivi_params)}\
-${initialize_output_params(scalar_output_parameters)}\
+${initialize_output_params(scalar_output_parameters, indent_level=1)}\
       while (true) {
 ${call_library_method(
   function_name=function_name,
@@ -138,9 +136,7 @@ ${call_library_method(
   indent_level=1)
 }\
 ${populate_error_check(function_data, parameters, indent_level=1)}\
-<%block filter="common_helpers.indent(1)">\
-${initialize_output_params(array_output_parameters)}\
-</%block>\
+${initialize_output_params(array_output_parameters, indent_level=2)}\
 % for ivi_param_set in ivi_param_sets:
 %   if not ivi_param_set.is_in_out_twist:
         auto ${ivi_param_set.size_param_name} = ${ivi_param_set.twist_param_name};
@@ -235,7 +231,7 @@ ${populate_error_check(function_data, parameters, indent_level=1, service_deref=
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
 ${initialize_input_params(function_name, parameters)}\
-${initialize_output_params(output_parameters)}\
+${initialize_output_params(output_parameters, indent_level=1)}\
 ${set_output_vararg_parameter_sizes(parameters)}\
 ${call_library_method(
   function_name=function_name,
@@ -254,7 +250,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
 ${initialize_input_params(function_name, parameters)}\
-${initialize_output_params(output_parameters)}\
+${initialize_output_params(output_parameters, indent_level=1)}\
 % if function_name == config['close_function'] or service_helpers.is_custom_close_method(function_data):
 <%
   session_param = common_helpers.get_first_session_param(parameters)
@@ -278,18 +274,18 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
     ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("${moniker_function_name}", ${moniker_function_name});
 </%def>
 
-<%def name="define_moniker_streaming_struct(function_name, parameters)">\
+<%def name="define_moniker_streaming_struct(begin_function_name, parameters, has_input_parameters)">\
 <%
   config = data['config']
-  streaming_param = common_helpers.get_first_streaming_parameter(parameters)
   service_class_prefix = config["service_class_prefix"]
-  grpc_streaming_type = streaming_param['grpc_streaming_type']
-  struct_name = common_helpers.get_data_moniker_struct_name(function_name)
-  streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
+  struct_name = common_helpers.get_data_moniker_struct_name(begin_function_name)
+  moniker_input_parameters = common_helpers.get_non_streaming_input_parameters(parameters)
+  request_message_type = common_helpers.get_data_moniker_request_message_type(begin_function_name)
+  response_message_type = common_helpers.get_data_moniker_response_message_type(begin_function_name)
 %>\
   struct ${struct_name}
   {
-% for parameter in streaming_params_to_include:
+% for parameter in moniker_input_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
 %>\
@@ -298,62 +294,54 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 % else:
      ${parameter['type']} ${parameter_name};
 % endif
-     % endfor
-     ${service_class_prefix.lower()}_grpc::${grpc_streaming_type} data;
+% endfor
+% if has_input_parameters:
+     ${service_class_prefix.lower()}_grpc::${request_message_type} request;
+% endif
+     ${service_class_prefix.lower()}_grpc::${response_message_type} response;
      std::shared_ptr<${service_class_prefix}LibraryInterface> library;
   };
 </%def>
 
-<%def name="define_moniker_function_body(function_name, function_data)">\
+<%def name="define_moniker_function_body(function_name, functions)">\
 <%
-  config = data['config']
+  function_data = functions[function_name]
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
+  moniker_input_parameters = common_helpers.get_non_streaming_input_parameters(function_data['parameters'])
   streaming_param = common_helpers.get_first_streaming_parameter(function_data['parameters'])
-  streaming_type = streaming_param['type']
-  grpc_streaming_type = streaming_param['grpc_streaming_type']
-  arg_string = service_helpers.create_args(function_data['parameters'])
-  arg_string = arg_string.replace(", &moniker", "").strip()
-  data_type = streaming_type.replace("[]", "")
-  c_api_name = service_helpers.get_c_api_name(function_name)
-  streaming_params_to_include = common_helpers.get_input_streaming_params(function_data['parameters'])
-  output_params_to_define = service_helpers.get_output_streaming_params_to_define(function_data['parameters'], streaming_param)
+  non_streaming_function_name = function_name.replace("Begin", "")
+  non_streaming_function_parameters = functions[non_streaming_function_name]['parameters']
+  arg_string = service_helpers.create_args(non_streaming_function_parameters)
+  output_parameters = [p for p in non_streaming_function_parameters if common_helpers.is_output_parameter(p)]
 %>\
 ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
 {
     ${struct_name}* function_data = static_cast<${struct_name}*>(data);
-    auto library = function_data->library;\
-${initialize_moniker_input_parameters(streaming_params_to_include)}\
-${initialize_moniker_output_parameters(output_params_to_define)}\
-  % if streaming_param and streaming_param['direction'] == 'out':
-${streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)}\
-  % elif streaming_param and streaming_param['direction'] == 'in':
-${streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)}\
-  % endif
-    if (status < 0) {
-      std::cout << "${moniker_function_name} error: " << status << std::endl;
-    }
+    auto library = function_data->library;
+    auto response = &function_data->response;
+${initialize_moniker_input_parameters(moniker_input_parameters)}\
+${initialize_output_params(output_parameters)}\
+    % if streaming_param and streaming_param['direction'] == 'in':
+${streaming_handle_in_direction(streaming_param)}\
+    % endif
+
+    auto status = library->${non_streaming_function_name}(${arg_string});
+
+${populate_moniker_response_for_out_functions(output_parameters, streaming_param)}\
     return ::grpc::Status::OK;
 }
 </%def>
 
-<%def name="define_streaming_api_body(function_name, function_data, parameters)">\
+<%def name="define_streaming_api_body(function_name, parameters)">\
 <%
-  config = data['config']
-  output_params = [p for p in parameters if common_helpers.is_output_parameter(p)]
-  service_class_prefix = config["service_class_prefix"]
-  request_param = service_helpers.get_request_param(function_name)
-  response_param = service_helpers.get_response_param(function_name)
   struct_name = common_helpers.get_data_moniker_struct_name(function_name)
   moniker_function_name = common_helpers.get_data_moniker_function_name(function_name)
-  streaming_param = common_helpers.get_first_streaming_parameter(parameters)
-  streaming_params_to_include = common_helpers.get_input_streaming_params(parameters)
+  moniker_input_parameters = common_helpers.get_non_streaming_input_parameters(parameters)
+  output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${initialize_streaming_input_param(function_name, streaming_params_to_include, parameters, streaming_param)}
-      auto data = std::make_unique<${struct_name}>();\
-      ${initialize_begin_input_params(streaming_params_to_include, streaming_param)}\
-      data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
-      ${initialize_service_output_params(output_params, streaming_param)}\
+${initialize_input_params(function_name, moniker_input_parameters)}
+${initialize_moniker_struct(struct_name, moniker_input_parameters, output_parameters)}\
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
@@ -361,76 +349,19 @@ ${initialize_streaming_input_param(function_name, streaming_params_to_include, p
       return ::grpc::Status::OK;\
 </%def>
 
-<%def name="streaming_handle_out_direction(c_api_name, arg_string, data_type, streaming_type, streaming_param)">
+<%def name="streaming_handle_in_direction(streaming_param)">
 <%
-  is_array = common_helpers.is_array(streaming_type)
-%>\
-% if is_array:
-    ${streaming_handle_out_direction_array(c_api_name, arg_string, data_type, streaming_param)}
-% else:
-    ${streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_param)}
-% endif
-</%def>
-
-<%def name="streaming_handle_out_direction_array(c_api_name, arg_string, data_type, streaming_param)">\
-<%
-   is_coerced = service_helpers.is_output_array_that_needs_coercion(streaming_param)
-   size_param_name = service_helpers.get_size_param_name(streaming_param)
-   streaming_param_name = common_helpers.camel_to_snake(streaming_param['name'])
-   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"])
-%>\
-% if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
-std::vector<${data_type}> ${streaming_param_name}(${size_param_name}, ${data_type}());
-% elif is_coerced:
-std::vector<${data_type}> ${streaming_param_name}(${size_param_name});
-% elif common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type):
-function_data->data.mutable_value()->Resize(${size_param_name}, 0);
-    auto ${streaming_param_name} = reinterpret_cast<${underlying_param_type}*>(function_data->data.mutable_value()->mutable_data());
-% else:
-function_data->data.mutable_value()->Resize(${size_param_name}, 0);
-    auto ${streaming_param_name} = function_data->data.mutable_value()->mutable_data();
-% endif
-    auto status = library->${c_api_name}(${arg_string});
-    if (status >= 0) {
-% if is_coerced or common_helpers.supports_standard_copy_conversion_routines(streaming_param):
-      std::transform(
-        ${streaming_param_name}.begin(),
-        ${streaming_param_name}.begin() + ${size_param_name},
-        function_data->data.mutable_value()->begin(),
-        [&](auto x) {
-           return x;
-      });
-% endif
-      packedData.PackFrom(function_data->data);
-    }
-</%def>
-
-<%def name="streaming_handle_out_direction_scaler(c_api_name, arg_string, streaming_param)">\
-<%
-  parameter_name = common_helpers.get_cpp_local_name(streaming_param)
-%>\
-${streaming_param['type']} ${parameter_name} {};\
-
-    auto status = library->${c_api_name}(${arg_string});
-    function_data->data.set_value(${parameter_name});
-    if (status >= 0) {
-        packedData.PackFrom(function_data->data);
-    }
-</%def>
-
-<%def name="streaming_handle_in_direction(c_api_name, arg_string, data_type, grpc_streaming_type, streaming_type, streaming_param)">
-<%
+  streaming_type = streaming_param['type']
+  grpc_streaming_type = streaming_param['grpc_streaming_type']
   is_array = common_helpers.is_array(streaming_type)
 %>\
     ${grpc_streaming_type} ${grpc_streaming_type.lower()}_message;
     packedData.UnpackTo(&${grpc_streaming_type.lower()}_message);
 % if is_array:
-    ${streaming_handle_in_direction_array(data_type, grpc_streaming_type, streaming_param)}\
+    ${streaming_handle_in_direction_array(grpc_streaming_type, streaming_param)}\
 % else:
     ${streaming_handle_in_direction_scaler(grpc_streaming_type, streaming_type, streaming_param)}\
 % endif
-
-    auto status = library->${c_api_name}(${arg_string});
 </%def>
 
 <%def name="streaming_handle_in_direction_scaler(grpc_streaming_type, streaming_type, streaming_param)">\
@@ -446,17 +377,18 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
 % endif
 </%def>
 
-<%def name="streaming_handle_in_direction_array(data_type, grpc_streaming_type, streaming_param)">
+<%def name="streaming_handle_in_direction_array(grpc_streaming_type, streaming_param)">
 <%
    is_coerced = service_helpers.is_input_array_that_needs_coercion(streaming_param)
    c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(streaming_param)
    streaming_param_name = common_helpers.camel_to_snake(streaming_param['name'])
-   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"]).replace("const ", "")
+   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"])
+   underlying_param_type_with_no_qualifiers = underlying_param_type.replace("const ", "")
 
 %>\
 % if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
-    std::vector<${data_type}> ${streaming_param_name}(data_array.begin(), data_array.end());
+    std::vector<${underlying_param_type}> ${streaming_param_name}(data_array.begin(), data_array.end());
     auto size = data_array.size();
 % elif is_coerced:
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
@@ -476,59 +408,73 @@ auto value = ${grpc_streaming_type.lower()}_message.value();
       });
 % else:
     auto data_array = ${grpc_streaming_type.lower()}_message.value();
-% if common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type):
-    auto ${streaming_param_name} = reinterpret_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
+% if common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type_with_no_qualifiers):
+    auto ${streaming_param_name} = reinterpret_cast<${underlying_param_type}*>(${grpc_streaming_type.lower()}_message.value().data());
 % else:
-    auto ${streaming_param_name} = const_cast<${data_type}*>(${grpc_streaming_type.lower()}_message.value().data());
+    auto ${streaming_param_name} = const_cast<${underlying_param_type}*>(${grpc_streaming_type.lower()}_message.value().data());
 % endif
     auto size = data_array.size();
 % endif
 </%def>
 
-## Initialize an bgin input parameter for an API call.
-<%def name="initialize_begin_input_params(streaming_params_to_include, streaming_param)">
-% for parameter in streaming_params_to_include:
+<%def name="populate_moniker_response_for_out_functions(output_parameters, streaming_param)">\
+% if streaming_param['direction'] == 'out':
+    if (status >= 0)
+    {
+      response->set_status(status);
+${set_response_values(output_parameters=output_parameters, init_method=false)}\
+      packedData.PackFrom(*response);
+    }
+    else
+    {
+      ## TODO this is not needed if we can make populate_response work which returns error through `AddTrailingMetadata`.
+      ## But that needs `context` parameter which is not available in Moniker functions.
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+% else:
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+% endif
+</%def>
+
+<%def name="initialize_moniker_struct(struct_name, moniker_input_parameters, output_parameters)">\
+<%
+  config = data['config']
+  service_class_prefix = config["service_class_prefix"]
+  output_array_params = [p for p in output_parameters if common_helpers.is_array(p['type'])]
+%>\
+      auto data = std::make_unique<${struct_name}>();
+% for parameter in moniker_input_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
 %>\
       data->${parameter_name} = ${parameter_name};
 % endfor
-</%def>
+      data->library = std::shared_ptr<${service_class_prefix}LibraryInterface>(library_);
 
-## Initialize an bgin input parameter for an API call.
-<%def name="initialize_streaming_input_param(function_name, streaming_params_to_include, parameters, streaming_param)">\
-% for param in streaming_params_to_include:
-${initialize_input_param(function_name, param, parameters)}\
+% for param in output_array_params:
+<%
+  grpc_field_name = common_helpers.get_grpc_field_name(param)
+  size_param_name = service_helpers.get_size_param_name(param)
+%>\
+% if common_helpers.is_string_arg(param):
+      data->response.mutable_${grpc_field_name}()->reserve(request->${size_param_name}());
+      data->response.mutable_${grpc_field_name}()->resize(request->${size_param_name}(), 0);
+% else:
+      data->response.mutable_${grpc_field_name}()->Reserve(request->${size_param_name}());
+      data->response.mutable_${grpc_field_name}()->Resize(request->${size_param_name}(), 0);
+% endif
 % endfor
 </%def>
 
-<%def name="initialize_moniker_input_parameters(streaming_params_to_include)">
-% for parameter in streaming_params_to_include:
+<%def name="initialize_moniker_input_parameters(moniker_input_parameters)">\
+% for parameter in moniker_input_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
 %>\
     auto ${parameter_name} = function_data->${parameter_name};
-% endfor
-</%def>
-
-<%def name="initialize_moniker_output_parameters(output_params_to_define)">\
-% for parameter in output_params_to_define:
-<%
-  parameter_name = common_helpers.get_cpp_local_name(parameter)
-%>
-    ${parameter['type']} ${parameter_name} = {};\
-% endfor
-</%def>
-
-<%def name="initialize_service_output_params(output_params, streaming_param)">\
-<%
-  size_param_name = service_helpers.get_size_param_name(streaming_param)
-%>
-% for param in output_params:
-% if common_helpers.is_array(param['type']):
-      data->data.mutable_value()->Reserve(request->${size_param_name}());
-      data->data.mutable_value()->Resize(request->${size_param_name}(), 0);
-% endif
 % endfor
 </%def>
 
@@ -557,16 +503,16 @@ ${initialize_enum_array_input_param(function_name, parameter)}
 % elif common_helpers.is_enum(parameter):
 ${initialize_enum_input_param(function_name, parameter)}
 % elif 'hardcoded_value' in parameter:
-${initialize_hardcoded_parameter(parameter)}
+  ${initialize_hardcoded_parameter(parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter, parameters)}
 % elif common_helpers.is_two_dimension_array_param(parameter):
-${initialize_two_dimension_input_param(function_name, parameter, parameters)}
+${initialize_two_dimension_input_param(parameter, parameters)}
 % elif service_helpers.is_size_param_passed_by_ptr(parameter):
 ${initialize_pointer_input_parameter(parameter)}
 % else:
-${initialize_standard_input_param(function_name, parameter)}
+${initialize_standard_input_param(parameter)}
 % endif
 </%def>
 
@@ -793,14 +739,14 @@ ${initialize_standard_input_param(function_name, parameter)}
 </%def>
 
 ## Initialize an input parameter with the 'two-dimension' size mechanism.
-<%def name="initialize_two_dimension_input_param(function_name, parameter, parameters)">\
+<%def name="initialize_two_dimension_input_param(parameter, parameters)">\
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   size_param_name = common_helpers.get_size_param(parameter)
   size_param = common_helpers.get_param_with_name(parameters, size_param_name)
   size_field_name = common_helpers.get_grpc_field_name(size_param)
 %>\
-${initialize_standard_input_param(function_name, parameter)}
+${initialize_standard_input_param(parameter)}
       auto total_length = std::accumulate(request->${size_field_name}().cbegin(), request->${size_field_name}().cend(), 0);
 
       if (total_length != request->${parameter_name}_size()) {
@@ -811,7 +757,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 
 ## Initialize a 'hardcoded' param.
 <%def name="initialize_hardcoded_parameter(parameter)">\
-      auto ${common_helpers.get_cpp_local_name(parameter)} = ${parameter['hardcoded_value']};\
+    auto ${common_helpers.get_cpp_local_name(parameter)} = ${parameter['hardcoded_value']};\
 </%def>
 
 ## Initialize an input parameter that's passed by pointer.
@@ -821,7 +767,7 @@ ${initialize_standard_input_param(function_name, parameter)}
 
 
 ## Initialize an input parameter for an API call.
-<%def name="initialize_standard_input_param(function_name, parameter)">\
+<%def name="initialize_standard_input_param(parameter)">\
 <%
   config = data['config']
   parameter_name = common_helpers.get_cpp_local_name(parameter)
@@ -933,10 +879,11 @@ ${initialize_standard_input_param(function_name, parameter)}
 </%def>
 
 ## Initialize the output parameters for an API call.
-<%def name="initialize_output_params(output_parameters)">\
+<%def name="initialize_output_params(output_parameters, indent_level=0)">\
 <%
   output_parameters = common_helpers.get_params_needing_initialization(output_parameters)
 %>\
+<%block filter="common_helpers.indent(indent_level)">\
 % for parameter in output_parameters:
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
@@ -944,55 +891,56 @@ ${initialize_standard_input_param(function_name, parameter)}
   grpc_type = parameter["grpc_type"]
   grpc_cpp_lib_type = service_helpers.get_protobuf_cpplib_type(grpc_type)
 %>\
-%   if 'hardcoded_value' in parameter:
+% if 'hardcoded_value' in parameter:
 ${initialize_hardcoded_parameter(parameter)}
-%   elif common_helpers.supports_standard_output_allocation_routines(parameter):
-      auto ${parameter_name} = allocate_output_storage<${underlying_param_type}, ${grpc_cpp_lib_type}>(${str.join(", ", parameter.get("additional_arguments_to_output_allocation", []))});
-%   elif common_helpers.is_repeating_parameter(parameter):
-      auto get_${parameter_name}_if = [](std::vector<${underlying_param_type}>& vector, int n) -> ${underlying_param_type}* {
-            if (vector.size() > n) {
+% elif common_helpers.supports_standard_output_allocation_routines(parameter):
+    auto ${parameter_name} = allocate_output_storage<${underlying_param_type}, ${grpc_cpp_lib_type}>(${str.join(", ", parameter.get("additional_arguments_to_output_allocation", []))});
+% elif common_helpers.is_repeating_parameter(parameter):
+    auto get_${parameter_name}_if = [](std::vector<${underlying_param_type}>& vector, int n) -> ${underlying_param_type}* {
+          if (vector.size() > n) {
 ## Note that this code will not handle every datatype, but it works for all
 ## the ones we currently use with repeated varargs.
-                  return &(vector[n]);
-            }
-            return nullptr;
-      };
-      std::vector<${underlying_param_type}> ${parameter_name}Vector;
-%   elif common_helpers.is_repeated_varargs_parameter(parameter): # pass
-%   elif common_helpers.is_array(parameter['type']):
+                return &(vector[n]);
+          }
+          return nullptr;
+    };
+    std::vector<${underlying_param_type}> ${parameter_name}Vector;
+% elif common_helpers.is_repeated_varargs_parameter(parameter): # pass
+% elif common_helpers.is_array(parameter['type']):
 <%
   buffer_size = common_helpers.get_buffer_size_expression(parameter)
   size = common_helpers.get_size_expression(parameter)
 %>\
-%     if common_helpers.supports_standard_copy_conversion_routines(parameter):
-      std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
+%   if common_helpers.supports_standard_copy_conversion_routines(parameter):
+    std::vector<${underlying_param_type}> ${parameter_name}(${size}, ${underlying_param_type}());
 ## Byte arrays are leveraging a string as a buffer, so we don't need to take special consideration of the null terminator.
-%     elif grpc_type == 'bytes':
-      std::string ${parameter_name}(${size}, '\0');
+%   elif grpc_type == 'bytes':
+    std::string ${parameter_name}(${size}, '\0');
 ## Driver string APIs require room in the buffer for the null terminator. We need to account for that when sizing the string.
-%     elif common_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
-      std::string ${parameter_name}(${size}, '\0');
-%     elif common_helpers.is_string_arg(parameter):
-      std::string ${parameter_name};
-      if (${buffer_size} > 0) {
-          ${parameter_name}.resize(${size});
-      }
-%     elif service_helpers.is_output_array_that_needs_coercion(parameter):
-      std::vector<${underlying_param_type}> ${parameter_name}(${size});
-%     elif common_helpers.is_enum(parameter):
-      response->mutable_${parameter_name}_raw()->Resize(${size}, 0);
-      ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}_raw()->mutable_data());
-%     elif common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type):
-      response->mutable_${parameter_name}()->Resize(${size}, 0);
-      ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}()->mutable_data());
-%     else:
-      response->mutable_${parameter_name}()->Resize(${size}, 0);
-      ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->mutable_data();
-%     endif
+%   elif common_helpers.is_string_arg(parameter) and common_helpers.get_size_mechanism(parameter) == 'fixed':
+    std::string ${parameter_name}(${size}, '\0');
+%   elif common_helpers.is_string_arg(parameter):
+    std::string ${parameter_name};
+    if (${buffer_size} > 0) {
+        ${parameter_name}.resize(${size});
+    }
+%   elif service_helpers.is_output_array_that_needs_coercion(parameter):
+    std::vector<${underlying_param_type}> ${parameter_name}(${size});
+%   elif common_helpers.is_enum(parameter):
+    response->mutable_${parameter_name}_raw()->Resize(${size}, 0);
+    ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}_raw()->mutable_data());
+%   elif common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type):
+    response->mutable_${parameter_name}()->Resize(${size}, 0);
+    ${underlying_param_type}* ${parameter_name} = reinterpret_cast<${underlying_param_type}*>(response->mutable_${parameter_name}()->mutable_data());
 %   else:
-      ${underlying_param_type} ${parameter_name} {};
+    response->mutable_${parameter_name}()->Resize(${size}, 0);
+    ${underlying_param_type}* ${parameter_name} = response->mutable_${parameter_name}()->mutable_data();
 %   endif
+% else:
+    ${underlying_param_type} ${parameter_name} {};
+% endif
 % endfor
+</%block>\
 </%def>
 
 

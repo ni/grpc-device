@@ -128,10 +128,14 @@ public:
   ::grpc::Status CalkitManagerCalkitGetCalibrationElementIDs(::grpc::ServerContext* context, const CalkitManagerCalkitGetCalibrationElementIDsRequest* request, CalkitManagerCalkitGetCalibrationElementIDsResponse* response) override;
   ::grpc::Status CalkitManagerCalkitGetConnectorIDs(::grpc::ServerContext* context, const CalkitManagerCalkitGetConnectorIDsRequest* request, CalkitManagerCalkitGetConnectorIDsResponse* response) override;
   ::grpc::Status CalkitManagerCalkitGetDescription(::grpc::ServerContext* context, const CalkitManagerCalkitGetDescriptionRequest* request, CalkitManagerCalkitGetDescriptionResponse* response) override;
+  ::grpc::Status CalkitManagerCalkitGetLRLLineAutoChar(::grpc::ServerContext* context, const CalkitManagerCalkitGetLRLLineAutoCharRequest* request, CalkitManagerCalkitGetLRLLineAutoCharResponse* response) override;
+  ::grpc::Status CalkitManagerCalkitGetTRLReferencePlane(::grpc::ServerContext* context, const CalkitManagerCalkitGetTRLReferencePlaneRequest* request, CalkitManagerCalkitGetTRLReferencePlaneResponse* response) override;
   ::grpc::Status CalkitManagerCalkitGetVersion(::grpc::ServerContext* context, const CalkitManagerCalkitGetVersionRequest* request, CalkitManagerCalkitGetVersionResponse* response) override;
   ::grpc::Status CalkitManagerCalkitRemoveCalibrationElement(::grpc::ServerContext* context, const CalkitManagerCalkitRemoveCalibrationElementRequest* request, CalkitManagerCalkitRemoveCalibrationElementResponse* response) override;
   ::grpc::Status CalkitManagerCalkitRemoveConnector(::grpc::ServerContext* context, const CalkitManagerCalkitRemoveConnectorRequest* request, CalkitManagerCalkitRemoveConnectorResponse* response) override;
   ::grpc::Status CalkitManagerCalkitSetDescription(::grpc::ServerContext* context, const CalkitManagerCalkitSetDescriptionRequest* request, CalkitManagerCalkitSetDescriptionResponse* response) override;
+  ::grpc::Status CalkitManagerCalkitSetLRLLineAutoChar(::grpc::ServerContext* context, const CalkitManagerCalkitSetLRLLineAutoCharRequest* request, CalkitManagerCalkitSetLRLLineAutoCharResponse* response) override;
+  ::grpc::Status CalkitManagerCalkitSetTRLReferencePlane(::grpc::ServerContext* context, const CalkitManagerCalkitSetTRLReferencePlaneRequest* request, CalkitManagerCalkitSetTRLReferencePlaneResponse* response) override;
   ::grpc::Status CalkitManagerCalkitSetVersion(::grpc::ServerContext* context, const CalkitManagerCalkitSetVersionRequest* request, CalkitManagerCalkitSetVersionResponse* response) override;
   ::grpc::Status CalkitManagerCreateCalkit(::grpc::ServerContext* context, const CalkitManagerCreateCalkitRequest* request, CalkitManagerCreateCalkitResponse* response) override;
   ::grpc::Status CalkitManagerExportCalkit(::grpc::ServerContext* context, const CalkitManagerExportCalkitRequest* request, CalkitManagerExportCalkitResponse* response) override;
@@ -196,10 +200,12 @@ public:
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status LoadDataToMeasurementMemoryFromFile(::grpc::ServerContext* context, const LoadDataToMeasurementMemoryFromFileRequest* request, LoadDataToMeasurementMemoryFromFileResponse* response) override;
   ::grpc::Status MarkerCfgDataSource(::grpc::ServerContext* context, const MarkerCfgDataSourceRequest* request, MarkerCfgDataSourceResponse* response) override;
+  ::grpc::Status MarkerCfgMode(::grpc::ServerContext* context, const MarkerCfgModeRequest* request, MarkerCfgModeResponse* response) override;
   ::grpc::Status MarkerCfgNumberOfMarkers(::grpc::ServerContext* context, const MarkerCfgNumberOfMarkersRequest* request, MarkerCfgNumberOfMarkersResponse* response) override;
   ::grpc::Status MarkerCfgPeakSearchExcursion(::grpc::ServerContext* context, const MarkerCfgPeakSearchExcursionRequest* request, MarkerCfgPeakSearchExcursionResponse* response) override;
   ::grpc::Status MarkerCfgPeakSearchThreshold(::grpc::ServerContext* context, const MarkerCfgPeakSearchThresholdRequest* request, MarkerCfgPeakSearchThresholdResponse* response) override;
   ::grpc::Status MarkerCfgReferenceMarker(::grpc::ServerContext* context, const MarkerCfgReferenceMarkerRequest* request, MarkerCfgReferenceMarkerResponse* response) override;
+  ::grpc::Status MarkerCfgTargetValue(::grpc::ServerContext* context, const MarkerCfgTargetValueRequest* request, MarkerCfgTargetValueResponse* response) override;
   ::grpc::Status MarkerCfgType(::grpc::ServerContext* context, const MarkerCfgTypeRequest* request, MarkerCfgTypeResponse* response) override;
   ::grpc::Status MarkerCfgX(::grpc::ServerContext* context, const MarkerCfgXRequest* request, MarkerCfgXResponse* response) override;
   ::grpc::Status MarkerCfgY(::grpc::ServerContext* context, const MarkerCfgYRequest* request, MarkerCfgYResponse* response) override;
