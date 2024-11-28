@@ -448,6 +448,7 @@ add_executable(ni_grpc_device_server
    "source/server/calibration_operations_restricted_service_registrar.cpp"
    "source/server/calibration_operations_restricted_service.cpp"
    "source/server/core_server.cpp"
+   "source/server/sideband_manager.cpp"
    "source/server/core_services_registrar.cpp"
    "source/server/data_moniker_service.cpp"
    "source/server/debug_session_properties_restricted_service_registrar.cpp"

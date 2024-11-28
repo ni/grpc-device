@@ -23,6 +23,7 @@
 
 #include "version.h"
 #include "data_moniker_service.h"
+#include "sideband_manager.h"
 
 using FeatureState = nidevice_grpc::FeatureToggles::FeatureState;
 using FeatureToggles = nidevice_grpc::FeatureToggles;
@@ -67,10 +68,12 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
 static std::mutex server_mutex;
 static std::unique_ptr<grpc::Server> server;
 static bool shutdown = false;
+SidebandManager sideband_manager;
 
 static void StopServer()
 {
   std::lock_guard<std::mutex> guard(server_mutex);
+  sideband_manager.stop_sideband_threads();
   shutdown = true;
   if (server) {
     server->Shutdown();
@@ -110,9 +113,7 @@ static void RunServer(const ServerConfiguration& config)
     }
     server = builder.BuildAndStart();
     if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
-      auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), 50055);
-      // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
-      // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
+      sideband_manager.start_sideband_threads(config.sideband_address.c_str(), 50055);
     }
   }
 
