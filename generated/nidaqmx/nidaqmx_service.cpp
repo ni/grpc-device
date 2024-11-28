@@ -406,6 +406,91 @@ namespace nidaqmx_grpc {
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
+  struct MonikerWriteCtrFreqData
+  {
+     TaskHandle task;
+     int32 num_samps_per_chan;
+     bool32 auto_start;
+     float64 timeout;
+     int32 data_layout;
+     bool32* reserved;
+     nidaqmx_grpc::MonikerWriteCtrFreqRequest request;
+     nidaqmx_grpc::MonikerWriteCtrFreqResponse response;
+     std::shared_ptr<NiDAQmxLibraryInterface> library;
+  };
+
+  struct MonikerWriteCtrFreqScalarData
+  {
+     TaskHandle task;
+     bool32 auto_start;
+     float64 timeout;
+     bool32* reserved;
+     nidaqmx_grpc::MonikerWriteCtrFreqScalarRequest request;
+     nidaqmx_grpc::MonikerWriteCtrFreqScalarResponse response;
+     std::shared_ptr<NiDAQmxLibraryInterface> library;
+  };
+
+  struct MonikerWriteCtrTicksData
+  {
+     TaskHandle task;
+     int32 num_samps_per_chan;
+     bool32 auto_start;
+     float64 timeout;
+     int32 data_layout;
+     bool32* reserved;
+     nidaqmx_grpc::MonikerWriteCtrTicksRequest request;
+     nidaqmx_grpc::MonikerWriteCtrTicksResponse response;
+     std::shared_ptr<NiDAQmxLibraryInterface> library;
+  };
+
+  struct MonikerWriteCtrTicksScalarData
+  {
+     TaskHandle task;
+     bool32 auto_start;
+     float64 timeout;
+     bool32* reserved;
+     nidaqmx_grpc::MonikerWriteCtrTicksScalarRequest request;
+     nidaqmx_grpc::MonikerWriteCtrTicksScalarResponse response;
+     std::shared_ptr<NiDAQmxLibraryInterface> library;
+  };
+
+  struct MonikerWriteCtrTimeData
+  {
+     TaskHandle task;
+     int32 num_samps_per_chan;
+     bool32 auto_start;
+     float64 timeout;
+     int32 data_layout;
+     bool32* reserved;
+     nidaqmx_grpc::MonikerWriteCtrTimeRequest request;
+     nidaqmx_grpc::MonikerWriteCtrTimeResponse response;
+     std::shared_ptr<NiDAQmxLibraryInterface> library;
+  };
+
+  struct MonikerWriteCtrTimeScalarData
+  {
+     TaskHandle task;
+     bool32 auto_start;
+     float64 timeout;
+     bool32* reserved;
+     nidaqmx_grpc::MonikerWriteCtrTimeScalarRequest request;
+     nidaqmx_grpc::MonikerWriteCtrTimeScalarResponse response;
+     std::shared_ptr<NiDAQmxLibraryInterface> library;
+  };
+
+  struct MonikerWriteDigitalLinesData
+  {
+     TaskHandle task;
+     int32 num_samps_per_chan;
+     bool32 auto_start;
+     float64 timeout;
+     int32 data_layout;
+     bool32* reserved;
+     nidaqmx_grpc::MonikerWriteDigitalLinesRequest request;
+     nidaqmx_grpc::MonikerWriteDigitalLinesResponse response;
+     std::shared_ptr<NiDAQmxLibraryInterface> library;
+  };
+
   struct MonikerWriteDigitalScalarU32Data
   {
      TaskHandle task;
@@ -440,6 +525,31 @@ namespace nidaqmx_grpc {
      bool32* reserved;
      nidaqmx_grpc::MonikerWriteDigitalU32Request request;
      nidaqmx_grpc::MonikerWriteDigitalU32Response response;
+     std::shared_ptr<NiDAQmxLibraryInterface> library;
+  };
+
+  struct MonikerWriteDigitalU8Data
+  {
+     TaskHandle task;
+     int32 num_samps_per_chan;
+     bool32 auto_start;
+     float64 timeout;
+     int32 data_layout;
+     bool32* reserved;
+     nidaqmx_grpc::MonikerWriteDigitalU8Request request;
+     nidaqmx_grpc::MonikerWriteDigitalU8Response response;
+     std::shared_ptr<NiDAQmxLibraryInterface> library;
+  };
+
+  struct MonikerWriteRawData
+  {
+     TaskHandle task;
+     int32 num_samps;
+     bool32 auto_start;
+     float64 timeout;
+     bool32* reserved;
+     nidaqmx_grpc::MonikerWriteRawRequest request;
+     nidaqmx_grpc::MonikerWriteRawResponse response;
      std::shared_ptr<NiDAQmxLibraryInterface> library;
   };
 
@@ -502,9 +612,18 @@ namespace nidaqmx_grpc {
       ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteBinaryI32", MonikerWriteBinaryI32);
       ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteBinaryU16", MonikerWriteBinaryU16);
       ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteBinaryU32", MonikerWriteBinaryU32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteCtrFreq", MonikerWriteCtrFreq);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteCtrFreqScalar", MonikerWriteCtrFreqScalar);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteCtrTicks", MonikerWriteCtrTicks);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteCtrTicksScalar", MonikerWriteCtrTicksScalar);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteCtrTime", MonikerWriteCtrTime);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteCtrTimeScalar", MonikerWriteCtrTimeScalar);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteDigitalLines", MonikerWriteDigitalLines);
       ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteDigitalScalarU32", MonikerWriteDigitalScalarU32);
       ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteDigitalU16", MonikerWriteDigitalU16);
       ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteDigitalU32", MonikerWriteDigitalU32);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteDigitalU8", MonikerWriteDigitalU8);
+      ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteRaw", MonikerWriteRaw);
   }
 
 ::grpc::Status MonikerReadAnalogF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
@@ -1372,13 +1491,10 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    ArrayDoubleData arraydoubledata_message;
-    packedData.UnpackTo(&arraydoubledata_message);
-    
-    auto data_array = arraydoubledata_message.value();
-    auto write_array = const_cast<const float64*>(arraydoubledata_message.value().data());
-    auto size = data_array.size();
+    packedData.UnpackTo(request);
+      auto write_array = const_cast<const float64*>(request->write_array().data());
 
     auto status = library->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
@@ -1398,10 +1514,10 @@ namespace nidaqmx_grpc {
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
+    auto request = &function_data->request;
 
-    DoubleData doubledata_message;
-    packedData.UnpackTo(&doubledata_message);
-    auto value = doubledata_message.value();
+    packedData.UnpackTo(request);
+      float64 value = request->value();
 
     auto status = library->WriteAnalogScalarF64(task, auto_start, timeout, value, reserved);
 
@@ -1424,25 +1540,27 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    ArrayI16Data arrayi16data_message;
-    packedData.UnpackTo(&arrayi16data_message);
-    
-    auto data_array = arrayi16data_message.value();
-    auto write_array = std::vector<int16>();
-    auto size = data_array.size();
-    write_array.reserve(size);
-    std::transform(
-      data_array.begin(),
-      data_array.end(),
-      std::back_inserter(write_array),
-      [](auto x) {
-        if (x < std::numeric_limits<int16>::min() || x > std::numeric_limits<int16>::max()) {
-          std::string message("value " + std::to_string(x) + " doesn't fit in datatype int16");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
-        return static_cast<int16>(x);
-      });
+    packedData.UnpackTo(request);
+      auto write_array_raw = request->write_array();
+      auto write_array = std::vector<int16>();
+      write_array.reserve(write_array_raw.size());
+      std::transform(
+        write_array_raw.begin(),
+        write_array_raw.end(),
+        std::back_inserter(write_array),
+        [](auto x) {
+              if (x < std::numeric_limits<int16>::min() || x > std::numeric_limits<int16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("int16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<int16>(x);
+        });
+
 
     auto status = library->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
 
@@ -1465,13 +1583,10 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    ArrayI32Data arrayi32data_message;
-    packedData.UnpackTo(&arrayi32data_message);
-    
-    auto data_array = arrayi32data_message.value();
-    auto write_array = reinterpret_cast<const int32*>(arrayi32data_message.value().data());
-    auto size = data_array.size();
+    packedData.UnpackTo(request);
+      auto write_array = reinterpret_cast<const int32*>(request->write_array().data());
 
     auto status = library->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
@@ -1494,25 +1609,27 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    ArrayU16Data arrayu16data_message;
-    packedData.UnpackTo(&arrayu16data_message);
-    
-    auto data_array = arrayu16data_message.value();
-    auto write_array = std::vector<uInt16>();
-    auto size = data_array.size();
-    write_array.reserve(size);
-    std::transform(
-      data_array.begin(),
-      data_array.end(),
-      std::back_inserter(write_array),
-      [](auto x) {
-        if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
-          std::string message("value " + std::to_string(x) + " doesn't fit in datatype uInt16");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
-        return static_cast<uInt16>(x);
-      });
+    packedData.UnpackTo(request);
+      auto write_array_raw = request->write_array();
+      auto write_array = std::vector<uInt16>();
+      write_array.reserve(write_array_raw.size());
+      std::transform(
+        write_array_raw.begin(),
+        write_array_raw.end(),
+        std::back_inserter(write_array),
+        [](auto x) {
+              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uInt16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uInt16>(x);
+        });
+
 
     auto status = library->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
 
@@ -1535,15 +1652,191 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
-    
-    auto data_array = arrayu32data_message.value();
-    auto write_array = reinterpret_cast<const uInt32*>(arrayu32data_message.value().data());
-    auto size = data_array.size();
+    packedData.UnpackTo(request);
+      auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
 
     auto status = library->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteCtrFreq(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteCtrFreqData* function_data = static_cast<MonikerWriteCtrFreqData*>(data);
+    auto library = function_data->library;
+    auto response = &function_data->response;
+    auto task = function_data->task;
+    auto num_samps_per_chan = function_data->num_samps_per_chan;
+    auto auto_start = function_data->auto_start;
+    auto timeout = function_data->timeout;
+    auto data_layout = function_data->data_layout;
+    auto reserved = function_data->reserved;
+    int32 num_samps_per_chan_written {};
+    auto request = &function_data->request;
+
+    packedData.UnpackTo(request);
+      auto frequency = const_cast<const float64*>(request->frequency().data());
+      auto duty_cycle = const_cast<const float64*>(request->duty_cycle().data());
+
+    auto status = library->WriteCtrFreq(task, num_samps_per_chan, auto_start, timeout, data_layout, frequency, duty_cycle, &num_samps_per_chan_written, reserved);
+
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteCtrFreqScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteCtrFreqScalarData* function_data = static_cast<MonikerWriteCtrFreqScalarData*>(data);
+    auto library = function_data->library;
+    auto response = &function_data->response;
+    auto task = function_data->task;
+    auto auto_start = function_data->auto_start;
+    auto timeout = function_data->timeout;
+    auto reserved = function_data->reserved;
+    auto request = &function_data->request;
+
+    packedData.UnpackTo(request);
+      float64 frequency = request->frequency();
+      float64 duty_cycle = request->duty_cycle();
+
+    auto status = library->WriteCtrFreqScalar(task, auto_start, timeout, frequency, duty_cycle, reserved);
+
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteCtrTicks(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteCtrTicksData* function_data = static_cast<MonikerWriteCtrTicksData*>(data);
+    auto library = function_data->library;
+    auto response = &function_data->response;
+    auto task = function_data->task;
+    auto num_samps_per_chan = function_data->num_samps_per_chan;
+    auto auto_start = function_data->auto_start;
+    auto timeout = function_data->timeout;
+    auto data_layout = function_data->data_layout;
+    auto reserved = function_data->reserved;
+    int32 num_samps_per_chan_written {};
+    auto request = &function_data->request;
+
+    packedData.UnpackTo(request);
+      auto high_ticks = reinterpret_cast<const uInt32*>(request->high_ticks().data());
+      auto low_ticks = reinterpret_cast<const uInt32*>(request->low_ticks().data());
+
+    auto status = library->WriteCtrTicks(task, num_samps_per_chan, auto_start, timeout, data_layout, high_ticks, low_ticks, &num_samps_per_chan_written, reserved);
+
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteCtrTicksScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteCtrTicksScalarData* function_data = static_cast<MonikerWriteCtrTicksScalarData*>(data);
+    auto library = function_data->library;
+    auto response = &function_data->response;
+    auto task = function_data->task;
+    auto auto_start = function_data->auto_start;
+    auto timeout = function_data->timeout;
+    auto reserved = function_data->reserved;
+    auto request = &function_data->request;
+
+    packedData.UnpackTo(request);
+      uInt32 high_ticks = request->high_ticks();
+      uInt32 low_ticks = request->low_ticks();
+
+    auto status = library->WriteCtrTicksScalar(task, auto_start, timeout, high_ticks, low_ticks, reserved);
+
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteCtrTime(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteCtrTimeData* function_data = static_cast<MonikerWriteCtrTimeData*>(data);
+    auto library = function_data->library;
+    auto response = &function_data->response;
+    auto task = function_data->task;
+    auto num_samps_per_chan = function_data->num_samps_per_chan;
+    auto auto_start = function_data->auto_start;
+    auto timeout = function_data->timeout;
+    auto data_layout = function_data->data_layout;
+    auto reserved = function_data->reserved;
+    int32 num_samps_per_chan_written {};
+    auto request = &function_data->request;
+
+    packedData.UnpackTo(request);
+      auto high_time = const_cast<const float64*>(request->high_time().data());
+      auto low_time = const_cast<const float64*>(request->low_time().data());
+
+    auto status = library->WriteCtrTime(task, num_samps_per_chan, auto_start, timeout, data_layout, high_time, low_time, &num_samps_per_chan_written, reserved);
+
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteCtrTimeScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteCtrTimeScalarData* function_data = static_cast<MonikerWriteCtrTimeScalarData*>(data);
+    auto library = function_data->library;
+    auto response = &function_data->response;
+    auto task = function_data->task;
+    auto auto_start = function_data->auto_start;
+    auto timeout = function_data->timeout;
+    auto reserved = function_data->reserved;
+    auto request = &function_data->request;
+
+    packedData.UnpackTo(request);
+      float64 high_time = request->high_time();
+      float64 low_time = request->low_time();
+
+    auto status = library->WriteCtrTimeScalar(task, auto_start, timeout, high_time, low_time, reserved);
+
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteDigitalLines(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteDigitalLinesData* function_data = static_cast<MonikerWriteDigitalLinesData*>(data);
+    auto library = function_data->library;
+    auto response = &function_data->response;
+    auto task = function_data->task;
+    auto num_samps_per_chan = function_data->num_samps_per_chan;
+    auto auto_start = function_data->auto_start;
+    auto timeout = function_data->timeout;
+    auto data_layout = function_data->data_layout;
+    auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
+    auto request = &function_data->request;
+
+    packedData.UnpackTo(request);
+      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+
+    auto status = library->WriteDigitalLines(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
     if (status < 0)
     {
@@ -1561,10 +1854,10 @@ namespace nidaqmx_grpc {
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
+    auto request = &function_data->request;
 
-    U32Data u32data_message;
-    packedData.UnpackTo(&u32data_message);
-    auto value = u32data_message.value();
+    packedData.UnpackTo(request);
+      uInt32 value = request->value();
 
     auto status = library->WriteDigitalScalarU32(task, auto_start, timeout, value, reserved);
 
@@ -1587,25 +1880,27 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    ArrayU16Data arrayu16data_message;
-    packedData.UnpackTo(&arrayu16data_message);
-    
-    auto data_array = arrayu16data_message.value();
-    auto write_array = std::vector<uInt16>();
-    auto size = data_array.size();
-    write_array.reserve(size);
-    std::transform(
-      data_array.begin(),
-      data_array.end(),
-      std::back_inserter(write_array),
-      [](auto x) {
-        if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
-          std::string message("value " + std::to_string(x) + " doesn't fit in datatype uInt16");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
-        return static_cast<uInt16>(x);
-      });
+    packedData.UnpackTo(request);
+      auto write_array_raw = request->write_array();
+      auto write_array = std::vector<uInt16>();
+      write_array.reserve(write_array_raw.size());
+      std::transform(
+        write_array_raw.begin(),
+        write_array_raw.end(),
+        std::back_inserter(write_array),
+        [](auto x) {
+              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
+                  std::string message("value ");
+                  message.append(std::to_string(x));
+                  message.append(" doesn't fit in datatype ");
+                  message.append("uInt16");
+                  throw nidevice_grpc::ValueOutOfRangeException(message);
+              }
+              return static_cast<uInt16>(x);
+        });
+
 
     auto status = library->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
 
@@ -1628,15 +1923,63 @@ namespace nidaqmx_grpc {
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
     int32 samps_per_chan_written {};
+    auto request = &function_data->request;
 
-    ArrayU32Data arrayu32data_message;
-    packedData.UnpackTo(&arrayu32data_message);
-    
-    auto data_array = arrayu32data_message.value();
-    auto write_array = reinterpret_cast<const uInt32*>(arrayu32data_message.value().data());
-    auto size = data_array.size();
+    packedData.UnpackTo(request);
+      auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
 
     auto status = library->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteDigitalU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteDigitalU8Data* function_data = static_cast<MonikerWriteDigitalU8Data*>(data);
+    auto library = function_data->library;
+    auto response = &function_data->response;
+    auto task = function_data->task;
+    auto num_samps_per_chan = function_data->num_samps_per_chan;
+    auto auto_start = function_data->auto_start;
+    auto timeout = function_data->timeout;
+    auto data_layout = function_data->data_layout;
+    auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
+    auto request = &function_data->request;
+
+    packedData.UnpackTo(request);
+      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+
+    auto status = library->WriteDigitalU8(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
+
+    if (status < 0)
+    {
+      return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
+    }
+    return ::grpc::Status::OK;
+}
+
+::grpc::Status MonikerWriteRaw(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+{
+    MonikerWriteRawData* function_data = static_cast<MonikerWriteRawData*>(data);
+    auto library = function_data->library;
+    auto response = &function_data->response;
+    auto task = function_data->task;
+    auto num_samps = function_data->num_samps;
+    auto auto_start = function_data->auto_start;
+    auto timeout = function_data->timeout;
+    auto reserved = function_data->reserved;
+    int32 samps_per_chan_written {};
+    auto request = &function_data->request;
+
+    packedData.UnpackTo(request);
+      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+
+    auto status = library->WriteRaw(task, num_samps, auto_start, timeout, write_array, &samps_per_chan_written, reserved);
 
     if (status < 0)
     {
@@ -22078,6 +22421,57 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::BeginWriteCtrFreq(::grpc::ServerContext* context, const BeginWriteCtrFreqRequest* request, BeginWriteCtrFreqResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::BeginWriteCtrFreqRequest::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteCtrFreqRequest::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteCtrFreqRequest::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto reserved = nullptr;
+
+      auto data = std::make_unique<MonikerWriteCtrFreqData>();
+      data->task = task;
+      data->num_samps_per_chan = num_samps_per_chan;
+      data->auto_start = auto_start;
+      data->timeout = timeout;
+      data->data_layout = data_layout;
+      data->reserved = reserved;
+      data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
+
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteCtrFreq", data.release(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::WriteCtrFreqScalar(::grpc::ServerContext* context, const WriteCtrFreqScalarRequest* request, WriteCtrFreqScalarResponse* response)
   {
     if (context->IsCancelled()) {
@@ -22096,6 +22490,38 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::BeginWriteCtrFreqScalar(::grpc::ServerContext* context, const BeginWriteCtrFreqScalarRequest* request, BeginWriteCtrFreqScalarResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+
+      auto data = std::make_unique<MonikerWriteCtrFreqScalarData>();
+      data->task = task;
+      data->auto_start = auto_start;
+      data->timeout = timeout;
+      data->reserved = reserved;
+      data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
+
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteCtrFreqScalar", data.release(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -22152,6 +22578,57 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::BeginWriteCtrTicks(::grpc::ServerContext* context, const BeginWriteCtrTicksRequest* request, BeginWriteCtrTicksResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::BeginWriteCtrTicksRequest::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteCtrTicksRequest::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteCtrTicksRequest::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto reserved = nullptr;
+
+      auto data = std::make_unique<MonikerWriteCtrTicksData>();
+      data->task = task;
+      data->num_samps_per_chan = num_samps_per_chan;
+      data->auto_start = auto_start;
+      data->timeout = timeout;
+      data->data_layout = data_layout;
+      data->reserved = reserved;
+      data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
+
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteCtrTicks", data.release(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::WriteCtrTicksScalar(::grpc::ServerContext* context, const WriteCtrTicksScalarRequest* request, WriteCtrTicksScalarResponse* response)
   {
     if (context->IsCancelled()) {
@@ -22170,6 +22647,38 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::BeginWriteCtrTicksScalar(::grpc::ServerContext* context, const BeginWriteCtrTicksScalarRequest* request, BeginWriteCtrTicksScalarResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+
+      auto data = std::make_unique<MonikerWriteCtrTicksScalarData>();
+      data->task = task;
+      data->auto_start = auto_start;
+      data->timeout = timeout;
+      data->reserved = reserved;
+      data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
+
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteCtrTicksScalar", data.release(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -22226,6 +22735,57 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::BeginWriteCtrTime(::grpc::ServerContext* context, const BeginWriteCtrTimeRequest* request, BeginWriteCtrTimeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::BeginWriteCtrTimeRequest::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteCtrTimeRequest::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteCtrTimeRequest::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto reserved = nullptr;
+
+      auto data = std::make_unique<MonikerWriteCtrTimeData>();
+      data->task = task;
+      data->num_samps_per_chan = num_samps_per_chan;
+      data->auto_start = auto_start;
+      data->timeout = timeout;
+      data->data_layout = data_layout;
+      data->reserved = reserved;
+      data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
+
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteCtrTime", data.release(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::WriteCtrTimeScalar(::grpc::ServerContext* context, const WriteCtrTimeScalarRequest* request, WriteCtrTimeScalarResponse* response)
   {
     if (context->IsCancelled()) {
@@ -22244,6 +22804,38 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::BeginWriteCtrTimeScalar(::grpc::ServerContext* context, const BeginWriteCtrTimeScalarRequest* request, BeginWriteCtrTimeScalarResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+
+      auto data = std::make_unique<MonikerWriteCtrTimeScalarData>();
+      data->task = task;
+      data->auto_start = auto_start;
+      data->timeout = timeout;
+      data->reserved = reserved;
+      data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
+
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteCtrTimeScalar", data.release(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -22290,6 +22882,57 @@ namespace nidaqmx_grpc {
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::BeginWriteDigitalLines(::grpc::ServerContext* context, const BeginWriteDigitalLinesRequest* request, BeginWriteDigitalLinesResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::BeginWriteDigitalLinesRequest::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteDigitalLinesRequest::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteDigitalLinesRequest::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto reserved = nullptr;
+
+      auto data = std::make_unique<MonikerWriteDigitalLinesData>();
+      data->task = task;
+      data->num_samps_per_chan = num_samps_per_chan;
+      data->auto_start = auto_start;
+      data->timeout = timeout;
+      data->data_layout = data_layout;
+      data->reserved = reserved;
+      data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
+
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteDigitalLines", data.release(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -22614,6 +23257,57 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::BeginWriteDigitalU8(::grpc::ServerContext* context, const BeginWriteDigitalU8Request* request, BeginWriteDigitalU8Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      int32 num_samps_per_chan = request->num_samps_per_chan();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      int32 data_layout;
+      switch (request->data_layout_enum_case()) {
+        case nidaqmx_grpc::BeginWriteDigitalU8Request::DataLayoutEnumCase::kDataLayout: {
+          data_layout = static_cast<int32>(request->data_layout());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteDigitalU8Request::DataLayoutEnumCase::kDataLayoutRaw: {
+          data_layout = static_cast<int32>(request->data_layout_raw());
+          break;
+        }
+        case nidaqmx_grpc::BeginWriteDigitalU8Request::DataLayoutEnumCase::DATA_LAYOUT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for data_layout was not specified or out of range");
+          break;
+        }
+      }
+
+      auto reserved = nullptr;
+
+      auto data = std::make_unique<MonikerWriteDigitalU8Data>();
+      data->task = task;
+      data->num_samps_per_chan = num_samps_per_chan;
+      data->auto_start = auto_start;
+      data->timeout = timeout;
+      data->data_layout = data_layout;
+      data->reserved = reserved;
+      data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
+
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteDigitalU8", data.release(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::WriteRaw(::grpc::ServerContext* context, const WriteRawRequest* request, WriteRawResponse* response)
   {
     if (context->IsCancelled()) {
@@ -22635,6 +23329,40 @@ namespace nidaqmx_grpc {
       }
       response->set_status(status);
       response->set_samps_per_chan_written(samps_per_chan_written);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::BeginWriteRaw(::grpc::ServerContext* context, const BeginWriteRawRequest* request, BeginWriteRawResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      int32 num_samps = request->num_samps();
+      bool32 auto_start = request->auto_start();
+      float64 timeout = request->timeout();
+      auto reserved = nullptr;
+
+      auto data = std::make_unique<MonikerWriteRawData>();
+      data->task = task;
+      data->num_samps = num_samps;
+      data->auto_start = auto_start;
+      data->timeout = timeout;
+      data->reserved = reserved;
+      data->library = std::shared_ptr<NiDAQmxLibraryInterface>(library_);
+
+      auto moniker = std::make_unique<ni::data_monikers::Moniker>();
+      ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteRaw", data.release(), *moniker);
+      response->set_allocated_moniker(moniker.release());
+      response->set_status(0);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

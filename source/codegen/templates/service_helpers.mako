@@ -323,7 +323,8 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
 ${initialize_moniker_input_parameters(moniker_input_parameters)}\
 ${initialize_output_params(output_parameters)}\
     % if streaming_param and streaming_param['direction'] == 'in':
-${streaming_handle_in_direction(streaming_param)}\
+    auto request = &function_data->request;
+${streaming_handle_in_direction(functions, function_name)}\
     % endif
 
     auto status = library->${non_streaming_function_name}(${arg_string});
@@ -349,72 +350,15 @@ ${initialize_moniker_struct(struct_name, moniker_input_parameters, output_parame
       return ::grpc::Status::OK;\
 </%def>
 
-<%def name="streaming_handle_in_direction(streaming_param)">
+<%def name="streaming_handle_in_direction(functions, begin_function_name)">
 <%
-  streaming_type = streaming_param['type']
-  grpc_streaming_type = streaming_param['grpc_streaming_type']
-  is_array = common_helpers.is_array(streaming_type)
+  request_message_type = common_helpers.get_data_moniker_request_message_type(begin_function_name)
+  non_streaming_function_name = begin_function_name.replace("Begin", "")
+  input_parameters, output_parameters = common_helpers.get_data_moniker_function_parameters(functions[non_streaming_function_name])
+  common_helpers.extend_input_params_with_size_params(input_parameters, functions[non_streaming_function_name])\
 %>\
-    ${grpc_streaming_type} ${grpc_streaming_type.lower()}_message;
-    packedData.UnpackTo(&${grpc_streaming_type.lower()}_message);
-% if is_array:
-    ${streaming_handle_in_direction_array(grpc_streaming_type, streaming_param)}\
-% else:
-    ${streaming_handle_in_direction_scaler(grpc_streaming_type, streaming_type, streaming_param)}\
-% endif
-</%def>
-
-<%def name="streaming_handle_in_direction_scaler(grpc_streaming_type, streaming_type, streaming_param)">\
-<%
-   is_coerced = service_helpers.is_scalar_input_that_needs_coercion(streaming_param)
-%>\
-auto value = ${grpc_streaming_type.lower()}_message.value();
-% if is_coerced:
-    if (value < std::numeric_limits<${streaming_type}>::min() || value > std::numeric_limits<${streaming_type}>::max()) {
-      std::string message("value " + std::to_string(value) + " doesn't fit in datatype ${streaming_type}");
-      throw nidevice_grpc::ValueOutOfRangeException(message);
-    }
-% endif
-</%def>
-
-<%def name="streaming_handle_in_direction_array(grpc_streaming_type, streaming_param)">
-<%
-   is_coerced = service_helpers.is_input_array_that_needs_coercion(streaming_param)
-   c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(streaming_param)
-   streaming_param_name = common_helpers.camel_to_snake(streaming_param['name'])
-   underlying_param_type = common_helpers.get_underlying_type_name(streaming_param["type"])
-   underlying_param_type_with_no_qualifiers = underlying_param_type.replace("const ", "")
-
-%>\
-% if common_helpers.supports_standard_copy_conversion_routines(streaming_param):
-    auto data_array = ${grpc_streaming_type.lower()}_message.value();
-    std::vector<${underlying_param_type}> ${streaming_param_name}(data_array.begin(), data_array.end());
-    auto size = data_array.size();
-% elif is_coerced:
-    auto data_array = ${grpc_streaming_type.lower()}_message.value();
-    auto ${streaming_param_name} = std::vector<${c_element_type_that_needs_coercion}>();
-    auto size = data_array.size();
-    ${streaming_param_name}.reserve(size);
-    std::transform(
-      data_array.begin(),
-      data_array.end(),
-      std::back_inserter(${streaming_param_name}),
-      [](auto x) {
-        if (x < std::numeric_limits<${c_element_type_that_needs_coercion}>::min() || x > std::numeric_limits<${c_element_type_that_needs_coercion}>::max()) {
-          std::string message("value " + std::to_string(x) + " doesn't fit in datatype ${c_element_type_that_needs_coercion}");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-        }
-        return static_cast<${c_element_type_that_needs_coercion}>(x);
-      });
-% else:
-    auto data_array = ${grpc_streaming_type.lower()}_message.value();
-% if common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(underlying_param_type_with_no_qualifiers):
-    auto ${streaming_param_name} = reinterpret_cast<${underlying_param_type}*>(${grpc_streaming_type.lower()}_message.value().data());
-% else:
-    auto ${streaming_param_name} = const_cast<${underlying_param_type}*>(${grpc_streaming_type.lower()}_message.value().data());
-% endif
-    auto size = data_array.size();
-% endif
+    packedData.UnpackTo(request);
+${initialize_input_params(non_streaming_function_name, input_parameters)}\
 </%def>
 
 <%def name="populate_moniker_response_for_out_functions(output_parameters, streaming_param)">\
@@ -457,7 +401,7 @@ ${set_response_values(output_parameters=output_parameters, init_method=false)}\
 % for param in output_array_params:
 <%
   grpc_field_name = common_helpers.get_grpc_field_name(param)
-  size_param_name = service_helpers.get_size_param_name(param)
+  size_param_name = common_helpers.camel_to_snake(common_helpers.get_size_param(param))
 %>\
 % if common_helpers.is_string_arg(param):
       data->response.mutable_${grpc_field_name}()->reserve(request->${size_param_name}());

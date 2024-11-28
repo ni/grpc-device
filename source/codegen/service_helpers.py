@@ -707,14 +707,3 @@ def get_protobuf_cpplib_type(grpc_type: str) -> str:
         return "std::string"
 
     return grpc_type
-
-
-def get_size_param_name(streaming_param: dict) -> str:
-    """Get the size parameter name for the given streaming parameter.
-
-    The size is only present for read arrays, which have an "out" direction.
-    """
-    if common_helpers.is_array(streaming_param["type"]) and streaming_param["direction"] == "out":
-        return common_helpers.camel_to_snake(streaming_param["size"]["value"])
-    else:
-        return None

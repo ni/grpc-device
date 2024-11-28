@@ -438,12 +438,19 @@ service NiDAQmx {
   rpc WriteBinaryU32(WriteBinaryU32Request) returns (WriteBinaryU32Response);
   rpc BeginWriteBinaryU32(BeginWriteBinaryU32Request) returns (BeginWriteBinaryU32Response);
   rpc WriteCtrFreq(WriteCtrFreqRequest) returns (WriteCtrFreqResponse);
+  rpc BeginWriteCtrFreq(BeginWriteCtrFreqRequest) returns (BeginWriteCtrFreqResponse);
   rpc WriteCtrFreqScalar(WriteCtrFreqScalarRequest) returns (WriteCtrFreqScalarResponse);
+  rpc BeginWriteCtrFreqScalar(BeginWriteCtrFreqScalarRequest) returns (BeginWriteCtrFreqScalarResponse);
   rpc WriteCtrTicks(WriteCtrTicksRequest) returns (WriteCtrTicksResponse);
+  rpc BeginWriteCtrTicks(BeginWriteCtrTicksRequest) returns (BeginWriteCtrTicksResponse);
   rpc WriteCtrTicksScalar(WriteCtrTicksScalarRequest) returns (WriteCtrTicksScalarResponse);
+  rpc BeginWriteCtrTicksScalar(BeginWriteCtrTicksScalarRequest) returns (BeginWriteCtrTicksScalarResponse);
   rpc WriteCtrTime(WriteCtrTimeRequest) returns (WriteCtrTimeResponse);
+  rpc BeginWriteCtrTime(BeginWriteCtrTimeRequest) returns (BeginWriteCtrTimeResponse);
   rpc WriteCtrTimeScalar(WriteCtrTimeScalarRequest) returns (WriteCtrTimeScalarResponse);
+  rpc BeginWriteCtrTimeScalar(BeginWriteCtrTimeScalarRequest) returns (BeginWriteCtrTimeScalarResponse);
   rpc WriteDigitalLines(WriteDigitalLinesRequest) returns (WriteDigitalLinesResponse);
+  rpc BeginWriteDigitalLines(BeginWriteDigitalLinesRequest) returns (BeginWriteDigitalLinesResponse);
   rpc WriteDigitalScalarU32(WriteDigitalScalarU32Request) returns (WriteDigitalScalarU32Response);
   rpc BeginWriteDigitalScalarU32(BeginWriteDigitalScalarU32Request) returns (BeginWriteDigitalScalarU32Response);
   rpc WriteDigitalU16(WriteDigitalU16Request) returns (WriteDigitalU16Response);
@@ -451,7 +458,9 @@ service NiDAQmx {
   rpc WriteDigitalU32(WriteDigitalU32Request) returns (WriteDigitalU32Response);
   rpc BeginWriteDigitalU32(BeginWriteDigitalU32Request) returns (BeginWriteDigitalU32Response);
   rpc WriteDigitalU8(WriteDigitalU8Request) returns (WriteDigitalU8Response);
+  rpc BeginWriteDigitalU8(BeginWriteDigitalU8Request) returns (BeginWriteDigitalU8Response);
   rpc WriteRaw(WriteRawRequest) returns (WriteRawResponse);
+  rpc BeginWriteRaw(BeginWriteRawRequest) returns (BeginWriteRawResponse);
   rpc WriteToTEDSFromArray(WriteToTEDSFromArrayRequest) returns (WriteToTEDSFromArrayResponse);
   rpc WriteToTEDSFromFile(WriteToTEDSFromFileRequest) returns (WriteToTEDSFromFileResponse);
 }
@@ -11033,6 +11042,32 @@ message WriteCtrFreqResponse {
   int32 num_samps_per_chan_written = 2;
 }
 
+message BeginWriteCtrFreqRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteCtrFreqResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message MonikerWriteCtrFreqRequest {
+  repeated double frequency = 1;
+  repeated double duty_cycle = 2;
+}
+
+message MonikerWriteCtrFreqResponse {
+  int32 status = 1;
+  int32 num_samps_per_chan_written = 2;
+}
+
 message WriteCtrFreqScalarRequest {
   nidevice_grpc.Session task = 1;
   bool auto_start = 2;
@@ -11042,6 +11077,26 @@ message WriteCtrFreqScalarRequest {
 }
 
 message WriteCtrFreqScalarResponse {
+  int32 status = 1;
+}
+
+message BeginWriteCtrFreqScalarRequest {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+}
+
+message BeginWriteCtrFreqScalarResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message MonikerWriteCtrFreqScalarRequest {
+  double frequency = 1;
+  double duty_cycle = 2;
+}
+
+message MonikerWriteCtrFreqScalarResponse {
   int32 status = 1;
 }
 
@@ -11063,6 +11118,32 @@ message WriteCtrTicksResponse {
   int32 num_samps_per_chan_written = 2;
 }
 
+message BeginWriteCtrTicksRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteCtrTicksResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message MonikerWriteCtrTicksRequest {
+  repeated uint32 high_ticks = 1;
+  repeated uint32 low_ticks = 2;
+}
+
+message MonikerWriteCtrTicksResponse {
+  int32 status = 1;
+  int32 num_samps_per_chan_written = 2;
+}
+
 message WriteCtrTicksScalarRequest {
   nidevice_grpc.Session task = 1;
   bool auto_start = 2;
@@ -11072,6 +11153,26 @@ message WriteCtrTicksScalarRequest {
 }
 
 message WriteCtrTicksScalarResponse {
+  int32 status = 1;
+}
+
+message BeginWriteCtrTicksScalarRequest {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+}
+
+message BeginWriteCtrTicksScalarResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message MonikerWriteCtrTicksScalarRequest {
+  uint32 high_ticks = 1;
+  uint32 low_ticks = 2;
+}
+
+message MonikerWriteCtrTicksScalarResponse {
   int32 status = 1;
 }
 
@@ -11093,6 +11194,32 @@ message WriteCtrTimeResponse {
   int32 num_samps_per_chan_written = 2;
 }
 
+message BeginWriteCtrTimeRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteCtrTimeResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message MonikerWriteCtrTimeRequest {
+  repeated double high_time = 1;
+  repeated double low_time = 2;
+}
+
+message MonikerWriteCtrTimeResponse {
+  int32 status = 1;
+  int32 num_samps_per_chan_written = 2;
+}
+
 message WriteCtrTimeScalarRequest {
   nidevice_grpc.Session task = 1;
   bool auto_start = 2;
@@ -11102,6 +11229,26 @@ message WriteCtrTimeScalarRequest {
 }
 
 message WriteCtrTimeScalarResponse {
+  int32 status = 1;
+}
+
+message BeginWriteCtrTimeScalarRequest {
+  nidevice_grpc.Session task = 1;
+  bool auto_start = 2;
+  double timeout = 3;
+}
+
+message BeginWriteCtrTimeScalarResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message MonikerWriteCtrTimeScalarRequest {
+  double high_time = 1;
+  double low_time = 2;
+}
+
+message MonikerWriteCtrTimeScalarResponse {
   int32 status = 1;
 }
 
@@ -11118,6 +11265,31 @@ message WriteDigitalLinesRequest {
 }
 
 message WriteDigitalLinesResponse {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message BeginWriteDigitalLinesRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteDigitalLinesResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message MonikerWriteDigitalLinesRequest {
+  bytes write_array = 1;
+}
+
+message MonikerWriteDigitalLinesResponse {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
 }
@@ -11253,6 +11425,31 @@ message WriteDigitalU8Response {
   int32 samps_per_chan_written = 2;
 }
 
+message BeginWriteDigitalU8Request {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+  oneof data_layout_enum {
+    GroupBy data_layout = 5;
+    int32 data_layout_raw = 6;
+  }
+}
+
+message BeginWriteDigitalU8Response {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message MonikerWriteDigitalU8Request {
+  bytes write_array = 1;
+}
+
+message MonikerWriteDigitalU8Response {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
 message WriteRawRequest {
   nidevice_grpc.Session task = 1;
   int32 num_samps = 2;
@@ -11262,6 +11459,27 @@ message WriteRawRequest {
 }
 
 message WriteRawResponse {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
+}
+
+message BeginWriteRawRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps = 2;
+  bool auto_start = 3;
+  double timeout = 4;
+}
+
+message BeginWriteRawResponse {
+  int32 status = 1;
+  ni.data_monikers.Moniker moniker = 2;
+}
+
+message MonikerWriteRawRequest {
+  bytes write_array = 1;
+}
+
+message MonikerWriteRawResponse {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
 }

@@ -68,9 +68,18 @@ void RegisterMonikerEndpoints();
 ::grpc::Status MonikerWriteBinaryI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteBinaryU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteBinaryU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteCtrFreq(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteCtrFreqScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteCtrTicks(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteCtrTicksScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteCtrTime(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteCtrTimeScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteDigitalLines(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteDigitalScalarU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteDigitalU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 ::grpc::Status MonikerWriteDigitalU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteDigitalU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
+::grpc::Status MonikerWriteRaw(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData);
 
 class NiDAQmxService final : public NiDAQmx::WithCallbackMethod_RegisterSignalEvent<NiDAQmx::WithCallbackMethod_RegisterEveryNSamplesEvent<NiDAQmx::WithCallbackMethod_RegisterDoneEvent<NiDAQmx::Service>>> {
 public:
@@ -502,12 +511,19 @@ public:
   ::grpc::Status WriteBinaryU32(::grpc::ServerContext* context, const WriteBinaryU32Request* request, WriteBinaryU32Response* response) override;
   ::grpc::Status BeginWriteBinaryU32(::grpc::ServerContext* context, const BeginWriteBinaryU32Request* request, BeginWriteBinaryU32Response* response) override;
   ::grpc::Status WriteCtrFreq(::grpc::ServerContext* context, const WriteCtrFreqRequest* request, WriteCtrFreqResponse* response) override;
+  ::grpc::Status BeginWriteCtrFreq(::grpc::ServerContext* context, const BeginWriteCtrFreqRequest* request, BeginWriteCtrFreqResponse* response) override;
   ::grpc::Status WriteCtrFreqScalar(::grpc::ServerContext* context, const WriteCtrFreqScalarRequest* request, WriteCtrFreqScalarResponse* response) override;
+  ::grpc::Status BeginWriteCtrFreqScalar(::grpc::ServerContext* context, const BeginWriteCtrFreqScalarRequest* request, BeginWriteCtrFreqScalarResponse* response) override;
   ::grpc::Status WriteCtrTicks(::grpc::ServerContext* context, const WriteCtrTicksRequest* request, WriteCtrTicksResponse* response) override;
+  ::grpc::Status BeginWriteCtrTicks(::grpc::ServerContext* context, const BeginWriteCtrTicksRequest* request, BeginWriteCtrTicksResponse* response) override;
   ::grpc::Status WriteCtrTicksScalar(::grpc::ServerContext* context, const WriteCtrTicksScalarRequest* request, WriteCtrTicksScalarResponse* response) override;
+  ::grpc::Status BeginWriteCtrTicksScalar(::grpc::ServerContext* context, const BeginWriteCtrTicksScalarRequest* request, BeginWriteCtrTicksScalarResponse* response) override;
   ::grpc::Status WriteCtrTime(::grpc::ServerContext* context, const WriteCtrTimeRequest* request, WriteCtrTimeResponse* response) override;
+  ::grpc::Status BeginWriteCtrTime(::grpc::ServerContext* context, const BeginWriteCtrTimeRequest* request, BeginWriteCtrTimeResponse* response) override;
   ::grpc::Status WriteCtrTimeScalar(::grpc::ServerContext* context, const WriteCtrTimeScalarRequest* request, WriteCtrTimeScalarResponse* response) override;
+  ::grpc::Status BeginWriteCtrTimeScalar(::grpc::ServerContext* context, const BeginWriteCtrTimeScalarRequest* request, BeginWriteCtrTimeScalarResponse* response) override;
   ::grpc::Status WriteDigitalLines(::grpc::ServerContext* context, const WriteDigitalLinesRequest* request, WriteDigitalLinesResponse* response) override;
+  ::grpc::Status BeginWriteDigitalLines(::grpc::ServerContext* context, const BeginWriteDigitalLinesRequest* request, BeginWriteDigitalLinesResponse* response) override;
   ::grpc::Status WriteDigitalScalarU32(::grpc::ServerContext* context, const WriteDigitalScalarU32Request* request, WriteDigitalScalarU32Response* response) override;
   ::grpc::Status BeginWriteDigitalScalarU32(::grpc::ServerContext* context, const BeginWriteDigitalScalarU32Request* request, BeginWriteDigitalScalarU32Response* response) override;
   ::grpc::Status WriteDigitalU16(::grpc::ServerContext* context, const WriteDigitalU16Request* request, WriteDigitalU16Response* response) override;
@@ -515,7 +531,9 @@ public:
   ::grpc::Status WriteDigitalU32(::grpc::ServerContext* context, const WriteDigitalU32Request* request, WriteDigitalU32Response* response) override;
   ::grpc::Status BeginWriteDigitalU32(::grpc::ServerContext* context, const BeginWriteDigitalU32Request* request, BeginWriteDigitalU32Response* response) override;
   ::grpc::Status WriteDigitalU8(::grpc::ServerContext* context, const WriteDigitalU8Request* request, WriteDigitalU8Response* response) override;
+  ::grpc::Status BeginWriteDigitalU8(::grpc::ServerContext* context, const BeginWriteDigitalU8Request* request, BeginWriteDigitalU8Response* response) override;
   ::grpc::Status WriteRaw(::grpc::ServerContext* context, const WriteRawRequest* request, WriteRawResponse* response) override;
+  ::grpc::Status BeginWriteRaw(::grpc::ServerContext* context, const BeginWriteRawRequest* request, BeginWriteRawResponse* response) override;
   ::grpc::Status WriteToTEDSFromArray(::grpc::ServerContext* context, const WriteToTEDSFromArrayRequest* request, WriteToTEDSFromArrayResponse* response) override;
   ::grpc::Status WriteToTEDSFromFile(::grpc::ServerContext* context, const WriteToTEDSFromFileRequest* request, WriteToTEDSFromFileResponse* response) override;
 private:
