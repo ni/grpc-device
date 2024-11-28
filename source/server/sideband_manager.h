@@ -7,8 +7,8 @@
 
 class SidebandManager {
 public:
-    void start_sideband_threads(const std::string& address, int port);
-    void stop_sideband_threads();
+    void start_sideband_thread(const std::string& address, int port);
+    void stop_sideband_thread();
 
 private:
     std::atomic<bool> stop_flag {false};

@@ -75,7 +75,7 @@ SidebandManager sideband_manager;
 static void StopServer()
 {
   std::lock_guard<std::mutex> guard(server_mutex);
-  sideband_manager.stop_sideband_threads();
+  sideband_manager.stop_sideband_thread();
   shutdown = true;
   if (server) {
     server->Shutdown();
@@ -115,7 +115,7 @@ static void RunServer(const ServerConfiguration& config)
     }
     server = builder.BuildAndStart();
     if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
-      sideband_manager.start_sideband_threads(config.sideband_address.c_str(), config.sideband_port);
+      sideband_manager.start_sideband_thread(config.sideband_address.c_str(), config.sideband_port);
     }
   }
 
