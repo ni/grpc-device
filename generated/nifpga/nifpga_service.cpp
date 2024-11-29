@@ -475,8 +475,8 @@ namespace nifpga_grpc {
       ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteU8", MonikerWriteU8);
   }
 
-::grpc::Status MonikerReadArrayBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayBoolData* function_data = static_cast<MonikerReadArrayBoolData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -498,10 +498,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArrayDbl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayDbl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayDblData* function_data = static_cast<MonikerReadArrayDblData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -523,10 +523,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayI16Data* function_data = static_cast<MonikerReadArrayI16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -540,15 +540,15 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_array()->Clear();
+      response->mutable_array()->Reserve(size);
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+        [&](auto x) {
+            return x;
+        });
       packedData.PackFrom(*response);
     }
     else
@@ -556,10 +556,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayI32Data* function_data = static_cast<MonikerReadArrayI32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -581,10 +581,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayI64Data* function_data = static_cast<MonikerReadArrayI64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -606,10 +606,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArrayI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayI8Data* function_data = static_cast<MonikerReadArrayI8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -623,15 +623,15 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_array()->Clear();
+      response->mutable_array()->Reserve(size);
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+        [&](auto x) {
+            return x;
+        });
       packedData.PackFrom(*response);
     }
     else
@@ -639,10 +639,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArraySgl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArraySgl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArraySglData* function_data = static_cast<MonikerReadArraySglData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -664,10 +664,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArrayU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayU16Data* function_data = static_cast<MonikerReadArrayU16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -681,15 +681,15 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_array()->Clear();
+      response->mutable_array()->Reserve(size);
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+        [&](auto x) {
+            return x;
+        });
       packedData.PackFrom(*response);
     }
     else
@@ -697,10 +697,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayU32Data* function_data = static_cast<MonikerReadArrayU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -722,10 +722,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayU64Data* function_data = static_cast<MonikerReadArrayU64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -747,10 +747,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadArrayU8Data* function_data = static_cast<MonikerReadArrayU8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -764,15 +764,15 @@ namespace nifpga_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_array()->Clear();
+      response->mutable_array()->Reserve(size);
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+        [&](auto x) {
+            return x;
+        });
       packedData.PackFrom(*response);
     }
     else
@@ -780,10 +780,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadBoolData* function_data = static_cast<MonikerReadBoolData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -804,10 +804,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadDbl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadDbl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadDblData* function_data = static_cast<MonikerReadDblData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -828,10 +828,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadI16Data* function_data = static_cast<MonikerReadI16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -852,10 +852,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadI32Data* function_data = static_cast<MonikerReadI32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -876,10 +876,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadI64Data* function_data = static_cast<MonikerReadI64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -900,10 +900,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadI8Data* function_data = static_cast<MonikerReadI8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -924,10 +924,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadSgl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadSgl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadSglData* function_data = static_cast<MonikerReadSglData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -948,10 +948,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadU16Data* function_data = static_cast<MonikerReadU16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -972,10 +972,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadU32Data* function_data = static_cast<MonikerReadU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -996,10 +996,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadU64Data* function_data = static_cast<MonikerReadU64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1020,10 +1020,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadU8Data* function_data = static_cast<MonikerReadU8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1044,10 +1044,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayBoolData* function_data = static_cast<MonikerWriteArrayBoolData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1056,8 +1056,8 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array = convert_from_grpc<NiFpga_Bool>(request->array());
-      size_t size = static_cast<size_t>(request->array().size());
+    auto array = convert_from_grpc<NiFpga_Bool>(request->array());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayBool(session, control, array.data(), size);
 
@@ -1066,10 +1066,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayDbl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayDbl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayDblData* function_data = static_cast<MonikerWriteArrayDblData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1078,8 +1078,8 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array = const_cast<double*>(request->array().data());
-      size_t size = static_cast<size_t>(request->array().size());
+    auto array = const_cast<double*>(request->array().data());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayDbl(session, control, array, size);
 
@@ -1088,10 +1088,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayI16Data* function_data = static_cast<MonikerWriteArrayI16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1100,25 +1100,25 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array_raw = request->array();
-      auto array = std::vector<int16_t>();
-      array.reserve(array_raw.size());
-      std::transform(
-        array_raw.begin(),
-        array_raw.end(),
-        std::back_inserter(array),
-        [](auto x) {
-              if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
-                  std::string message("value ");
-                  message.append(std::to_string(x));
-                  message.append(" doesn't fit in datatype ");
-                  message.append("int16_t");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<int16_t>(x);
-        });
+    auto array_raw = request->array();
+    auto array = std::vector<int16_t>();
+    array.reserve(array_raw.size());
+    std::transform(
+      array_raw.begin(),
+      array_raw.end(),
+      std::back_inserter(array),
+      [](auto x) {
+            if (x < std::numeric_limits<int16_t>::min() || x > std::numeric_limits<int16_t>::max()) {
+                std::string message("value ");
+                message.append(std::to_string(x));
+                message.append(" doesn't fit in datatype ");
+                message.append("int16_t");
+                throw nidevice_grpc::ValueOutOfRangeException(message);
+            }
+            return static_cast<int16_t>(x);
+      });
 
-      size_t size = static_cast<size_t>(request->array().size());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayI16(session, control, array.data(), size);
 
@@ -1127,10 +1127,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayI32Data* function_data = static_cast<MonikerWriteArrayI32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1139,8 +1139,8 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array = const_cast<int32_t*>(request->array().data());
-      size_t size = static_cast<size_t>(request->array().size());
+    auto array = const_cast<int32_t*>(request->array().data());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayI32(session, control, array, size);
 
@@ -1149,10 +1149,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayI64Data* function_data = static_cast<MonikerWriteArrayI64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1161,8 +1161,8 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array = const_cast<int64_t*>(request->array().data());
-      size_t size = static_cast<size_t>(request->array().size());
+    auto array = const_cast<int64_t*>(request->array().data());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayI64(session, control, array, size);
 
@@ -1171,10 +1171,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayI8Data* function_data = static_cast<MonikerWriteArrayI8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1183,25 +1183,25 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array_raw = request->array();
-      auto array = std::vector<int8_t>();
-      array.reserve(array_raw.size());
-      std::transform(
-        array_raw.begin(),
-        array_raw.end(),
-        std::back_inserter(array),
-        [](auto x) {
-              if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
-                  std::string message("value ");
-                  message.append(std::to_string(x));
-                  message.append(" doesn't fit in datatype ");
-                  message.append("int8_t");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<int8_t>(x);
-        });
+    auto array_raw = request->array();
+    auto array = std::vector<int8_t>();
+    array.reserve(array_raw.size());
+    std::transform(
+      array_raw.begin(),
+      array_raw.end(),
+      std::back_inserter(array),
+      [](auto x) {
+            if (x < std::numeric_limits<int8_t>::min() || x > std::numeric_limits<int8_t>::max()) {
+                std::string message("value ");
+                message.append(std::to_string(x));
+                message.append(" doesn't fit in datatype ");
+                message.append("int8_t");
+                throw nidevice_grpc::ValueOutOfRangeException(message);
+            }
+            return static_cast<int8_t>(x);
+      });
 
-      size_t size = static_cast<size_t>(request->array().size());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayI8(session, control, array.data(), size);
 
@@ -1210,10 +1210,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArraySgl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArraySgl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArraySglData* function_data = static_cast<MonikerWriteArraySglData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1222,8 +1222,8 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array = const_cast<float*>(request->array().data());
-      size_t size = static_cast<size_t>(request->array().size());
+    auto array = const_cast<float*>(request->array().data());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArraySgl(session, control, array, size);
 
@@ -1232,10 +1232,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayU16Data* function_data = static_cast<MonikerWriteArrayU16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1244,25 +1244,25 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array_raw = request->array();
-      auto array = std::vector<uint16_t>();
-      array.reserve(array_raw.size());
-      std::transform(
-        array_raw.begin(),
-        array_raw.end(),
-        std::back_inserter(array),
-        [](auto x) {
-              if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
-                  std::string message("value ");
-                  message.append(std::to_string(x));
-                  message.append(" doesn't fit in datatype ");
-                  message.append("uint16_t");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<uint16_t>(x);
-        });
+    auto array_raw = request->array();
+    auto array = std::vector<uint16_t>();
+    array.reserve(array_raw.size());
+    std::transform(
+      array_raw.begin(),
+      array_raw.end(),
+      std::back_inserter(array),
+      [](auto x) {
+            if (x < std::numeric_limits<uint16_t>::min() || x > std::numeric_limits<uint16_t>::max()) {
+                std::string message("value ");
+                message.append(std::to_string(x));
+                message.append(" doesn't fit in datatype ");
+                message.append("uint16_t");
+                throw nidevice_grpc::ValueOutOfRangeException(message);
+            }
+            return static_cast<uint16_t>(x);
+      });
 
-      size_t size = static_cast<size_t>(request->array().size());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayU16(session, control, array.data(), size);
 
@@ -1271,10 +1271,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayU32Data* function_data = static_cast<MonikerWriteArrayU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1283,8 +1283,8 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array = const_cast<uint32_t*>(request->array().data());
-      size_t size = static_cast<size_t>(request->array().size());
+    auto array = const_cast<uint32_t*>(request->array().data());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayU32(session, control, array, size);
 
@@ -1293,10 +1293,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayU64Data* function_data = static_cast<MonikerWriteArrayU64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1305,8 +1305,8 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array = const_cast<uint64_t*>(request->array().data());
-      size_t size = static_cast<size_t>(request->array().size());
+    auto array = const_cast<uint64_t*>(request->array().data());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayU64(session, control, array, size);
 
@@ -1315,10 +1315,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteArrayU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteArrayU8Data* function_data = static_cast<MonikerWriteArrayU8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1327,25 +1327,25 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto array_raw = request->array();
-      auto array = std::vector<uint8_t>();
-      array.reserve(array_raw.size());
-      std::transform(
-        array_raw.begin(),
-        array_raw.end(),
-        std::back_inserter(array),
-        [](auto x) {
-              if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
-                  std::string message("value ");
-                  message.append(std::to_string(x));
-                  message.append(" doesn't fit in datatype ");
-                  message.append("uint8_t");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<uint8_t>(x);
-        });
+    auto array_raw = request->array();
+    auto array = std::vector<uint8_t>();
+    array.reserve(array_raw.size());
+    std::transform(
+      array_raw.begin(),
+      array_raw.end(),
+      std::back_inserter(array),
+      [](auto x) {
+            if (x < std::numeric_limits<uint8_t>::min() || x > std::numeric_limits<uint8_t>::max()) {
+                std::string message("value ");
+                message.append(std::to_string(x));
+                message.append(" doesn't fit in datatype ");
+                message.append("uint8_t");
+                throw nidevice_grpc::ValueOutOfRangeException(message);
+            }
+            return static_cast<uint8_t>(x);
+      });
 
-      size_t size = static_cast<size_t>(request->array().size());
+    size_t size = static_cast<size_t>(request->array().size());
 
     auto status = library->WriteArrayU8(session, control, array.data(), size);
 
@@ -1354,10 +1354,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteBool(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteBoolData* function_data = static_cast<MonikerWriteBoolData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1366,7 +1366,7 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      NiFpga_Bool value = request->value();
+    NiFpga_Bool value = request->value();
 
     auto status = library->WriteBool(session, control, value);
 
@@ -1375,10 +1375,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteDbl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteDbl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteDblData* function_data = static_cast<MonikerWriteDblData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1387,7 +1387,7 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      double value = request->value();
+    double value = request->value();
 
     auto status = library->WriteDbl(session, control, value);
 
@@ -1396,10 +1396,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteI16Data* function_data = static_cast<MonikerWriteI16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1408,15 +1408,15 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto value_raw = request->value();
-      if (value_raw < std::numeric_limits<int16_t>::min() || value_raw > std::numeric_limits<int16_t>::max()) {
-          std::string message("value ");
-          message.append(std::to_string(value_raw));
-          message.append(" doesn't fit in datatype ");
-          message.append("int16_t");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-      }
-      auto value = static_cast<int16_t>(value_raw);
+    auto value_raw = request->value();
+    if (value_raw < std::numeric_limits<int16_t>::min() || value_raw > std::numeric_limits<int16_t>::max()) {
+        std::string message("value ");
+        message.append(std::to_string(value_raw));
+        message.append(" doesn't fit in datatype ");
+        message.append("int16_t");
+        throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+    auto value = static_cast<int16_t>(value_raw);
 
 
     auto status = library->WriteI16(session, control, value);
@@ -1426,10 +1426,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteI32Data* function_data = static_cast<MonikerWriteI32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1438,7 +1438,7 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      int32_t value = request->value();
+    int32_t value = request->value();
 
     auto status = library->WriteI32(session, control, value);
 
@@ -1447,10 +1447,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteI64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteI64Data* function_data = static_cast<MonikerWriteI64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1459,7 +1459,7 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      int64_t value = request->value();
+    int64_t value = request->value();
 
     auto status = library->WriteI64(session, control, value);
 
@@ -1468,10 +1468,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteI8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteI8Data* function_data = static_cast<MonikerWriteI8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1480,15 +1480,15 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto value_raw = request->value();
-      if (value_raw < std::numeric_limits<int8_t>::min() || value_raw > std::numeric_limits<int8_t>::max()) {
-          std::string message("value ");
-          message.append(std::to_string(value_raw));
-          message.append(" doesn't fit in datatype ");
-          message.append("int8_t");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-      }
-      auto value = static_cast<int8_t>(value_raw);
+    auto value_raw = request->value();
+    if (value_raw < std::numeric_limits<int8_t>::min() || value_raw > std::numeric_limits<int8_t>::max()) {
+        std::string message("value ");
+        message.append(std::to_string(value_raw));
+        message.append(" doesn't fit in datatype ");
+        message.append("int8_t");
+        throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+    auto value = static_cast<int8_t>(value_raw);
 
 
     auto status = library->WriteI8(session, control, value);
@@ -1498,10 +1498,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteSgl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteSgl(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteSglData* function_data = static_cast<MonikerWriteSglData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1510,7 +1510,7 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      float value = request->value();
+    float value = request->value();
 
     auto status = library->WriteSgl(session, control, value);
 
@@ -1519,10 +1519,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteU16Data* function_data = static_cast<MonikerWriteU16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1531,15 +1531,15 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto value_raw = request->value();
-      if (value_raw < std::numeric_limits<uint16_t>::min() || value_raw > std::numeric_limits<uint16_t>::max()) {
-          std::string message("value ");
-          message.append(std::to_string(value_raw));
-          message.append(" doesn't fit in datatype ");
-          message.append("uint16_t");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-      }
-      auto value = static_cast<uint16_t>(value_raw);
+    auto value_raw = request->value();
+    if (value_raw < std::numeric_limits<uint16_t>::min() || value_raw > std::numeric_limits<uint16_t>::max()) {
+        std::string message("value ");
+        message.append(std::to_string(value_raw));
+        message.append(" doesn't fit in datatype ");
+        message.append("uint16_t");
+        throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+    auto value = static_cast<uint16_t>(value_raw);
 
 
     auto status = library->WriteU16(session, control, value);
@@ -1549,10 +1549,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteU32Data* function_data = static_cast<MonikerWriteU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1561,7 +1561,7 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      uint32_t value = request->value();
+    uint32_t value = request->value();
 
     auto status = library->WriteU32(session, control, value);
 
@@ -1570,10 +1570,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteU64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteU64Data* function_data = static_cast<MonikerWriteU64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1582,7 +1582,7 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      uint64_t value = request->value();
+    uint64_t value = request->value();
 
     auto status = library->WriteU64(session, control, value);
 
@@ -1591,10 +1591,10 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteU8Data* function_data = static_cast<MonikerWriteU8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1603,15 +1603,15 @@ namespace nifpga_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto value_raw = request->value();
-      if (value_raw < std::numeric_limits<uint8_t>::min() || value_raw > std::numeric_limits<uint8_t>::max()) {
-          std::string message("value ");
-          message.append(std::to_string(value_raw));
-          message.append(" doesn't fit in datatype ");
-          message.append("uint8_t");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-      }
-      auto value = static_cast<uint8_t>(value_raw);
+    auto value_raw = request->value();
+    if (value_raw < std::numeric_limits<uint8_t>::min() || value_raw > std::numeric_limits<uint8_t>::max()) {
+        std::string message("value ");
+        message.append(std::to_string(value_raw));
+        message.append(" doesn't fit in datatype ");
+        message.append("uint8_t");
+        throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+    auto value = static_cast<uint8_t>(value_raw);
 
 
     auto status = library->WriteU8(session, control, value);
@@ -1621,7 +1621,7 @@ namespace nifpga_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -2263,15 +2263,15 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_array()->Clear();
+      response->mutable_array()->Reserve(size);
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+        [&](auto x) {
+            return x;
+        });
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2445,15 +2445,15 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_array()->Clear();
+      response->mutable_array()->Reserve(size);
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+        [&](auto x) {
+            return x;
+        });
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2569,15 +2569,15 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_array()->Clear();
+      response->mutable_array()->Reserve(size);
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+        [&](auto x) {
+            return x;
+        });
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2751,15 +2751,15 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
-        response->mutable_array()->Clear();
-        response->mutable_array()->Reserve(size);
-        std::transform(
-          array.begin(),
-          array.begin() + size,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_array()->Clear();
+      response->mutable_array()->Reserve(size);
+      std::transform(
+        array.begin(),
+        array.begin() + size,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_array()),
+        [&](auto x) {
+            return x;
+        });
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -2983,15 +2983,15 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
-        response->mutable_data()->Clear();
-        response->mutable_data()->Reserve(number_of_elements);
-        std::transform(
-          data.begin(),
-          data.begin() + number_of_elements,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_data()->Clear();
+      response->mutable_data()->Reserve(number_of_elements);
+      std::transform(
+        data.begin(),
+        data.begin() + number_of_elements,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
+        [&](auto x) {
+            return x;
+        });
       response->set_elements_remaining(elements_remaining);
       return ::grpc::Status::OK;
     }
@@ -3078,15 +3078,15 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
-        response->mutable_data()->Clear();
-        response->mutable_data()->Reserve(number_of_elements);
-        std::transform(
-          data.begin(),
-          data.begin() + number_of_elements,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_data()->Clear();
+      response->mutable_data()->Reserve(number_of_elements);
+      std::transform(
+        data.begin(),
+        data.begin() + number_of_elements,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
+        [&](auto x) {
+            return x;
+        });
       response->set_elements_remaining(elements_remaining);
       return ::grpc::Status::OK;
     }
@@ -3144,15 +3144,15 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
-        response->mutable_data()->Clear();
-        response->mutable_data()->Reserve(number_of_elements);
-        std::transform(
-          data.begin(),
-          data.begin() + number_of_elements,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_data()->Clear();
+      response->mutable_data()->Reserve(number_of_elements);
+      std::transform(
+        data.begin(),
+        data.begin() + number_of_elements,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
+        [&](auto x) {
+            return x;
+        });
       response->set_elements_remaining(elements_remaining);
       return ::grpc::Status::OK;
     }
@@ -3239,15 +3239,15 @@ namespace nifpga_grpc {
         return ConvertApiErrorStatusForNiFpga_Session(context, status, session);
       }
       response->set_status(status);
-        response->mutable_data()->Clear();
-        response->mutable_data()->Reserve(number_of_elements);
-        std::transform(
-          data.begin(),
-          data.begin() + number_of_elements,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_data()->Clear();
+      response->mutable_data()->Reserve(number_of_elements);
+      std::transform(
+        data.begin(),
+        data.begin() + number_of_elements,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_data()),
+        [&](auto x) {
+            return x;
+        });
       response->set_elements_remaining(elements_remaining);
       return ::grpc::Status::OK;
     }

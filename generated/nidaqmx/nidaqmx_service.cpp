@@ -626,8 +626,8 @@ namespace nidaqmx_grpc {
       ni::data_monikers::DataMonikerService::RegisterMonikerEndpoint("MonikerWriteRaw", MonikerWriteRaw);
   }
 
-::grpc::Status MonikerReadAnalogF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadAnalogF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadAnalogF64Data* function_data = static_cast<MonikerReadAnalogF64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -654,10 +654,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadAnalogScalarF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadAnalogScalarF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadAnalogScalarF64Data* function_data = static_cast<MonikerReadAnalogScalarF64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -679,10 +679,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadBinaryI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadBinaryI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadBinaryI16Data* function_data = static_cast<MonikerReadBinaryI16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -700,15 +700,15 @@ namespace nidaqmx_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-        response->mutable_read_array()->Clear();
-        response->mutable_read_array()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array.begin(),
-          read_array.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_read_array()->Clear();
+      response->mutable_read_array()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array.begin(),
+        read_array.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
+        [&](auto x) {
+            return x;
+        });
       response->set_samps_per_chan_read(samps_per_chan_read);
       packedData.PackFrom(*response);
     }
@@ -717,10 +717,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadBinaryI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadBinaryI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadBinaryI32Data* function_data = static_cast<MonikerReadBinaryI32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -747,10 +747,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadBinaryU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadBinaryU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadBinaryU16Data* function_data = static_cast<MonikerReadBinaryU16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -768,15 +768,15 @@ namespace nidaqmx_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-        response->mutable_read_array()->Clear();
-        response->mutable_read_array()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array.begin(),
-          read_array.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_read_array()->Clear();
+      response->mutable_read_array()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array.begin(),
+        read_array.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
+        [&](auto x) {
+            return x;
+        });
       response->set_samps_per_chan_read(samps_per_chan_read);
       packedData.PackFrom(*response);
     }
@@ -785,10 +785,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadBinaryU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadBinaryU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadBinaryU32Data* function_data = static_cast<MonikerReadBinaryU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -815,10 +815,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCounterF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCounterF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCounterF64Data* function_data = static_cast<MonikerReadCounterF64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -844,10 +844,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCounterF64Ex(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCounterF64Ex(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCounterF64ExData* function_data = static_cast<MonikerReadCounterF64ExData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -874,10 +874,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCounterScalarF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCounterScalarF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCounterScalarF64Data* function_data = static_cast<MonikerReadCounterScalarF64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -899,10 +899,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCounterScalarU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCounterScalarU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCounterScalarU32Data* function_data = static_cast<MonikerReadCounterScalarU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -924,10 +924,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCounterU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCounterU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCounterU32Data* function_data = static_cast<MonikerReadCounterU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -953,10 +953,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCounterU32Ex(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCounterU32Ex(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCounterU32ExData* function_data = static_cast<MonikerReadCounterU32ExData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -983,10 +983,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCtrFreq(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCtrFreq(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCtrFreqData* function_data = static_cast<MonikerReadCtrFreqData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1015,10 +1015,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCtrFreqScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCtrFreqScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCtrFreqScalarData* function_data = static_cast<MonikerReadCtrFreqScalarData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1042,10 +1042,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCtrTicks(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCtrTicks(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCtrTicksData* function_data = static_cast<MonikerReadCtrTicksData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1074,10 +1074,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCtrTicksScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCtrTicksScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCtrTicksScalarData* function_data = static_cast<MonikerReadCtrTicksScalarData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1101,10 +1101,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCtrTime(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCtrTime(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCtrTimeData* function_data = static_cast<MonikerReadCtrTimeData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1133,10 +1133,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadCtrTimeScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadCtrTimeScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadCtrTimeScalarData* function_data = static_cast<MonikerReadCtrTimeScalarData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1160,10 +1160,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadDigitalLines(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadDigitalLines(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadDigitalLinesData* function_data = static_cast<MonikerReadDigitalLinesData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1192,10 +1192,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadDigitalScalarU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadDigitalScalarU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadDigitalScalarU32Data* function_data = static_cast<MonikerReadDigitalScalarU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1217,10 +1217,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadDigitalU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadDigitalU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadDigitalU16Data* function_data = static_cast<MonikerReadDigitalU16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1238,15 +1238,15 @@ namespace nidaqmx_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-        response->mutable_read_array()->Clear();
-        response->mutable_read_array()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array.begin(),
-          read_array.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_read_array()->Clear();
+      response->mutable_read_array()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array.begin(),
+        read_array.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
+        [&](auto x) {
+            return x;
+        });
       response->set_samps_per_chan_read(samps_per_chan_read);
       packedData.PackFrom(*response);
     }
@@ -1255,10 +1255,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadDigitalU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadDigitalU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadDigitalU32Data* function_data = static_cast<MonikerReadDigitalU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1285,10 +1285,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadDigitalU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadDigitalU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadDigitalU8Data* function_data = static_cast<MonikerReadDigitalU8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1315,10 +1315,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadPowerBinaryI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadPowerBinaryI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadPowerBinaryI16Data* function_data = static_cast<MonikerReadPowerBinaryI16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1337,24 +1337,24 @@ namespace nidaqmx_grpc {
     if (status >= 0)
     {
       response->set_status(status);
-        response->mutable_read_array_voltage()->Clear();
-        response->mutable_read_array_voltage()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array_voltage.begin(),
-          read_array_voltage.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array_voltage()),
-          [&](auto x) {
-              return x;
-          });
-        response->mutable_read_array_current()->Clear();
-        response->mutable_read_array_current()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array_current.begin(),
-          read_array_current.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array_current()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_read_array_voltage()->Clear();
+      response->mutable_read_array_voltage()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array_voltage.begin(),
+        read_array_voltage.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array_voltage()),
+        [&](auto x) {
+            return x;
+        });
+      response->mutable_read_array_current()->Clear();
+      response->mutable_read_array_current()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array_current.begin(),
+        read_array_current.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array_current()),
+        [&](auto x) {
+            return x;
+        });
       response->set_samps_per_chan_read(samps_per_chan_read);
       packedData.PackFrom(*response);
     }
@@ -1363,10 +1363,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadPowerF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadPowerF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadPowerF64Data* function_data = static_cast<MonikerReadPowerF64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1395,10 +1395,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadPowerScalarF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadPowerScalarF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadPowerScalarF64Data* function_data = static_cast<MonikerReadPowerScalarF64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1422,10 +1422,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerReadRaw(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerReadRaw(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerReadRawData* function_data = static_cast<MonikerReadRawData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1453,10 +1453,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWaitForNextSampleClock(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWaitForNextSampleClock(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWaitForNextSampleClockData* function_data = static_cast<MonikerWaitForNextSampleClockData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1477,10 +1477,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteAnalogF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteAnalogF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteAnalogF64Data* function_data = static_cast<MonikerWriteAnalogF64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1490,11 +1490,11 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto write_array = const_cast<const float64*>(request->write_array().data());
+    auto write_array = const_cast<const float64*>(request->write_array().data());
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteAnalogF64(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
@@ -1503,10 +1503,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteAnalogScalarF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteAnalogScalarF64(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteAnalogScalarF64Data* function_data = static_cast<MonikerWriteAnalogScalarF64Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1517,7 +1517,7 @@ namespace nidaqmx_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      float64 value = request->value();
+    float64 value = request->value();
 
     auto status = library->WriteAnalogScalarF64(task, auto_start, timeout, value, reserved);
 
@@ -1526,10 +1526,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteBinaryI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteBinaryI16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteBinaryI16Data* function_data = static_cast<MonikerWriteBinaryI16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1539,28 +1539,28 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto write_array_raw = request->write_array();
-      auto write_array = std::vector<int16>();
-      write_array.reserve(write_array_raw.size());
-      std::transform(
-        write_array_raw.begin(),
-        write_array_raw.end(),
-        std::back_inserter(write_array),
-        [](auto x) {
-              if (x < std::numeric_limits<int16>::min() || x > std::numeric_limits<int16>::max()) {
-                  std::string message("value ");
-                  message.append(std::to_string(x));
-                  message.append(" doesn't fit in datatype ");
-                  message.append("int16");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<int16>(x);
-        });
+    auto write_array_raw = request->write_array();
+    auto write_array = std::vector<int16>();
+    write_array.reserve(write_array_raw.size());
+    std::transform(
+      write_array_raw.begin(),
+      write_array_raw.end(),
+      std::back_inserter(write_array),
+      [](auto x) {
+            if (x < std::numeric_limits<int16>::min() || x > std::numeric_limits<int16>::max()) {
+                std::string message("value ");
+                message.append(std::to_string(x));
+                message.append(" doesn't fit in datatype ");
+                message.append("int16");
+                throw nidevice_grpc::ValueOutOfRangeException(message);
+            }
+            return static_cast<int16>(x);
+      });
 
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteBinaryI16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
 
@@ -1569,10 +1569,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteBinaryI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteBinaryI32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteBinaryI32Data* function_data = static_cast<MonikerWriteBinaryI32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1582,11 +1582,11 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto write_array = reinterpret_cast<const int32*>(request->write_array().data());
+    auto write_array = reinterpret_cast<const int32*>(request->write_array().data());
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteBinaryI32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
@@ -1595,10 +1595,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteBinaryU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteBinaryU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteBinaryU16Data* function_data = static_cast<MonikerWriteBinaryU16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1608,28 +1608,28 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto write_array_raw = request->write_array();
-      auto write_array = std::vector<uInt16>();
-      write_array.reserve(write_array_raw.size());
-      std::transform(
-        write_array_raw.begin(),
-        write_array_raw.end(),
-        std::back_inserter(write_array),
-        [](auto x) {
-              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
-                  std::string message("value ");
-                  message.append(std::to_string(x));
-                  message.append(" doesn't fit in datatype ");
-                  message.append("uInt16");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<uInt16>(x);
-        });
+    auto write_array_raw = request->write_array();
+    auto write_array = std::vector<uInt16>();
+    write_array.reserve(write_array_raw.size());
+    std::transform(
+      write_array_raw.begin(),
+      write_array_raw.end(),
+      std::back_inserter(write_array),
+      [](auto x) {
+            if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
+                std::string message("value ");
+                message.append(std::to_string(x));
+                message.append(" doesn't fit in datatype ");
+                message.append("uInt16");
+                throw nidevice_grpc::ValueOutOfRangeException(message);
+            }
+            return static_cast<uInt16>(x);
+      });
 
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteBinaryU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
 
@@ -1638,10 +1638,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteBinaryU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteBinaryU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteBinaryU32Data* function_data = static_cast<MonikerWriteBinaryU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1651,11 +1651,11 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
+    auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteBinaryU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
@@ -1664,10 +1664,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteCtrFreq(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteCtrFreq(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteCtrFreqData* function_data = static_cast<MonikerWriteCtrFreqData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1677,12 +1677,12 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 num_samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto frequency = const_cast<const float64*>(request->frequency().data());
-      auto duty_cycle = const_cast<const float64*>(request->duty_cycle().data());
+    auto frequency = const_cast<const float64*>(request->frequency().data());
+    auto duty_cycle = const_cast<const float64*>(request->duty_cycle().data());
+    int32 num_samps_per_chan_written {};
 
     auto status = library->WriteCtrFreq(task, num_samps_per_chan, auto_start, timeout, data_layout, frequency, duty_cycle, &num_samps_per_chan_written, reserved);
 
@@ -1691,10 +1691,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteCtrFreqScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteCtrFreqScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteCtrFreqScalarData* function_data = static_cast<MonikerWriteCtrFreqScalarData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1705,8 +1705,8 @@ namespace nidaqmx_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      float64 frequency = request->frequency();
-      float64 duty_cycle = request->duty_cycle();
+    float64 frequency = request->frequency();
+    float64 duty_cycle = request->duty_cycle();
 
     auto status = library->WriteCtrFreqScalar(task, auto_start, timeout, frequency, duty_cycle, reserved);
 
@@ -1715,10 +1715,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteCtrTicks(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteCtrTicks(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteCtrTicksData* function_data = static_cast<MonikerWriteCtrTicksData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1728,12 +1728,12 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 num_samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto high_ticks = reinterpret_cast<const uInt32*>(request->high_ticks().data());
-      auto low_ticks = reinterpret_cast<const uInt32*>(request->low_ticks().data());
+    auto high_ticks = reinterpret_cast<const uInt32*>(request->high_ticks().data());
+    auto low_ticks = reinterpret_cast<const uInt32*>(request->low_ticks().data());
+    int32 num_samps_per_chan_written {};
 
     auto status = library->WriteCtrTicks(task, num_samps_per_chan, auto_start, timeout, data_layout, high_ticks, low_ticks, &num_samps_per_chan_written, reserved);
 
@@ -1742,10 +1742,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteCtrTicksScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteCtrTicksScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteCtrTicksScalarData* function_data = static_cast<MonikerWriteCtrTicksScalarData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1756,8 +1756,8 @@ namespace nidaqmx_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      uInt32 high_ticks = request->high_ticks();
-      uInt32 low_ticks = request->low_ticks();
+    uInt32 high_ticks = request->high_ticks();
+    uInt32 low_ticks = request->low_ticks();
 
     auto status = library->WriteCtrTicksScalar(task, auto_start, timeout, high_ticks, low_ticks, reserved);
 
@@ -1766,10 +1766,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteCtrTime(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteCtrTime(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteCtrTimeData* function_data = static_cast<MonikerWriteCtrTimeData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1779,12 +1779,12 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 num_samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto high_time = const_cast<const float64*>(request->high_time().data());
-      auto low_time = const_cast<const float64*>(request->low_time().data());
+    auto high_time = const_cast<const float64*>(request->high_time().data());
+    auto low_time = const_cast<const float64*>(request->low_time().data());
+    int32 num_samps_per_chan_written {};
 
     auto status = library->WriteCtrTime(task, num_samps_per_chan, auto_start, timeout, data_layout, high_time, low_time, &num_samps_per_chan_written, reserved);
 
@@ -1793,10 +1793,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteCtrTimeScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteCtrTimeScalar(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteCtrTimeScalarData* function_data = static_cast<MonikerWriteCtrTimeScalarData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1807,8 +1807,8 @@ namespace nidaqmx_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      float64 high_time = request->high_time();
-      float64 low_time = request->low_time();
+    float64 high_time = request->high_time();
+    float64 low_time = request->low_time();
 
     auto status = library->WriteCtrTimeScalar(task, auto_start, timeout, high_time, low_time, reserved);
 
@@ -1817,10 +1817,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteDigitalLines(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteDigitalLines(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteDigitalLinesData* function_data = static_cast<MonikerWriteDigitalLinesData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1830,11 +1830,11 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+    const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteDigitalLines(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
@@ -1843,10 +1843,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteDigitalScalarU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteDigitalScalarU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteDigitalScalarU32Data* function_data = static_cast<MonikerWriteDigitalScalarU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1857,7 +1857,7 @@ namespace nidaqmx_grpc {
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      uInt32 value = request->value();
+    uInt32 value = request->value();
 
     auto status = library->WriteDigitalScalarU32(task, auto_start, timeout, value, reserved);
 
@@ -1866,10 +1866,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteDigitalU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteDigitalU16(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteDigitalU16Data* function_data = static_cast<MonikerWriteDigitalU16Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1879,28 +1879,28 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto write_array_raw = request->write_array();
-      auto write_array = std::vector<uInt16>();
-      write_array.reserve(write_array_raw.size());
-      std::transform(
-        write_array_raw.begin(),
-        write_array_raw.end(),
-        std::back_inserter(write_array),
-        [](auto x) {
-              if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
-                  std::string message("value ");
-                  message.append(std::to_string(x));
-                  message.append(" doesn't fit in datatype ");
-                  message.append("uInt16");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<uInt16>(x);
-        });
+    auto write_array_raw = request->write_array();
+    auto write_array = std::vector<uInt16>();
+    write_array.reserve(write_array_raw.size());
+    std::transform(
+      write_array_raw.begin(),
+      write_array_raw.end(),
+      std::back_inserter(write_array),
+      [](auto x) {
+            if (x < std::numeric_limits<uInt16>::min() || x > std::numeric_limits<uInt16>::max()) {
+                std::string message("value ");
+                message.append(std::to_string(x));
+                message.append(" doesn't fit in datatype ");
+                message.append("uInt16");
+                throw nidevice_grpc::ValueOutOfRangeException(message);
+            }
+            return static_cast<uInt16>(x);
+      });
 
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteDigitalU16(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array.data(), &samps_per_chan_written, reserved);
 
@@ -1909,10 +1909,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteDigitalU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteDigitalU32(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteDigitalU32Data* function_data = static_cast<MonikerWriteDigitalU32Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1922,11 +1922,11 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
+    auto write_array = reinterpret_cast<const uInt32*>(request->write_array().data());
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteDigitalU32(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
@@ -1935,10 +1935,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteDigitalU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteDigitalU8(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteDigitalU8Data* function_data = static_cast<MonikerWriteDigitalU8Data*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1948,11 +1948,11 @@ namespace nidaqmx_grpc {
     auto timeout = function_data->timeout;
     auto data_layout = function_data->data_layout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+    const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteDigitalU8(task, num_samps_per_chan, auto_start, timeout, data_layout, write_array, &samps_per_chan_written, reserved);
 
@@ -1961,10 +1961,10 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
-::grpc::Status MonikerWriteRaw(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status MonikerWriteRaw(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     MonikerWriteRawData* function_data = static_cast<MonikerWriteRawData*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
@@ -1973,11 +1973,11 @@ namespace nidaqmx_grpc {
     auto auto_start = function_data->auto_start;
     auto timeout = function_data->timeout;
     auto reserved = function_data->reserved;
-    int32 samps_per_chan_written {};
     auto request = &function_data->request;
 
     packedData.UnpackTo(request);
-      const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+    const uInt8* write_array = (const uInt8*)request->write_array().c_str();
+    int32 samps_per_chan_written {};
 
     auto status = library->WriteRaw(task, num_samps, auto_start, timeout, write_array, &samps_per_chan_written, reserved);
 
@@ -1986,7 +1986,7 @@ namespace nidaqmx_grpc {
       return ::grpc::Status(grpc::StatusCode::UNKNOWN, "ni-error: " + status);
     }
     return ::grpc::Status::OK;
-}
+  }
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
@@ -9759,15 +9759,15 @@ namespace nidaqmx_grpc {
       }
       response->set_status(status);
       response->mutable_state_array()->Resize(array_size_copy, 0);
-        response->mutable_channel_type_array()->Clear();
-        response->mutable_channel_type_array()->Reserve(array_size_copy);
-        std::transform(
-          response->channel_type_array_raw().begin(),
-          response->channel_type_array_raw().begin() + array_size_copy,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_channel_type_array()),
-          [&](auto x) {
-              return static_cast<nidaqmx_grpc::PowerUpChannelType>(x);
-          });
+      response->mutable_channel_type_array()->Clear();
+      response->mutable_channel_type_array()->Reserve(array_size_copy);
+      std::transform(
+        response->channel_type_array_raw().begin(),
+        response->channel_type_array_raw().begin() + array_size_copy,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_channel_type_array()),
+        [&](auto x) {
+            return static_cast<nidaqmx_grpc::PowerUpChannelType>(x);
+        });
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -10650,15 +10650,15 @@ namespace nidaqmx_grpc {
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
           return static_cast<nidaqmx_grpc::DeviceInt32AttributeValues>(valid_enum_value);
         };
-          response->mutable_value()->Clear();
-          response->mutable_value()->Reserve(size);
-          std::transform(
-            response->value_raw().begin(),
-            response->value_raw().begin() + size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-            [&](auto x) {
-                return checked_convert_value(x);
-            });
+        response->mutable_value()->Clear();
+        response->mutable_value()->Reserve(size);
+        std::transform(
+          response->value_raw().begin(),
+          response->value_raw().begin() + size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+          [&](auto x) {
+              return checked_convert_value(x);
+          });
         return ::grpc::Status::OK;
       }
     }
@@ -12096,15 +12096,15 @@ namespace nidaqmx_grpc {
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
           return static_cast<nidaqmx_grpc::PhysicalChannelInt32AttributeValues>(valid_enum_value);
         };
-          response->mutable_value()->Clear();
-          response->mutable_value()->Reserve(size);
-          std::transform(
-            response->value_raw().begin(),
-            response->value_raw().begin() + size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-            [&](auto x) {
-                return checked_convert_value(x);
-            });
+        response->mutable_value()->Clear();
+        response->mutable_value()->Reserve(size);
+        std::transform(
+          response->value_raw().begin(),
+          response->value_raw().begin() + size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+          [&](auto x) {
+              return checked_convert_value(x);
+          });
         return ::grpc::Status::OK;
       }
     }
@@ -14189,15 +14189,15 @@ namespace nidaqmx_grpc {
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
           return static_cast<nidaqmx_grpc::TriggerInt32AttributeValues>(valid_enum_value);
         };
-          response->mutable_value()->Clear();
-          response->mutable_value()->Reserve(size);
-          std::transform(
-            response->value_raw().begin(),
-            response->value_raw().begin() + size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-            [&](auto x) {
-                return checked_convert_value(x);
-            });
+        response->mutable_value()->Clear();
+        response->mutable_value()->Reserve(size);
+        std::transform(
+          response->value_raw().begin(),
+          response->value_raw().begin() + size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+          [&](auto x) {
+              return checked_convert_value(x);
+          });
         return ::grpc::Status::OK;
       }
     }
@@ -15295,15 +15295,15 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
-        response->mutable_read_array()->Clear();
-        response->mutable_read_array()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array.begin(),
-          read_array.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_read_array()->Clear();
+      response->mutable_read_array()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array.begin(),
+        read_array.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
+        [&](auto x) {
+            return x;
+        });
       response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
@@ -15503,15 +15503,15 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
-        response->mutable_read_array()->Clear();
-        response->mutable_read_array()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array.begin(),
-          read_array.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_read_array()->Clear();
+      response->mutable_read_array()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array.begin(),
+        read_array.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
+        [&](auto x) {
+            return x;
+        });
       response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
@@ -16801,15 +16801,15 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
-        response->mutable_read_array()->Clear();
-        response->mutable_read_array()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array.begin(),
-          read_array.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_read_array()->Clear();
+      response->mutable_read_array()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array.begin(),
+        read_array.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array()),
+        [&](auto x) {
+            return x;
+        });
       response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
@@ -17110,24 +17110,24 @@ namespace nidaqmx_grpc {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
       response->set_status(status);
-        response->mutable_read_array_voltage()->Clear();
-        response->mutable_read_array_voltage()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array_voltage.begin(),
-          read_array_voltage.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array_voltage()),
-          [&](auto x) {
-              return x;
-          });
-        response->mutable_read_array_current()->Clear();
-        response->mutable_read_array_current()->Reserve(array_size_in_samps);
-        std::transform(
-          read_array_current.begin(),
-          read_array_current.begin() + array_size_in_samps,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array_current()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_read_array_voltage()->Clear();
+      response->mutable_read_array_voltage()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array_voltage.begin(),
+        read_array_voltage.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array_voltage()),
+        [&](auto x) {
+            return x;
+        });
+      response->mutable_read_array_current()->Clear();
+      response->mutable_read_array_current()->Reserve(array_size_in_samps);
+      std::transform(
+        read_array_current.begin(),
+        read_array_current.begin() + array_size_in_samps,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_read_array_current()),
+        [&](auto x) {
+            return x;
+        });
       response->set_samps_per_chan_read(samps_per_chan_read);
       return ::grpc::Status::OK;
     }
@@ -17524,7 +17524,7 @@ namespace nidaqmx_grpc {
             break;
           }
         }
-  
+
         uInt32 n_samples = request->n_samples();
         auto options = 0U;
 
@@ -17595,7 +17595,7 @@ namespace nidaqmx_grpc {
             break;
           }
         }
-  
+
         auto options = 0U;
 
         auto status = library->RegisterSignalEvent(task, signal_id, options, CallbackRouter::handle_callback, handler->token());

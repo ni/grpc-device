@@ -836,7 +836,9 @@ def indent(level):
         result = ""
         indentation = level * "  "
         for line in text.splitlines(True):
-            result = result + indentation + line
+            if line.strip():
+                result += indentation
+            result += line
         return result
 
     return lambda text: indent_text_to_level(text, level)

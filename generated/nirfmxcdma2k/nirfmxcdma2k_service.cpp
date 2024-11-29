@@ -2831,15 +2831,15 @@ namespace nirfmxcdma2k_grpc {
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
           return static_cast<nirfmxcdma2k_grpc::NiRFmxCDMA2kInt32AttributeValues>(valid_enum_value);
         };
-          response->mutable_attr_val()->Clear();
-          response->mutable_attr_val()->Reserve(actual_array_size);
-          std::transform(
-            response->attr_val_raw().begin(),
-            response->attr_val_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) {
-                return checked_convert_attr_val(x);
-            });
+        response->mutable_attr_val()->Clear();
+        response->mutable_attr_val()->Reserve(actual_array_size);
+        std::transform(
+          response->attr_val_raw().begin(),
+          response->attr_val_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+          [&](auto x) {
+              return checked_convert_attr_val(x);
+          });
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -2975,15 +2975,15 @@ namespace nirfmxcdma2k_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_attr_val()->Clear();
-          response->mutable_attr_val()->Reserve(actual_array_size);
-          std::transform(
-            attr_val.begin(),
-            attr_val.begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) {
-                return x;
-            });
+        response->mutable_attr_val()->Clear();
+        response->mutable_attr_val()->Reserve(actual_array_size);
+        std::transform(
+          attr_val.begin(),
+          attr_val.begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+          [&](auto x) {
+              return x;
+          });
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -3731,15 +3731,15 @@ namespace nirfmxcdma2k_grpc {
         response->set_status(status);
         response->mutable_detected_walsh_code_length()->Resize(actual_array_size, 0);
         response->mutable_detected_walsh_code_number()->Resize(actual_array_size, 0);
-          response->mutable_detected_branch()->Clear();
-          response->mutable_detected_branch()->Reserve(actual_array_size);
-          std::transform(
-            response->detected_branch_raw().begin(),
-            response->detected_branch_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_detected_branch()),
-            [&](auto x) {
-                return static_cast<nirfmxcdma2k_grpc::ModAccDetectedBranch>(x);
-            });
+        response->mutable_detected_branch()->Clear();
+        response->mutable_detected_branch()->Reserve(actual_array_size);
+        std::transform(
+          response->detected_branch_raw().begin(),
+          response->detected_branch_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_detected_branch()),
+          [&](auto x) {
+              return static_cast<nirfmxcdma2k_grpc::ModAccDetectedBranch>(x);
+          });
         response->mutable_detected_branch()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -4896,15 +4896,15 @@ namespace nirfmxcdma2k_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_measurement_status()->Clear();
-          response->mutable_measurement_status()->Reserve(actual_array_size);
-          std::transform(
-            response->measurement_status_raw().begin(),
-            response->measurement_status_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
-            [&](auto x) {
-                return static_cast<nirfmxcdma2k_grpc::SemLowerOffsetMeasurementStatus>(x);
-            });
+        response->mutable_measurement_status()->Clear();
+        response->mutable_measurement_status()->Reserve(actual_array_size);
+        std::transform(
+          response->measurement_status_raw().begin(),
+          response->measurement_status_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
+          [&](auto x) {
+              return static_cast<nirfmxcdma2k_grpc::SemLowerOffsetMeasurementStatus>(x);
+          });
         response->mutable_measurement_status()->Resize(actual_array_size, 0);
         response->mutable_margin()->Resize(actual_array_size, 0);
         response->mutable_margin_frequency()->Resize(actual_array_size, 0);
@@ -5161,15 +5161,15 @@ namespace nirfmxcdma2k_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_measurement_status()->Clear();
-          response->mutable_measurement_status()->Reserve(actual_array_size);
-          std::transform(
-            response->measurement_status_raw().begin(),
-            response->measurement_status_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
-            [&](auto x) {
-                return static_cast<nirfmxcdma2k_grpc::SemUpperOffsetMeasurementStatus>(x);
-            });
+        response->mutable_measurement_status()->Clear();
+        response->mutable_measurement_status()->Reserve(actual_array_size);
+        std::transform(
+          response->measurement_status_raw().begin(),
+          response->measurement_status_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
+          [&](auto x) {
+              return static_cast<nirfmxcdma2k_grpc::SemUpperOffsetMeasurementStatus>(x);
+          });
         response->mutable_measurement_status()->Resize(actual_array_size, 0);
         response->mutable_margin()->Resize(actual_array_size, 0);
         response->mutable_margin_frequency()->Resize(actual_array_size, 0);
