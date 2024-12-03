@@ -144,7 +144,12 @@ int ServerConfigurationParser::parse_max_message_size() const
 
 int ServerConfigurationParser::parse_sideband_port() const
 {
-  return parse_port_with_key(kSidebandPortJsonKey);
+  try {
+    return parse_port_with_key(kSidebandPortJsonKey);
+  }
+  catch (const UnspecifiedPortException&) {
+    return DEFAULT_SIDEBAND_PORT;
+  }
 }
 
 FeatureToggles ServerConfigurationParser::parse_feature_toggles() const
