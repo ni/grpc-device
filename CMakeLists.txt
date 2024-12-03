@@ -588,6 +588,7 @@ add_executable(IntegrationTestsRunner
     "source/tests/integration/session_utilities_service_tests.cpp"
     "source/tests/integration/session_utilities_service_tests_endtoend.cpp"
     "source/tests/integration/visa_resource_manager_tests.cpp"
+    "source/tests/integration/ni_fake_daqmx_streaming_tests.cpp"
     "source/tests/integration/ni_fake_fpga_streaming_tests.cpp"
     "source/server/calibration_operations_restricted_service_registrar.cpp"
     "source/server/calibration_operations_restricted_service.cpp"
@@ -624,6 +625,7 @@ add_executable(IntegrationTestsRunner
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.pb.cc"
     "${proto_srcs_dir}/nifake_non_ivi.grpc.pb.cc"
+    "${service_output_dir}/nidaqmx/nidaqmx_client.cpp"
     "${service_output_dir}/nifake/nifake_client.cpp"
     "${service_output_dir}/nifake/nifake_service.cpp"
     "${service_output_dir}/nifpga/nifpga_client.cpp"
@@ -744,7 +746,7 @@ target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake_non_ivi"
     PRIVATE "source/server")
 
-target_link_libraries(UnitTestsRunner
+    target_link_libraries(UnitTestsRunner
     ${CMAKE_DL_LIBS}
     ${server_lib_deps}
     gmock
