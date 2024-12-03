@@ -72,9 +72,9 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
 static std::mutex server_mutex;
 static std::unique_ptr<grpc::Server> server;
 static bool shutdown = false;
-static int s_SidebandReadWriteCore;
-static int s_StreamWriteCore;
-static int s_ServerRunCore;
+int s_SidebandReadWriteCore;
+int s_StreamWriteCore;
+int s_ServerRunCore;
 
 void SetCoreConfiguration(CoreConfiguration core_config)
 {
