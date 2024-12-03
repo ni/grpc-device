@@ -7,5 +7,10 @@
        "server_cert": "",
        "server_key": "",
        "root_cert": ""
+    },
+    "core_configuration": {
+       "sideband_read_write_core": 8,
+       "stream_write_core": 1,
+       "server_run_core": 6
     }
  }

@@ -108,14 +108,14 @@ void DataMonikerService::InitiateMonikerList(const MonikerList& monikers, Endpoi
 void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::SidebandStrategy strategy, EndpointList* readers, EndpointList* writers)
 {
 #ifndef _WIN32
-  if (strategy == ::SidebandStrategy::RDMA_LOW_LATENCY ||
-      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) {
+  if ((strategy == ::SidebandStrategy::RDMA_LOW_LATENCY ||
+      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) && s_SidebandReadWriteCore >= 0) {
     pid_t threadId = syscall(SYS_gettid);
     ::SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/tasks", std::to_string(threadId));
 
     cpu_set_t cpuSet;
     CPU_ZERO(&cpuSet);
-    CPU_SET(8, &cpuSet);
+    CPU_SET(s_SidebandReadWriteCore, &cpuSet);
     sched_setaffinity(threadId, sizeof(cpu_set_t), &cpuSet);
   }
 #endif
@@ -240,10 +240,12 @@ Status DataMonikerService::StreamRead(ServerContext* context, const MonikerList*
 Status DataMonikerService::StreamWrite(ServerContext* context, ServerReaderWriter<StreamWriteResponse, MonikerWriteRequest>* stream)
 {
 #ifndef _WIN32
-  cpu_set_t cpuSet;
-  CPU_ZERO(&cpuSet);
-  CPU_SET(1, &cpuSet);
-  sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
+  if(s_StreamWriteCore >= 0) {
+    cpu_set_t cpuSet;
+    CPU_ZERO(&cpuSet);
+    CPU_SET(s_StreamWriteCore, &cpuSet);
+    sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
+  }
 #endif
 
   EndpointList writers;

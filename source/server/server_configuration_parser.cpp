@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "feature_toggles.h"
+#include "core_configuration.h"
 
 #if defined(_MSC_VER)
   #include <windows.h>
@@ -19,6 +20,10 @@ static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
 static const char* kSidebandAddressJsonKey = "sideband_address";
 static const char* kSidebandPortJsonKey = "sideband_port";
+static const char* kCoreConfigurationKey = "core_configuration";
+static const char* kSidebandReadWriteCoreKey = "sideband_read_write_core";
+static const char* kStreamWriteCoreKey = "stream_write_core";
+static const char* kServerRunCoreKey = "server_run_core";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
@@ -287,6 +292,41 @@ int ServerConfigurationParser::parse_port_with_key(const std::string& key) const
   return parsed_port;
 }
 
+CoreConfiguration ServerConfigurationParser::parse_core_configuration() const
+{
+    CoreConfiguration core_config;
+
+    auto core_config_it = config_file_.find(kCoreConfigurationKey);
+    if (core_config_it != config_file_.end()) {
+        core_config.sideband_read_write_core = parse_core_with_key(kSidebandReadWriteCoreKey);
+        core_config.stream_write_core = parse_core_with_key(kStreamWriteCoreKey);
+        core_config.server_run_core = parse_core_with_key(kServerRunCoreKey);
+    }
+
+    return core_config;
+}
+
+int ServerConfigurationParser::parse_core_with_key(const std::string& key) const
+{
+    int parsed_core = -1;
+
+    auto it = config_file_.find(key);
+    if (it != config_file_.end()) {
+        try {
+            parsed_core = it->get<int>();
+        }
+        catch (const nlohmann::json::type_error& ex) {
+            throw WrongCoreTypeException(ex.what());
+        }
+    }
+
+    if (parsed_core < -1) {
+        throw InvalidCoreException();
+    }
+
+    return parsed_core;
+}
+
 ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException(const std::string& config_file_path)
     : std::runtime_error(kConfigFileNotFoundMessage + config_file_path)
 {
@@ -307,6 +347,11 @@ ServerConfigurationParser::InvalidPortException::InvalidPortException()
 {
 }
 
+ServerConfigurationParser::InvalidCoreException::InvalidCoreException()
+    : std::runtime_error(kInvalidCoreMessage)
+{
+}
+
 ServerConfigurationParser::MalformedJsonException::MalformedJsonException(const std::string& parse_error_details)
     : std::runtime_error(kMalformedJsonMessage + parse_error_details)
 {
@@ -314,6 +359,11 @@ ServerConfigurationParser::MalformedJsonException::MalformedJsonException(const 
 
 ServerConfigurationParser::WrongPortTypeException::WrongPortTypeException(const std::string& type_error_details)
     : std::runtime_error(kWrongPortTypeMessage + type_error_details)
+{
+}
+
+ServerConfigurationParser::WrongCoreTypeException::WrongCoreTypeException(const std::string& type_error_details)
+    : std::runtime_error(kWrongCoreTypeMessage + type_error_details)
 {
 }
 
