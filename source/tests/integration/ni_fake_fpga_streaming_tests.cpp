@@ -230,11 +230,11 @@ TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
 
   for (int i = 0; i < 5; i++) {
     // Write data
-    nifpga_grpc::ArrayI32Data write_values_array_i32;
-    nifpga_grpc::ArrayI64Data write_values_array_i64;
+    nifpga_grpc::MonikerWriteArrayI32Request  write_values_array_i32;
+    nifpga_grpc::MonikerWriteArrayI64Request  write_values_array_i64;
 
-    write_values_array_i32.mutable_value()->Add(data_int_i32.begin(), data_int_i32.end());
-    write_values_array_i64.mutable_value()->Add(data_int_i64.begin(), data_int_i64.end());
+    write_values_array_i32.mutable_array()->Add(data_int_i32.begin(), data_int_i32.end());
+    write_values_array_i64.mutable_array()->Add(data_int_i64.begin(), data_int_i64.end());
 
     ni::data_monikers::MonikerWriteRequest write_data_request;
     write_data_request.mutable_data()->add_values()->PackFrom(write_values_array_i32);
@@ -302,11 +302,11 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
 
   for (int i = 0; i < 5; i++) {
     // Write data
-    nifpga_grpc::ArrayI32Data write_values_array_i32;
-    nifpga_grpc::ArrayI64Data write_values_array_i64;
+    nifpga_grpc::MonikerWriteArrayI32Request write_values_array_i32;
+    nifpga_grpc::MonikerWriteArrayI64Request write_values_array_i64;
 
-    write_values_array_i32.mutable_value()->Add(write_data_int32.begin(), write_data_int32.end());
-    write_values_array_i64.mutable_value()->Add(write_data_int64.begin(), write_data_int64.end());
+    write_values_array_i32.mutable_array()->Add(write_data_int32.begin(), write_data_int32.end());
+    write_values_array_i64.mutable_array()->Add(write_data_int64.begin(), write_data_int64.end());
 
     ni::data_monikers::MonikerWriteRequest write_data_request;
     write_data_request.mutable_data()->add_values()->PackFrom(write_values_array_i32);
@@ -388,11 +388,11 @@ TEST_F(NiFakeFpgaStreamingTests, DISABLED_SidebandStreamReadWrite_Array)
 
   for (int i = 0; i < 5; i++) {
     // Write data
-    nifpga_grpc::ArrayI32Data write_values_array_i32;
-    nifpga_grpc::ArrayI64Data write_values_array_i64;
+    nifpga_grpc::MonikerWriteArrayI32Request write_values_array_i32;
+    nifpga_grpc::MonikerWriteArrayI64Request write_values_array_i64;
 
-    write_values_array_i32.mutable_value()->Add(write_data_int32.begin(), write_data_int32.end());
-    write_values_array_i64.mutable_value()->Add(write_data_int64.begin(), write_data_int64.end());
+    write_values_array_i32.mutable_array()->Add(write_data_int32.begin(), write_data_int32.end());
+    write_values_array_i64.mutable_array()->Add(write_data_int64.begin(), write_data_int64.end());
 
     ni::data_monikers::SidebandWriteRequest write_data_request;
     write_data_request.mutable_values()->add_values()->PackFrom(write_values_array_i32);

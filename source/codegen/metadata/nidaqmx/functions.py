@@ -17588,7 +17588,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -17612,7 +17611,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -17667,7 +17665,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -17742,7 +17739,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.int16',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI16Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -17766,7 +17762,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -17842,7 +17837,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.int32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -17866,7 +17860,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -17943,7 +17936,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.uint16',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU16Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -17967,7 +17959,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -18043,7 +18034,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18067,7 +18057,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -18132,7 +18121,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18156,7 +18144,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -18232,7 +18219,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18256,7 +18242,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -18311,7 +18296,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -18364,7 +18348,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'out',
-                'grpc_streaming_type': 'U32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -18427,7 +18410,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18451,7 +18433,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -18527,7 +18508,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18551,7 +18531,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -18627,7 +18606,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -18643,7 +18621,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -18665,7 +18642,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -18720,7 +18696,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'frequency',
@@ -18731,7 +18706,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'dutyCycle',
@@ -18804,7 +18778,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -18820,7 +18793,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -18842,7 +18814,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -18897,7 +18868,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'U32Data',
                 'is_streaming_type': True,
                 'name': 'highTicks',
                 'python_data_type': 'int',
@@ -18906,7 +18876,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'U32Data',
                 'is_streaming_type': True,
                 'name': 'lowTicks',
                 'python_data_type': 'int',
@@ -18977,7 +18946,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -18993,7 +18961,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -19015,7 +18982,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -19070,7 +19036,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'highTime',
@@ -19081,7 +19046,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'lowTime',
@@ -19154,7 +19118,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.bool',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU8Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -19178,7 +19141,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -19243,7 +19205,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'out',
-                'grpc_streaming_type': 'U32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -19318,7 +19279,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.uint16',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU16Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -19342,7 +19302,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -19418,7 +19377,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -19442,7 +19400,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -19518,7 +19475,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint8',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU8Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -19542,7 +19498,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -19619,7 +19574,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.generic',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI16Data',
                 'is_list': True,
                 'is_streaming_type': True,
                 'name': 'readArrayVoltage',
@@ -19634,7 +19588,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.generic',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI16Data',
                 'is_list': True,
                 'is_streaming_type': True,
                 'name': 'readArrayCurrent',
@@ -19655,7 +19608,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -19731,7 +19683,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_streaming_type': True,
                 'name': 'readArrayVoltage',
@@ -19745,7 +19696,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_streaming_type': True,
                 'name': 'readArrayCurrent',
@@ -19766,7 +19716,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
@@ -19821,7 +19770,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'voltage',
@@ -19833,7 +19781,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'current',
@@ -19896,7 +19843,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.generic',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU8Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -19919,7 +19865,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsRead',
@@ -19932,7 +19877,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'numBytesPerSamp',
@@ -24059,7 +24003,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'BoolData',
                 'is_streaming_type': True,
                 'name': 'isLate',
                 'type': 'bool32'
@@ -24216,7 +24159,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24229,7 +24171,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
@@ -24293,7 +24234,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -24378,7 +24318,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.int16',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayI16Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24391,7 +24330,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
@@ -24476,7 +24414,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.int32',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24489,7 +24426,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
@@ -24575,7 +24511,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.uint16',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU16Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24588,7 +24523,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
@@ -24673,7 +24607,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24686,7 +24619,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
@@ -25390,7 +25322,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'in',
-                'grpc_streaming_type': 'U32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -25475,7 +25406,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.uint16',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU16Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -25488,7 +25418,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
@@ -25573,7 +25502,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -25586,7 +25514,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
