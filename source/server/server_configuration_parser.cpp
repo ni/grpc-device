@@ -302,6 +302,11 @@ CoreConfiguration ServerConfigurationParser::parse_core_configuration() const
         core_config.stream_write_core = parse_core_with_key(kStreamWriteCoreKey);
         core_config.server_run_core = parse_core_with_key(kServerRunCoreKey);
     }
+    else{
+      core_config.sideband_read_write_core = -1;
+      core_config.stream_write_core = -1;
+      core_config.server_run_core = -1;
+    }
 
     return core_config;
 }
