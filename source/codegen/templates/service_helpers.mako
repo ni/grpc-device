@@ -25,7 +25,7 @@
       session_initialized_param_name = common_helpers.get_cpp_local_name(session_initialized_param)
       add_session_snippet = f'add_session(grpc_device_session_name, init_lambda, cleanup_lambda, {session_behavior_param_name}, &{session_initialized_param_name})'
 %>\
-${initialize_input_params(function_name, parameters)}
+${initialize_input_params(function_name, parameters, indent_level=1)}
 ${initialize_output_params(output_parameters_to_initialize, indent_level=1)}\
       auto init_lambda = [&] () {
 ## If the session is not returned, it's an output param and need to be declared before calling.
@@ -63,7 +63,7 @@ ${populate_response(function_data=function_data, parameters=parameters, init_met
   initiating_driver_input_var_name = common_helpers.get_cpp_local_name(initiating_driver_input_param)
   initiating_driver_c_name = f'{initiating_driver_input_var_name}_grpc_session'
 %>\
-${initialize_input_params(function_name, parameters)}
+${initialize_input_params(function_name, parameters, indent_level=1)}
 ${initialize_output_params(output_parameters_to_initialize, indent_level=1)}\
       auto initiating_session_name = ${initiating_driver_c_name}.name();
       auto init_lambda = [&] () {
@@ -86,7 +86,7 @@ ${initialize_output_params(output_parameters_to_initialize, indent_level=1)}\
   (size_param, array_param, non_ivi_params) = common_helpers.get_ivi_dance_params(parameters)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${initialize_input_params(function_name, non_ivi_params)}\
+${initialize_input_params(function_name, non_ivi_params, indent_level=1)}\
 
       while (true) {
 ${call_library_method(
@@ -126,7 +126,7 @@ ${populate_response(function_data=function_data, parameters=parameters, indent_l
   array_output_parameters = [p for p in output_parameters if common_helpers.is_array(p['type'])]
   scalar_output_parameters = [p for p in output_parameters if p not in array_output_parameters]
 %>\
-${initialize_input_params(function_name, non_ivi_params)}\
+${initialize_input_params(function_name, non_ivi_params, indent_level=1)}\
 ${initialize_output_params(scalar_output_parameters, indent_level=1)}\
       while (true) {
 ${call_library_method(
@@ -195,7 +195,7 @@ ${set_response_values(output_parameters=response_parameters, init_method=False)}
 
         const auto& session_repository_ = service->session_repository_;
 <%block filter="common_helpers.indent(1)">\
-${initialize_input_params(function_name, parameters)}\
+${initialize_input_params(function_name, parameters, indent_level=1)}\
 </%block>\
 
 ${call_library_method(
@@ -230,7 +230,7 @@ ${populate_error_check(function_data, parameters, indent_level=1, service_deref=
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${initialize_input_params(function_name, parameters)}\
+${initialize_input_params(function_name, parameters, indent_level=1)}\
 ${initialize_output_params(output_parameters, indent_level=1)}\
 ${set_output_vararg_parameter_sizes(parameters)}\
 ${call_library_method(
@@ -249,7 +249,7 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   config = data['config']
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${initialize_input_params(function_name, parameters)}\
+${initialize_input_params(function_name, parameters, indent_level=1)}\
 ${initialize_output_params(output_parameters, indent_level=1)}\
 % if function_name == config['close_function'] or service_helpers.is_custom_close_method(function_data):
 <%
@@ -315,23 +315,20 @@ ${populate_response(function_data=function_data, parameters=parameters)}\
   arg_string = service_helpers.create_args(non_streaming_function_parameters)
   output_parameters = [p for p in non_streaming_function_parameters if common_helpers.is_output_parameter(p)]
 %>\
-::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
-{
+  ::grpc::Status ${moniker_function_name}(void* data, google::protobuf::Arena& arena, google::protobuf::Any& packedData)
+  {
     ${struct_name}* function_data = static_cast<${struct_name}*>(data);
     auto library = function_data->library;
     auto response = &function_data->response;
 ${initialize_moniker_input_parameters(moniker_input_parameters)}\
+${initialize_moniker_request_for_in_functions(streaming_param, functions, function_name)}\
 ${initialize_output_params(output_parameters)}\
-    % if streaming_param and streaming_param['direction'] == 'in':
-    auto request = &function_data->request;
-${streaming_handle_in_direction(functions, function_name)}\
-    % endif
 
     auto status = library->${non_streaming_function_name}(${arg_string});
 
 ${populate_moniker_response_for_out_functions(output_parameters, streaming_param)}\
     return ::grpc::Status::OK;
-}
+  }
 </%def>
 
 <%def name="define_streaming_api_body(function_name, parameters)">\
@@ -341,7 +338,7 @@ ${populate_moniker_response_for_out_functions(output_parameters, streaming_param
   moniker_input_parameters = common_helpers.get_non_streaming_input_parameters(parameters)
   output_parameters = [p for p in parameters if common_helpers.is_output_parameter(p)]
 %>\
-${initialize_input_params(function_name, moniker_input_parameters)}
+${initialize_input_params(function_name, moniker_input_parameters, indent_level=1)}
 ${initialize_moniker_struct(struct_name, moniker_input_parameters, output_parameters)}\
       auto moniker = std::make_unique<ni::data_monikers::Moniker>();
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("${moniker_function_name}", data.release(), *moniker);
@@ -350,15 +347,19 @@ ${initialize_moniker_struct(struct_name, moniker_input_parameters, output_parame
       return ::grpc::Status::OK;\
 </%def>
 
-<%def name="streaming_handle_in_direction(functions, begin_function_name)">
-<%
-  request_message_type = common_helpers.get_data_moniker_request_message_type(begin_function_name)
-  non_streaming_function_name = begin_function_name.replace("Begin", "")
-  input_parameters, output_parameters = common_helpers.get_data_moniker_function_parameters(functions[non_streaming_function_name])
-  common_helpers.extend_input_params_with_size_params(input_parameters, functions[non_streaming_function_name])\
-%>\
+<%def name="initialize_moniker_request_for_in_functions(streaming_param, functions, begin_function_name)">\
+% if streaming_param and streaming_param['direction'] == 'in':
+  <%
+    request_message_type = common_helpers.get_data_moniker_request_message_type(begin_function_name)
+    non_streaming_function_name = begin_function_name.replace("Begin", "")
+    input_parameters, output_parameters = common_helpers.get_data_moniker_function_parameters(functions[non_streaming_function_name])
+    common_helpers.extend_input_params_with_size_params(input_parameters, functions[non_streaming_function_name])\
+  %>\
+  auto request = &function_data->request;
+
     packedData.UnpackTo(request);
 ${initialize_input_params(non_streaming_function_name, input_parameters)}\
+% endif
 </%def>
 
 <%def name="populate_moniker_response_for_out_functions(output_parameters, streaming_param)">\
@@ -423,15 +424,17 @@ ${set_response_values(output_parameters=output_parameters, init_method=false)}\
 </%def>
 
 ## Initialize the input parameters to the API call.
-<%def name="initialize_input_params(function_name, parameters)">\
+<%def name="initialize_input_params(function_name, parameters, indent_level=0)">\
 <%
   input_parameters = [p for p in parameters if common_helpers.is_input_parameter(p)]
   input_vararg_parameters = [p for p in input_parameters if common_helpers.is_repeated_varargs_parameter(p)]
   input_vararg_parameter = input_vararg_parameters[0] if len(input_vararg_parameters) > 0 else None
 %>\
+<%block filter="common_helpers.indent(indent_level)">\
 % for parameter in input_parameters:
 ${initialize_input_param(function_name, parameter, parameters, input_vararg_parameter)}\
 % endfor
+</%block>\
 </%def>
 
 ## Initialize an input parameter for an API call.
@@ -447,7 +450,7 @@ ${initialize_enum_array_input_param(function_name, parameter)}
 % elif common_helpers.is_enum(parameter):
 ${initialize_enum_input_param(function_name, parameter)}
 % elif 'hardcoded_value' in parameter:
-  ${initialize_hardcoded_parameter(parameter)}
+${initialize_hardcoded_parameter(parameter)}
 % elif 'callback_token' in parameter or 'callback_params' in parameter: ## pass
 % elif "determine_size_from" in parameter:
 ${initialize_len_input_param(parameter, parameters)}
@@ -469,8 +472,8 @@ ${initialize_standard_input_param(parameter)}
   parameter_c_type_pointer = parameter_c_type.replace('[]','*')
   parameter_name = common_helpers.get_grpc_field_name(parameter)
 %>\
-      auto get_${parameter['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, int n) -> ${parameter_c_type_pointer} {
-            if (vector.size() > n) {
+    auto get_${parameter['name']}_if = [](const google::protobuf::RepeatedPtrField<${stripped_grpc_type}>& vector, int n) -> ${parameter_c_type_pointer} {
+          if (vector.size() > n) {
 <%
     # Note that this code will not handle every datatype, but it works for all
     # the ones we currently use with repeated varargs.
@@ -484,14 +487,14 @@ ${initialize_standard_input_param(parameter)}
       # that are ASCII-only. (For physical channels and lines.)
       return_snippet += f'.c_str()'
 %>\
-                  return vector[n]${return_snippet};
-            }
+                return vector[n]${return_snippet};
+          }
 % if common_helpers.is_string_arg(parameter):
-            return nullptr;
+          return nullptr;
 % else:
-            return 0;
+          return 0;
 % endif
-      };\
+    };\
 </%def>
 
 <%def name="initialize_repeated_varargs_param(parameter)">\
@@ -505,13 +508,13 @@ ${initialize_standard_input_param(parameter)}
   c_type_pointer = c_type.replace('[]','*')
   max_vector_size = parameter['max_length']
 %>\
-      auto ${parameter_name} = request->${field_name}();
-      if (${parameter_name}.size() == 0) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for ${parameter["name"]} were specified");
-      }
-      if (${parameter_name}.size() > ${max_vector_size}) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than ${max_vector_size} values for ${parameter["name"]} were specified");
-      }
+    auto ${parameter_name} = request->${field_name}();
+    if (${parameter_name}.size() == 0) {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No values for ${parameter["name"]} were specified");
+    }
+    if (${parameter_name}.size() > ${max_vector_size}) {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "More than ${max_vector_size} values for ${parameter["name"]} were specified");
+    }
 </%def>
 
 
@@ -524,14 +527,14 @@ ${initialize_standard_input_param(parameter)}
   field_name = common_helpers.get_grpc_field_name(parameter)
   element_type = service_helpers.get_c_element_type(parameter)
 %>\
-      auto ${parameter_name}_vector = std::vector<${element_type}>();
-      ${parameter_name}_vector.reserve(request->${field_name}().size());
-      std::transform(
-        request->${field_name}().begin(),
-        request->${field_name}().end(),
-        std::back_inserter(${parameter_name}_vector),
-        [](auto x) { return x; });
-      auto ${parameter_name} = ${parameter_name}_vector.data();
+    auto ${parameter_name}_vector = std::vector<${element_type}>();
+    ${parameter_name}_vector.reserve(request->${field_name}().size());
+    std::transform(
+      request->${field_name}().begin(),
+      request->${field_name}().end(),
+      std::back_inserter(${parameter_name}_vector),
+      [](auto x) { return x; });
+    auto ${parameter_name} = ${parameter_name}_vector.data();
 </%def>
 
 ## Initialize a bitfield as enum array input parameter for an API call.
@@ -542,9 +545,9 @@ ${initialize_standard_input_param(parameter)}
   enum_type = common_helpers.get_bitfield_enum_type(parameter)
   bitfield_type = parameter["type"]
 %>\
-      const auto ${parameter_name} = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
-        request->${field_name}_array(),
-        request->${field_name}_raw());
+    const auto ${parameter_name} = nidevice_grpc::converters::convert_bitfield_as_enum_array_input(
+      request->${field_name}_array(),
+      request->${field_name}_raw());
 </%def>
 
 ## Initialize an enum input parameter for an API call.
@@ -571,60 +574,60 @@ ${initialize_standard_input_param(parameter)}
   raw_request_snippet = f'request->{field_name}_raw()'
   validate_attribute_enum = parameter.get("raw_attribute", False)
 %>\
-      ${parameter_type_pointer} ${parameter_name};
+    ${parameter_type_pointer} ${parameter_name};
 % if parameter['grpc_type'] == "string":
-      std::string ${parameter_name}_buffer;
+    std::string ${parameter_name}_buffer;
 % endif
-      switch (request->${field_name}_enum_case()) {
+    switch (request->${field_name}_enum_case()) {
 % if has_unmapped_enum:
-        case ${one_of_case_prefix}::k${pascal_field_name}: {
+      case ${one_of_case_prefix}::k${pascal_field_name}: {
 %   if parameter['grpc_type'] == "string":
-          ${parameter_name} = const_cast<${parameter['type']}>((${enum_request_snippet}).c_str());
+        ${parameter_name} = const_cast<${parameter['type']}>((${enum_request_snippet}).c_str());
 %   else:
-          ${parameter_name} = static_cast<${parameter['type']}>(${enum_request_snippet});
+        ${parameter_name} = static_cast<${parameter['type']}>(${enum_request_snippet});
 %   endif
 %   if validate_attribute_enum:
 ## "raw" attributes always validate non-raw enum values before passing to driver
 ## this can be important if (a) the driver can't handle all validation scenarios
 ## and (b) the caller passes/casts an invalid enum value.
 ## Non-raw attributes allow the driver to handle validation.
-          ${parameter_name} = ${check_enum_is_valid} ? ${parameter_name} : 0;
+        ${parameter_name} = ${check_enum_is_valid} ? ${parameter_name} : 0;
 %   endif
-          break;
-        }
+        break;
+      }
 % endif
 % if has_mapped_enum:
-        case ${one_of_case_prefix}::k${pascal_field_name}Mapped: {
-          auto ${mapped_enum_iterator_name} = ${map_name}.find(${mapped_request_snippet});
-          if (${mapped_enum_iterator_name} == ${map_name}.end()) {
-            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name}_mapped was not specified or out of range.");
-          }
-%   if parameter['grpc_type'] == "string":
-          ${parameter_name} = const_cast<${parameter_type_pointer}>((${f'{mapped_enum_iterator_name}->second'}).c_str());
-%   else:
-          ${parameter_name} = static_cast<${parameter['type']}>(${f'{mapped_enum_iterator_name}->second'});
-%   endif
-          break;
+      case ${one_of_case_prefix}::k${pascal_field_name}Mapped: {
+        auto ${mapped_enum_iterator_name} = ${map_name}.find(${mapped_request_snippet});
+        if (${mapped_enum_iterator_name} == ${map_name}.end()) {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name}_mapped was not specified or out of range.");
         }
+%   if parameter['grpc_type'] == "string":
+        ${parameter_name} = const_cast<${parameter_type_pointer}>((${f'{mapped_enum_iterator_name}->second'}).c_str());
+%   else:
+        ${parameter_name} = static_cast<${parameter['type']}>(${f'{mapped_enum_iterator_name}->second'});
+%   endif
+        break;
+      }
 % endif
-        case ${one_of_case_prefix}::k${pascal_field_name}Raw: {
+      case ${one_of_case_prefix}::k${pascal_field_name}Raw: {
 % if parameter['grpc_type'] == "string":
-          ${parameter_name}_buffer = convert_from_grpc<std::string>(${raw_request_snippet});
-          ${parameter_name} = const_cast<${parameter_type_pointer}>(${parameter_name}_buffer.c_str());
+        ${parameter_name}_buffer = convert_from_grpc<std::string>(${raw_request_snippet});
+        ${parameter_name} = const_cast<${parameter_type_pointer}>(${parameter_name}_buffer.c_str());
 % else:
-          ${parameter_name} = static_cast<${parameter['type']}>(${raw_request_snippet});
+        ${parameter_name} = static_cast<${parameter['type']}>(${raw_request_snippet});
 % endif
 % if validate_attribute_enum: # raw validation can be overridden with a toggle.
-          auto ${parameter_name}_is_valid = ${check_enum_is_valid} || feature_toggles_.is_allow_undefined_attributes_enabled;
-          ${parameter_name} = ${parameter_name}_is_valid ? ${parameter_name} : 0;
+        auto ${parameter_name}_is_valid = ${check_enum_is_valid} || feature_toggles_.is_allow_undefined_attributes_enabled;
+        ${parameter_name} = ${parameter_name}_is_valid ? ${parameter_name} : 0;
 % endif
-          break;
-        }
-        case ${one_of_case_prefix}::${field_name.upper()}_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range");
-          break;
-        }
+        break;
       }
+      case ${one_of_case_prefix}::${field_name.upper()}_ENUM_NOT_SET: {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for ${parameter_name} was not specified or out of range");
+        break;
+      }
+    }
 </%def>
 
 ## Initialize an input parameter that is determined by the 'len' size mechanism.
@@ -640,28 +643,28 @@ ${initialize_standard_input_param(parameter)}
   allow_optional_as_cpp_constant = "true" if allow_optional else "false"
 %>\
 % if len(size_sources) > 1:
-      auto ${parameter_name}_determine_from_sizes = std::array<int, ${len(size_sources)}>
-      {
+    auto ${parameter_name}_determine_from_sizes = std::array<int, ${len(size_sources)}>
+    {
 <%block filter="common_helpers.trim_trailing_comma()">\
 % for size_source in size_sources:
-        request->${size_source}_size(),
+      request->${size_source}_size(),
 % endfor
 </%block>\
-      };
-      const auto ${parameter_name}_size_calculation = calculate_linked_array_size(${parameter_name}_determine_from_sizes, ${allow_optional_as_cpp_constant});
+    };
+    const auto ${parameter_name}_size_calculation = calculate_linked_array_size(${parameter_name}_determine_from_sizes, ${allow_optional_as_cpp_constant});
 
-      if (${parameter_name}_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [${str.join(', ', size_sources)}] do not match");
-      }
+    if (${parameter_name}_size_calculation.match_state == MatchState::MISMATCH) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [${str.join(', ', size_sources)}] do not match");
+    }
 % if allow_optional:
-      // NULL out optional params with zero sizes.
-      if (${parameter_name}_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+    // NULL out optional params with zero sizes.
+    if (${parameter_name}_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
 % for size_source in size_sources:
-        ${size_source} = request->${size_source}_size() ? std::move(${size_source}) : nullptr;
+      ${size_source} = request->${size_source}_size() ? std::move(${size_source}) : nullptr;
 % endfor
-      }
+    }
 % endif
-      auto ${parameter_name} = ${parameter_name}_size_calculation.size;
+    auto ${parameter_name} = ${parameter_name}_size_calculation.size;
 % else:
 <%
   size_field_name = size_sources[-1]
@@ -672,13 +675,13 @@ ${initialize_standard_input_param(parameter)}
   if len(linked_array_param_name) > 1 and calculate_len_in_bytes:
     raise f"{parameter['name']} has 'len-in-bytes' set but has more than one 'determine-size-from' values!"
 %>\
-  %if calculate_len_in_bytes:
-      ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size() * sizeof(${linked_array_param_underlying_type}));\
-  %elif linked_array_param['type'] in ['ViConstString', 'const char[]']:
-      ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(convert_from_grpc<std::string>(request->${size_field_name}()).size());\
-  %else:
-      ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
-  %endif
+%if calculate_len_in_bytes:
+    ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size() * sizeof(${linked_array_param_underlying_type}));\
+%elif linked_array_param['type'] in ['ViConstString', 'const char[]']:
+    ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(convert_from_grpc<std::string>(request->${size_field_name}()).size());\
+%else:
+    ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
+%endif
 % endif
 </%def>
 
@@ -691,11 +694,11 @@ ${initialize_standard_input_param(parameter)}
   size_field_name = common_helpers.get_grpc_field_name(size_param)
 %>\
 ${initialize_standard_input_param(parameter)}
-      auto total_length = std::accumulate(request->${size_field_name}().cbegin(), request->${size_field_name}().cend(), 0);
+    auto total_length = std::accumulate(request->${size_field_name}().cbegin(), request->${size_field_name}().cend(), 0);
 
-      if (total_length != request->${parameter_name}_size()) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array ${parameter_name} does not match the expected size from the sum of ${size_field_name}");
-      }
+    if (total_length != request->${parameter_name}_size()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The total size of the two-dimensional array ${parameter_name} does not match the expected size from the sum of ${size_field_name}");
+    }
 </%def>
 
 
@@ -706,7 +709,7 @@ ${initialize_standard_input_param(parameter)}
 
 ## Initialize an input parameter that's passed by pointer.
 <%def name="initialize_pointer_input_parameter(parameter)">\
-      ${parameter['type']} ${common_helpers.get_cpp_local_name(parameter)}_copy = request->${common_helpers.get_cpp_local_name(parameter)}();\
+    ${parameter['type']} ${common_helpers.get_cpp_local_name(parameter)}_copy = request->${common_helpers.get_cpp_local_name(parameter)}();\
 </%def>
 
 
@@ -725,86 +728,86 @@ ${initialize_standard_input_param(parameter)}
   c_element_type_that_needs_coercion = service_helpers.get_c_element_type_for_array_that_needs_coercion(parameter)
 %>\
 % if c_type in ['ViConstString', 'const char[]']:
-      auto ${parameter_name}_mbcs = convert_from_grpc<std::string>(${request_snippet});
-      auto ${parameter_name} = ${parameter_name}_mbcs.c_str();\
+    auto ${parameter_name}_mbcs = convert_from_grpc<std::string>(${request_snippet});
+    auto ${parameter_name} = ${parameter_name}_mbcs.c_str();\
 % elif grpc_type == 'string':
-      auto ${parameter_name}_mbcs = convert_from_grpc<std::string>(${request_snippet});
-      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${parameter_name}_mbcs.c_str();\
+    auto ${parameter_name}_mbcs = convert_from_grpc<std::string>(${request_snippet});
+    ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${parameter_name}_mbcs.c_str();\
 % elif common_helpers.is_string_arg(parameter):
-      ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
+    ${c_type_pointer} ${parameter_name} = (${c_type_pointer})${request_snippet}.c_str();\
 % elif common_helpers.supports_standard_copy_conversion_routines(parameter):
-      auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${str.join(", ", [request_snippet] + parameter.get("additional_arguments_to_copy_convert", []))});\
+    auto ${parameter_name} = convert_from_grpc<${c_type_underlying_type}>(${str.join(", ", [request_snippet] + parameter.get("additional_arguments_to_copy_convert", []))});\
 % elif grpc_type == 'repeated nidevice_grpc.Session':
-      auto ${parameter_name}_request = ${request_snippet};
-      std::vector<${c_type_underlying_type}> ${parameter_name};
-      std::transform(
-        ${parameter_name}_request.begin(),
-        ${parameter_name}_request.end(),
-        std::back_inserter(${parameter_name}),
-        [&](auto session) { return ${service_helpers.session_repository_field_name(parameter, config)}->access_session(session.name()); }); \
+    auto ${parameter_name}_request = ${request_snippet};
+    std::vector<${c_type_underlying_type}> ${parameter_name};
+    std::transform(
+      ${parameter_name}_request.begin(),
+      ${parameter_name}_request.end(),
+      std::back_inserter(${parameter_name}),
+      [&](auto session) { return ${service_helpers.session_repository_field_name(parameter, config)}->access_session(session.name()); }); \
 % elif c_type == 'ViBoolean[]':
-      auto ${parameter_name}_request = ${request_snippet};
-      std::vector<${c_type_underlying_type}> ${parameter_name};
-      std::transform(
-        ${parameter_name}_request.begin(),
-        ${parameter_name}_request.end(),
-        std::back_inserter(${parameter_name}),
-        [](auto x) { return x ? VI_TRUE : VI_FALSE; });
+    auto ${parameter_name}_request = ${request_snippet};
+    std::vector<${c_type_underlying_type}> ${parameter_name};
+    std::transform(
+      ${parameter_name}_request.begin(),
+      ${parameter_name}_request.end(),
+      std::back_inserter(${parameter_name}),
+      [](auto x) { return x ? VI_TRUE : VI_FALSE; });
 % elif c_type in ['ViInt16[]', 'ViUInt16[]']:
-      auto ${parameter_name}_request = ${request_snippet};
-      std::vector<${c_type_underlying_type}> ${parameter_name};
-      std::transform(
-        ${parameter_name}_request.begin(),
-        ${parameter_name}_request.end(),
-        std::back_inserter(${parameter_name}),
-        [](auto x) { return (${c_type_underlying_type})x; }); \
+    auto ${parameter_name}_request = ${request_snippet};
+    std::vector<${c_type_underlying_type}> ${parameter_name};
+    std::transform(
+      ${parameter_name}_request.begin(),
+      ${parameter_name}_request.end(),
+      std::back_inserter(${parameter_name}),
+      [](auto x) { return (${c_type_underlying_type})x; }); \
 % elif c_type == 'ViAddr':
-      ${c_type} ${parameter_name} = reinterpret_cast<${c_type}>(${request_snippet});\
+    ${c_type} ${parameter_name} = reinterpret_cast<${c_type}>(${request_snippet});\
 % elif c_type in ['ViChar', 'ViInt8', 'ViInt16']:
-      ${c_type} ${parameter_name} = static_cast<${c_type}>(${request_snippet});\
+    ${c_type} ${parameter_name} = static_cast<${c_type}>(${request_snippet});\
 % elif grpc_type == 'nidevice_grpc.Session':
-      auto ${parameter_name}_grpc_session = ${request_snippet};
-      ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter, config)}->access_session(${parameter_name}_grpc_session.name());\
+    auto ${parameter_name}_grpc_session = ${request_snippet};
+    ${c_type} ${parameter_name} = ${service_helpers.session_repository_field_name(parameter, config)}->access_session(${parameter_name}_grpc_session.name());\
 % elif is_array and common_helpers.is_driver_typedef_with_same_size_but_different_qualifiers(c_type_underlying_type):
-      auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
+    auto ${parameter_name} = const_cast<${c_type_pointer}>(reinterpret_cast<const ${c_type_pointer}>(${request_snippet}.data()));\
 % elif c_type in ['const int32[]', 'const uInt32[]']:
-      auto ${parameter_name} = reinterpret_cast<${c_type_pointer}>(${request_snippet}.data());\
+    auto ${parameter_name} = reinterpret_cast<${c_type_pointer}>(${request_snippet}.data());\
 % elif grpc_type == 'bytes':
-      auto ${parameter_name} = reinterpret_cast<const unsigned char*>(${request_snippet}.data());\
+    auto ${parameter_name} = reinterpret_cast<const unsigned char*>(${request_snippet}.data());\
 % elif service_helpers.is_scalar_input_that_needs_coercion(parameter):
-      auto ${parameter_name}_raw = ${request_snippet};
-      if (${parameter_name}_raw < std::numeric_limits<${c_type}>::min() || ${parameter_name}_raw > std::numeric_limits<${c_type}>::max()) {
-          std::string message("value ");
-          message.append(std::to_string(${parameter_name}_raw));
-          message.append(" doesn't fit in datatype ");
-          message.append("${c_type}");
-          throw nidevice_grpc::ValueOutOfRangeException(message);
-      }
-      auto ${parameter_name} = static_cast<${c_type}>(${parameter_name}_raw);
+    auto ${parameter_name}_raw = ${request_snippet};
+    if (${parameter_name}_raw < std::numeric_limits<${c_type}>::min() || ${parameter_name}_raw > std::numeric_limits<${c_type}>::max()) {
+        std::string message("value ");
+        message.append(std::to_string(${parameter_name}_raw));
+        message.append(" doesn't fit in datatype ");
+        message.append("${c_type}");
+        throw nidevice_grpc::ValueOutOfRangeException(message);
+    }
+    auto ${parameter_name} = static_cast<${c_type}>(${parameter_name}_raw);
 % elif service_helpers.is_input_array_that_needs_coercion(parameter):
-      auto ${parameter_name}_raw = ${request_snippet};
-      auto ${parameter_name} = std::vector<${c_element_type_that_needs_coercion}>();
-      ${parameter_name}.reserve(${parameter_name}_raw.size());
-      std::transform(
-        ${parameter_name}_raw.begin(),
-        ${parameter_name}_raw.end(),
-        std::back_inserter(${parameter_name}),
-        [](auto x) {
-              if (x < std::numeric_limits<${c_element_type_that_needs_coercion}>::min() || x > std::numeric_limits<${c_element_type_that_needs_coercion}>::max()) {
-                  std::string message("value ");
-                  message.append(std::to_string(x));
-                  message.append(" doesn't fit in datatype ");
-                  message.append("${c_element_type_that_needs_coercion}");
-                  throw nidevice_grpc::ValueOutOfRangeException(message);
-              }
-              return static_cast<${c_element_type_that_needs_coercion}>(x);
-        });
+    auto ${parameter_name}_raw = ${request_snippet};
+    auto ${parameter_name} = std::vector<${c_element_type_that_needs_coercion}>();
+    ${parameter_name}.reserve(${parameter_name}_raw.size());
+    std::transform(
+      ${parameter_name}_raw.begin(),
+      ${parameter_name}_raw.end(),
+      std::back_inserter(${parameter_name}),
+      [](auto x) {
+            if (x < std::numeric_limits<${c_element_type_that_needs_coercion}>::min() || x > std::numeric_limits<${c_element_type_that_needs_coercion}>::max()) {
+                std::string message("value ");
+                message.append(std::to_string(x));
+                message.append(" doesn't fit in datatype ");
+                message.append("${c_element_type_that_needs_coercion}");
+                throw nidevice_grpc::ValueOutOfRangeException(message);
+            }
+            return static_cast<${c_element_type_that_needs_coercion}>(x);
+      });
 % elif common_helpers.is_array(c_type):
-      auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
+    auto ${parameter_name} = const_cast<${c_type_pointer}>(${request_snippet}.data());\
 % elif common_helpers.is_nidevice_enum_parameter(grpc_type):
-      auto ${parameter_name} = ${request_snippet};\
+    auto ${parameter_name} = ${request_snippet};\
 % else:
-      ${c_type} ${parameter_name} = ${request_snippet};\
+    ${c_type} ${parameter_name} = ${request_snippet};\
 % endif
 </%def>
 
@@ -1086,19 +1089,19 @@ ${copy_to_response_with_transform(source_buffer=parameter_name, parameter_name=p
 
 ## Allocate the response buffer using get_size_expression.
 <%def name="initialize_response_buffer(parameter_name, parameter)">\
-        response->mutable_${parameter_name}()->Clear();
-        response->mutable_${parameter_name}()->Reserve(${common_helpers.get_size_expression(parameter)});
+      response->mutable_${parameter_name}()->Clear();
+      response->mutable_${parameter_name}()->Reserve(${common_helpers.get_size_expression(parameter)});
 </%def>
 
 ## Copy source_buffer to response->mutable_[parameter_name]() applying transform_x.
 <%def name="copy_to_response_with_transform(source_buffer, parameter_name, transform_x, size)">\
-        std::transform(
-          ${source_buffer}.begin(),
-          ${source_buffer}.begin() + ${size},
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
-          [&](auto x) {
-              return ${transform_x};
-          });
+      std::transform(
+        ${source_buffer}.begin(),
+        ${source_buffer}.begin() + ${size},
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_${parameter_name}()),
+        [&](auto x) {
+            return ${transform_x};
+        });
 </%def>
 
 ## Call the driver library method function_name.

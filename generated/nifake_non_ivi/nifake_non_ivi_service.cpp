@@ -327,15 +327,15 @@ namespace nifake_non_ivi_grpc {
         auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
         return static_cast<nifake_non_ivi_grpc::MarbleInt32AttributeValues>(valid_enum_value);
       };
-        response->mutable_value()->Clear();
-        response->mutable_value()->Reserve(10);
-        std::transform(
-          response->value_raw().begin(),
-          response->value_raw().begin() + 10,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
-          [&](auto x) {
-              return checked_convert_value(x);
-          });
+      response->mutable_value()->Clear();
+      response->mutable_value()->Reserve(10);
+      std::transform(
+        response->value_raw().begin(),
+        response->value_raw().begin() + 10,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_value()),
+        [&](auto x) {
+            return checked_convert_value(x);
+        });
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -662,33 +662,33 @@ namespace nifake_non_ivi_grpc {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);
       }
       response->set_status(status);
-        response->mutable_u16_data()->Clear();
-        response->mutable_u16_data()->Reserve(number_of_u16_samples);
-        std::transform(
-          u16_data.begin(),
-          u16_data.begin() + number_of_u16_samples,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
-          [&](auto x) {
-              return x;
-          });
-        response->mutable_i16_data()->Clear();
-        response->mutable_i16_data()->Reserve(number_of_i16_samples);
-        std::transform(
-          i16_data.begin(),
-          i16_data.begin() + number_of_i16_samples,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_i16_data()),
-          [&](auto x) {
-              return x;
-          });
-        response->mutable_i8_data()->Clear();
-        response->mutable_i8_data()->Reserve(number_of_i8_samples);
-        std::transform(
-          i8_data.begin(),
-          i8_data.begin() + number_of_i8_samples,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_i8_data()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_u16_data()->Clear();
+      response->mutable_u16_data()->Reserve(number_of_u16_samples);
+      std::transform(
+        u16_data.begin(),
+        u16_data.begin() + number_of_u16_samples,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
+        [&](auto x) {
+            return x;
+        });
+      response->mutable_i16_data()->Clear();
+      response->mutable_i16_data()->Reserve(number_of_i16_samples);
+      std::transform(
+        i16_data.begin(),
+        i16_data.begin() + number_of_i16_samples,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_i16_data()),
+        [&](auto x) {
+            return x;
+        });
+      response->mutable_i8_data()->Clear();
+      response->mutable_i8_data()->Reserve(number_of_i8_samples);
+      std::transform(
+        i8_data.begin(),
+        i8_data.begin() + number_of_i8_samples,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_i8_data()),
+        [&](auto x) {
+            return x;
+        });
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -758,15 +758,15 @@ namespace nifake_non_ivi_grpc {
       }
       response->set_status(status);
       response->mutable_i32_data()->Resize(array_size_copy, 0);
-        response->mutable_u16_data()->Clear();
-        response->mutable_u16_data()->Reserve(array_size_copy);
-        std::transform(
-          u16_data.begin(),
-          u16_data.begin() + array_size_copy,
-          google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
-          [&](auto x) {
-              return x;
-          });
+      response->mutable_u16_data()->Clear();
+      response->mutable_u16_data()->Reserve(array_size_copy);
+      std::transform(
+        u16_data.begin(),
+        u16_data.begin() + array_size_copy,
+        google::protobuf::RepeatedFieldBackInserter(response->mutable_u16_data()),
+        [&](auto x) {
+            return x;
+        });
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
