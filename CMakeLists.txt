@@ -746,7 +746,7 @@ target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake_non_ivi"
     PRIVATE "source/server")
 
-    target_link_libraries(UnitTestsRunner
+target_link_libraries(UnitTestsRunner
     ${CMAKE_DL_LIBS}
     ${server_lib_deps}
     gmock
