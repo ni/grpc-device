@@ -1457,6 +1457,63 @@ attributes = {
         'name': 'MODACC_RESULTS_MAXIMUM_PEAK_FREQUENCY_ERROR',
         'type': 'float64'
     },
+    3162244: {
+        'access': 'read-write',
+        'enum': 'NBIoTDownlinkChannelConfigurationMode',
+        'name': 'NB_IOT_DOWNLINK_CHANNEL_CONFIGURATION_MODE',
+        'type': 'int32'
+    },
+    3162247: {
+        'access': 'read-write',
+        'name': 'NPSS_POWER',
+        'type': 'float64'
+    },
+    3162249: {
+        'access': 'read-write',
+        'name': 'NSSS_POWER',
+        'type': 'float64'
+    },
+    3162250: {
+        'access': 'read-write',
+        'name': 'NPDSCH_POWER',
+        'type': 'float64'
+    },
+    3162251: {
+        'access': 'read-write',
+        'enum': 'NpdschEnabled',
+        'name': 'NPDSCH_ENABLED',
+        'type': 'int32'
+    },
+    3162254: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_MEAN_RMS_NPSS_EVM',
+        'type': 'float64'
+    },
+    3162255: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_MEAN_RMS_NSSS_EVM',
+        'type': 'float64'
+    },
+    3162256: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_NPDSCH_MEAN_RMS_EVM',
+        'type': 'float64'
+    },
+    3162257: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_NPDSCH_MEAN_RMS_QPSK_EVM',
+        'type': 'float64'
+    },
+    3162259: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_MEAN_RMS_NRS_EVM',
+        'type': 'float64'
+    },
+    3162260: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_DOWNLINK_NRS_TRANSMIT_POWER',
+        'type': 'float64'
+    },
     3170304: {
         'access': 'read-write',
         'name': 'OBW_MEASUREMENT_ENABLED',

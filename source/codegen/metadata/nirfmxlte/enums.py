@@ -1317,6 +1317,19 @@ enums = {
             }
         ]
     },
+    'NBIoTDownlinkChannelConfigurationMode': {
+        'enum-value-prefix': 'NB_IOT_DOWNLINK_CHANNEL_CONFIGURATION_MODE',
+        'values': [
+            {
+                'name': 'USER_DEFINED',
+                'value': 1
+            },
+            {
+                'name': 'TEST_MODEL',
+                'value': 2
+            }
+        ]
+    },
     'NBIoTUplinkSubcarrierSpacing': {
         'enum-value-prefix': 'NB_IOT_UPLINK_SUBCARRIER_SPACING',
         'values': [
@@ -1365,6 +1378,18 @@ enums = {
             },
             {
                 'name': 'QPSK',
+                'value': 1
+            }
+        ]
+    },
+    'NpdschEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
                 'value': 1
             }
         ]
