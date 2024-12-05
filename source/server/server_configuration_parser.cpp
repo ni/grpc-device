@@ -303,9 +303,10 @@ StreamingCoreConfiguration ServerConfigurationParser::parse_streaming_core_confi
         streaming_core_config.server_run_core = parse_streaming_core_with_key(kServerRunCoreKey);
     }
     else{
-      streaming_core_config.sideband_read_write_core = 0;
-      streaming_core_config.stream_write_core = 0;
-      streaming_core_config.server_run_core = 0;
+      // -1 is set as the default value for the cores which indicates that any available core can be used.
+      streaming_core_config.sideband_read_write_core = -1;
+      streaming_core_config.stream_write_core = -1;
+      streaming_core_config.server_run_core = -1;
     }
 
     return streaming_core_config;
@@ -325,7 +326,7 @@ int ServerConfigurationParser::parse_streaming_core_with_key(const std::string& 
         }
     }
 
-    if (parsed_core <= -1) {
+    if (parsed_core < -1) {
         throw InvalidStreamingCoreException();
     }
 

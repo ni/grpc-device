@@ -9,8 +9,8 @@
        "root_cert": ""
     },
     "core_configuration": {
-       "sideband_read_write_core": 0,
-       "stream_write_core": 0,
-       "server_run_core": 0
+       "sideband_read_write_core": -1,
+       "stream_write_core": -1,
+       "server_run_core": -1
     }
  }
