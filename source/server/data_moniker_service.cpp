@@ -123,7 +123,7 @@ void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::S
 
     cpu_set_t cpuSet;
     CPU_ZERO(&cpuSet);
-    CPU_SET(s_SidebandReadWriteCore, &cpuSet);
+    CPU_SET(s_StreamingCoreConfig.sideband_read_write_core, &cpuSet);
     sched_setaffinity(threadId, sizeof(cpu_set_t), &cpuSet);
   }
 #endif
@@ -177,7 +177,7 @@ Status DataMonikerService::BeginSidebandStream(ServerContext* context, const Beg
   char identifier[32] = {};
   InitOwnerSidebandData(strategy, bufferSize, identifier);
   std::string identifierString(identifier);
-  
+
   response->set_strategy(request->strategy());
   response->set_sideband_identifier(identifier);
   response->set_connection_url(GetConnectionAddress(strategy));
@@ -251,7 +251,7 @@ Status DataMonikerService::StreamWrite(ServerContext* context, ServerReaderWrite
   if(s_StreamingCoreConfig.stream_write_core >= 0) {
     cpu_set_t cpuSet;
     CPU_ZERO(&cpuSet);
-    CPU_SET(s_StreamWriteCore, &cpuSet);
+    CPU_SET(s_StreamingCoreConfig.stream_write_core, &cpuSet);
     sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
   }
 #endif
