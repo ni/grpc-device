@@ -10,7 +10,7 @@
 #include "logging.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
-#include "core_configuration.h"
+#include "streaming_core_configuration.h"
 
 #if defined(__GNUC__)
   #include <sys/mman.h>
@@ -38,7 +38,7 @@ struct ServerConfiguration {
   int max_message_size;
   int sideband_port;
   nidevice_grpc::FeatureToggles feature_toggles;
-  CoreConfiguration core_config;
+  StreamingCoreConfiguration streaming_core_config;
 };
 
 static ServerConfiguration GetConfiguration(const std::string& config_file_path)
@@ -53,7 +53,7 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
     config.server_address = server_config_parser.parse_address();
     config.sideband_address = server_config_parser.parse_sideband_address();
     config.sideband_port = server_config_parser.parse_sideband_port();
-    config.core_config = server_config_parser.parse_core_configuration();
+    config.streaming_core_config = server_config_parser.parse_streaming_core_configuration();
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
     config.root_cert = server_config_parser.parse_root_cert();
@@ -72,16 +72,6 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
 static std::mutex server_mutex;
 static std::unique_ptr<grpc::Server> server;
 static bool shutdown = false;
-int s_SidebandReadWriteCore;
-int s_StreamWriteCore;
-int s_ServerRunCore;
-
-void SetCoreConfiguration(CoreConfiguration core_config)
-{
-  s_SidebandReadWriteCore = core_config.sideband_read_write_core;
-  s_StreamWriteCore = core_config.stream_write_core;
-  s_ServerRunCore = core_config.server_run_core;
-}
 
 static void StopServer()
 {
@@ -126,7 +116,7 @@ static void RunServer(const ServerConfiguration& config)
     server = builder.BuildAndStart();
     if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
       auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), config.sideband_port);
-      SetCoreConfiguration(config.core_config);
+      ni::data_monikers::configure_streaming_cores_for_cpu_pinning(config.streaming_core_config);
       // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
       // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
     }
@@ -286,7 +276,7 @@ int main(int argc, char** argv)
     schedParam.sched_priority = 95;
     sched_setscheduler(0, SCHED_FIFO, &schedParam);
 
-    if (s_ServerRunCore >= 0) {
+    if (config.streaming_core_config.server_run_core >= 0) {
       cpu_set_t cpuSet;
       CPU_ZERO(&cpuSet);
       CPU_SET(s_ServerRunCore, &cpuSet);

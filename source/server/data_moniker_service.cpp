@@ -1,6 +1,7 @@
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 #include "data_moniker_service.h"
+#include "streaming_core_configuration.h"
 
 #include <sideband_data.h>
 #include <sideband_grpc.h>
@@ -44,6 +45,13 @@ static void SysFsWrite(const std::string& fileName, const std::string& value)
 }
 
 namespace ni::data_monikers {
+
+static StreamingCoreConfiguration s_StreamingCoreConfig;
+
+void configure_streaming_cores_for_cpu_pinning(const StreamingCoreConfiguration& streaming_core_config)
+{
+  s_StreamingCoreConfig = streaming_core_config;
+}
 
 bool is_sideband_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles)
 {
@@ -109,7 +117,7 @@ void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::S
 {
 #ifndef _WIN32
   if ((strategy == ::SidebandStrategy::RDMA_LOW_LATENCY ||
-      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) && s_SidebandReadWriteCore >= 0) {
+      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) && s_StreamingCoreConfig.sideband_read_write_core >= 0) {
     pid_t threadId = syscall(SYS_gettid);
     ::SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/tasks", std::to_string(threadId));
 
@@ -240,7 +248,7 @@ Status DataMonikerService::StreamRead(ServerContext* context, const MonikerList*
 Status DataMonikerService::StreamWrite(ServerContext* context, ServerReaderWriter<StreamWriteResponse, MonikerWriteRequest>* stream)
 {
 #ifndef _WIN32
-  if(s_StreamWriteCore >= 0) {
+  if(s_StreamingCoreConfig.stream_write_core >= 0) {
     cpu_set_t cpuSet;
     CPU_ZERO(&cpuSet);
     CPU_SET(s_StreamWriteCore, &cpuSet);

@@ -5,7 +5,7 @@
 #include <sstream>
 
 #include "feature_toggles.h"
-#include "core_configuration.h"
+#include "streaming_core_configuration.h"
 
 #if defined(_MSC_VER)
   #include <windows.h>
@@ -20,7 +20,7 @@ static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
 static const char* kSidebandAddressJsonKey = "sideband_address";
 static const char* kSidebandPortJsonKey = "sideband_port";
-static const char* kCoreConfigurationKey = "core_configuration";
+static const char* kStreamingCoreConfigurationKey = "streaming_core_configuration";
 static const char* kSidebandReadWriteCoreKey = "sideband_read_write_core";
 static const char* kStreamWriteCoreKey = "stream_write_core";
 static const char* kServerRunCoreKey = "server_run_core";
@@ -292,26 +292,26 @@ int ServerConfigurationParser::parse_port_with_key(const std::string& key) const
   return parsed_port;
 }
 
-CoreConfiguration ServerConfigurationParser::parse_core_configuration() const
+StreamingCoreConfiguration ServerConfigurationParser::parse_streaming_core_configuration() const
 {
-    CoreConfiguration core_config;
+    StreamingCoreConfiguration streaming_core_config;
 
-    auto core_config_it = config_file_.find(kCoreConfigurationKey);
+    auto core_config_it = config_file_.find(kStreamingCoreConfigurationKey);
     if (core_config_it != config_file_.end()) {
-        core_config.sideband_read_write_core = parse_core_with_key(kSidebandReadWriteCoreKey);
-        core_config.stream_write_core = parse_core_with_key(kStreamWriteCoreKey);
-        core_config.server_run_core = parse_core_with_key(kServerRunCoreKey);
+        streaming_core_config.sideband_read_write_core = parse_streaming_core_with_key(kSidebandReadWriteCoreKey);
+        streaming_core_config.stream_write_core = parse_streaming_core_with_key(kStreamWriteCoreKey);
+        streaming_core_config.server_run_core = parse_streaming_core_with_key(kServerRunCoreKey);
     }
     else{
-      core_config.sideband_read_write_core = -1;
-      core_config.stream_write_core = -1;
-      core_config.server_run_core = -1;
+      streaming_core_config.sideband_read_write_core = 0;
+      streaming_core_config.stream_write_core = 0;
+      streaming_core_config.server_run_core = 0;
     }
 
-    return core_config;
+    return streaming_core_config;
 }
 
-int ServerConfigurationParser::parse_core_with_key(const std::string& key) const
+int ServerConfigurationParser::parse_streaming_core_with_key(const std::string& key) const
 {
     int parsed_core = -1;
 
@@ -321,12 +321,12 @@ int ServerConfigurationParser::parse_core_with_key(const std::string& key) const
             parsed_core = it->get<int>();
         }
         catch (const nlohmann::json::type_error& ex) {
-            throw WrongCoreTypeException(ex.what());
+            throw WrongStreamingCoreTypeException(ex.what());
         }
     }
 
-    if (parsed_core < -1) {
-        throw InvalidCoreException();
+    if (parsed_core <= -1) {
+        throw InvalidStreamingCoreException();
     }
 
     return parsed_core;
@@ -352,7 +352,7 @@ ServerConfigurationParser::InvalidPortException::InvalidPortException()
 {
 }
 
-ServerConfigurationParser::InvalidCoreException::InvalidCoreException()
+ServerConfigurationParser::InvalidStreamingCoreException::InvalidStreamingCoreException()
     : std::runtime_error(kInvalidCoreMessage)
 {
 }
@@ -367,7 +367,7 @@ ServerConfigurationParser::WrongPortTypeException::WrongPortTypeException(const 
 {
 }
 
-ServerConfigurationParser::WrongCoreTypeException::WrongCoreTypeException(const std::string& type_error_details)
+ServerConfigurationParser::WrongStreamingCoreTypeException::WrongStreamingCoreTypeException(const std::string& type_error_details)
     : std::runtime_error(kWrongCoreTypeMessage + type_error_details)
 {
 }
