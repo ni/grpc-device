@@ -353,7 +353,7 @@ ServerConfigurationParser::InvalidPortException::InvalidPortException()
 }
 
 ServerConfigurationParser::InvalidStreamingCoreException::InvalidStreamingCoreException()
-    : std::runtime_error(kInvalidCoreMessage)
+    : std::runtime_error(kInvalidStreamingCoreMessage)
 {
 }
 
@@ -368,7 +368,7 @@ ServerConfigurationParser::WrongPortTypeException::WrongPortTypeException(const 
 }
 
 ServerConfigurationParser::WrongStreamingCoreTypeException::WrongStreamingCoreTypeException(const std::string& type_error_details)
-    : std::runtime_error(kWrongCoreTypeMessage + type_error_details)
+    : std::runtime_error(kWrongStreamingCoreTypeMessage + type_error_details)
 {
 }
 
