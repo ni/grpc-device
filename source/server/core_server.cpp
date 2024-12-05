@@ -279,7 +279,7 @@ int main(int argc, char** argv)
     if (config.streaming_core_config.server_run_core >= 0) {
       cpu_set_t cpuSet;
       CPU_ZERO(&cpuSet);
-      CPU_SET(s_ServerRunCore, &cpuSet);
+      CPU_SET(config.streaming_core_config.server_run_core, &cpuSet);
       sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
     }
 
