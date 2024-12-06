@@ -1,6 +1,7 @@
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 #include "data_moniker_service.h"
+#include "cpu_affinity_configuration.h"
 
 #include <sideband_data.h>
 #include <sideband_grpc.h>
@@ -44,6 +45,13 @@ static void SysFsWrite(const std::string& fileName, const std::string& value)
 }
 
 namespace ni::data_monikers {
+
+static CpuAffinityConfiguration c_CpuAffinityConfig;
+
+void configure_cpu_affinity(const CpuAffinityConfiguration& cpu_affinity)
+{
+  c_CpuAffinityConfig = cpu_affinity;
+}
 
 bool is_sideband_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles)
 {
@@ -108,14 +116,14 @@ void DataMonikerService::InitiateMonikerList(const MonikerList& monikers, Endpoi
 void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::SidebandStrategy strategy, EndpointList* readers, EndpointList* writers)
 {
 #ifndef _WIN32
-  if (strategy == ::SidebandStrategy::RDMA_LOW_LATENCY ||
-      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) {
+  if ((strategy == ::SidebandStrategy::RDMA_LOW_LATENCY ||
+      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) && c_CpuAffinityConfig.sideband_read_write >= 0) {
     pid_t threadId = syscall(SYS_gettid);
     ::SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/tasks", std::to_string(threadId));
 
     cpu_set_t cpuSet;
     CPU_ZERO(&cpuSet);
-    CPU_SET(8, &cpuSet);
+    CPU_SET(c_CpuAffinityConfig.sideband_read_write, &cpuSet);
     sched_setaffinity(threadId, sizeof(cpu_set_t), &cpuSet);
   }
 #endif
@@ -169,7 +177,7 @@ Status DataMonikerService::BeginSidebandStream(ServerContext* context, const Beg
   char identifier[32] = {};
   InitOwnerSidebandData(strategy, bufferSize, identifier);
   std::string identifierString(identifier);
-  
+
   response->set_strategy(request->strategy());
   response->set_sideband_identifier(identifier);
   response->set_connection_url(GetConnectionAddress(strategy));
@@ -240,10 +248,12 @@ Status DataMonikerService::StreamRead(ServerContext* context, const MonikerList*
 Status DataMonikerService::StreamWrite(ServerContext* context, ServerReaderWriter<StreamWriteResponse, MonikerWriteRequest>* stream)
 {
 #ifndef _WIN32
-  cpu_set_t cpuSet;
-  CPU_ZERO(&cpuSet);
-  CPU_SET(1, &cpuSet);
-  sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
+  if(c_CpuAffinityConfig.stream_write >= 0) {
+    cpu_set_t cpuSet;
+    CPU_ZERO(&cpuSet);
+    CPU_SET(c_CpuAffinityConfig.stream_write, &cpuSet);
+    sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
+  }
 #endif
 
   EndpointList writers;

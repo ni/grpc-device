@@ -7,5 +7,10 @@
        "server_cert": "",
        "server_key": "",
        "root_cert": ""
+    },
+    "cpu_affinity_configuration": {
+       "sideband_read_write": -1,
+       "stream_write": -1,
+       "server": -1
     }
  }
