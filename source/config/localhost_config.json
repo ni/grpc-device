@@ -8,9 +8,9 @@
        "server_key": "",
        "root_cert": ""
     },
-    "core_configuration": {
-       "sideband_read_write_core": -1,
-       "stream_write_core": -1,
-       "server_run_core": -1
+    "cpu_affinity_configuration": {
+       "sideband_read_write": -1,
+       "stream_write": -1,
+       "server": -1
     }
  }
