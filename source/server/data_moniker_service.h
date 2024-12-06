@@ -11,13 +11,13 @@
 #include <map>
 #include <sideband_data.h>
 #include "feature_toggles.h"
-#include "streaming_core_configuration.h"
+#include "cpu_affinity_configuration.h"
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 namespace ni::data_monikers
 {
-    void configure_streaming_cores_for_cpu_pinning(const StreamingCoreConfiguration& streaming_core_config);
+    void configure_cpu_affinity(const CpuAffinityConfiguration& cpu_affinity);
     bool is_sideband_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles);
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------

@@ -5,7 +5,7 @@
 #include <nlohmann/json.hpp>
 
 #include "feature_toggles.h"
-#include "streaming_core_configuration.h"
+#include "cpu_affinity_configuration.h"
 
 namespace nidevice_grpc {
 
@@ -13,10 +13,10 @@ static const char* kConfigFileNotFoundMessage = "The server configuration file w
 static const char* kInvalidAddressMessage = "The specified address is not valid.\n Use a valid IPv4 or IPv6 address. Valid values include localhost, 192.168.1.1, [::], [::1], etc.";
 static const char* kWrongAddressTypeMessage = "The server address must be specified in the server's configuration file as a string: \n\n";
 static const char* kInvalidPortMessage = "The specified port number must between 0 and 65535.";
-static const char* kInvalidStreamingCoreMessage = "The specified core number must be -1 or greater. -1 indicates that any available core can be used.";
+static const char* kInvalidCpuAffinityMessage = "The specified affinity must be -1 or greater. -1 indicates that any available core can be used.";
 static const char* kMalformedJsonMessage = "The JSON in the server configuration file is malformed: \n\n";
 static const char* kWrongPortTypeMessage = "The server port must be specified in the server's configuration file as an integer: \n\n";
-static const char* kWrongStreamingCoreTypeMessage = "The cpu core must be specified in the server's configuration file as an integer: \n\n";
+static const char* kWrongCpuAffinityTypeMessage = "The cpu affinity must be specified in the server's configuration file as an integer: \n\n";
 static const char* kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file.";
 static const char* kValueTypeNotStringMessage = "The following key must be specified in the server's configuration file as a string enclosed with double quotes: ";
 static const char* kFileNotFoundMessage = "The following certificate file was not found: ";
@@ -45,7 +45,7 @@ class ServerConfigurationParser {
   std::string parse_root_cert() const;
   int parse_max_message_size() const;
   int parse_sideband_port() const;
-  StreamingCoreConfiguration parse_streaming_core_configuration() const;
+  CpuAffinityConfiguration parse_cpu_affinity() const;
   FeatureToggles parse_feature_toggles() const;
   FeatureToggles::CodeReadiness parse_code_readiness() const;
 
@@ -65,8 +65,8 @@ class ServerConfigurationParser {
     InvalidPortException();
   };
 
-  struct InvalidStreamingCoreException : public std::runtime_error {
-    InvalidStreamingCoreException();
+  struct InvalidCpuAffinityException : public std::runtime_error {
+    InvalidCpuAffinityException();
   };
 
   struct MalformedJsonException : public std::runtime_error {
@@ -77,8 +77,8 @@ class ServerConfigurationParser {
     WrongPortTypeException(const std::string& type_error_details);
   };
 
-  struct WrongStreamingCoreTypeException : public std::runtime_error {
-    WrongStreamingCoreTypeException(const std::string& type_error_details);
+  struct WrongCpuAffinityTypeException : public std::runtime_error {
+    WrongCpuAffinityTypeException(const std::string& type_error_details);
   };
 
   struct UnspecifiedPortException : public std::runtime_error {
@@ -117,7 +117,7 @@ class ServerConfigurationParser {
   std::string parse_bind_address() const;
   int parse_port() const;
   int parse_port_with_key(const std::string& key) const;
-  int parse_streaming_core_with_key(const std::string& key) const;
+  int parse_cpu_affinity_with_key(const std::string& key) const;
 
   std::string config_file_path_;
   nlohmann::json config_file_;

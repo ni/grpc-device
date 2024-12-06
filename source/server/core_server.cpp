@@ -10,7 +10,7 @@
 #include "logging.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
-#include "streaming_core_configuration.h"
+#include "cpu_affinity_configuration.h"
 
 #if defined(__GNUC__)
   #include <sys/mman.h>
@@ -38,7 +38,7 @@ struct ServerConfiguration {
   int max_message_size;
   int sideband_port;
   nidevice_grpc::FeatureToggles feature_toggles;
-  StreamingCoreConfiguration streaming_core_config;
+  CpuAffinityConfiguration cpu_affinity;
 };
 
 static ServerConfiguration GetConfiguration(const std::string& config_file_path)
@@ -53,7 +53,7 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
     config.server_address = server_config_parser.parse_address();
     config.sideband_address = server_config_parser.parse_sideband_address();
     config.sideband_port = server_config_parser.parse_sideband_port();
-    config.streaming_core_config = server_config_parser.parse_streaming_core_configuration();
+    config.cpu_affinity = server_config_parser.parse_cpu_affinity();
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
     config.root_cert = server_config_parser.parse_root_cert();
@@ -116,7 +116,7 @@ static void RunServer(const ServerConfiguration& config)
     server = builder.BuildAndStart();
     if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
       auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), config.sideband_port);
-      ni::data_monikers::configure_streaming_cores_for_cpu_pinning(config.streaming_core_config);
+      ni::data_monikers::configure_cpu_affinity(config.cpu_affinity);
       // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
       // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
     }
@@ -276,10 +276,10 @@ int main(int argc, char** argv)
     schedParam.sched_priority = 95;
     sched_setscheduler(0, SCHED_FIFO, &schedParam);
 
-    if (config.streaming_core_config.server_run_core >= 0) {
+    if (config.cpu_affinity.server >= 0) {
       cpu_set_t cpuSet;
       CPU_ZERO(&cpuSet);
-      CPU_SET(config.streaming_core_config.server_run_core, &cpuSet);
+      CPU_SET(config.cpu_affinity.server, &cpuSet);
       sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
     }
 

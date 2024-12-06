@@ -5,7 +5,7 @@
 #include <sstream>
 
 #include "feature_toggles.h"
-#include "streaming_core_configuration.h"
+#include "cpu_affinity_configuration.h"
 
 #if defined(_MSC_VER)
   #include <windows.h>
@@ -20,10 +20,10 @@ static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
 static const char* kSidebandAddressJsonKey = "sideband_address";
 static const char* kSidebandPortJsonKey = "sideband_port";
-static const char* kStreamingCoreConfigurationKey = "streaming_core_configuration";
-static const char* kSidebandReadWriteCoreKey = "sideband_read_write_core";
-static const char* kStreamWriteCoreKey = "stream_write_core";
-static const char* kServerRunCoreKey = "server_run_core";
+static const char* kCpuAffinityConfigurationKey = "streaming_core_configuration";
+static const char* kSidebandReadWriteKey = "sideband_read_write_core";
+static const char* kStreamWriteKey = "stream_write_core";
+static const char* kServerKey = "server_run_core";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
@@ -292,27 +292,27 @@ int ServerConfigurationParser::parse_port_with_key(const std::string& key) const
   return parsed_port;
 }
 
-StreamingCoreConfiguration ServerConfigurationParser::parse_streaming_core_configuration() const
+CpuAffinityConfiguration ServerConfigurationParser::parse_cpu_affinity() const
 {
-    StreamingCoreConfiguration streaming_core_config;
+    CpuAffinityConfiguration cpu_affinity;
 
-    auto core_config_it = config_file_.find(kStreamingCoreConfigurationKey);
+    auto core_config_it = config_file_.find(kCpuAffinityConfigurationKey);
     if (core_config_it != config_file_.end()) {
-        streaming_core_config.sideband_read_write_core = parse_streaming_core_with_key(kSidebandReadWriteCoreKey);
-        streaming_core_config.stream_write_core = parse_streaming_core_with_key(kStreamWriteCoreKey);
-        streaming_core_config.server_run_core = parse_streaming_core_with_key(kServerRunCoreKey);
+        cpu_affinity.sideband_read_write = parse_cpu_affinity_with_key(kSidebandReadWriteKey);
+        cpu_affinity.stream_write = parse_cpu_affinity_with_key(kStreamWriteKey);
+        cpu_affinity.server = parse_cpu_affinity_with_key(kServerKey);
     }
     else{
       // -1 is set as the default value for the cores which indicates that any available core can be used.
-      streaming_core_config.sideband_read_write_core = -1;
-      streaming_core_config.stream_write_core = -1;
-      streaming_core_config.server_run_core = -1;
+      cpu_affinity.sideband_read_write = -1;
+      cpu_affinity.stream_write = -1;
+      cpu_affinity.server = -1;
     }
 
-    return streaming_core_config;
+    return cpu_affinity;
 }
 
-int ServerConfigurationParser::parse_streaming_core_with_key(const std::string& key) const
+int ServerConfigurationParser::parse_cpu_affinity_with_key(const std::string& key) const
 {
     int parsed_core = -1;
 
@@ -322,12 +322,12 @@ int ServerConfigurationParser::parse_streaming_core_with_key(const std::string& 
             parsed_core = it->get<int>();
         }
         catch (const nlohmann::json::type_error& ex) {
-            throw WrongStreamingCoreTypeException(ex.what());
+            throw WrongCpuAffinityTypeException(ex.what());
         }
     }
 
     if (parsed_core < -1) {
-        throw InvalidStreamingCoreException();
+        throw InvalidCpuAffinityException();
     }
 
     return parsed_core;
@@ -353,8 +353,8 @@ ServerConfigurationParser::InvalidPortException::InvalidPortException()
 {
 }
 
-ServerConfigurationParser::InvalidStreamingCoreException::InvalidStreamingCoreException()
-    : std::runtime_error(kInvalidStreamingCoreMessage)
+ServerConfigurationParser::InvalidCpuAffinityException::InvalidCpuAffinityException()
+    : std::runtime_error(kInvalidCpuAffinityMessage)
 {
 }
 
@@ -368,8 +368,8 @@ ServerConfigurationParser::WrongPortTypeException::WrongPortTypeException(const 
 {
 }
 
-ServerConfigurationParser::WrongStreamingCoreTypeException::WrongStreamingCoreTypeException(const std::string& type_error_details)
-    : std::runtime_error(kWrongStreamingCoreTypeMessage + type_error_details)
+ServerConfigurationParser::WrongCpuAffinityTypeException::WrongCpuAffinityTypeException(const std::string& type_error_details)
+    : std::runtime_error(kWrongCpuAffinityTypeMessage + type_error_details)
 {
 }
 
