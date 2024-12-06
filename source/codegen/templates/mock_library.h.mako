@@ -35,7 +35,11 @@ class ${service_class_prefix}MockLibrary : public ${namespace_prefix}::${service
   parameters = f['parameters']
   return_type = f['returns']
 %>\
+% if len(parameters) <= 15: # MOCK_METHOD shows compilation error (undefined GMOCK_PP_INTERNAL_FOR_EACH_IMPL_<type>) for params > 15
   MOCK_METHOD(${return_type}, ${method_name}, (${service_helpers.create_params(parameters)}), (override));
+% else:
+  ${return_type} ${method_name}(${service_helpers.create_params(parameters)}) { throw std::runtime_error("Not implemented."); }
+% endif
 % endfor
 };
 
