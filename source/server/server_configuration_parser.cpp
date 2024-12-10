@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "feature_toggles.h"
+#include "cpu_affinity_configuration.h"
 
 #if defined(_MSC_VER)
   #include <windows.h>
@@ -19,6 +20,10 @@ static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
 static const char* kSidebandAddressJsonKey = "sideband_address";
 static const char* kSidebandPortJsonKey = "sideband_port";
+static const char* kCpuAffinityConfigurationKey = "streaming_core_configuration";
+static const char* kSidebandReadWriteKey = "sideband_read_write_core";
+static const char* kStreamWriteKey = "stream_write_core";
+static const char* kServerKey = "server_run_core";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
@@ -292,6 +297,40 @@ int ServerConfigurationParser::parse_port_with_key(const std::string& key) const
   return parsed_port;
 }
 
+CpuAffinityConfiguration ServerConfigurationParser::parse_cpu_affinity() const
+{
+    CpuAffinityConfiguration cpu_affinity;
+
+    auto core_config_it = config_file_.find(kCpuAffinityConfigurationKey);
+    if (core_config_it != config_file_.end()) {
+        cpu_affinity.sideband_read_write = parse_cpu_affinity_with_key(kSidebandReadWriteKey);
+        cpu_affinity.stream_write = parse_cpu_affinity_with_key(kStreamWriteKey);
+        cpu_affinity.server = parse_cpu_affinity_with_key(kServerKey);
+    }
+    return cpu_affinity;
+}
+
+int ServerConfigurationParser::parse_cpu_affinity_with_key(const std::string& key) const
+{
+    int parsed_core = -1;
+
+    auto it = config_file_.find(key);
+    if (it != config_file_.end()) {
+        try {
+            parsed_core = it->get<int>();
+        }
+        catch (const nlohmann::json::type_error& ex) {
+            throw WrongCpuAffinityTypeException(ex.what());
+        }
+    }
+
+    if (parsed_core < -1) {
+        throw InvalidCpuAffinityException();
+    }
+
+    return parsed_core;
+}
+
 ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException(const std::string& config_file_path)
     : std::runtime_error(kConfigFileNotFoundMessage + config_file_path)
 {
@@ -312,6 +351,11 @@ ServerConfigurationParser::InvalidPortException::InvalidPortException()
 {
 }
 
+ServerConfigurationParser::InvalidCpuAffinityException::InvalidCpuAffinityException()
+    : std::runtime_error(kInvalidCpuAffinityMessage)
+{
+}
+
 ServerConfigurationParser::MalformedJsonException::MalformedJsonException(const std::string& parse_error_details)
     : std::runtime_error(kMalformedJsonMessage + parse_error_details)
 {
@@ -319,6 +363,11 @@ ServerConfigurationParser::MalformedJsonException::MalformedJsonException(const 
 
 ServerConfigurationParser::WrongPortTypeException::WrongPortTypeException(const std::string& type_error_details)
     : std::runtime_error(kWrongPortTypeMessage + type_error_details)
+{
+}
+
+ServerConfigurationParser::WrongCpuAffinityTypeException::WrongCpuAffinityTypeException(const std::string& type_error_details)
+    : std::runtime_error(kWrongCpuAffinityTypeMessage + type_error_details)
 {
 }
 
