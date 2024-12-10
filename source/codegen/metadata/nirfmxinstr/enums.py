@@ -327,6 +327,10 @@ enums = {
             {
                 'name': 'EXTERNAL_STAR',
                 'value': 3
+            },
+            {
+                'name': 'SPLITTER_AND_DAISY_CHAIN',
+                'value': 5
             }
         ]
     },
