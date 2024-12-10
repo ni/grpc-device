@@ -302,13 +302,6 @@ CpuAffinityConfiguration ServerConfigurationParser::parse_cpu_affinity() const
         cpu_affinity.stream_write = parse_cpu_affinity_with_key(kStreamWriteKey);
         cpu_affinity.server = parse_cpu_affinity_with_key(kServerKey);
     }
-    else{
-      // -1 is set as the default value for the cores which indicates that any available core can be used.
-      cpu_affinity.sideband_read_write = -1;
-      cpu_affinity.stream_write = -1;
-      cpu_affinity.server = -1;
-    }
-
     return cpu_affinity;
 }
 
