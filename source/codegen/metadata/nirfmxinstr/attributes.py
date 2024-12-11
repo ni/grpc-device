@@ -527,5 +527,15 @@ attributes = {
         'enum': 'LoadOptions',
         'name': 'LOAD_OPTIONS',
         'type': 'int32[]'
+    },
+    184: {
+        'access': 'read-write',
+        'name': 'LO_SPLITTER_LOSS_FREQUENCY',
+        'type': 'float64[]'
+    },
+    185: {
+        'access': 'read-write',
+        'name': 'LO_SPLITTER_LOSS',
+        'type': 'float64[]'
     }
 }
