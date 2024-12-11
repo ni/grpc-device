@@ -206,11 +206,17 @@ NiRFmxLTELibrary::NiRFmxLTELibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.ModAccFetchMaximumFrequencyErrorPerSlotTrace = reinterpret_cast<ModAccFetchMaximumFrequencyErrorPerSlotTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchMaximumFrequencyErrorPerSlotTrace"));
   function_pointers_.ModAccFetchMaximumMagnitudeErrorPerSymbolTrace = reinterpret_cast<ModAccFetchMaximumMagnitudeErrorPerSymbolTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchMaximumMagnitudeErrorPerSymbolTrace"));
   function_pointers_.ModAccFetchMaximumPhaseErrorPerSymbolTrace = reinterpret_cast<ModAccFetchMaximumPhaseErrorPerSymbolTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchMaximumPhaseErrorPerSymbolTrace"));
+  function_pointers_.ModAccFetchNBSynchronizationSignalConstellation = reinterpret_cast<ModAccFetchNBSynchronizationSignalConstellationPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNBSynchronizationSignalConstellation"));
+  function_pointers_.ModAccFetchNBSynchronizationSignalConstellationSplit = reinterpret_cast<ModAccFetchNBSynchronizationSignalConstellationSplitPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNBSynchronizationSignalConstellationSplit"));
+  function_pointers_.ModAccFetchNPDSCHQPSKConstellation = reinterpret_cast<ModAccFetchNPDSCHQPSKConstellationPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNPDSCHQPSKConstellation"));
+  function_pointers_.ModAccFetchNPDSCHQPSKConstellationSplit = reinterpret_cast<ModAccFetchNPDSCHQPSKConstellationSplitPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNPDSCHQPSKConstellationSplit"));
   function_pointers_.ModAccFetchNPUSCHConstellationTrace = reinterpret_cast<ModAccFetchNPUSCHConstellationTracePtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNPUSCHConstellationTrace"));
   function_pointers_.ModAccFetchNPUSCHConstellationTraceSplit = reinterpret_cast<ModAccFetchNPUSCHConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNPUSCHConstellationTraceSplit"));
   function_pointers_.ModAccFetchNPUSCHDMRSEVM = reinterpret_cast<ModAccFetchNPUSCHDMRSEVMPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNPUSCHDMRSEVM"));
   function_pointers_.ModAccFetchNPUSCHDataEVM = reinterpret_cast<ModAccFetchNPUSCHDataEVMPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNPUSCHDataEVM"));
   function_pointers_.ModAccFetchNPUSCHSymbolPower = reinterpret_cast<ModAccFetchNPUSCHSymbolPowerPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNPUSCHSymbolPower"));
+  function_pointers_.ModAccFetchNRSConstellation = reinterpret_cast<ModAccFetchNRSConstellationPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNRSConstellation"));
+  function_pointers_.ModAccFetchNRSConstellationSplit = reinterpret_cast<ModAccFetchNRSConstellationSplitPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchNRSConstellationSplit"));
   function_pointers_.ModAccFetchPDSCH1024QAMConstellation = reinterpret_cast<ModAccFetchPDSCH1024QAMConstellationPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchPDSCH1024QAMConstellation"));
   function_pointers_.ModAccFetchPDSCH1024QAMConstellationSplit = reinterpret_cast<ModAccFetchPDSCH1024QAMConstellationSplitPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchPDSCH1024QAMConstellationSplit"));
   function_pointers_.ModAccFetchPDSCH1024QAMEVM = reinterpret_cast<ModAccFetchPDSCH1024QAMEVMPtr>(shared_library_->get_function_pointer("RFmxLTE_ModAccFetchPDSCH1024QAMEVM"));
@@ -1785,6 +1791,38 @@ int32 NiRFmxLTELibrary::ModAccFetchMaximumPhaseErrorPerSymbolTrace(niRFmxInstrHa
   return function_pointers_.ModAccFetchMaximumPhaseErrorPerSymbolTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumPhaseErrorPerSymbol, arraySize, actualArraySize);
 }
 
+int32 NiRFmxLTELibrary::ModAccFetchNBSynchronizationSignalConstellation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle nsssConstellation[], int32 nsssConstellationArraySize, int32* nsssConstellationActualArraySize, NIComplexSingle npssConstellation[], int32 npssConstellationArraySize, int32* npssConstellationActualArraySize)
+{
+  if (!function_pointers_.ModAccFetchNBSynchronizationSignalConstellation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchNBSynchronizationSignalConstellation.");
+  }
+  return function_pointers_.ModAccFetchNBSynchronizationSignalConstellation(instrumentHandle, selectorString, timeout, nsssConstellation, nsssConstellationArraySize, nsssConstellationActualArraySize, npssConstellation, npssConstellationArraySize, npssConstellationActualArraySize);
+}
+
+int32 NiRFmxLTELibrary::ModAccFetchNBSynchronizationSignalConstellationSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 nsssConstellationI[], float32 nsssConstellationQ[], int32 nsssConstellationArraySize, int32* nsssConstellationActualArraySize, float32 npssConstellationI[], float32 npssConstellationQ[], int32 npssConstellationArraySize, int32* npssConstellationActualArraySize)
+{
+  if (!function_pointers_.ModAccFetchNBSynchronizationSignalConstellationSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchNBSynchronizationSignalConstellationSplit.");
+  }
+  return function_pointers_.ModAccFetchNBSynchronizationSignalConstellationSplit(instrumentHandle, selectorString, timeout, nsssConstellationI, nsssConstellationQ, nsssConstellationArraySize, nsssConstellationActualArraySize, npssConstellationI, npssConstellationQ, npssConstellationArraySize, npssConstellationActualArraySize);
+}
+
+int32 NiRFmxLTELibrary::ModAccFetchNPDSCHQPSKConstellation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle qpskConstellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchNPDSCHQPSKConstellation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchNPDSCHQPSKConstellation.");
+  }
+  return function_pointers_.ModAccFetchNPDSCHQPSKConstellation(instrumentHandle, selectorString, timeout, qpskConstellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxLTELibrary::ModAccFetchNPDSCHQPSKConstellationSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qpskConstellationI[], float32 qpskConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchNPDSCHQPSKConstellationSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchNPDSCHQPSKConstellationSplit.");
+  }
+  return function_pointers_.ModAccFetchNPDSCHQPSKConstellationSplit(instrumentHandle, selectorString, timeout, qpskConstellationI, qpskConstellationQ, arraySize, actualArraySize);
+}
+
 int32 NiRFmxLTELibrary::ModAccFetchNPUSCHConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dataConstellation[], int32 dataConstellationArraySize, int32* dataConstellationActualArraySize, NIComplexSingle dmrsConstellation[], int32 dmrsConstellationArraySize, int32* dmrsConstellationActualArraySize)
 {
   if (!function_pointers_.ModAccFetchNPUSCHConstellationTrace) {
@@ -1823,6 +1861,22 @@ int32 NiRFmxLTELibrary::ModAccFetchNPUSCHSymbolPower(niRFmxInstrHandle instrumen
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchNPUSCHSymbolPower.");
   }
   return function_pointers_.ModAccFetchNPUSCHSymbolPower(instrumentHandle, selectorString, timeout, npuschMeanDataPower, npuschMeanDMRSPower);
+}
+
+int32 NiRFmxLTELibrary::ModAccFetchNRSConstellation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle nrsConstellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchNRSConstellation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchNRSConstellation.");
+  }
+  return function_pointers_.ModAccFetchNRSConstellation(instrumentHandle, selectorString, timeout, nrsConstellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxLTELibrary::ModAccFetchNRSConstellationSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 nrsConstellationI[], float32 nrsConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchNRSConstellationSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchNRSConstellationSplit.");
+  }
+  return function_pointers_.ModAccFetchNRSConstellationSplit(instrumentHandle, selectorString, timeout, nrsConstellationI, nrsConstellationQ, arraySize, actualArraySize);
 }
 
 int32 NiRFmxLTELibrary::ModAccFetchPDSCH1024QAMConstellation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle qam1024Constellation[], int32 arraySize, int32* actualArraySize)

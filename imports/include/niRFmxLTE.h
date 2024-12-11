@@ -123,6 +123,11 @@
 #define RFMXLTE_ATTR_NPUSCH_DMRS_CYCLIC_SHIFT                                               0x00304067
 #define RFMXLTE_ATTR_NPUSCH_DMRS_GROUP_HOPPING_ENABLED                                      0x00304069
 #define RFMXLTE_ATTR_NPUSCH_DMRS_DELTA_SEQUENCE_SHIFT                                       0x00304068
+#define RFMXLTE_ATTR_NB_IOT_DOWNLINK_CHANNEL_CONFIGURATION_MODE                             0x00304084
+#define RFMXLTE_ATTR_NPSS_POWER                                                             0x00304087
+#define RFMXLTE_ATTR_NSSS_POWER                                                             0x00304089
+#define RFMXLTE_ATTR_NPDSCH_POWER                                                           0x0030408a
+#define RFMXLTE_ATTR_NPDSCH_ENABLED                                                         0x0030408b
 #define RFMXLTE_ATTR_EMTC_ANALYSIS_ENABLED                                                  0x00304070
 #define RFMXLTE_ATTR_NUMBER_OF_STEPS                                                        0x00300ff8
 #define RFMXLTE_ATTR_LIST_STEP_TIMER_UNIT                                                   0x00300ff6
@@ -183,6 +188,12 @@
 #define RFMXLTE_ATTR_MODACC_RESULTS_DOWNLINK_RS_TRANSMIT_POWER                              0x00304051
 #define RFMXLTE_ATTR_MODACC_RESULTS_DOWNLINK_OFDM_SYMBOL_TRANSMIT_POWER                     0x00304052
 #define RFMXLTE_ATTR_MODACC_RESULTS_DOWNLINK_DETECTED_CELL_ID                               0x00304053
+#define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_RMS_NPSS_EVM                                       0x0030408e
+#define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_RMS_NSSS_EVM                                       0x0030408f
+#define RFMXLTE_ATTR_MODACC_RESULTS_NPDSCH_MEAN_RMS_EVM                                     0x00304090
+#define RFMXLTE_ATTR_MODACC_RESULTS_NPDSCH_MEAN_RMS_QPSK_EVM                                0x00304091
+#define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_RMS_NRS_EVM                                        0x00304093
+#define RFMXLTE_ATTR_MODACC_RESULTS_DOWNLINK_NRS_TRANSMIT_POWER                             0x00304094
 #define RFMXLTE_ATTR_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN                                 0x0030402b
 #define RFMXLTE_ATTR_MODACC_RESULTS_SPECTRAL_FLATNESS_RANGE1_MAXIMUM_TO_RANGE1_MINIMUM      0x0030402c
 #define RFMXLTE_ATTR_MODACC_RESULTS_SPECTRAL_FLATNESS_RANGE2_MAXIMUM_TO_RANGE2_MINIMUM      0x0030402d
@@ -627,6 +638,14 @@
 // Values for RFMXLTE_ATTR_NPUSCH_DMRS_GROUP_HOPPING_ENABLED
 #define RFMXLTE_VAL_NPUSCH_DMRS_GROUP_HOPPING_ENABLED_FALSE                                        0
 #define RFMXLTE_VAL_NPUSCH_DMRS_GROUP_HOPPING_ENABLED_TRUE                                         1
+
+// Values for RFMXLTE_ATTR_NB_IOT_DOWNLINK_CHANNEL_CONFIGURATION_MODE
+#define RFMXLTE_VAL_NB_IOT_DOWNLINK_CHANNEL_CONFIGURATION_MODE_USER_DEFINED                        1
+#define RFMXLTE_VAL_NB_IOT_DOWNLINK_CHANNEL_CONFIGURATION_MODE_TEST_MODEL                          2
+
+// Values for RFMXLTE_ATTR_NPDSCH_ENABLED
+#define RFMXLTE_VAL_NB_IOT_DOWNLINK_USER_DEFINED_NPDSCH_ENABLED_FALSE                              0
+#define RFMXLTE_VAL_NB_IOT_DOWNLINK_USER_DEFINED_NPDSCH_ENABLED_TRUE                               1
 
 // Values for RFMXLTE_ATTR_EMTC_ANALYSIS_ENABLED
 #define RFMXLTE_VAL_EMTC_ANALYSIS_ENABLED_FALSE                                                    0
@@ -2389,6 +2408,32 @@ int32 __stdcall RFmxLTE_ModAccFetchSynchronizationSignalConstellationSplit(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxLTE_ModAccFetchNBSynchronizationSignalConstellation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle NSSSConstellation[],
+   int32 NSSSConstellationArraySize,
+   int32* NSSSConstellationActualArraySize,
+   NIComplexSingle NPSSConstellation[],
+   int32 NPSSConstellationArraySize,
+   int32* NPSSConstellationActualArraySize
+);
+
+int32 __stdcall RFmxLTE_ModAccFetchNBSynchronizationSignalConstellationSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 NSSSConstellationI[],
+   float32 NSSSConstellationQ[],
+   int32 NSSSConstellationArraySize,
+   int32* NSSSConstellationActualArraySize,
+   float32 NPSSConstellationI[],
+   float32 NPSSConstellationQ[],
+   int32 NPSSConstellationArraySize,
+   int32* NPSSConstellationActualArraySize
+);
+
 int32 __stdcall RFmxLTE_AbortMeasurements(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
@@ -3181,6 +3226,44 @@ int32 __stdcall RFmxLTE_ModAccFetchMaximumFrequencyErrorPerSlotTrace(
    float64* x0,
    float64* dx,
    float32 maximumFrequencyErrorPerSlot[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxLTE_ModAccFetchNPDSCHQPSKConstellation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle QPSKConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxLTE_ModAccFetchNPDSCHQPSKConstellationSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 QPSKConstellationI[],
+   float32 QPSKConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxLTE_ModAccFetchNRSConstellation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle NRSConstellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxLTE_ModAccFetchNRSConstellationSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 NRSConstellationI[],
+   float32 NRSConstellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -4913,6 +4996,66 @@ int32 __stdcall RFmxLTE_SetNPUSCHDMRSDeltaSequenceShift(
    int32 attrVal
 );
 
+int32 __stdcall RFmxLTE_GetNBIoTDownlinkChannelConfigurationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetNBIoTDownlinkChannelConfigurationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_GetNPSSPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetNPSSPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxLTE_GetNSSSPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetNSSSPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxLTE_GetNPDSCHPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetNPDSCHPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxLTE_GetNPDSCHEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetNPDSCHEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxLTE_GetEMTCAnalysisEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5553,6 +5696,42 @@ int32 __stdcall RFmxLTE_ModAccGetResultsDownlinkDetectedCellID(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetResultsMeanRMSNPSSEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetResultsMeanRMSNSSSEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetResultsNPDSCHMeanRMSEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetResultsNPDSCHMeanRMSQPSKEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetResultsMeanRMSNRSEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ModAccGetResultsDownlinkNRSTransmitPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
 );
 
 int32 __stdcall RFmxLTE_ModAccGetResultsInBandEmissionMargin(

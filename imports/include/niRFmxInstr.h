@@ -216,6 +216,8 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_ATTR_NUMBER_OF_LO_SHARING_GROUPS                         0x00000061
 #define RFMXINSTR_ATTR_LOAD_OPTIONS                                        0x000000A3
 #define RFMXINSTR_ATTR_DIGITAL_GAIN                                        0x00000054
+#define RFMXINSTR_ATTR_LO_SPLITTER_LOSS_FREQUENCY                          0x000000b8
+#define RFMXINSTR_ATTR_LO_SPLITTER_LOSS                                    0x000000b9
 
 
 /* -- Values for binary attributes -- */
@@ -447,6 +449,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_VAL_LO_SHARING_MODE_DISABLED                             0
 #define RFMXINSTR_VAL_LO_SHARING_MODE_EXTERNAL_STAR                        3
 #define RFMXINSTR_VAL_LO_SHARING_MODE_EXTERNAL_DAISY_CHAIN                 4
+#define RFMXINSTR_VAL_LO_SHARING_MODE_SPLITTER_AND_DAISY_CHAIN             5
 
 // Values for RFMXINSTR_ATTR_LOAD_OPTIONS
 #define RFMXINSTR_VAL_LOAD_OPTIONS_SKIP_NONE                               0
@@ -2070,6 +2073,36 @@ int32 __stdcall RFmxInstr_FetchRawIQData(
       float64 attrVal
    );
 
+   int32 __stdcall RFmxInstr_GetLOSplitterLossFrequency(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      float64 attrVal[],
+      int32 arraySize,
+      int32 *actualArraySize
+   );
+
+   int32 __stdcall RFmxInstr_SetLOSplitterLossFrequency(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      float64 attrVal[],
+      int32 arraySize
+   );
+
+   int32 __stdcall RFmxInstr_GetLOSplitterLoss(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      float64 attrVal[],
+      int32 arraySize,
+      int32 *actualArraySize
+   );
+
+   int32 __stdcall RFmxInstr_SetLOSplitterLoss(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      float64 attrVal[],
+      int32 arraySize
+   );
+
 #ifdef __cplusplus
 }
 #endif
@@ -2083,6 +2116,11 @@ int32 __stdcall RFmxInstr_FetchRawIQData(
 
 #define RFMXINSTR_VAL_AUTOMATIC_SG_SA_SHARED_LO_DISABLED                   0
 #define RFMXINSTR_VAL_AUTOMATIC_SG_SA_SHARED_LO_ENABLED                    1
+
+/* -- Values for LO Sharing Mode -- */
+
+#define RFMXINSTR_VAL_LO_SHARING_MODE_ONBOARD_STAR   					         1
+#define RFMXINSTR_VAL_LO_SHARING_MODE_ONBOARD_DAISY_CHAIN				      2
 
 #ifdef __cplusplus
 extern "C"
