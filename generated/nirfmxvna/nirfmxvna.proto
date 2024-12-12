@@ -1877,7 +1877,7 @@ message CopyCalsetResponse {
 message CopyDataToMeasurementMemoryRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  string memory_data_name = 3;
+  string measurement_memory_name = 3;
 }
 
 message CopyDataToMeasurementMemoryResponse {
@@ -2290,7 +2290,7 @@ message LoadDataToMeasurementMemoryFromFileRequest {
   string selector_string = 2;
   string file_path = 3;
   string parameter = 4;
-  string memory_data_name = 5;
+  string measurement_memory_name = 5;
 }
 
 message LoadDataToMeasurementMemoryFromFileResponse {

@@ -2310,14 +2310,14 @@ copy_calset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const
 }
 
 CopyDataToMeasurementMemoryResponse
-copy_data_to_measurement_memory(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& memory_data_name)
+copy_data_to_measurement_memory(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& measurement_memory_name)
 {
   ::grpc::ClientContext context;
 
   auto request = CopyDataToMeasurementMemoryRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_memory_data_name(memory_data_name);
+  request.set_measurement_memory_name(measurement_memory_name);
 
   auto response = CopyDataToMeasurementMemoryResponse{};
 
@@ -2982,7 +2982,7 @@ initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const st
 }
 
 LoadDataToMeasurementMemoryFromFileResponse
-load_data_to_measurement_memory_from_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& file_path, const std::string& parameter, const std::string& memory_data_name)
+load_data_to_measurement_memory_from_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& file_path, const std::string& parameter, const std::string& measurement_memory_name)
 {
   ::grpc::ClientContext context;
 
@@ -2991,7 +2991,7 @@ load_data_to_measurement_memory_from_file(const StubPtr& stub, const nidevice_gr
   request.set_selector_string(selector_string);
   request.set_file_path(file_path);
   request.set_parameter(parameter);
-  request.set_memory_data_name(memory_data_name);
+  request.set_measurement_memory_name(measurement_memory_name);
 
   auto response = LoadDataToMeasurementMemoryFromFileResponse{};
 

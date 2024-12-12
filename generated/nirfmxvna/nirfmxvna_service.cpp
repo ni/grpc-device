@@ -3946,9 +3946,9 @@ namespace nirfmxvna_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      auto memory_data_name_mbcs = convert_from_grpc<std::string>(request->memory_data_name());
-      char* memory_data_name = (char*)memory_data_name_mbcs.c_str();
-      auto status = library_->CopyDataToMeasurementMemory(instrument, selector_string, memory_data_name);
+      auto measurement_memory_name_mbcs = convert_from_grpc<std::string>(request->measurement_memory_name());
+      char* measurement_memory_name = (char*)measurement_memory_name_mbcs.c_str();
+      auto status = library_->CopyDataToMeasurementMemory(instrument, selector_string, measurement_memory_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -5297,9 +5297,9 @@ namespace nirfmxvna_grpc {
       char* file_path = (char*)file_path_mbcs.c_str();
       auto parameter_mbcs = convert_from_grpc<std::string>(request->parameter());
       char* parameter = (char*)parameter_mbcs.c_str();
-      auto memory_data_name_mbcs = convert_from_grpc<std::string>(request->memory_data_name());
-      char* memory_data_name = (char*)memory_data_name_mbcs.c_str();
-      auto status = library_->LoadDataToMeasurementMemoryFromFile(instrument, selector_string, file_path, parameter, memory_data_name);
+      auto measurement_memory_name_mbcs = convert_from_grpc<std::string>(request->measurement_memory_name());
+      char* measurement_memory_name = (char*)measurement_memory_name_mbcs.c_str();
+      auto status = library_->LoadDataToMeasurementMemoryFromFile(instrument, selector_string, file_path, parameter, measurement_memory_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

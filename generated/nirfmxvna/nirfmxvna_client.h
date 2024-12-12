@@ -140,7 +140,7 @@ CloneSignalConfigurationResponse clone_signal_configuration(const StubPtr& stub,
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& instrument, const bool& force_destroy);
 CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 CopyCalsetResponse copy_calset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& source_calset_name, const std::string& new_calset_name);
-CopyDataToMeasurementMemoryResponse copy_data_to_measurement_memory(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& memory_data_name);
+CopyDataToMeasurementMemoryResponse copy_data_to_measurement_memory(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& measurement_memory_name);
 CreateSignalConfigurationResponse create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name);
 DeleteSignalConfigurationResponse delete_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name);
 DeselectActiveCalsetResponse deselect_active_calset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
@@ -176,7 +176,7 @@ IQFetchDataSplitResponse iq_fetch_data_split(const StubPtr& stub, const nidevice
 InitializeResponse initialize(const StubPtr& stub, const std::string& resource_name, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitializeFromNIRFSASessionResponse initialize_from_nirfsa_session(const StubPtr& stub, const nidevice_grpc::Session& nirfsa_session, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name);
-LoadDataToMeasurementMemoryFromFileResponse load_data_to_measurement_memory_from_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& file_path, const std::string& parameter, const std::string& memory_data_name);
+LoadDataToMeasurementMemoryFromFileResponse load_data_to_measurement_memory_from_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& file_path, const std::string& parameter, const std::string& measurement_memory_name);
 MarkerCfgDataSourceResponse marker_cfg_data_source(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& data_source);
 MarkerCfgModeResponse marker_cfg_mode(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerMode, pb::int32>& marker_mode);
 MarkerCfgNumberOfMarkersResponse marker_cfg_number_of_markers(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& number_of_markers);

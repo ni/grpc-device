@@ -139,7 +139,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy) override;
   int32 Commit(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 CopyCalset(niRFmxInstrHandle instrumentHandle, char selectorString[], char sourceCalsetName[], char newCalsetName[]) override;
-  int32 CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char memoryDataName[]) override;
+  int32 CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char measurementMemoryName[]) override;
   int32 CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[]) override;
   int32 DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[]) override;
   int32 DeselectActiveCalset(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
@@ -175,7 +175,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) override;
   int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut) override;
   int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]) override;
-  int32 LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char memoryDataName[]) override;
+  int32 LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char measurementMemoryName[]) override;
   int32 MarkerCfgDataSource(niRFmxInstrHandle instrumentHandle, char selectorString[], char dataSource[]) override;
   int32 MarkerCfgMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerMode) override;
   int32 MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers) override;

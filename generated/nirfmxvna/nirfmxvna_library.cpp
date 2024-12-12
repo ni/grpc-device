@@ -1188,12 +1188,12 @@ int32 NiRFmxVNALibrary::CopyCalset(niRFmxInstrHandle instrumentHandle, char sele
   return function_pointers_.CopyCalset(instrumentHandle, selectorString, sourceCalsetName, newCalsetName);
 }
 
-int32 NiRFmxVNALibrary::CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char memoryDataName[])
+int32 NiRFmxVNALibrary::CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char measurementMemoryName[])
 {
   if (!function_pointers_.CopyDataToMeasurementMemory) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CopyDataToMeasurementMemory.");
   }
-  return function_pointers_.CopyDataToMeasurementMemory(instrumentHandle, selectorString, memoryDataName);
+  return function_pointers_.CopyDataToMeasurementMemory(instrumentHandle, selectorString, measurementMemoryName);
 }
 
 int32 NiRFmxVNALibrary::CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
@@ -1476,12 +1476,12 @@ int32 NiRFmxVNALibrary::Initiate(niRFmxInstrHandle instrumentHandle, char select
   return function_pointers_.Initiate(instrumentHandle, selectorString, resultName);
 }
 
-int32 NiRFmxVNALibrary::LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char memoryDataName[])
+int32 NiRFmxVNALibrary::LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char measurementMemoryName[])
 {
   if (!function_pointers_.LoadDataToMeasurementMemoryFromFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_LoadDataToMeasurementMemoryFromFile.");
   }
-  return function_pointers_.LoadDataToMeasurementMemoryFromFile(instrumentHandle, selectorString, filePath, parameter, memoryDataName);
+  return function_pointers_.LoadDataToMeasurementMemoryFromFile(instrumentHandle, selectorString, filePath, parameter, measurementMemoryName);
 }
 
 int32 NiRFmxVNALibrary::MarkerCfgDataSource(niRFmxInstrHandle instrumentHandle, char selectorString[], char dataSource[])
