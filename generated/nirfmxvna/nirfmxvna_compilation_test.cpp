@@ -597,9 +597,9 @@ int32 CopyCalset(niRFmxInstrHandle instrumentHandle, char selectorString[], char
   return RFmxVNA_CopyCalset(instrumentHandle, selectorString, sourceCalsetName, newCalsetName);
 }
 
-int32 CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char memoryDataName[])
+int32 CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char measurementMemoryName[])
 {
-  return RFmxVNA_CopyDataToMeasurementMemory(instrumentHandle, selectorString, memoryDataName);
+  return RFmxVNA_CopyDataToMeasurementMemory(instrumentHandle, selectorString, measurementMemoryName);
 }
 
 int32 CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[])
@@ -777,9 +777,9 @@ int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char r
   return RFmxVNA_Initiate(instrumentHandle, selectorString, resultName);
 }
 
-int32 LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char memoryDataName[])
+int32 LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char measurementMemoryName[])
 {
-  return RFmxVNA_LoadDataToMeasurementMemoryFromFile(instrumentHandle, selectorString, filePath, parameter, memoryDataName);
+  return RFmxVNA_LoadDataToMeasurementMemoryFromFile(instrumentHandle, selectorString, filePath, parameter, measurementMemoryName);
 }
 
 int32 MarkerCfgDataSource(niRFmxInstrHandle instrumentHandle, char selectorString[], char dataSource[])

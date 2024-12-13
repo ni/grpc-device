@@ -615,6 +615,18 @@ enums = {
             }
         ]
     },
+    'AmpmThresholdDefinition': {
+        'values': [
+            {
+                'name': 'INPUT_AND_OUTPUT',
+                'value': 0
+            },
+            {
+                'name': 'REFERENCE_POWER_TYPE',
+                'value': 1
+            }
+        ]
+    },
     'AmpmThresholdEnabled': {
         'values': [
             {
@@ -1253,6 +1265,18 @@ enums = {
             {
                 'name': 'BISQUARE',
                 'value': 2
+            }
+        ]
+    },
+    'DpdLookupTableThresholdDefinition': {
+        'values': [
+            {
+                'name': 'INPUT_AND_OUTPUT',
+                'value': 0
+            },
+            {
+                'name': 'INPUT',
+                'value': 1
             }
         ]
     },

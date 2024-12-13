@@ -614,6 +614,13 @@ int32 __stdcall RFmxVNA_BuildMarkerString(
    char selectorStringOut[]
 );
 
+int32 __stdcall RFmxVNA_BuildMeasurementMemoryString(
+   char selectorString[],
+   char memoryDataName[],
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
 int32 __stdcall RFmxVNA_SetAttributeI8(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1078,13 +1085,13 @@ int32 __stdcall RFmxVNA_LoadDataToMeasurementMemoryFromFile(
    char selectorString[],
    char filePath[],
    char parameter[],
-   char memoryDataName[]
+   char measurementMemoryName[]
 );
 
 int32 __stdcall RFmxVNA_CopyDataToMeasurementMemory(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   char memoryDataName[]
+   char measurementMemoryName[]
 );
 
 int32 __stdcall RFmxVNA_ClearMeasurementMemoryNames(

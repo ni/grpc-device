@@ -133,7 +133,7 @@ class NiRFmxVNALibraryInterface {
   virtual int32 Close(niRFmxInstrHandle instrumentHandle, int32 forceDestroy) = 0;
   virtual int32 Commit(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
   virtual int32 CopyCalset(niRFmxInstrHandle instrumentHandle, char selectorString[], char sourceCalsetName[], char newCalsetName[]) = 0;
-  virtual int32 CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char memoryDataName[]) = 0;
+  virtual int32 CopyDataToMeasurementMemory(niRFmxInstrHandle instrumentHandle, char selectorString[], char measurementMemoryName[]) = 0;
   virtual int32 CreateSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[]) = 0;
   virtual int32 DeleteSignalConfiguration(niRFmxInstrHandle instrumentHandle, char signalName[]) = 0;
   virtual int32 DeselectActiveCalset(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
@@ -169,7 +169,7 @@ class NiRFmxVNALibraryInterface {
   virtual int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) = 0;
   virtual int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut) = 0;
   virtual int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]) = 0;
-  virtual int32 LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char memoryDataName[]) = 0;
+  virtual int32 LoadDataToMeasurementMemoryFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char filePath[], char parameter[], char measurementMemoryName[]) = 0;
   virtual int32 MarkerCfgDataSource(niRFmxInstrHandle instrumentHandle, char selectorString[], char dataSource[]) = 0;
   virtual int32 MarkerCfgMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 markerMode) = 0;
   virtual int32 MarkerCfgNumberOfMarkers(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfMarkers) = 0;

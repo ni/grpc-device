@@ -3053,7 +3053,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'memoryDataName',
+                'name': 'measurementMemoryName',
                 'type': 'char[]'
             }
         ],
@@ -4299,7 +4299,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'memoryDataName',
+                'name': 'measurementMemoryName',
                 'type': 'char[]'
             }
         ],
