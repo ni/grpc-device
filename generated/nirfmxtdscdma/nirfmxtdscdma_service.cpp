@@ -3002,15 +3002,15 @@ namespace nirfmxtdscdma_grpc {
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
           return static_cast<nirfmxtdscdma_grpc::NiRFmxTDSCDMAInt32AttributeValues>(valid_enum_value);
         };
-          response->mutable_attr_val()->Clear();
-          response->mutable_attr_val()->Reserve(actual_array_size);
-          std::transform(
-            response->attr_val_raw().begin(),
-            response->attr_val_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) {
-                return checked_convert_attr_val(x);
-            });
+        response->mutable_attr_val()->Clear();
+        response->mutable_attr_val()->Reserve(actual_array_size);
+        std::transform(
+          response->attr_val_raw().begin(),
+          response->attr_val_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+          [&](auto x) {
+              return checked_convert_attr_val(x);
+          });
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -3146,15 +3146,15 @@ namespace nirfmxtdscdma_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_attr_val()->Clear();
-          response->mutable_attr_val()->Reserve(actual_array_size);
-          std::transform(
-            attr_val.begin(),
-            attr_val.begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) {
-                return x;
-            });
+        response->mutable_attr_val()->Clear();
+        response->mutable_attr_val()->Reserve(actual_array_size);
+        std::transform(
+          attr_val.begin(),
+          attr_val.begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+          [&](auto x) {
+              return x;
+          });
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -4197,15 +4197,15 @@ namespace nirfmxtdscdma_grpc {
         response->set_status(status);
         response->mutable_detected_slot_index()->Resize(actual_array_size, 0);
         response->mutable_detected_spreading_factor()->Resize(actual_array_size, 0);
-          response->mutable_detected_modulation_type()->Clear();
-          response->mutable_detected_modulation_type()->Reserve(actual_array_size);
-          std::transform(
-            response->detected_modulation_type_raw().begin(),
-            response->detected_modulation_type_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_detected_modulation_type()),
-            [&](auto x) {
-                return static_cast<nirfmxtdscdma_grpc::ModAccDetectedModulationType>(x);
-            });
+        response->mutable_detected_modulation_type()->Clear();
+        response->mutable_detected_modulation_type()->Reserve(actual_array_size);
+        std::transform(
+          response->detected_modulation_type_raw().begin(),
+          response->detected_modulation_type_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_detected_modulation_type()),
+          [&](auto x) {
+              return static_cast<nirfmxtdscdma_grpc::ModAccDetectedModulationType>(x);
+          });
         response->mutable_detected_modulation_type()->Resize(actual_array_size, 0);
         response->mutable_detected_channelization_code()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
@@ -5153,15 +5153,15 @@ namespace nirfmxtdscdma_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_segment_status()->Clear();
-          response->mutable_segment_status()->Reserve(actual_array_size);
-          std::transform(
-            response->segment_status_raw().begin(),
-            response->segment_status_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_segment_status()),
-            [&](auto x) {
-                return static_cast<nirfmxtdscdma_grpc::PvtSegmentStatus>(x);
-            });
+        response->mutable_segment_status()->Clear();
+        response->mutable_segment_status()->Reserve(actual_array_size);
+        std::transform(
+          response->segment_status_raw().begin(),
+          response->segment_status_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_segment_status()),
+          [&](auto x) {
+              return static_cast<nirfmxtdscdma_grpc::PvtSegmentStatus>(x);
+          });
         response->mutable_segment_status()->Resize(actual_array_size, 0);
         response->mutable_segment_margin()->Resize(actual_array_size, 0);
         response->mutable_segment_margin_time()->Resize(actual_array_size, 0);
@@ -5474,15 +5474,15 @@ namespace nirfmxtdscdma_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_measurement_status()->Clear();
-          response->mutable_measurement_status()->Reserve(actual_array_size);
-          std::transform(
-            response->measurement_status_raw().begin(),
-            response->measurement_status_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
-            [&](auto x) {
-                return static_cast<nirfmxtdscdma_grpc::SemLowerOffsetMeasurementStatus>(x);
-            });
+        response->mutable_measurement_status()->Clear();
+        response->mutable_measurement_status()->Reserve(actual_array_size);
+        std::transform(
+          response->measurement_status_raw().begin(),
+          response->measurement_status_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
+          [&](auto x) {
+              return static_cast<nirfmxtdscdma_grpc::SemLowerOffsetMeasurementStatus>(x);
+          });
         response->mutable_measurement_status()->Resize(actual_array_size, 0);
         response->mutable_margin()->Resize(actual_array_size, 0);
         response->mutable_margin_frequency()->Resize(actual_array_size, 0);
@@ -5739,15 +5739,15 @@ namespace nirfmxtdscdma_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_measurement_status()->Clear();
-          response->mutable_measurement_status()->Reserve(actual_array_size);
-          std::transform(
-            response->measurement_status_raw().begin(),
-            response->measurement_status_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
-            [&](auto x) {
-                return static_cast<nirfmxtdscdma_grpc::SemUpperOffsetMeasurementStatus>(x);
-            });
+        response->mutable_measurement_status()->Clear();
+        response->mutable_measurement_status()->Reserve(actual_array_size);
+        std::transform(
+          response->measurement_status_raw().begin(),
+          response->measurement_status_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_measurement_status()),
+          [&](auto x) {
+              return static_cast<nirfmxtdscdma_grpc::SemUpperOffsetMeasurementStatus>(x);
+          });
         response->mutable_measurement_status()->Resize(actual_array_size, 0);
         response->mutable_margin()->Resize(actual_array_size, 0);
         response->mutable_margin_frequency()->Resize(actual_array_size, 0);

@@ -1670,7 +1670,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayBoolData',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1702,7 +1701,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1734,7 +1732,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1766,7 +1763,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1798,7 +1794,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI64Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1830,7 +1825,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1862,7 +1856,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayFloatData',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1894,7 +1887,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1926,7 +1918,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1958,7 +1949,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU64Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -1990,7 +1980,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -2022,7 +2011,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'BoolData',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'NiFpga_Bool'
@@ -2045,7 +2033,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'double'
@@ -2568,7 +2555,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int16_t'
@@ -2591,7 +2577,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int32_t'
@@ -2614,7 +2599,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'I64Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int64_t'
@@ -2637,7 +2621,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'I32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int8_t'
@@ -2660,7 +2643,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'FloatData',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'float'
@@ -2683,7 +2665,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'U32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint16_t'
@@ -2706,7 +2687,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'U32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint32_t'
@@ -2729,7 +2709,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'U64Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint64_t'
@@ -2752,7 +2731,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'U32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint8_t'
@@ -3103,7 +3081,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayBoolData',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3135,7 +3112,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3167,7 +3143,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3199,7 +3174,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3231,7 +3205,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayI64Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3263,7 +3236,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3295,7 +3267,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayFloatData',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3327,7 +3298,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3359,7 +3329,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3391,7 +3360,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU64Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3423,7 +3391,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_streaming_type': True,
                 'name': 'array',
                 'size': {
@@ -3455,7 +3422,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'BoolData',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'NiFpga_Bool'
@@ -3478,7 +3444,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'DoubleData',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'double'
@@ -3997,7 +3962,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'I32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int16_t'
@@ -4020,7 +3984,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'I32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int32_t'
@@ -4043,7 +4006,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'I64Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int64_t'
@@ -4066,7 +4028,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'I32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'int8_t'
@@ -4089,7 +4050,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'FloatData',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'float'
@@ -4112,7 +4072,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'U32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint16_t'
@@ -4135,7 +4094,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'U32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint32_t'
@@ -4158,7 +4116,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'U64Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint64_t'
@@ -4181,7 +4138,6 @@ functions = {
             },
             {
                 'direction': 'in',
-                'grpc_streaming_type': 'U32Data',
                 'is_streaming_type': True,
                 'name': 'value',
                 'type': 'uint8_t'

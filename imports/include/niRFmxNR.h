@@ -899,6 +899,8 @@
 #define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_STANDARD                                        0
 #define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_CUSTOM                                          1
 #define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_NS_29                                           2
+#define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_STANDARD_REL_16                                 3
+#define RFMXNR_VAL_ACP_CHANNEL_CONFIGURATION_TYPE_STANDARD_REL_18                                 4
 
 // Values for RFMXNR_ATTR_ACP_OFFSET_SIDEBAND
 #define RFMXNR_VAL_ACP_OFFSET_SIDEBAND_NEGATIVE                                                   0

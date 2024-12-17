@@ -73,6 +73,12 @@
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_DELAY                             0x00d00027
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_DC_LOSS_ENABLED                   0x00d00028
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_DC_LOSS                           0x00d00029
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS1_ENABLED                     0x00d00059
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS1_FREQUENCY                   0x00d0005a
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS1                             0x00d0005b
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED                     0x00d0005c
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS2_FREQUENCY                   0x00d0005d
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS2                             0x00d0005e
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_PORTS                                0x00d00010
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_CONNECTOR_TYPE                       0x00d00011
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_CALKIT_TYPE                          0x00d00012
@@ -233,6 +239,14 @@
 #define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_DC_LOSS_ENABLED_FALSE                                               0
 #define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_DC_LOSS_ENABLED_TRUE                                                1
 
+// Values for RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS1_ENABLED
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_LOSS1_ENABLED_FALSE                                                 0
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_LOSS1_ENABLED_TRUE                                                  1
+
+// Values for RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED_FALSE                                                 0
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED_TRUE                                                  1
+
 // Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_CALKIT_TYPE
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_CALKIT_TYPE_ELECTRONIC                                                 0
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_CALKIT_TYPE_MECHANICAL                                                 1
@@ -240,6 +254,7 @@
 // Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_METHOD
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_METHOD_SOL                                                             0
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_METHOD_SOLT                                                            1
+#define RFMXVNA_VAL_CORRECTION_CALIBRATION_METHOD_TRL                                                             2
 
 // Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_METHOD
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_AUTO                                                       0
@@ -379,6 +394,10 @@
 #define RFMXVNA_VAL_CALKIT_MANAGER_CALKIT_CONNECTOR_GENDER_FEMALE                                                 1
 #define RFMXVNA_VAL_CALKIT_MANAGER_CALKIT_CONNECTOR_GENDER_NO_GENDER                                              2
 
+// Values for CalkitManagerCalkitTrlReferencePlane
+#define RFMXVNA_VAL_CALKIT_MANAGER_CALKIT_TRL_REFERENCE_PLANE_THRU                                                0
+#define RFMXVNA_VAL_CALKIT_MANAGER_CALKIT_TRL_REFERENCE_PLANE_REFLECT                                             1
+
 // Values for CalkitManagerCalkitCalibrationElementType
 #define RFMXVNA_VAL_CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_TYPE_LOAD                                           0
 #define RFMXVNA_VAL_CALKIT_MANAGER_CALKIT_CALIBRATION_ELEMENT_TYPE_OPEN                                           1
@@ -415,6 +434,9 @@
 #define RFMXVNA_VAL_MARKER_SEARCH_MODE_NEXT_PEAK                                                                  4
 #define RFMXVNA_VAL_MARKER_SEARCH_MODE_NEXT_LEFT_PEAK                                                             5
 #define RFMXVNA_VAL_MARKER_SEARCH_MODE_NEXT_RIGHT_PEAK                                                            6
+#define RFMXVNA_VAL_MARKER_SEARCH_MODE_TARGET                                                                     7
+#define RFMXVNA_VAL_MARKER_SEARCH_MODE_NEXT_LEFT_TARGET                                                           8
+#define RFMXVNA_VAL_MARKER_SEARCH_MODE_NEXT_RIGHT_TARGET                                                          9
 
 // Values for MarkerType
 #define RFMXVNA_VAL_MARKER_TYPE_OFF                                                                               0
@@ -429,6 +451,10 @@
 // Values for MarkerPeakSearchExcursionEnabled
 #define RFMXVNA_VAL_MARKER_PEAK_SEARCH_EXCURSION_ENABLED_FALSE                                                    0
 #define RFMXVNA_VAL_MARKER_PEAK_SEARCH_EXCURSION_ENABLED_TRUE                                                     1
+
+// Values for MarkerMode
+#define RFMXVNA_VAL_MARKER_MODE_CONTINUOUS                                                                        0
+#define RFMXVNA_VAL_MARKER_MODE_DISCRETE                                                                          1
 
 // Values for RFAttenuationAuto
 #define RFMXVNA_VAL_RF_ATTENUATION_AUTO_FALSE                                                                     0
@@ -584,6 +610,13 @@ int32 __stdcall RFmxVNA_BuildPulseGeneratorString(
 int32 __stdcall RFmxVNA_BuildMarkerString(
    char selectorString[],
    int32 markerNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxVNA_BuildMeasurementMemoryString(
+   char selectorString[],
+   char memoryDataName[],
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
@@ -1052,13 +1085,13 @@ int32 __stdcall RFmxVNA_LoadDataToMeasurementMemoryFromFile(
    char selectorString[],
    char filePath[],
    char parameter[],
-   char memoryDataName[]
+   char measurementMemoryName[]
 );
 
 int32 __stdcall RFmxVNA_CopyDataToMeasurementMemory(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   char memoryDataName[]
+   char measurementMemoryName[]
 );
 
 int32 __stdcall RFmxVNA_ClearMeasurementMemoryNames(
@@ -1166,6 +1199,18 @@ int32 __stdcall RFmxVNA_CalkitManagerCalkitGetVersion(
    char selectorString[],
    int32 arraySize,
    char calkitVersion[]
+);
+
+int32 __stdcall RFmxVNA_CalkitManagerCalkitSetTRLReferencePlane(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 referencePlane
+);
+
+int32 __stdcall RFmxVNA_CalkitManagerCalkitSetLRLLineAutoChar(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 autoCharacterizationEnabled
 );
 
 int32 __stdcall RFmxVNA_CalkitManagerCalkitConnectorSetDescription(
@@ -1377,6 +1422,18 @@ int32 __stdcall RFmxVNA_MarkerCfgPeakSearchExcursion(
    char selectorString[],
    int32 peakExcursionEnabled,
    float64 peakExcursion
+);
+
+int32 __stdcall RFmxVNA_MarkerCfgMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 markerMode
+);
+
+int32 __stdcall RFmxVNA_MarkerCfgTargetValue(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 targetValue
 );
 
 int32 __stdcall RFmxVNA_CfgCorrectionPortSubset(
@@ -1735,6 +1792,18 @@ int32 __stdcall RFmxVNA_GetMeasurementMemoryYData(
    float32 Y2[],
    int32 arraySize,
    int32* actualArraySize
+);
+
+int32 __stdcall RFmxVNA_CalkitManagerCalkitGetTRLReferencePlane(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32* referencePlane
+);
+
+int32 __stdcall RFmxVNA_CalkitManagerCalkitGetLRLLineAutoChar(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32* autoCharacterizationEnabled
 );
 
 int32 __stdcall RFmxVNA_CalkitManagerCalkitConnectorGetGender(
@@ -2492,6 +2561,78 @@ int32 __stdcall RFmxVNA_GetCorrectionPortExtensionDCLoss(
 );
 
 int32 __stdcall RFmxVNA_SetCorrectionPortExtensionDCLoss(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionLoss1Enabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionLoss1Enabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionLoss1Frequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionLoss1Frequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionLoss1(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionLoss1(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionLoss2Enabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionLoss2Enabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionLoss2Frequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionLoss2Frequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionLoss2(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionLoss2(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal

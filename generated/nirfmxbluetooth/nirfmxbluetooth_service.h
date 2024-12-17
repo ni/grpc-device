@@ -135,6 +135,7 @@ public:
   ::grpc::Status ModAccFetchDf2(::grpc::ServerContext* context, const ModAccFetchDf2Request* request, ModAccFetchDf2Response* response) override;
   ::grpc::Status ModAccFetchDf2maxTrace(::grpc::ServerContext* context, const ModAccFetchDf2maxTraceRequest* request, ModAccFetchDf2maxTraceResponse* response) override;
   ::grpc::Status ModAccFetchDf4avgTrace(::grpc::ServerContext* context, const ModAccFetchDf4avgTraceRequest* request, ModAccFetchDf4avgTraceResponse* response) override;
+  ::grpc::Status ModAccFetchEVMPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchEVMPerSymbolTraceRequest* request, ModAccFetchEVMPerSymbolTraceResponse* response) override;
   ::grpc::Status ModAccFetchFrequencyErrorBR(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorBRRequest* request, ModAccFetchFrequencyErrorBRResponse* response) override;
   ::grpc::Status ModAccFetchFrequencyErrorEDR(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorEDRRequest* request, ModAccFetchFrequencyErrorEDRResponse* response) override;
   ::grpc::Status ModAccFetchFrequencyErrorLE(::grpc::ServerContext* context, const ModAccFetchFrequencyErrorLERequest* request, ModAccFetchFrequencyErrorLEResponse* response) override;

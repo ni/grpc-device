@@ -415,6 +415,7 @@
 #define RFMXSPECAN_ATTR_AMPM_THRESHOLD_ENABLED                                         0x0010e00d
 #define RFMXSPECAN_ATTR_AMPM_THRESHOLD_TYPE                                            0x0010e00e
 #define RFMXSPECAN_ATTR_AMPM_THRESHOLD_LEVEL                                           0x0010e00f
+#define RFMXSPECAN_ATTR_AMPM_THRESHOLD_DEFINITION                                      0x0010e03c
 #define RFMXSPECAN_ATTR_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED                       0x0010e021
 #define RFMXSPECAN_ATTR_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED                       0x0010e029
 #define RFMXSPECAN_ATTR_AMPM_AM_TO_AM_ENABLED                                          0x0010e031
@@ -469,6 +470,7 @@
 #define RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_THRESHOLD_ENABLED                             0x0010f00d
 #define RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_THRESHOLD_TYPE                                0x0010f00e
 #define RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_THRESHOLD_LEVEL                               0x0010f00f
+#define RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION                          0x0010f06d
 #define RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_STEP_SIZE                                     0x0010f010
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_ORDER                                    0x0010f011
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_MEMORY_DEPTH                             0x0010f012
@@ -1430,6 +1432,10 @@
 #define RFMXSPECAN_VAL_AMPM_THRESHOLD_TYPE_RELATIVE                                                   0
 #define RFMXSPECAN_VAL_AMPM_THRESHOLD_TYPE_ABSOLUTE                                                   1
 
+// Values for RFMXSPECAN_ATTR_AMPM_THRESHOLD_DEFINITION
+#define RFMXSPECAN_VAL_AMPM_THRESHOLD_DEFINITION_INPUT_AND_OUTPUT                                     0
+#define RFMXSPECAN_VAL_AMPM_THRESHOLD_DEFINITION_REFERENCE_POWER_TYPE                                 1
+
 // Values for RFMXSPECAN_ATTR_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED
 #define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                 0
 #define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                  1
@@ -1520,6 +1526,10 @@
 // Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_THRESHOLD_TYPE
 #define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_TYPE_RELATIVE                                       0
 #define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_TYPE_ABSOLUTE                                       1
+
+// Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION_INPUT_AND_OUTPUT                         0
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION_INPUT                                    1
 
 // Values for RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE
 #define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_ALL_ORDERS                                    0
@@ -9959,6 +9969,18 @@ int32 __stdcall RFmxSpecAn_AMPMSetThresholdLevel(
    float64 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_AMPMGetThresholdDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_AMPMSetThresholdDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_AMPMGetFrequencyOffsetCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -10526,6 +10548,18 @@ int32 __stdcall RFmxSpecAn_DPDSetLookupTableThresholdLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetLookupTableThresholdDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetLookupTableThresholdDefinition(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxSpecAn_DPDGetLookupTableStepSize(

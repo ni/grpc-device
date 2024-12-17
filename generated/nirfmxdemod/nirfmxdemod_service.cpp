@@ -2653,15 +2653,15 @@ namespace nirfmxdemod_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_demodulated_bits()->Clear();
-          response->mutable_demodulated_bits()->Reserve(actual_array_size);
-          std::transform(
-            demodulated_bits.begin(),
-            demodulated_bits.begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_demodulated_bits()),
-            [&](auto x) {
-                return x;
-            });
+        response->mutable_demodulated_bits()->Clear();
+        response->mutable_demodulated_bits()->Reserve(actual_array_size);
+        std::transform(
+          demodulated_bits.begin(),
+          demodulated_bits.begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_demodulated_bits()),
+          [&](auto x) {
+              return x;
+          });
         response->mutable_demodulated_bits()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -4231,15 +4231,15 @@ namespace nirfmxdemod_grpc {
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
           return static_cast<nirfmxdemod_grpc::NiRFmxDemodInt32AttributeValues>(valid_enum_value);
         };
-          response->mutable_attr_val()->Clear();
-          response->mutable_attr_val()->Reserve(actual_array_size);
-          std::transform(
-            response->attr_val_raw().begin(),
-            response->attr_val_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) {
-                return checked_convert_attr_val(x);
-            });
+        response->mutable_attr_val()->Clear();
+        response->mutable_attr_val()->Reserve(actual_array_size);
+        std::transform(
+          response->attr_val_raw().begin(),
+          response->attr_val_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+          [&](auto x) {
+              return checked_convert_attr_val(x);
+          });
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -4375,15 +4375,15 @@ namespace nirfmxdemod_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_attr_val()->Clear();
-          response->mutable_attr_val()->Reserve(actual_array_size);
-          std::transform(
-            attr_val.begin(),
-            attr_val.begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) {
-                return x;
-            });
+        response->mutable_attr_val()->Clear();
+        response->mutable_attr_val()->Reserve(actual_array_size);
+        std::transform(
+          attr_val.begin(),
+          attr_val.begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+          [&](auto x) {
+              return x;
+          });
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;

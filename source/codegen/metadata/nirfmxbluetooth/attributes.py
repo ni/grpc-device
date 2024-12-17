@@ -604,6 +604,21 @@ attributes = {
         'name': 'MODACC_RESULTS_PERCENTAGE_OF_SYMBOLS_ABOVE_DF4AVG_THRESHOLD',
         'type': 'float64'
     },
+    11550774: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PREAMBLE_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    11550775: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_CONTROL_HEADER_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    11550776: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PAYLOAD_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
     11554816: {
         'access': 'read-write',
         'name': 'ACP_MEASUREMENT_ENABLED',

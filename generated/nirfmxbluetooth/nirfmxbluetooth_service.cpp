@@ -2041,15 +2041,15 @@ namespace nirfmxbluetooth_grpc {
           auto valid_enum_value = raw_value_is_valid ? raw_value : 0;
           return static_cast<nirfmxbluetooth_grpc::NiRFmxBluetoothInt32AttributeValues>(valid_enum_value);
         };
-          response->mutable_attr_val()->Clear();
-          response->mutable_attr_val()->Reserve(actual_array_size);
-          std::transform(
-            response->attr_val_raw().begin(),
-            response->attr_val_raw().begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) {
-                return checked_convert_attr_val(x);
-            });
+        response->mutable_attr_val()->Clear();
+        response->mutable_attr_val()->Reserve(actual_array_size);
+        std::transform(
+          response->attr_val_raw().begin(),
+          response->attr_val_raw().begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+          [&](auto x) {
+              return checked_convert_attr_val(x);
+          });
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -2185,15 +2185,15 @@ namespace nirfmxbluetooth_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_attr_val()->Clear();
-          response->mutable_attr_val()->Reserve(actual_array_size);
-          std::transform(
-            attr_val.begin(),
-            attr_val.begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
-            [&](auto x) {
-                return x;
-            });
+        response->mutable_attr_val()->Clear();
+        response->mutable_attr_val()->Reserve(actual_array_size);
+        std::transform(
+          attr_val.begin(),
+          attr_val.begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_attr_val()),
+          [&](auto x) {
+              return x;
+          });
         response->mutable_attr_val()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -3164,15 +3164,15 @@ namespace nirfmxbluetooth_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-          response->mutable_demodulated_bits()->Clear();
-          response->mutable_demodulated_bits()->Reserve(actual_array_size);
-          std::transform(
-            demodulated_bits.begin(),
-            demodulated_bits.begin() + actual_array_size,
-            google::protobuf::RepeatedFieldBackInserter(response->mutable_demodulated_bits()),
-            [&](auto x) {
-                return x;
-            });
+        response->mutable_demodulated_bits()->Clear();
+        response->mutable_demodulated_bits()->Reserve(actual_array_size);
+        std::transform(
+          demodulated_bits.begin(),
+          demodulated_bits.begin() + actual_array_size,
+          google::protobuf::RepeatedFieldBackInserter(response->mutable_demodulated_bits()),
+          [&](auto x) {
+              return x;
+          });
         response->mutable_demodulated_bits()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
@@ -3364,6 +3364,47 @@ namespace nirfmxbluetooth_grpc {
         response->set_status(status);
         response->mutable_time()->Resize(actual_array_size, 0);
         response->mutable_df4avg()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothService::ModAccFetchEVMPerSymbolTrace(::grpc::ServerContext* context, const ModAccFetchEVMPerSymbolTraceRequest* request, ModAccFetchEVMPerSymbolTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchEVMPerSymbolTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_evm_per_symbol()->Resize(actual_array_size, 0);
+        float32* evm_per_symbol = response->mutable_evm_per_symbol()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchEVMPerSymbolTrace(instrument, selector_string, timeout, evm_per_symbol, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_evm_per_symbol()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }

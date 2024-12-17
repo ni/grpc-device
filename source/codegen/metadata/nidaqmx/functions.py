@@ -17588,7 +17588,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -17613,8 +17612,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -17666,7 +17665,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -17741,7 +17739,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.int16',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI16Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -17766,8 +17763,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -17840,7 +17837,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.int32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -17865,8 +17861,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -17940,7 +17936,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.uint16',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU16Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -17965,8 +17960,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -18039,7 +18034,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18064,8 +18058,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -18127,7 +18121,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18152,8 +18145,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -18226,7 +18219,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18251,8 +18243,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -18304,7 +18296,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -18357,7 +18348,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'out',
-                'grpc_streaming_type': 'U32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -18420,7 +18410,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18445,8 +18434,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -18519,7 +18508,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -18544,8 +18532,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -18620,6 +18608,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'readArrayFrequency',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -18634,6 +18623,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'readArrayDutyCycle',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -18653,6 +18643,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -18676,6 +18667,7 @@ functions = {
         ],
         'python_codegen_method': 'CustomCode',
         'returns': 'int32',
+        'supports_streaming': True,
         'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrFreqScalar': {
@@ -18705,6 +18697,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'frequency',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -18714,6 +18707,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'dutyCycle',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -18734,7 +18728,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'ReadCtrTicks': {
         'calling_convention': 'StdCall',
@@ -18785,6 +18780,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'readArrayHighTicks',
                 'python_data_type': 'int',
                 'python_type_annotation': 'List[int]',
@@ -18799,6 +18795,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'readArrayLowTicks',
                 'python_data_type': 'int',
                 'python_type_annotation': 'List[int]',
@@ -18818,6 +18815,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -18841,6 +18839,7 @@ functions = {
         ],
         'python_codegen_method': 'CustomCode',
         'returns': 'int32',
+        'supports_streaming': True,
         'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrTicksScalar': {
@@ -18869,6 +18868,7 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
+                'is_streaming_type': True,
                 'name': 'highTicks',
                 'python_data_type': 'int',
                 'type': 'uInt32'
@@ -18876,6 +18876,7 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
+                'is_streaming_type': True,
                 'name': 'lowTicks',
                 'python_data_type': 'int',
                 'type': 'uInt32'
@@ -18895,7 +18896,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'ReadCtrTime': {
         'calling_convention': 'StdCall',
@@ -18946,6 +18948,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'readArrayHighTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -18960,6 +18963,7 @@ functions = {
                 'direction': 'out',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'readArrayLowTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -18979,6 +18983,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -19002,6 +19007,7 @@ functions = {
         ],
         'python_codegen_method': 'CustomCode',
         'returns': 'int32',
+        'supports_streaming': True,
         'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadCtrTimeScalar': {
@@ -19031,6 +19037,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'highTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -19040,6 +19047,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'lowTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -19060,7 +19068,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'ReadDigitalLines': {
         'calling_convention': 'StdCall',
@@ -19112,6 +19121,7 @@ functions = {
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'readArray',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -19132,6 +19142,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -19165,6 +19176,7 @@ functions = {
         ],
         'python_codegen_method': 'CustomCode',
         'returns': 'int32',
+        'supports_streaming': True,
         'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadDigitalScalarU32': {
@@ -19193,7 +19205,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'out',
-                'grpc_streaming_type': 'U32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -19268,7 +19279,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.uint16',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU16Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -19293,8 +19303,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -19367,7 +19377,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'out',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
@@ -19392,8 +19401,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanRead',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -19469,6 +19478,7 @@ functions = {
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'readArray',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -19489,6 +19499,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -19512,6 +19523,7 @@ functions = {
         ],
         'python_codegen_method': 'CustomCode',
         'returns': 'int32',
+        'supports_streaming': True,
         'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadPowerBinaryI16': {
@@ -19563,6 +19575,7 @@ functions = {
                 'ctypes_data_type': 'numpy.generic',
                 'direction': 'out',
                 'is_list': True,
+                'is_streaming_type': True,
                 'name': 'readArrayVoltage',
                 'python_data_type': 'object',
                 'size': {
@@ -19576,6 +19589,7 @@ functions = {
                 'ctypes_data_type': 'numpy.generic',
                 'direction': 'out',
                 'is_list': True,
+                'is_streaming_type': True,
                 'name': 'readArrayCurrent',
                 'python_data_type': 'object',
                 'size': {
@@ -19595,6 +19609,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -19618,6 +19633,7 @@ functions = {
         ],
         'python_codegen_method': 'CustomCode',
         'returns': 'int32',
+        'supports_streaming': True,
         'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadPowerF64': {
@@ -19668,6 +19684,7 @@ functions = {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
                 'is_list': True,
+                'is_streaming_type': True,
                 'name': 'readArrayVoltage',
                 'python_data_type': 'float',
                 'size': {
@@ -19680,6 +19697,7 @@ functions = {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'out',
                 'is_list': True,
+                'is_streaming_type': True,
                 'name': 'readArrayCurrent',
                 'python_data_type': 'float',
                 'size': {
@@ -19699,6 +19717,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanRead',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -19722,6 +19741,7 @@ functions = {
         ],
         'python_codegen_method': 'CustomCode',
         'returns': 'int32',
+        'supports_streaming': True,
         'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'ReadPowerScalarF64': {
@@ -19751,6 +19771,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'voltage',
                 'python_data_type': 'float',
                 'python_description': '',
@@ -19761,6 +19782,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'current',
                 'python_data_type': 'float',
                 'python_description': '',
@@ -19782,7 +19804,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'ReadRaw': {
         'calling_convention': 'StdCall',
@@ -19823,6 +19846,7 @@ functions = {
                 'has_explicit_buffer_size': True,
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'readArray',
                 'python_data_type': 'dynamic',
                 'python_description': '',
@@ -19842,6 +19866,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsRead',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -19853,6 +19878,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'numBytesPerSamp',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -19875,6 +19901,7 @@ functions = {
         ],
         'python_codegen_method': 'no',
         'returns': 'int32',
+        'supports_streaming': True,
         'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
     'RegisterDoneEvent': {
@@ -23976,7 +24003,6 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_streaming_type': 'BoolData',
                 'is_streaming_type': True,
                 'name': 'isLate',
                 'type': 'bool32'
@@ -24133,7 +24159,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.float64',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayDoubleData',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24147,8 +24172,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanWritten',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -24209,7 +24234,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
-                'grpc_streaming_type': 'DoubleData',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -24294,7 +24318,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.int16',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayI16Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24308,8 +24331,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanWritten',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -24391,7 +24414,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.int32',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayI32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24405,8 +24427,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanWritten',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -24489,7 +24511,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.uint16',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU16Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24503,8 +24524,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanWritten',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -24586,7 +24607,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -24600,8 +24620,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanWritten',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -24685,6 +24705,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'frequency',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -24695,6 +24716,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'dutyCycle',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -24704,6 +24726,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'numSampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -24726,7 +24749,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrFreqScalar': {
         'calling_convention': 'StdCall',
@@ -24765,6 +24789,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'frequency',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -24774,6 +24799,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'dutyCycle',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -24794,7 +24820,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrTicks': {
         'calling_convention': 'StdCall',
@@ -24855,6 +24882,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'highTicks',
                 'python_data_type': 'int',
                 'python_type_annotation': 'List[int]',
@@ -24865,6 +24893,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'lowTicks',
                 'python_data_type': 'int',
                 'python_type_annotation': 'List[int]',
@@ -24874,6 +24903,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'numSampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -24896,7 +24926,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrTicksScalar': {
         'calling_convention': 'StdCall',
@@ -24934,6 +24965,7 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
+                'is_streaming_type': True,
                 'name': 'highTicks',
                 'python_data_type': 'int',
                 'type': 'uInt32'
@@ -24941,6 +24973,7 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'in',
+                'is_streaming_type': True,
                 'name': 'lowTicks',
                 'python_data_type': 'int',
                 'type': 'uInt32'
@@ -24960,7 +24993,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrTime': {
         'calling_convention': 'StdCall',
@@ -25021,6 +25055,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'highTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -25031,6 +25066,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'lowTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'List[float]',
@@ -25040,6 +25076,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'numSampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25062,7 +25099,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteCtrTimeScalar': {
         'calling_convention': 'StdCall',
@@ -25101,6 +25139,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'highTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -25110,6 +25149,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_double',
                 'direction': 'in',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'lowTime',
                 'python_data_type': 'float',
                 'python_type_annotation': 'float',
@@ -25130,7 +25170,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteDigitalLines': {
         'calling_convention': 'StdCall',
@@ -25191,6 +25232,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'writeArray',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25201,6 +25243,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25223,7 +25266,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteDigitalScalarU32': {
         'calling_convention': 'StdCall',
@@ -25261,7 +25305,6 @@ functions = {
             {
                 'ctypes_data_type': 'ctypes.c_uint',
                 'direction': 'in',
-                'grpc_streaming_type': 'U32Data',
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
                 'name': 'value',
@@ -25346,7 +25389,6 @@ functions = {
                 'coerced': True,
                 'ctypes_data_type': 'numpy.uint16',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU16Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -25360,8 +25402,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanWritten',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -25443,7 +25485,6 @@ functions = {
             {
                 'ctypes_data_type': 'numpy.uint32',
                 'direction': 'in',
-                'grpc_streaming_type': 'ArrayU32Data',
                 'is_list': True,
                 'is_optional_in_python': False,
                 'is_streaming_type': True,
@@ -25457,8 +25498,8 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
-                'name': 'sampsPerChanWritten',
                 'is_streaming_type': True,
+                'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
@@ -25542,6 +25583,7 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'writeArray',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25552,6 +25594,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25574,7 +25617,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'CustomCode',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteRaw': {
         'calling_convention': 'StdCall',
@@ -25623,6 +25667,7 @@ functions = {
                 'ctypes_data_type': 'numpy.generic',
                 'direction': 'in',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'writeArray',
                 'python_data_type': 'dynamic',
                 'python_type_annotation': 'dynamic',
@@ -25632,6 +25677,7 @@ functions = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'out',
                 'is_optional_in_python': False,
+                'is_streaming_type': True,
                 'name': 'sampsPerChanWritten',
                 'python_data_type': 'int',
                 'python_description': '',
@@ -25654,7 +25700,8 @@ functions = {
             }
         ],
         'python_codegen_method': 'no',
-        'returns': 'int32'
+        'returns': 'int32',
+        'supports_streaming': True
     },
     'WriteToTEDSFromArray': {
         'calling_convention': 'StdCall',

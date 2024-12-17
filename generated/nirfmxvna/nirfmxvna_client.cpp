@@ -1599,6 +1599,42 @@ calkit_manager_calkit_get_description(const StubPtr& stub, const nidevice_grpc::
   return response;
 }
 
+CalkitManagerCalkitGetLRLLineAutoCharResponse
+calkit_manager_calkit_get_lrl_line_auto_char(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitGetLRLLineAutoCharRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitGetLRLLineAutoCharResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitGetLRLLineAutoChar(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitGetTRLReferencePlaneResponse
+calkit_manager_calkit_get_trl_reference_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitGetTRLReferencePlaneRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitGetTRLReferencePlaneResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitGetTRLReferencePlane(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CalkitManagerCalkitGetVersionResponse
 calkit_manager_calkit_get_version(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
@@ -1669,6 +1705,51 @@ calkit_manager_calkit_set_description(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->CalkitManagerCalkitSetDescription(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitSetLRLLineAutoCharResponse
+calkit_manager_calkit_set_lrl_line_auto_char(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& auto_characterization_enabled)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitSetLRLLineAutoCharRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_auto_characterization_enabled(auto_characterization_enabled);
+
+  auto response = CalkitManagerCalkitSetLRLLineAutoCharResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitSetLRLLineAutoChar(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitSetTRLReferencePlaneResponse
+calkit_manager_calkit_set_trl_reference_plane(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<CalkitManagerCalkitTrlReferencePlane, pb::int32>& reference_plane)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitSetTRLReferencePlaneRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto reference_plane_ptr = reference_plane.get_if<CalkitManagerCalkitTrlReferencePlane>();
+  const auto reference_plane_raw_ptr = reference_plane.get_if<pb::int32>();
+  if (reference_plane_ptr) {
+    request.set_reference_plane(*reference_plane_ptr);
+  }
+  else if (reference_plane_raw_ptr) {
+    request.set_reference_plane_raw(*reference_plane_raw_ptr);
+  }
+
+  auto response = CalkitManagerCalkitSetTRLReferencePlaneResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitSetTRLReferencePlane(&context, request, &response),
       context);
 
   return response;
@@ -2229,14 +2310,14 @@ copy_calset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const
 }
 
 CopyDataToMeasurementMemoryResponse
-copy_data_to_measurement_memory(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& memory_data_name)
+copy_data_to_measurement_memory(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& measurement_memory_name)
 {
   ::grpc::ClientContext context;
 
   auto request = CopyDataToMeasurementMemoryRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_memory_data_name(memory_data_name);
+  request.set_measurement_memory_name(measurement_memory_name);
 
   auto response = CopyDataToMeasurementMemoryResponse{};
 
@@ -2901,7 +2982,7 @@ initiate(const StubPtr& stub, const nidevice_grpc::Session& instrument, const st
 }
 
 LoadDataToMeasurementMemoryFromFileResponse
-load_data_to_measurement_memory_from_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& file_path, const std::string& parameter, const std::string& memory_data_name)
+load_data_to_measurement_memory_from_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& file_path, const std::string& parameter, const std::string& measurement_memory_name)
 {
   ::grpc::ClientContext context;
 
@@ -2910,7 +2991,7 @@ load_data_to_measurement_memory_from_file(const StubPtr& stub, const nidevice_gr
   request.set_selector_string(selector_string);
   request.set_file_path(file_path);
   request.set_parameter(parameter);
-  request.set_memory_data_name(memory_data_name);
+  request.set_measurement_memory_name(measurement_memory_name);
 
   auto response = LoadDataToMeasurementMemoryFromFileResponse{};
 
@@ -2935,6 +3016,32 @@ marker_cfg_data_source(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->MarkerCfgDataSource(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgModeResponse
+marker_cfg_mode(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<MarkerMode, pb::int32>& marker_mode)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgModeRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto marker_mode_ptr = marker_mode.get_if<MarkerMode>();
+  const auto marker_mode_raw_ptr = marker_mode.get_if<pb::int32>();
+  if (marker_mode_ptr) {
+    request.set_marker_mode(*marker_mode_ptr);
+  }
+  else if (marker_mode_raw_ptr) {
+    request.set_marker_mode_raw(*marker_mode_raw_ptr);
+  }
+
+  auto response = MarkerCfgModeResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgMode(&context, request, &response),
       context);
 
   return response;
@@ -3027,6 +3134,25 @@ marker_cfg_reference_marker(const StubPtr& stub, const nidevice_grpc::Session& i
 
   raise_if_error(
       stub->MarkerCfgReferenceMarker(&context, request, &response),
+      context);
+
+  return response;
+}
+
+MarkerCfgTargetValueResponse
+marker_cfg_target_value(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& target_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = MarkerCfgTargetValueRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_target_value(target_value);
+
+  auto response = MarkerCfgTargetValueResponse{};
+
+  raise_if_error(
+      stub->MarkerCfgTargetValue(&context, request, &response),
       context);
 
   return response;

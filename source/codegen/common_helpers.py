@@ -3,7 +3,7 @@
 import os
 import re
 from collections import defaultdict, namedtuple
-from typing import Any, Dict, List, NamedTuple, Optional
+from typing import Any, Dict, List, NamedTuple, Optional, Tuple
 
 _NIDEVICE_COMMON_MESSAGE_TYPES = (
     "nidevice_grpc.NIComplexNumber",
@@ -836,7 +836,9 @@ def indent(level):
         result = ""
         indentation = level * "  "
         for line in text.splitlines(True):
-            result = result + indentation + line
+            if line.strip():
+                result += indentation
+            result += line
         return result
 
     return lambda text: indent_text_to_level(text, level)
@@ -1204,29 +1206,73 @@ def get_params_needing_initialization(parameters: List[dict]) -> List[dict]:
     return [p for p in parameters if not (is_return_value(p) or is_get_last_error_output_param(p))]
 
 
-def filter_moniker_streaming_functions(functions, functions_to_generate):
+def filter_moniker_streaming_functions(
+    functions: dict, functions_to_generate: List[str]
+) -> List[str]:
     """Return streaming functions that need to be generated."""
     return [
-        name for name in functions_to_generate if functions[name].get("is_streaming_api", False)
+        name for name in functions_to_generate if is_moniker_streaming_function(functions[name])
     ]
 
 
-def get_data_moniker_function_name(function_name):
+def is_moniker_streaming_function(function: dict) -> bool:
+    """Whether this function is for streaming data through moniker."""
+    return function.get("is_streaming_api", False)
+
+
+def get_data_moniker_function_name(function_name: str) -> str:
     """Return the corresponding moniker function name for the given C API function."""
     return function_name.replace("Begin", "Moniker")
 
 
-def get_data_moniker_struct_name(function_name):
-    """Return the corresponding moniker function name for the given C API function."""
-    return f"{function_name.replace('Begin', 'Moniker')}Data"
+def get_data_moniker_struct_name(begin_function_name: str) -> str:
+    """Return the Moniker function name.
+
+    Input expected is Begin* streaming API name.
+    """
+    return f"{begin_function_name.replace('Begin', 'Moniker')}Data"
 
 
-def is_function_in_streaming_functions(function_name, streaming_functions_to_generate):
+def get_data_moniker_request_message_type(begin_function_name: str) -> str:
+    """Return the request message type for Moniker functions.
+
+    Input expected is Begin* streaming API name.
+    """
+    return f"{begin_function_name.replace('Begin', 'Moniker')}Request"
+
+
+def get_data_moniker_response_message_type(begin_function_name: str) -> str:
+    """Return the response message type for Moniker functions.
+
+    Input expected is Begin* streaming API name.
+    """
+    return f"{begin_function_name.replace('Begin', 'Moniker')}Response"
+
+
+def get_data_moniker_function_parameters(function: dict) -> Tuple[List[dict], List[dict]]:
+    """Return moniker function parameters split into input/output.
+
+    Input expected is equivalent non-streaming function.
+    Add a default "status" output parameter if there isn't one already.
+    """
+    parameter_array = filter_parameters_for_grpc_fields(function["parameters"])
+    input_parameters = [
+        p for p in parameter_array if is_input_parameter(p) and p.get("is_streaming_type", False)
+    ]
+    default_status_param = {"name": "status", "type": "int32", "grpc_type": "int32"}
+    output_parameters = [default_status_param]
+    output_parameters.extend([p for p in parameter_array if is_output_parameter(p)])
+    return (input_parameters, output_parameters)
+
+
+def is_function_in_streaming_functions(
+    function_name: str, streaming_functions_to_generate: List[str]
+):
     """Check if a function name is in the streaming functions to generate."""
     return function_name in streaming_functions_to_generate
 
 
-def _is_streaming_param_input_array(streaming_param):
+def _is_streaming_param_input_array(streaming_param: dict) -> bool:
     """Check if the streaming parameter is an input array."""
     return (
         streaming_param
@@ -1235,14 +1281,9 @@ def _is_streaming_param_input_array(streaming_param):
     )
 
 
-def get_input_streaming_params(parameters):
-    """Determine if a parameter should be included based on streaming conditions."""
-    streaming_param = None
-    for param in parameters:
-        if param.get("is_streaming_type", False):
-            streaming_param = param
-            break
-
+def get_non_streaming_input_parameters(parameters: List[dict]) -> List[dict]:
+    """Determine if a parameter should be passed from Begin streaming API to Moniker function."""
+    streaming_param = get_first_streaming_parameter(parameters)
     params = []
     for param in parameters:
         if is_input_parameter(param) and not param.get("is_streaming_type", False):
@@ -1253,3 +1294,11 @@ def get_input_streaming_params(parameters):
             else:
                 params.append(param)
     return params
+
+
+def extend_input_params_with_size_params(input_parameters: List[dict], function_metadata: dict):
+    """Return the input_parameters list with size parameters added to it."""
+    for param in input_parameters:
+        size_param_name = get_size_param(param)
+        size_param = [p for p in function_metadata["parameters"] if p["name"] == size_param_name]
+        input_parameters.extend(size_param)

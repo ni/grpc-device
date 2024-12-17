@@ -2428,6 +2428,12 @@ attributes = {
         'name': 'AMPM_RESULTS_PEAK_REFERENCE_POWER_GAIN',
         'type': 'float64'
     },
+    1105980: {
+        'access': 'read-write',
+        'enum': 'AmpmThresholdDefinition',
+        'name': 'AMPM_THRESHOLD_DEFINITION',
+        'type': 'int32'
+    },
     1110016: {
         'access': 'read-write',
         'name': 'DPD_MEASUREMENT_ENABLED',
@@ -2874,6 +2880,12 @@ attributes = {
         'access': 'read-write',
         'enum': 'DpdMeasurementMode',
         'name': 'DPD_MEASUREMENT_MODE',
+        'type': 'int32'
+    },
+    1110125: {
+        'access': 'read-write',
+        'enum': 'DpdLookupTableThresholdDefinition',
+        'name': 'DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION',
         'type': 'int32'
     },
     1110272: {

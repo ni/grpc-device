@@ -8072,6 +8072,34 @@ read_ctr_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const pb:
   return response;
 }
 
+BeginReadCtrFreqResponse
+begin_read_ctr_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& interleaved, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCtrFreqRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto interleaved_ptr = interleaved.get_if<GroupBy>();
+  const auto interleaved_raw_ptr = interleaved.get_if<pb::int32>();
+  if (interleaved_ptr) {
+    request.set_interleaved(*interleaved_ptr);
+  }
+  else if (interleaved_raw_ptr) {
+    request.set_interleaved_raw(*interleaved_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadCtrFreqResponse{};
+
+  raise_if_error(
+      stub->BeginReadCtrFreq(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadCtrFreqScalarResponse
 read_ctr_freq_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
 {
@@ -8085,6 +8113,24 @@ read_ctr_freq_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, co
 
   raise_if_error(
       stub->ReadCtrFreqScalar(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadCtrFreqScalarResponse
+begin_read_ctr_freq_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCtrFreqScalarRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = BeginReadCtrFreqScalarResponse{};
+
+  raise_if_error(
+      stub->BeginReadCtrFreqScalar(&context, request, &response),
       context);
 
   return response;
@@ -8118,6 +8164,34 @@ read_ctr_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   return response;
 }
 
+BeginReadCtrTicksResponse
+begin_read_ctr_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& interleaved, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCtrTicksRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto interleaved_ptr = interleaved.get_if<GroupBy>();
+  const auto interleaved_raw_ptr = interleaved.get_if<pb::int32>();
+  if (interleaved_ptr) {
+    request.set_interleaved(*interleaved_ptr);
+  }
+  else if (interleaved_raw_ptr) {
+    request.set_interleaved_raw(*interleaved_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadCtrTicksResponse{};
+
+  raise_if_error(
+      stub->BeginReadCtrTicks(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadCtrTicksScalarResponse
 read_ctr_ticks_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
 {
@@ -8131,6 +8205,24 @@ read_ctr_ticks_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, c
 
   raise_if_error(
       stub->ReadCtrTicksScalar(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadCtrTicksScalarResponse
+begin_read_ctr_ticks_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCtrTicksScalarRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = BeginReadCtrTicksScalarResponse{};
+
+  raise_if_error(
+      stub->BeginReadCtrTicksScalar(&context, request, &response),
       context);
 
   return response;
@@ -8164,6 +8256,34 @@ read_ctr_time(const StubPtr& stub, const nidevice_grpc::Session& task, const pb:
   return response;
 }
 
+BeginReadCtrTimeResponse
+begin_read_ctr_time(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& interleaved, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCtrTimeRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto interleaved_ptr = interleaved.get_if<GroupBy>();
+  const auto interleaved_raw_ptr = interleaved.get_if<pb::int32>();
+  if (interleaved_ptr) {
+    request.set_interleaved(*interleaved_ptr);
+  }
+  else if (interleaved_raw_ptr) {
+    request.set_interleaved_raw(*interleaved_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadCtrTimeResponse{};
+
+  raise_if_error(
+      stub->BeginReadCtrTime(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadCtrTimeScalarResponse
 read_ctr_time_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
 {
@@ -8177,6 +8297,24 @@ read_ctr_time_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, co
 
   raise_if_error(
       stub->ReadCtrTimeScalar(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadCtrTimeScalarResponse
+begin_read_ctr_time_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadCtrTimeScalarRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = BeginReadCtrTimeScalarResponse{};
+
+  raise_if_error(
+      stub->BeginReadCtrTimeScalar(&context, request, &response),
       context);
 
   return response;
@@ -8205,6 +8343,34 @@ read_digital_lines(const StubPtr& stub, const nidevice_grpc::Session& task, cons
 
   raise_if_error(
       stub->ReadDigitalLines(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadDigitalLinesResponse
+begin_read_digital_lines(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_bytes)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadDigitalLinesRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_bytes(array_size_in_bytes);
+
+  auto response = BeginReadDigitalLinesResponse{};
+
+  raise_if_error(
+      stub->BeginReadDigitalLines(&context, request, &response),
       context);
 
   return response;
@@ -8386,6 +8552,34 @@ read_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   return response;
 }
 
+BeginReadDigitalU8Response
+begin_read_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadDigitalU8Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadDigitalU8Response{};
+
+  raise_if_error(
+      stub->BeginReadDigitalU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadPowerBinaryI16Response
 read_power_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
 {
@@ -8409,6 +8603,34 @@ read_power_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, c
 
   raise_if_error(
       stub->ReadPowerBinaryI16(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadPowerBinaryI16Response
+begin_read_power_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadPowerBinaryI16Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadPowerBinaryI16Response{};
+
+  raise_if_error(
+      stub->BeginReadPowerBinaryI16(&context, request, &response),
       context);
 
   return response;
@@ -8442,6 +8664,34 @@ read_power_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   return response;
 }
 
+BeginReadPowerF64Response
+begin_read_power_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadPowerF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto fill_mode_ptr = fill_mode.get_if<GroupBy>();
+  const auto fill_mode_raw_ptr = fill_mode.get_if<pb::int32>();
+  if (fill_mode_ptr) {
+    request.set_fill_mode(*fill_mode_ptr);
+  }
+  else if (fill_mode_raw_ptr) {
+    request.set_fill_mode_raw(*fill_mode_raw_ptr);
+  }
+  request.set_array_size_in_samps(array_size_in_samps);
+
+  auto response = BeginReadPowerF64Response{};
+
+  raise_if_error(
+      stub->BeginReadPowerF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadPowerScalarF64Response
 read_power_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
 {
@@ -8455,6 +8705,24 @@ read_power_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, c
 
   raise_if_error(
       stub->ReadPowerScalarF64(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadPowerScalarF64Response
+begin_read_power_scalar_f64(const StubPtr& stub, const nidevice_grpc::Session& task, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadPowerScalarF64Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_timeout(timeout);
+
+  auto response = BeginReadPowerScalarF64Response{};
+
+  raise_if_error(
+      stub->BeginReadPowerScalarF64(&context, request, &response),
       context);
 
   return response;
@@ -8475,6 +8743,26 @@ read_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int3
 
   raise_if_error(
       stub->ReadRaw(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginReadRawResponse
+begin_read_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const pb::uint32& array_size_in_bytes)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginReadRawRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  request.set_array_size_in_bytes(array_size_in_bytes);
+
+  auto response = BeginReadRawResponse{};
+
+  raise_if_error(
+      stub->BeginReadRaw(&context, request, &response),
       context);
 
   return response;
@@ -11463,6 +11751,34 @@ write_ctr_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   return response;
 }
 
+BeginWriteCtrFreqResponse
+begin_write_ctr_freq(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteCtrFreqRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteCtrFreqResponse{};
+
+  raise_if_error(
+      stub->BeginWriteCtrFreq(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteCtrFreqScalarResponse
 write_ctr_freq_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout, const double& frequency, const double& duty_cycle)
 {
@@ -11479,6 +11795,25 @@ write_ctr_freq_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, c
 
   raise_if_error(
       stub->WriteCtrFreqScalar(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteCtrFreqScalarResponse
+begin_write_ctr_freq_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteCtrFreqScalarRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+
+  auto response = BeginWriteCtrFreqScalarResponse{};
+
+  raise_if_error(
+      stub->BeginWriteCtrFreqScalar(&context, request, &response),
       context);
 
   return response;
@@ -11514,6 +11849,34 @@ write_ctr_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const p
   return response;
 }
 
+BeginWriteCtrTicksResponse
+begin_write_ctr_ticks(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteCtrTicksRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteCtrTicksResponse{};
+
+  raise_if_error(
+      stub->BeginWriteCtrTicks(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteCtrTicksScalarResponse
 write_ctr_ticks_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout, const pb::uint32& high_ticks, const pb::uint32& low_ticks)
 {
@@ -11530,6 +11893,25 @@ write_ctr_ticks_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, 
 
   raise_if_error(
       stub->WriteCtrTicksScalar(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteCtrTicksScalarResponse
+begin_write_ctr_ticks_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteCtrTicksScalarRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+
+  auto response = BeginWriteCtrTicksScalarResponse{};
+
+  raise_if_error(
+      stub->BeginWriteCtrTicksScalar(&context, request, &response),
       context);
 
   return response;
@@ -11565,6 +11947,34 @@ write_ctr_time(const StubPtr& stub, const nidevice_grpc::Session& task, const pb
   return response;
 }
 
+BeginWriteCtrTimeResponse
+begin_write_ctr_time(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteCtrTimeRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteCtrTimeResponse{};
+
+  raise_if_error(
+      stub->BeginWriteCtrTime(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteCtrTimeScalarResponse
 write_ctr_time_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout, const double& high_time, const double& low_time)
 {
@@ -11581,6 +11991,25 @@ write_ctr_time_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, c
 
   raise_if_error(
       stub->WriteCtrTimeScalar(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteCtrTimeScalarResponse
+begin_write_ctr_time_scalar(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteCtrTimeScalarRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+
+  auto response = BeginWriteCtrTimeScalarResponse{};
+
+  raise_if_error(
+      stub->BeginWriteCtrTimeScalar(&context, request, &response),
       context);
 
   return response;
@@ -11610,6 +12039,34 @@ write_digital_lines(const StubPtr& stub, const nidevice_grpc::Session& task, con
 
   raise_if_error(
       stub->WriteDigitalLines(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteDigitalLinesResponse
+begin_write_digital_lines(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteDigitalLinesRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteDigitalLinesResponse{};
+
+  raise_if_error(
+      stub->BeginWriteDigitalLines(&context, request, &response),
       context);
 
   return response;
@@ -11797,6 +12254,34 @@ write_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const 
   return response;
 }
 
+BeginWriteDigitalU8Response
+begin_write_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const simple_variant<GroupBy, pb::int32>& data_layout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteDigitalU8Request{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+  const auto data_layout_ptr = data_layout.get_if<GroupBy>();
+  const auto data_layout_raw_ptr = data_layout.get_if<pb::int32>();
+  if (data_layout_ptr) {
+    request.set_data_layout(*data_layout_ptr);
+  }
+  else if (data_layout_raw_ptr) {
+    request.set_data_layout_raw(*data_layout_raw_ptr);
+  }
+
+  auto response = BeginWriteDigitalU8Response{};
+
+  raise_if_error(
+      stub->BeginWriteDigitalU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteRawResponse
 write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps, const bool& auto_start, const double& timeout, const std::string& write_array)
 {
@@ -11813,6 +12298,26 @@ write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int
 
   raise_if_error(
       stub->WriteRaw(&context, request, &response),
+      context);
+
+  return response;
+}
+
+BeginWriteRawResponse
+begin_write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps, const bool& auto_start, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BeginWriteRawRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps(num_samps);
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+
+  auto response = BeginWriteRawResponse{};
+
+  raise_if_error(
+      stub->BeginWriteRaw(&context, request, &response),
       context);
 
   return response;
