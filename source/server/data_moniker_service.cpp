@@ -113,15 +113,29 @@ void DataMonikerService::InitiateMonikerList(const MonikerList& monikers, Endpoi
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
+#ifndef _WIN32
+void set_moniker_stream_processor(int stream_processor)
+{
+  if(stream_processor >= 0) {
+    cpu_set_t cpuSet;
+    CPU_ZERO(&cpuSet);
+    CPU_SET(stream_processor, &cpuSet);
+    sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
+  }
+}
+#endif
+
+//---------------------------------------------------------------------
+//---------------------------------------------------------------------
 void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::SidebandStrategy strategy, EndpointList* readers, EndpointList* writers)
 {
 #ifndef _WIN32
   if ((strategy == ::SidebandStrategy::RDMA_LOW_LATENCY ||
-      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) && c_StreamProcessor.moniker_stream_read_write >= 0) {
+      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) && c_StreamProcessor.moniker_sideband_stream_read_write >= 0) {
     pid_t threadId = syscall(SYS_gettid);
     ::SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/tasks", std::to_string(threadId));
 
-    set_moniker_stream_processor(c_StreamProcessor.moniker_stream_read_write);
+    set_moniker_stream_processor(c_StreamProcessor.moniker_sideband_stream_read_write);
   }
 #endif
 
@@ -195,6 +209,10 @@ Status DataMonikerService::BeginSidebandStream(ServerContext* context, const Beg
 //---------------------------------------------------------------------
 Status DataMonikerService::StreamReadWrite(ServerContext* context, ServerReaderWriter<MonikerReadResponse, MonikerWriteRequest>* stream)
 {
+#ifndef _WIN32
+  set_moniker_stream_processor(c_StreamProcessor.moniker_stream_read_write);
+#endif
+
   EndpointList writers;
   EndpointList readers;
   MonikerWriteRequest writeRequest;
@@ -223,6 +241,10 @@ Status DataMonikerService::StreamReadWrite(ServerContext* context, ServerReaderW
 //---------------------------------------------------------------------
 Status DataMonikerService::StreamRead(ServerContext* context, const MonikerList* request, ServerWriter<MonikerReadResponse>* writer)
 {
+#ifndef _WIN32
+  set_moniker_stream_processor(c_StreamProcessor.moniker_stream_read);
+#endif
+
   EndpointList writers;
   EndpointList readers;
   InitiateMonikerList(*request, &readers, &writers);
@@ -265,16 +287,4 @@ Status DataMonikerService::StreamWrite(ServerContext* context, ServerReaderWrite
   }
   return Status::OK;
 }
-
-#ifndef _WIN32
-void set_moniker_stream_processor(int stream_processor)
-{
-  if(stream_processor >= 0) {
-    cpu_set_t cpuSet;
-    CPU_ZERO(&cpuSet);
-    CPU_SET(stream_processor, &cpuSet);
-    sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
-  }
-}
-#endif
 }  // namespace ni::data_monikers

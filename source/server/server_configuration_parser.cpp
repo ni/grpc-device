@@ -21,8 +21,10 @@ static const char* kPortJsonKey = "port";
 static const char* kSidebandAddressJsonKey = "sideband_address";
 static const char* kSidebandPortJsonKey = "sideband_port";
 static const char* kMonikerStreamProcessorKey = "moniker_stream_processor_configuration";
-static const char* kMonikerStreamReadWriteKey = "moniker_stream_read_write";
+static const char* kMonikerSidebandStreamReadWriteKey = "moniker_sideband_stream_read_write";
 static const char* kMonikerStreamWriteKey = "moniker_stream_write";
+static const char* kMonikerStreamReadKey = "moniker_stream_read";
+static const char* kMonikerStreamReadWriteKey = "moniker_stream_read_write";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
@@ -297,8 +299,10 @@ MonikerStreamProcessor ServerConfigurationParser::parse_moniker_stream_processor
 
     auto core_config_it = config_file_.find(kMonikerStreamProcessorKey);
     if (core_config_it != config_file_.end()) {
-        stream_processor.moniker_stream_read_write = parse_moniker_stream_processor_with_key(kMonikerStreamReadWriteKey);
+        stream_processor.moniker_sideband_stream_read_write = parse_moniker_stream_processor_with_key(kMonikerSidebandStreamReadWriteKey);
         stream_processor.moniker_stream_write = parse_moniker_stream_processor_with_key(kMonikerStreamWriteKey);
+        stream_processor.moniker_stream_read = parse_moniker_stream_processor_with_key(kMonikerStreamReadKey);
+        stream_processor.moniker_stream_read_write = parse_moniker_stream_processor_with_key(kMonikerStreamReadWriteKey);
     }
     return stream_processor;
 }
