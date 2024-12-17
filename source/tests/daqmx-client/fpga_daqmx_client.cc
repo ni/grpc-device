@@ -185,12 +185,11 @@ void ThreadRunSidebandLoop(uint64_t sideband_token, NiDAQmx::Stub* stub, nidevic
 #endif
 
         std::unique_ptr<NiDAQmx::Stub> daqmx_client(stub);
-        ArrayDoubleData daqmx_write_values;
-        BoolData daqmx_is_late;
+        MonikerWriteAnalogF64Request daqmx_write_values;
         std::cout << "Start sideband thread" << std::endl;
 
-        daqmx_write_values.mutable_value()->Reserve(1);
-        daqmx_write_values.mutable_value()->Resize(1, 0);
+        daqmx_write_values.mutable_write_array()->Reserve(1);
+        daqmx_write_values.mutable_write_array()->Resize(1, 0);
 
         auto io_times = new TimeVector{};
 
@@ -218,7 +217,7 @@ void ThreadRunSidebandLoop(uint64_t sideband_token, NiDAQmx::Stub* stub, nidevic
     
             // Read data      
             auto read_result = google::protobuf::Arena::CreateMessage<ni::data_monikers::SidebandReadResponse>(&arena);
-            auto daqmx_read_values = google::protobuf::Arena::CreateMessage<ArrayDoubleData>(&arena);
+            auto daqmx_read_values = google::protobuf::Arena::CreateMessage<MonikerReadAnalogF64Response>(&arena);
             if (!ReadSidebandMessage(sideband_token, read_result))
             {
                 break;
@@ -294,11 +293,23 @@ void CleanupDaqmxTasks(const StubPtr& daqmx_client,
     clear_task(daqmx_client, daqmx_write_task);
 }
 
-void PrintArray(const ArrayDoubleData& data)
+void PrintArray(const MonikerWriteAnalogF64Request& data)
 {
     std::cout << "[";
-    for(auto it=data.value().begin();
-        it != data.value().end();
+    for(auto it=data.write_array().begin();
+        it != data.write_array().end();
+        ++it)
+    {
+        std::cout << *it << " ";
+    }
+    std::cout << "]" << std::endl;
+}
+
+void PrintArray(const MonikerReadAnalogF64Response& data)
+{
+    std::cout << "[";
+    for(auto it=data.read_array().begin();
+        it != data.read_array().end();
         ++it)
     {
         std::cout << *it << " ";
@@ -314,12 +325,12 @@ void CopyDataToWrite(ni::data_monikers::MonikerValues *moniker_values, DaqDataTy
             throw std::logic_error("Function not yet implemented");
         case DaqDataTypesToTest::DAQ_U64_Array:
             {
-                ArrayDoubleData daqmx_write_values;
+                MonikerWriteAnalogF64Request daqmx_write_values;
                 int array_size = 1;
-                daqmx_write_values.mutable_value()->Reserve(array_size);
-                daqmx_write_values.mutable_value()->Resize(array_size, 0);
+                daqmx_write_values.mutable_write_array()->Reserve(array_size);
+                daqmx_write_values.mutable_write_array()->Resize(array_size, 0);
 
-                double* data_to_write = daqmx_write_values.mutable_value()->mutable_data();
+                double* data_to_write = daqmx_write_values.mutable_write_array()->mutable_data();
                 for(int i=0; i<array_size; i++)
                 {
                     *(data_to_write + i) = i*100;
@@ -343,7 +354,7 @@ void HandleReadResponse(const google::protobuf::Any& read_message, DaqDataTypesT
             throw std::logic_error("Function not yet implemented");
         case DaqDataTypesToTest::DAQ_U64_Array:
             {
-                ArrayDoubleData daqmx_read_values;
+                MonikerReadAnalogF64Response daqmx_read_values;
                 read_message.UnpackTo(&daqmx_read_values);
                 std::cout << "Read data..." << std::endl;
                 PrintArray(daqmx_read_values);
@@ -547,8 +558,8 @@ int main(int argc, char **argv)
     {
         cout << "Connecting to localhost" << endl;
         //target_str = "localhost:31763";
-        target_str = "10.1.128.143:31763";
-        target_str_sideband = "10.1.128.143:7000";
+        target_str = "127.0.0.1:31763";
+        target_str_sideband = "127.0.0.1:31763";
     }
 
     auto creds = CreateCredentials(argc, argv);
