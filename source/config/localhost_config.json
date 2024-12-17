@@ -8,9 +8,8 @@
        "server_key": "",
        "root_cert": ""
     },
-    "cpu_affinity_configuration": {
-       "sideband_read_write": -1,
-       "stream_write": -1,
-       "server": -1
+    "moniker_stream_processor": {
+       "moniker_stream_read_write": -1,
+       "moniker_stream_write": -1
     }
  }

@@ -5,7 +5,7 @@
 #include <sstream>
 
 #include "feature_toggles.h"
-#include "cpu_affinity_configuration.h"
+#include "moniker_stream_processor.h"
 
 #if defined(_MSC_VER)
   #include <windows.h>
@@ -20,10 +20,9 @@ static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
 static const char* kSidebandAddressJsonKey = "sideband_address";
 static const char* kSidebandPortJsonKey = "sideband_port";
-static const char* kCpuAffinityConfigurationKey = "streaming_core_configuration";
-static const char* kSidebandReadWriteKey = "sideband_read_write_core";
-static const char* kStreamWriteKey = "stream_write_core";
-static const char* kServerKey = "server_run_core";
+static const char* kMonikerStreamProcessorKey = "moniker_stream_processor_configuration";
+static const char* kMonikerStreamReadWriteKey = "moniker_stream_read_write";
+static const char* kMonikerStreamWriteKey = "moniker_stream_write";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
@@ -292,20 +291,19 @@ int ServerConfigurationParser::parse_port_with_key(const std::string& key) const
   return parsed_port;
 }
 
-CpuAffinityConfiguration ServerConfigurationParser::parse_cpu_affinity() const
+MonikerStreamProcessor ServerConfigurationParser::parse_moniker_stream_processor() const
 {
-    CpuAffinityConfiguration cpu_affinity;
+    MonikerStreamProcessor stream_processor;
 
-    auto core_config_it = config_file_.find(kCpuAffinityConfigurationKey);
+    auto core_config_it = config_file_.find(kMonikerStreamProcessorKey);
     if (core_config_it != config_file_.end()) {
-        cpu_affinity.sideband_read_write = parse_cpu_affinity_with_key(kSidebandReadWriteKey);
-        cpu_affinity.stream_write = parse_cpu_affinity_with_key(kStreamWriteKey);
-        cpu_affinity.server = parse_cpu_affinity_with_key(kServerKey);
+        stream_processor.moniker_stream_read_write = parse_moniker_stream_processor_with_key(kMonikerStreamReadWriteKey);
+        stream_processor.moniker_stream_write = parse_moniker_stream_processor_with_key(kMonikerStreamWriteKey);
     }
-    return cpu_affinity;
+    return stream_processor;
 }
 
-int ServerConfigurationParser::parse_cpu_affinity_with_key(const std::string& key) const
+int ServerConfigurationParser::parse_moniker_stream_processor_with_key(const std::string& key) const
 {
     int parsed_core = -1;
 
@@ -315,12 +313,12 @@ int ServerConfigurationParser::parse_cpu_affinity_with_key(const std::string& ke
             parsed_core = it->get<int>();
         }
         catch (const nlohmann::json::type_error& ex) {
-            throw WrongCpuAffinityTypeException(ex.what());
+            throw WrongMonikerStreamProcessorTypeException(ex.what());
         }
     }
 
     if (parsed_core < -1) {
-        throw InvalidCpuAffinityException();
+        throw InvalidMonikerStreamProcessorException();
     }
 
     return parsed_core;
@@ -346,8 +344,8 @@ ServerConfigurationParser::InvalidPortException::InvalidPortException()
 {
 }
 
-ServerConfigurationParser::InvalidCpuAffinityException::InvalidCpuAffinityException()
-    : std::runtime_error(kInvalidCpuAffinityMessage)
+ServerConfigurationParser::InvalidMonikerStreamProcessorException::InvalidMonikerStreamProcessorException()
+    : std::runtime_error(kInvalidMonikerStreamProcessorMessage)
 {
 }
 
@@ -361,8 +359,8 @@ ServerConfigurationParser::WrongPortTypeException::WrongPortTypeException(const 
 {
 }
 
-ServerConfigurationParser::WrongCpuAffinityTypeException::WrongCpuAffinityTypeException(const std::string& type_error_details)
-    : std::runtime_error(kWrongCpuAffinityTypeMessage + type_error_details)
+ServerConfigurationParser::WrongMonikerStreamProcessorTypeException::WrongMonikerStreamProcessorTypeException(const std::string& type_error_details)
+    : std::runtime_error(kWrongMonikerStreamProcessorTypeMessage + type_error_details)
 {
 }
 

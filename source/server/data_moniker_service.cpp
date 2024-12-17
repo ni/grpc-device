@@ -1,7 +1,7 @@
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 #include "data_moniker_service.h"
-#include "cpu_affinity_configuration.h"
+#include "moniker_stream_processor.h"
 
 #include <sideband_data.h>
 #include <sideband_grpc.h>
@@ -46,11 +46,11 @@ static void SysFsWrite(const std::string& fileName, const std::string& value)
 
 namespace ni::data_monikers {
 
-static CpuAffinityConfiguration c_CpuAffinityConfig;
+static MonikerStreamProcessor c_StreamProcessor;
 
-void configure_cpu_affinity(const CpuAffinityConfiguration& cpu_affinity)
+void configure_moniker_stream_processor(const MonikerStreamProcessor& stream_processor)
 {
-  c_CpuAffinityConfig = cpu_affinity;
+  c_StreamProcessor = stream_processor;
 }
 
 bool is_sideband_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles)
@@ -117,14 +117,11 @@ void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::S
 {
 #ifndef _WIN32
   if ((strategy == ::SidebandStrategy::RDMA_LOW_LATENCY ||
-      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) && c_CpuAffinityConfig.sideband_read_write >= 0) {
+      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) && c_StreamProcessor.moniker_stream_read_write >= 0) {
     pid_t threadId = syscall(SYS_gettid);
     ::SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/tasks", std::to_string(threadId));
 
-    cpu_set_t cpuSet;
-    CPU_ZERO(&cpuSet);
-    CPU_SET(c_CpuAffinityConfig.sideband_read_write, &cpuSet);
-    sched_setaffinity(threadId, sizeof(cpu_set_t), &cpuSet);
+    set_moniker_stream_processor(c_StreamProcessor.moniker_stream_read_write);
   }
 #endif
 
@@ -248,12 +245,7 @@ Status DataMonikerService::StreamRead(ServerContext* context, const MonikerList*
 Status DataMonikerService::StreamWrite(ServerContext* context, ServerReaderWriter<StreamWriteResponse, MonikerWriteRequest>* stream)
 {
 #ifndef _WIN32
-  if(c_CpuAffinityConfig.stream_write >= 0) {
-    cpu_set_t cpuSet;
-    CPU_ZERO(&cpuSet);
-    CPU_SET(c_CpuAffinityConfig.stream_write, &cpuSet);
-    sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
-  }
+  set_moniker_stream_processor(c_StreamProcessor.moniker_stream_write);
 #endif
 
   EndpointList writers;
@@ -273,4 +265,16 @@ Status DataMonikerService::StreamWrite(ServerContext* context, ServerReaderWrite
   }
   return Status::OK;
 }
+
+#ifndef _WIN32
+void set_moniker_stream_processor(int stream_processor)
+{
+  if(stream_processor >= 0) {
+    cpu_set_t cpuSet;
+    CPU_ZERO(&cpuSet);
+    CPU_SET(stream_processor, &cpuSet);
+    sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
+  }
+}
+#endif
 }  // namespace ni::data_monikers
