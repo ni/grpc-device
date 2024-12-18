@@ -46,11 +46,11 @@ static void SysFsWrite(const std::string& fileName, const std::string& value)
 
 namespace ni::data_monikers {
 
-static MonikerStreamProcessor c_StreamProcessor;
+static MonikerStreamProcessor s_StreamProcessor;
 
 void configure_moniker_stream_processor(const MonikerStreamProcessor& stream_processor)
 {
-  c_StreamProcessor = stream_processor;
+  s_StreamProcessor = stream_processor;
 }
 
 bool is_sideband_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles)
@@ -116,7 +116,7 @@ void DataMonikerService::InitiateMonikerList(const MonikerList& monikers, Endpoi
 #ifndef _WIN32
 void set_moniker_stream_processor(int stream_processor)
 {
-  if(stream_processor >= 0) {
+  if (stream_processor >= 0) {
     cpu_set_t cpuSet;
     CPU_ZERO(&cpuSet);
     CPU_SET(stream_processor, &cpuSet);
@@ -130,12 +130,12 @@ void set_moniker_stream_processor(int stream_processor)
 void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::SidebandStrategy strategy, EndpointList* readers, EndpointList* writers)
 {
 #ifndef _WIN32
-  if ((strategy == ::SidebandStrategy::RDMA_LOW_LATENCY ||
-      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) && c_StreamProcessor.moniker_sideband_stream_read_write >= 0) {
+  if (strategy == ::SidebandStrategy::RDMA_LOW_LATENCY ||
+      strategy == ::SidebandStrategy::SOCKETS_LOW_LATENCY) {
     pid_t threadId = syscall(SYS_gettid);
     ::SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/tasks", std::to_string(threadId));
 
-    set_moniker_stream_processor(c_StreamProcessor.moniker_sideband_stream_read_write);
+    set_moniker_stream_processor(s_StreamProcessor.moniker_sideband_stream_read_write);
   }
 #endif
 
@@ -210,7 +210,7 @@ Status DataMonikerService::BeginSidebandStream(ServerContext* context, const Beg
 Status DataMonikerService::StreamReadWrite(ServerContext* context, ServerReaderWriter<MonikerReadResponse, MonikerWriteRequest>* stream)
 {
 #ifndef _WIN32
-  set_moniker_stream_processor(c_StreamProcessor.moniker_stream_read_write);
+  set_moniker_stream_processor(s_StreamProcessor.moniker_stream_read_write);
 #endif
 
   EndpointList writers;
@@ -242,7 +242,7 @@ Status DataMonikerService::StreamReadWrite(ServerContext* context, ServerReaderW
 Status DataMonikerService::StreamRead(ServerContext* context, const MonikerList* request, ServerWriter<MonikerReadResponse>* writer)
 {
 #ifndef _WIN32
-  set_moniker_stream_processor(c_StreamProcessor.moniker_stream_read);
+  set_moniker_stream_processor(s_StreamProcessor.moniker_stream_read);
 #endif
 
   EndpointList writers;
@@ -267,7 +267,7 @@ Status DataMonikerService::StreamRead(ServerContext* context, const MonikerList*
 Status DataMonikerService::StreamWrite(ServerContext* context, ServerReaderWriter<StreamWriteResponse, MonikerWriteRequest>* stream)
 {
 #ifndef _WIN32
-  set_moniker_stream_processor(c_StreamProcessor.moniker_stream_write);
+  set_moniker_stream_processor(s_StreamProcessor.moniker_stream_write);
 #endif
 
   EndpointList writers;
