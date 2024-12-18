@@ -10,6 +10,7 @@
 #include "logging.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
+#include "moniker_stream_processor.h"
 
 #if defined(__GNUC__)
   #include <sys/mman.h>
@@ -37,6 +38,7 @@ struct ServerConfiguration {
   int max_message_size;
   int sideband_port;
   nidevice_grpc::FeatureToggles feature_toggles;
+  MonikerStreamProcessor stream_processor;
 };
 
 static ServerConfiguration GetConfiguration(const std::string& config_file_path)
@@ -51,6 +53,7 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
     config.server_address = server_config_parser.parse_address();
     config.sideband_address = server_config_parser.parse_sideband_address();
     config.sideband_port = server_config_parser.parse_sideband_port();
+    config.stream_processor = server_config_parser.parse_moniker_stream_processor();
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
     config.root_cert = server_config_parser.parse_root_cert();
@@ -113,6 +116,7 @@ static void RunServer(const ServerConfiguration& config)
     server = builder.BuildAndStart();
     if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
       auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), config.sideband_port);
+      ni::data_monikers::configure_moniker_stream_processor(config.stream_processor);
       // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
       // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
     }

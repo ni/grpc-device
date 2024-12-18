@@ -11,12 +11,15 @@
 #include <map>
 #include <sideband_data.h>
 #include "feature_toggles.h"
+#include "moniker_stream_processor.h"
 
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 namespace ni::data_monikers
 {
+    void configure_moniker_stream_processor(const MonikerStreamProcessor& stream_processor);
     bool is_sideband_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles);
+    void set_cpu_affinity(int cpu);
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
     using MonikerEndpointPtr = std::add_pointer<::grpc::Status(void*, google::protobuf::Arena& arena, google::protobuf::Any&)>::type;
@@ -37,7 +40,7 @@ namespace ni::data_monikers
     public:
         static void RegisterMonikerEndpoint(std::string endpointName, MonikerEndpointPtr endpoint);
         static void RegisterMonikerInstance(std::string endpointName, void* instanceData, Moniker& moniker);
-    
+
     private:
         static DataMonikerService* s_Server;
         std::map<std::string, MonikerEndpointPtr> _endpoints;
