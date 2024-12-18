@@ -7,12 +7,5 @@
        "server_cert": "",
        "server_key": "",
        "root_cert": ""
-    },
-    "moniker_stream_processor": {
-       "moniker_sideband_stream_read_write": -1,
-       "moniker_stream_write": -1,
-       "moniker_stream_read": -1,
-       "moniker_stream_read_write": -1
-
     }
  }

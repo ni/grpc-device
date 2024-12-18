@@ -114,12 +114,12 @@ void DataMonikerService::InitiateMonikerList(const MonikerList& monikers, Endpoi
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 #ifndef _WIN32
-void set_moniker_stream_processor(int stream_processor)
+void set_cpu_affinity(int cpu)
 {
-  if (stream_processor >= 0) {
+  if (cpu >= 0) {
     cpu_set_t cpuSet;
     CPU_ZERO(&cpuSet);
-    CPU_SET(stream_processor, &cpuSet);
+    CPU_SET(cpu, &cpuSet);
     sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
   }
 }
@@ -135,7 +135,7 @@ void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::S
     pid_t threadId = syscall(SYS_gettid);
     ::SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/tasks", std::to_string(threadId));
 
-    set_moniker_stream_processor(s_StreamProcessor.moniker_sideband_stream_read_write);
+    set_cpu_affinity(s_StreamProcessor.moniker_sideband_stream_read_write);
   }
 #endif
 
@@ -210,7 +210,7 @@ Status DataMonikerService::BeginSidebandStream(ServerContext* context, const Beg
 Status DataMonikerService::StreamReadWrite(ServerContext* context, ServerReaderWriter<MonikerReadResponse, MonikerWriteRequest>* stream)
 {
 #ifndef _WIN32
-  set_moniker_stream_processor(s_StreamProcessor.moniker_stream_read_write);
+  set_cpu_affinity(s_StreamProcessor.moniker_stream_read_write);
 #endif
 
   EndpointList writers;
@@ -242,7 +242,7 @@ Status DataMonikerService::StreamReadWrite(ServerContext* context, ServerReaderW
 Status DataMonikerService::StreamRead(ServerContext* context, const MonikerList* request, ServerWriter<MonikerReadResponse>* writer)
 {
 #ifndef _WIN32
-  set_moniker_stream_processor(s_StreamProcessor.moniker_stream_read);
+  set_cpu_affinity(s_StreamProcessor.moniker_stream_read);
 #endif
 
   EndpointList writers;
@@ -267,7 +267,7 @@ Status DataMonikerService::StreamRead(ServerContext* context, const MonikerList*
 Status DataMonikerService::StreamWrite(ServerContext* context, ServerReaderWriter<StreamWriteResponse, MonikerWriteRequest>* stream)
 {
 #ifndef _WIN32
-  set_moniker_stream_processor(s_StreamProcessor.moniker_stream_write);
+  set_cpu_affinity(s_StreamProcessor.moniker_stream_write);
 #endif
 
   EndpointList writers;
