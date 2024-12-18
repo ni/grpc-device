@@ -200,7 +200,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
 {
   // create some setup for writing
   auto session = std::make_unique<nidevice_grpc::Session>();
-  std::vector<pb::int32> data_int_i16 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<pb::int16> data_int_i16 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   std::vector<pb::int64> data_int_i64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
   int control = 1;
   int size_i16 = data_int_i16.size();
@@ -252,7 +252,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
   auto session = std::make_unique<nidevice_grpc::Session>();
 
   // create some data for the array
-  std::vector<pb::int32> write_data_int16 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<pb::int16> write_data_int16 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   std::vector<pb::int64> write_data_int64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
   int control = 1;
   int write_size_i16 = write_data_int16.size();
@@ -338,39 +338,39 @@ TEST_F(NiFakeFpgaStreamingTests, DISABLED_SidebandStreamReadWrite_Array)
 {
   auto session = std::make_unique<nidevice_grpc::Session>();
   // create some data for the array
-  std::vector<pb::int32> write_data_int32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<pb::int16> write_data_int16 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   std::vector<pb::int64> write_data_int64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
   int control = 1;
-  int size_i32 = write_data_int32.size();
+  int size_i16 = write_data_int16.size();
   int size_i64 = write_data_int64.size();
 
   // Set expectation on the mocked fpga lib method.
-  EXPECT_CALL(*library(), WriteArrayI32(_, control, _, size_i32))
-      .With(Args<2, 3>(ElementsAreArray(write_data_int32)))
+  EXPECT_CALL(*library(), WriteArrayI16(_, control, _, size_i16))
+      .With(Args<2, 3>(ElementsAreArray(write_data_int16)))
       .WillRepeatedly(::testing::Return(0));
   EXPECT_CALL(*library(), WriteArrayI64(_, control, _, size_i64))
       .With(Args<2, 3>(ElementsAreArray(write_data_int64)))
       .WillRepeatedly(::testing::Return(0));
 
   // create some setup for reading
-  std::vector<pb::int32> data_int32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
+  std::vector<pb::int16> data_int16 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
   std::vector<pb::int64> data_int64 = {11, 22, 33, 44, 55, 66, 77, 88, 99};
 
   // Set expectation on the mocked fpga lib method.
-  EXPECT_CALL(*library(), ReadArrayI32(_, 0, ::testing::_, 10))
-      .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(data_int32.begin(), data_int32.begin() + 10), ::testing::Return(0)));
+  EXPECT_CALL(*library(), ReadArrayI16(_, 0, ::testing::_, 10))
+      .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(data_int16.begin(), data_int16.begin() + 10), ::testing::Return(0)));
   EXPECT_CALL(*library(), ReadArrayI64(_, 0, ::testing::_, 9))
       .WillRepeatedly(::testing::DoAll(::testing::SetArrayArgument<2>(data_int64.begin(), data_int64.begin() + 9), ::testing::Return(0)));
 
-  // Dont worry about deleting read_moniker32 and read_moniker64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
-  auto begin_write_i32_array_response = nifpga_grpc::experimental::client::begin_write_array_i32(stub(), *session, control);
-  auto write_moniker_i32 = new ni::data_monikers::Moniker(begin_write_i32_array_response.moniker());
+  // Dont worry about deleting read_moniker16 and read_moniker64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
+  auto begin_write_i16_array_response = nifpga_grpc::experimental::client::begin_write_array_i16(stub(), *session, control);
+  auto write_moniker_i16 = new ni::data_monikers::Moniker(begin_write_i16_array_response.moniker());
   auto begin_write_i64_response = nifpga_grpc::experimental::client::begin_write_array_i64(stub(), *session, control);
   auto write_moniker_i64 = new ni::data_monikers::Moniker(begin_write_i64_response.moniker());
 
-  // Dont worry about deleting read_moniker32 and read_moniker64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
-  auto begin_read_i32_array__response = nifpga_grpc::experimental::client::begin_read_array_i32(stub(), *session, 0, data_int32.size());
-  auto read_moniker_i32 = new ni::data_monikers::Moniker(begin_read_i32_array__response.moniker());
+  // Dont worry about deleting read_moniker16 and read_moniker64 since AddAllocated takes ownership of the ptr being passed in ensuring its destruction.
+  auto begin_read_i16_array__response = nifpga_grpc::experimental::client::begin_read_array_i16(stub(), *session, 0, data_int16.size());
+  auto read_moniker_i16 = new ni::data_monikers::Moniker(begin_read_i16_array__response.moniker());
   auto begin_read_i64_response = nifpga_grpc::experimental::client::begin_read_array_i64(stub(), *session, 0, data_int64.size());
   auto read_moniker_i64 = new ni::data_monikers::Moniker(begin_read_i64_response.moniker());
 
@@ -378,9 +378,9 @@ TEST_F(NiFakeFpgaStreamingTests, DISABLED_SidebandStreamReadWrite_Array)
   ni::data_monikers::BeginMonikerSidebandStreamRequest sideband_request;
   ni::data_monikers::BeginMonikerSidebandStreamResponse sideband_response;
   sideband_request.set_strategy(ni::data_monikers::SidebandStrategy::SOCKETS);
-  sideband_request.mutable_monikers()->mutable_read_monikers()->AddAllocated(read_moniker_i32);
+  sideband_request.mutable_monikers()->mutable_read_monikers()->AddAllocated(read_moniker_i16);
   sideband_request.mutable_monikers()->mutable_read_monikers()->AddAllocated(read_moniker_i64);
-  sideband_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(write_moniker_i32);
+  sideband_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(write_moniker_i16);
   sideband_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(write_moniker_i64);
 
   auto write_stream = moniker_stub().get()->BeginSidebandStream(&moniker_context, sideband_request, &sideband_response);
@@ -388,28 +388,28 @@ TEST_F(NiFakeFpgaStreamingTests, DISABLED_SidebandStreamReadWrite_Array)
 
   for (int i = 0; i < 5; i++) {
     // Write data
-    nifpga_grpc::MonikerWriteArrayI32Request write_values_array_i32;
+    nifpga_grpc::MonikerWriteArrayI16Request write_values_array_i16;
     nifpga_grpc::MonikerWriteArrayI64Request write_values_array_i64;
 
-    write_values_array_i32.mutable_array()->Add(write_data_int32.begin(), write_data_int32.end());
+    write_values_array_i16.mutable_array()->Add(write_data_int16.begin(), write_data_int16.end());
     write_values_array_i64.mutable_array()->Add(write_data_int64.begin(), write_data_int64.end());
 
     ni::data_monikers::SidebandWriteRequest write_data_request;
-    write_data_request.mutable_values()->add_values()->PackFrom(write_values_array_i32);
+    write_data_request.mutable_values()->add_values()->PackFrom(write_values_array_i16);
     write_data_request.mutable_values()->add_values()->PackFrom(write_values_array_i64);
 
     WriteSidebandMessage(sideband_token, write_data_request);
 
-    nifpga_grpc::MonikerReadArrayI32Response read_values_i32;
+    nifpga_grpc::MonikerReadArrayI16Response read_values_i16;
     nifpga_grpc::MonikerReadArrayI64Response read_values_i64;
 
     ni::data_monikers::SidebandReadResponse read_result;
     ReadSidebandMessage(sideband_token, &read_result);
 
-    read_result.values().values(0).UnpackTo(&read_values_i32);
+    read_result.values().values(0).UnpackTo(&read_values_i16);
     read_result.values().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i32.array(), SizeIs(10));
-    ASSERT_THAT(read_values_i32.array(), ElementsAreArray(data_int32));
+    ASSERT_THAT(read_values_i16.array(), SizeIs(10));
+    ASSERT_THAT(read_values_i16.array(), ElementsAreArray(data_int16));
     ASSERT_THAT(read_values_i64.array(), SizeIs(9));
     ASSERT_THAT(read_values_i64.array(), ElementsAreArray(data_int64));
   }
