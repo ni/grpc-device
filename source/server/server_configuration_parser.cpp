@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "feature_toggles.h"
+#include "moniker_stream_processor.h"
 
 #if defined(_MSC_VER)
   #include <windows.h>
@@ -19,6 +20,11 @@ static const char* kAddressJsonKey = "address";
 static const char* kPortJsonKey = "port";
 static const char* kSidebandAddressJsonKey = "sideband_address";
 static const char* kSidebandPortJsonKey = "sideband_port";
+static const char* kMonikerStreamProcessorKey = "moniker_stream_processor_configuration";
+static const char* kMonikerSidebandStreamReadWriteKey = "moniker_sideband_stream_read_write";
+static const char* kMonikerStreamWriteKey = "moniker_stream_write";
+static const char* kMonikerStreamReadKey = "moniker_stream_read";
+static const char* kMonikerStreamReadWriteKey = "moniker_stream_read_write";
 static const char* kServerCertJsonKey = "server_cert";
 static const char* kServerKeyJsonKey = "server_key";
 static const char* kRootCertJsonKey = "root_cert";
@@ -292,6 +298,41 @@ int ServerConfigurationParser::parse_port_with_key(const std::string& key) const
   return parsed_port;
 }
 
+MonikerStreamProcessor ServerConfigurationParser::parse_moniker_stream_processor() const
+{
+    MonikerStreamProcessor stream_processor;
+
+    auto core_config_it = config_file_.find(kMonikerStreamProcessorKey);
+    if (core_config_it != config_file_.end()) {
+        stream_processor.moniker_sideband_stream_read_write = parse_moniker_stream_processor_with_key(kMonikerSidebandStreamReadWriteKey);
+        stream_processor.moniker_stream_write = parse_moniker_stream_processor_with_key(kMonikerStreamWriteKey);
+        stream_processor.moniker_stream_read = parse_moniker_stream_processor_with_key(kMonikerStreamReadKey);
+        stream_processor.moniker_stream_read_write = parse_moniker_stream_processor_with_key(kMonikerStreamReadWriteKey);
+    }
+    return stream_processor;
+}
+
+int ServerConfigurationParser::parse_moniker_stream_processor_with_key(const std::string& key) const
+{
+    int parsed_core = -1;
+
+    auto it = config_file_.find(key);
+    if (it != config_file_.end()) {
+        try {
+            parsed_core = it->get<int>();
+        }
+        catch (const nlohmann::json::type_error& ex) {
+            throw WrongMonikerStreamProcessorTypeException(ex.what());
+        }
+    }
+
+    if (parsed_core < -1) {
+        throw InvalidMonikerStreamProcessorException();
+    }
+
+    return parsed_core;
+}
+
 ServerConfigurationParser::ConfigFileNotFoundException::ConfigFileNotFoundException(const std::string& config_file_path)
     : std::runtime_error(kConfigFileNotFoundMessage + config_file_path)
 {
@@ -312,6 +353,11 @@ ServerConfigurationParser::InvalidPortException::InvalidPortException()
 {
 }
 
+ServerConfigurationParser::InvalidMonikerStreamProcessorException::InvalidMonikerStreamProcessorException()
+    : std::runtime_error(kInvalidMonikerStreamProcessorMessage)
+{
+}
+
 ServerConfigurationParser::MalformedJsonException::MalformedJsonException(const std::string& parse_error_details)
     : std::runtime_error(kMalformedJsonMessage + parse_error_details)
 {
@@ -319,6 +365,11 @@ ServerConfigurationParser::MalformedJsonException::MalformedJsonException(const 
 
 ServerConfigurationParser::WrongPortTypeException::WrongPortTypeException(const std::string& type_error_details)
     : std::runtime_error(kWrongPortTypeMessage + type_error_details)
+{
+}
+
+ServerConfigurationParser::WrongMonikerStreamProcessorTypeException::WrongMonikerStreamProcessorTypeException(const std::string& type_error_details)
+    : std::runtime_error(kWrongMonikerStreamProcessorTypeMessage + type_error_details)
 {
 }
 
