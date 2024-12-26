@@ -27,7 +27,7 @@ void register_core_services(
     feature_toggles,
     *server_reset_observer_registrar));
 
-  if (ni::data_monikers::is_sideband_streaming_enabled(feature_toggles)) {
+  if (ni::data_monikers::is_moniker_streaming_enabled(feature_toggles)) {
     auto moniker_service = std::make_shared<ni::data_monikers::DataMonikerService>();
     server_builder.RegisterService(moniker_service.get());
     service_vector->push_back(moniker_service);
