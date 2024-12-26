@@ -58,6 +58,11 @@ bool is_moniker_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_t
   return feature_toggles.is_feature_enabled("moniker_streaming", nidevice_grpc::FeatureToggles::CodeReadiness::kNextRelease);
 }
 
+bool is_moniker_streaming_sideband_support_enabled(const nidevice_grpc::FeatureToggles& feature_toggles)
+{
+  return feature_toggles.is_feature_enabled("moniker_streaming_sideband_support", nidevice_grpc::FeatureToggles::CodeReadiness::kNextRelease);
+}
+
 //---------------------------------------------------------------------
 //---------------------------------------------------------------------
 DataMonikerService* DataMonikerService::s_Server;

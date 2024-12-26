@@ -115,10 +115,12 @@ static void RunServer(const ServerConfiguration& config)
     }
     server = builder.BuildAndStart();
     if (ni::data_monikers::is_moniker_streaming_enabled(config.feature_toggles)) {
-      auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), config.sideband_port);
       ni::data_monikers::configure_moniker_stream_processor(config.stream_processor);
+      if (ni::data_monikers::is_moniker_streaming_sideband_support_enabled(config.feature_toggles)) {
+      auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), config.sideband_port);
       // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
       // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
+      }
     }
   }
 

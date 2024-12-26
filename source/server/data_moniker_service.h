@@ -19,6 +19,7 @@ namespace ni::data_monikers
 {
     void configure_moniker_stream_processor(const MonikerStreamProcessor& stream_processor);
     bool is_moniker_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles);
+    bool is_moniker_streaming_sideband_support_enabled(const nidevice_grpc::FeatureToggles& feature_toggles);
     void set_cpu_affinity(int cpu);
     //---------------------------------------------------------------------
     //---------------------------------------------------------------------
