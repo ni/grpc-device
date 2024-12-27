@@ -114,11 +114,13 @@ static void RunServer(const ServerConfiguration& config)
       return;
     }
     server = builder.BuildAndStart();
-    if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
-      auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), config.sideband_port);
+    if (ni::data_monikers::is_moniker_streaming_enabled(config.feature_toggles)) {
       ni::data_monikers::configure_moniker_stream_processor(config.stream_processor);
+      if (ni::data_monikers::is_moniker_streaming_sideband_support_enabled(config.feature_toggles)) {
+      auto sideband_socket_thread = new std::thread(RunSidebandSocketsAccept, config.sideband_address.c_str(), config.sideband_port);
       // auto sideband_rdma_send_thread = new std::thread(AcceptSidebandRdmaSendRequests);
       // auto sideband_rdma_recv_thread = new std::thread(AcceptSidebandRdmaReceiveRequests);
+      }
     }
   }
 
@@ -266,7 +268,7 @@ int main(int argc, char** argv)
 #if defined(_WIN32)
   nidevice_grpc::set_console_ctrl_handler(&StopServer);
 #else
-  if (ni::data_monikers::is_sideband_streaming_enabled(config.feature_toggles)) {
+  if (ni::data_monikers::is_moniker_streaming_enabled(config.feature_toggles)) {
     SysFsWrite("/dev/cgroup/cpuset/system_set/cpus", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_ScanEngine_set", "0-5");
     SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/cpus", "6-8");

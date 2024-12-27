@@ -53,9 +53,14 @@ void configure_moniker_stream_processor(const MonikerStreamProcessor& stream_pro
   s_StreamProcessor = stream_processor;
 }
 
-bool is_sideband_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles)
+bool is_moniker_streaming_enabled(const nidevice_grpc::FeatureToggles& feature_toggles)
 {
-  return feature_toggles.is_feature_enabled("sideband_streaming", nidevice_grpc::FeatureToggles::CodeReadiness::kNextRelease);
+  return feature_toggles.is_feature_enabled("moniker_streaming", nidevice_grpc::FeatureToggles::CodeReadiness::kNextRelease);
+}
+
+bool is_moniker_streaming_sideband_support_enabled(const nidevice_grpc::FeatureToggles& feature_toggles)
+{
+  return feature_toggles.is_feature_enabled("moniker_streaming_sideband_support", nidevice_grpc::FeatureToggles::CodeReadiness::kNextRelease);
 }
 
 //---------------------------------------------------------------------

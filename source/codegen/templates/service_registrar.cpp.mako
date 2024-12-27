@@ -48,7 +48,7 @@ std::shared_ptr<void> register_service(
     builder.RegisterService(service.get());
 % if config.get("has_moniker_streaming_apis", False):
 
-    if (ni::data_monikers::is_sideband_streaming_enabled(feature_toggles)) {
+    if (ni::data_monikers::is_moniker_streaming_enabled(feature_toggles)) {
 <%
   namespace = f"{config['namespace_component']}_grpc"
 %>\
