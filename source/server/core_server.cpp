@@ -267,24 +267,6 @@ int main(int argc, char** argv)
 #endif
 #if defined(_WIN32)
   nidevice_grpc::set_console_ctrl_handler(&StopServer);
-#else
-  if (ni::data_monikers::is_moniker_streaming_enabled(config.feature_toggles)) {
-    SysFsWrite("/dev/cgroup/cpuset/system_set/cpus", "0-5");
-    SysFsWrite("/dev/cgroup/cpuset/LabVIEW_ScanEngine_set", "0-5");
-    SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/cpus", "6-8");
-    SysFsWrite("/dev/cgroup/cpuset/LabVIEW_tl_set/cpu_exclusive", "1");
-
-    sched_param schedParam;
-    schedParam.sched_priority = 95;
-    sched_setscheduler(0, SCHED_FIFO, &schedParam);
-
-    cpu_set_t cpuSet;
-    CPU_ZERO(&cpuSet);
-    CPU_SET(6, &cpuSet);
-    sched_setaffinity(0, sizeof(cpu_set_t), &cpuSet);
-
-    mlockall(MCL_CURRENT | MCL_FUTURE);
-  }
 #endif
 
   RunServer(config);
