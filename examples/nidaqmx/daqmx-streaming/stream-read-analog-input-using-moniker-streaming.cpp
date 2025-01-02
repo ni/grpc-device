@@ -92,7 +92,7 @@ void print_array(const MonikerReadAnalogF64Response& data)
 {
   ::grpc::ClientContext create_task_context;
   auto create_task_request = CreateTaskRequest{};
-  create_task_request.set_initialization_behavior(nidevice_grpc::SessionInitializationBehavior::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
+  create_task_request.set_session_name("my task");
   auto create_task_response = CreateTaskResponse{};
   raise_if_error(
     client.CreateTask(&create_task_context, create_task_request, &create_task_response),
@@ -100,29 +100,25 @@ void print_array(const MonikerReadAnalogF64Response& data)
   auto daqmx_read_task = create_task_response.task();
 
   ::grpc::ClientContext create_channel_context;
-  auto create_channel_request = CreateAIVoltageChanWithExcitRequest{};
+  auto create_channel_request = CreateAIVoltageChanRequest{};
   create_channel_request.mutable_task()->CopyFrom(daqmx_read_task);
   create_channel_request.set_physical_channel(PHYSICAL_CHANNEL);
   create_channel_request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT);
   create_channel_request.set_min_val(-10.0);
   create_channel_request.set_max_val(10.0);
   create_channel_request.set_units(VoltageUnits2::VOLTAGE_UNITS2_VOLTS);
-  create_channel_request.set_bridge_config(BridgeConfiguration1::BRIDGE_CONFIGURATION1_FULL_BRIDGE);
-  create_channel_request.set_voltage_excit_source(ExcitationSource::EXCITATION_SOURCE_INTERNAL);
-  create_channel_request.set_voltage_excit_val(2.5);
-  create_channel_request.set_voltage_excit_source(ExcitationSource::EXCITATION_SOURCE_INTERNAL);
-  auto create_channel_response = CreateAIVoltageChanWithExcitResponse{};
+  auto create_channel_response = CreateAIVoltageChanResponse{};
   raise_if_error(
-    client.CreateAIVoltageChanWithExcit(&create_channel_context, create_channel_request, &create_channel_response),
+    client.CreateAIVoltageChan(&create_channel_context, create_channel_request, &create_channel_response),
     create_channel_context);
 
   ::grpc::ClientContext cfg_clk_context;
   auto cfg_clk_request = CfgSampClkTimingRequest{};
   cfg_clk_request.mutable_task()->CopyFrom(daqmx_read_task);
-  cfg_clk_request.set_rate(1000.0);
+  cfg_clk_request.set_rate(100.0);
   cfg_clk_request.set_active_edge(Edge1::EDGE1_RISING);
   cfg_clk_request.set_sample_mode(AcquisitionType::ACQUISITION_TYPE_HW_TIMED_SINGLE_POINT);
-  cfg_clk_request.set_samps_per_chan(1000);
+  cfg_clk_request.set_samps_per_chan(10);
   auto cfg_clk_response = CfgSampClkTimingResponse{};
   raise_if_error(
     client.CfgSampClkTiming(&cfg_clk_context, cfg_clk_request, &cfg_clk_response),
@@ -137,6 +133,14 @@ void print_array(const MonikerReadAnalogF64Response& data)
   raise_if_error(
     client.SetReadAttributeInt32(&set_read_attribute_context, set_read_attribute_request, &set_read_attribute_response),
     set_read_attribute_context);
+
+  ::grpc::ClientContext start_task_context;
+  StartTaskRequest start_task_request;
+  start_task_request.mutable_task()->CopyFrom(daqmx_read_task);
+  StartTaskResponse start_task_response;
+  raise_if_error(
+    client.StartTask(&start_task_context, start_task_request, &start_task_response),
+    start_task_context);
 
   return daqmx_read_task;
 }
@@ -164,10 +168,10 @@ int main(int argc, char **argv)
     ::grpc::ClientContext begin_read_context;
     auto begin_read_request = BeginReadAnalogF64Request{};
     begin_read_request.mutable_task()->CopyFrom(daqmx_read_task);
-    begin_read_request.set_num_samps_per_chan(1);
+    begin_read_request.set_num_samps_per_chan(10);
     begin_read_request.set_timeout(10.0);
     begin_read_request.set_fill_mode(GroupBy::GROUP_BY_GROUP_BY_CHANNEL);
-    begin_read_request.set_array_size_in_samps(1);
+    begin_read_request.set_array_size_in_samps(10);
     auto begin_read_response = BeginReadAnalogF64Response{};
     raise_if_error(
       client.BeginReadAnalogF64(&begin_read_context, begin_read_request, &begin_read_response),
