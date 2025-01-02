@@ -1,33 +1,38 @@
 /*********************************************************************
-* Acquire a finite amount of data using the DAQ device's internal clock.
-
-The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
-  C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
-
-Getting Started:
-
-To run this example, install "NI-DAQmx Driver" on the server machine:
-  https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html
-
-For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
-Client" wiki page:
-  https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
-
-Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
-  https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
-
-To run this example without hardware: create a simulated device in NI MAX on the server (Windows
-only).
-
-Running from command line:
-
-Server machine's IP address, port number, and physical channel name can be passed as separate
-command line arguments.
-  > python analog-input.py <server_address> <port_number> <physical_channel_name>
-To acquire data from multiple channels, pass in a list or range of channels (i.e., Dev1/ai0:3).
-If they are not passed in as command line arguments, then by default the server address will be
-"localhost:31763", with "Dev1/ai0" as the physical channel name..
-"""
+* Acquire data continuously from an analog input channel using moniker based streaming
+*
+* The gRPC API is built from the C API. NI-DAQmx documentation is installed with the driver at:
+*   C:\Program Files (x86)\National Instruments\NI-DAQ\docs\cdaqmx.chm
+*
+* Getting Started:
+*
+* To run this example, install "NI-DAQmx Driver" on the server machine:
+*   https://www.ni.com/en-us/support/downloads/drivers/download.ni-daqmx.html
+*
+* For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
+* Client" wiki page:
+*   https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
+*
+* Refer to the NI DAQmx gRPC Wiki for the latest C Function Reference:
+*   https://github.com/ni/grpc-device/wiki/NI-DAQMX-C-Function-Reference
+*
+* To run this example without hardware: create a simulated device in NI MAX on the server (Windows
+* only).
+*
+* Build:
+*
+*   > mkdir build
+*   > cd build
+*   > cmake ..
+*   > cmake --build .
+*
+* Running from command line:
+*
+* Server machine's IP address, port number, and physical channel name can be passed as separate
+* command line arguments.
+*   > MonikerStreamingClient <server_address> <port_number> <physical_channel_name>
+* If they are not passed in as command line arguments, then by default the server address will be
+* "localhost:31763", with "Dev1/ai0" as the physical channel name..
 *********************************************************************/
 
 #include <iostream>
@@ -42,7 +47,7 @@ using StubPtr = std::unique_ptr<NiDAQmx::Stub>;
 
 std::string SERVER_ADDRESS = "localhost";
 std::string SERVER_PORT = "31763";
-std::string PHYSICAL_CHANNEL = "PXI1Slot6/ai0";
+std::string PHYSICAL_CHANNEL = "Dev1/ai0";
 int NUM_ITERATIONS = 5;
 
 class grpc_driver_error : public std::runtime_error {
