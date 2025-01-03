@@ -28,7 +28,7 @@ get_filename_component(data_moniker_proto_path "${data_moniker_proto}" PATH)
 message(STATUS "daqmx_proto_path: ${daqmx_proto_path}")
 #----------------------------------------------------------------------
 # Generate sources from proto files
-# Usage: GenerateGrpcSources(PROTO <path> OUTPUT <path>...)
+# Usage: GenerateGrpcSources(<proto-file-name> <proto-file-path>)
 #----------------------------------------------------------------------
 function(GenerateGrpcSources)
 set(proto_name ${ARGV0})
