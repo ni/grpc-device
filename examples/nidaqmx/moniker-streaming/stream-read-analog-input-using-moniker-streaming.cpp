@@ -189,7 +189,7 @@ int main(int argc, char **argv)
     auto read_stream = moniker_service.StreamRead(&stream_read_context, read_request);
 
     // Read data
-    for(int i=0; i<NUM_ITERATIONS; i++) {
+    for (int i = 0; i < NUM_ITERATIONS; i++) {
       ni::data_monikers::MonikerReadResponse read_data_result;
       if (read_stream->Read(&read_data_result)) {
         google::protobuf::Any read_message = read_data_result.data().values(0);

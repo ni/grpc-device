@@ -18,20 +18,29 @@ find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
 
 # Proto files
-get_filename_component(daqmx_proto "../../../generated/nidaqmx/nidaqmx.proto" ABSOLUTE)
+get_filename_component(daqmx_proto "${CMAKE_SOURCE_DIR}/../../../generated/nidaqmx/nidaqmx.proto" ABSOLUTE)
 get_filename_component(daqmx_proto_path "${daqmx_proto}" PATH)
-get_filename_component(session_proto "../../../imports/protobuf/session.proto" ABSOLUTE)
+get_filename_component(session_proto "${CMAKE_SOURCE_DIR}/../../../imports/protobuf/session.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
-get_filename_component(data_moniker_proto "../../../imports/protobuf/data_moniker.proto" ABSOLUTE)
+get_filename_component(data_moniker_proto "${CMAKE_SOURCE_DIR}/../../../imports/protobuf/data_moniker.proto" ABSOLUTE)
 get_filename_component(data_moniker_proto_path "${data_moniker_proto}" PATH)
 
-# Generated sources
-set(daqmx_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/nidaqmx.pb.cc")
-set(daqmx_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/nidaqmx.pb.h")
-set(daq_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/nidaqmx.grpc.pb.cc")
-set(daq_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/nidaqmx.grpc.pb.h")
+message(STATUS "daqmx_proto_path: ${daqmx_proto_path}")
+#----------------------------------------------------------------------
+# Generate sources from proto files
+# Usage: GenerateGrpcSources(PROTO <path> OUTPUT <path>...)
+#----------------------------------------------------------------------
+function(GenerateGrpcSources)
+set(proto_name ${ARGV0})
+set(proto_absolute_path ${ARGV1})
+
+set(proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/${proto_name}.pb.cc")
+set(proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/${proto_name}.pb.h")
+set(grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/${proto_name}.grpc.pb.cc")
+set(grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/${proto_name}.grpc.pb.h")
+
 add_custom_command(
-      OUTPUT "${daqmx_proto_srcs}" "${daqmx_proto_hdrs}" "${daq_grpc_srcs}" "${daq_grpc_hdrs}"
+      OUTPUT "${proto_srcs}" "${proto_hdrs}" "${grpc_srcs}" "${grpc_hdrs}"
       COMMAND ${_PROTOBUF_PROTOC}
       ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
         --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
@@ -39,38 +48,14 @@ add_custom_command(
         -I "${session_proto_path}"
         -I "${data_moniker_proto_path}"
         --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-        "${daqmx_proto}"
-      DEPENDS "${daqmx_proto}")
+        ${proto_absolute_path}
+      DEPENDS ${proto_absolute_path})
+endfunction()
 
 # Generated sources
-set(session_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/session.pb.cc")
-set(session_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/session.pb.h")
-set(session_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/session.grpc.pb.cc")
-set(session_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/session.grpc.pb.h")
-add_custom_command(
-    OUTPUT "${session_proto_srcs}" "${session_proto_hdrs}" "${session_grpc_srcs}" "${session_grpc_hdrs}"
-    COMMAND ${_PROTOBUF_PROTOC}
-    ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
-        --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
-        -I "${session_proto_path}"
-        --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-        "${session_proto}"
-    DEPENDS "${session_proto}")
-
-# Generated sources
-set(data_moniker_proto_srcs "${CMAKE_CURRENT_BINARY_DIR}/data_moniker.pb.cc")
-set(data_moniker_proto_hdrs "${CMAKE_CURRENT_BINARY_DIR}/data_moniker.pb.h")
-set(data_moniker_grpc_srcs "${CMAKE_CURRENT_BINARY_DIR}/data_moniker.grpc.pb.cc")
-set(data_moniker_grpc_hdrs "${CMAKE_CURRENT_BINARY_DIR}/data_moniker.grpc.pb.h")
-add_custom_command(
-        OUTPUT "${data_moniker_proto_srcs}" "${data_moniker_proto_hdrs}" "${data_moniker_grpc_srcs}" "${data_moniker_grpc_hdrs}"
-        COMMAND ${_PROTOBUF_PROTOC}
-        ARGS --grpc_out "${CMAKE_CURRENT_BINARY_DIR}"
-        --cpp_out "${CMAKE_CURRENT_BINARY_DIR}"
-        -I "${data_moniker_proto_path}"
-        --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-        "${data_moniker_proto}"
-        DEPENDS "${data_moniker_proto}")
+GenerateGrpcSources(nidaqmx ${daqmx_proto})
+GenerateGrpcSources(session ${session_proto})
+GenerateGrpcSources(data_moniker ${data_moniker_proto})
 
 # Include generated *.pb.h files
 include_directories("${CMAKE_CURRENT_BINARY_DIR}")
