@@ -59,7 +59,7 @@ def _validate_examples(
     print(f"Validating examples using staging_dir: {staging_dir}")
 
     with _create_stage_dir(staging_dir):
-        _system(rf"copy examples_dir/examples/pyproject.toml {staging_dir}")
+        _system(rf"copy staging_dir/examples/pyproject.toml {staging_dir}")
         _system("poetry install")
 
         _stage_client_files(artifact_location, staging_dir)
