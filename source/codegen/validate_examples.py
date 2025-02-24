@@ -30,8 +30,6 @@ def _system(command):
 @contextmanager
 def _create_stage_dir(staging_dir):
     initial_dir = getcwd()
-    print(f"{initial_dir}")
-    _system(rf"dir")
     try:
         rmtree(staging_dir, ignore_errors=True)
         staging_dir.mkdir(parents=True)
@@ -67,7 +65,7 @@ def _validate_examples(
 
         proto_files_str = str.join(" ", [file.name for file in proto_dir.glob("*.proto")])
 
-        _system(rf"copy staging_dir/examples/pyproject.toml {staging_dir}")
+        _system(f"cp examples_dir/pyproject.toml {staging_dir}")
         _system("poetry install")
 
         _system(
