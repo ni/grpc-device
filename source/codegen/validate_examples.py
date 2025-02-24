@@ -31,6 +31,7 @@ def _system(command):
 def _create_stage_dir(staging_dir):
     initial_dir = getcwd()
     print(f"{initial_dir}")
+    _system(rf"dir")
     try:
         rmtree(staging_dir, ignore_errors=True)
         staging_dir.mkdir(parents=True)
