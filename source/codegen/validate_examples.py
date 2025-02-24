@@ -30,6 +30,7 @@ def _system(command):
 @contextmanager
 def _create_stage_dir(staging_dir):
     initial_dir = getcwd()
+    print(f"{initial_dir}")
     try:
         rmtree(staging_dir, ignore_errors=True)
         staging_dir.mkdir(parents=True)
