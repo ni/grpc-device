@@ -1347,6 +1347,11 @@ int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int
   return DAQmxReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
 }
 
+int32 ReadIDPinMemory(const char deviceName[], const char idPinName[], uInt8 data[], uInt32 arraySize, uInt32* dataLengthRead, uInt32* formatCode)
+{
+  return DAQmxReadIDPinMemory(deviceName, idPinName, data, arraySize, dataLengthRead, formatCode);
+}
+
 int32 ReadPowerBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArrayVoltage[], int16 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
 {
   return DAQmxReadPowerBinaryI16(task, numSampsPerChan, timeout, fillMode, readArrayVoltage, readArrayCurrent, arraySizeInSamps, sampsPerChanRead, reserved);
@@ -1980,6 +1985,11 @@ int32 WriteDigitalU32(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, 
 int32 WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
 {
   return DAQmxWriteDigitalU8(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
+}
+
+int32 WriteIDPinMemory(const char deviceName[], const char idPinName[], const uInt8 data[], uInt32 arraySize, uInt32 formatCode)
+{
+  return DAQmxWriteIDPinMemory(deviceName, idPinName, data, arraySize, formatCode);
 }
 
 int32 WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved)
