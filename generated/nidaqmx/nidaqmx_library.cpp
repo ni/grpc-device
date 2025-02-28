@@ -297,6 +297,7 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.ReadDigitalU16 = reinterpret_cast<ReadDigitalU16Ptr>(shared_library_->get_function_pointer("DAQmxReadDigitalU16"));
   function_pointers_.ReadDigitalU32 = reinterpret_cast<ReadDigitalU32Ptr>(shared_library_->get_function_pointer("DAQmxReadDigitalU32"));
   function_pointers_.ReadDigitalU8 = reinterpret_cast<ReadDigitalU8Ptr>(shared_library_->get_function_pointer("DAQmxReadDigitalU8"));
+  function_pointers_.ReadIDPinMemory = reinterpret_cast<ReadIDPinMemoryPtr>(shared_library_->get_function_pointer("DAQmxReadIDPinMemory"));
   function_pointers_.ReadPowerBinaryI16 = reinterpret_cast<ReadPowerBinaryI16Ptr>(shared_library_->get_function_pointer("DAQmxReadPowerBinaryI16"));
   function_pointers_.ReadPowerF64 = reinterpret_cast<ReadPowerF64Ptr>(shared_library_->get_function_pointer("DAQmxReadPowerF64"));
   function_pointers_.ReadPowerScalarF64 = reinterpret_cast<ReadPowerScalarF64Ptr>(shared_library_->get_function_pointer("DAQmxReadPowerScalarF64"));
@@ -425,6 +426,7 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.WriteDigitalU16 = reinterpret_cast<WriteDigitalU16Ptr>(shared_library_->get_function_pointer("DAQmxWriteDigitalU16"));
   function_pointers_.WriteDigitalU32 = reinterpret_cast<WriteDigitalU32Ptr>(shared_library_->get_function_pointer("DAQmxWriteDigitalU32"));
   function_pointers_.WriteDigitalU8 = reinterpret_cast<WriteDigitalU8Ptr>(shared_library_->get_function_pointer("DAQmxWriteDigitalU8"));
+  function_pointers_.WriteIDPinMemory = reinterpret_cast<WriteIDPinMemoryPtr>(shared_library_->get_function_pointer("DAQmxWriteIDPinMemory"));
   function_pointers_.WriteRaw = reinterpret_cast<WriteRawPtr>(shared_library_->get_function_pointer("DAQmxWriteRaw"));
   function_pointers_.WriteToTEDSFromArray = reinterpret_cast<WriteToTEDSFromArrayPtr>(shared_library_->get_function_pointer("DAQmxWriteToTEDSFromArray"));
   function_pointers_.WriteToTEDSFromFile = reinterpret_cast<WriteToTEDSFromFilePtr>(shared_library_->get_function_pointer("DAQmxWriteToTEDSFromFile"));
@@ -2598,6 +2600,14 @@ int32 NiDAQmxLibrary::ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, floa
   return function_pointers_.ReadDigitalU8(task, numSampsPerChan, timeout, fillMode, readArray, arraySizeInSamps, sampsPerChanRead, reserved);
 }
 
+int32 NiDAQmxLibrary::ReadIDPinMemory(const char deviceName[], const char idPinName[], uInt8 data[], uInt32 arraySize, uInt32* dataLengthRead, uInt32* formatCode)
+{
+  if (!function_pointers_.ReadIDPinMemory) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxReadIDPinMemory.");
+  }
+  return function_pointers_.ReadIDPinMemory(deviceName, idPinName, data, arraySize, dataLengthRead, formatCode);
+}
+
 int32 NiDAQmxLibrary::ReadPowerBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArrayVoltage[], int16 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved)
 {
   if (!function_pointers_.ReadPowerBinaryI16) {
@@ -3620,6 +3630,14 @@ int32 NiDAQmxLibrary::WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, boo
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteDigitalU8.");
   }
   return function_pointers_.WriteDigitalU8(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, sampsPerChanWritten, reserved);
+}
+
+int32 NiDAQmxLibrary::WriteIDPinMemory(const char deviceName[], const char idPinName[], const uInt8 data[], uInt32 arraySize, uInt32 formatCode)
+{
+  if (!function_pointers_.WriteIDPinMemory) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxWriteIDPinMemory.");
+  }
+  return function_pointers_.WriteIDPinMemory(deviceName, idPinName, data, arraySize, formatCode);
 }
 
 int32 NiDAQmxLibrary::WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved)

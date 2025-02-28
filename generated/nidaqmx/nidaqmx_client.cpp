@@ -8580,6 +8580,25 @@ begin_read_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, c
   return response;
 }
 
+ReadIDPinMemoryResponse
+read_id_pin_memory(const StubPtr& stub, const std::string& device_name, const std::string& id_pin_name, const pb::uint32& array_size)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadIDPinMemoryRequest{};
+  request.set_device_name(device_name);
+  request.set_id_pin_name(id_pin_name);
+  request.set_array_size(array_size);
+
+  auto response = ReadIDPinMemoryResponse{};
+
+  raise_if_error(
+      stub->ReadIDPinMemory(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ReadPowerBinaryI16Response
 read_power_binary_i16(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<GroupBy, pb::int32>& fill_mode, const pb::uint32& array_size_in_samps)
 {
@@ -12277,6 +12296,26 @@ begin_write_digital_u8(const StubPtr& stub, const nidevice_grpc::Session& task, 
 
   raise_if_error(
       stub->BeginWriteDigitalU8(&context, request, &response),
+      context);
+
+  return response;
+}
+
+WriteIDPinMemoryResponse
+write_id_pin_memory(const StubPtr& stub, const std::string& device_name, const std::string& id_pin_name, const std::string& data, const pb::uint32& format_code)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteIDPinMemoryRequest{};
+  request.set_device_name(device_name);
+  request.set_id_pin_name(id_pin_name);
+  request.set_data(data);
+  request.set_format_code(format_code);
+
+  auto response = WriteIDPinMemoryResponse{};
+
+  raise_if_error(
+      stub->WriteIDPinMemory(&context, request, &response),
       context);
 
   return response;

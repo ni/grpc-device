@@ -383,6 +383,7 @@ public:
   ::grpc::Status BeginReadDigitalU32(::grpc::ServerContext* context, const BeginReadDigitalU32Request* request, BeginReadDigitalU32Response* response) override;
   ::grpc::Status ReadDigitalU8(::grpc::ServerContext* context, const ReadDigitalU8Request* request, ReadDigitalU8Response* response) override;
   ::grpc::Status BeginReadDigitalU8(::grpc::ServerContext* context, const BeginReadDigitalU8Request* request, BeginReadDigitalU8Response* response) override;
+  ::grpc::Status ReadIDPinMemory(::grpc::ServerContext* context, const ReadIDPinMemoryRequest* request, ReadIDPinMemoryResponse* response) override;
   ::grpc::Status ReadPowerBinaryI16(::grpc::ServerContext* context, const ReadPowerBinaryI16Request* request, ReadPowerBinaryI16Response* response) override;
   ::grpc::Status BeginReadPowerBinaryI16(::grpc::ServerContext* context, const BeginReadPowerBinaryI16Request* request, BeginReadPowerBinaryI16Response* response) override;
   ::grpc::Status ReadPowerF64(::grpc::ServerContext* context, const ReadPowerF64Request* request, ReadPowerF64Response* response) override;
@@ -532,6 +533,7 @@ public:
   ::grpc::Status BeginWriteDigitalU32(::grpc::ServerContext* context, const BeginWriteDigitalU32Request* request, BeginWriteDigitalU32Response* response) override;
   ::grpc::Status WriteDigitalU8(::grpc::ServerContext* context, const WriteDigitalU8Request* request, WriteDigitalU8Response* response) override;
   ::grpc::Status BeginWriteDigitalU8(::grpc::ServerContext* context, const BeginWriteDigitalU8Request* request, BeginWriteDigitalU8Response* response) override;
+  ::grpc::Status WriteIDPinMemory(::grpc::ServerContext* context, const WriteIDPinMemoryRequest* request, WriteIDPinMemoryResponse* response) override;
   ::grpc::Status WriteRaw(::grpc::ServerContext* context, const WriteRawRequest* request, WriteRawResponse* response) override;
   ::grpc::Status BeginWriteRaw(::grpc::ServerContext* context, const BeginWriteRawRequest* request, BeginWriteRawResponse* response) override;
   ::grpc::Status WriteToTEDSFromArray(::grpc::ServerContext* context, const WriteToTEDSFromArrayRequest* request, WriteToTEDSFromArrayResponse* response) override;

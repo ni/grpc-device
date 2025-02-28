@@ -310,6 +310,7 @@ service NiDAQmx {
   rpc BeginReadDigitalU32(BeginReadDigitalU32Request) returns (BeginReadDigitalU32Response);
   rpc ReadDigitalU8(ReadDigitalU8Request) returns (ReadDigitalU8Response);
   rpc BeginReadDigitalU8(BeginReadDigitalU8Request) returns (BeginReadDigitalU8Response);
+  rpc ReadIDPinMemory(ReadIDPinMemoryRequest) returns (ReadIDPinMemoryResponse);
   rpc ReadPowerBinaryI16(ReadPowerBinaryI16Request) returns (ReadPowerBinaryI16Response);
   rpc BeginReadPowerBinaryI16(BeginReadPowerBinaryI16Request) returns (BeginReadPowerBinaryI16Response);
   rpc ReadPowerF64(ReadPowerF64Request) returns (ReadPowerF64Response);
@@ -459,6 +460,7 @@ service NiDAQmx {
   rpc BeginWriteDigitalU32(BeginWriteDigitalU32Request) returns (BeginWriteDigitalU32Response);
   rpc WriteDigitalU8(WriteDigitalU8Request) returns (WriteDigitalU8Response);
   rpc BeginWriteDigitalU8(BeginWriteDigitalU8Request) returns (BeginWriteDigitalU8Response);
+  rpc WriteIDPinMemory(WriteIDPinMemoryRequest) returns (WriteIDPinMemoryResponse);
   rpc WriteRaw(WriteRawRequest) returns (WriteRawResponse);
   rpc BeginWriteRaw(BeginWriteRawRequest) returns (BeginWriteRawResponse);
   rpc WriteToTEDSFromArray(WriteToTEDSFromArrayRequest) returns (WriteToTEDSFromArrayResponse);
@@ -1708,6 +1710,8 @@ enum DeviceStringAttribute {
   DEVICE_ATTRIBUTE_COMPACT_RIO_CHASSIS_DEV_NAME = 12641;
   DEVICE_ATTRIBUTE_FIELD_DAQ_DEV_NAME = 12657;
   DEVICE_ATTRIBUTE_FIELD_DAQ_BANK_DEV_NAMES = 12664;
+  DEVICE_ATTRIBUTE_ID_PIN_PIN_NAMES = 12785;
+  DEVICE_ATTRIBUTE_ID_PIN_MEM_SERIAL_NUMS = 12788;
 }
 
 enum DeviceUInt32Attribute {
@@ -1816,6 +1820,8 @@ enum DeviceUInt32ArrayAttribute {
   DEVICE_UINT32_ARRAY_ATTRIBUTE_UNSPECIFIED = 0;
   DEVICE_ATTRIBUTE_ACCESSORY_PRODUCT_NUMS = 12142;
   DEVICE_ATTRIBUTE_ACCESSORY_SERIAL_NUMS = 12143;
+  DEVICE_ATTRIBUTE_ID_PIN_MEM_FAMILY_CODES = 12787;
+  DEVICE_ATTRIBUTE_ID_PIN_MEM_SIZES = 12789;
 }
 
 enum DeviceInt32ArrayAttribute {
@@ -1831,6 +1837,7 @@ enum DeviceInt32ArrayAttribute {
   DEVICE_ATTRIBUTE_NAV_SUPPORTED_MEAS_TYPES = 12323;
   DEVICE_ATTRIBUTE_NAV_TRIG_USAGE = 12324;
   DEVICE_ATTRIBUTE_AI_DIG_FLTR_TYPES = 12551;
+  DEVICE_ATTRIBUTE_ID_PIN_PIN_STATUSES = 12786;
 }
 
 enum ExportSignalDoubleAttribute {
@@ -3592,6 +3599,7 @@ enum ChannelInt32AttributeValues {
   CHANNEL_INT32_AI_MEASUREMENT_TYPE_TEDS_SENSOR = 12531;
   CHANNEL_INT32_AI_MEASUREMENT_TYPE_CHARGE = 16105;
   CHANNEL_INT32_AI_MEASUREMENT_TYPE_POWER = 16201;
+  CHANNEL_INT32_AI_MEASUREMENT_TYPE_CALCULATED_POWER = 16204;
   CHANNEL_INT32_AO_IDLE_OUTPUT_BEHAVIOR_ZERO_VOLTS = 12526;
   CHANNEL_INT32_AO_IDLE_OUTPUT_BEHAVIOR_HIGH_IMPEDANCE = 12527;
   CHANNEL_INT32_AO_IDLE_OUTPUT_BEHAVIOR_MAINTAIN_EXISTING_VALUE = 12528;
@@ -3966,6 +3974,7 @@ enum DeviceInt32AttributeValues {
   DEVICE_INT32_AI_MEASUREMENT_TYPE_TEDS_SENSOR = 12531;
   DEVICE_INT32_AI_MEASUREMENT_TYPE_CHARGE = 16105;
   DEVICE_INT32_AI_MEASUREMENT_TYPE_POWER = 16201;
+  DEVICE_INT32_AI_MEASUREMENT_TYPE_CALCULATED_POWER = 16204;
   DEVICE_INT32_AO_OUTPUT_CHANNEL_TYPE_VOLTAGE = 10322;
   DEVICE_INT32_AO_OUTPUT_CHANNEL_TYPE_CURRENT = 10134;
   DEVICE_INT32_AO_OUTPUT_CHANNEL_TYPE_FUNC_GEN = 14750;
@@ -4020,6 +4029,8 @@ enum DeviceInt32AttributeValues {
   DEVICE_INT32_FILTER_TYPE2_BANDPASS = 16073;
   DEVICE_INT32_FILTER_TYPE2_NOTCH = 16074;
   DEVICE_INT32_FILTER_TYPE2_CUSTOM = 10137;
+  DEVICE_INT32_ID_PIN_STATUS_MEMORY_NOT_PRESENT = 16205;
+  DEVICE_INT32_ID_PIN_STATUS_MEMORY_PRESENT = 16206;
   DEVICE_INT32_NAV_MEASUREMENT_TYPE_ALTITUDE = 15997;
   DEVICE_INT32_NAV_MEASUREMENT_TYPE_LONGITUDE = 15998;
   DEVICE_INT32_NAV_MEASUREMENT_TYPE_LATITUDE = 15999;
@@ -4127,6 +4138,7 @@ enum PhysicalChannelInt32AttributeValues {
   PHYSICALCHANNEL_INT32_AI_MEASUREMENT_TYPE_TEDS_SENSOR = 12531;
   PHYSICALCHANNEL_INT32_AI_MEASUREMENT_TYPE_CHARGE = 16105;
   PHYSICALCHANNEL_INT32_AI_MEASUREMENT_TYPE_POWER = 16201;
+  PHYSICALCHANNEL_INT32_AI_MEASUREMENT_TYPE_CALCULATED_POWER = 16204;
   PHYSICALCHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_VOLTAGE = 10322;
   PHYSICALCHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_CURRENT = 10134;
   PHYSICALCHANNEL_INT32_AO_OUTPUT_CHANNEL_TYPE_FUNC_GEN = 14750;
@@ -9269,6 +9281,19 @@ message MonikerReadDigitalU8Response {
   int32 samps_per_chan_read = 3;
 }
 
+message ReadIDPinMemoryRequest {
+  string device_name = 1;
+  string id_pin_name = 2;
+  uint32 array_size = 3;
+}
+
+message ReadIDPinMemoryResponse {
+  int32 status = 1;
+  bytes data = 2;
+  uint32 data_length_read = 3;
+  uint32 format_code = 4;
+}
+
 message ReadPowerBinaryI16Request {
   nidevice_grpc.Session task = 1;
   int32 num_samps_per_chan = 2;
@@ -11413,6 +11438,17 @@ message MonikerWriteDigitalU8Request {
 message MonikerWriteDigitalU8Response {
   int32 status = 1;
   int32 samps_per_chan_written = 2;
+}
+
+message WriteIDPinMemoryRequest {
+  string device_name = 1;
+  string id_pin_name = 2;
+  bytes data = 3;
+  uint32 format_code = 4;
+}
+
+message WriteIDPinMemoryResponse {
+  int32 status = 1;
 }
 
 message WriteRawRequest {
