@@ -17073,6 +17073,37 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::ReadIDPinMemory(::grpc::ServerContext* context, const ReadIDPinMemoryRequest* request, ReadIDPinMemoryResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto device_name_mbcs = convert_from_grpc<std::string>(request->device_name());
+      auto device_name = device_name_mbcs.c_str();
+      auto id_pin_name_mbcs = convert_from_grpc<std::string>(request->id_pin_name());
+      auto id_pin_name = id_pin_name_mbcs.c_str();
+      uInt32 array_size = request->array_size();
+      std::string data(array_size, '\0');
+      uInt32 data_length_read {};
+      uInt32 format_code {};
+      auto status = library_->ReadIDPinMemory(device_name, id_pin_name, (uInt8*)data.data(), array_size, &data_length_read, &format_code);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, 0);
+      }
+      response->set_status(status);
+      response->set_data(data);
+      response->set_data_length_read(data_length_read);
+      response->set_format_code(format_code);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::ReadPowerBinaryI16(::grpc::ServerContext* context, const ReadPowerBinaryI16Request* request, ReadPowerBinaryI16Response* response)
   {
     if (context->IsCancelled()) {
@@ -23299,6 +23330,33 @@ namespace nidaqmx_grpc {
       ni::data_monikers::DataMonikerService::RegisterMonikerInstance("MonikerWriteDigitalU8", data.release(), *moniker);
       response->set_allocated_moniker(moniker.release());
       response->set_status(0);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::WriteIDPinMemory(::grpc::ServerContext* context, const WriteIDPinMemoryRequest* request, WriteIDPinMemoryResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto device_name_mbcs = convert_from_grpc<std::string>(request->device_name());
+      auto device_name = device_name_mbcs.c_str();
+      auto id_pin_name_mbcs = convert_from_grpc<std::string>(request->id_pin_name());
+      auto id_pin_name = id_pin_name_mbcs.c_str();
+      const uInt8* data = (const uInt8*)request->data().c_str();
+      uInt32 array_size = static_cast<uInt32>(request->data().size());
+      uInt32 format_code = request->format_code();
+      auto status = library_->WriteIDPinMemory(device_name, id_pin_name, data, array_size, format_code);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, 0);
+      }
+      response->set_status(status);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {

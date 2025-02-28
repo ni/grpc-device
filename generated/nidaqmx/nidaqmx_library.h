@@ -290,6 +290,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 ReadDigitalU16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) override;
   int32 ReadDigitalU32(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) override;
   int32 ReadDigitalU8(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) override;
+  int32 ReadIDPinMemory(const char deviceName[], const char idPinName[], uInt8 data[], uInt32 arraySize, uInt32* dataLengthRead, uInt32* formatCode) override;
   int32 ReadPowerBinaryI16(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArrayVoltage[], int16 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) override;
   int32 ReadPowerF64(TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArrayVoltage[], float64 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved) override;
   int32 ReadPowerScalarF64(TaskHandle task, float64 timeout, float64* voltage, float64* current, bool32* reserved) override;
@@ -418,6 +419,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 WriteDigitalU16(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved) override;
   int32 WriteDigitalU32(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved) override;
   int32 WriteDigitalU8(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved) override;
+  int32 WriteIDPinMemory(const char deviceName[], const char idPinName[], const uInt8 data[], uInt32 arraySize, uInt32 formatCode) override;
   int32 WriteRaw(TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved) override;
   int32 WriteToTEDSFromArray(const char physicalChannel[], const uInt8 bitStream[], uInt32 arraySize, int32 basicTEDSOptions) override;
   int32 WriteToTEDSFromFile(const char physicalChannel[], const char filePath[], int32 basicTEDSOptions) override;
@@ -693,6 +695,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using ReadDigitalU16Ptr = decltype(&DAQmxReadDigitalU16);
   using ReadDigitalU32Ptr = decltype(&DAQmxReadDigitalU32);
   using ReadDigitalU8Ptr = decltype(&DAQmxReadDigitalU8);
+  using ReadIDPinMemoryPtr = decltype(&DAQmxReadIDPinMemory);
   using ReadPowerBinaryI16Ptr = decltype(&DAQmxReadPowerBinaryI16);
   using ReadPowerF64Ptr = decltype(&DAQmxReadPowerF64);
   using ReadPowerScalarF64Ptr = decltype(&DAQmxReadPowerScalarF64);
@@ -821,6 +824,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using WriteDigitalU16Ptr = decltype(&DAQmxWriteDigitalU16);
   using WriteDigitalU32Ptr = decltype(&DAQmxWriteDigitalU32);
   using WriteDigitalU8Ptr = decltype(&DAQmxWriteDigitalU8);
+  using WriteIDPinMemoryPtr = decltype(&DAQmxWriteIDPinMemory);
   using WriteRawPtr = decltype(&DAQmxWriteRaw);
   using WriteToTEDSFromArrayPtr = decltype(&DAQmxWriteToTEDSFromArray);
   using WriteToTEDSFromFilePtr = decltype(&DAQmxWriteToTEDSFromFile);
@@ -1095,6 +1099,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     ReadDigitalU16Ptr ReadDigitalU16;
     ReadDigitalU32Ptr ReadDigitalU32;
     ReadDigitalU8Ptr ReadDigitalU8;
+    ReadIDPinMemoryPtr ReadIDPinMemory;
     ReadPowerBinaryI16Ptr ReadPowerBinaryI16;
     ReadPowerF64Ptr ReadPowerF64;
     ReadPowerScalarF64Ptr ReadPowerScalarF64;
@@ -1223,6 +1228,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     WriteDigitalU16Ptr WriteDigitalU16;
     WriteDigitalU32Ptr WriteDigitalU32;
     WriteDigitalU8Ptr WriteDigitalU8;
+    WriteIDPinMemoryPtr WriteIDPinMemory;
     WriteRawPtr WriteRaw;
     WriteToTEDSFromArrayPtr WriteToTEDSFromArray;
     WriteToTEDSFromFilePtr WriteToTEDSFromFile;
