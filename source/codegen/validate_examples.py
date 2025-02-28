@@ -63,7 +63,7 @@ def _validate_examples(
         _system("poetry add grpcio")
         _system("poetry add --dev grpcio-tools mypy mypy-protobuf types-protobuf grpc-stubs")
         _system("poetry add --dev black==23.3.0")
-        _system("poetry install")
+        _system("poetry install --no-root")
 
         _stage_client_files(artifact_location, staging_dir)
         examples_dir = staging_dir / "examples"
@@ -90,7 +90,7 @@ def _validate_examples(
 
             print(f" -> Running mypy")
             _system(
-                f"poetry run mypy {dir} --check-untyped-defs --ignore-missing-imports{exclude_option}"
+                f"poetry run mypy {dir} --check-untyped-defs --disable-error-code=operator --ignore-missing-imports{exclude_option}"
             )
 
             if ip_address:

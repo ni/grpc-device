@@ -4,7 +4,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 from shutil import copy2, copytree
 from tempfile import TemporaryDirectory
-from typing import Dict, Iterable, List
+from typing import Iterable, List
 
 from common_helpers import get_driver_readiness, is_driver_restricted
 from template_helpers import load_metadata
