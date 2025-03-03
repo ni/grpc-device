@@ -60,8 +60,10 @@ def _validate_examples(
 
     with _create_stage_dir(staging_dir):
         _system("poetry new .")
-        _system("poetry add grpcio")
-        _system("poetry add --dev grpcio-tools mypy mypy-protobuf types-protobuf grpc-stubs")
+        _system("poetry add grpcio==1.70.0")
+        _system(
+            "poetry add --dev grpcio-tools==1.70.0 mypy~=1.14 mypy-protobuf~=3.5 types-protobuf==5.29.1.20241207 grpc-stubs"
+        )
         _system("poetry add --dev black==23.3.0")
         _system("poetry install")
 
