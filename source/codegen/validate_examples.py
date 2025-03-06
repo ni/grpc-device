@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 from contextlib import contextmanager
 from os import chdir, getcwd, system as _system_core
 from pathlib import Path
-from shutil import copytree, rmtree
+from shutil import copytree, rmtree, move
 from sys import exit
 from typing import List, NamedTuple, Optional
 
@@ -65,8 +65,7 @@ def _validate_examples(
 
         proto_files_str = str.join(" ", [file.name for file in proto_dir.glob("*.proto")])
 
-        _system(rf"ls {examples_dir}")
-        _system(rf"cp {examples_dir}/pyproject.toml {staging_dir}")
+        _system(rf"move {examples_dir}/pyproject.toml {staging_dir}")
         _system("poetry install")
 
         _system(
