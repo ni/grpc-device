@@ -137,8 +137,8 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
     copy2(artifact_locations.repo_root / "LICENSE", output_path)
     copy2(artifact_locations.repo_root / "ThirdPartyNotices.txt", output_path)
 
-    copy2(artifact_locations.repo_root / "examples" / "pyproject.toml", examples_path)
-    copy2(artifact_locations.repo_root / "examples" / "poetry.lock", examples_path)
+    copy2(artifact_locations.repo_root / "examples" / "pyproject.toml", output_path)
+    copy2(artifact_locations.repo_root / "examples" / "poetry.lock", output_path)
 
 
 if __name__ == "__main__":
