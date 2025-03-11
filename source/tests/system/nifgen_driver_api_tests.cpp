@@ -10,13 +10,12 @@ namespace tests {
 namespace system {
 
 namespace fgen = nifgen_grpc;
-namespace pb = ::google::protobuf;
 
-typedef pb::int16 int16;
-typedef pb::int32 int32;
-typedef pb::int64 int64;
-typedef pb::uint32 uint32;
-typedef pb::uint16 uint16;
+typedef ::google::protobuf::int16 int16;
+typedef ::google::protobuf::int32 int32;
+typedef ::google::protobuf::int64 int64;
+typedef ::google::protobuf::uint32 uint32;
+typedef ::google::protobuf::uint16 uint16;
 
 const int kFgenDriverApiSuccess = 0;
 

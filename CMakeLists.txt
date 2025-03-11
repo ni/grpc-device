@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.12.0)
+cmake_minimum_required(VERSION 3.16.0)
 
 project(ni_grpc_device_server
   LANGUAGES C CXX
@@ -6,17 +6,29 @@ project(ni_grpc_device_server
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
-
 # Workaround for: https://bugs.chromium.org/p/boringssl/issues/detail?id=423
 if (CMAKE_SYSTEM_PROCESSOR STREQUAL "AMD64")
   set(CMAKE_SYSTEM_PROCESSOR "amd64")
+endif()
+
+if(MSVC)
+  add_definitions(-D_WIN32_WINNT=0x600)
+  add_definitions(-DNOMINMAX) # Disable ancient min and max macros in Windows.h
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4267 /wd4244") # Disable possible loss of precision warnings
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 endif()
 
 # Enforce consistent runtime library settings in case of MSVC
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
   if (POLICY CMP0091)
     cmake_policy(SET CMP0091 NEW)
-    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>" CACHE STRING "Use static runtime" FORCE)
+    set(gRPC_MSVC_STATIC_RUNTIME ON CACHE BOOL "Use static runtime for gRPC" FORCE)
+    set(libprotoc_MSVC_STATIC_RUNTIME ON CACHE BOOL "Use static runtime for libprotoc" FORCE)
+    set(protobuf_MSVC_STATIC_RUNTIME ON CACHE BOOL "Use static runtime for protobuf" FORCE)
+    set(ABSL_MSVC_STATIC_RUNTIME ON CACHE BOOL "Use static runtime for Abseil" FORCE)
     message("Setting policy CMP0091 and runtime library")
   else()
     set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MD")
@@ -294,21 +306,42 @@ function(GenerateGrpcSources)
   if(USE_SUBMODULE_LIBS)
     set(protobuf_includes_arg -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/)
   endif()
+  get_filename_component(proto_name "${proto_file}" NAME)
   get_filename_component(proto_path "${proto_file}" PATH)
   # Asssumption: all outputs are in the same directory: use the zero-th.
   list(GET output_files 0 proto_srcs)
   get_filename_component(proto_out_path "${proto_srcs}" PATH)
-  add_custom_command(
-    OUTPUT ${output_files}
-    COMMAND ${_PROTOBUF_PROTOC}
-    ARGS --grpc_out "${proto_out_path}"
-      --cpp_out "${proto_out_path}"
-      -I "${proto_path}"
-      ${protobuf_includes_arg}
-      -I ${CMAKE_SOURCE_DIR}/imports/protobuf
-      --plugin=protoc-gen-grpc="${_GRPC_CPP_PLUGIN_EXECUTABLE}"
-      "${proto_file}"
-    DEPENDS "${proto_file}" "${session_proto}")
+  string(FIND "${proto_name}" "nixnetsocket" generating_nixnetsocket)
+  if(generating_nixnetsocket EQUAL -1)
+    add_custom_command(
+      OUTPUT ${output_files}
+      COMMAND ${_PROTOBUF_PROTOC}
+      ARGS --grpc_out ${proto_out_path}
+        --cpp_out ${proto_out_path}
+        -I ${proto_path}
+        ${protobuf_includes_arg}
+        -I ${CMAKE_SOURCE_DIR}/imports/protobuf
+        --plugin=protoc-gen-grpc=${_GRPC_CPP_PLUGIN_EXECUTABLE}
+        ${proto_file}
+      DEPENDS "${proto_file}" "${session_proto}"
+      VERBATIM)
+  else()
+    add_custom_command(
+      OUTPUT ${output_files}
+      COMMAND ${_PROTOBUF_PROTOC}
+      ARGS --grpc_out ${proto_out_path}
+        --cpp_out ${proto_out_path}
+        -I ${proto_path}
+        ${protobuf_includes_arg}
+        -I ${CMAKE_SOURCE_DIR}/imports/protobuf
+        --plugin=protoc-gen-grpc=${_GRPC_CPP_PLUGIN_EXECUTABLE}
+        ${proto_file}
+      COMMAND ${CMAKE_COMMAND} -E echo \#include \"custom/xnetsocket_compatibility.h\" > ${proto_srcs_dir}/nixnetsocket.pb.h.tmp
+      COMMAND ${CMAKE_COMMAND} -E cat ${proto_srcs_dir}/nixnetsocket.pb.h >> ${proto_srcs_dir}/nixnetsocket.pb.h.tmp
+      COMMAND ${CMAKE_COMMAND} -E cat ${proto_srcs_dir}/nixnetsocket.pb.h.tmp > ${proto_srcs_dir}/nixnetsocket.pb.h
+      DEPENDS "${proto_file}" "${session_proto}"
+      VERBATIM)
+  endif()
 endfunction()
 
 set(session_proto_srcs "${proto_srcs_dir}/session.pb.cc")

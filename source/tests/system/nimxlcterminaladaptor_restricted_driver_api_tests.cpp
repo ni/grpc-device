@@ -7,7 +7,6 @@
 using namespace ::testing;
 using namespace nimxlcterminaladaptor_restricted_grpc;
 namespace client = nimxlcterminaladaptor_restricted_grpc::experimental::client;
-namespace pb = ::google::protobuf;
 
 namespace ni {
 namespace tests {

@@ -71,12 +71,12 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
 
 static std::mutex server_mutex;
 static std::unique_ptr<grpc::Server> server;
-static bool shutdown = false;
+static bool shutdown_server = false;
 
 static void StopServer()
 {
   std::lock_guard<std::mutex> guard(server_mutex);
-  shutdown = true;
+  shutdown_server = true;
   if (server) {
     server->Shutdown();
   }
@@ -107,7 +107,7 @@ static void RunServer(const ServerConfiguration& config)
   // Assemble the server.
   {
     std::lock_guard<std::mutex> guard(server_mutex);
-    if (shutdown) {
+    if (shutdown_server) {
       nidevice_grpc::logging::log(
           nidevice_grpc::logging::Level_Info,
           "Asked to shutdown before creating the server");

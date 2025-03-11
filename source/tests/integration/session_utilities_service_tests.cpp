@@ -10,9 +10,6 @@
 
 #include <thread>
 
-// fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
-static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
-
 namespace ni {
 namespace tests {
 namespace integration {

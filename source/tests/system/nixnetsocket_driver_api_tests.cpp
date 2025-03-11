@@ -15,7 +15,6 @@
 
 using namespace nixnetsocket_grpc;
 namespace client = nixnetsocket_grpc::experimental::client;
-namespace pb = google::protobuf;
 using namespace ::testing;
 using nlohmann::json;
 using namespace std::string_literals;  // for trailing ""s string literal syntax;
@@ -339,7 +338,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidSocket_Select_ReturnsAndSetsExpectedE
 {
   SocketResponse invalid_socket;
   invalid_socket.mutable_socket()->set_name("");
-  auto duration = pb::Duration{};
+  auto duration = ::google::protobuf::Duration{};
   duration.set_seconds(1);
   duration.set_nanos(500000);
 
@@ -629,7 +628,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4SocketsOnWiredPhysicalLoopback_SendAndRece
   const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
   const auto accept = client::accept(stub(), rx_socket.socket());
   const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
-  const auto recv = client::recv(stub(), accept.socket(), static_cast<pb::int32>(MESSAGE.size()), 0);
+  const auto recv = client::recv(stub(), accept.socket(), static_cast<::google::protobuf::int32>(MESSAGE.size()), 0);
 
   EXPECT_SUCCESS(connect);
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), send);
@@ -653,7 +652,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv4TwoWaySession_CloseAllSockets_SocketsAreCl
   const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
   const auto accept = client::accept(stub(), rx_socket.socket());
   const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
-  const auto recv = client::recv(stub(), accept.socket(), static_cast<pb::int32>(MESSAGE.size()), 0);
+  const auto recv = client::recv(stub(), accept.socket(), static_cast<::google::protobuf::int32>(MESSAGE.size()), 0);
 
   const auto close_tx = client::close(stub(), tx_socket.socket());
   const auto close_rx = client::close(stub(), rx_socket.socket());
@@ -695,7 +694,7 @@ TEST_F(NiXnetSocketLoopbackTests, UdpSocketsOnWiredPhysicalLoopback_SendAndRecei
   EXPECT_SUCCESS(tx_add_member);
 
   const auto send = client::send_to(stub(), tx_socket.socket(), MESSAGE, 0, multicast_sock_addr);
-  const auto recv = client::recv(stub(), rx_socket.socket(), static_cast<pb::int32>(MESSAGE.size()), 0);
+  const auto recv = client::recv(stub(), rx_socket.socket(), static_cast<::google::protobuf::int32>(MESSAGE.size()), 0);
 
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), send);
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), recv);
@@ -727,7 +726,7 @@ TEST_F(NiXnetSocketLoopbackTests, IPv6OnLoopbackAddress_SendAndReceiveData_Recei
   const auto connect = client::connect(stub(), tx_socket.socket(), get_name.addr());
   const auto accept = client::accept(stub(), rx_socket.socket());
   const auto send = client::send(stub(), tx_socket.socket(), MESSAGE, 0);
-  const auto recv = client::recv(stub(), accept.socket(), static_cast<pb::int32>(MESSAGE.size()), 0);
+  const auto recv = client::recv(stub(), accept.socket(), static_cast<::google::protobuf::int32>(MESSAGE.size()), 0);
 
   EXPECT_SUCCESS(connect);
   EXPECT_SUCCESS_WITH_STATUS(MESSAGE.size(), send);

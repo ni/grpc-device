@@ -13,15 +13,14 @@ using namespace nirfmxnr_grpc;
 namespace client = nirfmxnr_grpc::experimental::client;
 namespace instr_client = nirfmxinstr_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
-namespace pb = ::google::protobuf;
 
 namespace ni {
 namespace tests {
 namespace system {
 namespace {
 
-typedef pb::int32 int32;
-typedef pb::int64 int64;
+typedef ::google::protobuf::int32 int32;
+typedef ::google::protobuf::int64 int64;
 typedef double float64;
 
 constexpr auto PXI_5663E = "5663E";

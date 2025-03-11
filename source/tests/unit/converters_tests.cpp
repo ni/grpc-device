@@ -1,5 +1,3 @@
-#define NOMINMAX
-
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
 #include <server/converters.h>

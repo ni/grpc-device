@@ -1,4 +1,3 @@
-#include <grpcpp/impl/grpc_library.h>
 #include <gtest/gtest.h>
 #include <nifake/nifake_mock_library.h>
 #pragma warning(push)
@@ -17,9 +16,6 @@
 #include <string>
 
 using namespace ::nlohmann;
-
-// fixes seg faults caused by https://github.com/grpc/grpc/issues/14633
-static grpc::internal::GrpcLibraryInitializer g_gli_initializer;
 
 namespace nifake_grpc {
 bool operator==(const nifake_grpc::FakeCustomStruct& first, const nifake_grpc::FakeCustomStruct& second)

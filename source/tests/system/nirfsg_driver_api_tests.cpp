@@ -10,7 +10,6 @@
 using namespace nirfsg_grpc;
 namespace client = nirfsg_grpc::experimental::client;
 namespace nitclk_client = nitclk_grpc::experimental::client;
-namespace pb = google::protobuf;
 using namespace ::testing;
 
 namespace nidevice_grpc {

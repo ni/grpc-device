@@ -1,5 +1,3 @@
-#define NOMINMAX
-
 #include <custom/nimxlcterminaladaptor_restricted_converters.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -13,7 +11,6 @@
 using namespace nimxlcterminaladaptor_restricted_grpc;
 using nidevice_grpc::converters::convert_from_grpc;
 using nidevice_grpc::converters::convert_to_grpc;
-namespace pb = ::google::protobuf;
 
 namespace ni {
 namespace tests {

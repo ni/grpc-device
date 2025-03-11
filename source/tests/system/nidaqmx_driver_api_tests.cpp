@@ -19,17 +19,16 @@ using namespace ::testing;
 using namespace nidaqmx_grpc;
 using google::protobuf::uint32;
 namespace client = nidaqmx_grpc::experimental::client;
-namespace pb = ::google::protobuf;
 
 namespace ni {
 namespace tests {
 namespace system {
 namespace {
 
-typedef pb::int16 int16;
-typedef pb::int32 int32;
-typedef pb::int64 int64;
-typedef pb::uint64 uInt64;
+typedef ::google::protobuf::int16 int16;
+typedef ::google::protobuf::int32 int32;
+typedef ::google::protobuf::int64 int64;
+typedef ::google::protobuf::uint64 uInt64;
 typedef double float64;
 
 constexpr auto DAQMX_SUCCESS = 0;
@@ -942,7 +941,18 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     CfgTimeStartTrigRequest request;
     set_request_session_name(request);
+
+    // Ensure GetCurrentTime macro in WinBase.h does not interfere with the GetCurrentTime function from protobuf.
+#ifdef _WIN32
+     #pragma push_macro("GetCurrentTime")
+     #undef GetCurrentTime
+#endif
     auto time = google::protobuf::util::TimeUtil::GetCurrentTime();
+#ifdef _WIN32
+     #pragma pop_macro("GetCurrentTime")
+#endif
+
+
     auto duration = google::protobuf::Duration{};
     duration.set_seconds(10);
     time += duration;
