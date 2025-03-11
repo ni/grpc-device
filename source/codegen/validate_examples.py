@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 from contextlib import contextmanager
 from os import chdir, getcwd, system as _system_core
 from pathlib import Path
-from shutil import copytree, rmtree, move
+from shutil import copytree, rmtree
 from sys import exit
 from typing import List, NamedTuple, Optional
 
