@@ -65,7 +65,7 @@ def _validate_examples(
 
         proto_files_str = str.join(" ", [file.name for file in proto_dir.glob("*.proto")])
 
-        move(str({examples_dir} / "pyproject.toml"), str({staging_dir}))
+        move(Path({examples_dir} / "pyproject.toml"), Path({staging_dir}))
         _system("poetry install")
 
         _system(
