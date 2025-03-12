@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "ni-grpc-device-examples"
-version = "2.1.1"
+version = "1.8.2"
 description = ""
 authors = ["Christian Aguilar <christian.aguilar@ni.com>"]
 package-mode = false
