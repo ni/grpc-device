@@ -1,9 +1,9 @@
-r""" Write Signal Data.
+r"""Write Signal Data.
 
  This example writes a signal value for 10 times.
- This is used to demonstrate a signal single point output session. 
+ This is used to demonstrate a signal single point output session.
  This example uses hardcoded signal names that use the NIXNET_example database.
- To use your own database, you need to add an alias to your database file using the NI-XNET 
+ To use your own database, you need to add an alias to your database file using the NI-XNET
  Database Editor and then modify the database name and signals used here.
  Also ensure that the transceivers are externally powered when using C Series modules.
 
