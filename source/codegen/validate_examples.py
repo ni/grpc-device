@@ -65,6 +65,7 @@ def _validate_examples(
 
         proto_files_str = str.join(" ", [file.name for file in proto_dir.glob("*.proto")])
 
+        _system("poetry lock")
         _system("poetry install")
 
         _system(
