@@ -1,4 +1,4 @@
-r""" Read and Write to controls and FIFO.
+r"""Read and Write to controls and FIFO.
 
 The gRPC API is built from the C API. NI-FPGA documentation is installed with the driver at:
     C:\Program Files (x86)\National Instruments\FPGA Interface C API\capi.chm
@@ -7,8 +7,8 @@ Getting Started:
 
 To run this example with your VI, you need to configure the values below.
 Additionally, you should have a VI that includes controls and FIFOs, and update the
-references for them below. Ensure that the R-Series drivers are installed on the system 
-where the gRPC-device server is running. You will also need LABVIEW and the LABVIEW FPGA 
+references for them below. Ensure that the R-Series drivers are installed on the system
+where the gRPC-device server is running. You will also need LABVIEW and the LABVIEW FPGA
 module to configure the VIs.
 
 For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a gRPC
@@ -21,8 +21,8 @@ arguments.
 If they are not passed in as command line arguments, then by default the server address will be
 "localhost:31763", with "FPGA" as the resource name.
 
-In this example, we specify the number of elements to write to the FIFO and provide 
-a multiplier as input. We then read elements from another FIFO, which contains the multiplied 
+In this example, we specify the number of elements to write to the FIFO and provide
+a multiplier as input. We then read elements from another FIFO, which contains the multiplied
 values of the elements from the first FIFO.
 """
 

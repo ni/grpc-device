@@ -27,7 +27,7 @@ jobs:
     - name: Install poetry for validate_examples.py
       uses: abatilo/actions-poetry@v3
       with:
-        poetry-version: 1.2.2
+        poetry-version: 1.8.2
 
     - name: Validate examples (except aio)
       run: |

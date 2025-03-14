@@ -59,17 +59,14 @@ def _validate_examples(
     print(f"Validating examples using staging_dir: {staging_dir}")
 
     with _create_stage_dir(staging_dir):
-        _system("poetry new .")
-        _system("poetry add grpcio")
-        _system("poetry add --dev grpcio-tools mypy mypy-protobuf types-protobuf grpc-stubs")
-        _system("poetry add --dev black==23.3.0")
-        _system("poetry install")
-
         _stage_client_files(artifact_location, staging_dir)
         examples_dir = staging_dir / "examples"
         proto_dir = staging_dir / "proto"
 
         proto_files_str = str.join(" ", [file.name for file in proto_dir.glob("*.proto")])
+
+        _system("poetry lock")
+        _system("poetry install")
 
         _system(
             rf"poetry run python -m grpc_tools.protoc -I{proto_dir} --python_out=. --grpc_python_out=. --mypy_out=. --mypy_grpc_out=. {proto_files_str}"
