@@ -40,7 +40,6 @@ If they are not passed in as command line arguments, then by default the server 
 "localhost:31763", with "SimulatedDevice" as the resource name
 """
 
-
 import sys
 
 import grpc

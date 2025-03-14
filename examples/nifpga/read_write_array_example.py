@@ -1,4 +1,4 @@
-r""" Read and Write to Arrays.
+r"""Read and Write to Arrays.
 
 The gRPC API is built from the C API. NI-FPGA documentation is installed with the driver at:
     C:\Program Files (x86)\National Instruments\FPGA Interface C API\capi.chm
