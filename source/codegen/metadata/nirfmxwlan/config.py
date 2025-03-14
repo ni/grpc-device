@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '24.3.0',
+    'api_version': '25.3.0',
     'c_header': 'niRFmxWLAN.h',
     'c_function_prefix': 'RFmxWLAN_',
     'service_class_prefix': 'NiRFmxWLAN',

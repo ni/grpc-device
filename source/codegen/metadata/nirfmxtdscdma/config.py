@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '23.0.0',
+    'api_version': '25.3.0',
     'c_header': 'niRFmxTDSCDMA.h',
     'c_function_prefix': 'RFmxTDSCDMA_',
     'service_class_prefix': 'NiRFmxTDSCDMA',
