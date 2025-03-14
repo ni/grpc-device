@@ -50,6 +50,9 @@ NiRFmxNRLibrary::NiRFmxNRLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInt
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxNR_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxNR_AnalyzeIQ1Waveform"));
   function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxNR_AnalyzeIQ1WaveformSplit"));
+  function_pointers_.AnalyzeNWaveformsIQ = reinterpret_cast<AnalyzeNWaveformsIQPtr>(shared_library_->get_function_pointer("RFmxNR_AnalyzeNWaveformsIQ"));
+  function_pointers_.AnalyzeNWaveformsIQSplit = reinterpret_cast<AnalyzeNWaveformsIQSplitPtr>(shared_library_->get_function_pointer("RFmxNR_AnalyzeNWaveformsIQSplit"));
+  function_pointers_.AnalyzeNWaveformsSpectrum = reinterpret_cast<AnalyzeNWaveformsSpectrumPtr>(shared_library_->get_function_pointer("RFmxNR_AnalyzeNWaveformsSpectrum"));
   function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_->get_function_pointer("RFmxNR_AnalyzeSpectrum1Waveform"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxNR_AutoLevel"));
   function_pointers_.BuildBandwidthPartString = reinterpret_cast<BuildBandwidthPartStringPtr>(shared_library_->get_function_pointer("RFmxNR_BuildBandwidthPartString"));
@@ -85,6 +88,7 @@ NiRFmxNRLibrary::NiRFmxNRLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInt
   function_pointers_.CfgRF = reinterpret_cast<CfgRFPtr>(shared_library_->get_function_pointer("RFmxNR_CfgRF"));
   function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_->get_function_pointer("RFmxNR_CfgRFAttenuation"));
   function_pointers_.CfgReferenceLevel = reinterpret_cast<CfgReferenceLevelPtr>(shared_library_->get_function_pointer("RFmxNR_CfgReferenceLevel"));
+  function_pointers_.CfgSelectedPortsMultiple = reinterpret_cast<CfgSelectedPortsMultiplePtr>(shared_library_->get_function_pointer("RFmxNR_CfgSelectedPortsMultiple"));
   function_pointers_.CfgSoftwareEdgeTrigger = reinterpret_cast<CfgSoftwareEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxNR_CfgSoftwareEdgeTrigger"));
   function_pointers_.CfggNodeBCategory = reinterpret_cast<CfggNodeBCategoryPtr>(shared_library_->get_function_pointer("RFmxNR_CfggNodeBCategory"));
   function_pointers_.CheckMeasurementStatus = reinterpret_cast<CheckMeasurementStatusPtr>(shared_library_->get_function_pointer("RFmxNR_CheckMeasurementStatus"));
@@ -465,6 +469,30 @@ int32 NiRFmxNRLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandl
   return function_pointers_.AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
 }
 
+int32 NiRFmxNRLibrary::AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset)
+{
+  if (!function_pointers_.AnalyzeNWaveformsIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_AnalyzeNWaveformsIQ.");
+  }
+  return function_pointers_.AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqSize, arraySize, reset);
+}
+
+int32 NiRFmxNRLibrary::AnalyzeNWaveformsIQSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iqi[], float32 iqq[], int32 iqSize[], int32 arraySize, int32 reset)
+{
+  if (!function_pointers_.AnalyzeNWaveformsIQSplit) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_AnalyzeNWaveformsIQSplit.");
+  }
+  return function_pointers_.AnalyzeNWaveformsIQSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, iqSize, arraySize, reset);
+}
+
+int32 NiRFmxNRLibrary::AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset)
+{
+  if (!function_pointers_.AnalyzeNWaveformsSpectrum) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_AnalyzeNWaveformsSpectrum.");
+  }
+  return function_pointers_.AnalyzeNWaveformsSpectrum(instrumentHandle, selectorString, resultName, x0, dx, spectrum, spectrumSize, arraySize, reset);
+}
+
 int32 NiRFmxNRLibrary::AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
 {
   if (!function_pointers_.AnalyzeSpectrum1Waveform) {
@@ -743,6 +771,14 @@ int32 NiRFmxNRLibrary::CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, cha
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_CfgReferenceLevel.");
   }
   return function_pointers_.CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
+}
+
+int32 NiRFmxNRLibrary::CfgSelectedPortsMultiple(niRFmxInstrHandle instrumentHandle, char selectorString[], char selectedPorts[])
+{
+  if (!function_pointers_.CfgSelectedPortsMultiple) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_CfgSelectedPortsMultiple.");
+  }
+  return function_pointers_.CfgSelectedPortsMultiple(instrumentHandle, selectorString, selectedPorts);
 }
 
 int32 NiRFmxNRLibrary::CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)

@@ -39,6 +39,7 @@
 #define RFMXNR_ATTR_GNODEB_TYPE                                                            0x009000a0
 #define RFMXNR_ATTR_SATELLITE_ACCESS_NODE_CLASS                                            0x009000a3
 #define RFMXNR_ATTR_TRANSMIT_ANTENNA_TO_ANALYZE                                            0x0090009b
+#define RFMXNR_ATTR_NUMBER_OF_RECEIVE_CHAINS                                               0x0090d003
 #define RFMXNR_ATTR_POWER_CLASS                                                            0x0090009c
 #define RFMXNR_ATTR_PIBY2BPSK_POWER_BOOST_ENABLED                                          0x0090009e
 #define RFMXNR_ATTR_AUTO_RESOURCE_BLOCK_DETECTION_ENABLED                                  0x0090001f
@@ -504,6 +505,15 @@
 #define RFMXNR_VAL_PXI_STAR_STR                                                                   "PXI_STAR"
 #define RFMXNR_VAL_PXIE_DSTARB_STR                                                                "PXIe_DStarB"
 #define RFMXNR_VAL_TIMER_EVENT_STR                                                                "TimerEvent"
+#define RFMXNR_VAL_PULSE_IN_STR                                                                   "PulseIn"
+#define RFMXNR_VAL_DIO_PFI0_STR                                                                   "DIO/PFI0"
+#define RFMXNR_VAL_DIO_PFI1_STR                                                                   "DIO/PFI1"
+#define RFMXNR_VAL_DIO_PFI2_STR                                                                   "DIO/PFI2"
+#define RFMXNR_VAL_DIO_PFI3_STR                                                                   "DIO/PFI3"
+#define RFMXNR_VAL_DIO_PFI4_STR                                                                   "DIO/PFI4"
+#define RFMXNR_VAL_DIO_PFI5_STR                                                                   "DIO/PFI5"
+#define RFMXNR_VAL_DIO_PFI6_STR                                                                   "DIO/PFI6"
+#define RFMXNR_VAL_DIO_PFI7_STR                                                                   "DIO/PFI7"
 
 // Values for RFMXNR_ATTR_DIGITAL_EDGE_TRIGGER_EDGE
 #define RFMXNR_VAL_DIGITAL_EDGE_RISING_EDGE                                                       0
@@ -1437,6 +1447,20 @@ int32 __stdcall RFmxNR_BuildUserString(
    char selectorStringOut[]
 );
 
+int32 __stdcall RFmxNR_BuildLayerString(
+   char selectorString[],
+   int32 layerNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxNR_BuildChainString(
+   char selectorString[],
+   int32 chainNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
 int32 __stdcall RFmxNR_SetAttributeI8(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1872,6 +1896,12 @@ int32 __stdcall RFmxNR_Commit(
    char selectorString[]
 );
 
+int32 __stdcall RFmxNR_CfgSelectedPortsMultiple(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char selectedPorts[]
+);
+
 int32 __stdcall RFmxNR_CreateList(
    niRFmxInstrHandle instrumentHandle,
    char listName[]
@@ -2226,6 +2256,43 @@ int32 __stdcall RFmxNR_CfgRF(
 int32 __stdcall RFmxNR_AbortMeasurements(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
+);
+
+int32 __stdcall RFmxNR_AnalyzeNWaveformsIQ(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char resultName[],
+   float64 x0[],
+   float64 dx[],
+   NIComplexSingle IQ[],
+   int32 IQSize[],
+   int32 arraySize,
+   int32 reset
+);
+
+int32 __stdcall RFmxNR_AnalyzeNWaveformsIQSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char resultName[],
+   float64 x0[],
+   float64 dx[],
+   float32 IQI[],
+   float32 IQQ[],
+   int32 IQSize[],
+   int32 arraySize,
+   int32 reset
+);
+
+int32 __stdcall RFmxNR_AnalyzeNWaveformsSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char resultName[],
+   float64 x0[],
+   float64 dx[],
+   float32 spectrum[],
+   int32 spectrumSize[],
+   int32 arraySize,
+   int32 reset
 );
 
 int32 __stdcall RFmxNR_CfgDigitalEdgeTrigger(
@@ -3523,6 +3590,18 @@ int32 __stdcall RFmxNR_GetTransmitAntennaToAnalyze(
 );
 
 int32 __stdcall RFmxNR_SetTransmitAntennaToAnalyze(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_GetNumberOfReceiveChains(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetNumberOfReceiveChains(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

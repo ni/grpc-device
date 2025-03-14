@@ -907,6 +907,165 @@ namespace nirfmxnr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxNRService::AnalyzeNWaveformsIQ(::grpc::ServerContext* context, const AnalyzeNWaveformsIQRequest* request, AnalyzeNWaveformsIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      auto x0 = const_cast<float64*>(request->x0().data());
+      auto dx = const_cast<float64*>(request->dx().data());
+      auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
+      auto iq_size = const_cast<int32*>(reinterpret_cast<const int32*>(request->iq_size().data()));
+      auto array_size_determine_from_sizes = std::array<int, 4>
+      {
+        request->x0_size(),
+        request->dx_size(),
+        request->iq_size(),
+        request->iq_size_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [x0, dx, iq, iq_size] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        x0 = request->x0_size() ? std::move(x0) : nullptr;
+        dx = request->dx_size() ? std::move(dx) : nullptr;
+        iq = request->iq_size() ? std::move(iq) : nullptr;
+        iq_size = request->iq_size_size() ? std::move(iq_size) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      int32 reset = request->reset();
+      auto status = library_->AnalyzeNWaveformsIQ(instrument, selector_string, result_name, x0, dx, iq.data(), iq_size, array_size, reset);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxNRService::AnalyzeNWaveformsIQSplit(::grpc::ServerContext* context, const AnalyzeNWaveformsIQSplitRequest* request, AnalyzeNWaveformsIQSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      auto x0 = const_cast<float64*>(request->x0().data());
+      auto dx = const_cast<float64*>(request->dx().data());
+      auto iqi = const_cast<float32*>(request->iqi().data());
+      auto iqq = const_cast<float32*>(request->iqq().data());
+      auto iq_size = const_cast<int32*>(reinterpret_cast<const int32*>(request->iq_size().data()));
+      auto array_size_determine_from_sizes = std::array<int, 5>
+      {
+        request->x0_size(),
+        request->dx_size(),
+        request->iqi_size(),
+        request->iqq_size(),
+        request->iq_size_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [x0, dx, iqi, iqq, iq_size] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        x0 = request->x0_size() ? std::move(x0) : nullptr;
+        dx = request->dx_size() ? std::move(dx) : nullptr;
+        iqi = request->iqi_size() ? std::move(iqi) : nullptr;
+        iqq = request->iqq_size() ? std::move(iqq) : nullptr;
+        iq_size = request->iq_size_size() ? std::move(iq_size) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      int32 reset = request->reset();
+      auto status = library_->AnalyzeNWaveformsIQSplit(instrument, selector_string, result_name, x0, dx, iqi, iqq, iq_size, array_size, reset);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxNRService::AnalyzeNWaveformsSpectrum(::grpc::ServerContext* context, const AnalyzeNWaveformsSpectrumRequest* request, AnalyzeNWaveformsSpectrumResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      auto x0 = const_cast<float64*>(request->x0().data());
+      auto dx = const_cast<float64*>(request->dx().data());
+      auto spectrum = const_cast<float32*>(request->spectrum().data());
+      auto spectrum_size = const_cast<int32*>(reinterpret_cast<const int32*>(request->spectrum_size().data()));
+      auto array_size_determine_from_sizes = std::array<int, 4>
+      {
+        request->x0_size(),
+        request->dx_size(),
+        request->spectrum_size(),
+        request->spectrum_size_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [x0, dx, spectrum, spectrum_size] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        x0 = request->x0_size() ? std::move(x0) : nullptr;
+        dx = request->dx_size() ? std::move(dx) : nullptr;
+        spectrum = request->spectrum_size() ? std::move(spectrum) : nullptr;
+        spectrum_size = request->spectrum_size_size() ? std::move(spectrum_size) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      int32 reset = request->reset();
+      auto status = library_->AnalyzeNWaveformsSpectrum(instrument, selector_string, result_name, x0, dx, spectrum, spectrum_size, array_size, reset);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxNRService::AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2344,6 +2503,32 @@ namespace nirfmxnr_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 reference_level = request->reference_level();
       auto status = library_->CfgReferenceLevel(instrument, selector_string, reference_level);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxNRService::CfgSelectedPortsMultiple(::grpc::ServerContext* context, const CfgSelectedPortsMultipleRequest* request, CfgSelectedPortsMultipleResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto selected_ports_mbcs = convert_from_grpc<std::string>(request->selected_ports());
+      char* selected_ports = (char*)selected_ports_mbcs.c_str();
+      auto status = library_->CfgSelectedPortsMultiple(instrument, selector_string, selected_ports);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

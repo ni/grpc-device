@@ -67,6 +67,9 @@ public:
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
   ::grpc::Status AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response) override;
   ::grpc::Status AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response) override;
+  ::grpc::Status AnalyzeNWaveformsIQ(::grpc::ServerContext* context, const AnalyzeNWaveformsIQRequest* request, AnalyzeNWaveformsIQResponse* response) override;
+  ::grpc::Status AnalyzeNWaveformsIQSplit(::grpc::ServerContext* context, const AnalyzeNWaveformsIQSplitRequest* request, AnalyzeNWaveformsIQSplitResponse* response) override;
+  ::grpc::Status AnalyzeNWaveformsSpectrum(::grpc::ServerContext* context, const AnalyzeNWaveformsSpectrumRequest* request, AnalyzeNWaveformsSpectrumResponse* response) override;
   ::grpc::Status AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
   ::grpc::Status BuildBandwidthPartString(::grpc::ServerContext* context, const BuildBandwidthPartStringRequest* request, BuildBandwidthPartStringResponse* response) override;
@@ -102,6 +105,7 @@ public:
   ::grpc::Status CfgRF(::grpc::ServerContext* context, const CfgRFRequest* request, CfgRFResponse* response) override;
   ::grpc::Status CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response) override;
   ::grpc::Status CfgReferenceLevel(::grpc::ServerContext* context, const CfgReferenceLevelRequest* request, CfgReferenceLevelResponse* response) override;
+  ::grpc::Status CfgSelectedPortsMultiple(::grpc::ServerContext* context, const CfgSelectedPortsMultipleRequest* request, CfgSelectedPortsMultipleResponse* response) override;
   ::grpc::Status CfgSoftwareEdgeTrigger(::grpc::ServerContext* context, const CfgSoftwareEdgeTriggerRequest* request, CfgSoftwareEdgeTriggerResponse* response) override;
   ::grpc::Status CfggNodeBCategory(::grpc::ServerContext* context, const CfggNodeBCategoryRequest* request, CfggNodeBCategoryResponse* response) override;
   ::grpc::Status CheckMeasurementStatus(::grpc::ServerContext* context, const CheckMeasurementStatusRequest* request, CheckMeasurementStatusResponse* response) override;
@@ -290,12 +294,12 @@ private:
   ResourceRepositorySharedPtr session_repository_;
   ViSessionResourceRepositorySharedPtr vi_session_resource_repository_;
   ::grpc::Status ConvertApiErrorStatusForNiRFmxInstrHandle(::grpc::ServerContextBase* context, int32_t status, niRFmxInstrHandle instrumentHandle);
-  std::map<std::int32_t, std::string> digitaledgetriggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"}, };
-  std::map<std::string, std::int32_t> digitaledgetriggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"PXIe_DStarB", 12},{"TimerEvent", 13}, };
+  std::map<std::int32_t, std::string> digitaledgetriggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"},{14, "PulseIn"},{15, "DIO/PFI0"},{16, "DIO/PFI1"},{17, "DIO/PFI2"},{18, "DIO/PFI3"},{19, "DIO/PFI4"},{20, "DIO/PFI5"},{21, "DIO/PFI6"},{22, "DIO/PFI7"}, };
+  std::map<std::string, std::int32_t> digitaledgetriggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"PXIe_DStarB", 12},{"TimerEvent", 13},{"PulseIn", 14},{"DIO/PFI0", 15},{"DIO/PFI1", 16},{"DIO/PFI2", 17},{"DIO/PFI3", 18},{"DIO/PFI4", 19},{"DIO/PFI5", 20},{"DIO/PFI6", 21},{"DIO/PFI7", 22}, };
   std::map<std::int32_t, std::string> frequencyreferencesource_input_map_ { {1, "OnboardClock"},{2, "RefIn"},{3, "PXI_Clk"},{4, "ClkIn"},{5, "RefIn2"},{6, "PXI_Clk_Master"}, };
   std::map<std::string, std::int32_t> frequencyreferencesource_output_map_ { {"OnboardClock", 1},{"RefIn", 2},{"PXI_Clk", 3},{"ClkIn", 4},{"RefIn2", 5},{"PXI_Clk_Master", 6}, };
-  std::map<std::int32_t, std::string> nirfmxnrstringattributevaluesmapped_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"}, };
-  std::map<std::string, std::int32_t> nirfmxnrstringattributevaluesmapped_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"PXIe_DStarB", 12},{"TimerEvent", 13}, };
+  std::map<std::int32_t, std::string> nirfmxnrstringattributevaluesmapped_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXIe_DStarB"},{13, "TimerEvent"},{14, "PulseIn"},{15, "DIO/PFI0"},{16, "DIO/PFI1"},{17, "DIO/PFI2"},{18, "DIO/PFI3"},{19, "DIO/PFI4"},{20, "DIO/PFI5"},{21, "DIO/PFI6"},{22, "DIO/PFI7"}, };
+  std::map<std::string, std::int32_t> nirfmxnrstringattributevaluesmapped_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"PXIe_DStarB", 12},{"TimerEvent", 13},{"PulseIn", 14},{"DIO/PFI0", 15},{"DIO/PFI1", 16},{"DIO/PFI2", 17},{"DIO/PFI3", 18},{"DIO/PFI4", 19},{"DIO/PFI5", 20},{"DIO/PFI6", 21},{"DIO/PFI7", 22}, };
 
   NiRFmxNRFeatureToggles feature_toggles_;
 };

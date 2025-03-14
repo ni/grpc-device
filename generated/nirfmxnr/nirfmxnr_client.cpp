@@ -524,6 +524,79 @@ analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& in
   return response;
 }
 
+AnalyzeNWaveformsIQResponse
+analyze_n_waveforms_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const std::vector<pb::int32>& iq_size, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeNWaveformsIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  copy_array(x0, request.mutable_x0());
+  copy_array(dx, request.mutable_dx());
+  copy_array(iq, request.mutable_iq());
+  copy_array(iq_size, request.mutable_iq_size());
+  request.set_reset(reset);
+
+  auto response = AnalyzeNWaveformsIQResponse{};
+
+  raise_if_error(
+      stub->AnalyzeNWaveformsIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AnalyzeNWaveformsIQSplitResponse
+analyze_n_waveforms_iq_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const std::vector<pb::int32>& iq_size, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeNWaveformsIQSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  copy_array(x0, request.mutable_x0());
+  copy_array(dx, request.mutable_dx());
+  copy_array(iqi, request.mutable_iqi());
+  copy_array(iqq, request.mutable_iqq());
+  copy_array(iq_size, request.mutable_iq_size());
+  request.set_reset(reset);
+
+  auto response = AnalyzeNWaveformsIQSplitResponse{};
+
+  raise_if_error(
+      stub->AnalyzeNWaveformsIQSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AnalyzeNWaveformsSpectrumResponse
+analyze_n_waveforms_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& spectrum, const std::vector<pb::int32>& spectrum_size, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeNWaveformsSpectrumRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  copy_array(x0, request.mutable_x0());
+  copy_array(dx, request.mutable_dx());
+  copy_array(spectrum, request.mutable_spectrum());
+  copy_array(spectrum_size, request.mutable_spectrum_size());
+  request.set_reset(reset);
+
+  auto response = AnalyzeNWaveformsSpectrumResponse{};
+
+  raise_if_error(
+      stub->AnalyzeNWaveformsSpectrum(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AnalyzeSpectrum1WaveformResponse
 analyze_spectrum1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& spectrum, const pb::int32& reset)
 {
@@ -1284,6 +1357,25 @@ cfg_reference_level(const StubPtr& stub, const nidevice_grpc::Session& instrumen
 
   raise_if_error(
       stub->CfgReferenceLevel(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CfgSelectedPortsMultipleResponse
+cfg_selected_ports_multiple(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& selected_ports)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgSelectedPortsMultipleRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_selected_ports(selected_ports);
+
+  auto response = CfgSelectedPortsMultipleResponse{};
+
+  raise_if_error(
+      stub->CfgSelectedPortsMultiple(&context, request, &response),
       context);
 
   return response;

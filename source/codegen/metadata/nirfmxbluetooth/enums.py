@@ -185,6 +185,42 @@ enums = {
             {
                 'name': 'TIMER_EVENT',
                 'value': 'TimerEvent'
+            },
+            {
+                'name': 'PULSE_IN',
+                'value': 'PulseIn'
+            },
+            {
+                'name': 'DIO_PFI0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'name': 'DIO_PFI1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'name': 'DIO_PFI2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'name': 'DIO_PFI3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'name': 'DIO_PFI4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'name': 'DIO_PFI5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'name': 'DIO_PFI6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'name': 'DIO_PFI7',
+                'value': 'DIO/PFI7'
             }
         ]
     },
@@ -234,6 +270,22 @@ enums = {
             {
                 'name': 'CLK_IN',
                 'value': 'ClkIn'
+            }
+        ]
+    },
+    'HighDataThroughputPacketFormat': {
+        'values': [
+            {
+                'name': 'SHORT_FORMAT',
+                'value': 0
+            },
+            {
+                'name': 'FORMAT0',
+                'value': 1
+            },
+            {
+                'name': 'FORMAT1',
+                'value': 2
             }
         ]
     },

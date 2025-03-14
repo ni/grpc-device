@@ -122,6 +122,21 @@ int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorS
   return RFmxNR_AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
 }
 
+int32 AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset)
+{
+  return RFmxNR_AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, iq, iqSize, arraySize, reset);
+}
+
+int32 AnalyzeNWaveformsIQSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iqi[], float32 iqq[], int32 iqSize[], int32 arraySize, int32 reset)
+{
+  return RFmxNR_AnalyzeNWaveformsIQSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, iqSize, arraySize, reset);
+}
+
+int32 AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset)
+{
+  return RFmxNR_AnalyzeNWaveformsSpectrum(instrumentHandle, selectorString, resultName, x0, dx, spectrum, spectrumSize, arraySize, reset);
+}
+
 int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved)
 {
   return RFmxNR_AnalyzeSpectrum1Waveform(instrumentHandle, selectorString, resultName, x0, dx, spectrum, arraySize, reset, reserved);
@@ -295,6 +310,11 @@ int32 CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], i
 int32 CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel)
 {
   return RFmxNR_CfgReferenceLevel(instrumentHandle, selectorString, referenceLevel);
+}
+
+int32 CfgSelectedPortsMultiple(niRFmxInstrHandle instrumentHandle, char selectorString[], char selectedPorts[])
+{
+  return RFmxNR_CfgSelectedPortsMultiple(instrumentHandle, selectorString, selectedPorts);
 }
 
 int32 CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger)
