@@ -10,7 +10,7 @@ env:
 
 jobs:
   build-nilrt:
-    name: NILRT Cross Compile with GCC 6.3.0
+    name: NILRT Cross Compile
     runs-on: ubuntu-latest
 
     steps:
