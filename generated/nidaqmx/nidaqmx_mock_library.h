@@ -282,6 +282,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, ReadDigitalU16, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt16 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadDigitalU32, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt32 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadDigitalU8, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, uInt8 readArray[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
+  MOCK_METHOD(int32, ReadIDPinMemory, (const char deviceName[], const char idPinName[], uInt8 data[], uInt32 arraySize, uInt32* dataLengthRead, uInt32* formatCode), (override));
   MOCK_METHOD(int32, ReadPowerBinaryI16, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, int16 readArrayVoltage[], int16 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadPowerF64, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int32 fillMode, float64 readArrayVoltage[], float64 readArrayCurrent[], uInt32 arraySizeInSamps, int32* sampsPerChanRead, bool32* reserved), (override));
   MOCK_METHOD(int32, ReadPowerScalarF64, (TaskHandle task, float64 timeout, float64* voltage, float64* current, bool32* reserved), (override));
@@ -407,6 +408,7 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, WriteDigitalU16, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt16 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, WriteDigitalU32, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt32 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, WriteDigitalU8, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, int32 dataLayout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
+  MOCK_METHOD(int32, WriteIDPinMemory, (const char deviceName[], const char idPinName[], const uInt8 data[], uInt32 arraySize, uInt32 formatCode), (override));
   MOCK_METHOD(int32, WriteRaw, (TaskHandle task, int32 numSamps, bool32 autoStart, float64 timeout, const uInt8 writeArray[], int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, WriteToTEDSFromArray, (const char physicalChannel[], const uInt8 bitStream[], uInt32 arraySize, int32 basicTEDSOptions), (override));
   MOCK_METHOD(int32, WriteToTEDSFromFile, (const char physicalChannel[], const char filePath[], int32 basicTEDSOptions), (override));

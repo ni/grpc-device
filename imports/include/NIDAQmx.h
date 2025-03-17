@@ -1,7 +1,7 @@
 /*============================================================================*/
 /*                 National Instruments / Data Acquisition                    */
 /*----------------------------------------------------------------------------*/
-/*    Copyright (c) National Instruments 2003-2023.  All Rights Reserved.     */
+/*    Copyright (c) National Instruments 2003-2025.  All Rights Reserved.     */
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /* Title:       NIDAQmx.h                                                     */
@@ -196,6 +196,11 @@ typedef uInt32             CalHandle;
 #define DAQmx_AI_EddyCurrentProxProbe_Units                              0x2AC0 // Specifies the units to use to return proximity measurements from the channel.
 #define DAQmx_AI_EddyCurrentProxProbe_Sensitivity                        0x2ABE // Specifies the sensitivity of the eddy current proximity probe . This value is in the units you specify with Sensitivity Units. Refer to the sensor documentation to determine this value.
 #define DAQmx_AI_EddyCurrentProxProbe_SensitivityUnits                   0x2ABF // Specifies the units of Sensitivity.
+#define DAQmx_AI_Power_Units                                             0x31EC // Specifies the units to use to return power measurements from the channel.
+#define DAQmx_AI_CalculatedPowerVoltage_Max                              0x31ED // Specifies the voltage maximum value you expect to measure. This value is in the units you specify with a units property. When you query this property, it returns the coerced voltage maximum value that the device can measure with the current settings.
+#define DAQmx_AI_CalculatedPowerVoltage_Min                              0x31EE // Specifies the voltage minimum value you expect to measure. This value is in the units you specify with a units property. When you query this property, it returns the coerced voltage minimum value that the device can measure with the current settings.
+#define DAQmx_AI_CalculatedPowerCurrent_Max                              0x31EF // Specifies the current maximum value you expect to measure. This value is in the units you specify with a units property. When you query this property, it returns the coerced current maximum value that the device can measure with the current settings.
+#define DAQmx_AI_CalculatedPowerCurrent_Min                              0x31F0 // Specifies the current minimum value you expect to measure. This value is in the units you specify with a units property. When you query this property, it returns the coerced current minimum value that the device can measure with the current settings.
 #define DAQmx_AI_SoundPressure_MaxSoundPressureLvl                       0x223A // Specifies the maximum instantaneous sound pressure level you expect to measure. This value is in decibels, referenced to 20 micropascals. NI-DAQmx uses the maximum sound pressure level to calculate values in pascals for Maximum Value and Minimum Value for the channel.
 #define DAQmx_AI_SoundPressure_Units                                     0x1528 // Specifies the units to use to return sound pressure measurements from the channel.
 #define DAQmx_AI_SoundPressure_dBRef                                     0x29B1 // Specifies the decibel reference level in the units of the channel. When you read samples as a waveform, the decibel reference level is included in the waveform attributes. NI-DAQmx also uses the decibel reference level when converting Maximum Sound Pressure Level to a voltage level.
@@ -713,7 +718,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_Pwr_OutputEnable                                           0x31D6 // Specifies whether to enable or disable power module output. Can be set while a task is running. Can be read at any time during a task. When a task is running, the output is enabled immediately. Otherwise, the output is not enabled until the task enters the Committed state.
 #define DAQmx_Pwr_OutputState                                            0x31D7 // Indicates power channel operating state. Can be read at any time during a task.
 #define DAQmx_Pwr_IdleOutputBehavior                                     0x31D8 // Specifies whether to disable the output or maintain the existing value after the task is uncommitted.
-#define DAQmx_Pwr_RemoteSense                                            0x31DB // Specifies whether to use local or remote sense to sense the output voltage. DAQmx Read (Power) will return remote or local voltage based on the Remote Sense attribute value. Reading this property will return the user-defined value.
+#define DAQmx_Pwr_RemoteSense                                            0x31DB // Specifies whether to use local or remote sense to sense the output voltage. DAQmx Read (Power Supply) will return remote or local voltage based on the Remote Sense attribute value. Reading this property will return the user-defined value.
 #define DAQmx_ChanType                                                   0x187F // Indicates the type of the virtual channel.
 #define DAQmx_PhysicalChanName                                           0x18F5 // Specifies the name of the physical channel upon which this virtual channel is based.
 #define DAQmx_ChanDescr                                                  0x1926 // Specifies a user-defined description for the channel.
@@ -732,6 +737,11 @@ typedef uInt32             CalHandle;
 #define DAQmx_Carrier_SerialNum                                          0x2A8A // Indicates the serial number of the device carrier. This value is zero if the carrier does not have a serial number.
 #define DAQmx_FieldDAQ_DevName                                           0x3171 // Indicates the parent device which this bank is located in.
 #define DAQmx_FieldDAQ_BankDevNames                                      0x3178 // Indicates an array containing the names of the banks in the FieldDAQ.
+#define DAQmx_Dev_IDPin_PinNames                                         0x31F1 // xx Indicates the names of all the ID Pins on this device.
+#define DAQmx_Dev_IDPin_PinStatuses                                      0x31F2 // xx Indicates status of each ID Pin.
+#define DAQmx_Dev_IDPin_MemFamilyCodes                                   0x31F3 // xx Indicates the family code of the memory connected to each ID Pin. Each array element corresponds to an ID Pin. The array contains 0 for each ID Pin with no memory connected.
+#define DAQmx_Dev_IDPin_MemSerialNums                                    0x31F4 // xx Indicates the serial number of the memory connected to each ID Pin. Each array element corresponds to an ID Pin. The array contains an empty string for each ID Pin with no memory connected.
+#define DAQmx_Dev_IDPin_MemSizes                                         0x31F5 // xx Indicates the size in bytes of the memory connected to each ID Pin. Each array element corresponds to an ID Pin. The array contains 0 for each ID Pin with no memory connected.
 #define DAQmx_Dev_Chassis_ModuleDevNames                                 0x29B6 // Indicates an array containing the names of the modules in the chassis.
 #define DAQmx_Dev_AnlgTrigSupported                                      0x2984 // Indicates if the device supports analog triggering.
 #define DAQmx_Dev_DigTrigSupported                                       0x2985 // Indicates if the device supports digital triggering.
@@ -915,6 +925,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_PhysicalChan_DO_SampModes                                  0x2FE1 // Indicates the sample modes supported by devices that support sample clocked digital output.
 #define DAQmx_PhysicalChan_CI_SupportedMeasTypes                         0x2FDA // Indicates the measurement types supported by the channel.
 #define DAQmx_PhysicalChan_CO_SupportedOutputTypes                       0x2FDB // Indicates the output types supported by the channel.
+#define DAQmx_PhysicalChan_Dig_PortLogicFamily                           0x31EB // Specifies the digital port logic family to use for acquisition and generation. A logic family corresponds to voltage thresholds that are compatible with a group of voltage standards. Refer to the device documentation for information on the logic high and logic low voltages for these logic families.
 #define DAQmx_PhysicalChan_TEDS_MfgID                                    0x21DA // Indicates the manufacturer ID of the sensor.
 #define DAQmx_PhysicalChan_TEDS_ModelNum                                 0x21DB // Indicates the model number of the sensor.
 #define DAQmx_PhysicalChan_TEDS_SerialNum                                0x21DC // Indicates the serial number of the sensor.
@@ -1451,6 +1462,12 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_ArmStartTrigger                                         14641 // Arm Start Trigger
 #define DAQmx_Val_FirstSampleTimestamp                                    16130 // First Sample Timestamp
 
+//*** Value set for bridge configuration for 11637 calibration functions ***
+#define DAQmx_Val_FullBridge                                              10182 // Full Bridge
+#define DAQmx_Val_HalfBridge                                              10187 // Half Bridge
+#define DAQmx_Val_QuarterBridge120OhmCompletionResistor                   16163 // Quarter Bridge 120 Ohm Completion Resistor
+#define DAQmx_Val_QuarterBridge350OhmCompletionResistor                   16164 // Quarter Bridge 350 Ohm Completion Resistor
+
 //*** Value for the Terminal Config parameter of DAQmxCreateAIVoltageChan, DAQmxCreateAICurrentChan and DAQmxCreateAIVoltageChanWithExcit ***
 #define DAQmx_Val_Cfg_Default                                             -1 // Default
 //*** Value for the Shunt Resistor Location parameter of DAQmxCreateAICurrentChan ***
@@ -1547,6 +1564,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_TEDS_Sensor                                             12531 // TEDS Sensor
 #define DAQmx_Val_Charge                                                  16105 // Charge
 #define DAQmx_Val_Power                                                   16201 // Power
+#define DAQmx_Val_Calculated_Power                                        16204 // CalculatedPower
 
 //*** Values for DAQmx_AO_IdleOutputBehavior ***
 //*** Value set AOIdleOutputBehavior ***
@@ -2011,6 +2029,11 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_WaitForHandshakeTriggerAssert                           12550 // Wait For Handshake Trigger Assert
 #define DAQmx_Val_WaitForHandshakeTriggerDeassert                         12551 // Wait For Handshake Trigger Deassert
 
+//*** Values for DAQmx_Dev_IDPin_PinStatuses ***
+//*** Value set IDPinStatus ***
+#define DAQmx_Val_MemoryNotPresent                                        16205 // Memory Not Present
+#define DAQmx_Val_MemoryPresent                                           16206 // Memory Present
+
 
 //*** Values for DAQmx_AI_DataXferReqCond ***
 //*** Values for DAQmx_DI_DataXferReqCond ***
@@ -2097,7 +2120,9 @@ typedef uInt32             CalHandle;
 
 //*** Values for DAQmx_DI_LogicFamily ***
 //*** Values for DAQmx_DO_LogicFamily ***
+//*** Values for DAQmx_PhysicalChan_Dig_PortLogicFamily ***
 //*** Value set LogicFamily ***
+#define DAQmx_Val_1point8V                                                16184 // 1.8 V
 #define DAQmx_Val_2point5V                                                14620 // 2.5 V
 #define DAQmx_Val_3point3V                                                14621 // 3.3 V
 #define DAQmx_Val_5V                                                      14619 // 5.0 V
@@ -2171,6 +2196,11 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_Overvoltage                                             15502 // Overvoltage
 #define DAQmx_Val_OutputDisabled                                          15503 // Output Disabled
 
+//*** Values for DAQmx_AI_Power_Units ***
+//*** Value set PowerUnits ***
+#define DAQmx_Val_Watts                                                   16203 // Watts
+#define DAQmx_Val_FromCustomScale                                         10065 // From Custom Scale
+
 //*** Values for DAQmx_AI_Pressure_Units ***
 //*** Value set PressureUnits ***
 #define DAQmx_Val_Pascals                                                 10081 // Pascals
@@ -2204,6 +2234,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_FieldDAQ                                                16151 // FieldDAQ
 #define DAQmx_Val_TestScaleChassis                                        16180 // TestScale Chassis
 #define DAQmx_Val_TestScaleModule                                         16181 // TestScale Module
+#define DAQmx_Val_mioDAQ                                                  16182 // mioDAQ
 #define DAQmx_Val_Unknown                                                 12588 // Unknown
 
 //*** Values for DAQmx_AI_RTD_Type ***
@@ -2722,6 +2753,10 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_Remote                                                  16096 // Remote
 
 
+
+
+
+
 /******************************************************************************
  *** NI-DAQmx Function Declarations *******************************************
  ******************************************************************************/
@@ -2759,6 +2794,7 @@ typedef int32 (CVICALLBACK *DAQmxSignalEventCallbackPtr)(TaskHandle taskHandle, 
 
 int32 __CFUNC     DAQmxRegisterEveryNSamplesEvent(TaskHandle task, int32 everyNsamplesEventType, uInt32 nSamples, uInt32 options, DAQmxEveryNSamplesEventCallbackPtr callbackFunction, void *callbackData);
 int32 __CFUNC     DAQmxRegisterDoneEvent         (TaskHandle task, uInt32 options, DAQmxDoneEventCallbackPtr callbackFunction, void *callbackData);
+// For possible values for parameter signalID see value set Signal2 in Values section above.
 int32 __CFUNC     DAQmxRegisterSignalEvent       (TaskHandle task, int32 signalID, uInt32 options, DAQmxSignalEventCallbackPtr callbackFunction, void *callbackData);
 
 /******************************************************/
@@ -2915,7 +2951,9 @@ int32 __CFUNC     DAQmxCfgDigPatternStartTrig    (TaskHandle taskHandle, const c
 int32 __CFUNC     DAQmxDisableRefTrig            (TaskHandle taskHandle);
 int32 __CFUNC     DAQmxCfgDigEdgeRefTrig         (TaskHandle taskHandle, const char triggerSource[], int32 triggerEdge, uInt32 pretriggerSamples);
 int32 __CFUNC     DAQmxCfgAnlgEdgeRefTrig        (TaskHandle taskHandle, const char triggerSource[], int32 triggerSlope, float64 triggerLevel, uInt32 pretriggerSamples);
+// Note: This function is deprecated.  Use DAQmxCfgAnlgMultiEdgeRefTrigEx instead.
 int32 __CFUNC     DAQmxCfgAnlgMultiEdgeRefTrig   (TaskHandle taskHandle, const char triggerSources[], const int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 pretriggerSamples, uInt32 arraySize);
+int32 __CFUNC     DAQmxCfgAnlgMultiEdgeRefTrigEx (TaskHandle taskHandle, const char triggerSources[], const int32 triggerSlopeArray[], const float64 triggerLevelArray[], uInt32 arraySize, uInt32 pretriggerSamples);
 int32 __CFUNC     DAQmxCfgAnlgWindowRefTrig      (TaskHandle taskHandle, const char triggerSource[], int32 triggerWhen, float64 windowTop, float64 windowBottom, uInt32 pretriggerSamples);
 int32 __CFUNC     DAQmxCfgDigPatternRefTrig      (TaskHandle taskHandle, const char triggerSource[], const char triggerPattern[], int32 triggerWhen, uInt32 pretriggerSamples);
 
@@ -3062,6 +3100,8 @@ int32 __CFUNC     DAQmxResetBufferAttribute      (TaskHandle taskHandle, int32 a
 
 
 int32 __CFUNC     DAQmxSwitchCreateScanList      (const char scanList[], TaskHandle *taskHandle);
+
+int32 __CFUNC     DAQmxSwitchCreateScanListEx(const char taskName[], const char scanList[], TaskHandle *taskHandle);
 
 int32 __CFUNC     DAQmxSwitchConnect             (const char switchChannel1[], const char switchChannel2[], bool32 waitForSettling);
 int32 __CFUNC     DAQmxSwitchConnectMulti        (const char connectionList[], bool32 waitForSettling);
@@ -3345,7 +3385,9 @@ int32 __CFUNC     DAQmxPerformStrainShuntCalEx   (TaskHandle taskHandle, const c
 int32 __CFUNC     DAQmxPerformBridgeShuntCal     (TaskHandle taskHandle, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, float64 bridgeResistance, bool32 skipUnsupportedChannels);
 int32 __CFUNC     DAQmxPerformBridgeShuntCalEx   (TaskHandle taskHandle, const char channel[], float64 shuntResistorValue, int32 shuntResistorLocation, int32 shuntResistorSelect, int32 shuntResistorSource, float64 bridgeResistance, bool32 skipUnsupportedChannels);
 int32 __CFUNC     DAQmxGetSelfCalLastDateAndTime (const char deviceName[], uInt32 *year, uInt32 *month, uInt32 *day, uInt32 *hour, uInt32 *minute);
+int32 __CFUNC     DAQmxGetSelfCalLastDateAndTimeEx (const char deviceName[], CVIAbsoluteTime *timestamp);
 int32 __CFUNC     DAQmxGetExtCalLastDateAndTime  (const char deviceName[], uInt32 *year, uInt32 *month, uInt32 *day, uInt32 *hour, uInt32 *minute);
+int32 __CFUNC     DAQmxGetExtCalLastDateAndTimeEx  (const char deviceName[], CVIAbsoluteTime *timestamp);
 int32 __CFUNC     DAQmxRestoreLastExtCalConst    (const char deviceName[]);
 
 int32 __CFUNC     DAQmxESeriesCalAdjust          (CalHandle calHandle, float64 referenceVoltage);
@@ -3354,6 +3396,7 @@ int32 __CFUNC     DAQmxSSeriesCalAdjust          (CalHandle calHandle, float64 r
 int32 __CFUNC     DAQmxSCBaseboardCalAdjust      (CalHandle calHandle, float64 referenceVoltage);
 int32 __CFUNC     DAQmxAOSeriesCalAdjust         (CalHandle calHandle, float64 referenceVoltage);
 int32 __CFUNC     DAQmxXSeriesCalAdjust          (CalHandle calHandle, float64 referenceVoltage);
+int32 __CFUNC     DAQmxAdjust64xxCal             (CalHandle calHandle, float64 referenceVoltage);
 
 int32 __CFUNC     DAQmxDeviceSupportsCal         (const char deviceName[], bool32 *calSupported);
 
@@ -3446,6 +3489,7 @@ int32 __CFUNC     DAQmxAdjust9202Cal(CalHandle calHandle, const char channelName
 int32 __CFUNC     DAQmxGet9203CalAdjustPoints(CalHandle calHandle, float64 rangeMin, float64 rangeMax, float64* adjustmentPoints, uInt32 bufferSize);
 int32 __CFUNC     DAQmxAdjust9203GainCal(CalHandle calHandle, const char channelNames[], float64 rangeMin, float64 rangeMax, float64 value);
 int32 __CFUNC     DAQmxAdjust9203OffsetCal(CalHandle calHandle, const char channelNames[], float64 rangeMin, float64 rangeMax);
+int32 __CFUNC     DAQmxAdjust9204Cal(CalHandle calHandle, float64 value);
 int32 __CFUNC     DAQmxAdjust9205Cal(CalHandle calHandle, float64 value);
 int32 __CFUNC     DAQmxAdjust9206Cal(CalHandle calHandle, float64 value);
 int32 __CFUNC     DAQmxGet9207CalAdjustPoints(CalHandle calHandle, const char channelNames[], float64* adjustmentPoints, uInt32 bufferSize);
@@ -3635,6 +3679,13 @@ int32 __CFUNC_C   DAQmxGetPhysicalChanAttribute  (const char physicalChannel[], 
 
 
 /******************************************************/
+/***                    ID Pin                      ***/
+/******************************************************/
+
+int32 __CFUNC     DAQmxWriteIDPinMemory (const char deviceName[], const char idPinName[], const uInt8 data[], uInt32 arraySize, uInt32 formatCode);
+int32 __CFUNC     DAQmxReadIDPinMemory (const char deviceName[], const char idPinName[], uInt8 data[], uInt32 arraySize, uInt32* dataLengthRead, uInt32* formatCode);
+
+/******************************************************/
 /***                  Real-Time                     ***/
 /******************************************************/
 
@@ -3669,9 +3720,13 @@ int32 __CFUNC_C   DAQmxGetPersistedScaleAttribute(const char scaleName[], int32 
 
 int32 __CFUNC_C   DAQmxGetSystemInfoAttribute    (int32 attribute, void *value, ...);
 int32 __CFUNC_C   DAQmxSetDigitalPowerUpStates   (const char deviceName[], const char channelNames[], int32 state, ...);
+int32 __CFUNC     DAQmxSetDigitalPowerUpStatesEx (const char channelNames[], const int32 stateArray[], uInt32 arraySize);
 int32 __CFUNC_C   DAQmxGetDigitalPowerUpStates   (const char deviceName[], const char channelName[], int32* state, ...);
+int32 __CFUNC     DAQmxGetDigitalPowerUpStatesEx (const char channelNames[], int32 stateArray[], uInt32 *arraySizePtr);
 int32 __CFUNC_C   DAQmxSetDigitalPullUpPullDownStates   (const char deviceName[], const char channelName[], int32 state, ...);
+int32 __CFUNC     DAQmxSetDigitalPullUpPullDownStatesEx (const char channelNames[], const int32 stateArray[], uInt32 arraySize);
 int32 __CFUNC_C   DAQmxGetDigitalPullUpPullDownStates   (const char deviceName[], const char channelName[], int32* state, ...);
+int32 __CFUNC     DAQmxGetDigitalPullUpPullDownStatesEx (const char channelNames[], int32 stateArray[], uInt32 *arraySizePtr);
 int32 __CFUNC_C   DAQmxSetAnalogPowerUpStates    (const char deviceName[], const char channelNames[], float64 state, int32 channelType, ...);
 int32 __CFUNC_C   DAQmxSetAnalogPowerUpStatesWithOutputType (const char channelNames[], const float64 stateArray[], const int32 channelTypeArray[], uInt32 arraySize);
 int32 __CFUNC_C   DAQmxGetAnalogPowerUpStates    (const char deviceName[], const char channelName[], float64* state, int32 channelType, ...);
@@ -3949,6 +4004,27 @@ int32 __CFUNC DAQmxResetAIEddyCurrentProxProbeSensitivity(TaskHandle taskHandle,
 int32 __CFUNC DAQmxGetAIEddyCurrentProxProbeSensitivityUnits(TaskHandle taskHandle, const char channel[], int32 *data);
 int32 __CFUNC DAQmxSetAIEddyCurrentProxProbeSensitivityUnits(TaskHandle taskHandle, const char channel[], int32 data);
 int32 __CFUNC DAQmxResetAIEddyCurrentProxProbeSensitivityUnits(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_AI_Power_Units ***
+// Uses value set PowerUnits
+int32 __CFUNC DAQmxGetAIPowerUnits(TaskHandle taskHandle, const char channel[], int32 *data);
+int32 __CFUNC DAQmxSetAIPowerUnits(TaskHandle taskHandle, const char channel[], int32 data);
+int32 __CFUNC DAQmxResetAIPowerUnits(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_AI_CalculatedPowerVoltage_Max ***
+int32 __CFUNC DAQmxGetAICalculatedPowerVoltageMax(TaskHandle taskHandle, const char channel[], float64 *data);
+int32 __CFUNC DAQmxSetAICalculatedPowerVoltageMax(TaskHandle taskHandle, const char channel[], float64 data);
+int32 __CFUNC DAQmxResetAICalculatedPowerVoltageMax(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_AI_CalculatedPowerVoltage_Min ***
+int32 __CFUNC DAQmxGetAICalculatedPowerVoltageMin(TaskHandle taskHandle, const char channel[], float64 *data);
+int32 __CFUNC DAQmxSetAICalculatedPowerVoltageMin(TaskHandle taskHandle, const char channel[], float64 data);
+int32 __CFUNC DAQmxResetAICalculatedPowerVoltageMin(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_AI_CalculatedPowerCurrent_Max ***
+int32 __CFUNC DAQmxGetAICalculatedPowerCurrentMax(TaskHandle taskHandle, const char channel[], float64 *data);
+int32 __CFUNC DAQmxSetAICalculatedPowerCurrentMax(TaskHandle taskHandle, const char channel[], float64 data);
+int32 __CFUNC DAQmxResetAICalculatedPowerCurrentMax(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_AI_CalculatedPowerCurrent_Min ***
+int32 __CFUNC DAQmxGetAICalculatedPowerCurrentMin(TaskHandle taskHandle, const char channel[], float64 *data);
+int32 __CFUNC DAQmxSetAICalculatedPowerCurrentMin(TaskHandle taskHandle, const char channel[], float64 data);
+int32 __CFUNC DAQmxResetAICalculatedPowerCurrentMin(TaskHandle taskHandle, const char channel[]);
 //*** Set/Get functions for DAQmx_AI_SoundPressure_MaxSoundPressureLvl ***
 int32 __CFUNC DAQmxGetAISoundPressureMaxSoundPressureLvl(TaskHandle taskHandle, const char channel[], float64 *data);
 int32 __CFUNC DAQmxSetAISoundPressureMaxSoundPressureLvl(TaskHandle taskHandle, const char channel[], float64 data);
@@ -6167,6 +6243,17 @@ int32 __CFUNC DAQmxGetCarrierSerialNum(const char device[], uInt32 *data);
 int32 __CFUNC DAQmxGetFieldDAQDevName(const char device[], char *data, uInt32 bufferSize);
 //*** Set/Get functions for DAQmx_FieldDAQ_BankDevNames ***
 int32 __CFUNC DAQmxGetFieldDAQBankDevNames(const char device[], char *data, uInt32 bufferSize);
+//*** Set/Get functions for DAQmx_Dev_IDPin_PinNames ***
+int32 __CFUNC DAQmxGetDevIDPinPinNames(const char device[], char *data, uInt32 bufferSize);
+//*** Set/Get functions for DAQmx_Dev_IDPin_PinStatuses ***
+// Uses value set IDPinStatus
+int32 __CFUNC DAQmxGetDevIDPinPinStatuses(const char device[], int32 *data, uInt32 arraySizeInElements);
+//*** Set/Get functions for DAQmx_Dev_IDPin_MemFamilyCodes ***
+int32 __CFUNC DAQmxGetDevIDPinMemFamilyCodes(const char device[], uInt32 *data, uInt32 arraySizeInElements);
+//*** Set/Get functions for DAQmx_Dev_IDPin_MemSerialNums ***
+int32 __CFUNC DAQmxGetDevIDPinMemSerialNums(const char device[], char *data, uInt32 bufferSize);
+//*** Set/Get functions for DAQmx_Dev_IDPin_MemSizes ***
+int32 __CFUNC DAQmxGetDevIDPinMemSizes(const char device[], uInt32 *data, uInt32 arraySizeInElements);
 //*** Set/Get functions for DAQmx_Dev_Chassis_ModuleDevNames ***
 int32 __CFUNC DAQmxGetDevChassisModuleDevNames(const char device[], char *data, uInt32 bufferSize);
 //*** Set/Get functions for DAQmx_Dev_AnlgTrigSupported ***
@@ -6678,6 +6765,11 @@ int32 __CFUNC DAQmxGetPhysicalChanCISupportedMeasTypes(const char physicalChanne
 //*** Set/Get functions for DAQmx_PhysicalChan_CO_SupportedOutputTypes ***
 // Uses value set COOutputType
 int32 __CFUNC DAQmxGetPhysicalChanCOSupportedOutputTypes(const char physicalChannel[], int32 *data, uInt32 arraySizeInElements);
+//*** Set/Get functions for DAQmx_PhysicalChan_Dig_PortLogicFamily ***
+// Uses value set LogicFamily
+int32 __CFUNC DAQmxGetPhysicalChanDigPortLogicFamily(const char physicalChannel[], int32 *data);
+int32 __CFUNC DAQmxSetPhysicalChanDigPortLogicFamily(const char physicalChannel[], int32 data);
+int32 __CFUNC DAQmxResetPhysicalChanDigPortLogicFamily(const char physicalChannel[]);
 //*** Set/Get functions for DAQmx_PhysicalChan_TEDS_MfgID ***
 int32 __CFUNC DAQmxGetPhysicalChanTEDSMfgID(const char physicalChannel[], uInt32 *data);
 //*** Set/Get functions for DAQmx_PhysicalChan_TEDS_ModelNum ***
@@ -8070,6 +8162,22 @@ int32 __CFUNC DAQmxResetSampClkTimingResponseMode(TaskHandle taskHandle);
 #define DAQmxFailed(error)                            ((error)<0)
 
 // Error and Warning Codes
+#define DAQmxErrorIDPinNoEEPROM                                                         (-209904)
+#define DAQmxErrorIDPinNameInvalid                                                      (-209903)
+#define DAQmxErrorIDPinDataWriteError                                                   (-209902)
+#define DAQmxErrorIDPinUnsupportedFormatCode                                            (-209901)
+#define DAQmxErrorIDPinDataTooLarge                                                     (-209900)
+#define DAQmxErrorIDPinUnsupportedFamilyCode                                            (-209899)
+#define DAQmxErrorPropertyNotSpecdForEntirePort                                         (-209898)
+#define DAQmxErrorCannotSetPropertyWhenDAQmxTaskRunning                                 (-209897)
+#define DAQmxErrorAttrNotSupportedUsePhysicalChannelProperty                            (-209896)
+#define DAQmxErrorAICalculatedPowerMinMaxAttrNotSupported                               (-209895)
+#define DAQmxErrorAIMinMaxAttrWriteNotSupportedForCalcPower                             (-209894)
+#define DAQmxErrorPowerVoltageAndCurrentConfigurationMismatch                           (-209893)
+#define DAQmxErrorVoltageAndCurrentChannelsNotSameDevice                                (-209892)
+#define DAQmxErrorVoltageAndCurrentChannelCountMismatch                                 (-209891)
+#define DAQmxErrorBreakpointModesInconsistent                                           (-209890)
+#define DAQmxErrorNeedsUsbSuperSpeed                                                    (-209889)
 #define DAQmxErrorRemoteSense                                                           (-209888)
 #define DAQmxErrorOverTemperatureProtectionActivated                                    (-209887)
 #define DAQmxErrorMultiTaskCfgSampRateNotSupportedWithPropSet                           (-209886)
