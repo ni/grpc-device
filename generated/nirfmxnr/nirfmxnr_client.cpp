@@ -525,7 +525,7 @@ analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& in
 }
 
 AnalyzeNWaveformsIQResponse
-analyze_n_waveforms_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const std::vector<pb::int32>& iq_size, const pb::int32& reset)
+analyze_n_waveforms_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const std::vector<pb::int32>& iq_sizes, const pb::int32& reset)
 {
   ::grpc::ClientContext context;
 
@@ -536,7 +536,7 @@ analyze_n_waveforms_iq(const StubPtr& stub, const nidevice_grpc::Session& instru
   copy_array(x0, request.mutable_x0());
   copy_array(dx, request.mutable_dx());
   copy_array(iq, request.mutable_iq());
-  copy_array(iq_size, request.mutable_iq_size());
+  copy_array(iq_sizes, request.mutable_iq_sizes());
   request.set_reset(reset);
 
   auto response = AnalyzeNWaveformsIQResponse{};
@@ -549,7 +549,7 @@ analyze_n_waveforms_iq(const StubPtr& stub, const nidevice_grpc::Session& instru
 }
 
 AnalyzeNWaveformsIQSplitResponse
-analyze_n_waveforms_iq_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const std::vector<pb::int32>& iq_size, const pb::int32& reset)
+analyze_n_waveforms_iq_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const std::vector<pb::int32>& iq_sizes, const pb::int32& reset)
 {
   ::grpc::ClientContext context;
 
@@ -561,7 +561,7 @@ analyze_n_waveforms_iq_split(const StubPtr& stub, const nidevice_grpc::Session& 
   copy_array(dx, request.mutable_dx());
   copy_array(iqi, request.mutable_iqi());
   copy_array(iqq, request.mutable_iqq());
-  copy_array(iq_size, request.mutable_iq_size());
+  copy_array(iq_sizes, request.mutable_iq_sizes());
   request.set_reset(reset);
 
   auto response = AnalyzeNWaveformsIQSplitResponse{};
@@ -574,7 +574,7 @@ analyze_n_waveforms_iq_split(const StubPtr& stub, const nidevice_grpc::Session& 
 }
 
 AnalyzeNWaveformsSpectrumResponse
-analyze_n_waveforms_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& spectrum, const std::vector<pb::int32>& spectrum_size, const pb::int32& reset)
+analyze_n_waveforms_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& spectrum, const std::vector<pb::int32>& spectrum_sizes, const pb::int32& reset)
 {
   ::grpc::ClientContext context;
 
@@ -585,7 +585,7 @@ analyze_n_waveforms_spectrum(const StubPtr& stub, const nidevice_grpc::Session& 
   copy_array(x0, request.mutable_x0());
   copy_array(dx, request.mutable_dx());
   copy_array(spectrum, request.mutable_spectrum());
-  copy_array(spectrum_size, request.mutable_spectrum_size());
+  copy_array(spectrum_sizes, request.mutable_spectrum_sizes());
   request.set_reset(reset);
 
   auto response = AnalyzeNWaveformsSpectrumResponse{};

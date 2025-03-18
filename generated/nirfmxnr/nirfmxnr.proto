@@ -1792,7 +1792,7 @@ message AnalyzeNWaveformsIQRequest {
   repeated double x0 = 4;
   repeated double dx = 5;
   repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
-  repeated int32 iq_size = 7;
+  repeated int32 iq_sizes = 7;
   int32 reset = 8;
 }
 
@@ -1808,7 +1808,7 @@ message AnalyzeNWaveformsIQSplitRequest {
   repeated double dx = 5;
   repeated float iqi = 6;
   repeated float iqq = 7;
-  repeated int32 iq_size = 8;
+  repeated int32 iq_sizes = 8;
   int32 reset = 9;
 }
 
@@ -1823,7 +1823,7 @@ message AnalyzeNWaveformsSpectrumRequest {
   repeated double x0 = 4;
   repeated double dx = 5;
   repeated float spectrum = 6;
-  repeated int32 spectrum_size = 7;
+  repeated int32 spectrum_sizes = 7;
   int32 reset = 8;
 }
 

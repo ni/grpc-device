@@ -851,9 +851,6 @@ functions = {
                 'name': 'x0',
                 'size': {
                     'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -863,9 +860,6 @@ functions = {
                 'name': 'dx',
                 'size': {
                     'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -874,22 +868,17 @@ functions = {
                 'direction': 'in',
                 'name': 'iq',
                 'size': {
-                    'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
-                    'value': 'arraySize'
+                    'mechanism': 'two-dimension',
+                    'value': 'iqSize'
                 },
                 'type': 'NIComplexSingle[]'
             },
             {
                 'direction': 'in',
+                'grpc_name': 'iq_sizes',
                 'name': 'iqSize',
                 'size': {
                     'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
                     'value': 'arraySize'
                 },
                 'type': 'int32[]'
@@ -975,6 +964,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'iq_sizes',
                 'name': 'iqSize',
                 'size': {
                     'mechanism': 'len',
@@ -1021,9 +1011,6 @@ functions = {
                 'name': 'x0',
                 'size': {
                     'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -1033,9 +1020,6 @@ functions = {
                 'name': 'dx',
                 'size': {
                     'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
                     'value': 'arraySize'
                 },
                 'type': 'float64[]'
@@ -1044,22 +1028,17 @@ functions = {
                 'direction': 'in',
                 'name': 'spectrum',
                 'size': {
-                    'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
-                    'value': 'arraySize'
+                    'mechanism': 'two-dimension',
+                    'value': 'spectrumSize'
                 },
                 'type': 'float32[]'
             },
             {
                 'direction': 'in',
+                'grpc_name': 'spectrum_sizes',
                 'name': 'spectrumSize',
                 'size': {
                     'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
                     'value': 'arraySize'
                 },
                 'type': 'int32[]'
