@@ -22,6 +22,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
 
   ::grpc::Status check_function_exists(std::string functionName);
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
+  int32 AutoDetectvCalOrientation(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildCalkitString(char selectorString[], char calkitID[], int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildCalstepString(char selectorString[], int32 calstepNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
@@ -168,8 +169,8 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
   int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
   int32 GetMeasurementMemoryNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char measurementMemoryNames[]) override;
-  int32 GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x[], int32 arraySize, int32* actualArraySize) override;
-  int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize) override;
+  int32 GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementMemoryX[], int32 arraySize, int32* actualArraySize) override;
+  int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 measurementMemoryY1[], float32 measurementMemoryY2[], int32 arraySize, int32* actualArraySize) override;
   int32 IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize) override;
   int32 IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize) override;
   int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) override;
@@ -228,6 +229,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
 
  private:
   using AbortMeasurementsPtr = decltype(&RFmxVNA_AbortMeasurements);
+  using AutoDetectvCalOrientationPtr = decltype(&RFmxVNA_AutoDetectvCalOrientation);
   using BuildCalibrationElementStringPtr = decltype(&RFmxVNA_BuildCalibrationElementString);
   using BuildCalkitStringPtr = decltype(&RFmxVNA_BuildCalkitString);
   using BuildCalstepStringPtr = decltype(&RFmxVNA_BuildCalstepString);
@@ -434,6 +436,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
 
   typedef struct FunctionPointers {
     AbortMeasurementsPtr AbortMeasurements;
+    AutoDetectvCalOrientationPtr AutoDetectvCalOrientation;
     BuildCalibrationElementStringPtr BuildCalibrationElementString;
     BuildCalkitStringPtr BuildCalkitString;
     BuildCalstepStringPtr BuildCalstepString;

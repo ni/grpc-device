@@ -35,6 +35,24 @@ abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument
   return response;
 }
 
+AutoDetectvCalOrientationResponse
+auto_detectv_cal_orientation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AutoDetectvCalOrientationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = AutoDetectvCalOrientationResponse{};
+
+  raise_if_error(
+      stub->AutoDetectvCalOrientation(&context, request, &response),
+      context);
+
+  return response;
+}
+
 BuildCalibrationElementStringResponse
 build_calibration_element_string(const StubPtr& stub, const std::string& selector_string, const std::string& calibration_element_id)
 {

@@ -321,7 +321,7 @@ attributes = {
     },
     13631571: {
         'access': 'read-write',
-        'name': 'NUMBER_OF_FREQUENCY_POINTS',
+        'name': 'NUMBER_OF_POINTS',
         'type': 'int32'
     },
     13631572: {
@@ -380,6 +380,65 @@ attributes = {
     13631582: {
         'access': 'read-write',
         'name': 'CORRECTION_PORT_EXTENSION_LOSS2',
+        'type': 'float64'
+    },
+    13631583: {
+        'access': 'read-write',
+        'enum': 'CorrectionPortExtensionDelayDomain',
+        'name': 'CORRECTION_PORT_EXTENSION_DELAY_DOMAIN',
+        'type': 'int32'
+    },
+    13631584: {
+        'access': 'read-write',
+        'name': 'CORRECTION_PORT_EXTENSION_DISTANCE',
+        'type': 'float64'
+    },
+    13631585: {
+        'access': 'read-write',
+        'enum': 'CorrectionPortExtensionDistanceUnit',
+        'name': 'CORRECTION_PORT_EXTENSION_DISTANCE_UNIT',
+        'type': 'int32'
+    },
+    13631586: {
+        'access': 'read-write',
+        'name': 'CORRECTION_PORT_EXTENSION_VELOCITY_FACTOR',
+        'type': 'float64'
+    },
+    13631587: {
+        'access': 'read-write',
+        'name': 'READY_FOR_TRIGGER_EVENT_OUTPUT_TERMINAL',
+        'type': 'char[]'
+    },
+    13631588: {
+        'access': 'read-write',
+        'name': 'READY_FOR_TRIGGER_EVENT_TERMINAL_NAME',
+        'type': 'char[]'
+    },
+    13631589: {
+        'access': 'read-write',
+        'enum': 'ReadyForTriggerEventLevel',
+        'name': 'READY_FOR_TRIGGER_EVENT_LEVEL',
+        'type': 'int32'
+    },
+    13631590: {
+        'access': 'read-write',
+        'name': 'INDEX_EVENT_OUTPUT_TERMINAL',
+        'type': 'char[]'
+    },
+    13631591: {
+        'access': 'read-write',
+        'name': 'INDEX_EVENT_TERMINAL_NAME',
+        'type': 'char[]'
+    },
+    13631592: {
+        'access': 'read-write',
+        'enum': 'IndexEventLevel',
+        'name': 'INDEX_EVENT_LEVEL',
+        'type': 'int32'
+    },
+    13631600: {
+        'access': 'read-write',
+        'name': 'TRIGGER_DELAY',
         'type': 'float64'
     },
     13633536: {
@@ -461,11 +520,6 @@ attributes = {
         'name': 'SPARAMS_SNP_PORTS',
         'type': 'char[]'
     },
-    13635607: {
-        'access': 'read-write',
-        'name': 'SPARAMS_PARAMETER',
-        'type': 'char[]'
-    },
     13635608: {
         'access': 'read-write',
         'enum': 'SParamsCorrectionState',
@@ -477,6 +531,17 @@ attributes = {
         'enum': 'IQCorrectionState',
         'name': 'IQ_RESULTS_CORRECTION_STATE',
         'type': 'int32'
+    },
+    13635610: {
+        'access': 'read-write',
+        'enum': 'SParamsMathFunction',
+        'name': 'SPARAMS_MATH_FUNCTION',
+        'type': 'int32'
+    },
+    13635611: {
+        'access': 'read-write',
+        'name': 'SPARAMS_MATH_ACTIVE_MEASUREMENT_MEMORY',
+        'type': 'char[]'
     },
     13639680: {
         'access': 'read-write',
@@ -537,11 +602,6 @@ attributes = {
     13639693: {
         'access': 'read-write',
         'name': 'GROUND_TERMINATED_PORTS',
-        'type': 'char[]'
-    },
-    13639698: {
-        'access': 'read-write',
-        'name': 'WAVES_PARAMETER',
         'type': 'char[]'
     },
     13639699: {

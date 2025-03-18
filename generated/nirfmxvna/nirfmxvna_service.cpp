@@ -72,6 +72,30 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::AutoDetectvCalOrientation(::grpc::ServerContext* context, const AutoDetectvCalOrientationRequest* request, AutoDetectvCalOrientationResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->AutoDetectvCalOrientation(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::BuildCalibrationElementString(::grpc::ServerContext* context, const BuildCalibrationElementStringRequest* request, BuildCalibrationElementStringResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5015,10 +5039,10 @@ namespace nirfmxvna_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
-        response->mutable_x()->Resize(actual_array_size, 0);
-        float64* x = response->mutable_x()->mutable_data();
+        response->mutable_measurement_memory_x()->Resize(actual_array_size, 0);
+        float64* measurement_memory_x = response->mutable_measurement_memory_x()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->GetMeasurementMemoryXData(instrument, selector_string, x, array_size, &actual_array_size);
+        status = library_->GetMeasurementMemoryXData(instrument, selector_string, measurement_memory_x, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5027,7 +5051,7 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->mutable_x()->Resize(actual_array_size, 0);
+        response->mutable_measurement_memory_x()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
@@ -5055,12 +5079,12 @@ namespace nirfmxvna_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
-        response->mutable_y1()->Resize(actual_array_size, 0);
-        float32* y1 = response->mutable_y1()->mutable_data();
-        response->mutable_y2()->Resize(actual_array_size, 0);
-        float32* y2 = response->mutable_y2()->mutable_data();
+        response->mutable_measurement_memory_y1()->Resize(actual_array_size, 0);
+        float32* measurement_memory_y1 = response->mutable_measurement_memory_y1()->mutable_data();
+        response->mutable_measurement_memory_y2()->Resize(actual_array_size, 0);
+        float32* measurement_memory_y2 = response->mutable_measurement_memory_y2()->mutable_data();
         auto array_size = actual_array_size;
-        status = library_->GetMeasurementMemoryYData(instrument, selector_string, y1, y2, array_size, &actual_array_size);
+        status = library_->GetMeasurementMemoryYData(instrument, selector_string, measurement_memory_y1, measurement_memory_y2, array_size, &actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -5069,8 +5093,8 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->mutable_y1()->Resize(actual_array_size, 0);
-        response->mutable_y2()->Resize(actual_array_size, 0);
+        response->mutable_measurement_memory_y1()->Resize(actual_array_size, 0);
+        response->mutable_measurement_memory_y2()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }

@@ -18,6 +18,7 @@ namespace unit {
 class NiRFmxVNAMockLibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
  public:
   MOCK_METHOD(int32, AbortMeasurements, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
+  MOCK_METHOD(int32, AutoDetectvCalOrientation, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
   MOCK_METHOD(int32, BuildCalibrationElementString, (char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildCalkitString, (char selectorString[], char calkitID[], int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildCalstepString, (char selectorString[], int32 calstepNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
@@ -164,8 +165,8 @@ class NiRFmxVNAMockLibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   MOCK_METHOD(int32, GetError, (niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
   MOCK_METHOD(int32, GetErrorString, (niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
   MOCK_METHOD(int32, GetMeasurementMemoryNames, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char measurementMemoryNames[]), (override));
-  MOCK_METHOD(int32, GetMeasurementMemoryXData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x[], int32 arraySize, int32* actualArraySize), (override));
-  MOCK_METHOD(int32, GetMeasurementMemoryYData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, GetMeasurementMemoryXData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementMemoryX[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, GetMeasurementMemoryYData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float32 measurementMemoryY1[], float32 measurementMemoryY2[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, IQFetchData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, IQFetchDataSplit, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, Initialize, (char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession), (override));

@@ -327,6 +327,34 @@ enums = {
             }
         ]
     },
+    'CorrectionPortExtensionDelayDomain': {
+        'values': [
+            {
+                'name': 'DELAY',
+                'value': 0
+            },
+            {
+                'name': 'DISTANCE',
+                'value': 1
+            }
+        ]
+    },
+    'CorrectionPortExtensionDistanceUnit': {
+        'values': [
+            {
+                'name': 'METERS',
+                'value': 0
+            },
+            {
+                'name': 'FEET',
+                'value': 1
+            },
+            {
+                'name': 'INCHES',
+                'value': 2
+            }
+        ]
+    },
     'CorrectionPortExtensionEnabled': {
         'values': [
             {
@@ -490,6 +518,18 @@ enums = {
             {
                 'name': 'SETTINGS_MODIFIED',
                 'value': 3
+            }
+        ]
+    },
+    'IndexEventLevel': {
+        'values': [
+            {
+                'name': 'ACTIVE_HIGH',
+                'value': 0
+            },
+            {
+                'name': 'ACTIVE_LOW',
+                'value': 1
             }
         ]
     },
@@ -746,6 +786,18 @@ enums = {
             }
         ]
     },
+    'ReadyForTriggerEventLevel': {
+        'values': [
+            {
+                'name': 'ACTIVE_HIGH',
+                'value': 0
+            },
+            {
+                'name': 'ACTIVE_LOW',
+                'value': 1
+            }
+        ]
+    },
     'RestoreConfiguration': {
         'values': [
             {
@@ -831,6 +883,30 @@ enums = {
             {
                 'name': 'LINEAR',
                 'value': 1
+            }
+        ]
+    },
+    'SParamsMathFunction': {
+        'values': [
+            {
+                'name': 'OFF',
+                'value': 0
+            },
+            {
+                'name': 'ADD',
+                'value': 1
+            },
+            {
+                'name': 'SUBTRACT',
+                'value': 2
+            },
+            {
+                'name': 'MULTIPLY',
+                'value': 3
+            },
+            {
+                'name': 'DIVIDE',
+                'value': 4
             }
         ]
     },

@@ -28,6 +28,7 @@ NiRFmxVNALibrary::NiRFmxVNALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
     return;
   }
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxVNA_AbortMeasurements"));
+  function_pointers_.AutoDetectvCalOrientation = reinterpret_cast<AutoDetectvCalOrientationPtr>(shared_library_->get_function_pointer("RFmxVNA_AutoDetectvCalOrientation"));
   function_pointers_.BuildCalibrationElementString = reinterpret_cast<BuildCalibrationElementStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildCalibrationElementString"));
   function_pointers_.BuildCalkitString = reinterpret_cast<BuildCalkitStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildCalkitString"));
   function_pointers_.BuildCalstepString = reinterpret_cast<BuildCalstepStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildCalstepString"));
@@ -250,6 +251,14 @@ int32 NiRFmxVNALibrary::AbortMeasurements(niRFmxInstrHandle instrumentHandle, ch
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_AbortMeasurements.");
   }
   return function_pointers_.AbortMeasurements(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::AutoDetectvCalOrientation(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.AutoDetectvCalOrientation) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_AutoDetectvCalOrientation.");
+  }
+  return function_pointers_.AutoDetectvCalOrientation(instrumentHandle, selectorString);
 }
 
 int32 NiRFmxVNALibrary::BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[])
@@ -1420,20 +1429,20 @@ int32 NiRFmxVNALibrary::GetMeasurementMemoryNames(niRFmxInstrHandle instrumentHa
   return function_pointers_.GetMeasurementMemoryNames(instrumentHandle, selectorString, arraySize, measurementMemoryNames);
 }
 
-int32 NiRFmxVNALibrary::GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxVNALibrary::GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementMemoryX[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetMeasurementMemoryXData) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetMeasurementMemoryXData.");
   }
-  return function_pointers_.GetMeasurementMemoryXData(instrumentHandle, selectorString, x, arraySize, actualArraySize);
+  return function_pointers_.GetMeasurementMemoryXData(instrumentHandle, selectorString, measurementMemoryX, arraySize, actualArraySize);
 }
 
-int32 NiRFmxVNALibrary::GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxVNALibrary::GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 measurementMemoryY1[], float32 measurementMemoryY2[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.GetMeasurementMemoryYData) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_GetMeasurementMemoryYData.");
   }
-  return function_pointers_.GetMeasurementMemoryYData(instrumentHandle, selectorString, y1, y2, arraySize, actualArraySize);
+  return function_pointers_.GetMeasurementMemoryYData(instrumentHandle, selectorString, measurementMemoryY1, measurementMemoryY2, arraySize, actualArraySize);
 }
 
 int32 NiRFmxVNALibrary::IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)

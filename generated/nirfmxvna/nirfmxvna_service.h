@@ -45,6 +45,7 @@ public:
   virtual ~NiRFmxVNAService();
 
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
+  ::grpc::Status AutoDetectvCalOrientation(::grpc::ServerContext* context, const AutoDetectvCalOrientationRequest* request, AutoDetectvCalOrientationResponse* response) override;
   ::grpc::Status BuildCalibrationElementString(::grpc::ServerContext* context, const BuildCalibrationElementStringRequest* request, BuildCalibrationElementStringResponse* response) override;
   ::grpc::Status BuildCalkitString(::grpc::ServerContext* context, const BuildCalkitStringRequest* request, BuildCalkitStringResponse* response) override;
   ::grpc::Status BuildCalstepString(::grpc::ServerContext* context, const BuildCalstepStringRequest* request, BuildCalstepStringResponse* response) override;
