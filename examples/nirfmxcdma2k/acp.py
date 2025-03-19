@@ -26,7 +26,7 @@ Getting Started:
 To run this example, install "RFmx CDMA2k" on the server machine.
 Link: https://www.ni.com/en-us/support/downloads/software-products/download.rfmx-cdma2k.html
 
-For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a 
+For instructions on how to use protoc to generate gRPC client interfaces, see our "Creating a
 gRPC Client" wiki page.
 Link: https://github.com/ni/grpc-device/wiki/Creating-a-gRPC-Client
 

@@ -19526,6 +19526,83 @@ functions = {
         'supports_streaming': True,
         'timeout_error': 'DAQmxErrorSamplesNotYetAvailable'
     },
+    'ReadIDPinMemory': {
+        'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'ctypes.c_char_p',
+            'cvi_name': 'deviceName',
+            'python_accessor': 'self._name'
+        },
+        'parameters': [
+            {
+                'ctypes_data_type': 'ctypes.c_char_p',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'deviceName',
+                'python_data_type': 'str',
+                'python_description': 'Specifies the name of the physical device.',
+                'python_type_annotation': 'str',
+                'type': 'const char[]',
+                'use_in_python_api': False
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_char_p',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'idPinName',
+                'python_data_type': 'str',
+                'python_description': 'Is the name of the ID Pin to access (ex: id0)',
+                'python_type_annotation': 'str',
+                'type': 'const char[]'
+            },
+            {
+                'ctypes_data_type': 'numpy.uint8',
+                'direction': 'out',
+                'has_explicit_buffer_size': True,
+                'is_list': True,
+                'is_optional_in_python': False,
+                'name': 'data',
+                'python_data_type': 'int',
+                'python_description': 'Returns the 1D list of 8-bit unsigned integers read from the ID Pin memory',
+                'python_type_annotation': 'List[int]',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'arraySize'
+                },
+                'type': 'uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32',
+                'use_in_python_api': False
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_uint',
+                'direction': 'out',
+                'is_optional_in_python': False,
+                'name': 'dataLengthRead',
+                'python_data_type': 'int',
+                'python_description': 'Returns the 1D list of 8-bit unsigned integers read from the ID Pin memory',
+                'python_type_annotation': 'int',
+                'type': 'uInt32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_uint',
+                'direction': 'out',
+                'is_optional_in_python': False,
+                'name': 'formatCode',
+                'python_data_type': 'int',
+                'python_description': 'Returns the format code read from the memory. Use this when interpreting the data read.',
+                'python_type_annotation': 'int',
+                'type': 'uInt32'
+            }
+        ],
+        'python_class_name': 'Device',
+        'python_codegen_method': 'CustomCode',
+        'python_description': 'Reads and returns the data stored in the memory attached to the specified ID Pin.',
+        'returns': 'int32'
+    },
     'ReadPowerBinaryI16': {
         'calling_convention': 'StdCall',
         'parameters': [
@@ -25619,6 +25696,72 @@ functions = {
         'python_codegen_method': 'CustomCode',
         'returns': 'int32',
         'supports_streaming': True
+    },
+    'WriteIDPinMemory': {
+        'calling_convention': 'StdCall',
+        'handle_parameter': {
+            'ctypes_data_type': 'ctypes.c_char_p',
+            'cvi_name': 'deviceName',
+            'python_accessor': 'self._name'
+        },
+        'parameters': [
+            {
+                'ctypes_data_type': 'ctypes.c_char_p',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'deviceName',
+                'python_data_type': 'str',
+                'python_description': 'Specifies the name of the physical device.',
+                'python_type_annotation': 'str',
+                'type': 'const char[]',
+                'use_in_python_api': False
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_char_p',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'idPinName',
+                'python_data_type': 'str',
+                'python_description': 'Is the name of the ID Pin to access (ex: id0)',
+                'python_type_annotation': 'str',
+                'type': 'const char[]'
+            },
+            {
+                'ctypes_data_type': 'numpy.uint8',
+                'direction': 'in',
+                'has_explicit_buffer_size': True,
+                'is_list': True,
+                'is_optional_in_python': False,
+                'name': 'data',
+                'python_data_type': 'int',
+                'python_description': 'Is the 1D list of 8-bit unsigned integers to write to the memory',
+                'python_type_annotation': 'List[int]',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'const uInt8[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'uInt32',
+                'use_in_python_api': False
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_uint',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'formatCode',
+                'python_data_type': 'int',
+                'python_description': 'Specifies the type and structure of the data being written. User to define the meaning of the format code.',
+                'python_type_annotation': 'int',
+                'type': 'uInt32'
+            }
+        ],
+        'python_class_name': 'Device',
+        'python_description': 'Writes the supplied data and format code to the EEPROM connected to the specified ID pin.',
+        'returns': 'int32'
     },
     'WriteRaw': {
         'calling_convention': 'StdCall',
