@@ -285,13 +285,13 @@ attributes = {
     },
     10485818: {
         'access': 'read-write',
-        'enum': 'OfdmEhtSigCompressionEnabled',
-        'name': 'OFDM_EHT_SIG_COMPRESSION_ENABLED',
+        'enum': 'OfdmSigCompressionEnabled',
+        'name': 'OFDM_SIG_COMPRESSION_ENABLED',
         'type': 'int32'
     },
     10485819: {
         'access': 'read-write',
-        'name': 'OFDM_NUMBER_OF_EHT_SIG_SYMBOLS',
+        'name': 'OFDM_NUMBER_OF_SIG_SYMBOLS',
         'type': 'int32'
     },
     10485820: {
@@ -303,6 +303,23 @@ attributes = {
     10485821: {
         'access': 'read-write',
         'name': 'OFDM_SCRAMBLER_SEED',
+        'type': 'int32'
+    },
+    10485823: {
+        'access': 'read-write',
+        'enum': 'OfdmRUType',
+        'name': 'OFDM_RU_TYPE',
+        'type': 'int32'
+    },
+    10485824: {
+        'access': 'read-write',
+        'name': 'OFDM_DISTRIBUTION_BANDWIDTH',
+        'type': 'float64'
+    },
+    10485825: {
+        'access': 'read-write',
+        'enum': 'Ofdm2xLdpcEnabled',
+        'name': 'OFDM_2xLDPC_ENABLED',
         'type': 'int32'
     },
     10489852: {
@@ -1662,6 +1679,17 @@ attributes = {
         'access': 'read-write',
         'enum': 'OfdmModAccCommonPilotErrorScalingReference',
         'name': 'OFDMMODACC_COMMON_PILOT_ERROR_SCALING_REFERENCE',
+        'type': 'int32'
+    },
+    10502354: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_UHR_SIG_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    10502355: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccUhrSigCrcStatus',
+        'name': 'OFDMMODACC_RESULTS_UHR_SIG_CRC_STATUS',
         'type': 'int32'
     },
     10506240: {

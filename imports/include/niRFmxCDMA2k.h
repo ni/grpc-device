@@ -275,6 +275,15 @@
 #define RFMXCDMA2K_VAL_PXI_STAR_STR                                                                   "PXI_STAR"
 #define RFMXCDMA2K_VAL_PXIE_DSTARB_STR                                                                "PXIe_DStarB"
 #define RFMXCDMA2K_VAL_TIMER_EVENT_STR                                                                "TimerEvent"
+#define RFMXCDMA2K_VAL_PULSE_IN_STR                                                                   "PulseIn"
+#define RFMXCDMA2K_VAL_DIO_PFI0_STR                                                                   "DIO/PFI0"
+#define RFMXCDMA2K_VAL_DIO_PFI1_STR                                                                   "DIO/PFI1"
+#define RFMXCDMA2K_VAL_DIO_PFI2_STR                                                                   "DIO/PFI2"
+#define RFMXCDMA2K_VAL_DIO_PFI3_STR                                                                   "DIO/PFI3"
+#define RFMXCDMA2K_VAL_DIO_PFI4_STR                                                                   "DIO/PFI4"
+#define RFMXCDMA2K_VAL_DIO_PFI5_STR                                                                   "DIO/PFI5"
+#define RFMXCDMA2K_VAL_DIO_PFI6_STR                                                                   "DIO/PFI6"
+#define RFMXCDMA2K_VAL_DIO_PFI7_STR                                                                   "DIO/PFI7"
 
 // Values for RFMXCDMA2K_ATTR_DIGITAL_EDGE_TRIGGER_EDGE
 #define RFMXCDMA2K_VAL_DIGITAL_EDGE_RISING_EDGE                                                       0

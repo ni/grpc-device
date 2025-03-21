@@ -15,6 +15,22 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AutoDetectvCalOrientation': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'BuildCalibrationElementString': {
         'parameters': [
             {
@@ -3982,7 +3998,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'x',
+                'name': 'measurementMemoryX',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',
@@ -4018,7 +4034,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'y1',
+                'name': 'measurementMemoryY1',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',
@@ -4028,7 +4044,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'y2',
+                'name': 'measurementMemoryY2',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',

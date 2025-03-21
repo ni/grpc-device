@@ -181,6 +181,12 @@ attributes = {
         'name': 'CHANNEL_SOUNDING_NUMBER_OF_ANTENNA_PATH',
         'type': 'int32'
     },
+    11534392: {
+        'access': 'read-write',
+        'enum': 'HighDataThroughputPacketFormat',
+        'name': 'HIGH_DATA_THROUGHPUT_PACKET_FORMAT',
+        'type': 'int32'
+    },
     11538428: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',
@@ -617,6 +623,11 @@ attributes = {
     11550776: {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_PAYLOAD_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    11550777: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_FRACTIONAL_TIME_OFFSET_MEAN',
         'type': 'float64'
     },
     11554816: {

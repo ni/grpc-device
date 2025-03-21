@@ -12,6 +12,11 @@ int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[
   return RFmxVNA_AbortMeasurements(instrumentHandle, selectorString);
 }
 
+int32 AutoDetectvCalOrientation(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_AutoDetectvCalOrientation(instrumentHandle, selectorString);
+}
+
 int32 BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[])
 {
   return RFmxVNA_BuildCalibrationElementString(selectorString, calibrationElementID, selectorStringOutLength, selectorStringOut);
@@ -742,14 +747,14 @@ int32 GetMeasurementMemoryNames(niRFmxInstrHandle instrumentHandle, char selecto
   return RFmxVNA_GetMeasurementMemoryNames(instrumentHandle, selectorString, arraySize, measurementMemoryNames);
 }
 
-int32 GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x[], int32 arraySize, int32* actualArraySize)
+int32 GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementMemoryX[], int32 arraySize, int32* actualArraySize)
 {
-  return RFmxVNA_GetMeasurementMemoryXData(instrumentHandle, selectorString, x, arraySize, actualArraySize);
+  return RFmxVNA_GetMeasurementMemoryXData(instrumentHandle, selectorString, measurementMemoryX, arraySize, actualArraySize);
 }
 
-int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize)
+int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 measurementMemoryY1[], float32 measurementMemoryY2[], int32 arraySize, int32* actualArraySize)
 {
-  return RFmxVNA_GetMeasurementMemoryYData(instrumentHandle, selectorString, y1, y2, arraySize, actualArraySize);
+  return RFmxVNA_GetMeasurementMemoryYData(instrumentHandle, selectorString, measurementMemoryY1, measurementMemoryY2, arraySize, actualArraySize);
 }
 
 int32 IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)

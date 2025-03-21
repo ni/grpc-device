@@ -2471,5 +2471,10 @@ attributes = {
         'enum': 'LimitedConfigurationChange',
         'name': 'LIMITED_CONFIGURATION_CHANGE',
         'type': 'int32'
+    },
+    9490435: {
+        'access': 'read-write',
+        'name': 'NUMBER_OF_RECEIVE_CHAINS',
+        'type': 'int32'
     }
 }

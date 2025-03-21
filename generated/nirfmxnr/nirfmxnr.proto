@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXNR API metadata version 25.0.0
+// This file is generated from NI-RFMXNR API metadata version 25.3.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXNR Metadata
 //---------------------------------------------------------------------
@@ -40,6 +40,9 @@ service NiRFmxNR {
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
   rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
+  rpc AnalyzeNWaveformsIQ(AnalyzeNWaveformsIQRequest) returns (AnalyzeNWaveformsIQResponse);
+  rpc AnalyzeNWaveformsIQSplit(AnalyzeNWaveformsIQSplitRequest) returns (AnalyzeNWaveformsIQSplitResponse);
+  rpc AnalyzeNWaveformsSpectrum(AnalyzeNWaveformsSpectrumRequest) returns (AnalyzeNWaveformsSpectrumResponse);
   rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildBandwidthPartString(BuildBandwidthPartStringRequest) returns (BuildBandwidthPartStringResponse);
@@ -75,6 +78,7 @@ service NiRFmxNR {
   rpc CfgRF(CfgRFRequest) returns (CfgRFResponse);
   rpc CfgRFAttenuation(CfgRFAttenuationRequest) returns (CfgRFAttenuationResponse);
   rpc CfgReferenceLevel(CfgReferenceLevelRequest) returns (CfgReferenceLevelResponse);
+  rpc CfgSelectedPortsMultiple(CfgSelectedPortsMultipleRequest) returns (CfgSelectedPortsMultipleResponse);
   rpc CfgSoftwareEdgeTrigger(CfgSoftwareEdgeTriggerRequest) returns (CfgSoftwareEdgeTriggerResponse);
   rpc CfggNodeBCategory(CfggNodeBCategoryRequest) returns (CfggNodeBCategoryResponse);
   rpc CheckMeasurementStatus(CheckMeasurementStatusRequest) returns (CheckMeasurementStatusResponse);
@@ -726,6 +730,7 @@ enum NiRFmxNRAttribute {
   NIRFMXNR_ATTRIBUTE_RESULT_FETCH_TIMEOUT = 9486336;
   NIRFMXNR_ATTRIBUTE_ACQUISITION_BANDWIDTH_OPTIMIZATION_ENABLED = 9490433;
   NIRFMXNR_ATTRIBUTE_LIMITED_CONFIGURATION_CHANGE = 9490434;
+  NIRFMXNR_ATTRIBUTE_NUMBER_OF_RECEIVE_CHAINS = 9490435;
 }
 
 enum AcpAveragingEnabled {
@@ -832,6 +837,15 @@ enum DigitalEdgeTriggerSource {
   DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
   DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
   DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PULSE_IN = 14;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI0 = 15;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI1 = 16;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI2 = 17;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI3 = 18;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI4 = 19;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI5 = 20;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI6 = 21;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI7 = 22;
 }
 
 enum FrequencyReferenceSource {
@@ -1460,6 +1474,15 @@ enum NiRFmxNRStringAttributeValuesMapped {
   NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
   NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
   NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PULSE_IN = 14;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI0 = 15;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI1 = 16;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI2 = 17;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI3 = 18;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI4 = 19;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI5 = 20;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI6 = 21;
+  NIRFMXNR_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI7 = 22;
 }
 
 message ACPCfgAveragingRequest {
@@ -1759,6 +1782,52 @@ message AnalyzeIQ1WaveformSplitRequest {
 }
 
 message AnalyzeIQ1WaveformSplitResponse {
+  int32 status = 1;
+}
+
+message AnalyzeNWaveformsIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  repeated double x0 = 4;
+  repeated double dx = 5;
+  repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
+  repeated int32 iq_sizes = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeNWaveformsIQResponse {
+  int32 status = 1;
+}
+
+message AnalyzeNWaveformsIQSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  repeated double x0 = 4;
+  repeated double dx = 5;
+  repeated float iqi = 6;
+  repeated float iqq = 7;
+  repeated int32 iq_sizes = 8;
+  int32 reset = 9;
+}
+
+message AnalyzeNWaveformsIQSplitResponse {
+  int32 status = 1;
+}
+
+message AnalyzeNWaveformsSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  repeated double x0 = 4;
+  repeated double dx = 5;
+  repeated float spectrum = 6;
+  repeated int32 spectrum_sizes = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeNWaveformsSpectrumResponse {
   int32 status = 1;
 }
 
@@ -2186,6 +2255,16 @@ message CfgReferenceLevelRequest {
 }
 
 message CfgReferenceLevelResponse {
+  int32 status = 1;
+}
+
+message CfgSelectedPortsMultipleRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string selected_ports = 3;
+}
+
+message CfgSelectedPortsMultipleResponse {
   int32 status = 1;
 }
 

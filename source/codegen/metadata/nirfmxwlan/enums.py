@@ -65,6 +65,42 @@ enums = {
             {
                 'name': 'TIMER_EVENT',
                 'value': 'TimerEvent'
+            },
+            {
+                'name': 'PULSE_IN',
+                'value': 'PulseIn'
+            },
+            {
+                'name': 'DIO_PFI0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'name': 'DIO_PFI1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'name': 'DIO_PFI2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'name': 'DIO_PFI3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'name': 'DIO_PFI4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'name': 'DIO_PFI5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'name': 'DIO_PFI6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'name': 'DIO_PFI7',
+                'value': 'DIO/PFI7'
             }
         ]
     },
@@ -417,6 +453,18 @@ enums = {
             }
         ]
     },
+    'Ofdm2xLdpcEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'OfdmAutoPhaseRotationDetectionEnabled': {
         'values': [
             {
@@ -442,18 +490,6 @@ enums = {
         ]
     },
     'OfdmDcmEnabled': {
-        'values': [
-            {
-                'name': 'FALSE',
-                'value': 0
-            },
-            {
-                'name': 'TRUE',
-                'value': 1
-            }
-        ]
-    },
-    'OfdmEhtSigCompressionEnabled': {
         'values': [
             {
                 'name': 'FALSE',
@@ -1157,6 +1193,23 @@ enums = {
             }
         ]
     },
+    'OfdmModAccUhrSigCrcStatus': {
+        'enum-value-prefix': 'OFDMMODACC_UHR_SIG_CRC_STATUS',
+        'values': [
+            {
+                'name': 'NOT_APPLICABLE',
+                'value': -1
+            },
+            {
+                'name': 'FAIL',
+                'value': 0
+            },
+            {
+                'name': 'PASS',
+                'value': 1
+            }
+        ]
+    },
     'OfdmModAccUnusedToneErrorMaskReference': {
         'enum-value-prefix': 'OFDMMODACC_UNUSED_TONE_ERROR_MASK_REFERENCE',
         'values': [
@@ -1268,6 +1321,30 @@ enums = {
         ]
     },
     'OfdmPreamblePuncturingEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'OfdmRUType': {
+        'values': [
+            {
+                'name': 'RRU',
+                'value': 0
+            },
+            {
+                'name': 'DRU',
+                'value': 1
+            }
+        ]
+    },
+    'OfdmSigCompressionEnabled': {
         'values': [
             {
                 'name': 'FALSE',
@@ -1505,6 +1582,10 @@ enums = {
             {
                 'name': '802_11_BE',
                 'value': 7
+            },
+            {
+                'name': '802_11_BN',
+                'value': 8
             },
             {
                 'name': 'UNKNOWN',

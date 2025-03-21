@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-rfmxpulse API metadata version 25.0.0
+// This file is generated from NI-rfmxpulse API metadata version 25.3.0
 //---------------------------------------------------------------------
 // Proto file for the NI-rfmxpulse Metadata
 //---------------------------------------------------------------------
@@ -528,6 +528,15 @@ enum NiRFmxPulseStringAttributeValuesMapped {
   NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
   NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
   NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
+  NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PULSE_IN = 14;
+  NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI0 = 15;
+  NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI1 = 16;
+  NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI2 = 17;
+  NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI3 = 18;
+  NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI4 = 19;
+  NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI5 = 20;
+  NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI6 = 21;
+  NIRFMXPULSE_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI7 = 22;
 }
 
 message AbortMeasurementsRequest {

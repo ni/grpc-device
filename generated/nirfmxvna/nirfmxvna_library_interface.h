@@ -16,6 +16,7 @@ class NiRFmxVNALibraryInterface {
   virtual ~NiRFmxVNALibraryInterface() {}
 
   virtual int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
+  virtual int32 AutoDetectvCalOrientation(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
   virtual int32 BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 BuildCalkitString(char selectorString[], char calkitID[], int32 selectorStringOutLength, char selectorStringOut[]) = 0;
   virtual int32 BuildCalstepString(char selectorString[], int32 calstepNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
@@ -162,8 +163,8 @@ class NiRFmxVNALibraryInterface {
   virtual int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;
   virtual int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;
   virtual int32 GetMeasurementMemoryNames(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char measurementMemoryNames[]) = 0;
-  virtual int32 GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x[], int32 arraySize, int32* actualArraySize) = 0;
-  virtual int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 y1[], float32 y2[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementMemoryX[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 measurementMemoryY1[], float32 measurementMemoryY2[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) = 0;

@@ -44,6 +44,9 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved) override;
+  int32 AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset) override;
+  int32 AnalyzeNWaveformsIQSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iqi[], float32 iqq[], int32 iqSize[], int32 arraySize, int32 reset) override;
+  int32 AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset) override;
   int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) override;
   int32 BuildBandwidthPartString(char selectorString[], int32 bandwidthPartNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
@@ -79,6 +82,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   int32 CfgRF(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 centerFrequency, float64 referenceLevel, float64 externalAttenuation) override;
   int32 CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue) override;
   int32 CfgReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 referenceLevel) override;
+  int32 CfgSelectedPortsMultiple(niRFmxInstrHandle instrumentHandle, char selectorString[], char selectedPorts[]) override;
   int32 CfgSoftwareEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 triggerDelay, int32 enableTrigger) override;
   int32 CfggNodeBCategory(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 gNodeBCategory) override;
   int32 CheckMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* isDone) override;
@@ -287,6 +291,9 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   using AbortMeasurementsPtr = decltype(&RFmxNR_AbortMeasurements);
   using AnalyzeIQ1WaveformPtr = decltype(&RFmxNR_AnalyzeIQ1Waveform);
   using AnalyzeIQ1WaveformSplitPtr = decltype(&RFmxNR_AnalyzeIQ1WaveformSplit);
+  using AnalyzeNWaveformsIQPtr = decltype(&RFmxNR_AnalyzeNWaveformsIQ);
+  using AnalyzeNWaveformsIQSplitPtr = decltype(&RFmxNR_AnalyzeNWaveformsIQSplit);
+  using AnalyzeNWaveformsSpectrumPtr = decltype(&RFmxNR_AnalyzeNWaveformsSpectrum);
   using AnalyzeSpectrum1WaveformPtr = decltype(&RFmxNR_AnalyzeSpectrum1Waveform);
   using AutoLevelPtr = decltype(&RFmxNR_AutoLevel);
   using BuildBandwidthPartStringPtr = decltype(&RFmxNR_BuildBandwidthPartString);
@@ -322,6 +329,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   using CfgRFPtr = decltype(&RFmxNR_CfgRF);
   using CfgRFAttenuationPtr = decltype(&RFmxNR_CfgRFAttenuation);
   using CfgReferenceLevelPtr = decltype(&RFmxNR_CfgReferenceLevel);
+  using CfgSelectedPortsMultiplePtr = decltype(&RFmxNR_CfgSelectedPortsMultiple);
   using CfgSoftwareEdgeTriggerPtr = decltype(&RFmxNR_CfgSoftwareEdgeTrigger);
   using CfggNodeBCategoryPtr = decltype(&RFmxNR_CfggNodeBCategory);
   using CheckMeasurementStatusPtr = decltype(&RFmxNR_CheckMeasurementStatus);
@@ -530,6 +538,9 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     AbortMeasurementsPtr AbortMeasurements;
     AnalyzeIQ1WaveformPtr AnalyzeIQ1Waveform;
     AnalyzeIQ1WaveformSplitPtr AnalyzeIQ1WaveformSplit;
+    AnalyzeNWaveformsIQPtr AnalyzeNWaveformsIQ;
+    AnalyzeNWaveformsIQSplitPtr AnalyzeNWaveformsIQSplit;
+    AnalyzeNWaveformsSpectrumPtr AnalyzeNWaveformsSpectrum;
     AnalyzeSpectrum1WaveformPtr AnalyzeSpectrum1Waveform;
     AutoLevelPtr AutoLevel;
     BuildBandwidthPartStringPtr BuildBandwidthPartString;
@@ -565,6 +576,7 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     CfgRFPtr CfgRF;
     CfgRFAttenuationPtr CfgRFAttenuation;
     CfgReferenceLevelPtr CfgReferenceLevel;
+    CfgSelectedPortsMultiplePtr CfgSelectedPortsMultiple;
     CfgSoftwareEdgeTriggerPtr CfgSoftwareEdgeTrigger;
     CfggNodeBCategoryPtr CfggNodeBCategory;
     CheckMeasurementStatusPtr CheckMeasurementStatus;

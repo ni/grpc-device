@@ -52,6 +52,7 @@
 #define RFMXBT_ATTR_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT                                           0x00b00033
 #define RFMXBT_ATTR_CHANNEL_SOUNDING_NUMBER_OF_ANTENNA_PATH                                        0x00b00036
 #define RFMXBT_ATTR_CHANNEL_SOUNDING_ANTENNA_SWITCH_TIME                                           0x00b00035
+#define RFMXBT_ATTR_HIGH_DATA_THROUGHPUT_PACKET_FORMAT                                             0x00b00038
 #define RFMXBT_ATTR_CHANNEL_NUMBER                                                                 0x00b00017
 #define RFMXBT_ATTR_DETECTED_PACKET_TYPE                                                           0x00b00019
 #define RFMXBT_ATTR_DETECTED_DATA_RATE                                                             0x00b0002a
@@ -103,6 +104,7 @@
 #define RFMXBT_ATTR_MODACC_RESULTS_IQ_ORIGIN_OFFSET_MEAN                                           0x00b04023
 #define RFMXBT_ATTR_MODACC_RESULTS_CLOCK_DRIFT_MEAN                                                0x00b04032
 #define RFMXBT_ATTR_MODACC_RESULTS_PREAMBLE_START_TIME_MEAN                                        0x00b04033
+#define RFMXBT_ATTR_MODACC_RESULTS_FRACTIONAL_TIME_OFFSET_MEAN                                     0x00b04039
 #define RFMXBT_ATTR_ACP_MEASUREMENT_ENABLED                                                        0x00b05000
 #define RFMXBT_ATTR_ACP_OFFSET_CHANNEL_MODE                                                        0x00b05002
 #define RFMXBT_ATTR_ACP_NUMBER_OF_OFFSETS                                                          0x00b05003
@@ -199,6 +201,15 @@
 #define RFMXBT_VAL_PXI_STAR_STR                                                                   "PXI_STAR"
 #define RFMXBT_VAL_PXIE_DSTARB_STR                                                                "PXIe_DStarB"
 #define RFMXBT_VAL_TIMER_EVENT_STR                                                                "TimerEvent"
+#define RFMXBT_VAL_PULSE_IN_STR                                                                   "PulseIn"
+#define RFMXBT_VAL_DIO_PFI0_STR                                                                   "DIO/PFI0"
+#define RFMXBT_VAL_DIO_PFI1_STR                                                                   "DIO/PFI1"
+#define RFMXBT_VAL_DIO_PFI2_STR                                                                   "DIO/PFI2"
+#define RFMXBT_VAL_DIO_PFI3_STR                                                                   "DIO/PFI3"
+#define RFMXBT_VAL_DIO_PFI4_STR                                                                   "DIO/PFI4"
+#define RFMXBT_VAL_DIO_PFI5_STR                                                                   "DIO/PFI5"
+#define RFMXBT_VAL_DIO_PFI6_STR                                                                   "DIO/PFI6"
+#define RFMXBT_VAL_DIO_PFI7_STR                                                                   "DIO/PFI7"
 
 // Values for RFMXBT_ATTR_DIGITAL_EDGE_TRIGGER_EDGE
 #define RFMXBT_VAL_DIGITAL_EDGE_RISING_EDGE                                                       0
@@ -267,6 +278,11 @@
 // Values for RFMXBT_ATTR_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT
 #define RFMXBT_VAL_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_DISABLED                                  0
 #define RFMXBT_VAL_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT_ENABLED                                   1
+
+// Values for RFMXBT_ATTR_HIGH_DATA_THROUGHPUT_PACKET_FORMAT
+#define RFMXBT_VAL_HIGH_DATA_THROUGHPUT_PACKET_FORMAT_SHORT_FORMAT                                0
+#define RFMXBT_VAL_HIGH_DATA_THROUGHPUT_PACKET_FORMAT_FORMAT0                                     1
+#define RFMXBT_VAL_HIGH_DATA_THROUGHPUT_PACKET_FORMAT_FORMAT1                                     2
 
 // Values for RFMXBT_ATTR_MODACC_BURST_SYNCHRONIZATION_TYPE
 #define RFMXBT_VAL_MODACC_BURST_SYNCHRONIZATION_TYPE_NONE                                         0
@@ -1888,6 +1904,18 @@ int32 __stdcall RFmxBT_SetChannelSoundingAntennaSwitchTime(
    float64 attrVal
 );
 
+int32 __stdcall RFmxBT_GetHighDataThroughputPacketFormat(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetHighDataThroughputPacketFormat(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxBT_GetChannelNumber(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2273,6 +2301,12 @@ int32 __stdcall RFmxBT_ModAccGetResultsClockDriftMean(
 );
 
 int32 __stdcall RFmxBT_ModAccGetResultsPreambleStartTimeMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsFractionalTimeOffsetMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
