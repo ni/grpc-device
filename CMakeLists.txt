@@ -14,11 +14,15 @@ endif()
 if(MSVC)
   add_definitions(-D_WIN32_WINNT=0x600)
   add_definitions(-DNOMINMAX) # Disable ancient min and max macros in Windows.h
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4267 /wd4244") # Disable possible loss of precision warnings
-else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 endif()
+
+#----------------------------------------------------------------------
+# Use C++17 (needed for shared_mutex support on Linux)
+#----------------------------------------------------------------------
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 # Enforce consistent runtime library settings in case of MSVC
 if (CMAKE_CXX_COMPILER_ID STREQUAL "MSVC")
@@ -115,13 +119,6 @@ else()
 endif()
 
 enable_testing()
-
-#----------------------------------------------------------------------
-# Use C++17 (needed for shared_mutex support on Linux)
-#----------------------------------------------------------------------
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS OFF)
 
 #----------------------------------------------------------------------
 # Include generated *.pb.h files
@@ -312,7 +309,9 @@ function(GenerateGrpcSources)
   list(GET output_files 0 proto_srcs)
   get_filename_component(proto_out_path "${proto_srcs}" PATH)
   string(FIND "${proto_name}" "nixnetsocket" generating_nixnetsocket)
-  if(generating_nixnetsocket EQUAL -1)
+  # If generating nixnetsocket on Windows apply the winsock2 compatibility fix after codegen.
+  # Else do normal codegen.
+  if(MSVC AND (NOT generating_nixnetsocket EQUAL -1))
     add_custom_command(
       OUTPUT ${output_files}
       COMMAND ${_PROTOBUF_PROTOC}
@@ -323,6 +322,9 @@ function(GenerateGrpcSources)
         -I ${CMAKE_SOURCE_DIR}/imports/protobuf
         --plugin=protoc-gen-grpc=${_GRPC_CPP_PLUGIN_EXECUTABLE}
         ${proto_file}
+      COMMAND ${CMAKE_COMMAND} -E echo \#include \"custom/xnetsocket_winsock2_compatibility.h\" > ${proto_srcs_dir}/nixnetsocket.pb.h.tmp
+      COMMAND ${CMAKE_COMMAND} -E cat ${proto_srcs_dir}/nixnetsocket.pb.h >> ${proto_srcs_dir}/nixnetsocket.pb.h.tmp
+      COMMAND ${CMAKE_COMMAND} -E cat ${proto_srcs_dir}/nixnetsocket.pb.h.tmp > ${proto_srcs_dir}/nixnetsocket.pb.h
       DEPENDS "${proto_file}" "${session_proto}"
       VERBATIM)
   else()
@@ -336,9 +338,6 @@ function(GenerateGrpcSources)
         -I ${CMAKE_SOURCE_DIR}/imports/protobuf
         --plugin=protoc-gen-grpc=${_GRPC_CPP_PLUGIN_EXECUTABLE}
         ${proto_file}
-      COMMAND ${CMAKE_COMMAND} -E echo \#include \"custom/xnetsocket_compatibility.h\" > ${proto_srcs_dir}/nixnetsocket.pb.h.tmp
-      COMMAND ${CMAKE_COMMAND} -E cat ${proto_srcs_dir}/nixnetsocket.pb.h >> ${proto_srcs_dir}/nixnetsocket.pb.h.tmp
-      COMMAND ${CMAKE_COMMAND} -E cat ${proto_srcs_dir}/nixnetsocket.pb.h.tmp > ${proto_srcs_dir}/nixnetsocket.pb.h
       DEPENDS "${proto_file}" "${session_proto}"
       VERBATIM)
   endif()

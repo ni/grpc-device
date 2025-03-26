@@ -12,7 +12,7 @@ config = {
     'additional_headers': { 
         "custom/xnetsocket_converters.h": ["service.cpp"],
         "custom/xnetsocket_errors.h": ["service.cpp"],
-        "custom/xnetsocket_aliases.h": ["library_interface.h"]
+        "custom/xnetsocket_aliases.h": ["library_interface.h"] 
     },
     'get_last_error': [
         {

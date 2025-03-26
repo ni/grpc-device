@@ -25,9 +25,9 @@ See [GitHub's official documentation](https://help.github.com/articles/using-pul
 
 ### Prerequisites
 To prepare for cmake + Microsoft Visual C++ compiler build
-- Install Visual Studio 2017 or 2019 (Visual C++ compiler will be used).
+- Install Visual Studio 2022 or newer (Visual C++ compiler will be used).
 - Install [Git](https://git-scm.com/).
-- Install [CMake](https://cmake.org/download/) 3.12.0 or newer and add it to the PATH.
+- Install [CMake](https://cmake.org/download/) 3.16.0 or newer and add it to the PATH.
 - Install [Python](https://www.python.org/downloads/) and add it to the PATH.
 - Install [NASM](https://nasm.us/) and add it to the PATH.
 - Install [mako](https://www.makotemplates.org/download.html)
@@ -70,7 +70,7 @@ Build a release build for use in a production environment:
 
 ### Prerequisites
 
-For Debian/Ubuntu, install git, cmake (3.12.0 or newer), and mako:
+For Debian/Ubuntu, install git, cmake (3.16.0 or newer), and mako:
 ```
 > sudo apt-get update
 > sudo apt-get install git
@@ -78,9 +78,10 @@ For Debian/Ubuntu, install git, cmake (3.12.0 or newer), and mako:
 > python -m pip install mako
 ```
 
-For NI Linux RT, install git, git-perltools, cmake (3.12.0 or newer), python3-utils, and mako:
+For NI Linux RT, install packagegroup-core-buildessential, git, git-perltools, cmake (3.16.0 or newer), python3-utils, and mako:
 ```
 > opkg update
+> opkg install packagegroup-core-buildessential
 > opkg install git
 > opkg install git-perltools
 > opkg install cmake
@@ -95,6 +96,12 @@ may be required. Follow the instructions to [install CMake](https://cmake.org/in
 If this is required, make sure to install openssl-dev as well.
 ```
 > opkg install openssl-dev
+```
+
+**Note**: When building on Linux RT if the compiler toolchain segfaults at any point
+you might need to increase the default stack size before building again.
+```
+> ulimit -s 8192
 ```
 
 ### Clone Repo
