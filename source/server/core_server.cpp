@@ -91,6 +91,15 @@ static void RunServer(const ServerConfiguration& config)
         config.config_file_path.c_str());
   }
 
+  std::string string_kNiDeviceGrpcBranchName(nidevice_grpc::kNiDeviceGrpcBranchName);
+  if (string_kNiDeviceGrpcBranchName.rfind("releases", 0) == 0) {
+    nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, nidevice_grpc::kNiDeviceGrpcFileVersion);
+  }
+  else {
+    nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, nidevice_grpc::kNiDeviceGrpcFileVersion);
+    nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, "dev");
+  }
+
   grpc::EnableDefaultHealthCheckService(true);
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
 
