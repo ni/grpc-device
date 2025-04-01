@@ -27,7 +27,7 @@ See [GitHub's official documentation](https://help.github.com/articles/using-pul
 To prepare for cmake + Microsoft Visual C++ compiler build
 - Install Visual Studio 2022 or newer (Visual C++ compiler will be used).
 - Install [Git](https://git-scm.com/).
-- Install [CMake](https://cmake.org/download/) 3.16.0 or newer and add it to the PATH.
+- Install [CMake](https://cmake.org/download/) 3.18.0 or newer and add it to the PATH.
 - Install [Python](https://www.python.org/downloads/) and add it to the PATH.
 - Install [NASM](https://nasm.us/) and add it to the PATH.
 - Install [mako](https://www.makotemplates.org/download.html)
@@ -70,7 +70,7 @@ Build a release build for use in a production environment:
 
 ### Prerequisites
 
-For Debian/Ubuntu, install git, cmake (3.16.0 or newer), and mako:
+For Debian/Ubuntu, install git, cmake (3.18.0 or newer), and mako:
 ```
 > sudo apt-get update
 > sudo apt-get install git
@@ -78,7 +78,7 @@ For Debian/Ubuntu, install git, cmake (3.16.0 or newer), and mako:
 > python -m pip install mako
 ```
 
-For NI Linux RT, install packagegroup-core-buildessential, git, git-perltools, cmake (3.16.0 or newer), python3-utils, and mako:
+For NI Linux RT, install packagegroup-core-buildessential, git, git-perltools, cmake (3.18.0 or newer), python3-utils, and mako:
 ```
 > opkg update
 > opkg install packagegroup-core-buildessential

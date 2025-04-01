@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.16.0)
+cmake_minimum_required(VERSION 3.18.0)
 
 project(ni_grpc_device_server
   LANGUAGES C CXX
@@ -15,6 +15,7 @@ if(MSVC)
   add_definitions(-D_WIN32_WINNT=0x600)
   add_definitions(-DNOMINMAX) # Disable ancient min and max macros in Windows.h
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4267 /wd4244") # Disable possible loss of precision warnings
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /std:c17") # Needed for boringssl
 endif()
 
 #----------------------------------------------------------------------
