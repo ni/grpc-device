@@ -11,7 +11,6 @@ using namespace ::testing;
 using namespace nirfmxbluetooth_grpc;
 namespace client = nirfmxbluetooth_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
-namespace pb = ::google::protobuf;
 
 namespace nidevice_grpc {
 // Needs to be in the nidevice_grpc namespace for googletest to find this

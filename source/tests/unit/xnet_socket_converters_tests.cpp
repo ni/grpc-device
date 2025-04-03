@@ -1,5 +1,3 @@
-#define NOMINMAX
-
 #include <custom/xnetsocket_converters.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -11,7 +9,6 @@
 
 using namespace nixnetsocket_grpc;
 using namespace ::testing;
-namespace pb = ::google::protobuf;
 using namespace std::string_literals;
 using ni::tests::unit::NiXnetSocketMockLibrary;
 using nidevice_grpc::converters::allocate_output_storage;
@@ -40,7 +37,7 @@ TEST(XnetSocketConvertersTests, IPv4GrpcSockAddr_ConvertFromGrpc_CreatesIPv4NXSo
   EXPECT_EQ(ADDRESS, reinterpreted_ipv4_addr->sin_addr.addr);
 }
 
-SockAddr create_addr_ipv6(pb::uint32 port, pb::uint32 flowinfo, const std::vector<char>& address, pb::uint32 scope_id)
+SockAddr create_addr_ipv6(::google::protobuf::uint32 port, ::google::protobuf::uint32 flowinfo, const std::vector<char>& address, ::google::protobuf::uint32 scope_id)
 {
   auto grpc_sock_addr = SockAddr{};
   auto ipv6_addr = SockAddrIn6{};
@@ -54,10 +51,10 @@ SockAddr create_addr_ipv6(pb::uint32 port, pb::uint32 flowinfo, const std::vecto
 
 void EXPECT_IPV6_ADDR(
     const SockAddrInputConverter& converted_addr,
-    pb::uint32 port,
-    pb::uint32 flowinfo,
+    ::google::protobuf::uint32 port,
+    ::google::protobuf::uint32 flowinfo,
     const std::vector<char>& address,
-    pb::uint32 scope_id)
+    ::google::protobuf::uint32 scope_id)
 {
   auto addr_ptr = static_cast<const nxsockaddr*>(converted_addr);
   auto reinterpreted_ipv6_addr = reinterpret_cast<const nxsockaddr_in6*>(addr_ptr);
@@ -160,7 +157,7 @@ nidevice_grpc::Session create_session(std::string name)
 TEST(XnetSocketConvertersTests, EmptyListOfSockets_ConvertFromGrpc_CreatesZeroedOutSocketSet)
 {
   auto resource_repository = create_resource_repository({});
-  auto grpc_socket_list = pb::RepeatedPtrField<nidevice_grpc::Session>{};
+  auto grpc_socket_list = ::google::protobuf::RepeatedPtrField<nidevice_grpc::Session>{};
 
   auto converted_set = convert_from_grpc<nxfd_set>(grpc_socket_list, resource_repository);
   auto set_ptr = static_cast<nxfd_set*>(converted_set);
@@ -175,7 +172,7 @@ TEST(XnetSocketConvertersTests, ListOfTwoSockets_ConvertFromGrpc_CreateSocketSet
   constexpr auto SOCKET_1 = 1001;
   constexpr auto SOCKET_2 = 2002;
   auto resource_repository = create_resource_repository({{SESSION_NAME_1, SOCKET_1}, {SESSION_NAME_2, SOCKET_2}});
-  auto grpc_socket_list = pb::RepeatedPtrField<nidevice_grpc::Session>{};
+  auto grpc_socket_list = ::google::protobuf::RepeatedPtrField<nidevice_grpc::Session>{};
   grpc_socket_list.Add(create_session(SESSION_NAME_1));
   grpc_socket_list.Add(create_session(SESSION_NAME_2));
 
@@ -191,7 +188,7 @@ TEST(XnetSocketConvertersTests, ListWithSocketNotInRepository_ConvertFromGrpc_Cr
 {
   constexpr auto SESSION_NAME = "test";
   auto resource_repository = create_resource_repository({});
-  auto grpc_socket_list = pb::RepeatedPtrField<nidevice_grpc::Session>{};
+  auto grpc_socket_list = ::google::protobuf::RepeatedPtrField<nidevice_grpc::Session>{};
   grpc_socket_list.Add(create_session(SESSION_NAME));
 
   auto converted_set = convert_from_grpc<nxfd_set>(grpc_socket_list, resource_repository);
@@ -203,7 +200,7 @@ TEST(XnetSocketConvertersTests, ListWithSocketNotInRepository_ConvertFromGrpc_Cr
 
 TEST(XnetSocketConvertersTests, EmptyDuration_ConvertFromGrpc_CreatesEmptyTimeVal)
 {
-  const auto duration = pb::Duration{};
+  const auto duration = ::google::protobuf::Duration{};
 
   auto converted_timeval = convert_from_grpc<nxtimeval>(duration);
   auto timeval_ptr = static_cast<nxtimeval*>(converted_timeval);
@@ -216,7 +213,7 @@ TEST(XnetSocketConvertersTests, Duration_ConvertFromGrpc_CreatesCorrespondingTim
 {
   constexpr auto SECONDS = 100;
   constexpr auto MICROS = 500;
-  auto duration = pb::Duration{};
+  auto duration = ::google::protobuf::Duration{};
   duration.set_seconds(SECONDS);
   duration.set_nanos(MICROS * 1000);
 
@@ -232,7 +229,7 @@ TEST(XnetSocketConvertersTests, DurationWithSubMicroSecondResolution_ConvertFrom
   constexpr auto SECONDS = 100;
   constexpr auto NANOS = 5555;
   constexpr auto MICROS = 5;
-  auto duration = pb::Duration{};
+  auto duration = ::google::protobuf::Duration{};
   duration.set_seconds(SECONDS);
   duration.set_nanos(NANOS);
 
@@ -660,8 +657,8 @@ void EXPECT_ADDR_INFO(
     SocketProtocolType sock_type,
     IPProtocol protocol,
     const char* canon_name,
-    pb::uint32 address,
-    pb::uint32 port,
+    ::google::protobuf::uint32 address,
+    ::google::protobuf::uint32 port,
     AddrInfo& addr_info)
 {
   int expected_flags_raw = std::accumulate(flags.begin(), flags.end(), 0, std::bit_or<int>());

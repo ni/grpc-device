@@ -4,8 +4,6 @@
 #include <nixnet.pb.h>
 
 #include "server/converters.h"
-// Add underscore to usings so they don't conflict with including files in the same namespace.
-namespace pb_ = ::google::protobuf;
 
 namespace nixnet_grpc {
 namespace converters {
@@ -21,7 +19,7 @@ constexpr auto ENET_FRAME_FCS_SIZE = 4;
 u32 get_frame_buffer_size(int32 number_of_frames, u32 max_payload_size, u32 protocol);
 
 struct FrameHolder {
-  FrameHolder(const pb_::RepeatedPtrField<FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
+  FrameHolder(const ::google::protobuf::RepeatedPtrField<FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
   {
     // all frames in repeated field must be of same type
     switch (input[0].frame_case()) {
@@ -46,7 +44,7 @@ struct FrameHolder {
     }
   }
 
-  void InitializeCanFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
+  void InitializeCanFrames(const ::google::protobuf::RepeatedPtrField<FrameBufferRequest>& input)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
@@ -59,7 +57,7 @@ struct FrameHolder {
     }
   }
 
-  void InitializeLinFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
+  void InitializeLinFrames(const ::google::protobuf::RepeatedPtrField<FrameBufferRequest>& input)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
@@ -72,7 +70,7 @@ struct FrameHolder {
     }
   }
 
-  void InitializeFlexRayFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
+  void InitializeFlexRayFrames(const ::google::protobuf::RepeatedPtrField<FrameBufferRequest>& input)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
@@ -85,7 +83,7 @@ struct FrameHolder {
     }
   }
 
-  void InitializeJ1939Frames(const pb_::RepeatedPtrField<FrameBufferRequest>& input)
+  void InitializeJ1939Frames(const ::google::protobuf::RepeatedPtrField<FrameBufferRequest>& input)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
@@ -98,7 +96,7 @@ struct FrameHolder {
     }
   }
 
-  void InitializeEnetFrames(const pb_::RepeatedPtrField<FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
+  void InitializeEnetFrames(const ::google::protobuf::RepeatedPtrField<FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
   {
     std::vector<uint8_t> frame_data;
     for (auto grpc_frame : input) {
@@ -209,7 +207,7 @@ void convert_to_grpc(std::vector<u8>& input, google::protobuf::RepeatedPtrField<
 void convert_to_grpc(const void* input, nixnet_grpc::FrameBufferResponse* output, u32 protocol, std::map<std::int32_t, std::int32_t> enetflags_output_map);
 
 template <typename TFrame>
-nixnet_grpc::FrameHolder convert_from_grpc(const pb_::RepeatedPtrField<nixnet_grpc::FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
+nixnet_grpc::FrameHolder convert_from_grpc(const ::google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferRequest>& input, std::map<std::int32_t, std::int32_t> enetflags_input_map)
 {
   return nixnet_grpc::FrameHolder(input, enetflags_input_map);
 }

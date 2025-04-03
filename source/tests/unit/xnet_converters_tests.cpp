@@ -1,5 +1,3 @@
-#define NOMINMAX
-
 #include <custom/nixnet_converters.h>
 #include <gmock/gmock.h>
 #include <gtest/gtest.h>
@@ -14,7 +12,6 @@ using namespace nixnet_grpc;
 using namespace nixnet_grpc::converters;
 using namespace nixnet_utilities;
 using namespace ::testing;
-namespace pb = ::google::protobuf;
 using namespace std::string_literals;
 using ni::tests::unit::NiXnetMockLibrary;
 
@@ -159,7 +156,7 @@ TEST(XnetConvertersTests, FrameBufferArray_ConvertToGrpc_FrameBufferResponse)
     pFrame->Payload[j] = (u8)(j + 1);
   }
 
-  pb::RepeatedPtrField<nixnet_grpc::FrameBufferResponse> output;
+  ::google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferResponse> output;
   nixnet_grpc::convert_to_grpc(buffer, &output, static_cast<u32>(buffer.size()), nixnet_grpc::Protocol::PROTOCOL_LIN, std::map<int32_t, int32_t>());
 
   pFrame = (nxFrameVar_t*)buffer.data();
@@ -179,7 +176,7 @@ TEST(XnetConvertersTests, EnetFrameBuffer_ConvertToGrpc_EnetFrameResponse)
   buffer_length += pFrame->Length;
   std::map<int32_t, int32_t> enet_flags_map = {{nxEnetFlags_Transmit, nixnet_grpc::EnetFlags::ENET_FLAGS_TRANSMIT}};
 
-  pb::RepeatedPtrField<nixnet_grpc::FrameBufferResponse> output;
+  ::google::protobuf::RepeatedPtrField<nixnet_grpc::FrameBufferResponse> output;
   nixnet_grpc::convert_to_grpc(buffer, &output, buffer_length, nixnet_grpc::Protocol::PROTOCOL_ENET, enet_flags_map);
 
   pFrame = (nxFrameEnet_t*)buffer.data();

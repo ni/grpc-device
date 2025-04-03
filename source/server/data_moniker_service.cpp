@@ -148,7 +148,7 @@ void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::S
   int64_t sidebandToken;
   GetOwnerSidebandDataToken(sidebandIdentifier.c_str(), &sidebandToken);
   while (true) {
-    auto writeRequest = google::protobuf::Arena::CreateMessage<SidebandWriteRequest>(&arena);
+    auto writeRequest = google::protobuf::Arena::Create<SidebandWriteRequest>(&arena);
     if (!ReadSidebandMessage(sidebandToken, writeRequest)) {
       break;
     }
@@ -164,7 +164,7 @@ void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::S
         std::get<0>(writer)(std::get<1>(writer), arena, const_cast<google::protobuf::Any&>(writeRequest->values().values(x++)));
       }
     }
-    auto readResult = Arena::CreateMessage<SidebandReadResponse>(&arena);
+    auto readResult = Arena::Create<SidebandReadResponse>(&arena);
     if (readers->size() > 0) {
       int x = 0;
       for (auto reader : *readers) {
