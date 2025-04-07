@@ -25,7 +25,6 @@
 
 using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
-namespace pb = google::protobuf;
 
 static const u8 kEnetFrameOffsetEtherType = 12;
 static const u8 kEnetFrameOffsetVlanEtherType = 16;
@@ -39,20 +38,20 @@ static const u32 kEnetMacAddrSize = 6;
 static const u32 kFcsSize = FCS_SIZE;
 static const u16 kVlanId = 2;
 
-using u8 = pb::uint8;
-using u16 = pb::uint16;
-using u32 = pb::uint32;
+using u8 = ::google::protobuf::uint8;
+using u16 = ::google::protobuf::uint16;
+using u32 = ::google::protobuf::uint32;
 
 namespace nixnet_utilities {
 
-inline GetPropertyResponse get_property(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
+inline GetPropertyResponse get_property(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, ::google::protobuf::uint32>& property_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetPropertyRequest{};
   request.mutable_session()->CopyFrom(session_ref);
   const auto property_id_ptr = property_id.get_if<nixnet_grpc::Property>();
-  const auto property_id_raw_ptr = property_id.get_if<pb::uint32>();
+  const auto property_id_raw_ptr = property_id.get_if<::google::protobuf::uint32>();
   if (property_id_ptr) {
     request.set_property_id(*property_id_ptr);
   }
@@ -69,7 +68,7 @@ inline GetPropertyResponse get_property(const client::StubPtr& stub, const nidev
   return response;
 }
 
-inline void _set_property_value(SetPropertyRequest& request, const pb::uint32& value)
+inline void _set_property_value(SetPropertyRequest& request, const ::google::protobuf::uint32& value)
 {
   request.set_u32_scalar(value);
 }
@@ -84,12 +83,12 @@ inline void _set_property_value(SetPropertyRequest& request, const std::string& 
   request.set_str(value);
 }
 
-inline void _set_property_value(SetPropertyRequest& request, const pb::uint64& value)
+inline void _set_property_value(SetPropertyRequest& request, const ::google::protobuf::uint64& value)
 {
   request.set_u64_scalar(value);
 }
 
-inline void _set_property_value(SetPropertyRequest& request, const pb::int32& value)
+inline void _set_property_value(SetPropertyRequest& request, const ::google::protobuf::int32& value)
 {
   request.set_i32_scalar(value);
 }
@@ -99,7 +98,7 @@ inline void _set_property_value(SetPropertyRequest& request, const double& value
   request.set_f64_scalar(value);
 }
 
-inline void _set_property_value(SetPropertyRequest& request, const std::vector<pb::uint32>& value)
+inline void _set_property_value(SetPropertyRequest& request, const std::vector<::google::protobuf::uint32>& value)
 {
   request.mutable_u32_array()->clear_u32_array();
   request.mutable_u32_array()->mutable_u32_array()->Add(value.begin(), value.end());
@@ -132,7 +131,7 @@ template <typename T>
 inline SetPropertyResponse set_property(
     const client::StubPtr& stub,
     const nidevice_grpc::Session& session,
-    const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id,
+    const client::simple_variant<nixnet_grpc::Property, ::google::protobuf::uint32>& property_id,
     const T& value)
 {
   ::grpc::ClientContext context;
@@ -140,7 +139,7 @@ inline SetPropertyResponse set_property(
   auto request = SetPropertyRequest{};
   request.mutable_session()->CopyFrom(session);
   const auto property_id_ptr = property_id.get_if<nixnet_grpc::Property>();
-  const auto property_id_raw_ptr = property_id.get_if<pb::uint32>();
+  const auto property_id_raw_ptr = property_id.get_if<::google::protobuf::uint32>();
   if (property_id_ptr) {
     request.set_property_id(*property_id_ptr);
   }
@@ -158,14 +157,14 @@ inline SetPropertyResponse set_property(
   return response;
 }
 
-inline DbGetPropertyResponse db_get_property(const client::StubPtr& stub, const nidevice_grpc::Session& dbobject_ref, const client::simple_variant<nixnet_grpc::DBProperty, pb::uint32>& property_id)
+inline DbGetPropertyResponse db_get_property(const client::StubPtr& stub, const nidevice_grpc::Session& dbobject_ref, const client::simple_variant<nixnet_grpc::DBProperty, ::google::protobuf::uint32>& property_id)
 {
   ::grpc::ClientContext context;
 
   auto request = DbGetPropertyRequest{};
   request.mutable_dbobject()->CopyFrom(dbobject_ref);
   const auto property_id_ptr = property_id.get_if<nixnet_grpc::DBProperty>();
-  const auto property_id_raw_ptr = property_id.get_if<pb::uint32>();
+  const auto property_id_raw_ptr = property_id.get_if<::google::protobuf::uint32>();
   if (property_id_ptr) {
     request.set_property_id(*property_id_ptr);
   }
@@ -182,31 +181,31 @@ inline DbGetPropertyResponse db_get_property(const client::StubPtr& stub, const 
   return response;
 }
 
-inline std::vector<u32> get_property_u32_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
+inline std::vector<u32> get_property_u32_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, ::google::protobuf::uint32>& property_id)
 {
   auto array = EXPECT_SUCCESS(get_property(stub, session_ref, property_id)).u32_array().u32_array();
   return std::vector<u32>(array.begin(), array.end());
 }
 
-inline std::vector<nidevice_grpc::Session> get_property_db_ref_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, pb::uint32>& property_id)
+inline std::vector<nidevice_grpc::Session> get_property_db_ref_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& session_ref, const client::simple_variant<nixnet_grpc::Property, ::google::protobuf::uint32>& property_id)
 {
   auto array = EXPECT_SUCCESS(get_property(stub, session_ref, property_id)).db_ref_array().db_ref();
   return std::vector<nidevice_grpc::Session>(array.begin(), array.end());
 }
 
-inline std::vector<u32> db_get_property_u32_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& database_ref, const client::simple_variant<nixnet_grpc::DBProperty, pb::uint32>& property_id)
+inline std::vector<u32> db_get_property_u32_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& database_ref, const client::simple_variant<nixnet_grpc::DBProperty, ::google::protobuf::uint32>& property_id)
 {
   auto array = EXPECT_SUCCESS(db_get_property(stub, database_ref, property_id)).u32_array().u32_array();
   return std::vector<u32>(array.begin(), array.end());
 }
 
-inline std::vector<nidevice_grpc::Session> db_get_property_db_ref_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& database_ref, const client::simple_variant<nixnet_grpc::DBProperty, pb::uint32>& property_id)
+inline std::vector<nidevice_grpc::Session> db_get_property_db_ref_vtr(const client::StubPtr& stub, const nidevice_grpc::Session& database_ref, const client::simple_variant<nixnet_grpc::DBProperty, ::google::protobuf::uint32>& property_id)
 {
   auto array = EXPECT_SUCCESS(db_get_property(stub, database_ref, property_id)).db_ref_array().db_ref();
   return std::vector<nidevice_grpc::Session>(array.begin(), array.end());
 }
 
-inline int calculate_bitwise_or_of_flags(google::protobuf::RepeatedField<google::protobuf::int32> flags)
+inline int calculate_bitwise_or_of_flags(::google::protobuf::RepeatedField<::google::protobuf::int32> flags)
 {
   int bitwise_or_of_flags = 0;
   for (int i = 0; i < flags.size(); i++) {

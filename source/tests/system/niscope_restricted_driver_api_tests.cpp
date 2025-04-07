@@ -6,7 +6,6 @@
 
 using namespace niscope_grpc;
 using namespace niscope_restricted_grpc;
-namespace pb = ::google::protobuf;
 namespace client = niscope_grpc::experimental::client;
 namespace restricted_client = niscope_restricted_grpc::experimental::client;
 using namespace ::testing;

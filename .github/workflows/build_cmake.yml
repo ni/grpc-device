@@ -29,6 +29,12 @@ jobs:
           }
 
     steps:
+    - name: Free Disk Space (Ubuntu)
+      if: ${{ runner.os == 'Linux' }}
+      uses: insightsengineering/disk-space-reclaimer@v1
+      with:
+          tools-cache: false
+
     - name: Checkout Repo
       uses: actions/checkout@v4
 
@@ -54,6 +60,13 @@ jobs:
       uses: ilammy/msvc-dev-cmd@v1
       with:
           arch: x64
+          sdk: 10.0.22621.0
+          vsversion: "2022"
+
+    - name: Setup cmake
+      uses: jwlawson/actions-setup-cmake@v2
+      with:
+          cmake-version: '3.18.x'
 
     - name: Get number of CPU cores
       uses: SimenB/github-actions-cpu-cores@v2

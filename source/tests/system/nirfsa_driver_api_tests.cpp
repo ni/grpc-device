@@ -15,7 +15,6 @@ using namespace nirfsa_grpc;
 namespace client = nirfsa_grpc::experimental::client;
 namespace nitclk_client = nitclk_grpc::experimental::client;
 namespace niscope_client = niscope_grpc::experimental::client;
-namespace pb = google::protobuf;
 
 namespace ni {
 namespace tests {
@@ -260,7 +259,7 @@ TEST_F(NiRFSADriverApiTests, GetRelayName_ReturnsRelayName)
 
 TEST_F(NiRFSADriverApiTests, GetRelayOperationsCount_ReturnsOperationCounts)
 {
-  const auto EXPECTED = std::vector<pb::int32>{0, 0, 0, 0};
+  const auto EXPECTED = std::vector<::google::protobuf::int32>{0, 0, 0, 0};
   auto session = init_session(stub(), PXI_5603);
   auto response = client::get_relay_operations_count(stub(), session, "");
 

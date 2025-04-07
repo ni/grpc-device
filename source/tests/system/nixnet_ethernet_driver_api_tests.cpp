@@ -15,7 +15,6 @@
 
 using namespace nixnet_grpc;
 namespace client = nixnet_grpc::experimental::client;
-namespace pb = google::protobuf;
 using namespace ::testing;
 using namespace ::nixnet_utilities;
 using nlohmann::json;
@@ -25,10 +24,10 @@ namespace tests {
 namespace system {
 namespace {
 
-using u8 = pb::uint8;
-using u16 = pb::uint16;
-using u32 = pb::uint32;
-using u64 = pb::uint64;
+using u8 = ::google::protobuf::uint8;
+using u16 = ::google::protobuf::uint16;
+using u32 = ::google::protobuf::uint32;
+using u64 = ::google::protobuf::uint64;
 
 class NiXnetEthernetDriverApiTestsWithHardware : public ::testing::Test {
  protected:

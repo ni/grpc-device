@@ -14,7 +14,6 @@ using namespace nirfmxinstr_restricted_grpc;
 namespace client = nirfmxinstr_grpc::experimental::client;
 namespace restricted_client = nirfmxinstr_restricted_grpc::experimental::client;
 namespace nirfsa_client = nirfsa_grpc::experimental::client;
-namespace pb = ::google::protobuf;
 namespace specan_client = nirfmxspecan_grpc::experimental::client;
 
 namespace ni {
