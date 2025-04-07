@@ -1,6 +1,6 @@
 component:
   sbom_info:
-    - name:grpc
+    - name: grpc
       version: 1.69.0
       identifiers:
         cpe: cpe:2.3:a:grpc:grpc:1.69.0:*:*:*:*:-:*:*
