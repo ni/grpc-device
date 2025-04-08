@@ -5,4 +5,4 @@ component:
       identifiers:
         cpe: cpe:2.3:a:grpc:grpc:1.69.0:*:*:*:*:-:*:*
       licenses:
-        - legal_package: gRPC151
+        - legal_package: gRPC157
