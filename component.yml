@@ -1,8 +1,8 @@
 component:
   sbom_info:
-    - name: grpc
-      version: 1.69.0
+    - name: grpc-device
+      version: 2.11.0
       identifiers:
-        cpe: cpe:2.3:a:grpc:grpc:1.69.0:*:*:*:*:*:*:*
+        cpe: cpe:2.3:a:grpc-device:grpc-device:2.11.0:*:*:*:*:*:*:*
       licenses:
-        - legal_package: gRPC157
+        - legal_package: grpc-device151
