@@ -4,16 +4,14 @@ about: Create a report to help us improve
 title: "[BUG]"
 labels: 'bug,triage'
 assignees: ''
-
 ---
 
 # Bug Report
 
 <!--- Provide a general summary of the issue here -->
 
-
 > [!NOTE]
-> grpc-device is an API defined by .proto files along with a server that calls into an NI driver's C API. Does the issue you are running into able to be reproduced when just calling the driver's API directly? If so it is helpful to note.
+> grpc-device provides .proto files and a server to support calling NI driver APIs over gRPC. Can you reproduce your problem by calling the driver API directly?
 
 ## Repro or Code Sample
 
