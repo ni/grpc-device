@@ -2,29 +2,47 @@
 name: Bug report
 about: Create a report to help us improve
 title: "[BUG]"
-labels: ''
+labels: 'bug,triage'
 assignees: ''
 
 ---
 
-**Describe the bug**
-A clear and concise description of what the bug is.
+# Bug Report
+
+<!--- Provide a general summary of the issue here -->
+
 
 > [!NOTE]
 > grpc-device is an API defined by .proto files along with a server that calls into an NI driver's C API. Does the issue you are running into able to be reproduced when just calling the driver's API directly? If so it is helpful to note.
 
-**To Reproduce**
-Steps to reproduce the behavior or short code snippet reproducing example. 
+## Repro or Code Sample
 
-**Expected behavior**
-A clear and concise description of what you expected to happen.
+<!-- Please provide steps to reproduce the issue and/or a code repository, gist, code snippet or sample files -->
 
-**Screenshots**
-If applicable, add screenshots to help explain your problem.
+## Expected Behavior
 
-**Desktop (please complete the following information):**
- - OS: [e.g. Windows 11, Ubuntu 22.04, NI LinuxRT]
- - Software: [e.g. grpc-device 2.11.0, NI DAQmx 2024 Q1]
+<!--- Tell us what should happen -->
 
-**Additional context**
-Add any other context about the problem here.
+## Current Behavior
+
+<!--- Tell us what happens instead of the expected behavior -->
+<!--- If you are seeing an error, please include the full error message and stack trace -->
+<!--- If applicable, provide screenshots -->
+
+## Possible Solution
+
+<!--- Not obligatory, but suggest a fix/reason for the bug -->
+<!--- Please let us know if you'd be willing to contribute the fix; we'd be happy to work with you -->
+
+## Context
+
+<!--- How has this issue affected you? What are you trying to accomplish? -->
+<!--- Providing context helps us come up with a solution that is most useful in the real world -->
+
+## Your Environment
+
+<!--- Include as many relevant details as possible about the environment you experienced the bug in -->
+
+* Operating system and version: [e.g. Windows 11 24H2, Ubuntu Linux 24.04, NI Linux RT 2024 Q4]
+* All NI driver versions: [e.g. NI-DAQmx 2024 Q4, NI-FGEN 2024 Q4]
+* `grpc-device` version: [e.g. 2.11.0]
