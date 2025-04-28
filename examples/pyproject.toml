@@ -6,7 +6,7 @@ authors = ["Christian Aguilar <christian.aguilar@ni.com>"]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.12"
+python = ">=3.9,<3.12"
 grpcio = "^1.49.1"
 
 [tool.poetry.group.dev.dependencies]
@@ -14,7 +14,7 @@ grpcio-tools = "1.49.1"
 mypy = ">=1.0"
 mypy-protobuf = ">=3.6.0"
 types-protobuf = ">=5.28.3.20241203"
-grpc-stubs = ">=1.53"
+types-grpcio = ">=1.0"
 black = ">=23.3.0"
 
 [[tool.mypy.overrides]]
