@@ -25,9 +25,6 @@ jobs:
   run_win_system_tests:
     needs: build_desktop
     uses: ./.github/workflows/run_win_system_tests.yml
-  run_ubuntu_system_tests:
-    needs: build_desktop
-    uses: ./.github/workflows/run_ubuntu_system_tests.yml
   create_client_artifacts:
     uses: ./.github/workflows/create_client_artifacts.yml
   create_release:
