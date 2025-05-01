@@ -140,6 +140,8 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
     copy2(artifact_locations.repo_root / "examples" / "pyproject.toml", output_path)
     copy2(artifact_locations.repo_root / "examples" / "poetry.lock", output_path)
 
+    copy2(artifact_locations.repo_root / "component.yml", output_path)
+
 
 if __name__ == "__main__":
     parser = ArgumentParser(description="Stage client files for NI driver API gRPC services.")
