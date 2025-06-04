@@ -10765,6 +10765,147 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'NFLoadCalibrationLossFromS2p': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFCalibrationLossCompensationEnabled',
+                'name': 'calibrationLossCompensationEnabled',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'calibrationLossS2pFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFCalibrationLossS2pSParameterOrientation',
+                'name': 'calibrationLossSParameterOrientation',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'calibrationLossTemperature',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'NFLoadColdSourceDUTSParametersFromS2p': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dutsParametersS2pFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFColdSourceDutS2pSParameterOrientation',
+                'name': 'dutsParameterOrientation',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'NFLoadDUTInputLossFromS2p': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFDutInputLossCompensationEnabled',
+                'name': 'dutInputLossCompensationEnabled',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'dutInputLossS2pFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFDutInputLossS2pSParameterOrientation',
+                'name': 'dutInputLossSParameterOrientation',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'dutInputLossTemperature',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'NFLoadDUTOutputLossFromS2p': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFDutOutputLossCompensationEnabled',
+                'name': 'dutOutputLossCompensationEnabled',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'dutOutputLossS2pFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFDutOutputLossS2pSParameterOrientation',
+                'name': 'dutOutputLossSParameterOrientation',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'dutOutputLossTemperature',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'NFRecommendReferenceLevel': {
         'parameters': [
             {
@@ -12256,6 +12397,186 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'spotPhaseNoise',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'PowerListCfgRBWFilterArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'rbw',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'rbwFilterType',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'rrcAlpha',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'PowerListFetchMaximumPowerArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'maximumPower',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'PowerListFetchMeanAbsolutePowerArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'meanAbsolutePower',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'PowerListFetchMinimumPowerArray': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'minimumPower',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'arraySize',

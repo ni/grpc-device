@@ -1692,6 +1692,17 @@ attributes = {
         'name': 'OFDMMODACC_RESULTS_UHR_SIG_CRC_STATUS',
         'type': 'int32'
     },
+    10502356: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_ELR_SIG_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
+    10502357: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccElrSigCrcStatus',
+        'name': 'OFDMMODACC_RESULTS_ELR_SIG_CRC_STATUS',
+        'type': 'int32'
+    },
     10506240: {
         'access': 'read-write',
         'name': 'SEM_MEASUREMENT_ENABLED',

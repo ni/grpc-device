@@ -319,6 +319,10 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.NFFetchDUTNoiseFigureAndGain = reinterpret_cast<NFFetchDUTNoiseFigureAndGainPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFFetchDUTNoiseFigureAndGain"));
   function_pointers_.NFFetchYFactorPowers = reinterpret_cast<NFFetchYFactorPowersPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFFetchYFactorPowers"));
   function_pointers_.NFFetchYFactors = reinterpret_cast<NFFetchYFactorsPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFFetchYFactors"));
+  function_pointers_.NFLoadCalibrationLossFromS2p = reinterpret_cast<NFLoadCalibrationLossFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadCalibrationLossFromS2p"));
+  function_pointers_.NFLoadColdSourceDUTSParametersFromS2p = reinterpret_cast<NFLoadColdSourceDUTSParametersFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadColdSourceDUTSParametersFromS2p"));
+  function_pointers_.NFLoadDUTInputLossFromS2p = reinterpret_cast<NFLoadDUTInputLossFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadDUTInputLossFromS2p"));
+  function_pointers_.NFLoadDUTOutputLossFromS2p = reinterpret_cast<NFLoadDUTOutputLossFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadDUTOutputLossFromS2p"));
   function_pointers_.NFRecommendReferenceLevel = reinterpret_cast<NFRecommendReferenceLevelPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFRecommendReferenceLevel"));
   function_pointers_.NFValidateCalibrationData = reinterpret_cast<NFValidateCalibrationDataPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFValidateCalibrationData"));
   function_pointers_.OBWCfgAveraging = reinterpret_cast<OBWCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxSpecAn_OBWCfgAveraging"));
@@ -361,6 +365,10 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.PhaseNoiseFetchMeasuredLogPlotTrace = reinterpret_cast<PhaseNoiseFetchMeasuredLogPlotTracePtr>(shared_library_->get_function_pointer("RFmxSpecAn_PhaseNoiseFetchMeasuredLogPlotTrace"));
   function_pointers_.PhaseNoiseFetchSmoothedLogPlotTrace = reinterpret_cast<PhaseNoiseFetchSmoothedLogPlotTracePtr>(shared_library_->get_function_pointer("RFmxSpecAn_PhaseNoiseFetchSmoothedLogPlotTrace"));
   function_pointers_.PhaseNoiseFetchSpotNoise = reinterpret_cast<PhaseNoiseFetchSpotNoisePtr>(shared_library_->get_function_pointer("RFmxSpecAn_PhaseNoiseFetchSpotNoise"));
+  function_pointers_.PowerListCfgRBWFilterArray = reinterpret_cast<PowerListCfgRBWFilterArrayPtr>(shared_library_->get_function_pointer("RFmxSpecAn_PowerListCfgRBWFilterArray"));
+  function_pointers_.PowerListFetchMaximumPowerArray = reinterpret_cast<PowerListFetchMaximumPowerArrayPtr>(shared_library_->get_function_pointer("RFmxSpecAn_PowerListFetchMaximumPowerArray"));
+  function_pointers_.PowerListFetchMeanAbsolutePowerArray = reinterpret_cast<PowerListFetchMeanAbsolutePowerArrayPtr>(shared_library_->get_function_pointer("RFmxSpecAn_PowerListFetchMeanAbsolutePowerArray"));
+  function_pointers_.PowerListFetchMinimumPowerArray = reinterpret_cast<PowerListFetchMinimumPowerArrayPtr>(shared_library_->get_function_pointer("RFmxSpecAn_PowerListFetchMinimumPowerArray"));
   function_pointers_.ResetAttribute = reinterpret_cast<ResetAttributePtr>(shared_library_->get_function_pointer("RFmxSpecAn_ResetAttribute"));
   function_pointers_.ResetToDefault = reinterpret_cast<ResetToDefaultPtr>(shared_library_->get_function_pointer("RFmxSpecAn_ResetToDefault"));
   function_pointers_.SEMCfgAveraging = reinterpret_cast<SEMCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxSpecAn_SEMCfgAveraging"));
@@ -2831,6 +2839,38 @@ int32 NiRFmxSpecAnLibrary::NFFetchYFactors(niRFmxInstrHandle instrumentHandle, c
   return function_pointers_.NFFetchYFactors(instrumentHandle, selectorString, timeout, measurementYFactor, calibrationYFactor, arraySize, actualArraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::NFLoadCalibrationLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationLossCompensationEnabled, char calibrationLossS2pFilePath[], int32 calibrationLossSParameterOrientation, float64 calibrationLossTemperature)
+{
+  if (!function_pointers_.NFLoadCalibrationLossFromS2p) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFLoadCalibrationLossFromS2p.");
+  }
+  return function_pointers_.NFLoadCalibrationLossFromS2p(instrumentHandle, selectorString, calibrationLossCompensationEnabled, calibrationLossS2pFilePath, calibrationLossSParameterOrientation, calibrationLossTemperature);
+}
+
+int32 NiRFmxSpecAnLibrary::NFLoadColdSourceDUTSParametersFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char dutsParametersS2pFilePath[], int32 dutsParameterOrientation)
+{
+  if (!function_pointers_.NFLoadColdSourceDUTSParametersFromS2p) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFLoadColdSourceDUTSParametersFromS2p.");
+  }
+  return function_pointers_.NFLoadColdSourceDUTSParametersFromS2p(instrumentHandle, selectorString, dutsParametersS2pFilePath, dutsParameterOrientation);
+}
+
+int32 NiRFmxSpecAnLibrary::NFLoadDUTInputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutInputLossCompensationEnabled, char dutInputLossS2pFilePath[], int32 dutInputLossSParameterOrientation, float64 dutInputLossTemperature)
+{
+  if (!function_pointers_.NFLoadDUTInputLossFromS2p) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFLoadDUTInputLossFromS2p.");
+  }
+  return function_pointers_.NFLoadDUTInputLossFromS2p(instrumentHandle, selectorString, dutInputLossCompensationEnabled, dutInputLossS2pFilePath, dutInputLossSParameterOrientation, dutInputLossTemperature);
+}
+
+int32 NiRFmxSpecAnLibrary::NFLoadDUTOutputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutOutputLossCompensationEnabled, char dutOutputLossS2pFilePath[], int32 dutOutputLossSParameterOrientation, float64 dutOutputLossTemperature)
+{
+  if (!function_pointers_.NFLoadDUTOutputLossFromS2p) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFLoadDUTOutputLossFromS2p.");
+  }
+  return function_pointers_.NFLoadDUTOutputLossFromS2p(instrumentHandle, selectorString, dutOutputLossCompensationEnabled, dutOutputLossS2pFilePath, dutOutputLossSParameterOrientation, dutOutputLossTemperature);
+}
+
 int32 NiRFmxSpecAnLibrary::NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel)
 {
   if (!function_pointers_.NFRecommendReferenceLevel) {
@@ -3165,6 +3205,38 @@ int32 NiRFmxSpecAnLibrary::PhaseNoiseFetchSpotNoise(niRFmxInstrHandle instrument
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PhaseNoiseFetchSpotNoise.");
   }
   return function_pointers_.PhaseNoiseFetchSpotNoise(instrumentHandle, selectorString, timeout, spotPhaseNoise, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::PowerListCfgRBWFilterArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 rbw[], int32 rbwFilterType[], float64 rrcAlpha[], int32 arraySize)
+{
+  if (!function_pointers_.PowerListCfgRBWFilterArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PowerListCfgRBWFilterArray.");
+  }
+  return function_pointers_.PowerListCfgRBWFilterArray(instrumentHandle, selectorString, rbw, rbwFilterType, rrcAlpha, arraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::PowerListFetchMaximumPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 maximumPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.PowerListFetchMaximumPowerArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PowerListFetchMaximumPowerArray.");
+  }
+  return function_pointers_.PowerListFetchMaximumPowerArray(instrumentHandle, selectorString, timeout, maximumPower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::PowerListFetchMeanAbsolutePowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 meanAbsolutePower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.PowerListFetchMeanAbsolutePowerArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PowerListFetchMeanAbsolutePowerArray.");
+  }
+  return function_pointers_.PowerListFetchMeanAbsolutePowerArray(instrumentHandle, selectorString, timeout, meanAbsolutePower, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::PowerListFetchMinimumPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 minimumPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.PowerListFetchMinimumPowerArray) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_PowerListFetchMinimumPowerArray.");
+  }
+  return function_pointers_.PowerListFetchMinimumPowerArray(instrumentHandle, selectorString, timeout, minimumPower, arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)

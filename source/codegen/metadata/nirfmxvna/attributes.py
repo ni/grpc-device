@@ -436,6 +436,11 @@ attributes = {
         'name': 'INDEX_EVENT_LEVEL',
         'type': 'int32'
     },
+    13631594: {
+        'access': 'read-write',
+        'name': 'CW_FREQUENCY',
+        'type': 'float64'
+    },
     13631600: {
         'access': 'read-write',
         'name': 'TRIGGER_DELAY',
@@ -520,11 +525,6 @@ attributes = {
         'name': 'SPARAMS_SNP_PORTS',
         'type': 'char[]'
     },
-    13635607: {
-        'access': 'read-write',
-        'name': 'SPARAMS_PARAMETER',
-        'type': 'char[]'
-    },
     13635608: {
         'access': 'read-write',
         'enum': 'SParamsCorrectionState',
@@ -547,6 +547,27 @@ attributes = {
         'access': 'read-write',
         'name': 'SPARAMS_MATH_ACTIVE_MEASUREMENT_MEMORY',
         'type': 'char[]'
+    },
+    13635612: {
+        'access': 'read-write',
+        'enum': 'SParamsGroupDelayApertureMode',
+        'name': 'SPARAMS_GROUP_DELAY_APERTURE_MODE',
+        'type': 'int32'
+    },
+    13635613: {
+        'access': 'read-write',
+        'name': 'SPARAMS_GROUP_DELAY_APERTURE_POINTS',
+        'type': 'float64'
+    },
+    13635614: {
+        'access': 'read-write',
+        'name': 'SPARAMS_GROUP_DELAY_APERTURE_PERCENTAGE',
+        'type': 'float64'
+    },
+    13635615: {
+        'access': 'read-write',
+        'name': 'SPARAMS_GROUP_DELAY_APERTURE_FREQUENCY_SPAN',
+        'type': 'float64'
     },
     13639680: {
         'access': 'read-write',
@@ -609,16 +630,32 @@ attributes = {
         'name': 'GROUND_TERMINATED_PORTS',
         'type': 'char[]'
     },
-    13639698: {
-        'access': 'read-write',
-        'name': 'WAVES_PARAMETER',
-        'type': 'char[]'
-    },
     13639699: {
         'access': 'read-write',
         'enum': 'WavesCorrectionState',
         'name': 'WAVES_RESULTS_CORRECTION_STATE',
         'type': 'int32'
+    },
+    13639701: {
+        'access': 'read-write',
+        'enum': 'WavesGroupDelayApertureMode',
+        'name': 'WAVES_GROUP_DELAY_APERTURE_MODE',
+        'type': 'int32'
+    },
+    13639702: {
+        'access': 'read-write',
+        'name': 'WAVES_GROUP_DELAY_APERTURE_POINTS',
+        'type': 'float64'
+    },
+    13639703: {
+        'access': 'read-write',
+        'name': 'WAVES_GROUP_DELAY_APERTURE_PERCENTAGE',
+        'type': 'float64'
+    },
+    13639704: {
+        'access': 'read-write',
+        'name': 'WAVES_GROUP_DELAY_APERTURE_FREQUENCY_SPAN',
+        'type': 'float64'
     },
     13680640: {
         'access': 'read-write',

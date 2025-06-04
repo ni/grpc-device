@@ -187,6 +187,17 @@ attributes = {
         'name': 'HIGH_DATA_THROUGHPUT_PACKET_FORMAT',
         'type': 'int32'
     },
+    11534393: {
+        'access': 'read-write',
+        'name': 'ZADOFF_CHU_INDEX',
+        'type': 'int32'
+    },
+    11534400: {
+        'access': 'read-write',
+        'enum': 'VdhtModeEnabled',
+        'name': 'VHDT_MODE_ENABLED',
+        'type': 'int32'
+    },
     11538428: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',

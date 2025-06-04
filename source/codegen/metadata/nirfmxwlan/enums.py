@@ -814,6 +814,23 @@ enums = {
             }
         ]
     },
+    'OfdmModAccElrSigCrcStatus': {
+        'enum-value-prefix': 'OFDMMODACC_ELR_SIG_CRC_STATUS',
+        'values': [
+            {
+                'name': 'NOT_APPLICABLE',
+                'value': -1
+            },
+            {
+                'name': 'FAIL',
+                'value': 0
+            },
+            {
+                'name': 'PASS',
+                'value': 1
+            }
+        ]
+    },
     'OfdmModAccEvmReferenceDataSymbolsMode': {
         'enum-value-prefix': 'OFDMMODACC_EVM_REFERENCE_DATA_SYMBOLS_MODE',
         'values': [
@@ -1317,6 +1334,10 @@ enums = {
             {
                 'name': 'TRIGGER_BASED',
                 'value': 6
+            },
+            {
+                'name': 'ELR',
+                'value': 7
             }
         ]
     },

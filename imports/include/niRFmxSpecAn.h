@@ -484,7 +484,9 @@
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE                          0x0010f050
 #define RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE                           0x0010f051
 #define RFMXSPECAN_ATTR_DPD_DVR_NUMBER_OF_SEGMENTS                                     0x0010f067
+#define RFMXSPECAN_ATTR_DPD_DVR_LINEAR_MEMORY_DEPTH                                    0x0010f068
 #define RFMXSPECAN_ATTR_DPD_DVR_NONLINEAR_MEMORY_DEPTH                                 0x0010f069
+#define RFMXSPECAN_ATTR_DPD_DVR_DDR_ENABLED                                            0x0010f06a
 #define RFMXSPECAN_ATTR_DPD_MEASUREMENT_MODE                                           0x0010f06b
 #define RFMXSPECAN_ATTR_DPD_ITERATIVE_DPD_ENABLED                                      0x0010f01a
 #define RFMXSPECAN_ATTR_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED                        0x0010f039
@@ -721,6 +723,20 @@
 #define RFMXSPECAN_ATTR_PAVT_RESULTS_MEAN_ABSOLUTE_PHASE                               0x0010700f
 #define RFMXSPECAN_ATTR_PAVT_RESULTS_MEAN_ABSOLUTE_AMPLITUDE                           0x0010700e
 #define RFMXSPECAN_ATTR_PAVT_RESULTS_FREQUENCY_ERROR_MEAN                              0x00107014
+#define RFMXSPECAN_ATTR_POWERLIST_MEASUREMENT_ENABLED                                  0x00150000
+#define RFMXSPECAN_ATTR_POWERLIST_NUMBER_OF_SEGMENTS                                   0x00150002
+#define RFMXSPECAN_ATTR_POWERLIST_SEGMENT_LENGTH                                       0x00150003
+#define RFMXSPECAN_ATTR_POWERLIST_SEGMENT_FREQUENCY                                    0x00150004
+#define RFMXSPECAN_ATTR_POWERLIST_SEGMENT_REFERENCE_LEVEL                              0x00150005
+#define RFMXSPECAN_ATTR_POWERLIST_SEGMENT_MEASUREMENT_LENGTH                           0x00150006
+#define RFMXSPECAN_ATTR_POWERLIST_SEGMENT_MEASUREMENT_OFFSET                           0x00150007
+#define RFMXSPECAN_ATTR_POWERLIST_SEGMENT_RBW_FILTER_BANDWIDTH                         0x00150008
+#define RFMXSPECAN_ATTR_POWERLIST_SEGMENT_RBW_FILTER_TYPE                              0x00150009
+#define RFMXSPECAN_ATTR_POWERLIST_SEGMENT_RBW_FILTER_ALPHA                             0x0015000a
+#define RFMXSPECAN_ATTR_POWERLIST_SEGMENT_TRIGGER_TYPE                                 0x0015000b
+#define RFMXSPECAN_ATTR_POWERLIST_RESULTS_MEAN_ABSOLUTE_POWER                          0x0015000c
+#define RFMXSPECAN_ATTR_POWERLIST_RESULTS_MAXIMUM_POWER                                0x0015000d
+#define RFMXSPECAN_ATTR_POWERLIST_RESULTS_MINIMUM_POWER                                0x0015000e
 #define RFMXSPECAN_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                             0x0010000d
 #define RFMXSPECAN_ATTR_LIMITED_CONFIGURATION_CHANGE                                   0x0010000e
 #define RFMXSPECAN_ATTR_SELECTED_PATH                                                  0x0010000f
@@ -1555,6 +1571,10 @@
 #define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ODD_ORDERS_ONLY                           1
 #define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_EVEN_ORDERS_ONLY                          2
 
+// Values for RFMXSPECAN_ATTR_DPD_DVR_DDR_ENABLED
+#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_TRUE                                                       1
+
 // Values for RFMXSPECAN_ATTR_DPD_MEASUREMENT_MODE
 #define RFMXSPECAN_VAL_DPD_MEASUREMENT_MODE_ACQUIRE_AND_EXTRACT                                       0
 #define RFMXSPECAN_VAL_DPD_MEASUREMENT_MODE_EXTRACT_ONLY                                              1
@@ -1906,6 +1926,7 @@
 #define RFMXSPECAN_VAL_PHASENOISE                                                                     1<<15
 #define RFMXSPECAN_VAL_PAVT                                                                           1<<16
 #define RFMXSPECAN_VAL_IDPD                                                                           1<<17
+#define RFMXSPECAN_VAL_POWERLIST                                                                      1<<18
 
 // Values for SpectrumNoiseCalibrationDataValid
 #define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_DATA_VALID_FALSE                                    0
@@ -1973,6 +1994,22 @@
 #define RFMXSPECAN_VAL_REF_IN_STR                                                                     "RefIn"
 #define RFMXSPECAN_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
 #define RFMXSPECAN_VAL_CLK_IN_STR                                                                     "ClkIn"
+
+// Values for NFDutInputLossS2pSParameterOrientation
+#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT                0
+#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT                1
+
+// Values for NFDutOutputLossS2pSParameterOrientation
+#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT               0
+#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT               1
+
+// Values for NFCalibrationLossS2pSParameterOrientation
+#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT              0
+#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT              1
+
+// Values for NFColdSourceDutS2pSParameterOrientation
+#define RFMXSPECAN_VAL_NF_COLD_SOURCE_DUT_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT               0
+#define RFMXSPECAN_VAL_NF_COLD_SOURCE_DUT_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT               1
 
 /* ---------------- RFmxSpecAn APIs ------------------ */
 
@@ -4303,6 +4340,15 @@ int32 __stdcall RFmxSpecAn_IQCfgBandwidth(
    float64 bandwidth
 );
 
+int32 __stdcall RFmxSpecAn_PowerListCfgRBWFilterArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 RBW[],
+   int32 RBWFilterType[],
+   float64 RRCAlpha[],
+   int32 arraySize
+);
+
 int32 __stdcall RFmxSpecAn_CfgExternalAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4397,6 +4443,40 @@ int32 __stdcall RFmxSpecAn_MarkerPeakSearch(
 int32 __stdcall RFmxSpecAn_NFClearCalibrationDatabase(
    niRFmxInstrHandle instrumentHandle,
    char calibrationSetupID[]
+);
+
+int32 __stdcall RFmxSpecAn_NFLoadDUTInputLossFromS2p(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 DUTInputLossCompensationEnabled,
+   char DUTInputLossS2pFilePath[],
+   int32 DUTInputLossSParameterOrientation,
+   float64 DUTInputLossTemperature
+);
+
+int32 __stdcall RFmxSpecAn_NFLoadDUTOutputLossFromS2p(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 DUTOutputLossCompensationEnabled,
+   char DUTOutputLossS2pFilePath[],
+   int32 DUTOutputLossSParameterOrientation,
+   float64 DUTOutputLossTemperature
+);
+
+int32 __stdcall RFmxSpecAn_NFLoadCalibrationLossFromS2p(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 calibrationLossCompensationEnabled,
+   char calibrationLossS2pFilePath[],
+   int32 calibrationLossSParameterOrientation,
+   float64 calibrationLossTemperature
+);
+
+int32 __stdcall RFmxSpecAn_NFLoadColdSourceDUTSParametersFromS2p(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char DUTSParametersS2pFilePath[],
+   int32 DUTSParameterOrientation
 );
 
 int32 __stdcall RFmxSpecAn_SpectrumCfgFrequencyStartStop(
@@ -5751,6 +5831,33 @@ int32 __stdcall RFmxSpecAn_IDPDGetEqualizerReferenceWaveformSplit(
    float32 equalizerReferenceWaveformI[],
    float32 equalizerReferenceWaveformQ[],
    float64* PAPR,
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListFetchMeanAbsolutePowerArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 meanAbsolutePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListFetchMaximumPowerArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 maximumPower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListFetchMinimumPowerArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 minimumPower[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -10727,6 +10834,18 @@ int32 __stdcall RFmxSpecAn_DPDSetDVRNumberOfSegments(
    int32 attrVal
 );
 
+int32 __stdcall RFmxSpecAn_DPDGetDVRLinearMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetDVRLinearMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxSpecAn_DPDGetDVRNonlinearMemoryDepth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -10734,6 +10853,18 @@ int32 __stdcall RFmxSpecAn_DPDGetDVRNonlinearMemoryDepth(
 );
 
 int32 __stdcall RFmxSpecAn_DPDSetDVRNonlinearMemoryDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDGetDVRDDREnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_DPDSetDVRDDREnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -13438,6 +13569,189 @@ int32 __stdcall RFmxSpecAn_PAVTGetResultsFrequencyErrorMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetNumberOfSegments(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetNumberOfSegments(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetSegmentLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetSegmentLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetSegmentFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetSegmentFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetSegmentReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetSegmentReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetSegmentMeasurementLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetSegmentMeasurementLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetSegmentMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetSegmentMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetSegmentRBWFilterBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetSegmentRBWFilterBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetSegmentRBWFilterType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetSegmentRBWFilterType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetSegmentRBWFilterAlpha(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetSegmentRBWFilterAlpha(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetSegmentTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListSetSegmentTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetResultsMeanAbsolutePower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetResultsMaximumPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
+);
+
+int32 __stdcall RFmxSpecAn_PowerListGetResultsMinimumPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal[],
+   int32 arraySize,
+   int32 *actualArraySize
 );
 
 #ifdef __cplusplus
