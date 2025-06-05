@@ -525,6 +525,11 @@ attributes = {
         'name': 'SPARAMS_SNP_PORTS',
         'type': 'char[]'
     },
+    13635607: {
+        'access': 'read-write',
+        'name': 'SPARAMS_PARAMETER',
+        'type': 'char[]'
+    },
     13635608: {
         'access': 'read-write',
         'enum': 'SParamsCorrectionState',
@@ -628,6 +633,11 @@ attributes = {
     13639693: {
         'access': 'read-write',
         'name': 'GROUND_TERMINATED_PORTS',
+        'type': 'char[]'
+    },
+    13639698: {
+        'access': 'read-write',
+        'name': 'WAVES_PARAMETER',
         'type': 'char[]'
     },
     13639699: {
