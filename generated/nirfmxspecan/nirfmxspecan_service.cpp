@@ -11717,6 +11717,225 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::NFLoadCalibrationLossFromS2p(::grpc::ServerContext* context, const NFLoadCalibrationLossFromS2pRequest* request, NFLoadCalibrationLossFromS2pResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 calibration_loss_compensation_enabled;
+      switch (request->calibration_loss_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadCalibrationLossFromS2pRequest::CalibrationLossCompensationEnabledEnumCase::kCalibrationLossCompensationEnabled: {
+          calibration_loss_compensation_enabled = static_cast<int32>(request->calibration_loss_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadCalibrationLossFromS2pRequest::CalibrationLossCompensationEnabledEnumCase::kCalibrationLossCompensationEnabledRaw: {
+          calibration_loss_compensation_enabled = static_cast<int32>(request->calibration_loss_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadCalibrationLossFromS2pRequest::CalibrationLossCompensationEnabledEnumCase::CALIBRATION_LOSS_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for calibration_loss_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto calibration_loss_s2p_file_path_mbcs = convert_from_grpc<std::string>(request->calibration_loss_s2p_file_path());
+      char* calibration_loss_s2p_file_path = (char*)calibration_loss_s2p_file_path_mbcs.c_str();
+      int32 calibration_loss_s_parameter_orientation;
+      switch (request->calibration_loss_s_parameter_orientation_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadCalibrationLossFromS2pRequest::CalibrationLossSParameterOrientationEnumCase::kCalibrationLossSParameterOrientation: {
+          calibration_loss_s_parameter_orientation = static_cast<int32>(request->calibration_loss_s_parameter_orientation());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadCalibrationLossFromS2pRequest::CalibrationLossSParameterOrientationEnumCase::kCalibrationLossSParameterOrientationRaw: {
+          calibration_loss_s_parameter_orientation = static_cast<int32>(request->calibration_loss_s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadCalibrationLossFromS2pRequest::CalibrationLossSParameterOrientationEnumCase::CALIBRATION_LOSS_S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for calibration_loss_s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 calibration_loss_temperature = request->calibration_loss_temperature();
+      auto status = library_->NFLoadCalibrationLossFromS2p(instrument, selector_string, calibration_loss_compensation_enabled, calibration_loss_s2p_file_path, calibration_loss_s_parameter_orientation, calibration_loss_temperature);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::NFLoadColdSourceDUTSParametersFromS2p(::grpc::ServerContext* context, const NFLoadColdSourceDUTSParametersFromS2pRequest* request, NFLoadColdSourceDUTSParametersFromS2pResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto duts_parameters_s2p_file_path_mbcs = convert_from_grpc<std::string>(request->duts_parameters_s2p_file_path());
+      char* duts_parameters_s2p_file_path = (char*)duts_parameters_s2p_file_path_mbcs.c_str();
+      int32 duts_parameter_orientation;
+      switch (request->duts_parameter_orientation_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadColdSourceDUTSParametersFromS2pRequest::DutsParameterOrientationEnumCase::kDutsParameterOrientation: {
+          duts_parameter_orientation = static_cast<int32>(request->duts_parameter_orientation());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadColdSourceDUTSParametersFromS2pRequest::DutsParameterOrientationEnumCase::kDutsParameterOrientationRaw: {
+          duts_parameter_orientation = static_cast<int32>(request->duts_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadColdSourceDUTSParametersFromS2pRequest::DutsParameterOrientationEnumCase::DUTS_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for duts_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->NFLoadColdSourceDUTSParametersFromS2p(instrument, selector_string, duts_parameters_s2p_file_path, duts_parameter_orientation);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::NFLoadDUTInputLossFromS2p(::grpc::ServerContext* context, const NFLoadDUTInputLossFromS2pRequest* request, NFLoadDUTInputLossFromS2pResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 dut_input_loss_compensation_enabled;
+      switch (request->dut_input_loss_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadDUTInputLossFromS2pRequest::DutInputLossCompensationEnabledEnumCase::kDutInputLossCompensationEnabled: {
+          dut_input_loss_compensation_enabled = static_cast<int32>(request->dut_input_loss_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadDUTInputLossFromS2pRequest::DutInputLossCompensationEnabledEnumCase::kDutInputLossCompensationEnabledRaw: {
+          dut_input_loss_compensation_enabled = static_cast<int32>(request->dut_input_loss_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadDUTInputLossFromS2pRequest::DutInputLossCompensationEnabledEnumCase::DUT_INPUT_LOSS_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for dut_input_loss_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto dut_input_loss_s2p_file_path_mbcs = convert_from_grpc<std::string>(request->dut_input_loss_s2p_file_path());
+      char* dut_input_loss_s2p_file_path = (char*)dut_input_loss_s2p_file_path_mbcs.c_str();
+      int32 dut_input_loss_s_parameter_orientation;
+      switch (request->dut_input_loss_s_parameter_orientation_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadDUTInputLossFromS2pRequest::DutInputLossSParameterOrientationEnumCase::kDutInputLossSParameterOrientation: {
+          dut_input_loss_s_parameter_orientation = static_cast<int32>(request->dut_input_loss_s_parameter_orientation());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadDUTInputLossFromS2pRequest::DutInputLossSParameterOrientationEnumCase::kDutInputLossSParameterOrientationRaw: {
+          dut_input_loss_s_parameter_orientation = static_cast<int32>(request->dut_input_loss_s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadDUTInputLossFromS2pRequest::DutInputLossSParameterOrientationEnumCase::DUT_INPUT_LOSS_S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for dut_input_loss_s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 dut_input_loss_temperature = request->dut_input_loss_temperature();
+      auto status = library_->NFLoadDUTInputLossFromS2p(instrument, selector_string, dut_input_loss_compensation_enabled, dut_input_loss_s2p_file_path, dut_input_loss_s_parameter_orientation, dut_input_loss_temperature);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::NFLoadDUTOutputLossFromS2p(::grpc::ServerContext* context, const NFLoadDUTOutputLossFromS2pRequest* request, NFLoadDUTOutputLossFromS2pResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 dut_output_loss_compensation_enabled;
+      switch (request->dut_output_loss_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadDUTOutputLossFromS2pRequest::DutOutputLossCompensationEnabledEnumCase::kDutOutputLossCompensationEnabled: {
+          dut_output_loss_compensation_enabled = static_cast<int32>(request->dut_output_loss_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadDUTOutputLossFromS2pRequest::DutOutputLossCompensationEnabledEnumCase::kDutOutputLossCompensationEnabledRaw: {
+          dut_output_loss_compensation_enabled = static_cast<int32>(request->dut_output_loss_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadDUTOutputLossFromS2pRequest::DutOutputLossCompensationEnabledEnumCase::DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for dut_output_loss_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto dut_output_loss_s2p_file_path_mbcs = convert_from_grpc<std::string>(request->dut_output_loss_s2p_file_path());
+      char* dut_output_loss_s2p_file_path = (char*)dut_output_loss_s2p_file_path_mbcs.c_str();
+      int32 dut_output_loss_s_parameter_orientation;
+      switch (request->dut_output_loss_s_parameter_orientation_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadDUTOutputLossFromS2pRequest::DutOutputLossSParameterOrientationEnumCase::kDutOutputLossSParameterOrientation: {
+          dut_output_loss_s_parameter_orientation = static_cast<int32>(request->dut_output_loss_s_parameter_orientation());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadDUTOutputLossFromS2pRequest::DutOutputLossSParameterOrientationEnumCase::kDutOutputLossSParameterOrientationRaw: {
+          dut_output_loss_s_parameter_orientation = static_cast<int32>(request->dut_output_loss_s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadDUTOutputLossFromS2pRequest::DutOutputLossSParameterOrientationEnumCase::DUT_OUTPUT_LOSS_S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for dut_output_loss_s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 dut_output_loss_temperature = request->dut_output_loss_temperature();
+      auto status = library_->NFLoadDUTOutputLossFromS2p(instrument, selector_string, dut_output_loss_compensation_enabled, dut_output_loss_s2p_file_path, dut_output_loss_s_parameter_orientation, dut_output_loss_temperature);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::NFRecommendReferenceLevel(::grpc::ServerContext* context, const NFRecommendReferenceLevelRequest* request, NFRecommendReferenceLevelResponse* response)
   {
     if (context->IsCancelled()) {
@@ -13293,6 +13512,175 @@ namespace nirfmxspecan_grpc {
         }
         response->set_status(status);
         response->mutable_spot_phase_noise()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::PowerListCfgRBWFilterArray(::grpc::ServerContext* context, const PowerListCfgRBWFilterArrayRequest* request, PowerListCfgRBWFilterArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto rbw = const_cast<float64*>(request->rbw().data());
+      auto rbw_filter_type = const_cast<int32*>(reinterpret_cast<const int32*>(request->rbw_filter_type().data()));
+      auto rrc_alpha = const_cast<float64*>(request->rrc_alpha().data());
+      auto array_size_determine_from_sizes = std::array<int, 3>
+      {
+        request->rbw_size(),
+        request->rbw_filter_type_size(),
+        request->rrc_alpha_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rbw, rbw_filter_type, rrc_alpha] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        rbw = request->rbw_size() ? std::move(rbw) : nullptr;
+        rbw_filter_type = request->rbw_filter_type_size() ? std::move(rbw_filter_type) : nullptr;
+        rrc_alpha = request->rrc_alpha_size() ? std::move(rrc_alpha) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->PowerListCfgRBWFilterArray(instrument, selector_string, rbw, rbw_filter_type, rrc_alpha, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::PowerListFetchMaximumPowerArray(::grpc::ServerContext* context, const PowerListFetchMaximumPowerArrayRequest* request, PowerListFetchMaximumPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->PowerListFetchMaximumPowerArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_maximum_power()->Resize(actual_array_size, 0);
+        float64* maximum_power = response->mutable_maximum_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->PowerListFetchMaximumPowerArray(instrument, selector_string, timeout, maximum_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_maximum_power()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::PowerListFetchMeanAbsolutePowerArray(::grpc::ServerContext* context, const PowerListFetchMeanAbsolutePowerArrayRequest* request, PowerListFetchMeanAbsolutePowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->PowerListFetchMeanAbsolutePowerArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_mean_absolute_power()->Resize(actual_array_size, 0);
+        float64* mean_absolute_power = response->mutable_mean_absolute_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->PowerListFetchMeanAbsolutePowerArray(instrument, selector_string, timeout, mean_absolute_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_mean_absolute_power()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::PowerListFetchMinimumPowerArray(::grpc::ServerContext* context, const PowerListFetchMinimumPowerArrayRequest* request, PowerListFetchMinimumPowerArrayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->PowerListFetchMinimumPowerArray(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_minimum_power()->Resize(actual_array_size, 0);
+        float64* minimum_power = response->mutable_minimum_power()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->PowerListFetchMinimumPowerArray(instrument, selector_string, timeout, minimum_power, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_minimum_power()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }

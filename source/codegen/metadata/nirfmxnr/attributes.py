@@ -1907,6 +1907,16 @@ attributes = {
         'name': 'MODACC_RESULTS_PDSCH_PTRS_RE_POWER_MEAN',
         'type': 'float64'
     },
+    9453743: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_COMPONENT_CARRIER_CROSS_POWER_MEAN',
+        'type': 'float64'
+    },
+    9453744: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_COMPONENT_CARRIER_TIME_ALIGNMENT_ERROR_MEAN',
+        'type': 'float64'
+    },
     9461760: {
         'access': 'read-write',
         'name': 'OBW_MEASUREMENT_ENABLED',

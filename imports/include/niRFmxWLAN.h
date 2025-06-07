@@ -205,6 +205,7 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_U_SIG_RMS_EVM_MEAN                             0x00a040be
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_EHT_SIG_RMS_EVM_MEAN                           0x00a040bf
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_UHR_SIG_RMS_EVM_MEAN                           0x00a040d2
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_ELR_SIG_RMS_EVM_MEAN                           0x00a040d4
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_L_STF_AVERAGE_POWER_MEAN                 0x00a0403a
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_L_STF_PEAK_POWER_MAXIMUM                 0x00a0403b
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_L_LTF_AVERAGE_POWER_MEAN                 0x00a0403c
@@ -308,6 +309,7 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_U_SIG_CRC_STATUS                               0x00a04091
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_EHT_SIG_CRC_STATUS                             0x00a04092
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_UHR_SIG_CRC_STATUS                             0x00a040d3
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_ELR_SIG_CRC_STATUS                             0x00a040d5
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PSDU_CRC_STATUS                                0x00a0408c
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_SCRAMBLER_SEED                                 0x00a040c8
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PE_DURATION                                    0x00a04095
@@ -467,6 +469,7 @@
 #define RFMXWLAN_VAL_OFDM_PPDU_TYPE_MU                                                              4
 #define RFMXWLAN_VAL_OFDM_PPDU_TYPE_EXTENDED_RANGE_SU                                               5
 #define RFMXWLAN_VAL_OFDM_PPDU_TYPE_TRIGGER_BASED                                                   6
+#define RFMXWLAN_VAL_OFDM_PPDU_TYPE_ELR                                                             7
 
 // Values for RFMXWLAN_ATTR_OFDM_HEADER_DECODING_ENABLED
 #define RFMXWLAN_VAL_OFDM_HEADER_DECODING_ENABLED_FALSE                                             0
@@ -784,6 +787,11 @@
 #define RFMXWLAN_VAL_OFDMMODACC_UHR_SIG_CRC_STATUS_NOT_APPLICABLE                                   -1
 #define RFMXWLAN_VAL_OFDMMODACC_UHR_SIG_CRC_STATUS_FAIL                                             0
 #define RFMXWLAN_VAL_OFDMMODACC_UHR_SIG_CRC_STATUS_PASS                                             1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_ELR_SIG_CRC_STATUS
+#define RFMXWLAN_VAL_OFDMMODACC_ELR_SIG_CRC_STATUS_NOT_APPLICABLE                                   -1
+#define RFMXWLAN_VAL_OFDMMODACC_ELR_SIG_CRC_STATUS_FAIL                                             0
+#define RFMXWLAN_VAL_OFDMMODACC_ELR_SIG_CRC_STATUS_PASS                                             1
 
 // Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PSDU_CRC_STATUS
 #define RFMXWLAN_VAL_OFDMMODACC_PSDU_CRC_STATUS_FAIL                                                0
@@ -4893,6 +4901,12 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUHRSIGRMSEVMMean(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsELRSIGRMSEVMMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsLSTFAveragePowerMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5506,6 +5520,12 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsEHTSIGCRCStatus(
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUHRSIGCRCStatus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsELRSIGCRCStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal

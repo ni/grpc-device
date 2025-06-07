@@ -313,6 +313,10 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 NFFetchDUTNoiseFigureAndGain(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 dutNoiseFigure[], float64 dutNoiseTemperature[], float64 dutGain[], int32 arraySize, int32* actualArraySize) override;
   int32 NFFetchYFactorPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 hotPower[], float64 coldPower[], int32 arraySize, int32* actualArraySize) override;
   int32 NFFetchYFactors(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 measurementYFactor[], float64 calibrationYFactor[], int32 arraySize, int32* actualArraySize) override;
+  int32 NFLoadCalibrationLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationLossCompensationEnabled, char calibrationLossS2pFilePath[], int32 calibrationLossSParameterOrientation, float64 calibrationLossTemperature) override;
+  int32 NFLoadColdSourceDUTSParametersFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char dutsParametersS2pFilePath[], int32 dutsParameterOrientation) override;
+  int32 NFLoadDUTInputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutInputLossCompensationEnabled, char dutInputLossS2pFilePath[], int32 dutInputLossSParameterOrientation, float64 dutInputLossTemperature) override;
+  int32 NFLoadDUTOutputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutOutputLossCompensationEnabled, char dutOutputLossS2pFilePath[], int32 dutOutputLossSParameterOrientation, float64 dutOutputLossTemperature) override;
   int32 NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel) override;
   int32 NFValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid) override;
   int32 OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) override;
@@ -355,6 +359,10 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 PhaseNoiseFetchMeasuredLogPlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 frequency[], float32 measuredPhaseNoise[], int32 arraySize, int32* actualArraySize) override;
   int32 PhaseNoiseFetchSmoothedLogPlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 frequency[], float32 smoothedPhaseNoise[], int32 arraySize, int32* actualArraySize) override;
   int32 PhaseNoiseFetchSpotNoise(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 spotPhaseNoise[], int32 arraySize, int32* actualArraySize) override;
+  int32 PowerListCfgRBWFilterArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 rbw[], int32 rbwFilterType[], float64 rrcAlpha[], int32 arraySize) override;
+  int32 PowerListFetchMaximumPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 maximumPower[], int32 arraySize, int32* actualArraySize) override;
+  int32 PowerListFetchMeanAbsolutePowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 meanAbsolutePower[], int32 arraySize, int32* actualArraySize) override;
+  int32 PowerListFetchMinimumPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 minimumPower[], int32 arraySize, int32* actualArraySize) override;
   int32 ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID) override;
   int32 ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 SEMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) override;
@@ -770,6 +778,10 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using NFFetchDUTNoiseFigureAndGainPtr = decltype(&RFmxSpecAn_NFFetchDUTNoiseFigureAndGain);
   using NFFetchYFactorPowersPtr = decltype(&RFmxSpecAn_NFFetchYFactorPowers);
   using NFFetchYFactorsPtr = decltype(&RFmxSpecAn_NFFetchYFactors);
+  using NFLoadCalibrationLossFromS2pPtr = decltype(&RFmxSpecAn_NFLoadCalibrationLossFromS2p);
+  using NFLoadColdSourceDUTSParametersFromS2pPtr = decltype(&RFmxSpecAn_NFLoadColdSourceDUTSParametersFromS2p);
+  using NFLoadDUTInputLossFromS2pPtr = decltype(&RFmxSpecAn_NFLoadDUTInputLossFromS2p);
+  using NFLoadDUTOutputLossFromS2pPtr = decltype(&RFmxSpecAn_NFLoadDUTOutputLossFromS2p);
   using NFRecommendReferenceLevelPtr = decltype(&RFmxSpecAn_NFRecommendReferenceLevel);
   using NFValidateCalibrationDataPtr = decltype(&RFmxSpecAn_NFValidateCalibrationData);
   using OBWCfgAveragingPtr = decltype(&RFmxSpecAn_OBWCfgAveraging);
@@ -812,6 +824,10 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using PhaseNoiseFetchMeasuredLogPlotTracePtr = decltype(&RFmxSpecAn_PhaseNoiseFetchMeasuredLogPlotTrace);
   using PhaseNoiseFetchSmoothedLogPlotTracePtr = decltype(&RFmxSpecAn_PhaseNoiseFetchSmoothedLogPlotTrace);
   using PhaseNoiseFetchSpotNoisePtr = decltype(&RFmxSpecAn_PhaseNoiseFetchSpotNoise);
+  using PowerListCfgRBWFilterArrayPtr = decltype(&RFmxSpecAn_PowerListCfgRBWFilterArray);
+  using PowerListFetchMaximumPowerArrayPtr = decltype(&RFmxSpecAn_PowerListFetchMaximumPowerArray);
+  using PowerListFetchMeanAbsolutePowerArrayPtr = decltype(&RFmxSpecAn_PowerListFetchMeanAbsolutePowerArray);
+  using PowerListFetchMinimumPowerArrayPtr = decltype(&RFmxSpecAn_PowerListFetchMinimumPowerArray);
   using ResetAttributePtr = decltype(&RFmxSpecAn_ResetAttribute);
   using ResetToDefaultPtr = decltype(&RFmxSpecAn_ResetToDefault);
   using SEMCfgAveragingPtr = decltype(&RFmxSpecAn_SEMCfgAveraging);
@@ -1227,6 +1243,10 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     NFFetchDUTNoiseFigureAndGainPtr NFFetchDUTNoiseFigureAndGain;
     NFFetchYFactorPowersPtr NFFetchYFactorPowers;
     NFFetchYFactorsPtr NFFetchYFactors;
+    NFLoadCalibrationLossFromS2pPtr NFLoadCalibrationLossFromS2p;
+    NFLoadColdSourceDUTSParametersFromS2pPtr NFLoadColdSourceDUTSParametersFromS2p;
+    NFLoadDUTInputLossFromS2pPtr NFLoadDUTInputLossFromS2p;
+    NFLoadDUTOutputLossFromS2pPtr NFLoadDUTOutputLossFromS2p;
     NFRecommendReferenceLevelPtr NFRecommendReferenceLevel;
     NFValidateCalibrationDataPtr NFValidateCalibrationData;
     OBWCfgAveragingPtr OBWCfgAveraging;
@@ -1269,6 +1289,10 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     PhaseNoiseFetchMeasuredLogPlotTracePtr PhaseNoiseFetchMeasuredLogPlotTrace;
     PhaseNoiseFetchSmoothedLogPlotTracePtr PhaseNoiseFetchSmoothedLogPlotTrace;
     PhaseNoiseFetchSpotNoisePtr PhaseNoiseFetchSpotNoise;
+    PowerListCfgRBWFilterArrayPtr PowerListCfgRBWFilterArray;
+    PowerListFetchMaximumPowerArrayPtr PowerListFetchMaximumPowerArray;
+    PowerListFetchMeanAbsolutePowerArrayPtr PowerListFetchMeanAbsolutePowerArray;
+    PowerListFetchMinimumPowerArrayPtr PowerListFetchMinimumPowerArray;
     ResetAttributePtr ResetAttribute;
     ResetToDefaultPtr ResetToDefault;
     SEMCfgAveragingPtr SEMCfgAveraging;

@@ -307,6 +307,10 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 NFFetchDUTNoiseFigureAndGain(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 dutNoiseFigure[], float64 dutNoiseTemperature[], float64 dutGain[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 NFFetchYFactorPowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 hotPower[], float64 coldPower[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 NFFetchYFactors(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 measurementYFactor[], float64 calibrationYFactor[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 NFLoadCalibrationLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationLossCompensationEnabled, char calibrationLossS2pFilePath[], int32 calibrationLossSParameterOrientation, float64 calibrationLossTemperature) = 0;
+  virtual int32 NFLoadColdSourceDUTSParametersFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char dutsParametersS2pFilePath[], int32 dutsParameterOrientation) = 0;
+  virtual int32 NFLoadDUTInputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutInputLossCompensationEnabled, char dutInputLossS2pFilePath[], int32 dutInputLossSParameterOrientation, float64 dutInputLossTemperature) = 0;
+  virtual int32 NFLoadDUTOutputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutOutputLossCompensationEnabled, char dutOutputLossS2pFilePath[], int32 dutOutputLossSParameterOrientation, float64 dutOutputLossTemperature) = 0;
   virtual int32 NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel) = 0;
   virtual int32 NFValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid) = 0;
   virtual int32 OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) = 0;
@@ -349,6 +353,10 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 PhaseNoiseFetchMeasuredLogPlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 frequency[], float32 measuredPhaseNoise[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 PhaseNoiseFetchSmoothedLogPlotTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 frequency[], float32 smoothedPhaseNoise[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 PhaseNoiseFetchSpotNoise(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 spotPhaseNoise[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 PowerListCfgRBWFilterArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 rbw[], int32 rbwFilterType[], float64 rrcAlpha[], int32 arraySize) = 0;
+  virtual int32 PowerListFetchMaximumPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 maximumPower[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 PowerListFetchMeanAbsolutePowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 meanAbsolutePower[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 PowerListFetchMinimumPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 minimumPower[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID) = 0;
   virtual int32 ResetToDefault(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
   virtual int32 SEMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) = 0;

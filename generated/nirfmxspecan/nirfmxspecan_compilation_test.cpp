@@ -1467,6 +1467,26 @@ int32 NFFetchYFactors(niRFmxInstrHandle instrumentHandle, char selectorString[],
   return RFmxSpecAn_NFFetchYFactors(instrumentHandle, selectorString, timeout, measurementYFactor, calibrationYFactor, arraySize, actualArraySize);
 }
 
+int32 NFLoadCalibrationLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationLossCompensationEnabled, char calibrationLossS2pFilePath[], int32 calibrationLossSParameterOrientation, float64 calibrationLossTemperature)
+{
+  return RFmxSpecAn_NFLoadCalibrationLossFromS2p(instrumentHandle, selectorString, calibrationLossCompensationEnabled, calibrationLossS2pFilePath, calibrationLossSParameterOrientation, calibrationLossTemperature);
+}
+
+int32 NFLoadColdSourceDUTSParametersFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char dutsParametersS2pFilePath[], int32 dutsParameterOrientation)
+{
+  return RFmxSpecAn_NFLoadColdSourceDUTSParametersFromS2p(instrumentHandle, selectorString, dutsParametersS2pFilePath, dutsParameterOrientation);
+}
+
+int32 NFLoadDUTInputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutInputLossCompensationEnabled, char dutInputLossS2pFilePath[], int32 dutInputLossSParameterOrientation, float64 dutInputLossTemperature)
+{
+  return RFmxSpecAn_NFLoadDUTInputLossFromS2p(instrumentHandle, selectorString, dutInputLossCompensationEnabled, dutInputLossS2pFilePath, dutInputLossSParameterOrientation, dutInputLossTemperature);
+}
+
+int32 NFLoadDUTOutputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutOutputLossCompensationEnabled, char dutOutputLossS2pFilePath[], int32 dutOutputLossSParameterOrientation, float64 dutOutputLossTemperature)
+{
+  return RFmxSpecAn_NFLoadDUTOutputLossFromS2p(instrumentHandle, selectorString, dutOutputLossCompensationEnabled, dutOutputLossS2pFilePath, dutOutputLossSParameterOrientation, dutOutputLossTemperature);
+}
+
 int32 NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel)
 {
   return RFmxSpecAn_NFRecommendReferenceLevel(instrumentHandle, selectorString, dutMaxGain, dutMaxNoiseFigure, referenceLevel);
@@ -1675,6 +1695,26 @@ int32 PhaseNoiseFetchSmoothedLogPlotTrace(niRFmxInstrHandle instrumentHandle, ch
 int32 PhaseNoiseFetchSpotNoise(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 spotPhaseNoise[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_PhaseNoiseFetchSpotNoise(instrumentHandle, selectorString, timeout, spotPhaseNoise, arraySize, actualArraySize);
+}
+
+int32 PowerListCfgRBWFilterArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 rbw[], int32 rbwFilterType[], float64 rrcAlpha[], int32 arraySize)
+{
+  return RFmxSpecAn_PowerListCfgRBWFilterArray(instrumentHandle, selectorString, rbw, rbwFilterType, rrcAlpha, arraySize);
+}
+
+int32 PowerListFetchMaximumPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 maximumPower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_PowerListFetchMaximumPowerArray(instrumentHandle, selectorString, timeout, maximumPower, arraySize, actualArraySize);
+}
+
+int32 PowerListFetchMeanAbsolutePowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 meanAbsolutePower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_PowerListFetchMeanAbsolutePowerArray(instrumentHandle, selectorString, timeout, meanAbsolutePower, arraySize, actualArraySize);
+}
+
+int32 PowerListFetchMinimumPowerArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 minimumPower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_PowerListFetchMinimumPowerArray(instrumentHandle, selectorString, timeout, minimumPower, arraySize, actualArraySize);
 }
 
 int32 ResetAttribute(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 attributeID)

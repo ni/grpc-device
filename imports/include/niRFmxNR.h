@@ -290,11 +290,13 @@
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_FREQUENCY_ERROR_MEAN                  0x0090402d
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SLOT_FREQUENCY_ERROR_MAXIMUM          0x009040a1
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SYMBOL_CLOCK_ERROR_MEAN               0x00904033
+#define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_TIME_ALIGNMENT_ERROR_MEAN             0x009040b0
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_IQ_ORIGIN_OFFSET_MEAN                 0x0090402e
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_SLOT_IQ_ORIGIN_OFFSET_MAXIMUM         0x009040a2
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_IQ_GAIN_IMBALANCE_MEAN                0x0090402f
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_QUADRATURE_ERROR_MEAN                 0x00904030
 #define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_IQ_TIMING_SKEW_MEAN                   0x00904031
+#define RFMXNR_ATTR_MODACC_RESULTS_COMPONENT_CARRIER_CROSS_POWER_MEAN                      0x009040af
 #define RFMXNR_ATTR_MODACC_RESULTS_SUBBLOCK_LO_COMPONENT_CARRIER_INDEX                     0x00904062
 #define RFMXNR_ATTR_MODACC_RESULTS_SUBBLOCK_LO_SUBCARRIER_INDEX                            0x00904063
 #define RFMXNR_ATTR_MODACC_RESULTS_SUBBLOCK_IQ_ORIGIN_OFFSET_MEAN                          0x00904036
@@ -6300,6 +6302,12 @@ int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierSymbolClockErrorMean(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierTimeAlignmentErrorMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierIQOriginOffsetMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -6325,6 +6333,12 @@ int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierQuadratureErrorMean(
 );
 
 int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierIQTimingSkewMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsComponentCarrierCrossPowerMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

@@ -52,7 +52,9 @@
 #define RFMXBT_ATTR_CHANNEL_SOUNDING_TONE_EXTENSION_SLOT                                           0x00b00033
 #define RFMXBT_ATTR_CHANNEL_SOUNDING_NUMBER_OF_ANTENNA_PATH                                        0x00b00036
 #define RFMXBT_ATTR_CHANNEL_SOUNDING_ANTENNA_SWITCH_TIME                                           0x00b00035
+#define RFMXBT_ATTR_ZADOFF_CHU_INDEX                                                               0x00b00039
 #define RFMXBT_ATTR_HIGH_DATA_THROUGHPUT_PACKET_FORMAT                                             0x00b00038
+#define RFMXBT_ATTR_VHDT_MODE_ENABLED                                                              0x00b00040
 #define RFMXBT_ATTR_CHANNEL_NUMBER                                                                 0x00b00017
 #define RFMXBT_ATTR_DETECTED_PACKET_TYPE                                                           0x00b00019
 #define RFMXBT_ATTR_DETECTED_DATA_RATE                                                             0x00b0002a
@@ -283,6 +285,10 @@
 #define RFMXBT_VAL_HIGH_DATA_THROUGHPUT_PACKET_FORMAT_SHORT_FORMAT                                0
 #define RFMXBT_VAL_HIGH_DATA_THROUGHPUT_PACKET_FORMAT_FORMAT0                                     1
 #define RFMXBT_VAL_HIGH_DATA_THROUGHPUT_PACKET_FORMAT_FORMAT1                                     2
+
+// Values for RFMXBT_ATTR_VHDT_MODE_ENABLED
+#define RFMXBT_VAL_VHDT_MODE_ENABLED_FALSE                                                        0
+#define RFMXBT_VAL_VHDT_MODE_ENABLED_TRUE                                                         1
 
 // Values for RFMXBT_ATTR_MODACC_BURST_SYNCHRONIZATION_TYPE
 #define RFMXBT_VAL_MODACC_BURST_SYNCHRONIZATION_TYPE_NONE                                         0
@@ -1904,6 +1910,18 @@ int32 __stdcall RFmxBT_SetChannelSoundingAntennaSwitchTime(
    float64 attrVal
 );
 
+int32 __stdcall RFmxBT_GetZadoffChuIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetZadoffChuIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxBT_GetHighDataThroughputPacketFormat(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1911,6 +1929,18 @@ int32 __stdcall RFmxBT_GetHighDataThroughputPacketFormat(
 );
 
 int32 __stdcall RFmxBT_SetHighDataThroughputPacketFormat(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_GetVHDTModeEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetVHDTModeEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

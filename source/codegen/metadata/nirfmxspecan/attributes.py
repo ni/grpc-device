@@ -2871,9 +2871,20 @@ attributes = {
         'name': 'DPD_DVR_NUMBER_OF_SEGMENTS',
         'type': 'int32'
     },
+    1110120: {
+        'access': 'read-write',
+        'name': 'DPD_DVR_LINEAR_MEMORY_DEPTH',
+        'type': 'int32'
+    },
     1110121: {
         'access': 'read-write',
         'name': 'DPD_DVR_NONLINEAR_MEMORY_DEPTH',
+        'type': 'int32'
+    },
+    1110122: {
+        'access': 'read-write',
+        'enum': 'DpdDvrDdrEnabled',
+        'name': 'DPD_DVR_DDR_ENABLED',
         'type': 'int32'
     },
     1110123: {
@@ -3765,5 +3776,75 @@ attributes = {
         'access': 'read-write',
         'name': 'IDPD_TARGET_GAIN',
         'type': 'float64'
+    },
+    1376256: {
+        'access': 'read-write',
+        'name': 'POWERLIST_MEASUREMENT_ENABLED',
+        'type': 'int32'
+    },
+    1376258: {
+        'access': 'read-write',
+        'name': 'POWERLIST_NUMBER_OF_SEGMENTS',
+        'type': 'int32'
+    },
+    1376259: {
+        'access': 'read-write',
+        'name': 'POWERLIST_SEGMENT_LENGTH',
+        'type': 'float64[]'
+    },
+    1376260: {
+        'access': 'read-write',
+        'name': 'POWERLIST_SEGMENT_FREQUENCY',
+        'type': 'float64[]'
+    },
+    1376261: {
+        'access': 'read-write',
+        'name': 'POWERLIST_SEGMENT_REFERENCE_LEVEL',
+        'type': 'float64[]'
+    },
+    1376262: {
+        'access': 'read-write',
+        'name': 'POWERLIST_SEGMENT_MEASUREMENT_LENGTH',
+        'type': 'float64[]'
+    },
+    1376263: {
+        'access': 'read-write',
+        'name': 'POWERLIST_SEGMENT_MEASUREMENT_OFFSET',
+        'type': 'float64[]'
+    },
+    1376264: {
+        'access': 'read-write',
+        'name': 'POWERLIST_SEGMENT_RBW_FILTER_BANDWIDTH',
+        'type': 'float64[]'
+    },
+    1376265: {
+        'access': 'read-write',
+        'name': 'POWERLIST_SEGMENT_RBW_FILTER_TYPE',
+        'type': 'int32[]'
+    },
+    1376266: {
+        'access': 'read-write',
+        'name': 'POWERLIST_SEGMENT_RBW_FILTER_ALPHA',
+        'type': 'float64[]'
+    },
+    1376267: {
+        'access': 'read-write',
+        'name': 'POWERLIST_SEGMENT_TRIGGER_TYPE',
+        'type': 'int32[]'
+    },
+    1376268: {
+        'access': 'read-write',
+        'name': 'POWERLIST_RESULTS_MEAN_ABSOLUTE_POWER',
+        'type': 'float64[]'
+    },
+    1376269: {
+        'access': 'read-write',
+        'name': 'POWERLIST_RESULTS_MAXIMUM_POWER',
+        'type': 'float64[]'
+    },
+    1376270: {
+        'access': 'read-write',
+        'name': 'POWERLIST_RESULTS_MINIMUM_POWER',
+        'type': 'float64[]'
     }
 }

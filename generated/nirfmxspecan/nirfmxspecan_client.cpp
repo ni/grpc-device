@@ -6506,6 +6506,141 @@ nf_fetch_y_factors(const StubPtr& stub, const nidevice_grpc::Session& instrument
   return response;
 }
 
+NFLoadCalibrationLossFromS2pResponse
+nf_load_calibration_loss_from_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<NFCalibrationLossCompensationEnabled, pb::int32>& calibration_loss_compensation_enabled, const std::string& calibration_loss_s2p_file_path, const simple_variant<NFCalibrationLossS2pSParameterOrientation, pb::int32>& calibration_loss_s_parameter_orientation, const double& calibration_loss_temperature)
+{
+  ::grpc::ClientContext context;
+
+  auto request = NFLoadCalibrationLossFromS2pRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto calibration_loss_compensation_enabled_ptr = calibration_loss_compensation_enabled.get_if<NFCalibrationLossCompensationEnabled>();
+  const auto calibration_loss_compensation_enabled_raw_ptr = calibration_loss_compensation_enabled.get_if<pb::int32>();
+  if (calibration_loss_compensation_enabled_ptr) {
+    request.set_calibration_loss_compensation_enabled(*calibration_loss_compensation_enabled_ptr);
+  }
+  else if (calibration_loss_compensation_enabled_raw_ptr) {
+    request.set_calibration_loss_compensation_enabled_raw(*calibration_loss_compensation_enabled_raw_ptr);
+  }
+  request.set_calibration_loss_s2p_file_path(calibration_loss_s2p_file_path);
+  const auto calibration_loss_s_parameter_orientation_ptr = calibration_loss_s_parameter_orientation.get_if<NFCalibrationLossS2pSParameterOrientation>();
+  const auto calibration_loss_s_parameter_orientation_raw_ptr = calibration_loss_s_parameter_orientation.get_if<pb::int32>();
+  if (calibration_loss_s_parameter_orientation_ptr) {
+    request.set_calibration_loss_s_parameter_orientation(*calibration_loss_s_parameter_orientation_ptr);
+  }
+  else if (calibration_loss_s_parameter_orientation_raw_ptr) {
+    request.set_calibration_loss_s_parameter_orientation_raw(*calibration_loss_s_parameter_orientation_raw_ptr);
+  }
+  request.set_calibration_loss_temperature(calibration_loss_temperature);
+
+  auto response = NFLoadCalibrationLossFromS2pResponse{};
+
+  raise_if_error(
+      stub->NFLoadCalibrationLossFromS2p(&context, request, &response),
+      context);
+
+  return response;
+}
+
+NFLoadColdSourceDUTSParametersFromS2pResponse
+nf_load_cold_source_duts_parameters_from_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& duts_parameters_s2p_file_path, const simple_variant<NFColdSourceDutS2pSParameterOrientation, pb::int32>& duts_parameter_orientation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = NFLoadColdSourceDUTSParametersFromS2pRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_duts_parameters_s2p_file_path(duts_parameters_s2p_file_path);
+  const auto duts_parameter_orientation_ptr = duts_parameter_orientation.get_if<NFColdSourceDutS2pSParameterOrientation>();
+  const auto duts_parameter_orientation_raw_ptr = duts_parameter_orientation.get_if<pb::int32>();
+  if (duts_parameter_orientation_ptr) {
+    request.set_duts_parameter_orientation(*duts_parameter_orientation_ptr);
+  }
+  else if (duts_parameter_orientation_raw_ptr) {
+    request.set_duts_parameter_orientation_raw(*duts_parameter_orientation_raw_ptr);
+  }
+
+  auto response = NFLoadColdSourceDUTSParametersFromS2pResponse{};
+
+  raise_if_error(
+      stub->NFLoadColdSourceDUTSParametersFromS2p(&context, request, &response),
+      context);
+
+  return response;
+}
+
+NFLoadDUTInputLossFromS2pResponse
+nf_load_dut_input_loss_from_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<NFDutInputLossCompensationEnabled, pb::int32>& dut_input_loss_compensation_enabled, const std::string& dut_input_loss_s2p_file_path, const simple_variant<NFDutInputLossS2pSParameterOrientation, pb::int32>& dut_input_loss_s_parameter_orientation, const double& dut_input_loss_temperature)
+{
+  ::grpc::ClientContext context;
+
+  auto request = NFLoadDUTInputLossFromS2pRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto dut_input_loss_compensation_enabled_ptr = dut_input_loss_compensation_enabled.get_if<NFDutInputLossCompensationEnabled>();
+  const auto dut_input_loss_compensation_enabled_raw_ptr = dut_input_loss_compensation_enabled.get_if<pb::int32>();
+  if (dut_input_loss_compensation_enabled_ptr) {
+    request.set_dut_input_loss_compensation_enabled(*dut_input_loss_compensation_enabled_ptr);
+  }
+  else if (dut_input_loss_compensation_enabled_raw_ptr) {
+    request.set_dut_input_loss_compensation_enabled_raw(*dut_input_loss_compensation_enabled_raw_ptr);
+  }
+  request.set_dut_input_loss_s2p_file_path(dut_input_loss_s2p_file_path);
+  const auto dut_input_loss_s_parameter_orientation_ptr = dut_input_loss_s_parameter_orientation.get_if<NFDutInputLossS2pSParameterOrientation>();
+  const auto dut_input_loss_s_parameter_orientation_raw_ptr = dut_input_loss_s_parameter_orientation.get_if<pb::int32>();
+  if (dut_input_loss_s_parameter_orientation_ptr) {
+    request.set_dut_input_loss_s_parameter_orientation(*dut_input_loss_s_parameter_orientation_ptr);
+  }
+  else if (dut_input_loss_s_parameter_orientation_raw_ptr) {
+    request.set_dut_input_loss_s_parameter_orientation_raw(*dut_input_loss_s_parameter_orientation_raw_ptr);
+  }
+  request.set_dut_input_loss_temperature(dut_input_loss_temperature);
+
+  auto response = NFLoadDUTInputLossFromS2pResponse{};
+
+  raise_if_error(
+      stub->NFLoadDUTInputLossFromS2p(&context, request, &response),
+      context);
+
+  return response;
+}
+
+NFLoadDUTOutputLossFromS2pResponse
+nf_load_dut_output_loss_from_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<NFDutOutputLossCompensationEnabled, pb::int32>& dut_output_loss_compensation_enabled, const std::string& dut_output_loss_s2p_file_path, const simple_variant<NFDutOutputLossS2pSParameterOrientation, pb::int32>& dut_output_loss_s_parameter_orientation, const double& dut_output_loss_temperature)
+{
+  ::grpc::ClientContext context;
+
+  auto request = NFLoadDUTOutputLossFromS2pRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto dut_output_loss_compensation_enabled_ptr = dut_output_loss_compensation_enabled.get_if<NFDutOutputLossCompensationEnabled>();
+  const auto dut_output_loss_compensation_enabled_raw_ptr = dut_output_loss_compensation_enabled.get_if<pb::int32>();
+  if (dut_output_loss_compensation_enabled_ptr) {
+    request.set_dut_output_loss_compensation_enabled(*dut_output_loss_compensation_enabled_ptr);
+  }
+  else if (dut_output_loss_compensation_enabled_raw_ptr) {
+    request.set_dut_output_loss_compensation_enabled_raw(*dut_output_loss_compensation_enabled_raw_ptr);
+  }
+  request.set_dut_output_loss_s2p_file_path(dut_output_loss_s2p_file_path);
+  const auto dut_output_loss_s_parameter_orientation_ptr = dut_output_loss_s_parameter_orientation.get_if<NFDutOutputLossS2pSParameterOrientation>();
+  const auto dut_output_loss_s_parameter_orientation_raw_ptr = dut_output_loss_s_parameter_orientation.get_if<pb::int32>();
+  if (dut_output_loss_s_parameter_orientation_ptr) {
+    request.set_dut_output_loss_s_parameter_orientation(*dut_output_loss_s_parameter_orientation_ptr);
+  }
+  else if (dut_output_loss_s_parameter_orientation_raw_ptr) {
+    request.set_dut_output_loss_s_parameter_orientation_raw(*dut_output_loss_s_parameter_orientation_raw_ptr);
+  }
+  request.set_dut_output_loss_temperature(dut_output_loss_temperature);
+
+  auto response = NFLoadDUTOutputLossFromS2pResponse{};
+
+  raise_if_error(
+      stub->NFLoadDUTOutputLossFromS2p(&context, request, &response),
+      context);
+
+  return response;
+}
+
 NFRecommendReferenceLevelResponse
 nf_recommend_reference_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& dut_max_gain, const double& dut_max_noise_figure)
 {
@@ -7429,6 +7564,84 @@ phase_noise_fetch_spot_noise(const StubPtr& stub, const nidevice_grpc::Session& 
 
   raise_if_error(
       stub->PhaseNoiseFetchSpotNoise(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PowerListCfgRBWFilterArrayResponse
+power_list_cfg_rbw_filter_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& rbw, const std::vector<pb::int32>& rbw_filter_type, const std::vector<double>& rrc_alpha)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PowerListCfgRBWFilterArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(rbw, request.mutable_rbw());
+  copy_array(rbw_filter_type, request.mutable_rbw_filter_type());
+  copy_array(rrc_alpha, request.mutable_rrc_alpha());
+
+  auto response = PowerListCfgRBWFilterArrayResponse{};
+
+  raise_if_error(
+      stub->PowerListCfgRBWFilterArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PowerListFetchMaximumPowerArrayResponse
+power_list_fetch_maximum_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PowerListFetchMaximumPowerArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = PowerListFetchMaximumPowerArrayResponse{};
+
+  raise_if_error(
+      stub->PowerListFetchMaximumPowerArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PowerListFetchMeanAbsolutePowerArrayResponse
+power_list_fetch_mean_absolute_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PowerListFetchMeanAbsolutePowerArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = PowerListFetchMeanAbsolutePowerArrayResponse{};
+
+  raise_if_error(
+      stub->PowerListFetchMeanAbsolutePowerArray(&context, request, &response),
+      context);
+
+  return response;
+}
+
+PowerListFetchMinimumPowerArrayResponse
+power_list_fetch_minimum_power_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PowerListFetchMinimumPowerArrayRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = PowerListFetchMinimumPowerArrayResponse{};
+
+  raise_if_error(
+      stub->PowerListFetchMinimumPowerArray(&context, request, &response),
       context);
 
   return response;

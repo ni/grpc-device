@@ -34,6 +34,7 @@
 #define RFMXVNA_ATTR_FREQUENCY_LIST                                              0x00d00002
 #define RFMXVNA_ATTR_START_FREQUENCY                                             0x00d00051
 #define RFMXVNA_ATTR_STOP_FREQUENCY                                              0x00d00052
+#define RFMXVNA_ATTR_CW_FREQUENCY                                                0x00d0006a
 #define RFMXVNA_ATTR_NUMBER_OF_POINTS                                            0x00d00053
 #define RFMXVNA_ATTR_POWER_LEVEL                                                 0x00d00003
 #define RFMXVNA_ATTR_TEST_RECEIVER_ATTENUATION                                   0x00d0000a
@@ -109,6 +110,10 @@
 #define RFMXVNA_ATTR_SPARAMS_FORMAT                                              0x00d01005
 #define RFMXVNA_ATTR_SPARAMS_MAGNITUDE_UNITS                                     0x00d01006
 #define RFMXVNA_ATTR_SPARAMS_PHASE_TRACE_TYPE                                    0x00d01007
+#define RFMXVNA_ATTR_SPARAMS_GROUP_DELAY_APERTURE_MODE                           0x00d0101c
+#define RFMXVNA_ATTR_SPARAMS_GROUP_DELAY_APERTURE_POINTS                         0x00d0101d
+#define RFMXVNA_ATTR_SPARAMS_GROUP_DELAY_APERTURE_PERCENTAGE                     0x00d0101e
+#define RFMXVNA_ATTR_SPARAMS_GROUP_DELAY_APERTURE_FREQUENCY_SPAN                 0x00d0101f
 #define RFMXVNA_ATTR_SPARAMS_MATH_FUNCTION                                       0x00d0101a
 #define RFMXVNA_ATTR_SPARAMS_MATH_ACTIVE_MEASUREMENT_MEMORY                      0x00d0101b
 #define RFMXVNA_ATTR_SPARAMS_RESULTS_CORRECTION_STATE                            0x00d01018
@@ -123,6 +128,10 @@
 #define RFMXVNA_ATTR_WAVES_FORMAT                                                0x00d02006
 #define RFMXVNA_ATTR_WAVES_MAGNITUDE_UNITS                                       0x00d02007
 #define RFMXVNA_ATTR_WAVES_PHASE_TRACE_TYPE                                      0x00d02008
+#define RFMXVNA_ATTR_WAVES_GROUP_DELAY_APERTURE_MODE                             0x00d02015
+#define RFMXVNA_ATTR_WAVES_GROUP_DELAY_APERTURE_POINTS                           0x00d02016
+#define RFMXVNA_ATTR_WAVES_GROUP_DELAY_APERTURE_PERCENTAGE                       0x00d02017
+#define RFMXVNA_ATTR_WAVES_GROUP_DELAY_APERTURE_FREQUENCY_SPAN                   0x00d02018
 #define RFMXVNA_ATTR_WAVES_RESULTS_CORRECTION_STATE                              0x00d02013
 #define RFMXVNA_ATTR_IQ_MEASUREMENT_ENABLED                                      0x00d0100a
 #define RFMXVNA_ATTR_IQ_ACQUISITION_TIME                                         0x00d0100d
@@ -162,6 +171,7 @@
 #define RFMXVNA_VAL_TRIGGER_MODE_SIGNAL                                                                           0
 #define RFMXVNA_VAL_TRIGGER_MODE_SWEEP                                                                            1
 #define RFMXVNA_VAL_TRIGGER_MODE_POINT                                                                            2
+#define RFMXVNA_VAL_TRIGGER_MODE_SEGMENT                                                                          3
 
 // Values for RFMXVNA_ATTR_READY_FOR_TRIGGER_EVENT_LEVEL
 #define RFMXVNA_VAL_READY_FOR_TRIGGER_EVENT_LEVEL_ACTIVE_HIGH                                                     0
@@ -175,6 +185,7 @@
 #define RFMXVNA_VAL_SWEEP_TYPE_LIST                                                                               0
 #define RFMXVNA_VAL_SWEEP_TYPE_LINEAR                                                                             1
 #define RFMXVNA_VAL_SWEEP_TYPE_SEGMENT                                                                            2
+#define RFMXVNA_VAL_SWEEP_TYPE_CW_TIME                                                                            4
 
 // Values for RFMXVNA_ATTR_AUTO_IF_BANDWIDTH_SCALING_ENABLED
 #define RFMXVNA_VAL_AUTO_IF_BANDWIDTH_SCALING_ENABLED_FALSE                                                       0
@@ -299,6 +310,7 @@
 #define RFMXVNA_VAL_SPARAMS_FORMAT_SMITH_IMPEDANCE                                                                4
 #define RFMXVNA_VAL_SPARAMS_FORMAT_SMITH_ADMITTANCE                                                               5
 #define RFMXVNA_VAL_SPARAMS_FORMAT_POLAR                                                                          6
+#define RFMXVNA_VAL_SPARAMS_FORMAT_GROUP_DELAY                                                                    7
 
 // Values for RFMXVNA_ATTR_SPARAMS_MAGNITUDE_UNITS
 #define RFMXVNA_VAL_SPARAMS_MAGNITUDE_UNITS_DB                                                                    0
@@ -307,6 +319,11 @@
 // Values for RFMXVNA_ATTR_SPARAMS_PHASE_TRACE_TYPE
 #define RFMXVNA_VAL_SPARAMS_PHASE_TRACE_TYPE_WRAPPED                                                              0
 #define RFMXVNA_VAL_SPARAMS_PHASE_TRACE_TYPE_UNWRAPPED                                                            1
+
+// Values for RFMXVNA_ATTR_SPARAMS_GROUP_DELAY_APERTURE_MODE
+#define RFMXVNA_VAL_SPARAMS_GROUP_DELAY_APERTURE_MODE_POINTS                                                      0
+#define RFMXVNA_VAL_SPARAMS_GROUP_DELAY_APERTURE_MODE_PERCENTAGE                                                  1
+#define RFMXVNA_VAL_SPARAMS_GROUP_DELAY_APERTURE_MODE_FREQUENCY_SPAN                                              2
 
 // Values for RFMXVNA_ATTR_SPARAMS_MATH_FUNCTION
 #define RFMXVNA_VAL_SPARAMS_MATH_FUNCTION_OFF                                                                     0
@@ -339,6 +356,7 @@
 #define RFMXVNA_VAL_WAVES_FORMAT_SMITH_IMPEDANCE                                                                  4
 #define RFMXVNA_VAL_WAVES_FORMAT_SMITH_ADMITTANCE                                                                 5
 #define RFMXVNA_VAL_WAVES_FORMAT_POLAR                                                                            6
+#define RFMXVNA_VAL_WAVES_FORMAT_GROUP_DELAY                                                                      7
 
 // Values for RFMXVNA_ATTR_WAVES_MAGNITUDE_UNITS
 #define RFMXVNA_VAL_WAVES_MAGNITUDE_UNITS_DBM                                                                     0
@@ -352,6 +370,11 @@
 // Values for RFMXVNA_ATTR_WAVES_PHASE_TRACE_TYPE
 #define RFMXVNA_VAL_WAVES_PHASE_TRACE_TYPE_WRAPPED                                                                0
 #define RFMXVNA_VAL_WAVES_PHASE_TRACE_TYPE_UNWRAPPED                                                              1
+
+// Values for RFMXVNA_ATTR_WAVES_GROUP_DELAY_APERTURE_MODE
+#define RFMXVNA_VAL_WAVES_GROUP_DELAY_APERTURE_MODE_POINTS                                                        0
+#define RFMXVNA_VAL_WAVES_GROUP_DELAY_APERTURE_MODE_PERCENTAGE                                                    1
+#define RFMXVNA_VAL_WAVES_GROUP_DELAY_APERTURE_MODE_FREQUENCY_SPAN                                                2
 
 // Values for RFMXVNA_ATTR_WAVES_RESULTS_CORRECTION_STATE
 #define RFMXVNA_VAL_WAVES_CORRECTION_STATE_NONE                                                                   0
@@ -2136,6 +2159,18 @@ int32 __stdcall RFmxVNA_SetStopFrequency(
    float64 attrVal
 );
 
+int32 __stdcall RFmxVNA_GetCWFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCWFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
 int32 __stdcall RFmxVNA_GetNumberOfPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3069,6 +3104,54 @@ int32 __stdcall RFmxVNA_SParamsSetPhaseTraceType(
    int32 attrVal
 );
 
+int32 __stdcall RFmxVNA_SParamsGetGroupDelayApertureMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SParamsSetGroupDelayApertureMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_SParamsGetGroupDelayAperturePoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SParamsSetGroupDelayAperturePoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_SParamsGetGroupDelayAperturePercentage(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SParamsSetGroupDelayAperturePercentage(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_SParamsGetGroupDelayApertureFrequencySpan(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SParamsSetGroupDelayApertureFrequencySpan(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
 int32 __stdcall RFmxVNA_SParamsGetMathFunction(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3234,6 +3317,54 @@ int32 __stdcall RFmxVNA_WavesSetPhaseTraceType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_WavesGetGroupDelayApertureMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_WavesSetGroupDelayApertureMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_WavesGetGroupDelayAperturePoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_WavesSetGroupDelayAperturePoints(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_WavesGetGroupDelayAperturePercentage(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_WavesSetGroupDelayAperturePercentage(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_WavesGetGroupDelayApertureFrequencySpan(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_WavesSetGroupDelayApertureFrequencySpan(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxVNA_WavesGetResultsCorrectionState(

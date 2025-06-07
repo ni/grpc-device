@@ -871,6 +871,26 @@ enums = {
             {
                 'name': 'POLAR',
                 'value': 6
+            },
+            {
+                'name': 'GROUP_DELAY',
+                'value': 7
+            }
+        ]
+    },
+    'SParamsGroupDelayApertureMode': {
+        'values': [
+            {
+                'name': 'POINTS',
+                'value': 0
+            },
+            {
+                'name': 'PERCENTAGE',
+                'value': 1
+            },
+            {
+                'name': 'FREQUENCY_SPAN',
+                'value': 2
             }
         ]
     },
@@ -1039,6 +1059,10 @@ enums = {
             {
                 'name': 'SEGMENT',
                 'value': 2
+            },
+            {
+                'name': 'CW_TIME',
+                'value': 4
             }
         ]
     },
@@ -1055,6 +1079,10 @@ enums = {
             {
                 'name': 'POINT',
                 'value': 2
+            },
+            {
+                'name': 'SEGMENT',
+                'value': 3
             }
         ]
     },
@@ -1123,6 +1151,26 @@ enums = {
             {
                 'name': 'POLAR',
                 'value': 6
+            },
+            {
+                'name': 'GROUP_DELAY',
+                'value': 7
+            }
+        ]
+    },
+    'WavesGroupDelayApertureMode': {
+        'values': [
+            {
+                'name': 'POINTS',
+                'value': 0
+            },
+            {
+                'name': 'PERCENTAGE',
+                'value': 1
+            },
+            {
+                'name': 'FREQUENCY_SPAN',
+                'value': 2
             }
         ]
     },
