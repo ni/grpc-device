@@ -336,6 +336,10 @@ public:
   ::grpc::Status NFFetchDUTNoiseFigureAndGain(::grpc::ServerContext* context, const NFFetchDUTNoiseFigureAndGainRequest* request, NFFetchDUTNoiseFigureAndGainResponse* response) override;
   ::grpc::Status NFFetchYFactorPowers(::grpc::ServerContext* context, const NFFetchYFactorPowersRequest* request, NFFetchYFactorPowersResponse* response) override;
   ::grpc::Status NFFetchYFactors(::grpc::ServerContext* context, const NFFetchYFactorsRequest* request, NFFetchYFactorsResponse* response) override;
+  ::grpc::Status NFLoadCalibrationLossFromS2p(::grpc::ServerContext* context, const NFLoadCalibrationLossFromS2pRequest* request, NFLoadCalibrationLossFromS2pResponse* response) override;
+  ::grpc::Status NFLoadColdSourceDUTSParametersFromS2p(::grpc::ServerContext* context, const NFLoadColdSourceDUTSParametersFromS2pRequest* request, NFLoadColdSourceDUTSParametersFromS2pResponse* response) override;
+  ::grpc::Status NFLoadDUTInputLossFromS2p(::grpc::ServerContext* context, const NFLoadDUTInputLossFromS2pRequest* request, NFLoadDUTInputLossFromS2pResponse* response) override;
+  ::grpc::Status NFLoadDUTOutputLossFromS2p(::grpc::ServerContext* context, const NFLoadDUTOutputLossFromS2pRequest* request, NFLoadDUTOutputLossFromS2pResponse* response) override;
   ::grpc::Status NFRecommendReferenceLevel(::grpc::ServerContext* context, const NFRecommendReferenceLevelRequest* request, NFRecommendReferenceLevelResponse* response) override;
   ::grpc::Status NFValidateCalibrationData(::grpc::ServerContext* context, const NFValidateCalibrationDataRequest* request, NFValidateCalibrationDataResponse* response) override;
   ::grpc::Status OBWCfgAveraging(::grpc::ServerContext* context, const OBWCfgAveragingRequest* request, OBWCfgAveragingResponse* response) override;
@@ -378,6 +382,10 @@ public:
   ::grpc::Status PhaseNoiseFetchMeasuredLogPlotTrace(::grpc::ServerContext* context, const PhaseNoiseFetchMeasuredLogPlotTraceRequest* request, PhaseNoiseFetchMeasuredLogPlotTraceResponse* response) override;
   ::grpc::Status PhaseNoiseFetchSmoothedLogPlotTrace(::grpc::ServerContext* context, const PhaseNoiseFetchSmoothedLogPlotTraceRequest* request, PhaseNoiseFetchSmoothedLogPlotTraceResponse* response) override;
   ::grpc::Status PhaseNoiseFetchSpotNoise(::grpc::ServerContext* context, const PhaseNoiseFetchSpotNoiseRequest* request, PhaseNoiseFetchSpotNoiseResponse* response) override;
+  ::grpc::Status PowerListCfgRBWFilterArray(::grpc::ServerContext* context, const PowerListCfgRBWFilterArrayRequest* request, PowerListCfgRBWFilterArrayResponse* response) override;
+  ::grpc::Status PowerListFetchMaximumPowerArray(::grpc::ServerContext* context, const PowerListFetchMaximumPowerArrayRequest* request, PowerListFetchMaximumPowerArrayResponse* response) override;
+  ::grpc::Status PowerListFetchMeanAbsolutePowerArray(::grpc::ServerContext* context, const PowerListFetchMeanAbsolutePowerArrayRequest* request, PowerListFetchMeanAbsolutePowerArrayResponse* response) override;
+  ::grpc::Status PowerListFetchMinimumPowerArray(::grpc::ServerContext* context, const PowerListFetchMinimumPowerArrayRequest* request, PowerListFetchMinimumPowerArrayResponse* response) override;
   ::grpc::Status ResetAttribute(::grpc::ServerContext* context, const ResetAttributeRequest* request, ResetAttributeResponse* response) override;
   ::grpc::Status ResetToDefault(::grpc::ServerContext* context, const ResetToDefaultRequest* request, ResetToDefaultResponse* response) override;
   ::grpc::Status SEMCfgAveraging(::grpc::ServerContext* context, const SEMCfgAveragingRequest* request, SEMCfgAveragingResponse* response) override;

@@ -698,5 +698,17 @@ enums = {
                 'value': 2
             }
         ]
+    },
+    'VdhtModeEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
     }
 }

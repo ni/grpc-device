@@ -436,6 +436,11 @@ attributes = {
         'name': 'INDEX_EVENT_LEVEL',
         'type': 'int32'
     },
+    13631594: {
+        'access': 'read-write',
+        'name': 'CW_FREQUENCY',
+        'type': 'float64'
+    },
     13631600: {
         'access': 'read-write',
         'name': 'TRIGGER_DELAY',
@@ -548,6 +553,27 @@ attributes = {
         'name': 'SPARAMS_MATH_ACTIVE_MEASUREMENT_MEMORY',
         'type': 'char[]'
     },
+    13635612: {
+        'access': 'read-write',
+        'enum': 'SParamsGroupDelayApertureMode',
+        'name': 'SPARAMS_GROUP_DELAY_APERTURE_MODE',
+        'type': 'int32'
+    },
+    13635613: {
+        'access': 'read-write',
+        'name': 'SPARAMS_GROUP_DELAY_APERTURE_POINTS',
+        'type': 'float64'
+    },
+    13635614: {
+        'access': 'read-write',
+        'name': 'SPARAMS_GROUP_DELAY_APERTURE_PERCENTAGE',
+        'type': 'float64'
+    },
+    13635615: {
+        'access': 'read-write',
+        'name': 'SPARAMS_GROUP_DELAY_APERTURE_FREQUENCY_SPAN',
+        'type': 'float64'
+    },
     13639680: {
         'access': 'read-write',
         'name': 'WAVES_MEASUREMENT_ENABLED',
@@ -619,6 +645,27 @@ attributes = {
         'enum': 'WavesCorrectionState',
         'name': 'WAVES_RESULTS_CORRECTION_STATE',
         'type': 'int32'
+    },
+    13639701: {
+        'access': 'read-write',
+        'enum': 'WavesGroupDelayApertureMode',
+        'name': 'WAVES_GROUP_DELAY_APERTURE_MODE',
+        'type': 'int32'
+    },
+    13639702: {
+        'access': 'read-write',
+        'name': 'WAVES_GROUP_DELAY_APERTURE_POINTS',
+        'type': 'float64'
+    },
+    13639703: {
+        'access': 'read-write',
+        'name': 'WAVES_GROUP_DELAY_APERTURE_PERCENTAGE',
+        'type': 'float64'
+    },
+    13639704: {
+        'access': 'read-write',
+        'name': 'WAVES_GROUP_DELAY_APERTURE_FREQUENCY_SPAN',
+        'type': 'float64'
     },
     13680640: {
         'access': 'read-write',

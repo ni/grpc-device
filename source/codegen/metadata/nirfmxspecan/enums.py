@@ -1236,6 +1236,18 @@ enums = {
             }
         ]
     },
+    'DpdDvrDdrEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'DpdFrequencyOffsetCorrectionEnabled': {
         'values': [
             {
@@ -2359,6 +2371,10 @@ enums = {
             {
                 'name': 'IDPD',
                 'value': 131072
+            },
+            {
+                'name': 'POWERLIST',
+                'value': 262144
             }
         ]
     },
@@ -2410,6 +2426,30 @@ enums = {
             }
         ]
     },
+    'NFCalibrationLossS2pSParameterOrientation': {
+        'values': [
+            {
+                'name': 'PORT1_TOWARDS_DUT',
+                'value': 0
+            },
+            {
+                'name': 'PORT2_TOWARDS_DUT',
+                'value': 1
+            }
+        ]
+    },
+    'NFColdSourceDutS2pSParameterOrientation': {
+        'values': [
+            {
+                'name': 'PORT1_TOWARDS_DUT',
+                'value': 0
+            },
+            {
+                'name': 'PORT2_TOWARDS_DUT',
+                'value': 1
+            }
+        ]
+    },
     'NFColdSourceMode': {
         'values': [
             {
@@ -2434,6 +2474,18 @@ enums = {
             }
         ]
     },
+    'NFDutInputLossS2pSParameterOrientation': {
+        'values': [
+            {
+                'name': 'PORT1_TOWARDS_DUT',
+                'value': 0
+            },
+            {
+                'name': 'PORT2_TOWARDS_DUT',
+                'value': 1
+            }
+        ]
+    },
     'NFDutOutputLossCompensationEnabled': {
         'values': [
             {
@@ -2442,6 +2494,18 @@ enums = {
             },
             {
                 'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'NFDutOutputLossS2pSParameterOrientation': {
+        'values': [
+            {
+                'name': 'PORT1_TOWARDS_DUT',
+                'value': 0
+            },
+            {
+                'name': 'PORT2_TOWARDS_DUT',
                 'value': 1
             }
         ]

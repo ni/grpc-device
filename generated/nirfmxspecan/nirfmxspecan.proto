@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXSPECAN API metadata version 25.3.0
+// This file is generated from NI-RFMXSPECAN API metadata version 25.5.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXSPECAN Metadata
 //---------------------------------------------------------------------
@@ -309,6 +309,10 @@ service NiRFmxSpecAn {
   rpc NFFetchDUTNoiseFigureAndGain(NFFetchDUTNoiseFigureAndGainRequest) returns (NFFetchDUTNoiseFigureAndGainResponse);
   rpc NFFetchYFactorPowers(NFFetchYFactorPowersRequest) returns (NFFetchYFactorPowersResponse);
   rpc NFFetchYFactors(NFFetchYFactorsRequest) returns (NFFetchYFactorsResponse);
+  rpc NFLoadCalibrationLossFromS2p(NFLoadCalibrationLossFromS2pRequest) returns (NFLoadCalibrationLossFromS2pResponse);
+  rpc NFLoadColdSourceDUTSParametersFromS2p(NFLoadColdSourceDUTSParametersFromS2pRequest) returns (NFLoadColdSourceDUTSParametersFromS2pResponse);
+  rpc NFLoadDUTInputLossFromS2p(NFLoadDUTInputLossFromS2pRequest) returns (NFLoadDUTInputLossFromS2pResponse);
+  rpc NFLoadDUTOutputLossFromS2p(NFLoadDUTOutputLossFromS2pRequest) returns (NFLoadDUTOutputLossFromS2pResponse);
   rpc NFRecommendReferenceLevel(NFRecommendReferenceLevelRequest) returns (NFRecommendReferenceLevelResponse);
   rpc NFValidateCalibrationData(NFValidateCalibrationDataRequest) returns (NFValidateCalibrationDataResponse);
   rpc OBWCfgAveraging(OBWCfgAveragingRequest) returns (OBWCfgAveragingResponse);
@@ -351,6 +355,10 @@ service NiRFmxSpecAn {
   rpc PhaseNoiseFetchMeasuredLogPlotTrace(PhaseNoiseFetchMeasuredLogPlotTraceRequest) returns (PhaseNoiseFetchMeasuredLogPlotTraceResponse);
   rpc PhaseNoiseFetchSmoothedLogPlotTrace(PhaseNoiseFetchSmoothedLogPlotTraceRequest) returns (PhaseNoiseFetchSmoothedLogPlotTraceResponse);
   rpc PhaseNoiseFetchSpotNoise(PhaseNoiseFetchSpotNoiseRequest) returns (PhaseNoiseFetchSpotNoiseResponse);
+  rpc PowerListCfgRBWFilterArray(PowerListCfgRBWFilterArrayRequest) returns (PowerListCfgRBWFilterArrayResponse);
+  rpc PowerListFetchMaximumPowerArray(PowerListFetchMaximumPowerArrayRequest) returns (PowerListFetchMaximumPowerArrayResponse);
+  rpc PowerListFetchMeanAbsolutePowerArray(PowerListFetchMeanAbsolutePowerArrayRequest) returns (PowerListFetchMeanAbsolutePowerArrayResponse);
+  rpc PowerListFetchMinimumPowerArray(PowerListFetchMinimumPowerArrayRequest) returns (PowerListFetchMinimumPowerArrayResponse);
   rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
   rpc ResetToDefault(ResetToDefaultRequest) returns (ResetToDefaultResponse);
   rpc SEMCfgAveraging(SEMCfgAveragingRequest) returns (SEMCfgAveragingResponse);
@@ -1012,7 +1020,9 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_DPD_PRE_DPD_CARRIER_BANDWIDTH = 1110116;
   NIRFMXSPECAN_ATTRIBUTE_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED = 1110117;
   NIRFMXSPECAN_ATTRIBUTE_DPD_DVR_NUMBER_OF_SEGMENTS = 1110119;
+  NIRFMXSPECAN_ATTRIBUTE_DPD_DVR_LINEAR_MEMORY_DEPTH = 1110120;
   NIRFMXSPECAN_ATTRIBUTE_DPD_DVR_NONLINEAR_MEMORY_DEPTH = 1110121;
+  NIRFMXSPECAN_ATTRIBUTE_DPD_DVR_DDR_ENABLED = 1110122;
   NIRFMXSPECAN_ATTRIBUTE_DPD_MEASUREMENT_MODE = 1110123;
   NIRFMXSPECAN_ATTRIBUTE_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION = 1110125;
   NIRFMXSPECAN_ATTRIBUTE_IQ_MEASUREMENT_ENABLED = 1110272;
@@ -1182,6 +1192,20 @@ enum NiRFmxSpecAnAttribute {
   NIRFMXSPECAN_ATTRIBUTE_IDPD_ALL_TRACES_ENABLED = 1310751;
   NIRFMXSPECAN_ATTRIBUTE_IDPD_NUMBER_OF_ANALYSIS_THREADS = 1310753;
   NIRFMXSPECAN_ATTRIBUTE_IDPD_TARGET_GAIN = 1310759;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_MEASUREMENT_ENABLED = 1376256;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_NUMBER_OF_SEGMENTS = 1376258;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_SEGMENT_LENGTH = 1376259;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_SEGMENT_FREQUENCY = 1376260;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_SEGMENT_REFERENCE_LEVEL = 1376261;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_SEGMENT_MEASUREMENT_LENGTH = 1376262;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_SEGMENT_MEASUREMENT_OFFSET = 1376263;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_SEGMENT_RBW_FILTER_BANDWIDTH = 1376264;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_SEGMENT_RBW_FILTER_TYPE = 1376265;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_SEGMENT_RBW_FILTER_ALPHA = 1376266;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_SEGMENT_TRIGGER_TYPE = 1376267;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_RESULTS_MEAN_ABSOLUTE_POWER = 1376268;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_RESULTS_MAXIMUM_POWER = 1376269;
+  NIRFMXSPECAN_ATTRIBUTE_POWERLIST_RESULTS_MINIMUM_POWER = 1376270;
 }
 
 enum AcpAveragingEnabled {
@@ -1766,6 +1790,7 @@ enum MeasurementTypes {
   MEASUREMENT_TYPES_PHASENOISE = 32768;
   MEASUREMENT_TYPES_PAVT = 65536;
   MEASUREMENT_TYPES_IDPD = 131072;
+  MEASUREMENT_TYPES_POWERLIST = 262144;
 }
 
 enum MechanicalAttenuationAuto {
@@ -1788,6 +1813,16 @@ enum NFCalibrationLossCompensationEnabled {
   NF_CALIBRATION_LOSS_COMPENSATION_ENABLED_TRUE = 1;
 }
 
+enum NFCalibrationLossS2pSParameterOrientation {
+  NF_CALIBRATION_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 0;
+  NF_CALIBRATION_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 1;
+}
+
+enum NFColdSourceDutS2pSParameterOrientation {
+  NF_COLD_SOURCE_DUT_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 0;
+  NF_COLD_SOURCE_DUT_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 1;
+}
+
 enum NFColdSourceMode {
   NF_COLD_SOURCE_MODE_MEASURE = 0;
   NF_COLD_SOURCE_MODE_CALIBRATE = 1;
@@ -1798,9 +1833,19 @@ enum NFDutInputLossCompensationEnabled {
   NF_DUT_INPUT_LOSS_COMPENSATION_ENABLED_TRUE = 1;
 }
 
+enum NFDutInputLossS2pSParameterOrientation {
+  NF_DUT_INPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 0;
+  NF_DUT_INPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 1;
+}
+
 enum NFDutOutputLossCompensationEnabled {
   NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_FALSE = 0;
   NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_TRUE = 1;
+}
+
+enum NFDutOutputLossS2pSParameterOrientation {
+  NF_DUT_OUTPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 0;
+  NF_DUT_OUTPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 1;
 }
 
 enum NFMeasurementMethod {
@@ -2436,6 +2481,8 @@ enum NiRFmxSpecAnInt32AttributeValues {
   NIRFMXSPECAN_INT32_DPD_AUTO_CARRIER_DETECTION_ENABLED_TRUE = 1;
   NIRFMXSPECAN_INT32_DPD_AVERAGING_ENABLED_FALSE = 0;
   NIRFMXSPECAN_INT32_DPD_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXSPECAN_INT32_DPD_DVR_DDR_ENABLED_FALSE = 0;
+  NIRFMXSPECAN_INT32_DPD_DVR_DDR_ENABLED_TRUE = 1;
   NIRFMXSPECAN_INT32_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE = 0;
   NIRFMXSPECAN_INT32_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE = 1;
   NIRFMXSPECAN_INT32_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE = 0;
@@ -6722,6 +6769,77 @@ message NFFetchYFactorsResponse {
   int32 actual_array_size = 4;
 }
 
+message NFLoadCalibrationLossFromS2pRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof calibration_loss_compensation_enabled_enum {
+    NFCalibrationLossCompensationEnabled calibration_loss_compensation_enabled = 3;
+    int32 calibration_loss_compensation_enabled_raw = 4;
+  }
+  string calibration_loss_s2p_file_path = 5;
+  oneof calibration_loss_s_parameter_orientation_enum {
+    NFCalibrationLossS2pSParameterOrientation calibration_loss_s_parameter_orientation = 6;
+    int32 calibration_loss_s_parameter_orientation_raw = 7;
+  }
+  double calibration_loss_temperature = 8;
+}
+
+message NFLoadCalibrationLossFromS2pResponse {
+  int32 status = 1;
+}
+
+message NFLoadColdSourceDUTSParametersFromS2pRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string duts_parameters_s2p_file_path = 3;
+  oneof duts_parameter_orientation_enum {
+    NFColdSourceDutS2pSParameterOrientation duts_parameter_orientation = 4;
+    int32 duts_parameter_orientation_raw = 5;
+  }
+}
+
+message NFLoadColdSourceDUTSParametersFromS2pResponse {
+  int32 status = 1;
+}
+
+message NFLoadDUTInputLossFromS2pRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof dut_input_loss_compensation_enabled_enum {
+    NFDutInputLossCompensationEnabled dut_input_loss_compensation_enabled = 3;
+    int32 dut_input_loss_compensation_enabled_raw = 4;
+  }
+  string dut_input_loss_s2p_file_path = 5;
+  oneof dut_input_loss_s_parameter_orientation_enum {
+    NFDutInputLossS2pSParameterOrientation dut_input_loss_s_parameter_orientation = 6;
+    int32 dut_input_loss_s_parameter_orientation_raw = 7;
+  }
+  double dut_input_loss_temperature = 8;
+}
+
+message NFLoadDUTInputLossFromS2pResponse {
+  int32 status = 1;
+}
+
+message NFLoadDUTOutputLossFromS2pRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof dut_output_loss_compensation_enabled_enum {
+    NFDutOutputLossCompensationEnabled dut_output_loss_compensation_enabled = 3;
+    int32 dut_output_loss_compensation_enabled_raw = 4;
+  }
+  string dut_output_loss_s2p_file_path = 5;
+  oneof dut_output_loss_s_parameter_orientation_enum {
+    NFDutOutputLossS2pSParameterOrientation dut_output_loss_s_parameter_orientation = 6;
+    int32 dut_output_loss_s_parameter_orientation_raw = 7;
+  }
+  double dut_output_loss_temperature = 8;
+}
+
+message NFLoadDUTOutputLossFromS2pResponse {
+  int32 status = 1;
+}
+
 message NFRecommendReferenceLevelRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -7259,6 +7377,54 @@ message PhaseNoiseFetchSpotNoiseRequest {
 message PhaseNoiseFetchSpotNoiseResponse {
   int32 status = 1;
   repeated double spot_phase_noise = 2;
+  int32 actual_array_size = 3;
+}
+
+message PowerListCfgRBWFilterArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double rbw = 3;
+  repeated int32 rbw_filter_type = 4;
+  repeated double rrc_alpha = 5;
+}
+
+message PowerListCfgRBWFilterArrayResponse {
+  int32 status = 1;
+}
+
+message PowerListFetchMaximumPowerArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message PowerListFetchMaximumPowerArrayResponse {
+  int32 status = 1;
+  repeated double maximum_power = 2;
+  int32 actual_array_size = 3;
+}
+
+message PowerListFetchMeanAbsolutePowerArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message PowerListFetchMeanAbsolutePowerArrayResponse {
+  int32 status = 1;
+  repeated double mean_absolute_power = 2;
+  int32 actual_array_size = 3;
+}
+
+message PowerListFetchMinimumPowerArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message PowerListFetchMinimumPowerArrayResponse {
+  int32 status = 1;
+  repeated double minimum_power = 2;
   int32 actual_array_size = 3;
 }
 
