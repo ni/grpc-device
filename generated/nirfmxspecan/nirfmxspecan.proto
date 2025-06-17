@@ -6791,10 +6791,10 @@ message NFLoadCalibrationLossFromS2pResponse {
 message NFLoadColdSourceDUTSParametersFromS2pRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  string duts_parameters_s2p_file_path = 3;
-  oneof duts_parameter_orientation_enum {
-    NFColdSourceDutS2pSParameterOrientation duts_parameter_orientation = 4;
-    int32 duts_parameter_orientation_raw = 5;
+  string dut_s_parameters_s2p_file_path = 3;
+  oneof dut_s_parameter_orientation_enum {
+    NFColdSourceDutS2pSParameterOrientation dut_s_parameter_orientation = 4;
+    int32 dut_s_parameter_orientation_raw = 5;
   }
 }
 

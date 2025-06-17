@@ -6543,21 +6543,21 @@ nf_load_calibration_loss_from_s2p(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 NFLoadColdSourceDUTSParametersFromS2pResponse
-nf_load_cold_source_duts_parameters_from_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& duts_parameters_s2p_file_path, const simple_variant<NFColdSourceDutS2pSParameterOrientation, pb::int32>& duts_parameter_orientation)
+nf_load_cold_source_duts_parameters_from_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& dut_s_parameters_s2p_file_path, const simple_variant<NFColdSourceDutS2pSParameterOrientation, pb::int32>& dut_s_parameter_orientation)
 {
   ::grpc::ClientContext context;
 
   auto request = NFLoadColdSourceDUTSParametersFromS2pRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_duts_parameters_s2p_file_path(duts_parameters_s2p_file_path);
-  const auto duts_parameter_orientation_ptr = duts_parameter_orientation.get_if<NFColdSourceDutS2pSParameterOrientation>();
-  const auto duts_parameter_orientation_raw_ptr = duts_parameter_orientation.get_if<pb::int32>();
-  if (duts_parameter_orientation_ptr) {
-    request.set_duts_parameter_orientation(*duts_parameter_orientation_ptr);
+  request.set_dut_s_parameters_s2p_file_path(dut_s_parameters_s2p_file_path);
+  const auto dut_s_parameter_orientation_ptr = dut_s_parameter_orientation.get_if<NFColdSourceDutS2pSParameterOrientation>();
+  const auto dut_s_parameter_orientation_raw_ptr = dut_s_parameter_orientation.get_if<pb::int32>();
+  if (dut_s_parameter_orientation_ptr) {
+    request.set_dut_s_parameter_orientation(*dut_s_parameter_orientation_ptr);
   }
-  else if (duts_parameter_orientation_raw_ptr) {
-    request.set_duts_parameter_orientation_raw(*duts_parameter_orientation_raw_ptr);
+  else if (dut_s_parameter_orientation_raw_ptr) {
+    request.set_dut_s_parameter_orientation_raw(*dut_s_parameter_orientation_raw_ptr);
   }
 
   auto response = NFLoadColdSourceDUTSParametersFromS2pResponse{};
