@@ -68,11 +68,37 @@ class NiSyncDriverApiTest : public ::testing::Test {
 
   virtual const char* get_model_name() const = 0;
 
+  virtual bool is_PXI6683H() const = 0;
+
   void SetUp() override
   {
     for (const auto& device : EnumerateDevices()) {
       if (device.model() == get_model_name()) {
-        test_resource_name = device.name();
+        if (is_PXI6683H())
+        {
+          // nitsm only supports one PXI-6683H in Linux, when there are multiple PXI-6683Hs, try to find the one nitsm selects
+          ::grpc::ClientContext context;
+          nisync::InitRequest request;
+          nisync::InitResponse response;
+          request.set_resource_name(device.name());
+          request.set_session_name(SESSION_NAME);
+          request.set_reset_device(false);
+
+          ::grpc::Status status = GetStub()->Init(&context, request, &response);
+          if (status.ok() && response.status() == VI_SUCCESS)
+          {
+            test_resource_name = device.name();
+            break;
+          }
+          else
+          {
+            continue;
+          }
+        }
+        else
+        {
+          test_resource_name = device.name();
+        }
         break;
       }
     }
@@ -713,11 +739,13 @@ class NiSyncDriverApiTest : public ::testing::Test {
 class NiSyncDriver6674Test : public NiSyncDriverApiTest {
  public:
   NiSyncDriver6674Test() : NiSyncDriverApiTest() {}
+  bool is_PXI6683H() const { return false; }
   const char* get_model_name() const override { return "NI PXIe-6674T"; }
 };
 
 class NiSyncDriver6683Test : public NiSyncDriverApiTest {
  public:
+  bool is_PXI6683H() const { return true; }
   NiSyncDriver6683Test() : NiSyncDriverApiTest() {}
   const char* get_model_name() const override { return "NI PXI-6683H"; }
 };
