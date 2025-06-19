@@ -11786,25 +11786,25 @@ namespace nirfmxspecan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      auto duts_parameters_s2p_file_path_mbcs = convert_from_grpc<std::string>(request->duts_parameters_s2p_file_path());
-      char* duts_parameters_s2p_file_path = (char*)duts_parameters_s2p_file_path_mbcs.c_str();
-      int32 duts_parameter_orientation;
-      switch (request->duts_parameter_orientation_enum_case()) {
-        case nirfmxspecan_grpc::NFLoadColdSourceDUTSParametersFromS2pRequest::DutsParameterOrientationEnumCase::kDutsParameterOrientation: {
-          duts_parameter_orientation = static_cast<int32>(request->duts_parameter_orientation());
+      auto dut_s_parameters_s2p_file_path_mbcs = convert_from_grpc<std::string>(request->dut_s_parameters_s2p_file_path());
+      char* dut_s_parameters_s2p_file_path = (char*)dut_s_parameters_s2p_file_path_mbcs.c_str();
+      int32 dut_s_parameter_orientation;
+      switch (request->dut_s_parameter_orientation_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadColdSourceDUTSParametersFromS2pRequest::DutSParameterOrientationEnumCase::kDutSParameterOrientation: {
+          dut_s_parameter_orientation = static_cast<int32>(request->dut_s_parameter_orientation());
           break;
         }
-        case nirfmxspecan_grpc::NFLoadColdSourceDUTSParametersFromS2pRequest::DutsParameterOrientationEnumCase::kDutsParameterOrientationRaw: {
-          duts_parameter_orientation = static_cast<int32>(request->duts_parameter_orientation_raw());
+        case nirfmxspecan_grpc::NFLoadColdSourceDUTSParametersFromS2pRequest::DutSParameterOrientationEnumCase::kDutSParameterOrientationRaw: {
+          dut_s_parameter_orientation = static_cast<int32>(request->dut_s_parameter_orientation_raw());
           break;
         }
-        case nirfmxspecan_grpc::NFLoadColdSourceDUTSParametersFromS2pRequest::DutsParameterOrientationEnumCase::DUTS_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for duts_parameter_orientation was not specified or out of range");
+        case nirfmxspecan_grpc::NFLoadColdSourceDUTSParametersFromS2pRequest::DutSParameterOrientationEnumCase::DUT_S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for dut_s_parameter_orientation was not specified or out of range");
           break;
         }
       }
 
-      auto status = library_->NFLoadColdSourceDUTSParametersFromS2p(instrument, selector_string, duts_parameters_s2p_file_path, duts_parameter_orientation);
+      auto status = library_->NFLoadColdSourceDUTSParametersFromS2p(instrument, selector_string, dut_s_parameters_s2p_file_path, dut_s_parameter_orientation);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

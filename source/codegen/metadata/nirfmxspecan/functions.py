@@ -10818,12 +10818,14 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'dut_s_parameters_s2p_file_path',
                 'name': 'dutsParametersS2pFilePath',
                 'type': 'char[]'
             },
             {
                 'direction': 'in',
                 'enum': 'NFColdSourceDutS2pSParameterOrientation',
+                'grpc_name': 'dut_s_parameter_orientation',
                 'name': 'dutsParameterOrientation',
                 'type': 'int32'
             }
