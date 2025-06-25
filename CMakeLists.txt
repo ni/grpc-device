@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.18.0)
 
 project(ni_grpc_device_server
   LANGUAGES C CXX
-  VERSION 2.12.0)
+  VERSION 2.13.0)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
