@@ -12,12 +12,12 @@ namespace system {
 
 namespace fgen = nifgen_grpc;
 
-const int kInvalidFgenRsrc = -1074134944;
+const int kInvalidFgenRsrc = -1074134964;
 const int kInvalidFgenSession = -1074130544;
-const char* kViErrorFgenResourceNotFoundMessage = "Insufficient location information or resource not present in the system.\n\nInvalid Identifier: ";
+const char* kViErrorFgenResourceNotFoundMessage = "IVI: (Hex 0xBFFA004C) The option string parameter contains an entry with an unknown option value.\n\nInvalid Identifier: ";
 const char* kInvalidFgenSessionMessage = "The session handle is not valid.";
 const char* kTestFgenRsrc = "FakeDevice";
-const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5433 (2CH); BoardType:PXI";
+const char* kFgenOptionsString = "Simulate=1, DriverSetup=Model:5433 (2CH); BoardType:PXIe";
 const char* kFgenTestSession = "SessionName";
 const char* kTestInvalidFgenRsrc = "";
 
