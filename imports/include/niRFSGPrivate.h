@@ -170,6 +170,8 @@ extern "C" {
 #define NIRFSG_ATTR_RF_ACCESSORY_DIGITAL_GAIN               /* ViReal64*/     (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x79)
 #define NIRFSG_ATTR_SYSTEM_CONFIGURATION        /* ViString, read-only  */    (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x7a)
 
+#define NIRFSG_ATTR_ASSOC_AUX_SWITCH_GAIN_UID   /* ViInt32, read-only */      (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x88)
+
 // This attribute is only used by VST now and should not be used for newer devices.
 #define NIRFSG_ATTR_SELF_CALIBRATION_DATE_TIME              /* Timestamp */   (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x2C)
 
@@ -196,6 +198,10 @@ extern "C" {
 
 // NIRFSG_ATTR_OOP_SESSION_MANAGER_PTR attribute stores OutOfProcessSessionManager pointer. This attribute is used in Remote component.
 #define NIRFSG_ATTR_OOP_SESSION_MANAGER_PTR                 /* ViAddr */      (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x7f)
+#define NIRFSG_ATTR_OOP_SESSION_PIPE_ID                     /* ViInt64 */     (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x86)
+
+// This attribute stores the channel number specified at initialize (first used in MCVST)
+#define NIRFSG_ATTR_CREATED_SESSION_CHANNEL                 /* ViInt32 */     (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x139)
 
 // Leaving these attributes in the public attribute space but in the private header file
 #define NIRFSG_ATTR_CONFIGURATION_TRIGGER_DELAY                /* ViReal64  */               (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x65)
@@ -288,11 +294,7 @@ extern "C" {
 
 #define NIRFSG_ATTR_MTS_DELAY_BASELINE                         /* ViInt32 */                 (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x85)
 
-// Attributes for pulse output. Will be moved to the public header in the future.
-#define NIRFSG_ATTR_PULSE_MODULATION_ACTIVE_LEVEL                    /* ViInt32, read-write */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x133)
-#define NIRFSG_ATTR_PULSE_MODULATION_SOURCE                          /* ViString, read-write */  (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x134)
-#define NIRFSG_ATTR_EXPORTED_PULSE_MODULATION_EVENT_OUTPUT_TERMINAL  /* ViString, read-write */  (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x135)
-#define NIRFSG_ATTR_EXPORTED_PULSE_MODULATION_EVENT_ACTIVE_LEVEL     /* ViString, read-write */  (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x136)
+#define NIRFSG_ATTR_COERCE_POWER_LEVEL_TO_MAX_POWER            /* ViInt32 */                 (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x87)
 
 /*****************************************************************************
  *-----------------------  Hidden Constants  ---------------*
@@ -393,18 +395,16 @@ extern "C" {
 // Private marker used for RF Blanking
 #define NIRFSG_VAL_RF_BLANKING_MARKER                       "marker7"
 
+// "PulseIn" is an alias for the following two signal names.  We want customers to use
+// the public alias, which allows the driver to choose the appropriate signal for the
+// configured use case.
+#define NIRFSG_VAL_PULSE_IN_HIGH_RESOLUTION_STR             "PulseInHighResolution"
+#define NIRFSG_VAL_PULSE_IN_LOW_LATENCY_STR                 "PulseInLowLatency"
+
 //Enum values for DAC decoder modes
 
 #define NIRFSG_VAL_DAC_DECODER_MAX_SNR          28001
 #define NIRFSG_VAL_DAC_DECODER_MAX_LINEARITY    28002
-
-// Constant values for the Pulse Gen feature
-#define NIRFSG_VAL_PULSE_OUT_STR                "PulseOut"
-#define NIRFSG_VAL_PULSE_IN_STR                 "PulseIn"
-
-#define NIRFSG_VAL_PULSE_MODULATION_ANALOG      20002
-#define NIRFSG_VAL_PULSE_MODULATION_DIGITAL     20003
-#define NIRFSG_VAL_PULSE_MODULATION_ANALOG_HIGH_ISOLATION   NIRFSG_VAL_HIGH_ISOLATION
 
 /*****************************************************************************
  *-------------------  Global Variables (driver internal use) ---------------*
@@ -934,6 +934,17 @@ ViStatus _VI_FUNC niRFSG_GetPrivilegeLevel
 (
    ViSession vi,
    ViInt32* privilegeLevel
+);
+
+ViStatus _VI_FUNC niRFSG_GetSparameterTableS2pFilePathAndOrientation
+(
+    ViSession vi,
+    ViConstString port,
+    ViConstString tableName,
+    ViInt32 filePathBufferSize,
+    ViChar* s2pFilePath,
+    ViInt32* requiredFilePathBufferSize,
+    ViInt32* s2pOrientation
 );
 
 ViStatus _VI_FUNC niRFSG_GetDeembeddingTableNames

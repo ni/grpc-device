@@ -192,7 +192,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Start Trigger. This attribute is  used when the NIRFSG_ATTR_START_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_EDGE. This attribute is not case-sensitive. To set the  NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_SOURCE attribute, the NI-RFSG device  must be in the Configuration state.\n \n'
         },
-        'enum': 'TriggerSource',
+        'enum': 'StartTriggerSource',
         'name': 'DIGITAL_EDGE_START_TRIGGER_SOURCE',
         'type': 'ViString'
     },
@@ -346,7 +346,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Script Trigger. This attribute is  used when the NIRFSG_ATTR_SCRIPT_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_EDGE. This attribute is not case-sensitive. To set this  attribute, the NI-RFSG device must be in the Configuration state.\n \n'
         },
-        'enum': 'TriggerSource',
+        'enum': 'SciptTriggerSource',
         'name': 'DIGITAL_EDGE_SCRIPT_TRIGGER_SOURCE',
         'type': 'ViString'
     },
@@ -601,7 +601,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Script Trigger. This attribute is  used when the NIRFSG_ATTR_SCRIPT_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_LEVEL. This attribute is not case-sensitive. To set  the NIRFSG_ATTR_DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE attribute,  the NI-RFSG device must be in the Configuration state.\n \n'
         },
-        'enum': 'TriggerSource',
+        'enum': 'SciptTriggerSource',
         'name': 'DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE',
         'type': 'ViString'
     },
@@ -1664,7 +1664,7 @@ attributes = {
         },
         'enum': 'UpconverterFrequencyOffsetMode',
         'name': 'UPCONVERTER_FREQUENCY_OFFSET_MODE',
-        'type': 'ViInt32'
+        'type': 'ViReal64'
     },
     1150249: {
         'access': 'read-write',
@@ -1835,6 +1835,14 @@ attributes = {
         'name': 'LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS',
         'type': 'ViInt32'
     },
+    1150292: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' Specifies the Reference Clock Rate, in Hz, of the signal sent to the Reference Clock Export Output Terminal.  To set this attribute, the NI-RFSG device must be in the Configuration state.  Units: hertz (Hz) \n Default Value: 10 MHz  Valid Values:   PXIe-5820/5830/5831/5832/5840/5841: 10 MHz  PXIe-5842: 10 MHz, 100 MHz, 1 GHz  PXIe-5860: 10 MHz, 100 MHz  Supported Devices: PXIe-5820/5830/5831/5832/5840/5841/5842/5860  \n  '
+        },
+        'name': 'EXPORTED_REF_CLOCK_RATE',
+        'type': 'ViReal64'
+    },
     1150293: {
         'access': 'read-write',
         'documentation': {
@@ -1844,6 +1852,62 @@ attributes = {
         'enum': 'EnableValues',
         'name': 'WRITE_WAVEFORM_NORMALIZATION',
         'type': 'ViInt32'
+    },
+    1150297: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' Specifies the size of the waveform specified by active channel. \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841/5842/5860\n'
+        },
+        'name': 'WAVEFORM_WAVEFORM_SIZE',
+        'type': 'ViInt32'
+    },
+    1150307: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' Specifies the active level of the pulse modulation signal when pulse modulation is enabled. \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841/5842/5860\n'
+        },
+        'name': 'PULSE_MODULATION_ACTIVE_LEVEL',
+        'type': 'ViInt32'
+    },
+    1150308: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' Specifies the source of the pulse modulation signal. \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841/5842/5860\n'
+        },
+        'name': 'PULSE_MODULATION_SOURCE',
+        'type': 'ViString'
+    },
+    1150309: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' Specifies the destination terminal for exporting the Pulse Modulation Event. \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841/5842/5860\n'
+        },
+        'name': 'EXPORTED_PULSE_MODULATION_EVENT_OUTPUT_TERMINAL',
+        'type': 'ViString'
+    },
+    1150310: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' Specifies the active level of the exported Pulse Modulation Event. \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841/5842/5860\n'
+        },
+        'name': 'EXPORTED_PULSE_MODULATION_EVENT_ACTIVE_LEVEL',
+        'type': 'ViInt32'
+    },
+    1150311: {
+        'access': 'read-write',
+        'documentation': {
+            'description': ' Specifies the Selected Path. \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841/5842/5860\n'
+        },
+        'name': 'SELECTED_PATH',
+        'type': 'ViString'
+    },
+    1150312: {
+        'access': 'read only',
+        'documentation': {
+            'description': ' Returns a comma separated list of the configurable paths available for use based on your instrument configuration. \n\n Supported Devices: PXIe-5820/5830/5831/5832/5840/5841/5842/5860\n'
+        },
+        'name': 'AVAILABLE_PATHS',
+        'type': 'ViString'
     },
     1152832: {
         'access': 'read-write',
