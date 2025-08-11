@@ -17,34 +17,34 @@ ViStatus AllocateArbWaveform(ViSession vi, ViConstString waveformName, ViInt32 s
   return niRFSG_AllocateArbWaveform(vi, waveformName, sizeInSamples);
 }
 
-ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value)
+ViStatus CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean value)
 {
-  return niRFSG_CheckAttributeViBoolean(vi, channelName, attributeId, value);
+  return niRFSG_CheckAttributeViBoolean(vi, channelName, attribute, value);
 }
 
-ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value)
+ViStatus CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 value)
 {
-  return niRFSG_CheckAttributeViInt32(vi, channelName, attributeId, value);
+  return niRFSG_CheckAttributeViInt32(vi, channelName, attribute, value);
 }
 
-ViStatus CheckAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 value)
+ViStatus CheckAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt64 value)
 {
-  return niRFSG_CheckAttributeViInt64(vi, channelName, attributeId, value);
+  return niRFSG_CheckAttributeViInt64(vi, channelName, attribute, value);
 }
 
-ViStatus CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 value)
+ViStatus CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64 value)
 {
-  return niRFSG_CheckAttributeViReal64(vi, channelName, attributeId, value);
+  return niRFSG_CheckAttributeViReal64(vi, channelName, attribute, value);
 }
 
-ViStatus CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession value)
+ViStatus CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attribute, ViSession value)
 {
-  return niRFSG_CheckAttributeViSession(vi, channelName, attributeId, value);
+  return niRFSG_CheckAttributeViSession(vi, channelName, attribute, value);
 }
 
-ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString value)
+ViStatus CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attribute, ViConstString value)
 {
-  return niRFSG_CheckAttributeViString(vi, channelName, attributeId, value);
+  return niRFSG_CheckAttributeViString(vi, channelName, attribute, value);
 }
 
 ViStatus CheckGenerationStatus(ViSession vi, ViBoolean* isDone)
@@ -272,34 +272,49 @@ ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifi
   return niRFSG_ExportSignal(vi, signal, signalIdentifier, outputTerminal);
 }
 
-ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value)
+ViStatus GetAllNamedWaveformNames(ViSession vi, ViChar waveformNames[], ViInt32 bufferSize, ViInt32* actualBufferSize)
 {
-  return niRFSG_GetAttributeViBoolean(vi, channelName, attributeId, value);
+  return niRFSG_GetAllNamedWaveformNames(vi, waveformNames, bufferSize, actualBufferSize);
 }
 
-ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* value)
+ViStatus GetAllScriptNames(ViSession vi, ViChar scriptNames[], ViInt32 bufferSize, ViInt32* actualBufferSize)
 {
-  return niRFSG_GetAttributeViInt32(vi, channelName, attributeId, value);
+  return niRFSG_GetAllScriptNames(vi, scriptNames, bufferSize, actualBufferSize);
 }
 
-ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* value)
+ViStatus GetScript(ViSession vi, ViConstString scriptName, ViChar Script[], ViInt32 bufferSize, ViInt32* actualBufferSize)
 {
-  return niRFSG_GetAttributeViInt64(vi, channelName, attributeId, value);
+  return niRFSG_GetScript(vi, scriptName, Script, bufferSize, actualBufferSize);
 }
 
-ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* value)
+ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean* value)
 {
-  return niRFSG_GetAttributeViReal64(vi, channelName, attributeId, value);
+  return niRFSG_GetAttributeViBoolean(vi, channelName, attribute, value);
 }
 
-ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* value)
+ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32* value)
 {
-  return niRFSG_GetAttributeViSession(vi, channelName, attributeId, value);
+  return niRFSG_GetAttributeViInt32(vi, channelName, attribute, value);
 }
 
-ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[])
+ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt64* value)
 {
-  return niRFSG_GetAttributeViString(vi, channelName, attributeId, bufSize, value);
+  return niRFSG_GetAttributeViInt64(vi, channelName, attribute, value);
+}
+
+ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64* value)
+{
+  return niRFSG_GetAttributeViReal64(vi, channelName, attribute, value);
+}
+
+ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attribute, ViSession* value)
+{
+  return niRFSG_GetAttributeViSession(vi, channelName, attribute, value);
+}
+
+ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 bufSize, ViChar value[])
+{
+  return niRFSG_GetAttributeViString(vi, channelName, attribute, bufSize, value);
 }
 
 ViStatus GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar name[])
@@ -320,6 +335,11 @@ ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBuf
 ViStatus GetExternalCalibrationLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second)
 {
   return niRFSG_GetExternalCalibrationLastDateAndTime(vi, year, month, day, hour, minute, second);
+}
+
+ViStatus GetMaxSettablePower(ViSession vi, ViReal64* value)
+{
+  return niRFSG_GetMaxSettablePower(vi, value);
 }
 
 ViStatus GetSelfCalibrationDateAndTime(ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second)
@@ -362,9 +382,9 @@ ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViS
   return niRFSG_init(resourceName, idQuery, resetDevice, newVi);
 }
 
-ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
+ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi)
 {
-  return niRFSG_InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
+  return niRFSG_InitWithOptions(resourceName, idQuery, resetDevice, optionString, newVi);
 }
 
 ViStatus Initiate(ViSession vi)
@@ -467,34 +487,34 @@ ViStatus SetArbWaveformNextWritePosition(ViSession vi, ViConstString waveformNam
   return niRFSG_SetArbWaveformNextWritePosition(vi, waveformName, relativeTo, offset);
 }
 
-ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value)
+ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean value)
 {
-  return niRFSG_SetAttributeViBoolean(vi, channelName, attributeId, value);
+  return niRFSG_SetAttributeViBoolean(vi, channelName, attribute, value);
 }
 
-ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value)
+ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 value)
 {
-  return niRFSG_SetAttributeViInt32(vi, channelName, attributeId, value);
+  return niRFSG_SetAttributeViInt32(vi, channelName, attribute, value);
 }
 
-ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 value)
+ViStatus SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt64 value)
 {
-  return niRFSG_SetAttributeViInt64(vi, channelName, attributeId, value);
+  return niRFSG_SetAttributeViInt64(vi, channelName, attribute, value);
 }
 
-ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 value)
+ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64 value)
 {
-  return niRFSG_SetAttributeViReal64(vi, channelName, attributeId, value);
+  return niRFSG_SetAttributeViReal64(vi, channelName, attribute, value);
 }
 
-ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession value)
+ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attribute, ViSession value)
 {
-  return niRFSG_SetAttributeViSession(vi, channelName, attributeId, value);
+  return niRFSG_SetAttributeViSession(vi, channelName, attribute, value);
 }
 
-ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString value)
+ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attribute, ViConstString value)
 {
-  return niRFSG_SetAttributeViString(vi, channelName, attributeId, value);
+  return niRFSG_SetAttributeViString(vi, channelName, attribute, value);
 }
 
 ViStatus SetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[])
