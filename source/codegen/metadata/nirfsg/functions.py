@@ -29,6 +29,26 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ChangeExternalCalibrationPassword': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'oldPassword',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'newPassword',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'CheckAttributeViBoolean': {
         'parameters': [
             {
@@ -781,10 +801,6 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'sparameterTable',
-                'size': {
-                    'mechanism': 'len',
-                    'value': 'sparameterTableSize'
-                },
                 'type': 'NIComplexNumber_struct[]'
             },
             {
@@ -1338,6 +1354,21 @@ functions = {
                 'direction': 'out',
                 'name': 'numberOfSparameters',
                 'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfPorts',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetDeembeddingTableNumberOfPorts': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
             },
             {
                 'direction': 'out',
