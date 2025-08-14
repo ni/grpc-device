@@ -801,6 +801,10 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'sparameterTable',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'sparameterTableSize'
+                },
                 'type': 'NIComplexNumber_struct[]'
             },
             {
