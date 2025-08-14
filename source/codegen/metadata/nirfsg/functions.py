@@ -810,7 +810,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sparameterTableSize',
-                'type': 'ViInt32'
+                'type': 'ViInt32',
+                'include_in_proto': True
             },
             {
                 'direction': 'in',

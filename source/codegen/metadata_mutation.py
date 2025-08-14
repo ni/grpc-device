@@ -238,7 +238,10 @@ def mark_non_proto_params(parameters):
             if size_param["direction"] == "in":
                 # Output size_params can still be included in the proto
                 # as information.
-                size_param["include_in_proto"] = False
+                # Respect explicit include_in_proto if already set in metadata to allow
+                # forcing inclusion in the request even when the service computes the value.
+                if "include_in_proto" not in size_param:
+                    size_param["include_in_proto"] = False
             if mechanism in ["len", "len-in-bytes"]:
                 if "determine_size_from" not in size_param:
                     size_param["determine_size_from"] = []
