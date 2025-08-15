@@ -10,3 +10,6 @@
 [submodule "third_party/grpc-sideband"]
 	path = third_party/grpc-sideband
 	url = https://github.com/ni/grpc-sideband.git
+[submodule "third_party/googletest"]
+	path = third_party/googletest
+	url = https://github.com/google/googletest.git
