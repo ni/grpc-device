@@ -61,7 +61,7 @@ if(USE_SUBMODULE_LIBS)
 
   add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc)
   set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
-  add_subdirectory(third_party/gtest ${CMAKE_CURRENT_BINARY_DIR}/gtest EXCLUDE_FROM_ALL)
+  add_subdirectory(third_party/googletest ${CMAKE_CURRENT_BINARY_DIR}/googletest EXCLUDE_FROM_ALL)
   add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json)
   add_subdirectory(third_party/utfcpp ${CMAKE_CURRENT_BINARY_DIR}/utfcpp)
   add_subdirectory(third_party/grpc-sideband ${CMAKE_CURRENT_BINARY_DIR}/grpc-sideband)
