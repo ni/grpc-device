@@ -23,6 +23,7 @@ using namespace nidevice_grpc::experimental::client;
 
 
 GetStartTimestampInformationResponse get_start_timestamp_information(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetStartTimestampInformationWithChannelsResponse get_start_timestamp_information_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::uint32& number_of_channels);
 
 } // namespace niscope_restricted_grpc::experimental::client
 

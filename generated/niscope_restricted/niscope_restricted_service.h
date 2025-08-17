@@ -43,6 +43,7 @@ public:
   virtual ~NiScopeRestrictedService();
 
   ::grpc::Status GetStartTimestampInformation(::grpc::ServerContext* context, const GetStartTimestampInformationRequest* request, GetStartTimestampInformationResponse* response) override;
+  ::grpc::Status GetStartTimestampInformationWithChannels(::grpc::ServerContext* context, const GetStartTimestampInformationWithChannelsRequest* request, GetStartTimestampInformationWithChannelsResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;

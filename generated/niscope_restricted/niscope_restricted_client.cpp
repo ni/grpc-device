@@ -34,5 +34,24 @@ get_start_timestamp_information(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+GetStartTimestampInformationWithChannelsResponse
+get_start_timestamp_information_with_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const pb::uint32& number_of_channels)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetStartTimestampInformationWithChannelsRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_list(channel_list);
+  request.set_number_of_channels(number_of_channels);
+
+  auto response = GetStartTimestampInformationWithChannelsResponse{};
+
+  raise_if_error(
+      stub->GetStartTimestampInformationWithChannels(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace niscope_restricted_grpc::experimental::client

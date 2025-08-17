@@ -30,6 +30,7 @@ NiScopeRestrictedLibrary::NiScopeRestrictedLibrary(std::shared_ptr<nidevice_grpc
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("niScope_GetError"));
   function_pointers_.GetErrorMessage = reinterpret_cast<GetErrorMessagePtr>(shared_library_->get_function_pointer("niScope_GetErrorMessage"));
   function_pointers_.GetStartTimestampInformation = reinterpret_cast<GetStartTimestampInformationPtr>(shared_library_->get_function_pointer("niScope_GetStartTimestampInformation"));
+  function_pointers_.GetStartTimestampInformationWithChannels = reinterpret_cast<GetStartTimestampInformationWithChannelsPtr>(shared_library_->get_function_pointer("niScope_GetStartTimestampInformationWithChannels"));
 }
 
 NiScopeRestrictedLibrary::~NiScopeRestrictedLibrary()
@@ -65,6 +66,14 @@ ViStatus NiScopeRestrictedLibrary::GetStartTimestampInformation(ViSession vi, Vi
     throw nidevice_grpc::LibraryLoadException("Could not find niScope_GetStartTimestampInformation.");
   }
   return function_pointers_.GetStartTimestampInformation(vi, sysTimeIn128BitsT1, sysTimeIn128BitsT2, sysTimeIn128BitsT3, sysTimeIn128BitsT4, deviceTimeInAbsoluteTimeUnits);
+}
+
+ViStatus NiScopeRestrictedLibrary::GetStartTimestampInformationWithChannels(ViSession vi, ViConstString channelList, ViUInt32 numberOfChannels, ViUInt32 sysTimeIn128BitsT1Array[], ViUInt32 sysTimeIn128BitsT2Array[], ViUInt32 sysTimeIn128BitsT3Array[], ViUInt32 sysTimeIn128BitsT4Array[], ViReal64 deviceTimeInAbsoluteTimeUnitsArray[])
+{
+  if (!function_pointers_.GetStartTimestampInformationWithChannels) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niScope_GetStartTimestampInformationWithChannels.");
+  }
+  return function_pointers_.GetStartTimestampInformationWithChannels(vi, channelList, numberOfChannels, sysTimeIn128BitsT1Array, sysTimeIn128BitsT2Array, sysTimeIn128BitsT3Array, sysTimeIn128BitsT4Array, deviceTimeInAbsoluteTimeUnitsArray);
 }
 
 }  // namespace niscope_restricted_grpc

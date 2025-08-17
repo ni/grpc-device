@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-SCOPE-RESTRICTED API metadata version 25.8.0
+// This file is generated from NI-SCOPE-RESTRICTED API metadata version 23.0.0
 //---------------------------------------------------------------------
 // Proto file for the NI-SCOPE-RESTRICTED Metadata
 //---------------------------------------------------------------------
@@ -41,10 +41,10 @@ message GetStartTimestampInformationWithChannelsRequest {
 
 message GetStartTimestampInformationWithChannelsResponse {
   int32 status = 1;
-  uint32 sys_time_in128_bits_t1_array = 2;
-  uint32 sys_time_in128_bits_t2_array = 3;
-  uint32 sys_time_in128_bits_t3_array = 4;
-  uint32 sys_time_in128_bits_t4_array = 5;
-  double device_time_in_absolute_time_units_array = 6;
+  repeated uint32 sys_time_in_128_bits_t1_array = 2;
+  repeated uint32 sys_time_in_128_bits_t2_array = 3;
+  repeated uint32 sys_time_in_128_bits_t3_array = 4;
+  repeated uint32 sys_time_in_128_bits_t4_array = 5;
+  repeated double device_time_in_absolute_time_units_array = 6;
 }
 
