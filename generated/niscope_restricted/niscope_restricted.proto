@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-SCOPE-RESTRICTED API metadata version 23.0.0
+// This file is generated from NI-SCOPE-RESTRICTED API metadata version 25.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-SCOPE-RESTRICTED Metadata
 //---------------------------------------------------------------------
@@ -17,6 +17,7 @@ import "session.proto";
 
 service NiScopeRestricted {
   rpc GetStartTimestampInformation(GetStartTimestampInformationRequest) returns (GetStartTimestampInformationResponse);
+  rpc GetStartTimestampInformationWithChannels(GetStartTimestampInformationWithChannelsRequest) returns (GetStartTimestampInformationWithChannelsResponse);
 }
 
 message GetStartTimestampInformationRequest {
@@ -30,5 +31,20 @@ message GetStartTimestampInformationResponse {
   uint32 sys_time_in_128_bits_t3 = 4;
   uint32 sys_time_in_128_bits_t4 = 5;
   double device_time_in_absolute_time_units = 6;
+}
+
+message GetStartTimestampInformationWithChannelsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_list = 2;
+  uint32 number_of_channels = 3;
+}
+
+message GetStartTimestampInformationWithChannelsResponse {
+  int32 status = 1;
+  uint32 sys_time_in128_bits_t1_array = 2;
+  uint32 sys_time_in128_bits_t2_array = 3;
+  uint32 sys_time_in128_bits_t3_array = 4;
+  uint32 sys_time_in128_bits_t4_array = 5;
+  double device_time_in_absolute_time_units_array = 6;
 }
 
