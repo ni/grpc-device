@@ -7,7 +7,7 @@ config = {
     },
     "code_readiness": "Release",
     "is_restricted": True,
-    "api_version": "23.0.0",
+    "api_version": "25.8.0",
     "c_header": "niScopeCal.h",
     "c_function_prefix": "niScope_",
     "service_class_prefix": "NiScopeRestricted",
