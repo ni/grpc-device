@@ -19,6 +19,7 @@ class NiScopeRestrictedLibraryInterface {
   virtual ViStatus GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]) = 0;
   virtual ViStatus GetStartTimestampInformation(ViSession vi, ViUInt32* sysTimeIn128BitsT1, ViUInt32* sysTimeIn128BitsT2, ViUInt32* sysTimeIn128BitsT3, ViUInt32* sysTimeIn128BitsT4, ViReal64* deviceTimeInAbsoluteTimeUnits) = 0;
   virtual ViStatus GetStartTimestampInformationWithChannels(ViSession vi, ViConstString channelList, ViUInt32 numberOfChannels, ViUInt32 sysTimeIn128BitsT1Array[], ViUInt32 sysTimeIn128BitsT2Array[], ViUInt32 sysTimeIn128BitsT3Array[], ViUInt32 sysTimeIn128BitsT4Array[], ViReal64 deviceTimeInAbsoluteTimeUnitsArray[]) = 0;
+  virtual ViStatus ParseNumberOfChannels(ViSession vi, ViConstString channel, ViUInt32* numChannels) = 0;
 };
 
 }  // namespace niscope_restricted_grpc

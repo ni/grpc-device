@@ -44,6 +44,7 @@ public:
 
   ::grpc::Status GetStartTimestampInformation(::grpc::ServerContext* context, const GetStartTimestampInformationRequest* request, GetStartTimestampInformationResponse* response) override;
   ::grpc::Status GetStartTimestampInformationWithChannels(::grpc::ServerContext* context, const GetStartTimestampInformationWithChannelsRequest* request, GetStartTimestampInformationWithChannelsResponse* response) override;
+  ::grpc::Status ParseNumberOfChannels(::grpc::ServerContext* context, const ParseNumberOfChannelsRequest* request, ParseNumberOfChannelsResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;

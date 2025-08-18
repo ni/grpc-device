@@ -18,6 +18,7 @@ import "session.proto";
 service NiScopeRestricted {
   rpc GetStartTimestampInformation(GetStartTimestampInformationRequest) returns (GetStartTimestampInformationResponse);
   rpc GetStartTimestampInformationWithChannels(GetStartTimestampInformationWithChannelsRequest) returns (GetStartTimestampInformationWithChannelsResponse);
+  rpc ParseNumberOfChannels(ParseNumberOfChannelsRequest) returns (ParseNumberOfChannelsResponse);
 }
 
 message GetStartTimestampInformationRequest {
@@ -46,5 +47,15 @@ message GetStartTimestampInformationWithChannelsResponse {
   repeated uint32 sys_time_in_128_bits_t3_array = 4;
   repeated uint32 sys_time_in_128_bits_t4_array = 5;
   repeated double device_time_in_absolute_time_units_array = 6;
+}
+
+message ParseNumberOfChannelsRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel = 2;
+}
+
+message ParseNumberOfChannelsResponse {
+  int32 status = 1;
+  uint32 num_channels = 2;
 }
 

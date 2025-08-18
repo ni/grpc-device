@@ -109,6 +109,32 @@ namespace niscope_restricted_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeRestrictedService::ParseNumberOfChannels(::grpc::ServerContext* context, const ParseNumberOfChannelsRequest* request, ParseNumberOfChannelsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto channel_mbcs = convert_from_grpc<std::string>(request->channel());
+      auto channel = channel_mbcs.c_str();
+      ViUInt32 num_channels {};
+      auto status = library_->ParseNumberOfChannels(vi, channel, &num_channels);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_num_channels(num_channels);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiScopeRestrictedFeatureToggles::NiScopeRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

@@ -53,5 +53,23 @@ get_start_timestamp_information_with_channels(const StubPtr& stub, const nidevic
   return response;
 }
 
+ParseNumberOfChannelsResponse
+parse_number_of_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ParseNumberOfChannelsRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel(channel);
+
+  auto response = ParseNumberOfChannelsResponse{};
+
+  raise_if_error(
+      stub->ParseNumberOfChannels(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace niscope_restricted_grpc::experimental::client

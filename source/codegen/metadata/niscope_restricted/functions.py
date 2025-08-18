@@ -218,4 +218,31 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ParseNumberOfChannels': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channel',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channel',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'numChannels',
+                'direction': 'out',
+                'grpc_type': 'uint32',
+                'name': 'numChannels',
+                'type': 'ViUInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
 }

@@ -25,18 +25,21 @@ class NiScopeRestrictedLibrary : public niscope_restricted_grpc::NiScopeRestrict
   ViStatus GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]) override;
   ViStatus GetStartTimestampInformation(ViSession vi, ViUInt32* sysTimeIn128BitsT1, ViUInt32* sysTimeIn128BitsT2, ViUInt32* sysTimeIn128BitsT3, ViUInt32* sysTimeIn128BitsT4, ViReal64* deviceTimeInAbsoluteTimeUnits) override;
   ViStatus GetStartTimestampInformationWithChannels(ViSession vi, ViConstString channelList, ViUInt32 numberOfChannels, ViUInt32 sysTimeIn128BitsT1Array[], ViUInt32 sysTimeIn128BitsT2Array[], ViUInt32 sysTimeIn128BitsT3Array[], ViUInt32 sysTimeIn128BitsT4Array[], ViReal64 deviceTimeInAbsoluteTimeUnitsArray[]) override;
+  ViStatus ParseNumberOfChannels(ViSession vi, ViConstString channel, ViUInt32* numChannels) override;
 
  private:
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
   using GetErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]);
   using GetStartTimestampInformationPtr = ViStatus (*)(ViSession vi, ViUInt32* sysTimeIn128BitsT1, ViUInt32* sysTimeIn128BitsT2, ViUInt32* sysTimeIn128BitsT3, ViUInt32* sysTimeIn128BitsT4, ViReal64* deviceTimeInAbsoluteTimeUnits);
   using GetStartTimestampInformationWithChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channelList, ViUInt32 numberOfChannels, ViUInt32 sysTimeIn128BitsT1Array[], ViUInt32 sysTimeIn128BitsT2Array[], ViUInt32 sysTimeIn128BitsT3Array[], ViUInt32 sysTimeIn128BitsT4Array[], ViReal64 deviceTimeInAbsoluteTimeUnitsArray[]);
+  using ParseNumberOfChannelsPtr = ViStatus (*)(ViSession vi, ViConstString channel, ViUInt32* numChannels);
 
   typedef struct FunctionPointers {
     GetErrorPtr GetError;
     GetErrorMessagePtr GetErrorMessage;
     GetStartTimestampInformationPtr GetStartTimestampInformation;
     GetStartTimestampInformationWithChannelsPtr GetStartTimestampInformationWithChannels;
+    ParseNumberOfChannelsPtr ParseNumberOfChannels;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
