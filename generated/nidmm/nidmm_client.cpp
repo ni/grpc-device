@@ -1262,40 +1262,6 @@ get_measurement_period(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
-GetNextCoercionRecordResponse
-get_next_coercion_record(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetNextCoercionRecordRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = GetNextCoercionRecordResponse{};
-
-  raise_if_error(
-      stub->GetNextCoercionRecord(&context, request, &response),
-      context);
-
-  return response;
-}
-
-GetNextInterchangeWarningResponse
-get_next_interchange_warning(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetNextInterchangeWarningRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = GetNextInterchangeWarningResponse{};
-
-  raise_if_error(
-      stub->GetNextInterchangeWarning(&context, request, &response),
-      context);
-
-  return response;
-}
-
 GetSelfCalSupportedResponse
 get_self_cal_supported(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {

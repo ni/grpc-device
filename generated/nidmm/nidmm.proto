@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-DMM API metadata version 23.0.0f147
+// This file is generated from NI-DMM API metadata version 25.8.0d110
 //---------------------------------------------------------------------
 // Proto file for the NI-DMM Metadata
 //---------------------------------------------------------------------
@@ -74,8 +74,6 @@ service NiDmm {
   rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
   rpc GetLastCalTemp(GetLastCalTempRequest) returns (GetLastCalTempResponse);
   rpc GetMeasurementPeriod(GetMeasurementPeriodRequest) returns (GetMeasurementPeriodResponse);
-  rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
-  rpc GetNextInterchangeWarning(GetNextInterchangeWarningRequest) returns (GetNextInterchangeWarningResponse);
   rpc GetSelfCalSupported(GetSelfCalSupportedRequest) returns (GetSelfCalSupportedResponse);
   rpc ImportAttributeConfigurationBuffer(ImportAttributeConfigurationBufferRequest) returns (ImportAttributeConfigurationBufferResponse);
   rpc ImportAttributeConfigurationFile(ImportAttributeConfigurationFileRequest) returns (ImportAttributeConfigurationFileResponse);
@@ -118,10 +116,9 @@ enum NiDmmAttribute {
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_PREFIX = 1050302;
   NIDMM_ATTRIBUTE_IO_RESOURCE_DESCRIPTOR = 1050304;
   NIDMM_ATTRIBUTE_LOGICAL_NAME = 1050305;
+  NIDMM_ATTRIBUTE_IO_SESSION = 1050322;
   NIDMM_ATTRIBUTE_SUPPORTED_INSTRUMENT_MODELS = 1050327;
   NIDMM_ATTRIBUTE_GROUP_CAPABILITIES = 1050401;
-  NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_MAJOR_VERSION = 1050503;
-  NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_MINOR_VERSION = 1050504;
   NIDMM_ATTRIBUTE_INSTRUMENT_FIRMWARE_REVISION = 1050510;
   NIDMM_ATTRIBUTE_INSTRUMENT_MANUFACTURER = 1050511;
   NIDMM_ATTRIBUTE_INSTRUMENT_MODEL = 1050512;
@@ -129,6 +126,8 @@ enum NiDmmAttribute {
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_DESCRIPTION = 1050514;
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MAJOR_VERSION = 1050515;
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION = 1050516;
+  NIDMM_ATTRIBUTE_CLASS_DRIVER_CLASS_SPEC_MAJOR_VERSION = 1050519;
+  NIDMM_ATTRIBUTE_CLASS_DRIVER_CLASS_SPEC_MINOR_VERSION = 1050520;
   NIDMM_ATTRIBUTE_SPECIFIC_DRIVER_REVISION = 1050551;
   NIDMM_ATTRIBUTE_MEAS_DEST_SLOPE = 1150002;
   NIDMM_ATTRIBUTE_SHUNT_VALUE = 1150003;
@@ -398,6 +397,7 @@ enum NiDmmReal64AttributeValues {
   NIDMM_REAL64_RANGE_VAL_AUTO_RANGE_ONCE = -3;
   NIDMM_REAL64_SAMPLE_INTERVAL_VAL_AUTO_DELAY = -1;
   NIDMM_REAL64_SETTLE_TIME_VAL_SETTLE_TIME_AUTO = -1;
+  NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY = -1;
   NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_ON = -1;
   NIDMM_REAL64_TRIGGER_DELAYS_VAL_AUTO_DELAY_OFF = -2;
 }
@@ -408,9 +408,10 @@ enum NiDmmReal64AttributeValuesMapped {
   NIDMM_REAL64_CURRENT_SOURCE_VAL_10_MICROAMP = 2;
   NIDMM_REAL64_CURRENT_SOURCE_VAL_100_MICROAMP = 3;
   NIDMM_REAL64_CURRENT_SOURCE_VAL_1_MILLIAMP = 4;
-  NIDMM_REAL64_INPUT_RESISTANCE_VAL_1_MEGAOHM = 5;
-  NIDMM_REAL64_INPUT_RESISTANCE_VAL_10_MEGAOHM = 6;
-  NIDMM_REAL64_INPUT_RESISTANCE_VAL_GREATER_THAN_10_GIGAOHM = 7;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_RESISTANCE_NA = 5;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_1_MEGAOHM = 6;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_10_MEGAOHM = 7;
+  NIDMM_REAL64_INPUT_RESISTANCE_VAL_GREATER_THAN_10_GIGAOHM = 8;
 }
 
 enum PowerLineFrequencies {
@@ -489,7 +490,9 @@ enum TriggerCount {
 }
 
 enum TriggerDelays {
+  option allow_alias = true;
   TRIGGER_DELAYS_UNSPECIFIED = 0;
+  TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY = -1;
   TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_ON = -1;
   TRIGGER_DELAYS_NIDMM_VAL_AUTO_DELAY_OFF = -2;
 }
@@ -1168,24 +1171,6 @@ message GetMeasurementPeriodRequest {
 message GetMeasurementPeriodResponse {
   int32 status = 1;
   double period = 2;
-}
-
-message GetNextCoercionRecordRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetNextCoercionRecordResponse {
-  int32 status = 1;
-  string coercion_record = 2;
-}
-
-message GetNextInterchangeWarningRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetNextInterchangeWarningResponse {
-  int32 status = 1;
-  string interchange_warning = 2;
 }
 
 message GetSelfCalSupportedRequest {

@@ -80,8 +80,6 @@ GetErrorMessageResponse get_error_message(const StubPtr& stub, const nidevice_gr
 GetExtCalRecommendedIntervalResponse get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetLastCalTempResponse get_last_cal_temp(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<CalibrationType, pb::int32>& cal_type);
 GetMeasurementPeriodResponse get_measurement_period(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetNextCoercionRecordResponse get_next_coercion_record(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetNextInterchangeWarningResponse get_next_interchange_warning(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalSupportedResponse get_self_cal_supported(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ImportAttributeConfigurationBufferResponse import_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& configuration);
 ImportAttributeConfigurationFileResponse import_attribute_configuration_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& file_path);

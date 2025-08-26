@@ -297,16 +297,6 @@ ViStatus GetMeasurementPeriod(ViSession vi, ViReal64* period)
   return niDMM_GetMeasurementPeriod(vi, period);
 }
 
-ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[])
-{
-  return niDMM_GetNextCoercionRecord(vi, bufferSize, coercionRecord);
-}
-
-ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[])
-{
-  return niDMM_GetNextInterchangeWarning(vi, bufferSize, interchangeWarning);
-}
-
 ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported)
 {
   return niDMM_GetSelfCalSupported(vi, selfCalSupported);

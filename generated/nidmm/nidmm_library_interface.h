@@ -73,8 +73,6 @@ class NiDmmLibraryInterface {
   virtual ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months) = 0;
   virtual ViStatus GetLastCalTemp(ViSession vi, ViInt32 calType, ViReal64* temperature) = 0;
   virtual ViStatus GetMeasurementPeriod(ViSession vi, ViReal64* period) = 0;
-  virtual ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]) = 0;
-  virtual ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]) = 0;
   virtual ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported) = 0;
   virtual ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]) = 0;
   virtual ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) = 0;
@@ -103,8 +101,8 @@ class NiDmmLibraryInterface {
   virtual ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) = 0;
   virtual ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) = 0;
   virtual ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue) = 0;
-  virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) = 0;
+  virtual ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
 };
 
 }  // namespace nidmm_grpc

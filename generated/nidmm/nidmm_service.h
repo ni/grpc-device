@@ -100,8 +100,6 @@ public:
   ::grpc::Status GetExtCalRecommendedInterval(::grpc::ServerContext* context, const GetExtCalRecommendedIntervalRequest* request, GetExtCalRecommendedIntervalResponse* response) override;
   ::grpc::Status GetLastCalTemp(::grpc::ServerContext* context, const GetLastCalTempRequest* request, GetLastCalTempResponse* response) override;
   ::grpc::Status GetMeasurementPeriod(::grpc::ServerContext* context, const GetMeasurementPeriodRequest* request, GetMeasurementPeriodResponse* response) override;
-  ::grpc::Status GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response) override;
-  ::grpc::Status GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response) override;
   ::grpc::Status GetSelfCalSupported(::grpc::ServerContext* context, const GetSelfCalSupportedRequest* request, GetSelfCalSupportedResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationBuffer(::grpc::ServerContext* context, const ImportAttributeConfigurationBufferRequest* request, ImportAttributeConfigurationBufferResponse* response) override;
   ::grpc::Status ImportAttributeConfigurationFile(::grpc::ServerContext* context, const ImportAttributeConfigurationFileRequest* request, ImportAttributeConfigurationFileResponse* response) override;
@@ -133,8 +131,8 @@ private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
-  std::map<std::int32_t, double> nidmmreal64attributevaluesmapped_input_map_ { {1, 1e-06f},{2, 1e-05f},{3, 0.0001f},{4, 0.001f},{5, 1000000},{6, 10000000},{7, 10000000000.0f}, };
-  std::map<double, std::int32_t> nidmmreal64attributevaluesmapped_output_map_ { {1e-06f, 1},{1e-05f, 2},{0.0001f, 3},{0.001f, 4},{1000000, 5},{10000000, 6},{10000000000.0f, 7}, };
+  std::map<std::int32_t, double> nidmmreal64attributevaluesmapped_input_map_ { {1, 1e-06f},{2, 1e-05f},{3, 0.0001f},{4, 0.001f},{5, 0},{6, 1000000},{7, 10000000},{8, 10000000000.0f}, };
+  std::map<double, std::int32_t> nidmmreal64attributevaluesmapped_output_map_ { {1e-06f, 1},{1e-05f, 2},{0.0001f, 3},{0.001f, 4},{0, 5},{1000000, 6},{10000000, 7},{10000000000.0f, 8}, };
 
   NiDmmFeatureToggles feature_toggles_;
 };
