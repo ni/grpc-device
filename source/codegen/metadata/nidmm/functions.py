@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 23.0.0f147
+# This file is generated from NI-DMM API metadata version 25.8.0d110
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -1640,72 +1640,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetNextCoercionRecord': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'bufferSize',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'include_in_proto': False,
-                'is_size_param': True,
-                'name': 'bufferSize',
-                'type': 'ViInt32'
-            },
-            {
-                'cppName': 'coercionRecord',
-                'direction': 'out',
-                'grpc_type': 'string',
-                'name': 'coercionRecord',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetNextInterchangeWarning': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'bufferSize',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'include_in_proto': False,
-                'is_size_param': True,
-                'name': 'bufferSize',
-                'type': 'ViInt32'
-            },
-            {
-                'cppName': 'interchangeWarning',
-                'direction': 'out',
-                'grpc_type': 'string',
-                'name': 'interchangeWarning',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'GetSelfCalSupported': {
         'codegen_method': 'public',
         'parameters': [
@@ -2519,6 +2453,40 @@ functions = {
                 'grpc_type': 'string',
                 'name': 'attribute_value_raw',
                 'type': 'ViString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetRuntimeEnvironment': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'cppName': 'environment',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'environment',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'environmentVersion',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'environmentVersion',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'reserved1',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'reserved1',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'reserved2',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'reserved2',
+                'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'
