@@ -1,0 +1,75 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-DMM-RESTRICTED API metadata version 25.8.0d9999
+//---------------------------------------------------------------------
+// Proto file for the NI-DMM-RESTRICTED Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.dmmrestricted";
+option java_outer_classname = "NiDmmRestricted";
+option csharp_namespace = "NationalInstruments.Grpc.DmmRestricted";
+
+package nidmm_restricted_grpc;
+
+import "session.proto";
+
+service NiDmmRestricted {
+  rpc AttributeWasSetByUser(AttributeWasSetByUserRequest) returns (AttributeWasSetByUserResponse);
+  rpc CachedReadStatus(CachedReadStatusRequest) returns (CachedReadStatusResponse);
+  rpc FetchMultiPointWithCaching(FetchMultiPointWithCachingRequest) returns (FetchMultiPointWithCachingResponse);
+  rpc RequestPrivilege(RequestPrivilegeRequest) returns (RequestPrivilegeResponse);
+}
+
+enum AcquisitionStatus {
+  ACQUISITION_STATUS_NIDMM_VAL_RUNNING_ANTICOLLISION = 0;
+  ACQUISITION_STATUS_NIDMM_VAL_FINISHED_WITH_BACKLOG = 1;
+  ACQUISITION_STATUS_NIDMM_VAL_FINISHED_WITH_NO_BACKLOG = 2;
+  ACQUISITION_STATUS_NIDMM_VAL_PAUSED = 3;
+  ACQUISITION_STATUS_NIDMM_VAL_NO_ACQUISITION_IN_PROGRESS = 4;
+}
+
+message AttributeWasSetByUserRequest {
+  nidevice_grpc.Session vi = 1;
+  string rep_cap_name = 2;
+  int32 attribute_id = 3;
+}
+
+message AttributeWasSetByUserResponse {
+  int32 status = 1;
+}
+
+message CachedReadStatusRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message CachedReadStatusResponse {
+  int32 status = 1;
+  sint32 acq_backlog = 2;
+  AcquisitionStatus acq_status = 3;
+  sint32 acq_status_raw = 4;
+}
+
+message FetchMultiPointWithCachingRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 max_time = 2;
+  sint32 array_size = 3;
+  bool is_monitoring = 4;
+}
+
+message FetchMultiPointWithCachingResponse {
+  int32 status = 1;
+  repeated double reading_array = 2;
+  sint32 actual_pts = 3;
+}
+
+message RequestPrivilegeRequest {
+  nidevice_grpc.Session vi = 1;
+  sint32 privilege_level = 2;
+}
+
+message RequestPrivilegeResponse {
+  int32 status = 1;
+}
+

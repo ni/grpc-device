@@ -15,6 +15,7 @@
 #include "nidcpower/nidcpower_service_registrar.h"
 #include "nidigitalpattern/nidigitalpattern_service_registrar.h"
 #include "nidmm/nidmm_service_registrar.h"
+#include "nidmm_restricted/nidmm_restricted_service_registrar.h"
 #include "nifgen/nifgen_service_registrar.h"
 #include "nifpga/nifpga_service_registrar.h"
 #if defined(_MSC_VER)
@@ -124,6 +125,11 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       feature_toggles));
   service_vector->push_back(
     nidmm_grpc::register_service(
+      server_builder, 
+      vi_session_repository,
+      feature_toggles));
+  service_vector->push_back(
+    nidmm_restricted_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
