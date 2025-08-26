@@ -1,7 +1,15 @@
 #include <nirfsg/nirfsg_service.h>
 
+using nidevice_grpc::converters::convert_to_grpc;
+
 namespace nirfsg_grpc {
 
+  // Returns true if it's safe to use outputs of a method with the given status.
+  inline bool status_ok(int32 status)
+  {
+    return status >= 0;
+  }
+  
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
   ::grpc::Status NiRFSGService::GetDeembeddingSparameters(::grpc::ServerContext* context, const GetDeembeddingSparametersRequest* request, GetDeembeddingSparametersResponse* response)
@@ -12,11 +20,11 @@ namespace nirfsg_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 sparameter_array_size = request->sparameter_array_size();
-      std::vector<NIComplexNumber_struct> sparameters(sparameter_array_size, NIComplexNumber_struct());
+      ViInt32 sparameters_array_size = request->sparameters_array_size();
+      std::vector<NIComplexNumber_struct> sparameters(sparameters_array_size, NIComplexNumber_struct());
       ViInt32 number_of_sparameters {};
       ViInt32 number_of_ports {};
-      auto status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameter_array_size, &number_of_sparameters, &number_of_ports);
+      auto status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
