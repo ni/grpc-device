@@ -315,8 +315,11 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   int32 NFFetchYFactors(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 measurementYFactor[], float64 calibrationYFactor[], int32 arraySize, int32* actualArraySize) override;
   int32 NFLoadCalibrationLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationLossCompensationEnabled, char calibrationLossS2pFilePath[], int32 calibrationLossSParameterOrientation, float64 calibrationLossTemperature) override;
   int32 NFLoadColdSourceDUTSParametersFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char dutsParametersS2pFilePath[], int32 dutsParameterOrientation) override;
+  int32 NFLoadColdSourceInputTerminationFromS1p(niRFmxInstrHandle instrumentHandle, char selectorString[], char terminationS1pFilePath[], float64 terminationTemperature) override;
   int32 NFLoadDUTInputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutInputLossCompensationEnabled, char dutInputLossS2pFilePath[], int32 dutInputLossSParameterOrientation, float64 dutInputLossTemperature) override;
   int32 NFLoadDUTOutputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutOutputLossCompensationEnabled, char dutOutputLossS2pFilePath[], int32 dutOutputLossSParameterOrientation, float64 dutOutputLossTemperature) override;
+  int32 NFLoadExternalPreampGainFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 externalPreampPresent, char externalPreampGainS2pFilePath[], int32 externalPreampGainSParameterOrientation) override;
+  int32 NFLoadYFactorNoiseSourceLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseSourceLossCompensationEnabled, char noiseSourceLossS2pFilePath[], int32 noiseSourceLossSParameterOrientation, float64 noiseSourceLossTemperature) override;
   int32 NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel) override;
   int32 NFValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid) override;
   int32 OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) override;
@@ -780,8 +783,11 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
   using NFFetchYFactorsPtr = decltype(&RFmxSpecAn_NFFetchYFactors);
   using NFLoadCalibrationLossFromS2pPtr = decltype(&RFmxSpecAn_NFLoadCalibrationLossFromS2p);
   using NFLoadColdSourceDUTSParametersFromS2pPtr = decltype(&RFmxSpecAn_NFLoadColdSourceDUTSParametersFromS2p);
+  using NFLoadColdSourceInputTerminationFromS1pPtr = decltype(&RFmxSpecAn_NFLoadColdSourceInputTerminationFromS1p);
   using NFLoadDUTInputLossFromS2pPtr = decltype(&RFmxSpecAn_NFLoadDUTInputLossFromS2p);
   using NFLoadDUTOutputLossFromS2pPtr = decltype(&RFmxSpecAn_NFLoadDUTOutputLossFromS2p);
+  using NFLoadExternalPreampGainFromS2pPtr = decltype(&RFmxSpecAn_NFLoadExternalPreampGainFromS2p);
+  using NFLoadYFactorNoiseSourceLossFromS2pPtr = decltype(&RFmxSpecAn_NFLoadYFactorNoiseSourceLossFromS2p);
   using NFRecommendReferenceLevelPtr = decltype(&RFmxSpecAn_NFRecommendReferenceLevel);
   using NFValidateCalibrationDataPtr = decltype(&RFmxSpecAn_NFValidateCalibrationData);
   using OBWCfgAveragingPtr = decltype(&RFmxSpecAn_OBWCfgAveraging);
@@ -1245,8 +1251,11 @@ class NiRFmxSpecAnLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInterfa
     NFFetchYFactorsPtr NFFetchYFactors;
     NFLoadCalibrationLossFromS2pPtr NFLoadCalibrationLossFromS2p;
     NFLoadColdSourceDUTSParametersFromS2pPtr NFLoadColdSourceDUTSParametersFromS2p;
+    NFLoadColdSourceInputTerminationFromS1pPtr NFLoadColdSourceInputTerminationFromS1p;
     NFLoadDUTInputLossFromS2pPtr NFLoadDUTInputLossFromS2p;
     NFLoadDUTOutputLossFromS2pPtr NFLoadDUTOutputLossFromS2p;
+    NFLoadExternalPreampGainFromS2pPtr NFLoadExternalPreampGainFromS2p;
+    NFLoadYFactorNoiseSourceLossFromS2pPtr NFLoadYFactorNoiseSourceLossFromS2p;
     NFRecommendReferenceLevelPtr NFRecommendReferenceLevel;
     NFValidateCalibrationDataPtr NFValidateCalibrationData;
     OBWCfgAveragingPtr OBWCfgAveraging;

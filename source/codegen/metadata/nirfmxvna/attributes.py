@@ -446,6 +446,16 @@ attributes = {
         'name': 'TRIGGER_DELAY',
         'type': 'float64'
     },
+    13631601: {
+        'access': 'read-write',
+        'name': 'CORRECTION_CALIBRATION_STEP_VCAL_ORIENTATION',
+        'type': 'char[]'
+    },
+    13631602: {
+        'access': 'read-write',
+        'name': 'CORRECTION_CALIBRATION_STEP_PORT_ASSIGNMENT',
+        'type': 'char[]'
+    },
     13633536: {
         'access': 'read-write',
         'name': 'CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY',
@@ -574,6 +584,11 @@ attributes = {
         'name': 'SPARAMS_GROUP_DELAY_APERTURE_FREQUENCY_SPAN',
         'type': 'float64'
     },
+    13635616: {
+        'access': 'read-write',
+        'name': 'SPARAMS_RESULTS_CORRECTION_LEVEL',
+        'type': 'char[]'
+    },
     13639680: {
         'access': 'read-write',
         'name': 'WAVES_MEASUREMENT_ENABLED',
@@ -666,6 +681,11 @@ attributes = {
         'access': 'read-write',
         'name': 'WAVES_GROUP_DELAY_APERTURE_FREQUENCY_SPAN',
         'type': 'float64'
+    },
+    13639705: {
+        'access': 'read-write',
+        'name': 'WAVES_RESULTS_CORRECTION_LEVEL',
+        'type': 'char[]'
     },
     13680640: {
         'access': 'read-write',

@@ -321,8 +321,11 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.NFFetchYFactors = reinterpret_cast<NFFetchYFactorsPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFFetchYFactors"));
   function_pointers_.NFLoadCalibrationLossFromS2p = reinterpret_cast<NFLoadCalibrationLossFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadCalibrationLossFromS2p"));
   function_pointers_.NFLoadColdSourceDUTSParametersFromS2p = reinterpret_cast<NFLoadColdSourceDUTSParametersFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadColdSourceDUTSParametersFromS2p"));
+  function_pointers_.NFLoadColdSourceInputTerminationFromS1p = reinterpret_cast<NFLoadColdSourceInputTerminationFromS1pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadColdSourceInputTerminationFromS1p"));
   function_pointers_.NFLoadDUTInputLossFromS2p = reinterpret_cast<NFLoadDUTInputLossFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadDUTInputLossFromS2p"));
   function_pointers_.NFLoadDUTOutputLossFromS2p = reinterpret_cast<NFLoadDUTOutputLossFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadDUTOutputLossFromS2p"));
+  function_pointers_.NFLoadExternalPreampGainFromS2p = reinterpret_cast<NFLoadExternalPreampGainFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadExternalPreampGainFromS2p"));
+  function_pointers_.NFLoadYFactorNoiseSourceLossFromS2p = reinterpret_cast<NFLoadYFactorNoiseSourceLossFromS2pPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFLoadYFactorNoiseSourceLossFromS2p"));
   function_pointers_.NFRecommendReferenceLevel = reinterpret_cast<NFRecommendReferenceLevelPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFRecommendReferenceLevel"));
   function_pointers_.NFValidateCalibrationData = reinterpret_cast<NFValidateCalibrationDataPtr>(shared_library_->get_function_pointer("RFmxSpecAn_NFValidateCalibrationData"));
   function_pointers_.OBWCfgAveraging = reinterpret_cast<OBWCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxSpecAn_OBWCfgAveraging"));
@@ -2855,6 +2858,14 @@ int32 NiRFmxSpecAnLibrary::NFLoadColdSourceDUTSParametersFromS2p(niRFmxInstrHand
   return function_pointers_.NFLoadColdSourceDUTSParametersFromS2p(instrumentHandle, selectorString, dutsParametersS2pFilePath, dutsParameterOrientation);
 }
 
+int32 NiRFmxSpecAnLibrary::NFLoadColdSourceInputTerminationFromS1p(niRFmxInstrHandle instrumentHandle, char selectorString[], char terminationS1pFilePath[], float64 terminationTemperature)
+{
+  if (!function_pointers_.NFLoadColdSourceInputTerminationFromS1p) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFLoadColdSourceInputTerminationFromS1p.");
+  }
+  return function_pointers_.NFLoadColdSourceInputTerminationFromS1p(instrumentHandle, selectorString, terminationS1pFilePath, terminationTemperature);
+}
+
 int32 NiRFmxSpecAnLibrary::NFLoadDUTInputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutInputLossCompensationEnabled, char dutInputLossS2pFilePath[], int32 dutInputLossSParameterOrientation, float64 dutInputLossTemperature)
 {
   if (!function_pointers_.NFLoadDUTInputLossFromS2p) {
@@ -2869,6 +2880,22 @@ int32 NiRFmxSpecAnLibrary::NFLoadDUTOutputLossFromS2p(niRFmxInstrHandle instrume
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFLoadDUTOutputLossFromS2p.");
   }
   return function_pointers_.NFLoadDUTOutputLossFromS2p(instrumentHandle, selectorString, dutOutputLossCompensationEnabled, dutOutputLossS2pFilePath, dutOutputLossSParameterOrientation, dutOutputLossTemperature);
+}
+
+int32 NiRFmxSpecAnLibrary::NFLoadExternalPreampGainFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 externalPreampPresent, char externalPreampGainS2pFilePath[], int32 externalPreampGainSParameterOrientation)
+{
+  if (!function_pointers_.NFLoadExternalPreampGainFromS2p) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFLoadExternalPreampGainFromS2p.");
+  }
+  return function_pointers_.NFLoadExternalPreampGainFromS2p(instrumentHandle, selectorString, externalPreampPresent, externalPreampGainS2pFilePath, externalPreampGainSParameterOrientation);
+}
+
+int32 NiRFmxSpecAnLibrary::NFLoadYFactorNoiseSourceLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseSourceLossCompensationEnabled, char noiseSourceLossS2pFilePath[], int32 noiseSourceLossSParameterOrientation, float64 noiseSourceLossTemperature)
+{
+  if (!function_pointers_.NFLoadYFactorNoiseSourceLossFromS2p) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_NFLoadYFactorNoiseSourceLossFromS2p.");
+  }
+  return function_pointers_.NFLoadYFactorNoiseSourceLossFromS2p(instrumentHandle, selectorString, noiseSourceLossCompensationEnabled, noiseSourceLossS2pFilePath, noiseSourceLossSParameterOrientation, noiseSourceLossTemperature);
 }
 
 int32 NiRFmxSpecAnLibrary::NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel)

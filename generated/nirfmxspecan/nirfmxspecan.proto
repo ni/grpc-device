@@ -311,8 +311,11 @@ service NiRFmxSpecAn {
   rpc NFFetchYFactors(NFFetchYFactorsRequest) returns (NFFetchYFactorsResponse);
   rpc NFLoadCalibrationLossFromS2p(NFLoadCalibrationLossFromS2pRequest) returns (NFLoadCalibrationLossFromS2pResponse);
   rpc NFLoadColdSourceDUTSParametersFromS2p(NFLoadColdSourceDUTSParametersFromS2pRequest) returns (NFLoadColdSourceDUTSParametersFromS2pResponse);
+  rpc NFLoadColdSourceInputTerminationFromS1p(NFLoadColdSourceInputTerminationFromS1pRequest) returns (NFLoadColdSourceInputTerminationFromS1pResponse);
   rpc NFLoadDUTInputLossFromS2p(NFLoadDUTInputLossFromS2pRequest) returns (NFLoadDUTInputLossFromS2pResponse);
   rpc NFLoadDUTOutputLossFromS2p(NFLoadDUTOutputLossFromS2pRequest) returns (NFLoadDUTOutputLossFromS2pResponse);
+  rpc NFLoadExternalPreampGainFromS2p(NFLoadExternalPreampGainFromS2pRequest) returns (NFLoadExternalPreampGainFromS2pResponse);
+  rpc NFLoadYFactorNoiseSourceLossFromS2p(NFLoadYFactorNoiseSourceLossFromS2pRequest) returns (NFLoadYFactorNoiseSourceLossFromS2pResponse);
   rpc NFRecommendReferenceLevel(NFRecommendReferenceLevelRequest) returns (NFRecommendReferenceLevelResponse);
   rpc NFValidateCalibrationData(NFValidateCalibrationDataRequest) returns (NFValidateCalibrationDataResponse);
   rpc OBWCfgAveraging(OBWCfgAveragingRequest) returns (OBWCfgAveragingResponse);
@@ -1848,6 +1851,16 @@ enum NFDutOutputLossS2pSParameterOrientation {
   NF_DUT_OUTPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 1;
 }
 
+enum NFExternalPreampGainS2pSParameterOrientation {
+  NF_EXTERNAL_PREAMP_GAIN_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 0;
+  NF_EXTERNAL_PREAMP_GAIN_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 1;
+}
+
+enum NFExternalPreampPresent {
+  NF_EXTERNAL_PREAMP_PRESENT_FALSE = 0;
+  NF_EXTERNAL_PREAMP_PRESENT_TRUE = 1;
+}
+
 enum NFMeasurementMethod {
   NF_MEASUREMENT_METHOD_Y_FACTOR = 0;
   NF_MEASUREMENT_METHOD_COLD_SOURCE = 1;
@@ -1861,6 +1874,11 @@ enum NFYFactorMode {
 enum NFYFactorNoiseSourceLossCompensationEnabled {
   NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_FALSE = 0;
   NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_TRUE = 1;
+}
+
+enum NFYFactorNoiseSourceLossS2pSParameterOrientation {
+  NF_Y_FACTOR_NOISE_SOURCE_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 0;
+  NF_Y_FACTOR_NOISE_SOURCE_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 1;
 }
 
 enum ObwAveragingEnabled {
@@ -6802,6 +6820,17 @@ message NFLoadColdSourceDUTSParametersFromS2pResponse {
   int32 status = 1;
 }
 
+message NFLoadColdSourceInputTerminationFromS1pRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string termination_s1p_file_path = 3;
+  double termination_temperature = 4;
+}
+
+message NFLoadColdSourceInputTerminationFromS1pResponse {
+  int32 status = 1;
+}
+
 message NFLoadDUTInputLossFromS2pRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -6837,6 +6866,43 @@ message NFLoadDUTOutputLossFromS2pRequest {
 }
 
 message NFLoadDUTOutputLossFromS2pResponse {
+  int32 status = 1;
+}
+
+message NFLoadExternalPreampGainFromS2pRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof external_preamp_present_enum {
+    NFExternalPreampPresent external_preamp_present = 3;
+    int32 external_preamp_present_raw = 4;
+  }
+  string external_preamp_gain_s2p_file_path = 5;
+  oneof external_preamp_gain_s_parameter_orientation_enum {
+    NFExternalPreampGainS2pSParameterOrientation external_preamp_gain_s_parameter_orientation = 6;
+    int32 external_preamp_gain_s_parameter_orientation_raw = 7;
+  }
+}
+
+message NFLoadExternalPreampGainFromS2pResponse {
+  int32 status = 1;
+}
+
+message NFLoadYFactorNoiseSourceLossFromS2pRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof noise_source_loss_compensation_enabled_enum {
+    NFYFactorNoiseSourceLossCompensationEnabled noise_source_loss_compensation_enabled = 3;
+    int32 noise_source_loss_compensation_enabled_raw = 4;
+  }
+  string noise_source_loss_s2p_file_path = 5;
+  oneof noise_source_loss_s_parameter_orientation_enum {
+    NFYFactorNoiseSourceLossS2pSParameterOrientation noise_source_loss_s_parameter_orientation = 6;
+    int32 noise_source_loss_s_parameter_orientation_raw = 7;
+  }
+  double noise_source_loss_temperature = 8;
+}
+
+message NFLoadYFactorNoiseSourceLossFromS2pResponse {
   int32 status = 1;
 }
 
