@@ -6569,6 +6569,26 @@ nf_load_cold_source_duts_parameters_from_s2p(const StubPtr& stub, const nidevice
   return response;
 }
 
+NFLoadColdSourceInputTerminationFromS1pResponse
+nf_load_cold_source_input_termination_from_s1p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& termination_s1p_file_path, const double& termination_temperature)
+{
+  ::grpc::ClientContext context;
+
+  auto request = NFLoadColdSourceInputTerminationFromS1pRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_termination_s1p_file_path(termination_s1p_file_path);
+  request.set_termination_temperature(termination_temperature);
+
+  auto response = NFLoadColdSourceInputTerminationFromS1pResponse{};
+
+  raise_if_error(
+      stub->NFLoadColdSourceInputTerminationFromS1p(&context, request, &response),
+      context);
+
+  return response;
+}
+
 NFLoadDUTInputLossFromS2pResponse
 nf_load_dut_input_loss_from_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<NFDutInputLossCompensationEnabled, pb::int32>& dut_input_loss_compensation_enabled, const std::string& dut_input_loss_s2p_file_path, const simple_variant<NFDutInputLossS2pSParameterOrientation, pb::int32>& dut_input_loss_s_parameter_orientation, const double& dut_input_loss_temperature)
 {
@@ -6636,6 +6656,77 @@ nf_load_dut_output_loss_from_s2p(const StubPtr& stub, const nidevice_grpc::Sessi
 
   raise_if_error(
       stub->NFLoadDUTOutputLossFromS2p(&context, request, &response),
+      context);
+
+  return response;
+}
+
+NFLoadExternalPreampGainFromS2pResponse
+nf_load_external_preamp_gain_from_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<NFExternalPreampPresent, pb::int32>& external_preamp_present, const std::string& external_preamp_gain_s2p_file_path, const simple_variant<NFExternalPreampGainS2pSParameterOrientation, pb::int32>& external_preamp_gain_s_parameter_orientation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = NFLoadExternalPreampGainFromS2pRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto external_preamp_present_ptr = external_preamp_present.get_if<NFExternalPreampPresent>();
+  const auto external_preamp_present_raw_ptr = external_preamp_present.get_if<pb::int32>();
+  if (external_preamp_present_ptr) {
+    request.set_external_preamp_present(*external_preamp_present_ptr);
+  }
+  else if (external_preamp_present_raw_ptr) {
+    request.set_external_preamp_present_raw(*external_preamp_present_raw_ptr);
+  }
+  request.set_external_preamp_gain_s2p_file_path(external_preamp_gain_s2p_file_path);
+  const auto external_preamp_gain_s_parameter_orientation_ptr = external_preamp_gain_s_parameter_orientation.get_if<NFExternalPreampGainS2pSParameterOrientation>();
+  const auto external_preamp_gain_s_parameter_orientation_raw_ptr = external_preamp_gain_s_parameter_orientation.get_if<pb::int32>();
+  if (external_preamp_gain_s_parameter_orientation_ptr) {
+    request.set_external_preamp_gain_s_parameter_orientation(*external_preamp_gain_s_parameter_orientation_ptr);
+  }
+  else if (external_preamp_gain_s_parameter_orientation_raw_ptr) {
+    request.set_external_preamp_gain_s_parameter_orientation_raw(*external_preamp_gain_s_parameter_orientation_raw_ptr);
+  }
+
+  auto response = NFLoadExternalPreampGainFromS2pResponse{};
+
+  raise_if_error(
+      stub->NFLoadExternalPreampGainFromS2p(&context, request, &response),
+      context);
+
+  return response;
+}
+
+NFLoadYFactorNoiseSourceLossFromS2pResponse
+nf_load_y_factor_noise_source_loss_from_s2p(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<NFYFactorNoiseSourceLossCompensationEnabled, pb::int32>& noise_source_loss_compensation_enabled, const std::string& noise_source_loss_s2p_file_path, const simple_variant<NFYFactorNoiseSourceLossS2pSParameterOrientation, pb::int32>& noise_source_loss_s_parameter_orientation, const double& noise_source_loss_temperature)
+{
+  ::grpc::ClientContext context;
+
+  auto request = NFLoadYFactorNoiseSourceLossFromS2pRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto noise_source_loss_compensation_enabled_ptr = noise_source_loss_compensation_enabled.get_if<NFYFactorNoiseSourceLossCompensationEnabled>();
+  const auto noise_source_loss_compensation_enabled_raw_ptr = noise_source_loss_compensation_enabled.get_if<pb::int32>();
+  if (noise_source_loss_compensation_enabled_ptr) {
+    request.set_noise_source_loss_compensation_enabled(*noise_source_loss_compensation_enabled_ptr);
+  }
+  else if (noise_source_loss_compensation_enabled_raw_ptr) {
+    request.set_noise_source_loss_compensation_enabled_raw(*noise_source_loss_compensation_enabled_raw_ptr);
+  }
+  request.set_noise_source_loss_s2p_file_path(noise_source_loss_s2p_file_path);
+  const auto noise_source_loss_s_parameter_orientation_ptr = noise_source_loss_s_parameter_orientation.get_if<NFYFactorNoiseSourceLossS2pSParameterOrientation>();
+  const auto noise_source_loss_s_parameter_orientation_raw_ptr = noise_source_loss_s_parameter_orientation.get_if<pb::int32>();
+  if (noise_source_loss_s_parameter_orientation_ptr) {
+    request.set_noise_source_loss_s_parameter_orientation(*noise_source_loss_s_parameter_orientation_ptr);
+  }
+  else if (noise_source_loss_s_parameter_orientation_raw_ptr) {
+    request.set_noise_source_loss_s_parameter_orientation_raw(*noise_source_loss_s_parameter_orientation_raw_ptr);
+  }
+  request.set_noise_source_loss_temperature(noise_source_loss_temperature);
+
+  auto response = NFLoadYFactorNoiseSourceLossFromS2pResponse{};
+
+  raise_if_error(
+      stub->NFLoadYFactorNoiseSourceLossFromS2p(&context, request, &response),
       context);
 
   return response;

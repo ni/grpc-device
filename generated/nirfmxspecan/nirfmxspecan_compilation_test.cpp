@@ -1477,6 +1477,11 @@ int32 NFLoadColdSourceDUTSParametersFromS2p(niRFmxInstrHandle instrumentHandle, 
   return RFmxSpecAn_NFLoadColdSourceDUTSParametersFromS2p(instrumentHandle, selectorString, dutsParametersS2pFilePath, dutsParameterOrientation);
 }
 
+int32 NFLoadColdSourceInputTerminationFromS1p(niRFmxInstrHandle instrumentHandle, char selectorString[], char terminationS1pFilePath[], float64 terminationTemperature)
+{
+  return RFmxSpecAn_NFLoadColdSourceInputTerminationFromS1p(instrumentHandle, selectorString, terminationS1pFilePath, terminationTemperature);
+}
+
 int32 NFLoadDUTInputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutInputLossCompensationEnabled, char dutInputLossS2pFilePath[], int32 dutInputLossSParameterOrientation, float64 dutInputLossTemperature)
 {
   return RFmxSpecAn_NFLoadDUTInputLossFromS2p(instrumentHandle, selectorString, dutInputLossCompensationEnabled, dutInputLossS2pFilePath, dutInputLossSParameterOrientation, dutInputLossTemperature);
@@ -1485,6 +1490,16 @@ int32 NFLoadDUTInputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selecto
 int32 NFLoadDUTOutputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutOutputLossCompensationEnabled, char dutOutputLossS2pFilePath[], int32 dutOutputLossSParameterOrientation, float64 dutOutputLossTemperature)
 {
   return RFmxSpecAn_NFLoadDUTOutputLossFromS2p(instrumentHandle, selectorString, dutOutputLossCompensationEnabled, dutOutputLossS2pFilePath, dutOutputLossSParameterOrientation, dutOutputLossTemperature);
+}
+
+int32 NFLoadExternalPreampGainFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 externalPreampPresent, char externalPreampGainS2pFilePath[], int32 externalPreampGainSParameterOrientation)
+{
+  return RFmxSpecAn_NFLoadExternalPreampGainFromS2p(instrumentHandle, selectorString, externalPreampPresent, externalPreampGainS2pFilePath, externalPreampGainSParameterOrientation);
+}
+
+int32 NFLoadYFactorNoiseSourceLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseSourceLossCompensationEnabled, char noiseSourceLossS2pFilePath[], int32 noiseSourceLossSParameterOrientation, float64 noiseSourceLossTemperature)
+{
+  return RFmxSpecAn_NFLoadYFactorNoiseSourceLossFromS2p(instrumentHandle, selectorString, noiseSourceLossCompensationEnabled, noiseSourceLossS2pFilePath, noiseSourceLossSParameterOrientation, noiseSourceLossTemperature);
 }
 
 int32 NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel)

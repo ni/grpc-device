@@ -338,8 +338,11 @@ public:
   ::grpc::Status NFFetchYFactors(::grpc::ServerContext* context, const NFFetchYFactorsRequest* request, NFFetchYFactorsResponse* response) override;
   ::grpc::Status NFLoadCalibrationLossFromS2p(::grpc::ServerContext* context, const NFLoadCalibrationLossFromS2pRequest* request, NFLoadCalibrationLossFromS2pResponse* response) override;
   ::grpc::Status NFLoadColdSourceDUTSParametersFromS2p(::grpc::ServerContext* context, const NFLoadColdSourceDUTSParametersFromS2pRequest* request, NFLoadColdSourceDUTSParametersFromS2pResponse* response) override;
+  ::grpc::Status NFLoadColdSourceInputTerminationFromS1p(::grpc::ServerContext* context, const NFLoadColdSourceInputTerminationFromS1pRequest* request, NFLoadColdSourceInputTerminationFromS1pResponse* response) override;
   ::grpc::Status NFLoadDUTInputLossFromS2p(::grpc::ServerContext* context, const NFLoadDUTInputLossFromS2pRequest* request, NFLoadDUTInputLossFromS2pResponse* response) override;
   ::grpc::Status NFLoadDUTOutputLossFromS2p(::grpc::ServerContext* context, const NFLoadDUTOutputLossFromS2pRequest* request, NFLoadDUTOutputLossFromS2pResponse* response) override;
+  ::grpc::Status NFLoadExternalPreampGainFromS2p(::grpc::ServerContext* context, const NFLoadExternalPreampGainFromS2pRequest* request, NFLoadExternalPreampGainFromS2pResponse* response) override;
+  ::grpc::Status NFLoadYFactorNoiseSourceLossFromS2p(::grpc::ServerContext* context, const NFLoadYFactorNoiseSourceLossFromS2pRequest* request, NFLoadYFactorNoiseSourceLossFromS2pResponse* response) override;
   ::grpc::Status NFRecommendReferenceLevel(::grpc::ServerContext* context, const NFRecommendReferenceLevelRequest* request, NFRecommendReferenceLevelResponse* response) override;
   ::grpc::Status NFValidateCalibrationData(::grpc::ServerContext* context, const NFValidateCalibrationDataRequest* request, NFValidateCalibrationDataResponse* response) override;
   ::grpc::Status OBWCfgAveraging(::grpc::ServerContext* context, const OBWCfgAveragingRequest* request, OBWCfgAveragingResponse* response) override;

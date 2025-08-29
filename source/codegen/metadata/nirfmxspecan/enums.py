@@ -2526,6 +2526,18 @@ enums = {
             }
         ]
     },
+    'NFExternalPreampGainS2pSParameterOrientation': {
+        'values': [
+            {
+                'name': 'PORT1_TOWARDS_DUT',
+                'value': 0
+            },
+            {
+                'name': 'PORT2_TOWARDS_DUT',
+                'value': 1
+            }
+        ]
+    },
     'NFExternalPreampPresent': {
         'values': [
             {
@@ -2596,6 +2608,19 @@ enums = {
             },
             {
                 'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'NFYFactorNoiseSourceLossS2pSParameterOrientation': {
+        'enum-value-prefix': 'NF_Y_FACTOR_NOISE_SOURCE_LOSS_S2P_S_PARAMETER_ORIENTATION',
+        'values': [
+            {
+                'name': 'PORT1_TOWARDS_DUT',
+                'value': 0
+            },
+            {
+                'name': 'PORT2_TOWARDS_DUT',
                 'value': 1
             }
         ]

@@ -198,6 +198,11 @@ attributes = {
         'name': 'VHDT_MODE_ENABLED',
         'type': 'int32'
     },
+    11534401: {
+        'access': 'read-write',
+        'name': 'NUMBER_OF_BLOCK_REPETITION_SEQUENCES',
+        'type': 'int32'
+    },
     11538428: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',
@@ -639,6 +644,21 @@ attributes = {
     11550777: {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_FRACTIONAL_TIME_OFFSET_MEAN',
+        'type': 'float64'
+    },
+    11550778: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PREAMBLE_FREQUENCY_ERROR_W0_MAXIMUM',
+        'type': 'float64'
+    },
+    11550779: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PAYLOAD_FREQUENCY_ERROR_W1_MAXIMUM',
+        'type': 'float64'
+    },
+    11550780: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_FREQUENCY_ERROR_W0_PLUS_W1_MAXIMUM',
         'type': 'float64'
     },
     11554816: {

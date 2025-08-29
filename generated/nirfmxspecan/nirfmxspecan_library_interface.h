@@ -309,8 +309,11 @@ class NiRFmxSpecAnLibraryInterface {
   virtual int32 NFFetchYFactors(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 measurementYFactor[], float64 calibrationYFactor[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 NFLoadCalibrationLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationLossCompensationEnabled, char calibrationLossS2pFilePath[], int32 calibrationLossSParameterOrientation, float64 calibrationLossTemperature) = 0;
   virtual int32 NFLoadColdSourceDUTSParametersFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char dutsParametersS2pFilePath[], int32 dutsParameterOrientation) = 0;
+  virtual int32 NFLoadColdSourceInputTerminationFromS1p(niRFmxInstrHandle instrumentHandle, char selectorString[], char terminationS1pFilePath[], float64 terminationTemperature) = 0;
   virtual int32 NFLoadDUTInputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutInputLossCompensationEnabled, char dutInputLossS2pFilePath[], int32 dutInputLossSParameterOrientation, float64 dutInputLossTemperature) = 0;
   virtual int32 NFLoadDUTOutputLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dutOutputLossCompensationEnabled, char dutOutputLossS2pFilePath[], int32 dutOutputLossSParameterOrientation, float64 dutOutputLossTemperature) = 0;
+  virtual int32 NFLoadExternalPreampGainFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 externalPreampPresent, char externalPreampGainS2pFilePath[], int32 externalPreampGainSParameterOrientation) = 0;
+  virtual int32 NFLoadYFactorNoiseSourceLossFromS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseSourceLossCompensationEnabled, char noiseSourceLossS2pFilePath[], int32 noiseSourceLossSParameterOrientation, float64 noiseSourceLossTemperature) = 0;
   virtual int32 NFRecommendReferenceLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 dutMaxGain, float64 dutMaxNoiseFigure, float64* referenceLevel) = 0;
   virtual int32 NFValidateCalibrationData(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* calibrationDataValid) = 0;
   virtual int32 OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) = 0;

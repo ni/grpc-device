@@ -10832,6 +10832,32 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'NFLoadColdSourceInputTerminationFromS1p': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'terminationS1pFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'terminationTemperature',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'NFLoadDUTInputLossFromS2p': {
         'parameters': [
             {
@@ -10903,6 +10929,77 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'dutOutputLossTemperature',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'NFLoadExternalPreampGainFromS2p': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFExternalPreampPresent',
+                'name': 'externalPreampPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'externalPreampGainS2pFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFExternalPreampGainS2pSParameterOrientation',
+                'name': 'externalPreampGainSParameterOrientation',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'NFLoadYFactorNoiseSourceLossFromS2p': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFYFactorNoiseSourceLossCompensationEnabled',
+                'name': 'noiseSourceLossCompensationEnabled',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'noiseSourceLossS2pFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'NFYFactorNoiseSourceLossS2pSParameterOrientation',
+                'name': 'noiseSourceLossSParameterOrientation',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'noiseSourceLossTemperature',
                 'type': 'float64'
             }
         ],

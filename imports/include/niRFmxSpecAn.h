@@ -743,1273 +743,1281 @@
 #define RFMXSPECAN_ATTR_RESULT_FETCH_TIMEOUT                                           0x0010c000
 
 // Values for RFMXSPECAN_ATTR_TRIGGER_TYPE
-#define RFMXSPECAN_VAL_TRIGGER_TYPE_NONE                                                              0
-#define RFMXSPECAN_VAL_TRIGGER_TYPE_DIGITAL_EDGE                                                      1
-#define RFMXSPECAN_VAL_TRIGGER_TYPE_IQ_POWER_EDGE                                                     2
-#define RFMXSPECAN_VAL_TRIGGER_TYPE_SOFTWARE                                                          3
+#define RFMXSPECAN_VAL_TRIGGER_TYPE_NONE                                                                0
+#define RFMXSPECAN_VAL_TRIGGER_TYPE_DIGITAL_EDGE                                                        1
+#define RFMXSPECAN_VAL_TRIGGER_TYPE_IQ_POWER_EDGE                                                       2
+#define RFMXSPECAN_VAL_TRIGGER_TYPE_SOFTWARE                                                            3
 
 // Values for RFMXSPECAN_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE
-#define RFMXSPECAN_VAL_PFI0_STR                                                                       "PFI0"
-#define RFMXSPECAN_VAL_PFI1_STR                                                                       "PFI1"
-#define RFMXSPECAN_VAL_PXI_TRIG0_STR                                                                  "PXI_Trig0"
-#define RFMXSPECAN_VAL_PXI_TRIG1_STR                                                                  "PXI_Trig1"
-#define RFMXSPECAN_VAL_PXI_TRIG2_STR                                                                  "PXI_Trig2"
-#define RFMXSPECAN_VAL_PXI_TRIG3_STR                                                                  "PXI_Trig3"
-#define RFMXSPECAN_VAL_PXI_TRIG4_STR                                                                  "PXI_Trig4"
-#define RFMXSPECAN_VAL_PXI_TRIG5_STR                                                                  "PXI_Trig5"
-#define RFMXSPECAN_VAL_PXI_TRIG6_STR                                                                  "PXI_Trig6"
-#define RFMXSPECAN_VAL_PXI_TRIG7_STR                                                                  "PXI_Trig7"
-#define RFMXSPECAN_VAL_PXI_STAR_STR                                                                   "PXI_STAR"
-#define RFMXSPECAN_VAL_PXIE_DSTARB_STR                                                                "PXIe_DStarB"
-#define RFMXSPECAN_VAL_TIMER_EVENT_STR                                                                "TimerEvent"
-#define RFMXSPECAN_VAL_PULSE_IN_STR                                                                   "PulseIn"
-#define RFMXSPECAN_VAL_DIO_PFI0_STR                                                                   "DIO/PFI0"
-#define RFMXSPECAN_VAL_DIO_PFI1_STR                                                                   "DIO/PFI1"
-#define RFMXSPECAN_VAL_DIO_PFI2_STR                                                                   "DIO/PFI2"
-#define RFMXSPECAN_VAL_DIO_PFI3_STR                                                                   "DIO/PFI3"
-#define RFMXSPECAN_VAL_DIO_PFI4_STR                                                                   "DIO/PFI4"
-#define RFMXSPECAN_VAL_DIO_PFI5_STR                                                                   "DIO/PFI5"
-#define RFMXSPECAN_VAL_DIO_PFI6_STR                                                                   "DIO/PFI6"
-#define RFMXSPECAN_VAL_DIO_PFI7_STR                                                                   "DIO/PFI7"
+#define RFMXSPECAN_VAL_PFI0_STR                                                                         "PFI0"
+#define RFMXSPECAN_VAL_PFI1_STR                                                                         "PFI1"
+#define RFMXSPECAN_VAL_PXI_TRIG0_STR                                                                    "PXI_Trig0"
+#define RFMXSPECAN_VAL_PXI_TRIG1_STR                                                                    "PXI_Trig1"
+#define RFMXSPECAN_VAL_PXI_TRIG2_STR                                                                    "PXI_Trig2"
+#define RFMXSPECAN_VAL_PXI_TRIG3_STR                                                                    "PXI_Trig3"
+#define RFMXSPECAN_VAL_PXI_TRIG4_STR                                                                    "PXI_Trig4"
+#define RFMXSPECAN_VAL_PXI_TRIG5_STR                                                                    "PXI_Trig5"
+#define RFMXSPECAN_VAL_PXI_TRIG6_STR                                                                    "PXI_Trig6"
+#define RFMXSPECAN_VAL_PXI_TRIG7_STR                                                                    "PXI_Trig7"
+#define RFMXSPECAN_VAL_PXI_STAR_STR                                                                     "PXI_STAR"
+#define RFMXSPECAN_VAL_PXIE_DSTARB_STR                                                                  "PXIe_DStarB"
+#define RFMXSPECAN_VAL_TIMER_EVENT_STR                                                                  "TimerEvent"
+#define RFMXSPECAN_VAL_PULSE_IN_STR                                                                     "PulseIn"
+#define RFMXSPECAN_VAL_DIO_PFI0_STR                                                                     "DIO/PFI0"
+#define RFMXSPECAN_VAL_DIO_PFI1_STR                                                                     "DIO/PFI1"
+#define RFMXSPECAN_VAL_DIO_PFI2_STR                                                                     "DIO/PFI2"
+#define RFMXSPECAN_VAL_DIO_PFI3_STR                                                                     "DIO/PFI3"
+#define RFMXSPECAN_VAL_DIO_PFI4_STR                                                                     "DIO/PFI4"
+#define RFMXSPECAN_VAL_DIO_PFI5_STR                                                                     "DIO/PFI5"
+#define RFMXSPECAN_VAL_DIO_PFI6_STR                                                                     "DIO/PFI6"
+#define RFMXSPECAN_VAL_DIO_PFI7_STR                                                                     "DIO/PFI7"
 
 // Values for RFMXSPECAN_ATTR_DIGITAL_EDGE_TRIGGER_EDGE
-#define RFMXSPECAN_VAL_DIGITAL_EDGE_RISING_EDGE                                                       0
-#define RFMXSPECAN_VAL_DIGITAL_EDGE_FALLING_EDGE                                                      1
+#define RFMXSPECAN_VAL_DIGITAL_EDGE_RISING_EDGE                                                         0
+#define RFMXSPECAN_VAL_DIGITAL_EDGE_FALLING_EDGE                                                        1
 
 // Values for RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE
-#define RFMXSPECAN_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE                                      0
-#define RFMXSPECAN_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE                                      1
+#define RFMXSPECAN_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE                                        0
+#define RFMXSPECAN_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE                                        1
 
 // Values for RFMXSPECAN_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE
-#define RFMXSPECAN_VAL_IQ_POWER_EDGE_RISING_SLOPE                                                     0
-#define RFMXSPECAN_VAL_IQ_POWER_EDGE_FALLING_SLOPE                                                    1
+#define RFMXSPECAN_VAL_IQ_POWER_EDGE_RISING_SLOPE                                                       0
+#define RFMXSPECAN_VAL_IQ_POWER_EDGE_FALLING_SLOPE                                                      1
 
 // Values for RFMXSPECAN_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE
-#define RFMXSPECAN_VAL_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL                                         0
-#define RFMXSPECAN_VAL_TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO                                           1
+#define RFMXSPECAN_VAL_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL                                           0
+#define RFMXSPECAN_VAL_TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO                                             1
 
 // Values for RFMXSPECAN_ATTR_ACP_CARRIER_MODE
-#define RFMXSPECAN_VAL_ACP_CARRIER_MODE_PASSIVE                                                       0
-#define RFMXSPECAN_VAL_ACP_CARRIER_MODE_ACTIVE                                                        1
+#define RFMXSPECAN_VAL_ACP_CARRIER_MODE_PASSIVE                                                         0
+#define RFMXSPECAN_VAL_ACP_CARRIER_MODE_ACTIVE                                                          1
 
 // Values for RFMXSPECAN_ATTR_ACP_CARRIER_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_ACP_CARRIER_RRC_FILTER_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_ACP_CARRIER_RRC_FILTER_ENABLED_TRUE                                            1
+#define RFMXSPECAN_VAL_ACP_CARRIER_RRC_FILTER_ENABLED_FALSE                                             0
+#define RFMXSPECAN_VAL_ACP_CARRIER_RRC_FILTER_ENABLED_TRUE                                              1
 
 // Values for RFMXSPECAN_ATTR_ACP_OFFSET_ENABLED
-#define RFMXSPECAN_VAL_ACP_OFFSET_FREQUENCY_ENABLED_FALSE                                             0
-#define RFMXSPECAN_VAL_ACP_OFFSET_FREQUENCY_ENABLED_TRUE                                              1
+#define RFMXSPECAN_VAL_ACP_OFFSET_FREQUENCY_ENABLED_FALSE                                               0
+#define RFMXSPECAN_VAL_ACP_OFFSET_FREQUENCY_ENABLED_TRUE                                                1
 
 // Values for RFMXSPECAN_ATTR_ACP_OFFSET_SIDEBAND
-#define RFMXSPECAN_VAL_ACP_OFFSET_SIDEBAND_NEGATIVE                                                   0
-#define RFMXSPECAN_VAL_ACP_OFFSET_SIDEBAND_POSITIVE                                                   1
-#define RFMXSPECAN_VAL_ACP_OFFSET_SIDEBAND_BOTH                                                       2
+#define RFMXSPECAN_VAL_ACP_OFFSET_SIDEBAND_NEGATIVE                                                     0
+#define RFMXSPECAN_VAL_ACP_OFFSET_SIDEBAND_POSITIVE                                                     1
+#define RFMXSPECAN_VAL_ACP_OFFSET_SIDEBAND_BOTH                                                         2
 
 // Values for RFMXSPECAN_ATTR_ACP_OFFSET_POWER_REFERENCE_CARRIER
-#define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_CLOSEST                                     0
-#define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_HIGHEST                                     1
-#define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_COMPOSITE                                   2
-#define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_SPECIFIC                                    3
+#define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_CLOSEST                                       0
+#define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_HIGHEST                                       1
+#define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_COMPOSITE                                     2
+#define RFMXSPECAN_VAL_ACP_OFFSET_POWER_REFERENCE_CARRIER_SPECIFIC                                      3
 
 // Values for RFMXSPECAN_ATTR_ACP_OFFSET_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_ACP_OFFSET_RRC_FILTER_ENABLED_FALSE                                            0
-#define RFMXSPECAN_VAL_ACP_OFFSET_RRC_FILTER_ENABLED_TRUE                                             1
+#define RFMXSPECAN_VAL_ACP_OFFSET_RRC_FILTER_ENABLED_FALSE                                              0
+#define RFMXSPECAN_VAL_ACP_OFFSET_RRC_FILTER_ENABLED_TRUE                                               1
 
 // Values for RFMXSPECAN_ATTR_ACP_OFFSET_FREQUENCY_DEFINITION
-#define RFMXSPECAN_VAL_ACP_CARRIER_CENTER_TO_OFFSET_CENTER                                            0
-#define RFMXSPECAN_VAL_ACP_CARRIER_CENTER_TO_OFFSET_EDGE                                              1
+#define RFMXSPECAN_VAL_ACP_CARRIER_CENTER_TO_OFFSET_CENTER                                              0
+#define RFMXSPECAN_VAL_ACP_CARRIER_CENTER_TO_OFFSET_EDGE                                                1
 
 // Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_ACP_RBW_AUTO_FALSE                                                             0
-#define RFMXSPECAN_VAL_ACP_RBW_AUTO_TRUE                                                              1
+#define RFMXSPECAN_VAL_ACP_RBW_AUTO_FALSE                                                               0
+#define RFMXSPECAN_VAL_ACP_RBW_AUTO_TRUE                                                                1
 
 // Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_FFT_BASED                                                  0
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_FLAT                                                       2
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_FFT_BASED                                                    0
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_GAUSSIAN                                                     1
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_FLAT                                                         2
 
 // Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                          0
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                    2
 
 // Values for RFMXSPECAN_ATTR_ACP_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_ACP_SWEEP_TIME_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_ACP_SWEEP_TIME_AUTO_TRUE                                                       1
+#define RFMXSPECAN_VAL_ACP_SWEEP_TIME_AUTO_FALSE                                                        0
+#define RFMXSPECAN_VAL_ACP_SWEEP_TIME_AUTO_TRUE                                                         1
 
 // Values for RFMXSPECAN_ATTR_ACP_DETECTOR_TYPE
-#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NONE                                                         0
-#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_SAMPLE                                                       1
-#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NORMAL                                                       2
-#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_PEAK                                                         3
-#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NEGATIVE_PEAK                                                4
-#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_AVERAGE_RMS                                                  5
-#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_AVERAGE_VOLTAGE                                              6
-#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_AVERAGE_LOG                                                  7
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NONE                                                           0
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_SAMPLE                                                         1
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NORMAL                                                         2
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_PEAK                                                           3
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_NEGATIVE_PEAK                                                  4
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_AVERAGE_RMS                                                    5
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_AVERAGE_VOLTAGE                                                6
+#define RFMXSPECAN_VAL_ACP_DETECTOR_TYPE_AVERAGE_LOG                                                    7
 
 // Values for RFMXSPECAN_ATTR_ACP_POWER_UNITS
-#define RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM                                                            0
-#define RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM_PER_HZ                                                     1
+#define RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM                                                              0
+#define RFMXSPECAN_VAL_ACP_POWER_UNITS_DBM_PER_HZ                                                       1
 
 // Values for RFMXSPECAN_ATTR_ACP_MEASUREMENT_METHOD
-#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_NORMAL                                                  0
-#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_DYNAMIC_RANGE                                           1
-#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_SEQUENTIAL_FFT                                          2
+#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_NORMAL                                                    0
+#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_DYNAMIC_RANGE                                             1
+#define RFMXSPECAN_VAL_ACP_MEASUREMENT_METHOD_SEQUENTIAL_FFT                                            2
 
 // Values for RFMXSPECAN_ATTR_ACP_NOISE_CALIBRATION_MODE
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_MODE_MANUAL                                              0
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_MODE_AUTO                                                1
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_MODE_MANUAL                                                0
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_MODE_AUTO                                                  1
 
 // Values for RFMXSPECAN_ATTR_ACP_NOISE_CALIBRATION_AVERAGING_AUTO
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                     0
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                      1
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                       0
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                        1
 
 // Values for RFMXSPECAN_ATTR_ACP_NOISE_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_ENABLED_TRUE                                            1
+#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_ENABLED_FALSE                                             0
+#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_ENABLED_TRUE                                              1
 
 // Values for RFMXSPECAN_ATTR_ACP_NOISE_COMPENSATION_TYPE
-#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                           0
-#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                      1
+#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                             0
+#define RFMXSPECAN_VAL_ACP_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                        1
 
 // Values for RFMXSPECAN_ATTR_ACP_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_ACP_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_ACP_AVERAGING_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_ACP_AVERAGING_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_ACP_AVERAGING_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_ACP_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_RMS                                                         0
-#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_LOG                                                         1
-#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_SCALAR                                                      2
-#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_MAXIMUM                                                     3
-#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_MINIMUM                                                     4
+#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_RMS                                                           0
+#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_LOG                                                           1
+#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_SCALAR                                                        2
+#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_MAXIMUM                                                       3
+#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_MINIMUM                                                       4
 
 // Values for RFMXSPECAN_ATTR_ACP_MEASUREMENT_MODE
-#define RFMXSPECAN_VAL_ACP_MEASUREMENT_MODE_MEASURE                                                   0
-#define RFMXSPECAN_VAL_ACP_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                     1
+#define RFMXSPECAN_VAL_ACP_MEASUREMENT_MODE_MEASURE                                                     0
+#define RFMXSPECAN_VAL_ACP_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                       1
 
 // Values for RFMXSPECAN_ATTR_ACP_FFT_WINDOW
-#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_NONE                                                            0
-#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_FLAT_TOP                                                        1
-#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_HANNING                                                         2
-#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_HAMMING                                                         3
-#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_GAUSSIAN                                                        4
-#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_BLACKMAN                                                        5
-#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
-#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_KAISER_BESSEL                                                   7
+#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_NONE                                                              0
+#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_FLAT_TOP                                                          1
+#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_HANNING                                                           2
+#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_HAMMING                                                           3
+#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_GAUSSIAN                                                          4
+#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_BLACKMAN                                                          5
+#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_BLACKMAN_HARRIS                                                   6
+#define RFMXSPECAN_VAL_ACP_FFT_WINDOW_KAISER_BESSEL                                                     7
 
 // Values for RFMXSPECAN_ATTR_ACP_FFT_OVERLAP_MODE
-#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_DISABLED                                                  0
-#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_AUTOMATIC                                                 1
-#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_USER_DEFINED                                              2
+#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_DISABLED                                                    0
+#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_AUTOMATIC                                                   1
+#define RFMXSPECAN_VAL_ACP_FFT_OVERLAP_MODE_USER_DEFINED                                                2
 
 // Values for RFMXSPECAN_ATTR_ACP_IF_OUTPUT_POWER_OFFSET_AUTO
-#define RFMXSPECAN_VAL_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_FALSE                                          0
-#define RFMXSPECAN_VAL_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_TRUE                                           1
+#define RFMXSPECAN_VAL_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_FALSE                                            0
+#define RFMXSPECAN_VAL_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_TRUE                                             1
 
 // Values for RFMXSPECAN_ATTR_ACP_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_ACP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
-#define RFMXSPECAN_VAL_ACP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
+#define RFMXSPECAN_VAL_ACP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                                0
+#define RFMXSPECAN_VAL_ACP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                             1
 
 // Values for RFMXSPECAN_ATTR_CCDF_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_NONE                                                      5
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_GAUSSIAN                                                  1
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_FLAT                                                      2
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_RRC                                                       6
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_NONE                                                        5
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_GAUSSIAN                                                    1
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_FLAT                                                        2
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_RRC                                                         6
 
 // Values for RFMXSPECAN_ATTR_CCDF_THRESHOLD_ENABLED
-#define RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_CCDF_THRESHOLD_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_CCDF_THRESHOLD_TYPE
-#define RFMXSPECAN_VAL_CCDF_THRESHOLD_TYPE_RELATIVE                                                   0
-#define RFMXSPECAN_VAL_CCDF_THRESHOLD_TYPE_ABSOLUTE                                                   1
+#define RFMXSPECAN_VAL_CCDF_THRESHOLD_TYPE_RELATIVE                                                     0
+#define RFMXSPECAN_VAL_CCDF_THRESHOLD_TYPE_ABSOLUTE                                                     1
 
 // Values for RFMXSPECAN_ATTR_CHP_CARRIER_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_CHP_CARRIER_RRC_FILTER_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_CHP_CARRIER_RRC_FILTER_ENABLED_TRUE                                            1
+#define RFMXSPECAN_VAL_CHP_CARRIER_RRC_FILTER_ENABLED_FALSE                                             0
+#define RFMXSPECAN_VAL_CHP_CARRIER_RRC_FILTER_ENABLED_TRUE                                              1
 
 // Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_CHP_RBW_AUTO_FALSE                                                             0
-#define RFMXSPECAN_VAL_CHP_RBW_AUTO_TRUE                                                              1
+#define RFMXSPECAN_VAL_CHP_RBW_AUTO_FALSE                                                               0
+#define RFMXSPECAN_VAL_CHP_RBW_AUTO_TRUE                                                                1
 
 // Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_FFT_BASED                                                  0
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_FLAT                                                       2
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_FFT_BASED                                                    0
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_GAUSSIAN                                                     1
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_FLAT                                                         2
 
 // Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                          0
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                    2
 
 // Values for RFMXSPECAN_ATTR_CHP_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_CHP_SWEEP_TIME_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_CHP_SWEEP_TIME_AUTO_TRUE                                                       1
+#define RFMXSPECAN_VAL_CHP_SWEEP_TIME_AUTO_FALSE                                                        0
+#define RFMXSPECAN_VAL_CHP_SWEEP_TIME_AUTO_TRUE                                                         1
 
 // Values for RFMXSPECAN_ATTR_CHP_DETECTOR_TYPE
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NONE                                                         0
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_SAMPLE                                                       1
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NORMAL                                                       2
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_PEAK                                                         3
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NEGATIVE_PEAK                                                4
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_RMS                                                  5
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_VOLTAGE                                              6
-#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_LOG                                                  7
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NONE                                                           0
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_SAMPLE                                                         1
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NORMAL                                                         2
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_PEAK                                                           3
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_NEGATIVE_PEAK                                                  4
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_RMS                                                    5
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_VOLTAGE                                                6
+#define RFMXSPECAN_VAL_CHP_DETECTOR_TYPE_AVERAGE_LOG                                                    7
 
 // Values for RFMXSPECAN_ATTR_CHP_NOISE_CALIBRATION_MODE
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_MODE_MANUAL                                              0
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_MODE_AUTO                                                1
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_MODE_MANUAL                                                0
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_MODE_AUTO                                                  1
 
 // Values for RFMXSPECAN_ATTR_CHP_NOISE_CALIBRATION_AVERAGING_AUTO
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                     0
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                      1
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                       0
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                        1
 
 // Values for RFMXSPECAN_ATTR_CHP_NOISE_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_ENABLED_TRUE                                            1
+#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_ENABLED_FALSE                                             0
+#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_ENABLED_TRUE                                              1
 
 // Values for RFMXSPECAN_ATTR_CHP_NOISE_COMPENSATION_TYPE
-#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                           0
-#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                      1
+#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                             0
+#define RFMXSPECAN_VAL_CHP_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                        1
 
 // Values for RFMXSPECAN_ATTR_CHP_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_CHP_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_CHP_AVERAGING_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_CHP_AVERAGING_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_CHP_AVERAGING_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_CHP_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_RMS                                                         0
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_LOG                                                         1
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_SCALAR                                                      2
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_MAXIMUM                                                     3
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_MINIMUM                                                     4
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_RMS                                                           0
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_LOG                                                           1
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_SCALAR                                                        2
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_MAXIMUM                                                       3
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_MINIMUM                                                       4
 
 // Values for RFMXSPECAN_ATTR_CHP_MEASUREMENT_MODE
-#define RFMXSPECAN_VAL_CHP_MEASUREMENT_MODE_MEASURE                                                   0
-#define RFMXSPECAN_VAL_CHP_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                     1
+#define RFMXSPECAN_VAL_CHP_MEASUREMENT_MODE_MEASURE                                                     0
+#define RFMXSPECAN_VAL_CHP_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                       1
 
 // Values for RFMXSPECAN_ATTR_CHP_FFT_WINDOW
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_NONE                                                            0
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_FLAT_TOP                                                        1
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_HANNING                                                         2
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_HAMMING                                                         3
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_GAUSSIAN                                                        4
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_BLACKMAN                                                        5
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
-#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_KAISER_BESSEL                                                   7
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_NONE                                                              0
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_FLAT_TOP                                                          1
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_HANNING                                                           2
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_HAMMING                                                           3
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_GAUSSIAN                                                          4
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_BLACKMAN                                                          5
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_BLACKMAN_HARRIS                                                   6
+#define RFMXSPECAN_VAL_CHP_FFT_WINDOW_KAISER_BESSEL                                                     7
 
 // Values for RFMXSPECAN_ATTR_CHP_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
-#define RFMXSPECAN_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
+#define RFMXSPECAN_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                                0
+#define RFMXSPECAN_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                             1
 
 // Values for RFMXSPECAN_ATTR_FCNT_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_GAUSSIAN                                                  1
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_FLAT                                                      2
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_NONE                                                      5
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_RRC                                                       6
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_GAUSSIAN                                                    1
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_FLAT                                                        2
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_NONE                                                        5
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_RRC                                                         6
 
 // Values for RFMXSPECAN_ATTR_FCNT_THRESHOLD_ENABLED
-#define RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_FCNT_THRESHOLD_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_FCNT_THRESHOLD_TYPE
-#define RFMXSPECAN_VAL_FCNT_THRESHOLD_TYPE_RELATIVE                                                   0
-#define RFMXSPECAN_VAL_FCNT_THRESHOLD_TYPE_ABSOLUTE                                                   1
+#define RFMXSPECAN_VAL_FCNT_THRESHOLD_TYPE_RELATIVE                                                     0
+#define RFMXSPECAN_VAL_FCNT_THRESHOLD_TYPE_ABSOLUTE                                                     1
 
 // Values for RFMXSPECAN_ATTR_FCNT_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_FCNT_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MAXIMUM                                                    3
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINIMUM                                                    4
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MEAN                                                       6
-#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINMAX                                                     7
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MAXIMUM                                                      3
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINIMUM                                                      4
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MEAN                                                         6
+#define RFMXSPECAN_VAL_FCNT_AVERAGING_TYPE_MINMAX                                                       7
 
 // Values for RFMXSPECAN_ATTR_HARM_FUNDAMENTAL_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_GAUSSIAN                                                  1
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_FLAT                                                      2
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_NONE                                                      5
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_RRC                                                       6
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_GAUSSIAN                                                    1
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_FLAT                                                        2
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_NONE                                                        5
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_RRC                                                         6
 
 // Values for RFMXSPECAN_ATTR_HARM_AUTO_SETUP_ENABLED
-#define RFMXSPECAN_VAL_HARM_AUTO_HARMONICS_SETUP_ENABLED_FALSE                                        0
-#define RFMXSPECAN_VAL_HARM_AUTO_HARMONICS_SETUP_ENABLED_TRUE                                         1
+#define RFMXSPECAN_VAL_HARM_AUTO_HARMONICS_SETUP_ENABLED_FALSE                                          0
+#define RFMXSPECAN_VAL_HARM_AUTO_HARMONICS_SETUP_ENABLED_TRUE                                           1
 
 // Values for RFMXSPECAN_ATTR_HARM_HARMONIC_ENABLED
-#define RFMXSPECAN_VAL_HARM_HARMONIC_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_HARM_HARMONIC_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_HARM_HARMONIC_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_HARM_HARMONIC_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_HARM_MEASUREMENT_METHOD
-#define RFMXSPECAN_VAL_HARM_MEASUREMENT_METHOD_TIME_DOMAIN                                            0
-#define RFMXSPECAN_VAL_HARM_MEASUREMENT_METHOD_DYNAMIC_RANGE                                          2
+#define RFMXSPECAN_VAL_HARM_MEASUREMENT_METHOD_TIME_DOMAIN                                              0
+#define RFMXSPECAN_VAL_HARM_MEASUREMENT_METHOD_DYNAMIC_RANGE                                            2
 
 // Values for RFMXSPECAN_ATTR_HARM_NOISE_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_HARM_NOISE_COMPENSATION_ENABLED_FALSE                                          0
-#define RFMXSPECAN_VAL_HARM_NOISE_COMPENSATION_ENABLED_TRUE                                           1
+#define RFMXSPECAN_VAL_HARM_NOISE_COMPENSATION_ENABLED_FALSE                                            0
+#define RFMXSPECAN_VAL_HARM_NOISE_COMPENSATION_ENABLED_TRUE                                             1
 
 // Values for RFMXSPECAN_ATTR_HARM_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_HARM_AVERAGING_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_HARM_AVERAGING_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_HARM_AVERAGING_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_HARM_AVERAGING_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_HARM_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_RMS                                                        0
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_LOG                                                        1
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_SCALAR                                                     2
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_MAXIMUM                                                    3
-#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_MINIMUM                                                    4
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_RMS                                                          0
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_LOG                                                          1
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_SCALAR                                                       2
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_MAXIMUM                                                      3
+#define RFMXSPECAN_VAL_HARM_AVERAGING_TYPE_MINIMUM                                                      4
 
 // Values for RFMXSPECAN_ATTR_OBW_POWER_UNITS
-#define RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM                                                            0
-#define RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM_PER_HZ                                                     1
+#define RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM                                                              0
+#define RFMXSPECAN_VAL_OBW_POWER_UNITS_DBM_PER_HZ                                                       1
 
 // Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_OBW_RBW_AUTO_FALSE                                                             0
-#define RFMXSPECAN_VAL_OBW_RBW_AUTO_TRUE                                                              1
+#define RFMXSPECAN_VAL_OBW_RBW_AUTO_FALSE                                                               0
+#define RFMXSPECAN_VAL_OBW_RBW_AUTO_TRUE                                                                1
 
 // Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_FFT_BASED                                                  0
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_FLAT                                                       2
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_FFT_BASED                                                    0
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_GAUSSIAN                                                     1
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_FLAT                                                         2
 
 // Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                        0
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                  2
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                          0
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                                    2
 
 // Values for RFMXSPECAN_ATTR_OBW_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_OBW_SWEEP_TIME_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_OBW_SWEEP_TIME_AUTO_TRUE                                                       1
+#define RFMXSPECAN_VAL_OBW_SWEEP_TIME_AUTO_FALSE                                                        0
+#define RFMXSPECAN_VAL_OBW_SWEEP_TIME_AUTO_TRUE                                                         1
 
 // Values for RFMXSPECAN_ATTR_OBW_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_OBW_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_OBW_AVERAGING_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_OBW_AVERAGING_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_OBW_AVERAGING_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_OBW_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_RMS                                                         0
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_LOG                                                         1
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_SCALAR                                                      2
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_MAXIMUM                                                     3
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_MINIMUM                                                     4
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_RMS                                                           0
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_LOG                                                           1
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_SCALAR                                                        2
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_MAXIMUM                                                       3
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_MINIMUM                                                       4
 
 // Values for RFMXSPECAN_ATTR_OBW_FFT_WINDOW
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_NONE                                                            0
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_FLAT_TOP                                                        1
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_HANNING                                                         2
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_HAMMING                                                         3
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_GAUSSIAN                                                        4
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_BLACKMAN                                                        5
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
-#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_KAISER_BESSEL                                                   7
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_NONE                                                              0
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_FLAT_TOP                                                          1
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_HANNING                                                           2
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_HAMMING                                                           3
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_GAUSSIAN                                                          4
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_BLACKMAN                                                          5
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_BLACKMAN_HARRIS                                                   6
+#define RFMXSPECAN_VAL_OBW_FFT_WINDOW_KAISER_BESSEL                                                     7
 
 // Values for RFMXSPECAN_ATTR_OBW_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_OBW_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
-#define RFMXSPECAN_VAL_OBW_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
+#define RFMXSPECAN_VAL_OBW_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                                0
+#define RFMXSPECAN_VAL_OBW_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                             1
 
 // Values for RFMXSPECAN_ATTR_SEM_CARRIER_ENABLED
-#define RFMXSPECAN_VAL_SEM_ENABLED_FALSE                                                              0
-#define RFMXSPECAN_VAL_SEM_ENABLED_TRUE                                                               1
+#define RFMXSPECAN_VAL_SEM_ENABLED_FALSE                                                                0
+#define RFMXSPECAN_VAL_SEM_ENABLED_TRUE                                                                 1
 
 // Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_AUTO_FALSE                                                     0
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_AUTO_TRUE                                                      1
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_AUTO_FALSE                                                       0
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_AUTO_TRUE                                                        1
 
 // Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_FFT_BASED                                          0
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_GAUSSIAN                                           1
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_FLAT                                               2
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_FFT_BASED                                            0
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_GAUSSIAN                                             1
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_FLAT                                                 2
 
 // Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                0
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                          2
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                  0
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                            2
 
 // Values for RFMXSPECAN_ATTR_SEM_CARRIER_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_SEM_RRC_FILTER_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_SEM_RRC_FILTER_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_SEM_RRC_FILTER_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_SEM_RRC_FILTER_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_ENABLED
-#define RFMXSPECAN_VAL_SEM_OFFSET_ENABLED_FALSE                                                       0
-#define RFMXSPECAN_VAL_SEM_OFFSET_ENABLED_TRUE                                                        1
+#define RFMXSPECAN_VAL_SEM_OFFSET_ENABLED_FALSE                                                         0
+#define RFMXSPECAN_VAL_SEM_OFFSET_ENABLED_TRUE                                                          1
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_SIDEBAND
-#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_NEGATIVE                                                   0
-#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_POSITIVE                                                   1
-#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_BOTH                                                       2
+#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_NEGATIVE                                                     0
+#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_POSITIVE                                                     1
+#define RFMXSPECAN_VAL_SEM_OFFSET_SIDEBAND_BOTH                                                         2
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SEM_RBW_AUTO_FALSE                                                             0
-#define RFMXSPECAN_VAL_SEM_RBW_AUTO_TRUE                                                              1
+#define RFMXSPECAN_VAL_SEM_RBW_AUTO_FALSE                                                               0
+#define RFMXSPECAN_VAL_SEM_RBW_AUTO_TRUE                                                                1
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_FFT_BASED                                                  0
-#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_FLAT                                                       2
+#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_FFT_BASED                                                    0
+#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_GAUSSIAN                                                     1
+#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_FLAT                                                         2
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                 0
-#define RFMXSPECAN_VAL_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                           2
+#define RFMXSPECAN_VAL_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                   0
+#define RFMXSPECAN_VAL_SEM_OFFSET_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                             2
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_LIMIT_FAIL_MASK
-#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE_AND_RELATIVE                               0
-#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE_OR_RELATIVE                                1
-#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE                                            2
-#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_RELATIVE                                            3
+#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE_AND_RELATIVE                                 0
+#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE_OR_RELATIVE                                  1
+#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_ABSOLUTE                                              2
+#define RFMXSPECAN_VAL_SEM_OFFSET_LIMIT_FAIL_MASK_RELATIVE                                              3
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_ABSOLUTE_LIMIT_MODE
-#define RFMXSPECAN_VAL_SEM_OFFSET_ABSOLUTE_LIMIT_MODE_MANUAL                                          0
-#define RFMXSPECAN_VAL_SEM_OFFSET_ABSOLUTE_LIMIT_MODE_COUPLE                                          1
+#define RFMXSPECAN_VAL_SEM_OFFSET_ABSOLUTE_LIMIT_MODE_MANUAL                                            0
+#define RFMXSPECAN_VAL_SEM_OFFSET_ABSOLUTE_LIMIT_MODE_COUPLE                                            1
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_RELATIVE_LIMIT_MODE
-#define RFMXSPECAN_VAL_SEM_OFFSET_RELATIVE_LIMIT_MODE_MANUAL                                          0
-#define RFMXSPECAN_VAL_SEM_OFFSET_RELATIVE_LIMIT_MODE_COUPLE                                          1
+#define RFMXSPECAN_VAL_SEM_OFFSET_RELATIVE_LIMIT_MODE_MANUAL                                            0
+#define RFMXSPECAN_VAL_SEM_OFFSET_RELATIVE_LIMIT_MODE_COUPLE                                            1
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_FREQUENCY_DEFINITION
-#define RFMXSPECAN_VAL_SEM_CARRIER_CENTER_TO_MEASUREMENT_BANDWIDTH_CENTER                             0
-#define RFMXSPECAN_VAL_SEM_CARRIER_CENTER_TO_MEASUREMENT_BANDWIDTH_EDGE                               1
-#define RFMXSPECAN_VAL_SEM_CARRIER_EDGE_TO_MEASUREMENT_BANDWIDTH_CENTER                               2
-#define RFMXSPECAN_VAL_SEM_CARRIER_EDGE_TO_MEASUREMENT_BANDWIDTH_EDGE                                 3
+#define RFMXSPECAN_VAL_SEM_CARRIER_CENTER_TO_MEASUREMENT_BANDWIDTH_CENTER                               0
+#define RFMXSPECAN_VAL_SEM_CARRIER_CENTER_TO_MEASUREMENT_BANDWIDTH_EDGE                                 1
+#define RFMXSPECAN_VAL_SEM_CARRIER_EDGE_TO_MEASUREMENT_BANDWIDTH_CENTER                                 2
+#define RFMXSPECAN_VAL_SEM_CARRIER_EDGE_TO_MEASUREMENT_BANDWIDTH_EDGE                                   3
 
 // Values for RFMXSPECAN_ATTR_SEM_POWER_UNITS
-#define RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM                                                            0
-#define RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ                                                     1
+#define RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM                                                              0
+#define RFMXSPECAN_VAL_SEM_POWER_UNITS_DBM_PER_HZ                                                       1
 
 // Values for RFMXSPECAN_ATTR_SEM_REFERENCE_TYPE
-#define RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_INTEGRATION                                                 0
-#define RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_PEAK                                                        1
+#define RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_INTEGRATION                                                   0
+#define RFMXSPECAN_VAL_SEM_REFERENCE_TYPE_PEAK                                                          1
 
 // Values for RFMXSPECAN_ATTR_SEM_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_SEM_SWEEP_TIME_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_SEM_SWEEP_TIME_AUTO_TRUE                                                       1
+#define RFMXSPECAN_VAL_SEM_SWEEP_TIME_AUTO_FALSE                                                        0
+#define RFMXSPECAN_VAL_SEM_SWEEP_TIME_AUTO_TRUE                                                         1
 
 // Values for RFMXSPECAN_ATTR_SEM_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_SEM_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_SEM_AVERAGING_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_SEM_AVERAGING_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_SEM_AVERAGING_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_SEM_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_RMS                                                         0
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_LOG                                                         1
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_SCALAR                                                      2
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_MAXIMUM                                                     3
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_MINIMUM                                                     4
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_RMS                                                           0
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_LOG                                                           1
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_SCALAR                                                        2
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_MAXIMUM                                                       3
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_MINIMUM                                                       4
 
 // Values for RFMXSPECAN_ATTR_SEM_FFT_WINDOW
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_NONE                                                            0
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_FLAT_TOP                                                        1
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_HANNING                                                         2
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_HAMMING                                                         3
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_GAUSSIAN                                                        4
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_BLACKMAN                                                        5
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_BLACKMAN_HARRIS                                                 6
-#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_KAISER_BESSEL                                                   7
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_NONE                                                              0
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_FLAT_TOP                                                          1
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_HANNING                                                           2
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_HAMMING                                                           3
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_GAUSSIAN                                                          4
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_BLACKMAN                                                          5
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_BLACKMAN_HARRIS                                                   6
+#define RFMXSPECAN_VAL_SEM_FFT_WINDOW_KAISER_BESSEL                                                     7
 
 // Values for RFMXSPECAN_ATTR_SEM_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_SEM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
-#define RFMXSPECAN_VAL_SEM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
+#define RFMXSPECAN_VAL_SEM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                                0
+#define RFMXSPECAN_VAL_SEM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                             1
 
 // Values for RFMXSPECAN_ATTR_SEM_RESULTS_COMPOSITE_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SEM_COMPOSITE_MEASUREMENT_STATUS_FAIL                                          0
-#define RFMXSPECAN_VAL_SEM_COMPOSITE_MEASUREMENT_STATUS_PASS                                          1
+#define RFMXSPECAN_VAL_SEM_COMPOSITE_MEASUREMENT_STATUS_FAIL                                            0
+#define RFMXSPECAN_VAL_SEM_COMPOSITE_MEASUREMENT_STATUS_PASS                                            1
 
 // Values for RFMXSPECAN_ATTR_SEM_RESULTS_LOWER_OFFSET_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_FAIL                                       0
-#define RFMXSPECAN_VAL_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_PASS                                       1
+#define RFMXSPECAN_VAL_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_FAIL                                         0
+#define RFMXSPECAN_VAL_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_PASS                                         1
 
 // Values for RFMXSPECAN_ATTR_SEM_RESULTS_UPPER_OFFSET_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL                                       0
-#define RFMXSPECAN_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS                                       1
+#define RFMXSPECAN_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL                                         0
+#define RFMXSPECAN_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS                                         1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_POWER_UNITS
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBM                                                       0
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBM_PER_HZ                                                1
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBW                                                       2
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBV                                                       3
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBMV                                                      4
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBUV                                                      5
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_WATTS                                                     6
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_VOLTS                                                     7
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_VOLTS_SQUARED                                             8
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBM                                                         0
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBM_PER_HZ                                                  1
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBW                                                         2
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBV                                                         3
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBMV                                                        4
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_DBUV                                                        5
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_WATTS                                                       6
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_VOLTS                                                       7
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_VOLTS_SQUARED                                               8
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_AUTO_FALSE                                                        0
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_AUTO_TRUE                                                         1
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_AUTO_FALSE                                                          0
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_AUTO_TRUE                                                           1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_FFT_BASED                                             0
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN                                              1
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_FLAT                                                  2
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_FFT_BASED                                               0
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_GAUSSIAN                                                1
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_FLAT                                                    2
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                   0
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_6DB                                   1
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                             2
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_ENBW                                  3
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                     0
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_6DB                                     1
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                               2
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_BANDWIDTH_DEFINITION_ENBW                                    3
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                       0
-#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                        1
+#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                         0
+#define RFMXSPECAN_VAL_SPECTRUM_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                          1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_SPECTRUM_SWEEP_TIME_AUTO_FALSE                                                 0
-#define RFMXSPECAN_VAL_SPECTRUM_SWEEP_TIME_AUTO_TRUE                                                  1
+#define RFMXSPECAN_VAL_SPECTRUM_SWEEP_TIME_AUTO_FALSE                                                   0
+#define RFMXSPECAN_VAL_SPECTRUM_SWEEP_TIME_AUTO_TRUE                                                    1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_DETECTOR_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NONE                                                    0
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_SAMPLE                                                  1
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NORMAL                                                  2
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_PEAK                                                    3
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NEGATIVE_PEAK                                           4
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_RMS                                             5
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_VOLTAGE                                         6
-#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_LOG                                             7
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NONE                                                      0
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_SAMPLE                                                    1
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NORMAL                                                    2
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_PEAK                                                      3
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_NEGATIVE_PEAK                                             4
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_RMS                                               5
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_VOLTAGE                                           6
+#define RFMXSPECAN_VAL_SPECTRUM_DETECTOR_TYPE_AVERAGE_LOG                                               7
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_CALIBRATION_MODE
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_MODE_MANUAL                                         0
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_MODE_AUTO                                           1
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_MODE_MANUAL                                           0
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_MODE_AUTO                                             1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                0
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                 1
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO_FALSE                                  0
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_AVERAGING_AUTO_TRUE                                   1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_ENABLED_FALSE                                      0
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_ENABLED_TRUE                                       1
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_ENABLED_FALSE                                        0
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_ENABLED_TRUE                                         1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_NOISE_COMPENSATION_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                      0
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                 1
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_TYPE_ANALYZER_AND_TERMINATION                        0
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_COMPENSATION_TYPE_ANALYZER_ONLY                                   1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_ENABLED_FALSE                                               0
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_ENABLED_TRUE                                                1
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_ENABLED_FALSE                                                 0
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_ENABLED_TRUE                                                  1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_RMS                                                    0
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_LOG                                                    1
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_SCALAR                                                 2
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_MAXIMUM                                                3
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_MINIMUM                                                4
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_RMS                                                      0
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_LOG                                                      1
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_SCALAR                                                   2
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_MAXIMUM                                                  3
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_MINIMUM                                                  4
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_MEASUREMENT_MODE
-#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_MODE_MEASURE                                              0
-#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                1
+#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_MODE_MEASURE                                                0
+#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_MODE_CALIBRATE_NOISE_FLOOR                                  1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_FFT_WINDOW
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_NONE                                                       0
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_FLAT_TOP                                                   1
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_HANNING                                                    2
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_HAMMING                                                    3
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_GAUSSIAN                                                   4
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_BLACKMAN                                                   5
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_BLACKMAN_HARRIS                                            6
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_KAISER_BESSEL                                              7
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_NONE                                                         0
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_FLAT_TOP                                                     1
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_HANNING                                                      2
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_HAMMING                                                      3
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_GAUSSIAN                                                     4
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_BLACKMAN                                                     5
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_BLACKMAN_HARRIS                                              6
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_WINDOW_KAISER_BESSEL                                                7
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_FFT_OVERLAP_MODE
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_MODE_DISABLED                                             0
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_MODE_AUTOMATIC                                            1
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_MODE_USER_DEFINED                                         2
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_MODE_DISABLED                                               0
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_MODE_AUTOMATIC                                              1
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_MODE_USER_DEFINED                                           2
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_FFT_OVERLAP_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_TYPE_RMS                                                  0
-#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_TYPE_MAX                                                  3
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_TYPE_RMS                                                    0
+#define RFMXSPECAN_VAL_SPECTRUM_FFT_OVERLAP_TYPE_MAX                                                    3
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                         0
-#define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                      1
+#define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                           0
+#define RFMXSPECAN_VAL_SPECTRUM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                        1
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_MEASUREMENT_METHOD
-#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_METHOD_NORMAL                                             0
-#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_METHOD_SEQUENTIAL_FFT                                     2
+#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_METHOD_NORMAL                                               0
+#define RFMXSPECAN_VAL_SPECTRUM_MEASUREMENT_METHOD_SEQUENTIAL_FFT                                       2
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_ANALYSIS_INPUT
-#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_IQ                                                     0
-#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_I_ONLY                                                 1
-#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_Q_ONLY                                                 2
+#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_IQ                                                       0
+#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_I_ONLY                                                   1
+#define RFMXSPECAN_VAL_SPECTRUM_ANALYSIS_INPUT_Q_ONLY                                                   2
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_ENABLED
-#define RFMXSPECAN_VAL_SPUR_RANGE_ENABLED_FALSE                                                       0
-#define RFMXSPECAN_VAL_SPUR_RANGE_ENABLED_TRUE                                                        1
+#define RFMXSPECAN_VAL_SPUR_RANGE_ENABLED_FALSE                                                         0
+#define RFMXSPECAN_VAL_SPUR_RANGE_ENABLED_TRUE                                                          1
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPUR_RBW_AUTO_FALSE                                                            0
-#define RFMXSPECAN_VAL_SPUR_RBW_AUTO_TRUE                                                             1
+#define RFMXSPECAN_VAL_SPUR_RBW_AUTO_FALSE                                                              0
+#define RFMXSPECAN_VAL_SPUR_RBW_AUTO_TRUE                                                               1
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_FFT_BASED                                                 0
-#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_GAUSSIAN                                                  1
-#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_FLAT                                                      2
+#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_FFT_BASED                                                   0
+#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_GAUSSIAN                                                    1
+#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_FLAT                                                        2
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION
-#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                 0
-#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                           2
-#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_ENBW                                3
+#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_3DB                                   0
+#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_BIN_WIDTH                             2
+#define RFMXSPECAN_VAL_SPUR_RANGE_RBW_FILTER_BANDWIDTH_DEFINITION_ENBW                                  3
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                     0
-#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                      1
+#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                       0
+#define RFMXSPECAN_VAL_SPUR_RANGE_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                        1
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_SPUR_SWEEP_TIME_AUTO_FALSE                                                     0
-#define RFMXSPECAN_VAL_SPUR_SWEEP_TIME_AUTO_TRUE                                                      1
+#define RFMXSPECAN_VAL_SPUR_SWEEP_TIME_AUTO_FALSE                                                       0
+#define RFMXSPECAN_VAL_SPUR_SWEEP_TIME_AUTO_TRUE                                                        1
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_DETECTOR_TYPE
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NONE                                                  0
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_SAMPLE                                                1
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NORMAL                                                2
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_PEAK                                                  3
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NEGATIVE_PEAK                                         4
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_RMS                                           5
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_VOLTAGE                                       6
-#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_LOG                                           7
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NONE                                                    0
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_SAMPLE                                                  1
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NORMAL                                                  2
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_PEAK                                                    3
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_NEGATIVE_PEAK                                           4
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_RMS                                             5
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_VOLTAGE                                         6
+#define RFMXSPECAN_VAL_SPUR_RANGE_DETECTOR_TYPE_AVERAGE_LOG                                             7
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_ABSOLUTE_LIMIT_MODE
-#define RFMXSPECAN_VAL_SPUR_ABSOLUTE_LIMIT_MODE_MANUAL                                                0
-#define RFMXSPECAN_VAL_SPUR_ABSOLUTE_LIMIT_MODE_COUPLE                                                1
+#define RFMXSPECAN_VAL_SPUR_ABSOLUTE_LIMIT_MODE_MANUAL                                                  0
+#define RFMXSPECAN_VAL_SPUR_ABSOLUTE_LIMIT_MODE_COUPLE                                                  1
 
 // Values for RFMXSPECAN_ATTR_SPUR_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_SPUR_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_RMS                                                        0
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_LOG                                                        1
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_SCALAR                                                     2
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_MAXIMUM                                                    3
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_MINIMUM                                                    4
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_RMS                                                          0
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_LOG                                                          1
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_SCALAR                                                       2
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_MAXIMUM                                                      3
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_MINIMUM                                                      4
 
 // Values for RFMXSPECAN_ATTR_SPUR_FFT_WINDOW
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_NONE                                                           0
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_FLAT_TOP                                                       1
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_HANNING                                                        2
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_HAMMING                                                        3
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_GAUSSIAN                                                       4
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_BLACKMAN                                                       5
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_BLACKMAN_HARRIS                                                6
-#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_KAISER_BESSEL                                                  7
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_NONE                                                             0
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_FLAT_TOP                                                         1
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_HANNING                                                          2
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_HAMMING                                                          3
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_GAUSSIAN                                                         4
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_BLACKMAN                                                         5
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_BLACKMAN_HARRIS                                                  6
+#define RFMXSPECAN_VAL_SPUR_FFT_WINDOW_KAISER_BESSEL                                                    7
 
 // Values for RFMXSPECAN_ATTR_SPUR_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                             0
-#define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                          1
+#define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                               0
+#define RFMXSPECAN_VAL_SPUR_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                            1
 
 // Values for RFMXSPECAN_ATTR_SPUR_RESULTS_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SPUR_MEASUREMENT_STATUS_FAIL                                                   0
-#define RFMXSPECAN_VAL_SPUR_MEASUREMENT_STATUS_PASS                                                   1
+#define RFMXSPECAN_VAL_SPUR_MEASUREMENT_STATUS_FAIL                                                     0
+#define RFMXSPECAN_VAL_SPUR_MEASUREMENT_STATUS_PASS                                                     1
 
 // Values for RFMXSPECAN_ATTR_SPUR_RESULTS_RANGE_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SPUR_RANGE_STATUS_FAIL                                                         0
-#define RFMXSPECAN_VAL_SPUR_RANGE_STATUS_PASS                                                         1
+#define RFMXSPECAN_VAL_SPUR_RANGE_STATUS_FAIL                                                           0
+#define RFMXSPECAN_VAL_SPUR_RANGE_STATUS_PASS                                                           1
 
 // Values for RFMXSPECAN_ATTR_TXP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_GAUSSIAN                                                   1
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_FLAT                                                       2
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_NONE                                                       5
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_RRC                                                        6
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_GAUSSIAN                                                     1
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_FLAT                                                         2
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_NONE                                                         5
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_RRC                                                          6
 
 // Values for RFMXSPECAN_ATTR_TXP_VBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                            0
-#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                             1
+#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_FALSE                                              0
+#define RFMXSPECAN_VAL_TXP_VBW_FILTER_AUTO_BANDWIDTH_TRUE                                               1
 
 // Values for RFMXSPECAN_ATTR_TXP_THRESHOLD_ENABLED
-#define RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_TXP_THRESHOLD_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_TXP_THRESHOLD_TYPE
-#define RFMXSPECAN_VAL_TXP_THRESHOLD_TYPE_RELATIVE                                                    0
-#define RFMXSPECAN_VAL_TXP_THRESHOLD_TYPE_ABSOLUTE                                                    1
+#define RFMXSPECAN_VAL_TXP_THRESHOLD_TYPE_RELATIVE                                                      0
+#define RFMXSPECAN_VAL_TXP_THRESHOLD_TYPE_ABSOLUTE                                                      1
 
 // Values for RFMXSPECAN_ATTR_TXP_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_TXP_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_TXP_AVERAGING_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_TXP_AVERAGING_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_TXP_AVERAGING_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_TXP_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_RMS                                                         0
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_LOG                                                         1
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_SCALAR                                                      2
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_MAXIMUM                                                     3
-#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_MINIMUM                                                     4
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_RMS                                                           0
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_LOG                                                           1
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_SCALAR                                                        2
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_MAXIMUM                                                       3
+#define RFMXSPECAN_VAL_TXP_AVERAGING_TYPE_MINIMUM                                                       4
 
 // Values for RFMXSPECAN_ATTR_AMPM_MEASUREMENT_SAMPLE_RATE_MODE
-#define RFMXSPECAN_VAL_AMPM_MEASUREMENT_SAMPLE_RATE_MODE_USER                                         0
-#define RFMXSPECAN_VAL_AMPM_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM                           1
+#define RFMXSPECAN_VAL_AMPM_MEASUREMENT_SAMPLE_RATE_MODE_USER                                           0
+#define RFMXSPECAN_VAL_AMPM_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM                             1
 
 // Values for RFMXSPECAN_ATTR_AMPM_SIGNAL_TYPE
-#define RFMXSPECAN_VAL_AMPM_SIGNAL_TYPE_MODULATED                                                     0
-#define RFMXSPECAN_VAL_AMPM_SIGNAL_TYPE_TONES                                                         1
+#define RFMXSPECAN_VAL_AMPM_SIGNAL_TYPE_MODULATED                                                       0
+#define RFMXSPECAN_VAL_AMPM_SIGNAL_TYPE_TONES                                                           1
 
 // Values for RFMXSPECAN_ATTR_AMPM_SYNCHRONIZATION_METHOD
-#define RFMXSPECAN_VAL_AMPM_SYNCHRONIZATION_METHOD_DIRECT                                             1
-#define RFMXSPECAN_VAL_AMPM_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED                                    2
+#define RFMXSPECAN_VAL_AMPM_SYNCHRONIZATION_METHOD_DIRECT                                               1
+#define RFMXSPECAN_VAL_AMPM_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED                                      2
 
 // Values for RFMXSPECAN_ATTR_AMPM_AUTO_CARRIER_DETECTION_ENABLED
-#define RFMXSPECAN_VAL_AMPM_AUTO_CARRIER_DETECTION_ENABLED_FALSE                                      0
-#define RFMXSPECAN_VAL_AMPM_AUTO_CARRIER_DETECTION_ENABLED_TRUE                                       1
+#define RFMXSPECAN_VAL_AMPM_AUTO_CARRIER_DETECTION_ENABLED_FALSE                                        0
+#define RFMXSPECAN_VAL_AMPM_AUTO_CARRIER_DETECTION_ENABLED_TRUE                                         1
 
 // Values for RFMXSPECAN_ATTR_AMPM_AM_TO_AM_CURVE_FIT_TYPE
-#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_CURVE_FIT_TYPE_LEAST_SQUARE                                      0
-#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_CURVE_FIT_TYPE_LEAST_ABSOLUTE_RESIDUAL                           1
-#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_CURVE_FIT_TYPE_BISQUARE                                          2
+#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_CURVE_FIT_TYPE_LEAST_SQUARE                                        0
+#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_CURVE_FIT_TYPE_LEAST_ABSOLUTE_RESIDUAL                             1
+#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_CURVE_FIT_TYPE_BISQUARE                                            2
 
 // Values for RFMXSPECAN_ATTR_AMPM_AM_TO_PM_CURVE_FIT_TYPE
-#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_CURVE_FIT_TYPE_LEAST_SQUARE                                      0
-#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_CURVE_FIT_TYPE_LEAST_ABSOLUTE_RESIDUAL                           1
-#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_CURVE_FIT_TYPE_BISQUARE                                          2
+#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_CURVE_FIT_TYPE_LEAST_SQUARE                                        0
+#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_CURVE_FIT_TYPE_LEAST_ABSOLUTE_RESIDUAL                             1
+#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_CURVE_FIT_TYPE_BISQUARE                                            2
 
 // Values for RFMXSPECAN_ATTR_AMPM_THRESHOLD_ENABLED
-#define RFMXSPECAN_VAL_AMPM_THRESHOLD_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_AMPM_THRESHOLD_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_AMPM_THRESHOLD_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_AMPM_THRESHOLD_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_AMPM_THRESHOLD_TYPE
-#define RFMXSPECAN_VAL_AMPM_THRESHOLD_TYPE_RELATIVE                                                   0
-#define RFMXSPECAN_VAL_AMPM_THRESHOLD_TYPE_ABSOLUTE                                                   1
+#define RFMXSPECAN_VAL_AMPM_THRESHOLD_TYPE_RELATIVE                                                     0
+#define RFMXSPECAN_VAL_AMPM_THRESHOLD_TYPE_ABSOLUTE                                                     1
 
 // Values for RFMXSPECAN_ATTR_AMPM_THRESHOLD_DEFINITION
-#define RFMXSPECAN_VAL_AMPM_THRESHOLD_DEFINITION_INPUT_AND_OUTPUT                                     0
-#define RFMXSPECAN_VAL_AMPM_THRESHOLD_DEFINITION_REFERENCE_POWER_TYPE                                 1
+#define RFMXSPECAN_VAL_AMPM_THRESHOLD_DEFINITION_INPUT_AND_OUTPUT                                       0
+#define RFMXSPECAN_VAL_AMPM_THRESHOLD_DEFINITION_REFERENCE_POWER_TYPE                                   1
 
 // Values for RFMXSPECAN_ATTR_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED
-#define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                 0
-#define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                  1
+#define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                   0
+#define RFMXSPECAN_VAL_AMPM_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                    1
 
 // Values for RFMXSPECAN_ATTR_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED
-#define RFMXSPECAN_VAL_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                                 0
-#define RFMXSPECAN_VAL_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE                                  1
+#define RFMXSPECAN_VAL_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                                   0
+#define RFMXSPECAN_VAL_AMPM_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE                                    1
 
 // Values for RFMXSPECAN_ATTR_AMPM_AM_TO_AM_ENABLED
-#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_AMPM_AM_TO_AM_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_AMPM_AM_TO_PM_ENABLED
-#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_AMPM_AM_TO_PM_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_AMPM_EVM_ENABLED
-#define RFMXSPECAN_VAL_AMPM_EVM_ENABLED_FALSE                                                         0
-#define RFMXSPECAN_VAL_AMPM_EVM_ENABLED_TRUE                                                          1
+#define RFMXSPECAN_VAL_AMPM_EVM_ENABLED_FALSE                                                           0
+#define RFMXSPECAN_VAL_AMPM_EVM_ENABLED_TRUE                                                            1
 
 // Values for RFMXSPECAN_ATTR_AMPM_EQUALIZER_MODE
-#define RFMXSPECAN_VAL_AMPM_EQUALIZER_MODE_OFF                                                        0
-#define RFMXSPECAN_VAL_AMPM_EQUALIZER_MODE_TRAIN                                                      1
+#define RFMXSPECAN_VAL_AMPM_EQUALIZER_MODE_OFF                                                          0
+#define RFMXSPECAN_VAL_AMPM_EQUALIZER_MODE_TRAIN                                                        1
 
 // Values for RFMXSPECAN_ATTR_AMPM_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_AMPM_AVERAGING_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_AMPM_AVERAGING_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_AMPM_AVERAGING_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_AMPM_AVERAGING_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_ENABLED
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_ENABLED_TRUE                                            1
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_ENABLED_FALSE                                             0
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_ENABLED_TRUE                                              1
 
 // Values for RFMXSPECAN_ATTR_AMPM_COMPRESSION_POINT_GAIN_REFERENCE
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_AUTO                                     0
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_REFERENCE_POWER                          1
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_MAX_GAIN                                 2
-#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_USER_DEFINED                             3
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_AUTO                                       0
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_REFERENCE_POWER                            1
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_MAX_GAIN                                   2
+#define RFMXSPECAN_VAL_AMPM_COMPRESSION_POINT_GAIN_REFERENCE_USER_DEFINED                               3
 
 // Values for RFMXSPECAN_ATTR_AMPM_REFERENCE_POWER_TYPE
-#define RFMXSPECAN_VAL_AMPM_REFERENCE_POWER_TYPE_INPUT                                                0
-#define RFMXSPECAN_VAL_AMPM_REFERENCE_POWER_TYPE_OUTPUT                                               1
+#define RFMXSPECAN_VAL_AMPM_REFERENCE_POWER_TYPE_INPUT                                                  0
+#define RFMXSPECAN_VAL_AMPM_REFERENCE_POWER_TYPE_OUTPUT                                                 1
 
 // Values for RFMXSPECAN_ATTR_DPD_MEASUREMENT_SAMPLE_RATE_MODE
-#define RFMXSPECAN_VAL_DPD_MEASUREMENT_SAMPLE_RATE_MODE_USER                                          0
-#define RFMXSPECAN_VAL_DPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM                            1
+#define RFMXSPECAN_VAL_DPD_MEASUREMENT_SAMPLE_RATE_MODE_USER                                            0
+#define RFMXSPECAN_VAL_DPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM                              1
 
 // Values for RFMXSPECAN_ATTR_DPD_SIGNAL_TYPE
-#define RFMXSPECAN_VAL_DPD_SIGNAL_TYPE_MODULATED                                                      0
-#define RFMXSPECAN_VAL_DPD_SIGNAL_TYPE_TONES                                                          1
+#define RFMXSPECAN_VAL_DPD_SIGNAL_TYPE_MODULATED                                                        0
+#define RFMXSPECAN_VAL_DPD_SIGNAL_TYPE_TONES                                                            1
 
 // Values for RFMXSPECAN_ATTR_DPD_SYNCHRONIZATION_METHOD
-#define RFMXSPECAN_VAL_DPD_SYNCHRONIZATION_METHOD_DIRECT                                              1
-#define RFMXSPECAN_VAL_DPD_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED                                     2
+#define RFMXSPECAN_VAL_DPD_SYNCHRONIZATION_METHOD_DIRECT                                                1
+#define RFMXSPECAN_VAL_DPD_SYNCHRONIZATION_METHOD_ALIAS_PROTECTED                                       2
 
 // Values for RFMXSPECAN_ATTR_DPD_AUTO_CARRIER_DETECTION_ENABLED
-#define RFMXSPECAN_VAL_DPD_AUTO_CARRIER_DETECTION_ENABLED_FALSE                                       0
-#define RFMXSPECAN_VAL_DPD_AUTO_CARRIER_DETECTION_ENABLED_TRUE                                        1
+#define RFMXSPECAN_VAL_DPD_AUTO_CARRIER_DETECTION_ENABLED_FALSE                                         0
+#define RFMXSPECAN_VAL_DPD_AUTO_CARRIER_DETECTION_ENABLED_TRUE                                          1
 
 // Values for RFMXSPECAN_ATTR_DPD_MODEL
-#define RFMXSPECAN_VAL_DPD_MODEL_LOOKUP_TABLE                                                         0
-#define RFMXSPECAN_VAL_DPD_MODEL_MEMORY_POLYNOMIAL                                                    1
-#define RFMXSPECAN_VAL_DPD_MODEL_GENERALIZED_MEMORY_POLYNOMIAL                                        2
-#define RFMXSPECAN_VAL_DPD_MODEL_DECOMPOSED_VECTOR_ROTATION                                           3
+#define RFMXSPECAN_VAL_DPD_MODEL_LOOKUP_TABLE                                                           0
+#define RFMXSPECAN_VAL_DPD_MODEL_MEMORY_POLYNOMIAL                                                      1
+#define RFMXSPECAN_VAL_DPD_MODEL_GENERALIZED_MEMORY_POLYNOMIAL                                          2
+#define RFMXSPECAN_VAL_DPD_MODEL_DECOMPOSED_VECTOR_ROTATION                                             3
 
 // Values for RFMXSPECAN_ATTR_DPD_TARGET_GAIN_TYPE
-#define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_AVERAGE_GAIN                                              0
-#define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_LINEAR_REGION_GAIN                                        1
-#define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_PEAK_INPUT_POWER_GAIN                                     2
+#define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_AVERAGE_GAIN                                                0
+#define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_LINEAR_REGION_GAIN                                          1
+#define RFMXSPECAN_VAL_DPD_TARGET_GAIN_TYPE_PEAK_INPUT_POWER_GAIN                                       2
 
 // Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_TYPE
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_TYPE_LOG                                                      0
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_TYPE_LINEAR                                                   1
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_TYPE_LOG                                                        0
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_TYPE_LINEAR                                                     1
 
 // Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE_LEAST_SQUARE                          0
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE_LEAST_ABSOLUTE_RESIDUAL               1
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE_BISQUARE                              2
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE_LEAST_SQUARE                            0
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE_LEAST_ABSOLUTE_RESIDUAL                 1
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_AM_CURVE_FIT_TYPE_BISQUARE                                2
 
 // Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE_LEAST_SQUARE                          0
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE_LEAST_ABSOLUTE_RESIDUAL               1
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE_BISQUARE                              2
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE_LEAST_SQUARE                            0
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE_LEAST_ABSOLUTE_RESIDUAL                 1
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_AM_TO_PM_CURVE_FIT_TYPE_BISQUARE                                2
 
 // Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_THRESHOLD_ENABLED
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_ENABLED_FALSE                                       0
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_ENABLED_TRUE                                        1
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_ENABLED_FALSE                                         0
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_ENABLED_TRUE                                          1
 
 // Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_THRESHOLD_TYPE
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_TYPE_RELATIVE                                       0
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_TYPE_ABSOLUTE                                       1
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_TYPE_RELATIVE                                         0
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_TYPE_ABSOLUTE                                         1
 
 // Values for RFMXSPECAN_ATTR_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION_INPUT_AND_OUTPUT                         0
-#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION_INPUT                                    1
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION_INPUT_AND_OUTPUT                           0
+#define RFMXSPECAN_VAL_DPD_LOOKUP_TABLE_THRESHOLD_DEFINITION_INPUT                                      1
 
 // Values for RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE
-#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_ALL_ORDERS                                    0
-#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_ODD_ORDERS_ONLY                               1
-#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_EVEN_ORDERS_ONLY                              2
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_ALL_ORDERS                                      0
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_ODD_ORDERS_ONLY                                 1
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_ORDER_TYPE_EVEN_ORDERS_ONLY                                2
 
 // Values for RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE
-#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE_ALL_ORDERS                               0
-#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE_ODD_ORDERS_ONLY                          1
-#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE_EVEN_ORDERS_ONLY                         2
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE_ALL_ORDERS                                 0
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE_ODD_ORDERS_ONLY                            1
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LEAD_ORDER_TYPE_EVEN_ORDERS_ONLY                           2
 
 // Values for RFMXSPECAN_ATTR_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE
-#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ALL_ORDERS                                0
-#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ODD_ORDERS_ONLY                           1
-#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_EVEN_ORDERS_ONLY                          2
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ALL_ORDERS                                  0
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_ODD_ORDERS_ONLY                             1
+#define RFMXSPECAN_VAL_DPD_MEMORY_POLYNOMIAL_LAG_ORDER_TYPE_EVEN_ORDERS_ONLY                            2
 
 // Values for RFMXSPECAN_ATTR_DPD_DVR_DDR_ENABLED
-#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_FALSE                                                      0
-#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_TRUE                                                       1
+#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_FALSE                                                        0
+#define RFMXSPECAN_VAL_DPD_DVR_DDR_ENABLED_TRUE                                                         1
 
 // Values for RFMXSPECAN_ATTR_DPD_MEASUREMENT_MODE
-#define RFMXSPECAN_VAL_DPD_MEASUREMENT_MODE_ACQUIRE_AND_EXTRACT                                       0
-#define RFMXSPECAN_VAL_DPD_MEASUREMENT_MODE_EXTRACT_ONLY                                              1
+#define RFMXSPECAN_VAL_DPD_MEASUREMENT_MODE_ACQUIRE_AND_EXTRACT                                         0
+#define RFMXSPECAN_VAL_DPD_MEASUREMENT_MODE_EXTRACT_ONLY                                                1
 
 // Values for RFMXSPECAN_ATTR_DPD_ITERATIVE_DPD_ENABLED
-#define RFMXSPECAN_VAL_DPD_ITERATIVE_DPD_ENABLED_FALSE                                                0
-#define RFMXSPECAN_VAL_DPD_ITERATIVE_DPD_ENABLED_TRUE                                                 1
+#define RFMXSPECAN_VAL_DPD_ITERATIVE_DPD_ENABLED_FALSE                                                  0
+#define RFMXSPECAN_VAL_DPD_ITERATIVE_DPD_ENABLED_TRUE                                                   1
 
 // Values for RFMXSPECAN_ATTR_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED
-#define RFMXSPECAN_VAL_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                  0
-#define RFMXSPECAN_VAL_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                   1
+#define RFMXSPECAN_VAL_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                    0
+#define RFMXSPECAN_VAL_DPD_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                     1
 
 // Values for RFMXSPECAN_ATTR_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED
-#define RFMXSPECAN_VAL_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                                  0
-#define RFMXSPECAN_VAL_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE                                   1
+#define RFMXSPECAN_VAL_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                                    0
+#define RFMXSPECAN_VAL_DPD_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE                                     1
 
 // Values for RFMXSPECAN_ATTR_DPD_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_DPD_AVERAGING_ENABLED_FALSE                                                    0
-#define RFMXSPECAN_VAL_DPD_AVERAGING_ENABLED_TRUE                                                     1
+#define RFMXSPECAN_VAL_DPD_AVERAGING_ENABLED_FALSE                                                      0
+#define RFMXSPECAN_VAL_DPD_AVERAGING_ENABLED_TRUE                                                       1
 
 // Values for RFMXSPECAN_ATTR_DPD_NMSE_ENABLED
-#define RFMXSPECAN_VAL_DPD_NMSE_ENABLED_FALSE                                                         0
-#define RFMXSPECAN_VAL_DPD_NMSE_ENABLED_TRUE                                                          1
+#define RFMXSPECAN_VAL_DPD_NMSE_ENABLED_FALSE                                                           0
+#define RFMXSPECAN_VAL_DPD_NMSE_ENABLED_TRUE                                                            1
 
 // Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_ENABLED
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_ENABLED_FALSE                                                  0
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_ENABLED_TRUE                                                   1
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_ENABLED_FALSE                                                    0
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_ENABLED_TRUE                                                     1
 
 // Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_METHOD
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_CLIPPING                                                0
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_PEAK_WINDOWING                                          1
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_SIGMOID                                                 2
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_CLIPPING                                                  0
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_PEAK_WINDOWING                                            1
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_METHOD_SIGMOID                                                   2
 
 // Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_WINDOW_TYPE
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_FLAT_TOP                                           1
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_HANNING                                            2
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_HAMMING                                            3
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_GAUSSIAN                                           4
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_BLACKMAN                                           5
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_BLACKMAN_HARRIS                                    6
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_KAISER_BESSEL                                      7
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_FLAT_TOP                                             1
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_HANNING                                              2
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_HAMMING                                              3
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_GAUSSIAN                                             4
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_BLACKMAN                                             5
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_BLACKMAN_HARRIS                                      6
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_WINDOW_TYPE_KAISER_BESSEL                                        7
 
 // Values for RFMXSPECAN_ATTR_DPD_PRE_DPD_CFR_FILTER_ENABLED
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_FILTER_ENABLED_FALSE                                           0
-#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_FILTER_ENABLED_TRUE                                            1
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_FILTER_ENABLED_FALSE                                             0
+#define RFMXSPECAN_VAL_DPD_PRE_DPD_CFR_FILTER_ENABLED_TRUE                                              1
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CONFIGURATION_INPUT
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CONFIGURATION_INPUT_MEASUREMENT                                  0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CONFIGURATION_INPUT_USER                                         1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CONFIGURATION_INPUT_MEASUREMENT                                    0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CONFIGURATION_INPUT_USER                                           1
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_AND_PHASE                 0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_ONLY                      1
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_PHASE_ONLY                          2
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_AND_PHASE                   0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_MAGNITUDE_ONLY                        1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_LOOKUP_TABLE_CORRECTION_TYPE_PHASE_ONLY                            2
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_MAGNITUDE_AND_PHASE                 0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_MAGNITUDE_ONLY                      1
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_PHASE_ONLY                          2
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_MAGNITUDE_AND_PHASE                   0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_MAGNITUDE_ONLY                        1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_MEMORY_MODEL_CORRECTION_TYPE_PHASE_ONLY                            2
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_ENABLED
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_ENABLED_FALSE                                                0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_ENABLED_TRUE                                                 1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_ENABLED_FALSE                                                  0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_ENABLED_TRUE                                                   1
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_METHOD
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_CLIPPING                                              0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_PEAK_WINDOWING                                        1
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_SIGMOID                                               2
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_CLIPPING                                                0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_PEAK_WINDOWING                                          1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_METHOD_SIGMOID                                                 2
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE_INPUT_PAPR                                  0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE_CUSTOM                                      1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE_INPUT_PAPR                                    0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_TARGET_PAPR_TYPE_CUSTOM                                        1
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_CFR_WINDOW_TYPE
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_FLAT_TOP                                         1
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_HANNING                                          2
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_HAMMING                                          3
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_GAUSSIAN                                         4
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_BLACKMAN                                         5
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_BLACKMAN_HARRIS                                  6
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_KAISER_BESSEL                                    7
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_FLAT_TOP                                           1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_HANNING                                            2
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_HAMMING                                            3
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_GAUSSIAN                                           4
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_BLACKMAN                                           5
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_BLACKMAN_HARRIS                                    6
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_CFR_WINDOW_TYPE_KAISER_BESSEL                                      7
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_DPD_MODEL
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_LOOKUP_TABLE                                      0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_MEMORY_POLYNOMIAL                                 1
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_GENERALIZED_MEMORY_POLYNOMIAL                     2
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_LOOKUP_TABLE                                        0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_MEMORY_POLYNOMIAL                                   1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_DPD_MODEL_GENERALIZED_MEMORY_POLYNOMIAL                       2
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_USER_LOOKUP_TABLE_TYPE
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_LOOKUP_TABLE_TYPE_LOG                                       0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_LOOKUP_TABLE_TYPE_LINEAR                                    1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_LOOKUP_TABLE_TYPE_LOG                                         0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_USER_LOOKUP_TABLE_TYPE_LINEAR                                      1
 
 // Values for RFMXSPECAN_ATTR_IDPD_EQUALIZER_MODE
-#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_OFF                                                        0
-#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_TRAIN                                                      1
-#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_HOLD                                                       2
+#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_OFF                                                          0
+#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_TRAIN                                                        1
+#define RFMXSPECAN_VAL_IDPD_EQUALIZER_MODE_HOLD                                                         2
 
 // Values for RFMXSPECAN_ATTR_IDPD_MEASUREMENT_SAMPLE_RATE_MODE
-#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_USER                                         0
-#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM                           1
+#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_USER                                           0
+#define RFMXSPECAN_VAL_IDPD_MEASUREMENT_SAMPLE_RATE_MODE_REFERENCE_WAVEFORM                             1
 
 // Values for RFMXSPECAN_ATTR_IDPD_SIGNAL_TYPE
-#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_MODULATED                                                     0
-#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_TONES                                                         1
+#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_MODULATED                                                       0
+#define RFMXSPECAN_VAL_IDPD_SIGNAL_TYPE_TONES                                                           1
 
 // Values for RFMXSPECAN_ATTR_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT
-#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                            0
-#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                             1
+#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                              0
+#define RFMXSPECAN_VAL_IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                               1
 
 // Values for RFMXSPECAN_ATTR_IDPD_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_IDPD_AVERAGING_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_IDPD_EVM_ENABLED
-#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_FALSE                                                         0
-#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_TRUE                                                          1
+#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_FALSE                                                           0
+#define RFMXSPECAN_VAL_IDPD_EVM_ENABLED_TRUE                                                            1
 
 // Values for RFMXSPECAN_ATTR_IDPD_EVM_UNIT
-#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_PERCENTAGE                                                       0
-#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_DB                                                               1
+#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_PERCENTAGE                                                         0
+#define RFMXSPECAN_VAL_IDPD_EVM_UNIT_DB                                                                 1
 
 // Values for RFMXSPECAN_ATTR_IQ_MEASUREMENT_MODE
-#define RFMXSPECAN_VAL_IQ_MEASUREMENT_MODE_NORMAL                                                     0
-#define RFMXSPECAN_VAL_IQ_MEASUREMENT_MODE_RAWIQ                                                      1
+#define RFMXSPECAN_VAL_IQ_MEASUREMENT_MODE_NORMAL                                                       0
+#define RFMXSPECAN_VAL_IQ_MEASUREMENT_MODE_RAWIQ                                                        1
 
 // Values for RFMXSPECAN_ATTR_IQ_BANDWIDTH_AUTO
-#define RFMXSPECAN_VAL_IQ_AUTO_BANDWIDTH_FALSE                                                        0
-#define RFMXSPECAN_VAL_IQ_AUTO_BANDWIDTH_TRUE                                                         1
+#define RFMXSPECAN_VAL_IQ_AUTO_BANDWIDTH_FALSE                                                          0
+#define RFMXSPECAN_VAL_IQ_AUTO_BANDWIDTH_TRUE                                                           1
 
 // Values for RFMXSPECAN_ATTR_IQ_DELETE_RECORD_ON_FETCH
-#define RFMXSPECAN_VAL_IQ_DELETE_RECORD_ON_FETCH_FALSE                                                0
-#define RFMXSPECAN_VAL_IQ_DELETE_RECORD_ON_FETCH_TRUE                                                 1
+#define RFMXSPECAN_VAL_IQ_DELETE_RECORD_ON_FETCH_FALSE                                                  0
+#define RFMXSPECAN_VAL_IQ_DELETE_RECORD_ON_FETCH_TRUE                                                   1
 
 // Values for RFMXSPECAN_ATTR_IM_FREQUENCY_DEFINITION
-#define RFMXSPECAN_VAL_IM_FREQUENCY_DEFINITION_RELATIVE                                               0
-#define RFMXSPECAN_VAL_IM_FREQUENCY_DEFINITION_ABSOLUTE                                               1
+#define RFMXSPECAN_VAL_IM_FREQUENCY_DEFINITION_RELATIVE                                                 0
+#define RFMXSPECAN_VAL_IM_FREQUENCY_DEFINITION_ABSOLUTE                                                 1
 
 // Values for RFMXSPECAN_ATTR_IM_AUTO_INTERMODS_SETUP_ENABLED
-#define RFMXSPECAN_VAL_IM_AUTO_INTERMODS_SETUP_ENABLED_FALSE                                          0
-#define RFMXSPECAN_VAL_IM_AUTO_INTERMODS_SETUP_ENABLED_TRUE                                           1
+#define RFMXSPECAN_VAL_IM_AUTO_INTERMODS_SETUP_ENABLED_FALSE                                            0
+#define RFMXSPECAN_VAL_IM_AUTO_INTERMODS_SETUP_ENABLED_TRUE                                             1
 
 // Values for RFMXSPECAN_ATTR_IM_INTERMOD_ENABLED
-#define RFMXSPECAN_VAL_IM_INTERMOD_ENABLED_FALSE                                                      0
-#define RFMXSPECAN_VAL_IM_INTERMOD_ENABLED_TRUE                                                       1
+#define RFMXSPECAN_VAL_IM_INTERMOD_ENABLED_FALSE                                                        0
+#define RFMXSPECAN_VAL_IM_INTERMOD_ENABLED_TRUE                                                         1
 
 // Values for RFMXSPECAN_ATTR_IM_INTERMOD_SIDE
-#define RFMXSPECAN_VAL_IM_INTERMOD_SIDE_LOWER                                                         0
-#define RFMXSPECAN_VAL_IM_INTERMOD_SIDE_UPPER                                                         1
-#define RFMXSPECAN_VAL_IM_INTERMOD_SIDE_BOTH                                                          2
+#define RFMXSPECAN_VAL_IM_INTERMOD_SIDE_LOWER                                                           0
+#define RFMXSPECAN_VAL_IM_INTERMOD_SIDE_UPPER                                                           1
+#define RFMXSPECAN_VAL_IM_INTERMOD_SIDE_BOTH                                                            2
 
 // Values for RFMXSPECAN_ATTR_IM_MEASUREMENT_METHOD
-#define RFMXSPECAN_VAL_IM_MEASUREMENT_METHOD_NORMAL                                                   0
-#define RFMXSPECAN_VAL_IM_MEASUREMENT_METHOD_DYNAMIC_RANGE                                            1
-#define RFMXSPECAN_VAL_IM_MEASUREMENT_METHOD_SEGMENTED                                                2
+#define RFMXSPECAN_VAL_IM_MEASUREMENT_METHOD_NORMAL                                                     0
+#define RFMXSPECAN_VAL_IM_MEASUREMENT_METHOD_DYNAMIC_RANGE                                              1
+#define RFMXSPECAN_VAL_IM_MEASUREMENT_METHOD_SEGMENTED                                                  2
 
 // Values for RFMXSPECAN_ATTR_IM_LOCAL_PEAK_SEARCH_ENABLED
-#define RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_FALSE                                             0
-#define RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_TRUE                                              1
+#define RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_FALSE                                               0
+#define RFMXSPECAN_VAL_IM_LOCAL_PEAK_SEARCH_ENABLED_TRUE                                                1
 
 // Values for RFMXSPECAN_ATTR_IM_RBW_FILTER_AUTO_BANDWIDTH
-#define RFMXSPECAN_VAL_IM_RBW_FILTER_AUTO_BANDWIDTH_FALSE                                             0
-#define RFMXSPECAN_VAL_IM_RBW_FILTER_AUTO_BANDWIDTH_TRUE                                              1
+#define RFMXSPECAN_VAL_IM_RBW_FILTER_AUTO_BANDWIDTH_FALSE                                               0
+#define RFMXSPECAN_VAL_IM_RBW_FILTER_AUTO_BANDWIDTH_TRUE                                                1
 
 // Values for RFMXSPECAN_ATTR_IM_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_FFT_BASED                                                   0
-#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_GAUSSIAN                                                    1
-#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_FLAT                                                        2
+#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_FFT_BASED                                                     0
+#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_GAUSSIAN                                                      1
+#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_FLAT                                                          2
 
 // Values for RFMXSPECAN_ATTR_IM_SWEEP_TIME_AUTO
-#define RFMXSPECAN_VAL_IM_SWEEP_TIME_AUTO_FALSE                                                       0
-#define RFMXSPECAN_VAL_IM_SWEEP_TIME_AUTO_TRUE                                                        1
+#define RFMXSPECAN_VAL_IM_SWEEP_TIME_AUTO_FALSE                                                         0
+#define RFMXSPECAN_VAL_IM_SWEEP_TIME_AUTO_TRUE                                                          1
 
 // Values for RFMXSPECAN_ATTR_IM_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_IM_AVERAGING_ENABLED_FALSE                                                     0
-#define RFMXSPECAN_VAL_IM_AVERAGING_ENABLED_TRUE                                                      1
+#define RFMXSPECAN_VAL_IM_AVERAGING_ENABLED_FALSE                                                       0
+#define RFMXSPECAN_VAL_IM_AVERAGING_ENABLED_TRUE                                                        1
 
 // Values for RFMXSPECAN_ATTR_IM_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_RMS                                                          0
-#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_LOG                                                          1
-#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_SCALAR                                                       2
-#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_MAXIMUM                                                      3
-#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_MINIMUM                                                      4
+#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_RMS                                                            0
+#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_LOG                                                            1
+#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_SCALAR                                                         2
+#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_MAXIMUM                                                        3
+#define RFMXSPECAN_VAL_IM_AVERAGING_TYPE_MINIMUM                                                        4
 
 // Values for RFMXSPECAN_ATTR_IM_FFT_WINDOW
-#define RFMXSPECAN_VAL_IM_FFT_WINDOW_NONE                                                             0
-#define RFMXSPECAN_VAL_IM_FFT_WINDOW_FLAT_TOP                                                         1
-#define RFMXSPECAN_VAL_IM_FFT_WINDOW_HANNING                                                          2
-#define RFMXSPECAN_VAL_IM_FFT_WINDOW_HAMMING                                                          3
-#define RFMXSPECAN_VAL_IM_FFT_WINDOW_GAUSSIAN                                                         4
-#define RFMXSPECAN_VAL_IM_FFT_WINDOW_BLACKMAN                                                         5
-#define RFMXSPECAN_VAL_IM_FFT_WINDOW_BLACKMAN_HARRIS                                                  6
-#define RFMXSPECAN_VAL_IM_FFT_WINDOW_KAISER_BESSEL                                                    7
+#define RFMXSPECAN_VAL_IM_FFT_WINDOW_NONE                                                               0
+#define RFMXSPECAN_VAL_IM_FFT_WINDOW_FLAT_TOP                                                           1
+#define RFMXSPECAN_VAL_IM_FFT_WINDOW_HANNING                                                            2
+#define RFMXSPECAN_VAL_IM_FFT_WINDOW_HAMMING                                                            3
+#define RFMXSPECAN_VAL_IM_FFT_WINDOW_GAUSSIAN                                                           4
+#define RFMXSPECAN_VAL_IM_FFT_WINDOW_BLACKMAN                                                           5
+#define RFMXSPECAN_VAL_IM_FFT_WINDOW_BLACKMAN_HARRIS                                                    6
+#define RFMXSPECAN_VAL_IM_FFT_WINDOW_KAISER_BESSEL                                                      7
 
 // Values for RFMXSPECAN_ATTR_IM_IF_OUTPUT_POWER_OFFSET_AUTO
-#define RFMXSPECAN_VAL_IM_IF_OUTPUT_POWER_OFFSET_AUTO_FALSE                                           0
-#define RFMXSPECAN_VAL_IM_IF_OUTPUT_POWER_OFFSET_AUTO_TRUE                                            1
+#define RFMXSPECAN_VAL_IM_IF_OUTPUT_POWER_OFFSET_AUTO_FALSE                                             0
+#define RFMXSPECAN_VAL_IM_IF_OUTPUT_POWER_OFFSET_AUTO_TRUE                                              1
 
 // Values for RFMXSPECAN_ATTR_IM_AMPLITUDE_CORRECTION_TYPE
-#define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                               0
-#define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                            1
+#define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                                 0
+#define RFMXSPECAN_VAL_IM_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                              1
 
 // Values for RFMXSPECAN_ATTR_NF_DUT_TYPE
-#define RFMXSPECAN_VAL_NF_DUT_TYPE_AMPLIFIER                                                          0
-#define RFMXSPECAN_VAL_NF_DUT_TYPE_DOWNCONVERTER                                                      1
-#define RFMXSPECAN_VAL_NF_DUT_TYPE_UPCONVERTER                                                        2
+#define RFMXSPECAN_VAL_NF_DUT_TYPE_AMPLIFIER                                                            0
+#define RFMXSPECAN_VAL_NF_DUT_TYPE_DOWNCONVERTER                                                        1
+#define RFMXSPECAN_VAL_NF_DUT_TYPE_UPCONVERTER                                                          2
 
 // Values for RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT
-#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT_RF                                    0
-#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT_IF                                    1
+#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT_RF                                      0
+#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_FREQUENCY_CONTEXT_IF                                      1
 
 // Values for RFMXSPECAN_ATTR_NF_FREQUENCY_CONVERTER_SIDEBAND
-#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_SIDEBAND_LSB                                            0
-#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_SIDEBAND_USB                                            1
+#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_SIDEBAND_LSB                                              0
+#define RFMXSPECAN_VAL_NF_FREQUENCY_CONVERTER_SIDEBAND_USB                                              1
 
 // Values for RFMXSPECAN_ATTR_NF_AVERAGING_ENABLED
-#define RFMXSPECAN_VAL_NF_AVERAGING_ENABLED_FALSE                                                     0
-#define RFMXSPECAN_VAL_NF_AVERAGING_ENABLED_TRUE                                                      1
+#define RFMXSPECAN_VAL_NF_AVERAGING_ENABLED_FALSE                                                       0
+#define RFMXSPECAN_VAL_NF_AVERAGING_ENABLED_TRUE                                                        1
 
 // Values for RFMXSPECAN_ATTR_NF_EXTERNAL_PREAMP_PRESENT
-#define RFMXSPECAN_VAL_NF_EXTERNAL_PREAMP_PRESENT_FALSE                                               0
-#define RFMXSPECAN_VAL_NF_EXTERNAL_PREAMP_PRESENT_TRUE                                                1
+#define RFMXSPECAN_VAL_NF_EXTERNAL_PREAMP_PRESENT_FALSE                                                 0
+#define RFMXSPECAN_VAL_NF_EXTERNAL_PREAMP_PRESENT_TRUE                                                  1
 
 // Values for RFMXSPECAN_ATTR_NF_DUT_INPUT_LOSS_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_COMPENSATION_ENABLED_FALSE                                   0
-#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_COMPENSATION_ENABLED_TRUE                                    1
+#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_COMPENSATION_ENABLED_FALSE                                     0
+#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_COMPENSATION_ENABLED_TRUE                                      1
 
 // Values for RFMXSPECAN_ATTR_NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_FALSE                                  0
-#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_TRUE                                   1
+#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_FALSE                                    0
+#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_COMPENSATION_ENABLED_TRUE                                     1
 
 // Values for RFMXSPECAN_ATTR_NF_CALIBRATION_LOSS_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_COMPENSATION_ENABLED_FALSE                                 0
-#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_COMPENSATION_ENABLED_TRUE                                  1
+#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_COMPENSATION_ENABLED_FALSE                                   0
+#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_COMPENSATION_ENABLED_TRUE                                    1
 
 // Values for RFMXSPECAN_ATTR_NF_MEASUREMENT_METHOD
-#define RFMXSPECAN_VAL_NF_MEASUREMENT_METHOD_Y_FACTOR                                                 0
-#define RFMXSPECAN_VAL_NF_MEASUREMENT_METHOD_COLD_SOURCE                                              1
+#define RFMXSPECAN_VAL_NF_MEASUREMENT_METHOD_Y_FACTOR                                                   0
+#define RFMXSPECAN_VAL_NF_MEASUREMENT_METHOD_COLD_SOURCE                                                1
 
 // Values for RFMXSPECAN_ATTR_NF_Y_FACTOR_MODE
-#define RFMXSPECAN_VAL_NF_Y_FACTOR_MODE_MEASURE                                                       0
-#define RFMXSPECAN_VAL_NF_Y_FACTOR_MODE_CALIBRATE                                                     1
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_MODE_MEASURE                                                         0
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_MODE_CALIBRATE                                                       1
 
 // Values for RFMXSPECAN_ATTR_NF_Y_FACTOR_NOISE_SOURCE_TYPE
-#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_TYPE_EXTERNAL_NOISE_SOURCE                            0
-#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_TYPE_RF_SIGNAL_GENERATOR                              1
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_TYPE_EXTERNAL_NOISE_SOURCE                              0
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_TYPE_RF_SIGNAL_GENERATOR                                1
 
 // Values for RFMXSPECAN_ATTR_NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED
-#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_FALSE                       0
-#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_TRUE                        1
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_FALSE                         0
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_TRUE                          1
 
 // Values for RFMXSPECAN_ATTR_NF_COLD_SOURCE_MODE
-#define RFMXSPECAN_VAL_NF_COLD_SOURCE_MODE_MEASURE                                                    0
-#define RFMXSPECAN_VAL_NF_COLD_SOURCE_MODE_CALIBRATE                                                  1
+#define RFMXSPECAN_VAL_NF_COLD_SOURCE_MODE_MEASURE                                                      0
+#define RFMXSPECAN_VAL_NF_COLD_SOURCE_MODE_CALIBRATE                                                    1
 
 // Values for RFMXSPECAN_ATTR_PHASENOISE_RANGE_DEFINITION
-#define RFMXSPECAN_VAL_PHASENOISE_RANGE_DEFINITION_MANUAL                                             0
-#define RFMXSPECAN_VAL_PHASENOISE_RANGE_DEFINITION_AUTO                                               1
+#define RFMXSPECAN_VAL_PHASENOISE_RANGE_DEFINITION_MANUAL                                               0
+#define RFMXSPECAN_VAL_PHASENOISE_RANGE_DEFINITION_AUTO                                                 1
 
 // Values for RFMXSPECAN_ATTR_PHASENOISE_FFT_WINDOW
-#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_NONE                                                     0
-#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_FLAT_TOP                                                 1
-#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_HANNING                                                  2
-#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_HAMMING                                                  3
-#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_GAUSSIAN                                                 4
-#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_BLACKMAN                                                 5
-#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_BLACKMAN_HARRIS                                          6
-#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_KAISER_BESSEL                                            7
+#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_NONE                                                       0
+#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_FLAT_TOP                                                   1
+#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_HANNING                                                    2
+#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_HAMMING                                                    3
+#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_GAUSSIAN                                                   4
+#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_BLACKMAN                                                   5
+#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_BLACKMAN_HARRIS                                            6
+#define RFMXSPECAN_VAL_PHASENOISE_FFT_WINDOW_KAISER_BESSEL                                              7
 
 // Values for RFMXSPECAN_ATTR_PHASENOISE_SMOOTHING_TYPE
-#define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_NONE                                                 0
-#define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_LINEAR                                               1
-#define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_LOGARITHMIC                                          2
-#define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_MEDIAN                                               3
+#define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_NONE                                                   0
+#define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_LINEAR                                                 1
+#define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_LOGARITHMIC                                            2
+#define RFMXSPECAN_VAL_PHASENOISE_SMOOTHING_TYPE_MEDIAN                                                 3
 
 // Values for RFMXSPECAN_ATTR_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION
-#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_NONE                              0
-#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_MEASUREMENT                       1
-#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_CUSTOM                            2
+#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_NONE                                0
+#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_MEASUREMENT                         1
+#define RFMXSPECAN_VAL_PHASENOISE_INTEGRATED_NOISE_RANGE_DEFINITION_CUSTOM                              2
 
 // Values for RFMXSPECAN_ATTR_PHASENOISE_SPUR_REMOVAL_ENABLED
-#define RFMXSPECAN_VAL_PHASENOISE_SPUR_REMOVAL_ENABLED_FALSE                                          0
-#define RFMXSPECAN_VAL_PHASENOISE_SPUR_REMOVAL_ENABLED_TRUE                                           1
+#define RFMXSPECAN_VAL_PHASENOISE_SPUR_REMOVAL_ENABLED_FALSE                                            0
+#define RFMXSPECAN_VAL_PHASENOISE_SPUR_REMOVAL_ENABLED_TRUE                                             1
 
 // Values for RFMXSPECAN_ATTR_PHASENOISE_CANCELLATION_ENABLED
-#define RFMXSPECAN_VAL_PHASENOISE_CANCELLATION_ENABLED_FALSE                                          0
-#define RFMXSPECAN_VAL_PHASENOISE_CANCELLATION_ENABLED_TRUE                                           1
+#define RFMXSPECAN_VAL_PHASENOISE_CANCELLATION_ENABLED_FALSE                                            0
+#define RFMXSPECAN_VAL_PHASENOISE_CANCELLATION_ENABLED_TRUE                                             1
 
 // Values for RFMXSPECAN_ATTR_PAVT_MEASUREMENT_LOCATION_TYPE
-#define RFMXSPECAN_VAL_PAVT_MEASUREMENT_LOCATION_TYPE_TIME                                            0
-#define RFMXSPECAN_VAL_PAVT_MEASUREMENT_LOCATION_TYPE_TRIGGER                                         1
+#define RFMXSPECAN_VAL_PAVT_MEASUREMENT_LOCATION_TYPE_TIME                                              0
+#define RFMXSPECAN_VAL_PAVT_MEASUREMENT_LOCATION_TYPE_TRIGGER                                           1
 
 // Values for RFMXSPECAN_ATTR_PAVT_MEASUREMENT_INTERVAL_MODE
-#define RFMXSPECAN_VAL_PAVT_MEASUREMENT_INTERVAL_MODE_UNIFORM                                         0
-#define RFMXSPECAN_VAL_PAVT_MEASUREMENT_INTERVAL_MODE_VARIABLE                                        1
+#define RFMXSPECAN_VAL_PAVT_MEASUREMENT_INTERVAL_MODE_UNIFORM                                           0
+#define RFMXSPECAN_VAL_PAVT_MEASUREMENT_INTERVAL_MODE_VARIABLE                                          1
 
 // Values for RFMXSPECAN_ATTR_PAVT_SEGMENT_TYPE
-#define RFMXSPECAN_VAL_PAVT_SEGMENT_TYPE_PHASE_AND_AMPLITUDE                                          0
-#define RFMXSPECAN_VAL_PAVT_SEGMENT_TYPE_AMPLITUDE                                                    1
-#define RFMXSPECAN_VAL_PAVT_SEGMENT_TYPE_FREQUENCY_ERROR_MEASUREMENT                                  2
+#define RFMXSPECAN_VAL_PAVT_SEGMENT_TYPE_PHASE_AND_AMPLITUDE                                            0
+#define RFMXSPECAN_VAL_PAVT_SEGMENT_TYPE_AMPLITUDE                                                      1
+#define RFMXSPECAN_VAL_PAVT_SEGMENT_TYPE_FREQUENCY_ERROR_MEASUREMENT                                    2
 
 // Values for RFMXSPECAN_ATTR_PAVT_PHASE_UNWRAP_ENABLED
-#define RFMXSPECAN_VAL_PAVT_PHASE_UNWRAP_ENABLED_FALSE                                                0
-#define RFMXSPECAN_VAL_PAVT_PHASE_UNWRAP_ENABLED_TRUE                                                 1
+#define RFMXSPECAN_VAL_PAVT_PHASE_UNWRAP_ENABLED_FALSE                                                  0
+#define RFMXSPECAN_VAL_PAVT_PHASE_UNWRAP_ENABLED_TRUE                                                   1
 
 // Values for RFMXSPECAN_ATTR_PAVT_FREQUENCY_OFFSET_CORRECTION_ENABLED
-#define RFMXSPECAN_VAL_PAVT_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                 0
-#define RFMXSPECAN_VAL_PAVT_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                  1
+#define RFMXSPECAN_VAL_PAVT_FREQUENCY_OFFSET_CORRECTION_ENABLED_FALSE                                   0
+#define RFMXSPECAN_VAL_PAVT_FREQUENCY_OFFSET_CORRECTION_ENABLED_TRUE                                    1
 
 // Values for RFMXSPECAN_ATTR_PAVT_FREQUENCY_TRACKING_ENABLED
-#define RFMXSPECAN_VAL_PAVT_FREQUENCY_TRACKING_ENABLED_FALSE                                          0
-#define RFMXSPECAN_VAL_PAVT_FREQUENCY_TRACKING_ENABLED_TRUE                                           1
+#define RFMXSPECAN_VAL_PAVT_FREQUENCY_TRACKING_ENABLED_FALSE                                            0
+#define RFMXSPECAN_VAL_PAVT_FREQUENCY_TRACKING_ENABLED_TRUE                                             1
 
 // Values for RFMXSPECAN_ATTR_LIMITED_CONFIGURATION_CHANGE
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                          0
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE                                         1
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY                                         2
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL                                   3
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
-#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                            0
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE                                           1
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY                                           2
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL                                     3
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                       4
+#define RFMXSPECAN_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL        5
 
 // Values for AmpmReferenceWaveformIdleDurationPresent
-#define RFMXSPECAN_VAL_AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                            0
-#define RFMXSPECAN_VAL_AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                             1
+#define RFMXSPECAN_VAL_AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                              0
+#define RFMXSPECAN_VAL_AMPM_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                               1
 
 // Values for DpdReferenceWaveformIdleDurationPresent
-#define RFMXSPECAN_VAL_DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                             0
-#define RFMXSPECAN_VAL_DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                              1
+#define RFMXSPECAN_VAL_DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE                               0
+#define RFMXSPECAN_VAL_DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE                                1
 
 // Values for MarkerNextPeak
-#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_HIGHEST                                                  0
-#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_LEFT                                                     1
-#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_RIGHT                                                    2
+#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_HIGHEST                                                    0
+#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_LEFT                                                       1
+#define RFMXSPECAN_VAL_MARKER_NEXT_PEAK_NEXT_RIGHT                                                      2
 
 // Values for MeasurementTypes
-#define RFMXSPECAN_VAL_ACP                                                                            1<<0
-#define RFMXSPECAN_VAL_CCDF                                                                           1<<1
-#define RFMXSPECAN_VAL_CHP                                                                            1<<2
-#define RFMXSPECAN_VAL_FCNT                                                                           1<<3
-#define RFMXSPECAN_VAL_HARMONICS                                                                      1<<4
-#define RFMXSPECAN_VAL_OBW                                                                            1<<5
-#define RFMXSPECAN_VAL_SEM                                                                            1<<6
-#define RFMXSPECAN_VAL_SPECTRUM                                                                       1<<7
-#define RFMXSPECAN_VAL_SPUR                                                                           1<<8
-#define RFMXSPECAN_VAL_TXP                                                                            1<<9
-#define RFMXSPECAN_VAL_AMPM                                                                           1<<10
-#define RFMXSPECAN_VAL_DPD                                                                            1<<11
-#define RFMXSPECAN_VAL_IQ                                                                             1<<12
-#define RFMXSPECAN_VAL_IM                                                                             1<<13
-#define RFMXSPECAN_VAL_NF                                                                             1<<14
-#define RFMXSPECAN_VAL_PHASENOISE                                                                     1<<15
-#define RFMXSPECAN_VAL_PAVT                                                                           1<<16
-#define RFMXSPECAN_VAL_IDPD                                                                           1<<17
-#define RFMXSPECAN_VAL_POWERLIST                                                                      1<<18
+#define RFMXSPECAN_VAL_ACP                                                                              1<<0
+#define RFMXSPECAN_VAL_CCDF                                                                             1<<1
+#define RFMXSPECAN_VAL_CHP                                                                              1<<2
+#define RFMXSPECAN_VAL_FCNT                                                                             1<<3
+#define RFMXSPECAN_VAL_HARMONICS                                                                        1<<4
+#define RFMXSPECAN_VAL_OBW                                                                              1<<5
+#define RFMXSPECAN_VAL_SEM                                                                              1<<6
+#define RFMXSPECAN_VAL_SPECTRUM                                                                         1<<7
+#define RFMXSPECAN_VAL_SPUR                                                                             1<<8
+#define RFMXSPECAN_VAL_TXP                                                                              1<<9
+#define RFMXSPECAN_VAL_AMPM                                                                             1<<10
+#define RFMXSPECAN_VAL_DPD                                                                              1<<11
+#define RFMXSPECAN_VAL_IQ                                                                               1<<12
+#define RFMXSPECAN_VAL_IM                                                                               1<<13
+#define RFMXSPECAN_VAL_NF                                                                               1<<14
+#define RFMXSPECAN_VAL_PHASENOISE                                                                       1<<15
+#define RFMXSPECAN_VAL_PAVT                                                                             1<<16
+#define RFMXSPECAN_VAL_IDPD                                                                             1<<17
+#define RFMXSPECAN_VAL_POWERLIST                                                                        1<<18
 
 // Values for SpectrumNoiseCalibrationDataValid
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_DATA_VALID_FALSE                                    0
-#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_DATA_VALID_TRUE                                     1
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_DATA_VALID_FALSE                                      0
+#define RFMXSPECAN_VAL_SPECTRUM_NOISE_CALIBRATION_DATA_VALID_TRUE                                       1
 
 // Values for ChpNoiseCalibrationDataValid
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
-#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_FALSE                                           0
+#define RFMXSPECAN_VAL_CHP_NOISE_CALIBRATION_DATA_VALID_TRUE                                            1
 
 // Values for AcpNoiseCalibrationDataValid
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_FALSE                                         0
-#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_TRUE                                          1
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_FALSE                                           0
+#define RFMXSPECAN_VAL_ACP_NOISE_CALIBRATION_DATA_VALID_TRUE                                            1
 
 // Values for NFCalibrationDataValid
-#define RFMXSPECAN_VAL_NF_CALIBRATION_DATA_VALID_FALSE                                                0
-#define RFMXSPECAN_VAL_NF_CALIBRATION_DATA_VALID_TRUE                                                 1
+#define RFMXSPECAN_VAL_NF_CALIBRATION_DATA_VALID_FALSE                                                  0
+#define RFMXSPECAN_VAL_NF_CALIBRATION_DATA_VALID_TRUE                                                   1
 
 // Values for DpdApplyDpdIdleDurationPresent
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_IDLE_DURATION_PRESENT_FALSE                                      0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_IDLE_DURATION_PRESENT_TRUE                                       1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_IDLE_DURATION_PRESENT_FALSE                                        0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_IDLE_DURATION_PRESENT_TRUE                                         1
 
 // Values for MarkerPeakExcursionEnabled
-#define RFMXSPECAN_VAL_MARKER_PEAK_EXCURSION_ENABLED_FALSE                                            0
-#define RFMXSPECAN_VAL_MARKER_PEAK_EXCURSION_ENABLED_TRUE                                             1
+#define RFMXSPECAN_VAL_MARKER_PEAK_EXCURSION_ENABLED_FALSE                                              0
+#define RFMXSPECAN_VAL_MARKER_PEAK_EXCURSION_ENABLED_TRUE                                               1
 
 // Values for MarkerType
-#define RFMXSPECAN_VAL_MARKER_TYPE_OFF                                                                0
-#define RFMXSPECAN_VAL_MARKER_TYPE_NORMAL                                                             1
-#define RFMXSPECAN_VAL_MARKER_TYPE_DELTA                                                              3
-#define RFMXSPECAN_VAL_MARKER_TYPE_FIXED                                                              4
+#define RFMXSPECAN_VAL_MARKER_TYPE_OFF                                                                  0
+#define RFMXSPECAN_VAL_MARKER_TYPE_NORMAL                                                               1
+#define RFMXSPECAN_VAL_MARKER_TYPE_DELTA                                                                3
+#define RFMXSPECAN_VAL_MARKER_TYPE_FIXED                                                                4
 
 // Values for MarkerTrace
-#define RFMXSPECAN_VAL_MARKER_TRACE_ACP_SPECTRUM                                                      0
-#define RFMXSPECAN_VAL_MARKER_TRACE_CCDF_GAUSSIAN_PROBABILITIES_TRACE                                 1
-#define RFMXSPECAN_VAL_MARKER_TRACE_CCDF_PROBABILITIES_TRACE                                          2
-#define RFMXSPECAN_VAL_MARKER_TRACE_CHP_SPECTRUM                                                      3
-#define RFMXSPECAN_VAL_MARKER_TRACE_FCNT_POWER_TRACE                                                  4
-#define RFMXSPECAN_VAL_MARKER_TRACE_OBW_SPECTRUM                                                      5
-#define RFMXSPECAN_VAL_MARKER_TRACE_SEM_SPECTRUM                                                      6
-#define RFMXSPECAN_VAL_MARKER_TRACE_SPECTRUM                                                          7
-#define RFMXSPECAN_VAL_MARKER_TRACE_TXP_POWER_TRACE                                                   8
+#define RFMXSPECAN_VAL_MARKER_TRACE_ACP_SPECTRUM                                                        0
+#define RFMXSPECAN_VAL_MARKER_TRACE_CCDF_GAUSSIAN_PROBABILITIES_TRACE                                   1
+#define RFMXSPECAN_VAL_MARKER_TRACE_CCDF_PROBABILITIES_TRACE                                            2
+#define RFMXSPECAN_VAL_MARKER_TRACE_CHP_SPECTRUM                                                        3
+#define RFMXSPECAN_VAL_MARKER_TRACE_FCNT_POWER_TRACE                                                    4
+#define RFMXSPECAN_VAL_MARKER_TRACE_OBW_SPECTRUM                                                        5
+#define RFMXSPECAN_VAL_MARKER_TRACE_SEM_SPECTRUM                                                        6
+#define RFMXSPECAN_VAL_MARKER_TRACE_SPECTRUM                                                            7
+#define RFMXSPECAN_VAL_MARKER_TRACE_TXP_POWER_TRACE                                                     8
 
 // Values for MarkerThresholdEnabled
-#define RFMXSPECAN_VAL_MARKER_THRESHOLD_ENABLED_FALSE                                                 0
-#define RFMXSPECAN_VAL_MARKER_THRESHOLD_ENABLED_TRUE                                                  1
+#define RFMXSPECAN_VAL_MARKER_THRESHOLD_ENABLED_FALSE                                                   0
+#define RFMXSPECAN_VAL_MARKER_THRESHOLD_ENABLED_TRUE                                                    1
 
 // Values for Boolean
-#define RFMXSPECAN_VAL_FALSE                                                                          0
-#define RFMXSPECAN_VAL_TRUE                                                                           1
+#define RFMXSPECAN_VAL_FALSE                                                                            0
+#define RFMXSPECAN_VAL_TRUE                                                                             1
 
 // Values for RFAttenuationAuto
-#define RFMXSPECAN_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
-#define RFMXSPECAN_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
+#define RFMXSPECAN_VAL_RF_ATTENUATION_AUTO_FALSE                                                        0
+#define RFMXSPECAN_VAL_RF_ATTENUATION_AUTO_TRUE                                                         1
 
 // Values for MechanicalAttenuationAuto
-#define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
-#define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
+#define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                                0
+#define RFMXSPECAN_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                                 1
 
 // Values for RFMXSPECAN_ATTR_MARKER_FUNCTION_TYPE
-#define RFMXSPECAN_VAL_MARKER_FUNCTION_TYPE_OFF                                                       0
-#define RFMXSPECAN_VAL_MARKER_FUNCTION_TYPE_BAND_POWER                                                1
+#define RFMXSPECAN_VAL_MARKER_FUNCTION_TYPE_OFF                                                         0
+#define RFMXSPECAN_VAL_MARKER_FUNCTION_TYPE_BAND_POWER                                                  1
 
 // Values for FrequencyReferenceSource
-#define RFMXSPECAN_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
-#define RFMXSPECAN_VAL_REF_IN_STR                                                                     "RefIn"
-#define RFMXSPECAN_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
-#define RFMXSPECAN_VAL_CLK_IN_STR                                                                     "ClkIn"
+#define RFMXSPECAN_VAL_ONBOARD_CLOCK_STR                                                                "OnboardClock"
+#define RFMXSPECAN_VAL_REF_IN_STR                                                                       "RefIn"
+#define RFMXSPECAN_VAL_PXI_CLK_STR                                                                      "PXI_Clk"
+#define RFMXSPECAN_VAL_CLK_IN_STR                                                                       "ClkIn"
 
 // Values for NFDutInputLossS2pSParameterOrientation
-#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT                0
-#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT                1
+#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT                  0
+#define RFMXSPECAN_VAL_NF_DUT_INPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT                  1
 
 // Values for NFDutOutputLossS2pSParameterOrientation
-#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT               0
-#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT               1
+#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT                 0
+#define RFMXSPECAN_VAL_NF_DUT_OUTPUT_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT                 1
 
 // Values for NFCalibrationLossS2pSParameterOrientation
-#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT              0
-#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT              1
+#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT                0
+#define RFMXSPECAN_VAL_NF_CALIBRATION_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT                1
 
 // Values for NFColdSourceDutS2pSParameterOrientation
-#define RFMXSPECAN_VAL_NF_COLD_SOURCE_DUT_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT               0
-#define RFMXSPECAN_VAL_NF_COLD_SOURCE_DUT_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT               1
+#define RFMXSPECAN_VAL_NF_COLD_SOURCE_DUT_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT                 0
+#define RFMXSPECAN_VAL_NF_COLD_SOURCE_DUT_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT                 1
+
+// Values for NFYFactorNoiseSourceLossS2pSParameterOrientation
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT      0
+#define RFMXSPECAN_VAL_NF_Y_FACTOR_NOISE_SOURCE_LOSS_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT      1
+
+// Values for NFExternalPreampGainS2pSParameterOrientation
+#define RFMXSPECAN_VAL_NF_EXTERNAL_PREAMP_GAIN_S2P_S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT            0
+#define RFMXSPECAN_VAL_NF_EXTERNAL_PREAMP_GAIN_S2P_S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT            1
 
 /* ---------------- RFmxSpecAn APIs ------------------ */
 
@@ -4477,6 +4485,30 @@ int32 __stdcall RFmxSpecAn_NFLoadColdSourceDUTSParametersFromS2p(
    char selectorString[],
    char DUTSParametersS2pFilePath[],
    int32 DUTSParameterOrientation
+);
+
+int32 __stdcall RFmxSpecAn_NFLoadYFactorNoiseSourceLossFromS2p(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 noiseSourceLossCompensationEnabled,
+   char noiseSourceLossS2pFilePath[],
+   int32 noiseSourceLossSParameterOrientation,
+   float64 noiseSourceLossTemperature
+);
+
+int32 __stdcall RFmxSpecAn_NFLoadColdSourceInputTerminationFromS1p(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char terminationS1pFilePath[],
+   float64 terminationTemperature
+);
+
+int32 __stdcall RFmxSpecAn_NFLoadExternalPreampGainFromS2p(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 externalPreampPresent,
+   char externalPreampGainS2pFilePath[],
+   int32 externalPreampGainSParameterOrientation
 );
 
 int32 __stdcall RFmxSpecAn_SpectrumCfgFrequencyStartStop(
@@ -13771,104 +13803,104 @@ int32 __stdcall RFmxSpecAn_PowerListGetResultsMinimumPower(
 #define RFMXSPECAN_ATTR_PAVT_MEASUREMENT_START_TIME                                    0x00107004
 
 // Values for RFMXSPECAN_ATTR_ACP_OFFSET_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_ACP_RRC_FILTER_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_ACP_RRC_FILTER_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_ACP_RRC_FILTER_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_ACP_RRC_FILTER_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_ACP_OFFSET_ENABLED
-#define RFMXSPECAN_VAL_ACP_OFFSET_ENABLED_FALSE                                                       0
-#define RFMXSPECAN_VAL_ACP_OFFSET_ENABLED_TRUE                                                        1
+#define RFMXSPECAN_VAL_ACP_OFFSET_ENABLED_FALSE                                                         0
+#define RFMXSPECAN_VAL_ACP_OFFSET_ENABLED_TRUE                                                          1
 
 // Values for RFMXSPECAN_ATTR_CHP_RRC_FILTER_ENABLED
-#define RFMXSPECAN_VAL_CHP_RRC_FILTER_ENABLED_FALSE                                                   0
-#define RFMXSPECAN_VAL_CHP_RRC_FILTER_ENABLED_TRUE                                                    1
+#define RFMXSPECAN_VAL_CHP_RRC_FILTER_ENABLED_FALSE                                                     0
+#define RFMXSPECAN_VAL_CHP_RRC_FILTER_ENABLED_TRUE                                                      1
 
 // Values for RFMXSPECAN_ATTR_SEM_RESULTS_COMPOSITE_MEASUREMENT_STATUS
-#define RFMXSPECAN_VAL_SEM_MEASUREMENT_STATUS_FAIL                                                    0
-#define RFMXSPECAN_VAL_SEM_MEASUREMENT_STATUS_PASS                                                    1
+#define RFMXSPECAN_VAL_SEM_MEASUREMENT_STATUS_FAIL                                                      0
+#define RFMXSPECAN_VAL_SEM_MEASUREMENT_STATUS_PASS                                                      1
 
 // Values for RFMXSPECAN_ATTR_ACP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_SYNCH_TUNED_4                                              3
-#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_SYNCH_TUNED_5                                              4
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_SYNCH_TUNED_4                                                3
+#define RFMXSPECAN_VAL_ACP_RBW_FILTER_TYPE_SYNCH_TUNED_5                                                4
 
 // Values for RFMXSPECAN_ATTR_CCDF_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_SYNCH_TUNED_4                                             3
-#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_SYNCH_TUNED_5                                             4
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_SYNCH_TUNED_4                                               3
+#define RFMXSPECAN_VAL_CCDF_RBW_FILTER_TYPE_SYNCH_TUNED_5                                               4
 
 // Values for RFMXSPECAN_ATTR_CHP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_SYNCH_TUNED_4                                              3
-#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_SYNCH_TUNED_5                                              4
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_SYNCH_TUNED_4                                                3
+#define RFMXSPECAN_VAL_CHP_RBW_FILTER_TYPE_SYNCH_TUNED_5                                                4
 
 // Values for RFMXSPECAN_ATTR_FCNT_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_SYNCH_TUNED_4                                             3
-#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_SYNCH_TUNED_5                                             4
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_SYNCH_TUNED_4                                               3
+#define RFMXSPECAN_VAL_FCNT_RBW_FILTER_TYPE_SYNCH_TUNED_5                                               4
 
 // Values for RFMXSPECAN_ATTR_HARM_FUNDAMENTAL_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_SYNCH_TUNED_4                                             3
-#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_SYNCH_TUNED_5                                             4
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_SYNCH_TUNED_4                                               3
+#define RFMXSPECAN_VAL_HARM_RBW_FILTER_TYPE_SYNCH_TUNED_5                                               4
 
 // Values for RFMXSPECAN_ATTR_IM_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_SYNCH_TUNED_4                                               3
-#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_SYNCH_TUNED_5                                               4
+#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_SYNCH_TUNED_4                                                 3
+#define RFMXSPECAN_VAL_IM_RBW_FILTER_TYPE_SYNCH_TUNED_5                                                 4
 
 // Values for RFMXSPECAN_ATTR_OBW_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_SYNCH_TUNED_4                                              3
-#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_SYNCH_TUNED_5                                              4
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_SYNCH_TUNED_4                                                3
+#define RFMXSPECAN_VAL_OBW_RBW_FILTER_TYPE_SYNCH_TUNED_5                                                4
 
 // Values for RFMXSPECAN_ATTR_SEM_OFFSET_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_SYNCH_TUNED_4                                              3
-#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_SYNCH_TUNED_5                                              4
+#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_SYNCH_TUNED_4                                                3
+#define RFMXSPECAN_VAL_SEM_RBW_FILTER_TYPE_SYNCH_TUNED_5                                                4
 
 // Values for RFMXSPECAN_ATTR_SEM_CARRIER_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_SYNCH_TUNED_4                                      3
-#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_SYNCH_TUNED_5                                      4
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_SYNCH_TUNED_4                                        3
+#define RFMXSPECAN_VAL_SEM_CARRIER_RBW_FILTER_TYPE_SYNCH_TUNED_5                                        4
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_SYNCH_TUNED_4                                         3
-#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_SYNCH_TUNED_5                                         4
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_SYNCH_TUNED_4                                           3
+#define RFMXSPECAN_VAL_SPECTRUM_RBW_FILTER_TYPE_SYNCH_TUNED_5                                           4
 
 // Values for RFMXSPECAN_ATTR_SPUR_RANGE_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_SYNCH_TUNED_4                                             3
-#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_SYNCH_TUNED_5                                             4
+#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_SYNCH_TUNED_4                                               3
+#define RFMXSPECAN_VAL_SPUR_RBW_FILTER_TYPE_SYNCH_TUNED_5                                               4
 
 // Values for RFMXSPECAN_ATTR_TXP_RBW_FILTER_TYPE
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_SYNCH_TUNED_4                                              3
-#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_SYNCH_TUNED_5                                              4
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_SYNCH_TUNED_4                                                3
+#define RFMXSPECAN_VAL_TXP_RBW_FILTER_TYPE_SYNCH_TUNED_5                                                4
 
 // Values for RFMXSPECAN_ATTR_DPD_APPLY_DPD_HEADROOM_MODE
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_HEADROOM_MODE_OFF                                                0
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_HEADROOM_MODE_AUTO                                               1
-#define RFMXSPECAN_VAL_DPD_APPLY_DPD_HEADROOM_MODE_MANUAL                                             2
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_HEADROOM_MODE_OFF                                                  0
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_HEADROOM_MODE_AUTO                                                 1
+#define RFMXSPECAN_VAL_DPD_APPLY_DPD_HEADROOM_MODE_MANUAL                                               2
 
 // Values for RFMXSPECAN_ATTR_ACP_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_VECTOR                                                      5
+#define RFMXSPECAN_VAL_ACP_AVERAGING_TYPE_VECTOR                                                        5
 
 // Values for RFMXSPECAN_ATTR_SEM_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_VECTOR                                                      5
+#define RFMXSPECAN_VAL_SEM_AVERAGING_TYPE_VECTOR                                                        5
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_VECTOR                                                 5
+#define RFMXSPECAN_VAL_SPECTRUM_AVERAGING_TYPE_VECTOR                                                   5
 
 // Values for RFMXSPECAN_ATTR_SPUR_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_VECTOR                                                     5
+#define RFMXSPECAN_VAL_SPUR_AVERAGING_TYPE_VECTOR                                                       5
 
 // Values for RFMXSPECAN_ATTR_OBW_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_VECTOR                                                      5
+#define RFMXSPECAN_VAL_OBW_AVERAGING_TYPE_VECTOR                                                        5
 
 // Values for RFMXSPECAN_ATTR_CHP_AVERAGING_TYPE
-#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_VECTOR                                                      5
+#define RFMXSPECAN_VAL_CHP_AVERAGING_TYPE_VECTOR                                                        5
 
 // Values for RFMXSPECAN_ATTR_SPECTRUM_POWER_UNITS
-#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_REFERENCE_LEVEL_UNITS                                     9
+#define RFMXSPECAN_VAL_SPECTRUM_POWER_UNITS_REFERENCE_LEVEL_UNITS                                       9
 
 // Values for RFMXSPECAN_ATTR_REFERENCE_LEVEL_UNITS
-#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBM                                                      0
-#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBW                                                      2
-#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBV                                                      3
-#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBMV                                                     4
-#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBUV                                                     5
-#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_WATTS                                                    6
-#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_VOLTS                                                    7
-#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_VOLTS_SQUARED                                            8
+#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBM                                                        0
+#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBW                                                        2
+#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBV                                                        3
+#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBMV                                                       4
+#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_DBUV                                                       5
+#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_WATTS                                                      6
+#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_VOLTS                                                      7
+#define RFMXSPECAN_VAL_REFERENCE_LEVEL_UNITS_VOLTS_SQUARED                                              8
 
 #ifdef __cplusplus
 extern "C"

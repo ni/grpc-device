@@ -222,12 +222,18 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HE_SIG_A_PEAK_POWER_MAXIMUM              0x00a04047
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_U_SIG_AVERAGE_POWER_MEAN                 0x00a040c0
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_U_SIG_PEAK_POWER_MAXIMUM                 0x00a040c1
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_ELR_MARK_AVERAGE_POWER_MEAN              0x00a040de
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_ELR_MARK_PEAK_POWER_MAXIMUM              0x00a040df
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_VHT_SIG_B_AVERAGE_POWER_MEAN             0x00a04048
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_VHT_SIG_B_PEAK_POWER_MAXIMUM             0x00a04049
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HE_SIG_B_AVERAGE_POWER_MEAN              0x00a0404a
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HE_SIG_B_PEAK_POWER_MAXIMUM              0x00a0404b
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_EHT_SIG_AVERAGE_POWER_MEAN               0x00a040c2
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_EHT_SIG_PEAK_POWER_MAXIMUM               0x00a040c3
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_UHR_SIG_AVERAGE_POWER_MEAN               0x00a040da
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_UHR_SIG_PEAK_POWER_MAXIMUM               0x00a040db
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_ELR_SIG_AVERAGE_POWER_MEAN               0x00a040dc
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_ELR_SIG_PEAK_POWER_MAXIMUM               0x00a040dd
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_STF_AVERAGE_POWER_MEAN                0x00a0404c
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_STF_PEAK_POWER_MAXIMUM                0x00a0404d
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_GF_STF_AVERAGE_POWER_MEAN             0x00a0404e
@@ -238,6 +244,8 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HE_STF_PEAK_POWER_MAXIMUM                0x00a04053
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_EHT_STF_AVERAGE_POWER_MEAN               0x00a040c4
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_EHT_STF_PEAK_POWER_MAXIMUM               0x00a040c5
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_UHR_STF_AVERAGE_POWER_MEAN               0x00a040d6
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_UHR_STF_PEAK_POWER_MAXIMUM               0x00a040d7
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_DLTF_AVERAGE_POWER_MEAN               0x00a04054
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_DLTF_PEAK_POWER_MAXIMUM               0x00a04055
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HT_ELTF_AVERAGE_POWER_MEAN               0x00a04056
@@ -248,6 +256,8 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_HE_LTF_PEAK_POWER_MAXIMUM                0x00a0405b
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_EHT_LTF_AVERAGE_POWER_MEAN               0x00a040c6
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_EHT_LTF_PEAK_POWER_MAXIMUM               0x00a040c7
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_UHR_LTF_AVERAGE_POWER_MEAN               0x00a040d8
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_UHR_LTF_PEAK_POWER_MAXIMUM               0x00a040d9
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_DATA_AVERAGE_POWER_MEAN                  0x00a0405c
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_DATA_PEAK_POWER_MAXIMUM                  0x00a0405d
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_PE_AVERAGE_POWER_MEAN                    0x00a0405e
@@ -5003,6 +5013,18 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUSIGPeakPowerMaximum(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsELRMARKAveragePowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsELRMARKPeakPowerMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsVHTSIGBAveragePowerMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5034,6 +5056,30 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsEHTSIGAveragePowerMean(
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsEHTSIGPeakPowerMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUHRSIGAveragePowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUHRSIGPeakPowerMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsELRSIGAveragePowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsELRSIGPeakPowerMaximum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
@@ -5099,6 +5145,18 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsEHTSTFPeakPowerMaximum(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUHRSTFAveragePowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUHRSTFPeakPowerMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsHTDLTFAveragePowerMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5154,6 +5212,18 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsEHTLTFAveragePowerMean(
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsEHTLTFPeakPowerMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUHRLTFAveragePowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUHRLTFPeakPowerMaximum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
