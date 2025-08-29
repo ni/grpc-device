@@ -29,6 +29,26 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'ChangeExternalCalibrationPassword': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'oldPassword',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'newPassword',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'CheckAttributeViBoolean': {
         'parameters': [
             {
@@ -43,7 +63,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -68,7 +88,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -93,7 +113,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -118,7 +138,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -143,7 +163,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -168,7 +188,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -423,7 +443,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'TriggerSource',
+                'enum': 'StartTriggerSource',
                 'name': 'source',
                 'type': 'ViConstString'
             },
@@ -445,7 +465,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'TriggerSource',
+                'enum': 'StartTriggerSource',
                 'name': 'source',
                 'type': 'ViConstString'
             },
@@ -473,7 +493,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'TriggerSource',
+                'enum': 'StartTriggerSource',
                 'name': 'source',
                 'type': 'ViConstString'
             },
@@ -790,7 +810,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sparameterTableSize',
-                'type': 'ViInt32'
+                'type': 'ViInt32',
+                'include_in_proto': True
             },
             {
                 'direction': 'in',
@@ -1031,6 +1052,98 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetAllNamedWaveformNames': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'waveformNames',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualBufferSize',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetAllScriptNames': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'scriptNames',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualBufferSize',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetScript': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'scriptName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'out',
+                'name': 'Script',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
+                },
+                'type': 'ViChar[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'bufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualBufferSize',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetAttributeViBoolean': {
         'parameters': [
             {
@@ -1045,7 +1158,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -1070,7 +1183,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -1095,7 +1208,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -1120,7 +1233,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -1145,7 +1258,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -1170,7 +1283,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -1255,6 +1368,21 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetDeembeddingTableNumberOfPorts': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfPorts',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetError': {
         'parameters': [
             {
@@ -1320,6 +1448,21 @@ functions = {
                 'direction': 'out',
                 'name': 'second',
                 'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'GetMaxSettablePower': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'value',
+                'type': 'ViReal64'
             }
         ],
         'returns': 'ViStatus'
@@ -1641,7 +1784,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'vi',
+                'name': 'newVi',
                 'type': 'ViSession'
             },
             {
@@ -2064,7 +2207,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -2089,7 +2232,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -2114,7 +2257,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -2139,7 +2282,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -2164,7 +2307,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
@@ -2189,7 +2332,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attributeId',
+                'name': 'attribute',
                 'type': 'ViAttr'
             },
             {
