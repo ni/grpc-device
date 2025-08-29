@@ -86,8 +86,6 @@ NiDmmLibrary::NiDmmLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface
   function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_->get_function_pointer("niDMM_GetExtCalRecommendedInterval"));
   function_pointers_.GetLastCalTemp = reinterpret_cast<GetLastCalTempPtr>(shared_library_->get_function_pointer("niDMM_GetLastCalTemp"));
   function_pointers_.GetMeasurementPeriod = reinterpret_cast<GetMeasurementPeriodPtr>(shared_library_->get_function_pointer("niDMM_GetMeasurementPeriod"));
-  function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_->get_function_pointer("niDMM_GetNextCoercionRecord"));
-  function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_->get_function_pointer("niDMM_GetNextInterchangeWarning"));
   function_pointers_.GetSelfCalSupported = reinterpret_cast<GetSelfCalSupportedPtr>(shared_library_->get_function_pointer("niDMM_GetSelfCalSupported"));
   function_pointers_.ImportAttributeConfigurationBuffer = reinterpret_cast<ImportAttributeConfigurationBufferPtr>(shared_library_->get_function_pointer("niDMM_ImportAttributeConfigurationBuffer"));
   function_pointers_.ImportAttributeConfigurationFile = reinterpret_cast<ImportAttributeConfigurationFilePtr>(shared_library_->get_function_pointer("niDMM_ImportAttributeConfigurationFile"));
@@ -116,8 +114,8 @@ NiDmmLibrary::NiDmmLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterface
   function_pointers_.SetAttributeViReal64 = reinterpret_cast<SetAttributeViReal64Ptr>(shared_library_->get_function_pointer("niDMM_SetAttributeViReal64"));
   function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_->get_function_pointer("niDMM_SetAttributeViSession"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_->get_function_pointer("niDMM_SetAttributeViString"));
-  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_->get_function_pointer("niDMM_UnlockSession"));
   function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_->get_function_pointer("niDMM_SetRuntimeEnvironment"));
+  function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_->get_function_pointer("niDMM_UnlockSession"));
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
@@ -600,22 +598,6 @@ ViStatus NiDmmLibrary::GetMeasurementPeriod(ViSession vi, ViReal64* period)
   return function_pointers_.GetMeasurementPeriod(vi, period);
 }
 
-ViStatus NiDmmLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[])
-{
-  if (!function_pointers_.GetNextCoercionRecord) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetNextCoercionRecord.");
-  }
-  return function_pointers_.GetNextCoercionRecord(vi, bufferSize, coercionRecord);
-}
-
-ViStatus NiDmmLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[])
-{
-  if (!function_pointers_.GetNextInterchangeWarning) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetNextInterchangeWarning.");
-  }
-  return function_pointers_.GetNextInterchangeWarning(vi, bufferSize, interchangeWarning);
-}
-
 ViStatus NiDmmLibrary::GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported)
 {
   if (!function_pointers_.GetSelfCalSupported) {
@@ -840,20 +822,20 @@ ViStatus NiDmmLibrary::SetAttributeViString(ViSession vi, ViConstString channelN
   return function_pointers_.SetAttributeViString(vi, channelName, attributeId, attributeValue);
 }
 
-ViStatus NiDmmLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
-{
-  if (!function_pointers_.UnlockSession) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_UnlockSession.");
-  }
-  return function_pointers_.UnlockSession(vi, callerHasLock);
-}
-
 ViStatus NiDmmLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
 {
   if (!function_pointers_.SetRuntimeEnvironment) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_SetRuntimeEnvironment.");
   }
   return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
+}
+
+ViStatus NiDmmLibrary::UnlockSession(ViSession vi, ViBoolean* callerHasLock)
+{
+  if (!function_pointers_.UnlockSession) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niDMM_UnlockSession.");
+  }
+  return function_pointers_.UnlockSession(vi, callerHasLock);
 }
 
 bool NiDmmLibrary::is_runtime_environment_set() const { return this->runtime_environment_set_; }

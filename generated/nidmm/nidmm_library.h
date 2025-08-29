@@ -79,8 +79,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months) override;
   ViStatus GetLastCalTemp(ViSession vi, ViInt32 calType, ViReal64* temperature) override;
   ViStatus GetMeasurementPeriod(ViSession vi, ViReal64* period) override;
-  ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]) override;
-  ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]) override;
   ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported) override;
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 size, ViInt8 configuration[]) override;
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) override;
@@ -109,8 +107,8 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   ViStatus SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue) override;
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) override;
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue) override;
-  ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) override;
   ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) override;
+  ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) override;
   bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
@@ -172,8 +170,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using GetExtCalRecommendedIntervalPtr = decltype(&niDMM_GetExtCalRecommendedInterval);
   using GetLastCalTempPtr = decltype(&niDMM_GetLastCalTemp);
   using GetMeasurementPeriodPtr = decltype(&niDMM_GetMeasurementPeriod);
-  using GetNextCoercionRecordPtr = decltype(&niDMM_GetNextCoercionRecord);
-  using GetNextInterchangeWarningPtr = decltype(&niDMM_GetNextInterchangeWarning);
   using GetSelfCalSupportedPtr = decltype(&niDMM_GetSelfCalSupported);
   using ImportAttributeConfigurationBufferPtr = decltype(&niDMM_ImportAttributeConfigurationBuffer);
   using ImportAttributeConfigurationFilePtr = decltype(&niDMM_ImportAttributeConfigurationFile);
@@ -202,8 +198,8 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   using SetAttributeViReal64Ptr = decltype(&niDMM_SetAttributeViReal64);
   using SetAttributeViSessionPtr = decltype(&niDMM_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niDMM_SetAttributeViString);
-  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
+  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -264,8 +260,6 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     GetExtCalRecommendedIntervalPtr GetExtCalRecommendedInterval;
     GetLastCalTempPtr GetLastCalTemp;
     GetMeasurementPeriodPtr GetMeasurementPeriod;
-    GetNextCoercionRecordPtr GetNextCoercionRecord;
-    GetNextInterchangeWarningPtr GetNextInterchangeWarning;
     GetSelfCalSupportedPtr GetSelfCalSupported;
     ImportAttributeConfigurationBufferPtr ImportAttributeConfigurationBuffer;
     ImportAttributeConfigurationFilePtr ImportAttributeConfigurationFile;
@@ -294,8 +288,8 @@ class NiDmmLibrary : public nidmm_grpc::NiDmmLibraryInterface {
     SetAttributeViReal64Ptr SetAttributeViReal64;
     SetAttributeViSessionPtr SetAttributeViSession;
     SetAttributeViStringPtr SetAttributeViString;
-    UnlockSessionPtr UnlockSession;
     SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
+    UnlockSessionPtr UnlockSession;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;
