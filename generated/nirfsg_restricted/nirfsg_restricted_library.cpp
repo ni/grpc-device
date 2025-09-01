@@ -32,6 +32,7 @@ NiRFSGRestrictedLibrary::NiRFSGRestrictedLibrary(std::shared_ptr<nidevice_grpc::
   function_pointers_.CreateDeembeddingSparameterTable = reinterpret_cast<CreateDeembeddingSparameterTablePtr>(shared_library_->get_function_pointer("niRFSG_CreateDeembeddingSparameterTable"));
   function_pointers_.ConfigureSparameterTableFrequencies = reinterpret_cast<ConfigureSparameterTableFrequenciesPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureSparameterTableFrequencies"));
   function_pointers_.ConfigureSparameterTableSparameters = reinterpret_cast<ConfigureSparameterTableSparametersPtr>(shared_library_->get_function_pointer("niRFSG_ConfigureSparameterTableSparameters"));
+  function_pointers_.GetDeembeddingTableNumberOfPorts = reinterpret_cast<GetDeembeddingTableNumberOfPortsPtr>(shared_library_->get_function_pointer("niRFSG_GetDeembeddingTableNumberOfPorts"));
 }
 
 NiRFSGRestrictedLibrary::~NiRFSGRestrictedLibrary()
@@ -83,6 +84,14 @@ ViStatus NiRFSGRestrictedLibrary::ConfigureSparameterTableSparameters(ViSession 
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_ConfigureSparameterTableSparameters.");
   }
   return function_pointers_.ConfigureSparameterTableSparameters(vi, port, tableName, sparameterTable, sparameterTableSize, sparameterOrientation);
+}
+
+ViStatus NiRFSGRestrictedLibrary::GetDeembeddingTableNumberOfPorts(ViSession vi, ViInt32* numberOfPorts)
+{
+  if (!function_pointers_.GetDeembeddingTableNumberOfPorts) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetDeembeddingTableNumberOfPorts.");
+  }
+  return function_pointers_.GetDeembeddingTableNumberOfPorts(vi, numberOfPorts);
 }
 
 }  // namespace nirfsg_restricted_grpc

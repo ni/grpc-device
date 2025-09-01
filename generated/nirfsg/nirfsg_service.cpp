@@ -2169,36 +2169,19 @@ namespace nirfsg_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt32 sparameters_array_size = request->sparameters_array_size();
+      std::vector<NIComplexNumber_struct> sparameters(sparameters_array_size, NIComplexNumber_struct());
       ViInt32 number_of_sparameters {};
       ViInt32 number_of_ports {};
-      while (true) {
-        auto status = library_->GetDeembeddingSparameters(vi, nullptr, 0, &number_of_sparameters, &number_of_ports);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
-        auto sparameters_array_size = number_of_sparameters;
-        status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        response->set_status(status);
-        convert_to_grpc(sparameters, response->mutable_sparameters());
-        {
-          auto shrunk_size = number_of_sparameters;
-          auto current_size = response->mutable_sparameters()->size();
-          if (shrunk_size != current_size) {
-            response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-          }
-        }
-        response->set_number_of_sparameters(number_of_sparameters);
-        response->set_number_of_ports(number_of_ports);
-        return ::grpc::Status::OK;
+      auto status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
       }
+      response->set_status(status);
+      convert_to_grpc(sparameters, response->mutable_sparameters());
+      response->set_number_of_sparameters(number_of_sparameters);
+      response->set_number_of_ports(number_of_ports);
+      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();

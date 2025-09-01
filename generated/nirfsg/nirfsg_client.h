@@ -85,7 +85,7 @@ GetAttributeViReal64Response get_attribute_vi_real64(const StubPtr& stub, const 
 GetAttributeViSessionResponse get_attribute_vi_session(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSGAttribute& attribute);
 GetAttributeViStringResponse get_attribute_vi_string(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSGAttribute& attribute);
 GetChannelNameResponse get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& index);
-GetDeembeddingSparametersResponse get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetDeembeddingSparametersResponse get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& sparameters_array_size);
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExternalCalibrationLastDateAndTimeResponse get_external_calibration_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetMaxSettablePowerResponse get_max_settable_power(const StubPtr& stub, const nidevice_grpc::Session& vi);
