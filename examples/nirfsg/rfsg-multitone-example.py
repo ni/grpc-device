@@ -111,7 +111,7 @@ try:
             session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
         )
     )
-    vi = response.vi
+    vi = response.new_vi
     # tones to Generate
     # tones power is relative to the generated power.
 
@@ -171,7 +171,7 @@ try:
         nirfsg_types.SetAttributeViStringRequest(
             vi=vi,
             channel_name="",
-            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_SELECTED_PORTS,
+            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_SELECTED_PORTS,
             value_raw=rfsg_selected_ports,
         )
     )
@@ -183,7 +183,7 @@ try:
         nirfsg_types.SetAttributeViReal64Request(
             vi=vi,
             channel_name="",
-            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_POWER_LEVEL,
+            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_POWER_LEVEL,
             value_raw=rfsg_power_level_dbm + tones_power,
         )
     )
@@ -192,7 +192,7 @@ try:
         nirfsg_types.SetAttributeViReal64Request(
             vi=vi,
             channel_name="",
-            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_EXTERNAL_GAIN,
+            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_EXTERNAL_GAIN,
             value_raw=-rfsg_external_attenuation,
         )
     )
@@ -201,7 +201,7 @@ try:
         nirfsg_types.SetAttributeViReal64Request(
             vi=vi,
             channel_name="",
-            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_FREQUENCY,
+            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_FREQUENCY,
             value_raw=center_frequency,
         )
     )
@@ -255,7 +255,7 @@ try:
         nirfsg_types.SetAttributeViReal64Request(
             vi=vi,
             channel_name="waveform::wfm",
-            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_IQ_RATE,
+            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_IQ_RATE,
             value_raw=sampling_rate_hz,
         )
     )
@@ -266,7 +266,7 @@ try:
         nirfsg_types.SetAttributeViReal64Request(
             vi=vi,
             channel_name="waveform::wfm",
-            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_PAPR,
+            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_PAPR,
             value_raw=waveform_papr,
         )
     )
@@ -275,7 +275,7 @@ try:
         nirfsg_types.GetAttributeViReal64Request(
             vi=vi,
             channel_name="waveform::wfm",
-            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_PAPR,
+            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_PAPR,
         )
     )
     waveform_papr = response_papr.value
@@ -287,7 +287,7 @@ try:
         nirfsg_types.SetAttributeViReal64Request(
             vi=vi,
             channel_name="waveform::wfm",
-            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_RUNTIME_SCALING,
+            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_RUNTIME_SCALING,
             value_raw=-runtime_scaling,
         )
     )
@@ -295,7 +295,7 @@ try:
         nirfsg_types.SetAttributeViReal64Request(
             vi=vi,
             channel_name="waveform::wfm",
-            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_SIGNAL_BANDWIDTH,
+            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_WAVEFORM_SIGNAL_BANDWIDTH,
             value_raw=8e6,
         )
     )
