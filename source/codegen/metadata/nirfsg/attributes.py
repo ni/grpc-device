@@ -1664,7 +1664,7 @@ attributes = {
         },
         'enum': 'UpconverterFrequencyOffsetMode',
         'name': 'UPCONVERTER_FREQUENCY_OFFSET_MODE',
-        'type': 'ViReal64'
+        'type': 'ViInt32'
     },
     1150249: {
         'access': 'read-write',
