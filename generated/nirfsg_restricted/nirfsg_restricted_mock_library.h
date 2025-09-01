@@ -22,6 +22,7 @@ class NiRFSGRestrictedMockLibrary : public nirfsg_restricted_grpc::NiRFSGRestric
   MOCK_METHOD(ViStatus, CreateDeembeddingSparameterTable, (ViSession vi, ViConstString port, ViConstString tableName, ViInt32 numberOfFrequencies, ViInt32 numberOfPorts), (override));
   MOCK_METHOD(ViStatus, ConfigureSparameterTableFrequencies, (ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize), (override));
   MOCK_METHOD(ViStatus, ConfigureSparameterTableSparameters, (ViSession vi, ViConstString port, ViConstString tableName, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 sparameterOrientation), (override));
+  MOCK_METHOD(ViStatus, GetDeembeddingTableNumberOfPorts, (ViSession vi, ViInt32* numberOfPorts), (override));
 };
 
 }  // namespace unit

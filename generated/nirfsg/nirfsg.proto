@@ -1531,6 +1531,7 @@ message GetChannelNameResponse {
 
 message GetDeembeddingSparametersRequest {
   nidevice_grpc.Session vi = 1;
+  sint32 sparameters_array_size = 2;
 }
 
 message GetDeembeddingSparametersResponse {

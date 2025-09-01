@@ -26,6 +26,7 @@ class NiRFSGRestrictedLibrary : public nirfsg_restricted_grpc::NiRFSGRestrictedL
   ViStatus CreateDeembeddingSparameterTable(ViSession vi, ViConstString port, ViConstString tableName, ViInt32 numberOfFrequencies, ViInt32 numberOfPorts) override;
   ViStatus ConfigureSparameterTableFrequencies(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize) override;
   ViStatus ConfigureSparameterTableSparameters(ViSession vi, ViConstString port, ViConstString tableName, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 sparameterOrientation) override;
+  ViStatus GetDeembeddingTableNumberOfPorts(ViSession vi, ViInt32* numberOfPorts) override;
 
  private:
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]);
@@ -33,6 +34,7 @@ class NiRFSGRestrictedLibrary : public nirfsg_restricted_grpc::NiRFSGRestrictedL
   using CreateDeembeddingSparameterTablePtr = ViStatus (*)(ViSession vi, ViConstString port, ViConstString tableName, ViInt32 numberOfFrequencies, ViInt32 numberOfPorts);
   using ConfigureSparameterTableFrequenciesPtr = ViStatus (*)(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize);
   using ConfigureSparameterTableSparametersPtr = ViStatus (*)(ViSession vi, ViConstString port, ViConstString tableName, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 sparameterOrientation);
+  using GetDeembeddingTableNumberOfPortsPtr = ViStatus (*)(ViSession vi, ViInt32* numberOfPorts);
 
   typedef struct FunctionPointers {
     GetErrorPtr GetError;
@@ -40,6 +42,7 @@ class NiRFSGRestrictedLibrary : public nirfsg_restricted_grpc::NiRFSGRestrictedL
     CreateDeembeddingSparameterTablePtr CreateDeembeddingSparameterTable;
     ConfigureSparameterTableFrequenciesPtr ConfigureSparameterTableFrequencies;
     ConfigureSparameterTableSparametersPtr ConfigureSparameterTableSparameters;
+    GetDeembeddingTableNumberOfPortsPtr GetDeembeddingTableNumberOfPorts;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;

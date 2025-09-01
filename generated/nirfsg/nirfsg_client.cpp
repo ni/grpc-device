@@ -1356,12 +1356,13 @@ get_channel_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb
 }
 
 GetDeembeddingSparametersResponse
-get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi)
+get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& sparameters_array_size)
 {
   ::grpc::ClientContext context;
 
   auto request = GetDeembeddingSparametersRequest{};
   request.mutable_vi()->CopyFrom(vi);
+  request.set_sparameters_array_size(sparameters_array_size);
 
   auto response = GetDeembeddingSparametersResponse{};
 

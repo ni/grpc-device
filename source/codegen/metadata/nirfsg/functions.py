@@ -1344,9 +1344,8 @@ functions = {
                 'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'sparameters',
                 'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'sparametersArraySize',
-                    'value_twist': 'numberOfSparameters'
+                    'mechanism': 'passed-in',
+                    'value': 'sparametersArraySize'
                 },
                 'type': 'NIComplexNumber_struct[]'
             },

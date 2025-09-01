@@ -95,7 +95,7 @@ InitWithOptionsResponse init(const client::StubPtr& stub, const std::string& mod
 nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
 {
   auto response = init(stub, model, resource_name);
-  auto session = response.vi();
+  auto session = response.new_vi();
   EXPECT_SUCCESS(response);
   return session;
 }
@@ -191,7 +191,7 @@ TEST_F(NiRFSGDriverApiTests, ConfigureDigitalEdgeStartTrigger_Succeeds)
   auto response = client::configure_digital_edge_start_trigger(
       stub(),
       session,
-      TriggerSource::TRIGGER_SOURCE_PXI_TRIG0,
+      StartTriggerSource::START_TRIGGER_SOURCE_PXI_TRIG0,
       DigitalEdgeEdge::DIGITAL_EDGE_EDGE_RISING_EDGE);
 
   EXPECT_SUCCESS(session, response);
