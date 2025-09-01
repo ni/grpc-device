@@ -811,7 +811,6 @@ functions = {
                 'direction': 'in',
                 'name': 'sparameterTableSize',
                 'type': 'ViInt32',
-                'include_in_proto': True
             },
             {
                 'direction': 'in',
@@ -1358,21 +1357,6 @@ functions = {
                 'direction': 'out',
                 'name': 'numberOfSparameters',
                 'type': 'ViInt32'
-            },
-            {
-                'direction': 'out',
-                'name': 'numberOfPorts',
-                'type': 'ViInt32'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetDeembeddingTableNumberOfPorts': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
             },
             {
                 'direction': 'out',
