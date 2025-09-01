@@ -1312,7 +1312,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetDeembeddingSparameters': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1324,7 +1323,7 @@ functions = {
                 'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'sparameters',
                 'size': {
-                    'mechanism': 'custom-code',
+                    'mechanism': 'passed-in',
                     'value': 'sparametersArraySize'
                 },
                 'type': 'NIComplexNumber_struct[]'
