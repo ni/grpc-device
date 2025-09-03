@@ -29,26 +29,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'ChangeExternalCalibrationPassword': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'oldPassword',
-                'type': 'ViConstString'
-            },
-            {
-                'direction': 'in',
-                'name': 'newPassword',
-                'type': 'ViConstString'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'CheckAttributeViBoolean': {
         'parameters': [
             {
