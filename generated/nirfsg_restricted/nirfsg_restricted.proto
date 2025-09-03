@@ -22,6 +22,7 @@ service NiRFSGRestricted {
   rpc CreateDeembeddingSparameterTable(CreateDeembeddingSparameterTableRequest) returns (CreateDeembeddingSparameterTableResponse);
   rpc ConfigureSparameterTableFrequencies(ConfigureSparameterTableFrequenciesRequest) returns (ConfigureSparameterTableFrequenciesResponse);
   rpc ConfigureSparameterTableSparameters(ConfigureSparameterTableSparametersRequest) returns (ConfigureSparameterTableSparametersResponse);
+  rpc GetDeembeddingTableNumberOfPorts(GetDeembeddingTableNumberOfPortsRequest) returns (GetDeembeddingTableNumberOfPortsResponse);
 }
 
 enum SParameterOrientation {
@@ -86,5 +87,14 @@ message ConfigureSparameterTableSparametersRequest {
 
 message ConfigureSparameterTableSparametersResponse {
   int32 status = 1;
+}
+
+message GetDeembeddingTableNumberOfPortsRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetDeembeddingTableNumberOfPortsResponse {
+  int32 status = 1;
+  sint32 number_of_ports = 2;
 }
 

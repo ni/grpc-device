@@ -69,7 +69,7 @@ try:
             session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
         )
     )
-    vi = response.vi
+    vi = response.new_vi
     client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5))
     client.ConfigureGenerationMode(
         nirfsg_types.ConfigureGenerationModeRequest(

@@ -102,8 +102,12 @@
 #define NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_EDGE         /* ViInt32   */   IVIRFSIGGEN_ATTR_ARB_EXTERNAL_TRIGGER_SLOPE
 
    /*- Pulse Modulation -*/
-#define NIRFSG_ATTR_PULSE_MODULATION_ENABLED                /* ViBoolean */   IVIRFSIGGEN_ATTR_PULSE_MODULATION_ENABLED
-#define NIRFSG_ATTR_PULSE_MODULATION_MODE                   /* ViInt32   */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0xbe)
+#define NIRFSG_ATTR_PULSE_MODULATION_ENABLED                         /* ViBoolean */   IVIRFSIGGEN_ATTR_PULSE_MODULATION_ENABLED
+#define NIRFSG_ATTR_PULSE_MODULATION_MODE                            /* ViInt32, read-write */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0xbe)
+#define NIRFSG_ATTR_PULSE_MODULATION_ACTIVE_LEVEL                    /* ViInt32, read-write */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x133)
+#define NIRFSG_ATTR_PULSE_MODULATION_SOURCE                          /* ViString, read-write */  (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x134)
+#define NIRFSG_ATTR_EXPORTED_PULSE_MODULATION_EVENT_OUTPUT_TERMINAL  /* ViString, read-write */  (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x135)
+#define NIRFSG_ATTR_EXPORTED_PULSE_MODULATION_EVENT_ACTIVE_LEVEL     /* ViInt32,  read-write */  (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x136)
 
 /*- niRFSG Driver-Specific Attributes -----------------------------------*/
 
@@ -142,6 +146,7 @@
    /*- Clocking -*/
 #define NIRFSG_ATTR_REF_CLOCK_SOURCE                        /* ViString  */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x01)
 #define NIRFSG_ATTR_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL      /* ViString  */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x35)
+#define NIRFSG_ATTR_EXPORTED_REF_CLOCK_RATE                 /* ViReal64  */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x124)
 #define NIRFSG_ATTR_LO_OUT_ENABLED                          /* ViBoolean */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x0d)
 #define NIRFSG_ATTR_LO_OUT_POWER                            /* ViReal64  */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x42)
 #define NIRFSG_ATTR_LO_IN_POWER                             /* ViReal64  */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x43)
@@ -273,6 +278,8 @@
 #define NIRFSG_ATTR_FIXED_GROUP_DELAY_ACROSS_PORTS          /* ViString  */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x10F)
 #define NIRFSG_ATTR_SELECTED_PORTS                          /* ViString */    (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0xF1)
 #define NIRFSG_ATTR_AVAILABLE_PORTS                         /* ViString */    (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0xF9)
+#define NIRFSG_ATTR_SELECTED_PATH                           /* ViString */    (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x137)
+#define NIRFSG_ATTR_AVAILABLE_PATHS                         /* ViString */    (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x138)
 
    /*- IQ Impairments -*/
 #define NIRFSG_ATTR_IQ_IMPAIRMENT_ENABLED                   /* ViBoolean */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x45)
@@ -401,6 +408,7 @@
 #define NIRFSG_ATTR_WAVEFORM_PAPR                              /* ViReal64 */                (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x10A)
 #define NIRFSG_ATTR_WAVEFORM_FILEPATH                          /* ViString, read only */     (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x110)
 #define NIRFSG_ATTR_WAVEFORM_RF_BLANKING                       /* ViInt32 */                 (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x116)
+#define NIRFSG_ATTR_WAVEFORM_WAVEFORM_SIZE                     /* ViInt32 */                 (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x129)
 
 /****************************************************************************
  *------ Device-Specific Attribute Value Defines (5644R/5645R/5646R) -------*
@@ -527,6 +535,14 @@
 #define NIRFSG_VAL_RTSI5_STR                    "RTSI5"
 #define NIRFSG_VAL_RTSI6_STR                    "RTSI6"
 #define NIRFSG_VAL_RTSI7_STR                    "RTSI7"
+#define NIRFSG_VAL_DIO0_STR                     "DIO/PFI0"
+#define NIRFSG_VAL_DIO1_STR                     "DIO/PFI1"
+#define NIRFSG_VAL_DIO2_STR                     "DIO/PFI2"
+#define NIRFSG_VAL_DIO3_STR                     "DIO/PFI3"
+#define NIRFSG_VAL_DIO4_STR                     "DIO/PFI4"
+#define NIRFSG_VAL_DIO5_STR                     "DIO/PFI5"
+#define NIRFSG_VAL_DIO6_STR                     "DIO/PFI6"
+#define NIRFSG_VAL_DIO7_STR                     "DIO/PFI7"
 
 /*- Values for NIRFSG_ATTR_REF_CLOCK_RATE -*/
 #define NIRFSG_VAL_10MHz                        10000000
@@ -669,6 +685,15 @@
 /*- Values for attribute NIRFSG_ATTR_PULSE_MODULATION_MODE -*/
 #define NIRFSG_VAL_OPTIMAL_MATCH                20000
 #define NIRFSG_VAL_HIGH_ISOLATION               20001
+#define NIRFSG_VAL_PULSE_MODULATION_ANALOG      20002
+#define NIRFSG_VAL_PULSE_MODULATION_DIGITAL     20003
+#define NIRFSG_VAL_PULSE_MODULATION_ANALOG_HIGH_ISOLATION   NIRFSG_VAL_HIGH_ISOLATION
+
+/*- Values for attribute NIRFSG_ATTR_PULSE_MODULATION_SOURCE -*/
+#define NIRFSG_VAL_PULSE_IN_STR                 "PulseIn"
+
+/*- Values for attribute NIRFSG_ATTR_PULSE_MODULATION_EVENT_OUTPUT_TERMINAL -*/
+#define NIRFSG_VAL_PULSE_OUT_STR                "PulseOut"
 
 /*- Values for attribute NIRFSG_ATTR_MARKER_EVENT_TOGGLE_INITIAL_STATE -*/
 #define NIRFSG_VAL_DIGITAL_LOW                  21000
@@ -1179,6 +1204,31 @@ ViStatus _VI_FUNC niRFSG_GetTerminalName
    ViInt32        bufferSize,
    ViChar         terminalName[]
 );
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+ViStatus _VI_FUNC niRFSG_GetAllScriptNames
+(
+   ViSession  vi,
+   ViChar     scriptNames[],
+   ViInt32    bufferSize,
+   ViInt32*   actualBufferSize
+);
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+ViStatus _VI_FUNC niRFSG_GetScript
+(
+    ViSession vi,
+    ViConstString scriptName,
+    ViChar script[],
+    ViInt32 bufferSize,
+    ViInt32* actualBufferSize
+);
+/* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -*/
+ViStatus _VI_FUNC niRFSG_GetAllNamedWaveformNames
+(
+   ViSession  vi,
+   ViChar     waveformNames[],
+   ViInt32    bufferSize,
+   ViInt32*   actualBufferSize
+);
 
 /*- Peer-to-Peer (P2P) Functions -------------------------------------------*/
 ViStatus _VI_FUNC niRFSG_GetStreamEndpointHandle
@@ -1458,6 +1508,8 @@ ViStatus _VI_FUNC niRFSG_CheckAttributeViReal64 (ViSession vi, ViConstString cha
 ViStatus _VI_FUNC niRFSG_CheckAttributeViString (ViSession vi, ViConstString channelName, ViAttr attribute, ViConstString value);
 ViStatus _VI_FUNC niRFSG_CheckAttributeViSession (ViSession vi, ViConstString channelName, ViAttr attribute, ViSession value);
 ViStatus _VI_FUNC niRFSG_CheckAttributeViBoolean (ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean value);
+
+ViStatus _VI_FUNC niRFSG_GetMaxSettablePower (ViSession vi, ViReal64 *value);
 
 /*- Sparameter de-embedding API --------------------------------------------*/
 ViStatus _VI_FUNC niRFSG_CreateDeembeddingSparameterTableS2PFile(

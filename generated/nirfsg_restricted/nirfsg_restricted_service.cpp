@@ -218,6 +218,30 @@ namespace nirfsg_restricted_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGRestrictedService::GetDeembeddingTableNumberOfPorts(::grpc::ServerContext* context, const GetDeembeddingTableNumberOfPortsRequest* request, GetDeembeddingTableNumberOfPortsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt32 number_of_ports {};
+      auto status = library_->GetDeembeddingTableNumberOfPorts(vi, &number_of_ports);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_number_of_ports(number_of_ports);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiRFSGRestrictedFeatureToggles::NiRFSGRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

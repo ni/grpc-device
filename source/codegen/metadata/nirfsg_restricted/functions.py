@@ -157,5 +157,20 @@ functions = {
             }
         ],
         'returns': 'ViStatus'
+    },
+    'GetDeembeddingTableNumberOfPorts': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'out',
+                'name': 'numberOfPorts',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
     }
 }
