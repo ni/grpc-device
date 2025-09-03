@@ -790,7 +790,7 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'sparameterTableSize',
-                'type': 'ViInt32',
+                'type': 'ViInt32'
             },
             {
                 'direction': 'in',
