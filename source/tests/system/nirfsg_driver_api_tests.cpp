@@ -352,7 +352,7 @@ TEST_F(NiRFSGDriverApiTests, SetHostDMABufferSize_UpdatesHostDMABufferSizeSucces
 TEST_F(NiRFSGDriverApiTests, GetDeembeddingSParameters_Empty)
 {
   auto session = init_session(stub(), PXI_5841);
-  auto parameters = client::get_deembedding_sparameters(stub(), session);
+  auto parameters = client::get_deembedding_sparameters(stub(), session, 0);
 
   EXPECT_SUCCESS(session, parameters);
   EXPECT_EQ(0, parameters.number_of_sparameters());
@@ -386,7 +386,7 @@ TEST_F(NiRFSGDriverApiTests, SetDeembeddingSParameters_GetDeembeddingSParameters
       parameters,
       2,
       SParameterOrientation::S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT);
-  auto get_parameters = client::get_deembedding_sparameters(stub(), session);
+  auto get_parameters = client::get_deembedding_sparameters(stub(), session, 4);
 
   EXPECT_SUCCESS(session, set_parameters);
   EXPECT_SUCCESS(session, get_parameters);
