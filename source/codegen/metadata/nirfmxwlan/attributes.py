@@ -1703,6 +1703,56 @@ attributes = {
         'name': 'OFDMMODACC_RESULTS_ELR_SIG_CRC_STATUS',
         'type': 'int32'
     },
+    10502358: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_UHR_STF_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    10502359: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_UHR_STF_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
+    },
+    10502360: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_UHR_LTF_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    10502361: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_UHR_LTF_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
+    },
+    10502362: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_UHR_SIG_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    10502363: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_UHR_SIG_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
+    },
+    10502364: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_ELR_SIG_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    10502365: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_ELR_SIG_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
+    },
+    10502366: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_ELR_MARK_AVERAGE_POWER_MEAN',
+        'type': 'float64'
+    },
+    10502367: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_POWER_ELR_MARK_PEAK_POWER_MAXIMUM',
+        'type': 'float64'
+    },
     10506240: {
         'access': 'read-write',
         'name': 'SEM_MEASUREMENT_ENABLED',

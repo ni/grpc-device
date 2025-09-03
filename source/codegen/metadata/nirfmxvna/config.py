@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '25.5.0',
+    'api_version': '25.8.0',
     'c_header': 'niRFmxVNA.h',
     'c_function_prefix': 'RFmxVNA_',
     'service_class_prefix': 'NiRFmxVNA',

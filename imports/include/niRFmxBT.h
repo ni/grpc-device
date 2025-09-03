@@ -55,6 +55,7 @@
 #define RFMXBT_ATTR_ZADOFF_CHU_INDEX                                                               0x00b00039
 #define RFMXBT_ATTR_HIGH_DATA_THROUGHPUT_PACKET_FORMAT                                             0x00b00038
 #define RFMXBT_ATTR_VHDT_MODE_ENABLED                                                              0x00b00040
+#define RFMXBT_ATTR_NUMBER_OF_BLOCK_REPETITION_SEQUENCES                                           0x00b00041
 #define RFMXBT_ATTR_CHANNEL_NUMBER                                                                 0x00b00017
 #define RFMXBT_ATTR_DETECTED_PACKET_TYPE                                                           0x00b00019
 #define RFMXBT_ATTR_DETECTED_DATA_RATE                                                             0x00b0002a
@@ -91,6 +92,9 @@
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_INITIAL_FREQUENCY_DRIFT_MAXIMUM                              0x00b0401b
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_PEAK_FREQUENCY_DRIFT_MAXIMUM                                 0x00b0401c
 #define RFMXBT_ATTR_MODACC_RESULTS_LE_PEAK_FREQUENCY_DRIFT_RATE_MAXIMUM                            0x00b0401d
+#define RFMXBT_ATTR_MODACC_RESULTS_PREAMBLE_FREQUENCY_ERROR_W0_MAXIMUM                             0x00b0403a
+#define RFMXBT_ATTR_MODACC_RESULTS_PAYLOAD_FREQUENCY_ERROR_W1_MAXIMUM                              0x00b0403b
+#define RFMXBT_ATTR_MODACC_RESULTS_FREQUENCY_ERROR_W0_PLUS_W1_MAXIMUM                              0x00b0403c
 #define RFMXBT_ATTR_MODACC_RESULTS_PEAK_RMS_DEVM_MAXIMUM                                           0x00b0401e
 #define RFMXBT_ATTR_MODACC_RESULTS_RMS_DEVM_MEAN                                                   0x00b0401f
 #define RFMXBT_ATTR_MODACC_RESULTS_PEAK_DEVM_MAXIMUM                                               0x00b04020
@@ -1946,6 +1950,18 @@ int32 __stdcall RFmxBT_SetVHDTModeEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxBT_GetNumberOfBlockRepetitionSequences(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetNumberOfBlockRepetitionSequences(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxBT_GetChannelNumber(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2241,6 +2257,24 @@ int32 __stdcall RFmxBT_ModAccGetResultsLEPeakFrequencyDriftMaximum(
 );
 
 int32 __stdcall RFmxBT_ModAccGetResultsLEPeakFrequencyDriftRateMaximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsPreambleFrequencyErrorW0Maximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsPayloadFrequencyErrorW1Maximum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsFrequencyErrorW0PlusW1Maximum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

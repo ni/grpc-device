@@ -11818,6 +11818,33 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::NFLoadColdSourceInputTerminationFromS1p(::grpc::ServerContext* context, const NFLoadColdSourceInputTerminationFromS1pRequest* request, NFLoadColdSourceInputTerminationFromS1pResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto termination_s1p_file_path_mbcs = convert_from_grpc<std::string>(request->termination_s1p_file_path());
+      char* termination_s1p_file_path = (char*)termination_s1p_file_path_mbcs.c_str();
+      float64 termination_temperature = request->termination_temperature();
+      auto status = library_->NFLoadColdSourceInputTerminationFromS1p(instrument, selector_string, termination_s1p_file_path, termination_temperature);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::NFLoadDUTInputLossFromS2p(::grpc::ServerContext* context, const NFLoadDUTInputLossFromS2pRequest* request, NFLoadDUTInputLossFromS2pResponse* response)
   {
     if (context->IsCancelled()) {
@@ -11923,6 +11950,123 @@ namespace nirfmxspecan_grpc {
 
       float64 dut_output_loss_temperature = request->dut_output_loss_temperature();
       auto status = library_->NFLoadDUTOutputLossFromS2p(instrument, selector_string, dut_output_loss_compensation_enabled, dut_output_loss_s2p_file_path, dut_output_loss_s_parameter_orientation, dut_output_loss_temperature);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::NFLoadExternalPreampGainFromS2p(::grpc::ServerContext* context, const NFLoadExternalPreampGainFromS2pRequest* request, NFLoadExternalPreampGainFromS2pResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 external_preamp_present;
+      switch (request->external_preamp_present_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadExternalPreampGainFromS2pRequest::ExternalPreampPresentEnumCase::kExternalPreampPresent: {
+          external_preamp_present = static_cast<int32>(request->external_preamp_present());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadExternalPreampGainFromS2pRequest::ExternalPreampPresentEnumCase::kExternalPreampPresentRaw: {
+          external_preamp_present = static_cast<int32>(request->external_preamp_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadExternalPreampGainFromS2pRequest::ExternalPreampPresentEnumCase::EXTERNAL_PREAMP_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for external_preamp_present was not specified or out of range");
+          break;
+        }
+      }
+
+      auto external_preamp_gain_s2p_file_path_mbcs = convert_from_grpc<std::string>(request->external_preamp_gain_s2p_file_path());
+      char* external_preamp_gain_s2p_file_path = (char*)external_preamp_gain_s2p_file_path_mbcs.c_str();
+      int32 external_preamp_gain_s_parameter_orientation;
+      switch (request->external_preamp_gain_s_parameter_orientation_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadExternalPreampGainFromS2pRequest::ExternalPreampGainSParameterOrientationEnumCase::kExternalPreampGainSParameterOrientation: {
+          external_preamp_gain_s_parameter_orientation = static_cast<int32>(request->external_preamp_gain_s_parameter_orientation());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadExternalPreampGainFromS2pRequest::ExternalPreampGainSParameterOrientationEnumCase::kExternalPreampGainSParameterOrientationRaw: {
+          external_preamp_gain_s_parameter_orientation = static_cast<int32>(request->external_preamp_gain_s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadExternalPreampGainFromS2pRequest::ExternalPreampGainSParameterOrientationEnumCase::EXTERNAL_PREAMP_GAIN_S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for external_preamp_gain_s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->NFLoadExternalPreampGainFromS2p(instrument, selector_string, external_preamp_present, external_preamp_gain_s2p_file_path, external_preamp_gain_s_parameter_orientation);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::NFLoadYFactorNoiseSourceLossFromS2p(::grpc::ServerContext* context, const NFLoadYFactorNoiseSourceLossFromS2pRequest* request, NFLoadYFactorNoiseSourceLossFromS2pResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 noise_source_loss_compensation_enabled;
+      switch (request->noise_source_loss_compensation_enabled_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadYFactorNoiseSourceLossFromS2pRequest::NoiseSourceLossCompensationEnabledEnumCase::kNoiseSourceLossCompensationEnabled: {
+          noise_source_loss_compensation_enabled = static_cast<int32>(request->noise_source_loss_compensation_enabled());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadYFactorNoiseSourceLossFromS2pRequest::NoiseSourceLossCompensationEnabledEnumCase::kNoiseSourceLossCompensationEnabledRaw: {
+          noise_source_loss_compensation_enabled = static_cast<int32>(request->noise_source_loss_compensation_enabled_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadYFactorNoiseSourceLossFromS2pRequest::NoiseSourceLossCompensationEnabledEnumCase::NOISE_SOURCE_LOSS_COMPENSATION_ENABLED_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for noise_source_loss_compensation_enabled was not specified or out of range");
+          break;
+        }
+      }
+
+      auto noise_source_loss_s2p_file_path_mbcs = convert_from_grpc<std::string>(request->noise_source_loss_s2p_file_path());
+      char* noise_source_loss_s2p_file_path = (char*)noise_source_loss_s2p_file_path_mbcs.c_str();
+      int32 noise_source_loss_s_parameter_orientation;
+      switch (request->noise_source_loss_s_parameter_orientation_enum_case()) {
+        case nirfmxspecan_grpc::NFLoadYFactorNoiseSourceLossFromS2pRequest::NoiseSourceLossSParameterOrientationEnumCase::kNoiseSourceLossSParameterOrientation: {
+          noise_source_loss_s_parameter_orientation = static_cast<int32>(request->noise_source_loss_s_parameter_orientation());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadYFactorNoiseSourceLossFromS2pRequest::NoiseSourceLossSParameterOrientationEnumCase::kNoiseSourceLossSParameterOrientationRaw: {
+          noise_source_loss_s_parameter_orientation = static_cast<int32>(request->noise_source_loss_s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::NFLoadYFactorNoiseSourceLossFromS2pRequest::NoiseSourceLossSParameterOrientationEnumCase::NOISE_SOURCE_LOSS_S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for noise_source_loss_s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 noise_source_loss_temperature = request->noise_source_loss_temperature();
+      auto status = library_->NFLoadYFactorNoiseSourceLossFromS2p(instrument, selector_string, noise_source_loss_compensation_enabled, noise_source_loss_s2p_file_path, noise_source_loss_s_parameter_orientation, noise_source_loss_temperature);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

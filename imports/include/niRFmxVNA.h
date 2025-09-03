@@ -102,6 +102,8 @@
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_COAX_DELAY                      0x00d00018
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_COUNT                           0x00d00019
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_DESCRIPTION                     0x00d0001a
+#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_VCAL_ORIENTATION                0x00d00071
+#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_PORT_ASSIGNMENT                 0x00d00072
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY                 0x00d00800
 #define RFMXVNA_ATTR_SPARAMS_MEASUREMENT_ENABLED                                 0x00d01000
 #define RFMXVNA_ATTR_SPARAMS_NUMBER_OF_SPARAMETERS                               0x00d01002
@@ -117,6 +119,7 @@
 #define RFMXVNA_ATTR_SPARAMS_MATH_FUNCTION                                       0x00d0101a
 #define RFMXVNA_ATTR_SPARAMS_MATH_ACTIVE_MEASUREMENT_MEMORY                      0x00d0101b
 #define RFMXVNA_ATTR_SPARAMS_RESULTS_CORRECTION_STATE                            0x00d01018
+#define RFMXVNA_ATTR_SPARAMS_RESULTS_CORRECTION_LEVEL                            0x00d01020
 #define RFMXVNA_ATTR_SPARAMS_SNP_DATA_FORMAT                                     0x00d01013
 #define RFMXVNA_ATTR_SPARAMS_SNP_USER_COMMENT                                    0x00d01014
 #define RFMXVNA_ATTR_SPARAMS_SNP_PORTS                                           0x00d01015
@@ -133,6 +136,7 @@
 #define RFMXVNA_ATTR_WAVES_GROUP_DELAY_APERTURE_PERCENTAGE                       0x00d02017
 #define RFMXVNA_ATTR_WAVES_GROUP_DELAY_APERTURE_FREQUENCY_SPAN                   0x00d02018
 #define RFMXVNA_ATTR_WAVES_RESULTS_CORRECTION_STATE                              0x00d02013
+#define RFMXVNA_ATTR_WAVES_RESULTS_CORRECTION_LEVEL                              0x00d02019
 #define RFMXVNA_ATTR_IQ_MEASUREMENT_ENABLED                                      0x00d0100a
 #define RFMXVNA_ATTR_IQ_ACQUISITION_TIME                                         0x00d0100d
 #define RFMXVNA_ATTR_IQ_RECEIVER_PORT                                            0x00d0100f
@@ -2956,10 +2960,42 @@ int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepCount(
    int32 *attrVal
 );
 
+int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepDescription(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepVCalOrientation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepVCalOrientation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepPortAssignment(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepPortAssignment(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
    char attrVal[]
 );
 
@@ -3183,6 +3219,13 @@ int32 __stdcall RFmxVNA_SParamsGetResultsCorrectionState(
    int32 *attrVal
 );
 
+int32 __stdcall RFmxVNA_SParamsGetResultsCorrectionLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
 int32 __stdcall RFmxVNA_SParamsGetSnPDataFormat(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3371,6 +3414,13 @@ int32 __stdcall RFmxVNA_WavesGetResultsCorrectionState(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_WavesGetResultsCorrectionLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
 );
 
 int32 __stdcall RFmxVNA_IQGetMeasurementEnabled(
