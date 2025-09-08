@@ -28,6 +28,8 @@ To prepare for cmake + Microsoft Visual C++ compiler build
 - Install Visual Studio 2022 or newer (Visual C++ compiler will be used).
 - Install [Git](https://git-scm.com/).
 - Install [CMake](https://cmake.org/download/) 3.18.0 or newer and add it to the PATH.
+  - Our github actions use 3.18.0 to build currently. 
+  - [CMake Build Failure in grpc-device: Compatibility Update Required](https://github.com/ni/grpc-device/issues/1172) documents a known issue when using newer versions of CMake where you will see `Compatibility with CMake < 3.5 has been removed from CMake` with a workaround of using the flag `-DCMAKE_POLICY_VERSION_MINIMUM=3.5`.
 - Install [Python](https://www.python.org/downloads/) and add it to the PATH.
 - Install [NASM](https://nasm.us/) and add it to the PATH.
 - Install [mako](https://www.makotemplates.org/download.html)
