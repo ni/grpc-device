@@ -4,17 +4,21 @@ config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'
+        ],
+        'nidmmPrivate.h': [
+            'library_interface.h'
         ]
     },
     'api_version': '25.8.0d130',
     'c_function_prefix': 'niDMM_',
-    'c_header': 'nidmm.h',
-    'close_function': 'Close',
-    'csharp_namespace': 'NationalInstruments.Grpc.Dmm',
+    'c_header': 'nidmmRemoteDebug.h',
+    'close_function': None,
+    'csharp_namespace': 'NationalInstruments.Grpc.DmmRestricted',
     'custom_types': [
     ],
-    'driver_name': 'NI-DMM',
-    'java_package': 'com.ni.grpc.dmm',
+    'driver_name': 'NI-DMM-RESTRICTED',
+    'is_restricted': True,
+    'java_package': 'com.ni.grpc.dmmrestricted',
     'library_info': {
         'Linux': {
             '64bit': {
@@ -34,9 +38,9 @@ config = {
         }
     },
     'linux_rt_support': True,
-    'module_name': 'nidmm',
-    'namespace_component': 'nidmm',
-    'service_class_prefix': 'NiDmm',
+    'module_name': 'nidmm_restricted',
+    'namespace_component': 'nidmm_restricted',
+    'service_class_prefix': 'NiDmmRestricted',
     'session_handle_parameter_name': 'vi',
     'status_ok': 'status >= 0'
 }
