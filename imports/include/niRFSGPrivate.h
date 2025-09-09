@@ -198,7 +198,7 @@ extern "C" {
 
 // NIRFSG_ATTR_OOP_SESSION_MANAGER_PTR attribute stores OutOfProcessSessionManager pointer. This attribute is used in Remote component.
 #define NIRFSG_ATTR_OOP_SESSION_MANAGER_PTR                 /* ViAddr */      (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x7f)
-#define NIRFSG_ATTR_OOP_SESSION_PIPE_ID                     /* ViInt64 */     (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x86)
+#define NIRFSG_ATTR_OOP_SESSION_PIPE_ID                     /* ViInt64 */     (RFSG_SPECIFIC_PRIVATE_ATTR_BASE + 0x86) 
 
 // This attribute stores the channel number specified at initialize (first used in MCVST)
 #define NIRFSG_ATTR_CREATED_SESSION_CHANNEL                 /* ViInt32 */     (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 0x139)
