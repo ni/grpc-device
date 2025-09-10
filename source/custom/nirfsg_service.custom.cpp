@@ -31,7 +31,7 @@ namespace nirfsg_grpc {
       std::vector<NIComplexNumber_struct> sparameters(sparameters_array_size, NIComplexNumber_struct());
       ViInt32 number_of_sparameters {};
       ViInt32 number_of_ports {};
-      auto status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
+      status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
