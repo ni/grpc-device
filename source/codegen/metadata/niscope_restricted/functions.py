@@ -131,4 +131,118 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetStartTimestampInformationWithChannels': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channelList',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channelList',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'numberOfChannels',
+                'direction': 'in',
+                'grpc_type': 'uint32',
+                'is_size_param': True,
+                'name': 'numberOfChannels',
+                'type': 'ViUInt32'
+            },
+            {
+                'cppName': 'sysTimeIn128BitsT1Array',
+                'direction': 'out',
+                'grpc_name': 'sys_time_in_128_bits_t1_array',
+                'grpc_type': 'repeated uint32',
+                'name': 'sysTimeIn128BitsT1Array',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfChannels'
+                },
+                'type': 'ViUInt32[]'
+            },
+            {
+                'cppName': 'sysTimeIn128BitsT2Array',
+                'direction': 'out',
+                'grpc_name': 'sys_time_in_128_bits_t2_array',
+                'grpc_type': 'repeated uint32',
+                'name': 'sysTimeIn128BitsT2Array',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfChannels'
+                },
+                'type': 'ViUInt32[]'
+            },
+            {
+                'cppName': 'sysTimeIn128BitsT3Array',
+                'direction': 'out',
+                'grpc_name': 'sys_time_in_128_bits_t3_array',
+                'grpc_type': 'repeated uint32',
+                'name': 'sysTimeIn128BitsT3Array',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfChannels'
+                },
+                'type': 'ViUInt32[]'
+            },
+            {
+                'cppName': 'sysTimeIn128BitsT4Array',
+                'direction': 'out',
+                'grpc_name': 'sys_time_in_128_bits_t4_array',
+                'grpc_type': 'repeated uint32',
+                'name': 'sysTimeIn128BitsT4Array',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfChannels'
+                },
+                'type': 'ViUInt32[]'
+            },
+            {
+                'cppName': 'deviceTimeInAbsoluteTimeUnitsArray',
+                'direction': 'out',
+                'grpc_type': 'repeated double',
+                'name': 'deviceTimeInAbsoluteTimeUnitsArray',
+                'size': {
+                    'mechanism': 'passed-in',
+                    'value': 'numberOfChannels'
+                },
+                'type': 'ViReal64[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ParseNumberOfChannels': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'channel',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'channel',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'numChannels',
+                'direction': 'out',
+                'grpc_type': 'uint32',
+                'name': 'numChannels',
+                'type': 'ViUInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
 }

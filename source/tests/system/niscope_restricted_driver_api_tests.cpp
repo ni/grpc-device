@@ -68,6 +68,14 @@ nidevice_grpc::Session init_session(const client::StubPtr& stub)
   return session;
 }
 
+nidevice_grpc::Session init_multi_instrument_session(const client::StubPtr& stub)
+{
+  auto response = init_with_options(stub, "FakeDevice1,FakeDevice2", "Simulate=1, DriverSetup=Model:5164; BoardType:PXIe");
+  auto session = response.vi();
+  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  return session;
+}
+
 TEST_F(NiScopeRestrictedDriverApiTests, NiScopeRestrictedGetStartTimestampInformation_SendRequest_NonZeroTimestampsReturned)
 {
   const auto session = init_session(stub());
@@ -82,6 +90,41 @@ TEST_F(NiScopeRestrictedDriverApiTests, NiScopeRestrictedGetStartTimestampInform
   EXPECT_NE(0, response.sys_time_in_128_bits_t3());
   EXPECT_EQ(0, response.sys_time_in_128_bits_t4()); // Not sure why this is always 0, may be because it's on a simulated device.
   EXPECT_EQ(0, response.device_time_in_absolute_time_units()); // Not sure why this is always 0, may be because it's on a simulated device.
+}
+
+TEST_F(NiScopeRestrictedDriverApiTests, NiScopeRestrictedGetStartTimestampInformationWithChannels_SendRequest_NonZeroTimestampsReturned)
+{
+  GTEST_SKIP() << "This test is disabled until the VM driver runtime is updated to include the new function (added in NI-SCOPE 2025 Q4).";
+
+  const auto session = init_multi_instrument_session(stub());
+  const auto auto_setup_response = client::auto_setup(stub(), session);
+  EXPECT_EQ(kScopeDriverApiSuccess, auto_setup_response.status());
+
+  const auto response = restricted_client::get_start_timestamp_information_with_channels(restricted_stub(), session, "FakeDevice1/0,FakeDevice2/0", 2);
+
+  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  EXPECT_NE(0, response.sys_time_in_128_bits_t1_array()[0]);
+  EXPECT_NE(0, response.sys_time_in_128_bits_t1_array()[1]);
+  EXPECT_NE(0, response.sys_time_in_128_bits_t2_array()[0]);
+  EXPECT_NE(0, response.sys_time_in_128_bits_t2_array()[1]);
+  EXPECT_NE(0, response.sys_time_in_128_bits_t3_array()[0]);
+  EXPECT_NE(0, response.sys_time_in_128_bits_t3_array()[1]);
+  EXPECT_EQ(0, response.sys_time_in_128_bits_t4_array()[0]); // Not sure why this is always 0, may be because it's on a simulated device.
+  EXPECT_EQ(0, response.sys_time_in_128_bits_t4_array()[1]); // Not sure why this is always 0, may be because it's on a simulated device.
+  EXPECT_EQ(0, response.device_time_in_absolute_time_units_array()[0]); // Not sure why this is always 0, may be because it's on a simulated device.
+  EXPECT_EQ(0, response.device_time_in_absolute_time_units_array()[1]); // Not sure why this is always 0, may be because it's on a simulated device.
+}
+
+TEST_F(NiScopeRestrictedDriverApiTests, NiScopeRestrictedParseNumberOfChannels_SendRequest_NumberOfChannelsParsed)
+{
+  const auto session = init_multi_instrument_session(stub());
+  const auto auto_setup_response = client::auto_setup(stub(), session);
+  EXPECT_EQ(kScopeDriverApiSuccess, auto_setup_response.status());
+
+  const auto response = restricted_client::parse_number_of_channels(restricted_stub(), session,"FakeDevice1/0,FakeDevice2/0-1");
+
+  EXPECT_EQ(kScopeDriverApiSuccess, response.status());
+  EXPECT_EQ(3, response.num_channels());
 }
 
 }  // namespace system
