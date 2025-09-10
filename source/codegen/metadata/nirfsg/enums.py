@@ -1726,6 +1726,151 @@ enums = {
             }
         ]
     },
+    'SParameterOrientation': {
+        'values': [
+            {
+                'name': 'PORT1_TOWARDS_DUT',
+                'value': 24000
+            },
+            {
+                'name': 'PORT2_TOWARDS_DUT',
+                'value': 24001
+            }
+        ]
+    },
+    'ScriptTriggerType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Setting trigger attributes to this value specifies that no trigger is   configured. Signal generation starts immediately. \n'
+                },
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': ' The data operation does not start until a digital edge is detected. The  source of the digital edge is specified in the  NIRFSG_ATTR_DIGITAL_EDGE_SCRIPT_TRIGGER_SOURCE attribute, and the active edge is  specified in the NIRFSG_ATTR_DIGITAL_EDGE_SCRIPT_TRIGGER_EDGE attribute. \n'
+                },
+                'name': 'DIGITAL_EDGE',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': ' The data operation does not start until a digital level is detected. The  source of the digital level is specified in the  NIRFSG_ATTR_DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE attribute, and the active level is  specified in the NIRFSG_ATTR_DIGITAL_LEVEL_SCRIPT_TRIGGER_ACTIVE_LEVEL attribute. \n'
+                },
+                'name': 'DIGITAL_LEVEL',
+                'value': 8000
+            },
+            {
+                'documentation': {
+                    'description': ' The data operation does not start until a software event occurs. You may  create a software event by calling the niRFSG_SendSoftwareEdgeTrigger function. \n'
+                },
+                'name': 'SOFTWARE',
+                'value': 2
+            }
+        ]
+    },
+    'SelfCalibrateRangeStepsToOmit': {
+        'values': [
+            {
+                'name': 'OMIT_NONE',
+                'value': 0
+            },
+            {
+                'name': 'LO_SELF_CAL',
+                'value': 1
+            },
+            {
+                'name': 'POWER_LEVEL_ACCURACY',
+                'value': 2
+            },
+            {
+                'name': 'RESIDUAL_LO_POWER',
+                'value': 4
+            },
+            {
+                'name': 'IMAGE_SUPPRESSION',
+                'value': 8
+            },
+            {
+                'name': 'SYNTHESIZER_ALIGNMENT',
+                'value': 16
+            }
+        ]
+    },
+    'SignalIdentifier': {
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'NONE',
+                'value': ''
+            },
+            {
+                'name': 'SCRIPT_TRIGGER0',
+                'value': 'scriptTrigger0'
+            },
+            {
+                'name': 'SCRIPT_TRIGGER1',
+                'value': 'scriptTrigger1'
+            },
+            {
+                'name': 'SCRIPT_TRIGGER2',
+                'value': 'scriptTrigger2'
+            },
+            {
+                'name': 'SCRIPT_TRIGGER3',
+                'value': 'scriptTrigger3'
+            },
+            {
+                'name': 'MARKER0',
+                'value': 'marker0'
+            },
+            {
+                'name': 'MARKER1',
+                'value': 'marker1'
+            },
+            {
+                'name': 'MARKER2',
+                'value': 'marker2'
+            },
+            {
+                'name': 'MARKER3',
+                'value': 'marker3'
+            }
+        ]
+    },
+    'StartTriggerType': {
+        'values': [
+            {
+                'documentation': {
+                    'description': ' Setting trigger attributes to this value specifies that no trigger is  configured. \n'
+                },
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': ' The data operation does not start until a digital edge is detected. The  source of the digital edge is specified in the  NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_SOURCE attribute, and the active  edge is specified in the NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_EDGE  attribute. \n'
+                },
+                'name': 'DIGITAL_EDGE',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': ' The data operation does not start until a software event occurs. You may  create a software event by calling the niRFSG_SendSoftwareEdgeTrigger function. \n'
+                },
+                'name': 'SOFTWARE',
+                'value': 2
+            },
+            {
+                'documentation': {
+                    'description': ' Data operation does not start until the endpoint reaches a threshold  specified in the NIRFSG_ATTR_P2P_ENDPOINT_FULLNESS_START_TRIGGER_LEVEL  attribute. \n'
+                },
+                'name': 'P2_P_ENDPOINT_FULLNESS',
+                'value': 3
+            }
+        ]
+    },
     'TriggerSource': {
         'generate-mappings': True,
         'values': [
@@ -1910,151 +2055,6 @@ enums = {
                 },
                 'name': 'DIO7',
                 'value': 'DIO/PFI7'
-            }
-        ]
-    },
-    'SParameterOrientation': {
-        'values': [
-            {
-                'name': 'PORT1_TOWARDS_DUT',
-                'value': 24000
-            },
-            {
-                'name': 'PORT2_TOWARDS_DUT',
-                'value': 24001
-            }
-        ]
-    },
-    'ScriptTriggerType': {
-        'values': [
-            {
-                'documentation': {
-                    'description': ' Setting trigger attributes to this value specifies that no trigger is   configured. Signal generation starts immediately. \n'
-                },
-                'name': 'NONE',
-                'value': 0
-            },
-            {
-                'documentation': {
-                    'description': ' The data operation does not start until a digital edge is detected. The  source of the digital edge is specified in the  NIRFSG_ATTR_DIGITAL_EDGE_SCRIPT_TRIGGER_SOURCE attribute, and the active edge is  specified in the NIRFSG_ATTR_DIGITAL_EDGE_SCRIPT_TRIGGER_EDGE attribute. \n'
-                },
-                'name': 'DIGITAL_EDGE',
-                'value': 1
-            },
-            {
-                'documentation': {
-                    'description': ' The data operation does not start until a digital level is detected. The  source of the digital level is specified in the  NIRFSG_ATTR_DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE attribute, and the active level is  specified in the NIRFSG_ATTR_DIGITAL_LEVEL_SCRIPT_TRIGGER_ACTIVE_LEVEL attribute. \n'
-                },
-                'name': 'DIGITAL_LEVEL',
-                'value': 8000
-            },
-            {
-                'documentation': {
-                    'description': ' The data operation does not start until a software event occurs. You may  create a software event by calling the niRFSG_SendSoftwareEdgeTrigger function. \n'
-                },
-                'name': 'SOFTWARE',
-                'value': 2
-            }
-        ]
-    },
-    'SelfCalibrateRangeStepsToOmit': {
-        'values': [
-            {
-                'name': 'OMIT_NONE',
-                'value': 0
-            },
-            {
-                'name': 'LO_SELF_CAL',
-                'value': 1
-            },
-            {
-                'name': 'POWER_LEVEL_ACCURACY',
-                'value': 2
-            },
-            {
-                'name': 'RESIDUAL_LO_POWER',
-                'value': 4
-            },
-            {
-                'name': 'IMAGE_SUPPRESSION',
-                'value': 8
-            },
-            {
-                'name': 'SYNTHESIZER_ALIGNMENT',
-                'value': 16
-            }
-        ]
-    },
-    'SignalIdentifier': {
-        'generate-mappings': True,
-        'values': [
-            {
-                'name': 'NONE',
-                'value': ''
-            },
-            {
-                'name': 'SCRIPT_TRIGGER0',
-                'value': 'scriptTrigger0'
-            },
-            {
-                'name': 'SCRIPT_TRIGGER1',
-                'value': 'scriptTrigger1'
-            },
-            {
-                'name': 'SCRIPT_TRIGGER2',
-                'value': 'scriptTrigger2'
-            },
-            {
-                'name': 'SCRIPT_TRIGGER3',
-                'value': 'scriptTrigger3'
-            },
-            {
-                'name': 'MARKER0',
-                'value': 'marker0'
-            },
-            {
-                'name': 'MARKER1',
-                'value': 'marker1'
-            },
-            {
-                'name': 'MARKER2',
-                'value': 'marker2'
-            },
-            {
-                'name': 'MARKER3',
-                'value': 'marker3'
-            }
-        ]
-    },
-    'StartTriggerType': {
-        'values': [
-            {
-                'documentation': {
-                    'description': ' Setting trigger attributes to this value specifies that no trigger is  configured. \n'
-                },
-                'name': 'NONE',
-                'value': 0
-            },
-            {
-                'documentation': {
-                    'description': ' The data operation does not start until a digital edge is detected. The  source of the digital edge is specified in the  NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_SOURCE attribute, and the active  edge is specified in the NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_EDGE  attribute. \n'
-                },
-                'name': 'DIGITAL_EDGE',
-                'value': 1
-            },
-            {
-                'documentation': {
-                    'description': ' The data operation does not start until a software event occurs. You may  create a software event by calling the niRFSG_SendSoftwareEdgeTrigger function. \n'
-                },
-                'name': 'SOFTWARE',
-                'value': 2
-            },
-            {
-                'documentation': {
-                    'description': ' Data operation does not start until the endpoint reaches a threshold  specified in the NIRFSG_ATTR_P2P_ENDPOINT_FULLNESS_START_TRIGGER_LEVEL  attribute. \n'
-                },
-                'name': 'P2_P_ENDPOINT_FULLNESS',
-                'value': 3
             }
         ]
     },

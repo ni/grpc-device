@@ -1,5 +1,5 @@
 #include <nirfsg/nirfsg_service.h>
-#include <nirfsg_restricted/nirfsg_restricted_service.h>
+#include <nirfsg_restricted/nirfsg_restricted_library.h>
 
 using nidevice_grpc::converters::convert_to_grpc;
 
