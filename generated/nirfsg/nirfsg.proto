@@ -517,6 +517,36 @@ enum RoutedSignal {
   ROUTED_SIGNAL_STARTED_EVENT = 4;
 }
 
+enum TriggerSource {
+  TRIGGER_SOURCE_UNSPECIFIED = 0;
+  TRIGGER_SOURCE_PFI0 = 1;
+  TRIGGER_SOURCE_PFI1 = 2;
+  TRIGGER_SOURCE_PFI2 = 3;
+  TRIGGER_SOURCE_PFI3 = 4;
+  TRIGGER_SOURCE_PXI_TRIG0 = 5;
+  TRIGGER_SOURCE_PXI_TRIG1 = 6;
+  TRIGGER_SOURCE_PXI_TRIG2 = 7;
+  TRIGGER_SOURCE_PXI_TRIG3 = 8;
+  TRIGGER_SOURCE_PXI_TRIG4 = 9;
+  TRIGGER_SOURCE_PXI_TRIG5 = 10;
+  TRIGGER_SOURCE_PXI_TRIG6 = 11;
+  TRIGGER_SOURCE_PXI_TRIG7 = 12;
+  TRIGGER_SOURCE_PXI_STAR = 13;
+  TRIGGER_SOURCE_PXIE_DSTARB = 14;
+  TRIGGER_SOURCE_SYNC_START_TRIGGER = 15;
+  TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER = 16;
+  TRIGGER_SOURCE_TRIG_IN = 17;
+  TRIGGER_SOURCE_PULSE_IN = 18;
+  TRIGGER_SOURCE_DIO0 = 19;
+  TRIGGER_SOURCE_DIO1 = 20;
+  TRIGGER_SOURCE_DIO2 = 21;
+  TRIGGER_SOURCE_DIO3 = 22;
+  TRIGGER_SOURCE_DIO4 = 23;
+  TRIGGER_SOURCE_DIO5 = 24;
+  TRIGGER_SOURCE_DIO6 = 25;
+  TRIGGER_SOURCE_DIO7 = 26;
+}
+
 enum SParameterOrientation {
   S_PARAMETER_ORIENTATION_UNSPECIFIED = 0;
   S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 24000;
@@ -543,35 +573,6 @@ enum SignalIdentifier {
   SIGNAL_IDENTIFIER_MARKER1 = 7;
   SIGNAL_IDENTIFIER_MARKER2 = 8;
   SIGNAL_IDENTIFIER_MARKER3 = 9;
-}
-
-enum StartTriggerSource {
-  START_TRIGGER_SOURCE_UNSPECIFIED = 0;
-  START_TRIGGER_SOURCE_PFI0 = 1;
-  START_TRIGGER_SOURCE_PFI1 = 2;
-  START_TRIGGER_SOURCE_PFI2 = 3;
-  START_TRIGGER_SOURCE_PFI3 = 4;
-  START_TRIGGER_SOURCE_PXI_TRIG0 = 5;
-  START_TRIGGER_SOURCE_PXI_TRIG1 = 6;
-  START_TRIGGER_SOURCE_PXI_TRIG2 = 7;
-  START_TRIGGER_SOURCE_PXI_TRIG3 = 8;
-  START_TRIGGER_SOURCE_PXI_TRIG4 = 9;
-  START_TRIGGER_SOURCE_PXI_TRIG5 = 10;
-  START_TRIGGER_SOURCE_PXI_TRIG6 = 11;
-  START_TRIGGER_SOURCE_PXI_TRIG7 = 12;
-  START_TRIGGER_SOURCE_PXI_STAR = 13;
-  START_TRIGGER_SOURCE_PXIE_DSTARB = 14;
-  START_TRIGGER_SOURCE_SYNC_START_TRIGGER = 15;
-  START_TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER = 16;
-  START_TRIGGER_SOURCE_TRIG_IN = 17;
-  START_TRIGGER_SOURCE_DIO0 = 18;
-  START_TRIGGER_SOURCE_DIO1 = 19;
-  START_TRIGGER_SOURCE_DIO2 = 20;
-  START_TRIGGER_SOURCE_DIO3 = 21;
-  START_TRIGGER_SOURCE_DIO4 = 22;
-  START_TRIGGER_SOURCE_DIO5 = 23;
-  START_TRIGGER_SOURCE_DIO6 = 24;
-  START_TRIGGER_SOURCE_DIO7 = 25;
 }
 
 enum NiRFSGInt32AttributeValues {
@@ -784,57 +785,32 @@ enum NiRFSGStringAttributeValuesMapped {
   NIRFSG_STRING_REF_CLOCK_SOURCE_CLK_IN = 95;
   NIRFSG_STRING_REF_CLOCK_SOURCE_REF_IN_2 = 96;
   NIRFSG_STRING_REF_CLOCK_SOURCE_PXI_CLK_MASTER = 97;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PFI0 = 98;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PFI1 = 99;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PFI2 = 100;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PFI3 = 101;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXI_TRIG0 = 102;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXI_TRIG1 = 103;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXI_TRIG2 = 104;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXI_TRIG3 = 105;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXI_TRIG4 = 106;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXI_TRIG5 = 107;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXI_TRIG6 = 108;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXI_TRIG7 = 109;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXI_STAR = 110;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PXIE_DSTARB = 111;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_SYNC_START_TRIGGER = 112;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER = 113;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_TRIG_IN = 114;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_PULSE_IN = 115;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_DIO0 = 116;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_DIO1 = 117;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_DIO2 = 118;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_DIO3 = 119;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_DIO4 = 120;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_DIO5 = 121;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_DIO6 = 122;
-  NIRFSG_STRING_SCIPT_TRIGGER_SOURCE_DIO7 = 123;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PFI0 = 124;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PFI1 = 125;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PFI2 = 126;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PFI3 = 127;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXI_TRIG0 = 128;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXI_TRIG1 = 129;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXI_TRIG2 = 130;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXI_TRIG3 = 131;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXI_TRIG4 = 132;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXI_TRIG5 = 133;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXI_TRIG6 = 134;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXI_TRIG7 = 135;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXI_STAR = 136;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_PXIE_DSTARB = 137;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_SYNC_START_TRIGGER = 138;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER = 139;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_TRIG_IN = 140;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_DIO0 = 141;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_DIO1 = 142;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_DIO2 = 143;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_DIO3 = 144;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_DIO4 = 145;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_DIO5 = 146;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_DIO6 = 147;
-  NIRFSG_STRING_START_TRIGGER_SOURCE_DIO7 = 148;
+  NIRFSG_STRING_TRIGGER_SOURCE_PFI0 = 98;
+  NIRFSG_STRING_TRIGGER_SOURCE_PFI1 = 99;
+  NIRFSG_STRING_TRIGGER_SOURCE_PFI2 = 100;
+  NIRFSG_STRING_TRIGGER_SOURCE_PFI3 = 101;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXI_TRIG0 = 102;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXI_TRIG1 = 103;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXI_TRIG2 = 104;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXI_TRIG3 = 105;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXI_TRIG4 = 106;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXI_TRIG5 = 107;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXI_TRIG6 = 108;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXI_TRIG7 = 109;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXI_STAR = 110;
+  NIRFSG_STRING_TRIGGER_SOURCE_PXIE_DSTARB = 111;
+  NIRFSG_STRING_TRIGGER_SOURCE_SYNC_START_TRIGGER = 112;
+  NIRFSG_STRING_TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER = 113;
+  NIRFSG_STRING_TRIGGER_SOURCE_TRIG_IN = 114;
+  NIRFSG_STRING_TRIGGER_SOURCE_PULSE_IN = 115;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO0 = 116;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO1 = 117;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO2 = 118;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO3 = 119;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO4 = 120;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO5 = 121;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO6 = 122;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO7 = 123;
 }
 
 message AbortRequest {
@@ -858,7 +834,7 @@ message AllocateArbWaveformResponse {
 message CheckAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   bool value = 4;
 }
 
@@ -869,7 +845,7 @@ message CheckAttributeViBooleanResponse {
 message CheckAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGInt32AttributeValues value = 4;
     sint32 value_raw = 5;
@@ -883,7 +859,7 @@ message CheckAttributeViInt32Response {
 message CheckAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   int64 value_raw = 4;
 }
 
@@ -894,7 +870,7 @@ message CheckAttributeViInt64Response {
 message CheckAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGReal64AttributeValues value = 4;
     double value_raw = 5;
@@ -908,7 +884,7 @@ message CheckAttributeViReal64Response {
 message CheckAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   nidevice_grpc.Session value = 4;
 }
 
@@ -919,7 +895,7 @@ message CheckAttributeViSessionResponse {
 message CheckAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGStringAttributeValuesMapped value_mapped = 4;
     string value_raw = 5;
@@ -1075,7 +1051,7 @@ message ConfigureDigitalEdgeScriptTriggerRequest {
     string trigger_id_raw = 3;
   }
   oneof source_enum {
-    StartTriggerSource source_mapped = 4;
+    TriggerSource source_mapped = 4;
     string source_raw = 5;
   }
   oneof edge_enum {
@@ -1091,7 +1067,7 @@ message ConfigureDigitalEdgeScriptTriggerResponse {
 message ConfigureDigitalEdgeStartTriggerRequest {
   nidevice_grpc.Session vi = 1;
   oneof source_enum {
-    StartTriggerSource source_mapped = 2;
+    TriggerSource source_mapped = 2;
     string source_raw = 3;
   }
   oneof edge_enum {
@@ -1111,7 +1087,7 @@ message ConfigureDigitalLevelScriptTriggerRequest {
     string trigger_id_raw = 3;
   }
   oneof source_enum {
-    StartTriggerSource source_mapped = 4;
+    TriggerSource source_mapped = 4;
     string source_raw = 5;
   }
   oneof level_enum {
@@ -1455,7 +1431,7 @@ message GetScriptResponse {
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViBooleanResponse {
@@ -1466,7 +1442,7 @@ message GetAttributeViBooleanResponse {
 message GetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt32Response {
@@ -1477,7 +1453,7 @@ message GetAttributeViInt32Response {
 message GetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViInt64Response {
@@ -1488,7 +1464,7 @@ message GetAttributeViInt64Response {
 message GetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViReal64Response {
@@ -1499,7 +1475,7 @@ message GetAttributeViReal64Response {
 message GetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViSessionResponse {
@@ -1510,7 +1486,7 @@ message GetAttributeViSessionResponse {
 message GetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
 }
 
 message GetAttributeViStringResponse {
@@ -1530,7 +1506,6 @@ message GetChannelNameResponse {
 
 message GetDeembeddingSparametersRequest {
   nidevice_grpc.Session vi = 1;
-  sint32 sparameters_array_size = 2;
 }
 
 message GetDeembeddingSparametersResponse {
@@ -1691,7 +1666,7 @@ message InitWithOptionsRequest {
 
 message InitWithOptionsResponse {
   int32 status = 1;
-  nidevice_grpc.Session new_vi = 2;
+  nidevice_grpc.Session vi = 2;
   string error_message = 3 [deprecated = true];
   bool new_session_initialized = 4;
 }
@@ -1903,7 +1878,7 @@ message SetArbWaveformNextWritePositionResponse {
 message SetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   bool value = 4;
 }
 
@@ -1914,7 +1889,7 @@ message SetAttributeViBooleanResponse {
 message SetAttributeViInt32Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGInt32AttributeValues value = 4;
     sint32 value_raw = 5;
@@ -1928,7 +1903,7 @@ message SetAttributeViInt32Response {
 message SetAttributeViInt64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   int64 value_raw = 4;
 }
 
@@ -1939,7 +1914,7 @@ message SetAttributeViInt64Response {
 message SetAttributeViReal64Request {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGReal64AttributeValues value = 4;
     double value_raw = 5;
@@ -1953,7 +1928,7 @@ message SetAttributeViReal64Response {
 message SetAttributeViSessionRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   nidevice_grpc.Session value = 4;
 }
 
@@ -1964,7 +1939,7 @@ message SetAttributeViSessionResponse {
 message SetAttributeViStringRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
-  NiRFSGAttribute attribute = 3;
+  NiRFSGAttribute attribute_id = 3;
   oneof value_enum {
     NiRFSGStringAttributeValuesMapped value_mapped = 4;
     string value_raw = 5;

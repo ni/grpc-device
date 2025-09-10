@@ -192,7 +192,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Start Trigger. This attribute is  used when the NIRFSG_ATTR_START_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_EDGE. This attribute is not case-sensitive. To set the  NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_SOURCE attribute, the NI-RFSG device  must be in the Configuration state.\n \n'
         },
-        'enum': 'StartTriggerSource',
+        'enum': 'TriggerSource',
         'name': 'DIGITAL_EDGE_START_TRIGGER_SOURCE',
         'type': 'ViString'
     },
@@ -346,7 +346,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Script Trigger. This attribute is  used when the NIRFSG_ATTR_SCRIPT_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_EDGE. This attribute is not case-sensitive. To set this  attribute, the NI-RFSG device must be in the Configuration state.\n \n'
         },
-        'enum': 'SciptTriggerSource',
+        'enum': 'TriggerSource',
         'name': 'DIGITAL_EDGE_SCRIPT_TRIGGER_SOURCE',
         'type': 'ViString'
     },
@@ -601,7 +601,7 @@ attributes = {
         'documentation': {
             'description': ' Specifies the source terminal for the Script Trigger. This attribute is  used when the NIRFSG_ATTR_SCRIPT_TRIGGER_TYPE attribute is set to  NIRFSG_VAL_DIGITAL_LEVEL. This attribute is not case-sensitive. To set  the NIRFSG_ATTR_DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE attribute,  the NI-RFSG device must be in the Configuration state.\n \n'
         },
-        'enum': 'SciptTriggerSource',
+        'enum': 'TriggerSource',
         'name': 'DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE',
         'type': 'ViString'
     },

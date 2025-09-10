@@ -43,7 +43,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -68,7 +68,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -93,7 +93,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -118,7 +118,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -143,7 +143,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -168,7 +168,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -423,7 +423,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'StartTriggerSource',
+                'enum': 'TriggerSource',
                 'name': 'source',
                 'type': 'ViConstString'
             },
@@ -445,7 +445,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'StartTriggerSource',
+                'enum': 'TriggerSource',
                 'name': 'source',
                 'type': 'ViConstString'
             },
@@ -473,7 +473,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'enum': 'StartTriggerSource',
+                'enum': 'TriggerSource',
                 'name': 'source',
                 'type': 'ViConstString'
             },
@@ -1137,7 +1137,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1162,7 +1162,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1187,7 +1187,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1212,7 +1212,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1237,7 +1237,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1262,7 +1262,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -1312,6 +1312,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetDeembeddingSparameters': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -1323,8 +1324,9 @@ functions = {
                 'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'sparameters',
                 'size': {
-                    'mechanism': 'passed-in',
-                    'value': 'sparametersArraySize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'sparametersArraySize',
+                    'value_twist': 'numberOfSparameters'
                 },
                 'type': 'NIComplexNumber_struct[]'
             },
@@ -1747,7 +1749,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'newVi',
+                'name': 'vi',
                 'type': 'ViSession'
             },
             {
@@ -2170,7 +2172,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2195,7 +2197,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2220,7 +2222,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2245,7 +2247,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2270,7 +2272,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {
@@ -2295,7 +2297,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'attribute',
+                'name': 'attributeId',
                 'type': 'ViAttr'
             },
             {

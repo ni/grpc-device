@@ -71,7 +71,7 @@ TEST_F(NiRFSGSessionTest, InitializeSessionWithDeviceAndSessionName_CreatesDrive
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE("", response.new_vi().name());
+  EXPECT_NE("", response.vi().name());
 }
 
 TEST_F(NiRFSGSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDriverSession)
@@ -81,7 +81,7 @@ TEST_F(NiRFSGSessionTest, InitializeSessionWithDeviceAndNoSessionName_CreatesDri
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(0, response.status());
-  EXPECT_NE("", response.new_vi().name());
+  EXPECT_NE("", response.vi().name());
 }
 
 TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
@@ -89,7 +89,7 @@ TEST_F(NiRFSGSessionTest, InitializedSession_CloseSession_ClosesDriverSession)
   rfsg::InitWithOptionsResponse init_response;
   call_init_with_options(kRFSGTestRsrc, kRFSGOptionsString, kRFSGTestSession, &init_response);
 
-  nidevice_grpc::Session session = init_response.new_vi();
+  nidevice_grpc::Session session = init_response.vi();
   ::grpc::ClientContext context;
   rfsg::CloseRequest close_request;
   close_request.mutable_vi()->set_name(session.name());

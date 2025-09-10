@@ -104,9 +104,9 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViBoolean value = request->value();
-      auto status = library_->CheckAttributeViBoolean(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViBoolean(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -130,7 +130,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt32 value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::CheckAttributeViInt32Request::ValueEnumCase::kValue: {
@@ -147,7 +147,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViInt32(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -171,9 +171,9 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt64 value = request->value_raw();
-      auto status = library_->CheckAttributeViInt64(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViInt64(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -197,7 +197,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViReal64 value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::CheckAttributeViReal64Request::ValueEnumCase::kValue: {
@@ -214,7 +214,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViReal64(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -238,10 +238,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       auto value_grpc_session = request->value();
       ViSession value = session_repository_->access_session(value_grpc_session.name());
-      auto status = library_->CheckAttributeViSession(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViSession(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -265,7 +265,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViConstString value;
       std::string value_buffer;
       switch (request->value_enum_case()) {
@@ -288,7 +288,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->CheckAttributeViString(vi, channel_name, attribute, value);
+      auto status = library_->CheckAttributeViString(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -727,8 +727,8 @@ namespace nirfsg_grpc {
       std::string source_buffer;
       switch (request->source_enum_case()) {
         case nirfsg_grpc::ConfigureDigitalEdgeScriptTriggerRequest::SourceEnumCase::kSourceMapped: {
-          auto source_imap_it = starttriggersource_input_map_.find(request->source_mapped());
-          if (source_imap_it == starttriggersource_input_map_.end()) {
+          auto source_imap_it = triggersource_input_map_.find(request->source_mapped());
+          if (source_imap_it == triggersource_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
           }
           source = const_cast<ViConstString>((source_imap_it->second).c_str());
@@ -787,8 +787,8 @@ namespace nirfsg_grpc {
       std::string source_buffer;
       switch (request->source_enum_case()) {
         case nirfsg_grpc::ConfigureDigitalEdgeStartTriggerRequest::SourceEnumCase::kSourceMapped: {
-          auto source_imap_it = starttriggersource_input_map_.find(request->source_mapped());
-          if (source_imap_it == starttriggersource_input_map_.end()) {
+          auto source_imap_it = triggersource_input_map_.find(request->source_mapped());
+          if (source_imap_it == triggersource_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
           }
           source = const_cast<ViConstString>((source_imap_it->second).c_str());
@@ -869,8 +869,8 @@ namespace nirfsg_grpc {
       std::string source_buffer;
       switch (request->source_enum_case()) {
         case nirfsg_grpc::ConfigureDigitalLevelScriptTriggerRequest::SourceEnumCase::kSourceMapped: {
-          auto source_imap_it = starttriggersource_input_map_.find(request->source_mapped());
-          if (source_imap_it == starttriggersource_input_map_.end()) {
+          auto source_imap_it = triggersource_input_map_.find(request->source_mapped());
+          if (source_imap_it == triggersource_input_map_.end()) {
             return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for source_mapped was not specified or out of range.");
           }
           source = const_cast<ViConstString>((source_imap_it->second).c_str());
@@ -1945,9 +1945,9 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViBoolean value {};
-      auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViBoolean(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1972,9 +1972,9 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt32 value {};
-      auto status = library_->GetAttributeViInt32(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViInt32(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1999,9 +1999,9 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt64 value {};
-      auto status = library_->GetAttributeViInt64(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViInt64(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -2026,9 +2026,9 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViReal64 value {};
-      auto status = library_->GetAttributeViReal64(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViReal64(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -2053,9 +2053,9 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViSession value {};
-      auto status = library_->GetAttributeViSession(vi, channel_name, attribute, &value);
+      auto status = library_->GetAttributeViSession(vi, channel_name, attribute_id, &value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -2081,10 +2081,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
 
       while (true) {
-        auto status = library_->GetAttributeViString(vi, channel_name, attribute, 0, nullptr);
+        auto status = library_->GetAttributeViString(vi, channel_name, attribute_id, 0, nullptr);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
@@ -2094,7 +2094,7 @@ namespace nirfsg_grpc {
         if (buf_size > 0) {
             value.resize(buf_size - 1);
         }
-        status = library_->GetAttributeViString(vi, channel_name, attribute, buf_size, (ViChar*)value.data());
+        status = library_->GetAttributeViString(vi, channel_name, attribute_id, buf_size, (ViChar*)value.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buf_size)) {
           // buffer is now too small, try again
           continue;
@@ -2153,35 +2153,6 @@ namespace nirfsg_grpc {
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_name()));
         return ::grpc::Status::OK;
       }
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSGService::GetDeembeddingSparameters(::grpc::ServerContext* context, const GetDeembeddingSparametersRequest* request, GetDeembeddingSparametersResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 sparameters_array_size = request->sparameters_array_size();
-      std::vector<NIComplexNumber_struct> sparameters(sparameters_array_size, NIComplexNumber_struct());
-      ViInt32 number_of_sparameters {};
-      ViInt32 number_of_ports {};
-      auto status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      convert_to_grpc(sparameters, response->mutable_sparameters());
-      response->set_number_of_sparameters(number_of_sparameters);
-      response->set_number_of_ports(number_of_ports);
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
@@ -2678,9 +2649,9 @@ namespace nirfsg_grpc {
 
       bool new_session_initialized {};
       auto init_lambda = [&] () {
-        ViSession new_vi;
-        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &new_vi);
-        return std::make_tuple(status, new_vi);
+        ViSession vi;
+        auto status = library_->InitWithOptions(resource_name, id_query, reset_device, option_string, &vi);
+        return std::make_tuple(status, vi);
       };
       std::string grpc_device_session_name = request->session_name();
       // Capture the library shared_ptr by value. Do not capture `this` or any references.
@@ -2691,7 +2662,7 @@ namespace nirfsg_grpc {
         return ConvertApiErrorStatusForViSession(context, status, 0);
       }
       response->set_status(status);
-      response->mutable_new_vi()->set_name(grpc_device_session_name);
+      response->mutable_vi()->set_name(grpc_device_session_name);
       response->set_new_session_initialized(new_session_initialized);
       return ::grpc::Status::OK;
     }
@@ -3288,9 +3259,9 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViBoolean value = request->value();
-      auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViBoolean(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -3314,7 +3285,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt32 value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::SetAttributeViInt32Request::ValueEnumCase::kValue: {
@@ -3331,7 +3302,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->SetAttributeViInt32(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViInt32(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -3355,9 +3326,9 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViInt64 value = request->value_raw();
-      auto status = library_->SetAttributeViInt64(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViInt64(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -3381,7 +3352,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViReal64 value;
       switch (request->value_enum_case()) {
         case nirfsg_grpc::SetAttributeViReal64Request::ValueEnumCase::kValue: {
@@ -3398,7 +3369,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->SetAttributeViReal64(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViReal64(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -3422,10 +3393,10 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       auto value_grpc_session = request->value();
       ViSession value = session_repository_->access_session(value_grpc_session.name());
-      auto status = library_->SetAttributeViSession(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViSession(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -3449,7 +3420,7 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViAttr attribute = request->attribute();
+      ViAttr attribute_id = request->attribute_id();
       ViConstString value;
       std::string value_buffer;
       switch (request->value_enum_case()) {
@@ -3472,7 +3443,7 @@ namespace nirfsg_grpc {
         }
       }
 
-      auto status = library_->SetAttributeViString(vi, channel_name, attribute, value);
+      auto status = library_->SetAttributeViString(vi, channel_name, attribute_id, value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }

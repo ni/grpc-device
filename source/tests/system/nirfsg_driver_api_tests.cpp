@@ -95,7 +95,7 @@ InitWithOptionsResponse init(const client::StubPtr& stub, const std::string& mod
 nidevice_grpc::Session init_session(const client::StubPtr& stub, const std::string& model, const std::string& resource_name)
 {
   auto response = init(stub, model, resource_name);
-  auto session = response.new_vi();
+  auto session = response.vi();
   EXPECT_SUCCESS(response);
   return session;
 }
@@ -191,7 +191,7 @@ TEST_F(NiRFSGDriverApiTests, ConfigureDigitalEdgeStartTrigger_Succeeds)
   auto response = client::configure_digital_edge_start_trigger(
       stub(),
       session,
-      StartTriggerSource::START_TRIGGER_SOURCE_PXI_TRIG0,
+      TriggerSource::TRIGGER_SOURCE_PXI_TRIG0,
       DigitalEdgeEdge::DIGITAL_EDGE_EDGE_RISING_EDGE);
 
   EXPECT_SUCCESS(session, response);
@@ -352,7 +352,7 @@ TEST_F(NiRFSGDriverApiTests, SetHostDMABufferSize_UpdatesHostDMABufferSizeSucces
 TEST_F(NiRFSGDriverApiTests, GetDeembeddingSParameters_Empty)
 {
   auto session = init_session(stub(), PXI_5841);
-  auto parameters = client::get_deembedding_sparameters(stub(), session, 0);
+  auto parameters = client::get_deembedding_sparameters(stub(), session);
 
   EXPECT_SUCCESS(session, parameters);
   EXPECT_EQ(0, parameters.number_of_sparameters());
@@ -386,7 +386,7 @@ TEST_F(NiRFSGDriverApiTests, SetDeembeddingSParameters_GetDeembeddingSParameters
       parameters,
       2,
       SParameterOrientation::S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT);
-  auto get_parameters = client::get_deembedding_sparameters(stub(), session, 4);
+  auto get_parameters = client::get_deembedding_sparameters(stub(), session);
 
   EXPECT_SUCCESS(session, set_parameters);
   EXPECT_SUCCESS(session, get_parameters);

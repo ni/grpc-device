@@ -171,52 +171,52 @@ ViStatus NiRFSGLibrary::AllocateArbWaveform(ViSession vi, ViConstString waveform
   return function_pointers_.AllocateArbWaveform(vi, waveformName, sizeInSamples);
 }
 
-ViStatus NiRFSGLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean value)
+ViStatus NiRFSGLibrary::CheckAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value)
 {
   if (!function_pointers_.CheckAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViBoolean.");
   }
-  return function_pointers_.CheckAttributeViBoolean(vi, channelName, attribute, value);
+  return function_pointers_.CheckAttributeViBoolean(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 value)
+ViStatus NiRFSGLibrary::CheckAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value)
 {
   if (!function_pointers_.CheckAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViInt32.");
   }
-  return function_pointers_.CheckAttributeViInt32(vi, channelName, attribute, value);
+  return function_pointers_.CheckAttributeViInt32(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::CheckAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt64 value)
+ViStatus NiRFSGLibrary::CheckAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 value)
 {
   if (!function_pointers_.CheckAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViInt64.");
   }
-  return function_pointers_.CheckAttributeViInt64(vi, channelName, attribute, value);
+  return function_pointers_.CheckAttributeViInt64(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64 value)
+ViStatus NiRFSGLibrary::CheckAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 value)
 {
   if (!function_pointers_.CheckAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViReal64.");
   }
-  return function_pointers_.CheckAttributeViReal64(vi, channelName, attribute, value);
+  return function_pointers_.CheckAttributeViReal64(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attribute, ViSession value)
+ViStatus NiRFSGLibrary::CheckAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession value)
 {
   if (!function_pointers_.CheckAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViSession.");
   }
-  return function_pointers_.CheckAttributeViSession(vi, channelName, attribute, value);
+  return function_pointers_.CheckAttributeViSession(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attribute, ViConstString value)
+ViStatus NiRFSGLibrary::CheckAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString value)
 {
   if (!function_pointers_.CheckAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_CheckAttributeViString.");
   }
-  return function_pointers_.CheckAttributeViString(vi, channelName, attribute, value);
+  return function_pointers_.CheckAttributeViString(vi, channelName, attributeId, value);
 }
 
 ViStatus NiRFSGLibrary::CheckGenerationStatus(ViSession vi, ViBoolean* isDone)
@@ -603,52 +603,52 @@ ViStatus NiRFSGLibrary::GetScript(ViSession vi, ViConstString scriptName, ViChar
   return function_pointers_.GetScript(vi, scriptName, Script, bufferSize, actualBufferSize);
 }
 
-ViStatus NiRFSGLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean* value)
+ViStatus NiRFSGLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value)
 {
   if (!function_pointers_.GetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViBoolean.");
   }
-  return function_pointers_.GetAttributeViBoolean(vi, channelName, attribute, value);
+  return function_pointers_.GetAttributeViBoolean(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32* value)
+ViStatus NiRFSGLibrary::GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* value)
 {
   if (!function_pointers_.GetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViInt32.");
   }
-  return function_pointers_.GetAttributeViInt32(vi, channelName, attribute, value);
+  return function_pointers_.GetAttributeViInt32(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt64* value)
+ViStatus NiRFSGLibrary::GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* value)
 {
   if (!function_pointers_.GetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViInt64.");
   }
-  return function_pointers_.GetAttributeViInt64(vi, channelName, attribute, value);
+  return function_pointers_.GetAttributeViInt64(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64* value)
+ViStatus NiRFSGLibrary::GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* value)
 {
   if (!function_pointers_.GetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViReal64.");
   }
-  return function_pointers_.GetAttributeViReal64(vi, channelName, attribute, value);
+  return function_pointers_.GetAttributeViReal64(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attribute, ViSession* value)
+ViStatus NiRFSGLibrary::GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* value)
 {
   if (!function_pointers_.GetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViSession.");
   }
-  return function_pointers_.GetAttributeViSession(vi, channelName, attribute, value);
+  return function_pointers_.GetAttributeViSession(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 bufSize, ViChar value[])
+ViStatus NiRFSGLibrary::GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[])
 {
   if (!function_pointers_.GetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAttributeViString.");
   }
-  return function_pointers_.GetAttributeViString(vi, channelName, attribute, bufSize, value);
+  return function_pointers_.GetAttributeViString(vi, channelName, attributeId, bufSize, value);
 }
 
 ViStatus NiRFSGLibrary::GetChannelName(ViSession vi, ViInt32 index, ViInt32 bufferSize, ViChar name[])
@@ -755,12 +755,12 @@ ViStatus NiRFSGLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean r
   return function_pointers_.Init(resourceName, idQuery, resetDevice, newVi);
 }
 
-ViStatus NiRFSGLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi)
+ViStatus NiRFSGLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
 {
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_InitWithOptions.");
   }
-  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, newVi);
+  return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
 }
 
 ViStatus NiRFSGLibrary::Initiate(ViSession vi)
@@ -931,52 +931,52 @@ ViStatus NiRFSGLibrary::SetArbWaveformNextWritePosition(ViSession vi, ViConstStr
   return function_pointers_.SetArbWaveformNextWritePosition(vi, waveformName, relativeTo, offset);
 }
 
-ViStatus NiRFSGLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attribute, ViBoolean value)
+ViStatus NiRFSGLibrary::SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value)
 {
   if (!function_pointers_.SetAttributeViBoolean) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViBoolean.");
   }
-  return function_pointers_.SetAttributeViBoolean(vi, channelName, attribute, value);
+  return function_pointers_.SetAttributeViBoolean(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt32 value)
+ViStatus NiRFSGLibrary::SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value)
 {
   if (!function_pointers_.SetAttributeViInt32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViInt32.");
   }
-  return function_pointers_.SetAttributeViInt32(vi, channelName, attribute, value);
+  return function_pointers_.SetAttributeViInt32(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attribute, ViInt64 value)
+ViStatus NiRFSGLibrary::SetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64 value)
 {
   if (!function_pointers_.SetAttributeViInt64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViInt64.");
   }
-  return function_pointers_.SetAttributeViInt64(vi, channelName, attribute, value);
+  return function_pointers_.SetAttributeViInt64(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attribute, ViReal64 value)
+ViStatus NiRFSGLibrary::SetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 value)
 {
   if (!function_pointers_.SetAttributeViReal64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViReal64.");
   }
-  return function_pointers_.SetAttributeViReal64(vi, channelName, attribute, value);
+  return function_pointers_.SetAttributeViReal64(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attribute, ViSession value)
+ViStatus NiRFSGLibrary::SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession value)
 {
   if (!function_pointers_.SetAttributeViSession) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViSession.");
   }
-  return function_pointers_.SetAttributeViSession(vi, channelName, attribute, value);
+  return function_pointers_.SetAttributeViSession(vi, channelName, attributeId, value);
 }
 
-ViStatus NiRFSGLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attribute, ViConstString value)
+ViStatus NiRFSGLibrary::SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString value)
 {
   if (!function_pointers_.SetAttributeViString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_SetAttributeViString.");
   }
-  return function_pointers_.SetAttributeViString(vi, channelName, attribute, value);
+  return function_pointers_.SetAttributeViString(vi, channelName, attributeId, value);
 }
 
 ViStatus NiRFSGLibrary::SetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[])

@@ -71,7 +71,7 @@ try:
             session_name=SESSION_NAME, resource_name=RESOURCE, option_string=OPTIONS
         )
     )
-    vi = response.new_vi
+    vi = response.vi
 
     client.ConfigureRF(nirfsg_types.ConfigureRFRequest(vi=vi, frequency=1e9, power_level=-5))
     initiate_response = client.Initiate(nirfsg_types.InitiateRequest(vi=vi))

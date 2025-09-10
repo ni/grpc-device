@@ -85,7 +85,7 @@ nidevice_grpc::Session init(const client::StubPtr& stub, const std::string& mode
 {
   auto options = std::string("Simulate=1, DriverSetup=Model:") + model;
   auto response = client::init_with_options(stub, "FakeDevice", false, false, options);
-  auto session = response.new_vi();
+  auto session = response.vi();
   EXPECT_SUCCESS(response);
   return session;
 }

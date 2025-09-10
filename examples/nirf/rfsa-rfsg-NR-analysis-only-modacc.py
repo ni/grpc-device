@@ -136,7 +136,7 @@ try:
         )
     )
 
-    rfsgsession = initialize_rfsg_response.new_vi
+    rfsgsession = initialize_rfsg_response.vi
     print("Done")
 
     center_frequency = 3.5e9
@@ -177,7 +177,7 @@ try:
         nirfsg_types.SetAttributeViReal64Request(
             vi=rfsgsession,
             channel_name="",
-            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_POWER_LEVEL,
+            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_POWER_LEVEL,
             value_raw=power_level_dbm,
         )
     )
@@ -185,7 +185,7 @@ try:
         nirfsg_types.SetAttributeViReal64Request(
             vi=rfsgsession,
             channel_name="",
-            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_FREQUENCY,
+            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_FREQUENCY,
             value_raw=center_frequency,
         )
     )

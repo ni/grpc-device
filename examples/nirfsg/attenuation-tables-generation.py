@@ -80,7 +80,7 @@ try:
         )
     )
     raise_if_initialization_error(response)
-    vi = response.new_vi
+    vi = response.vi
 
     client.ConfigureRefClock(
         nirfsg_types.ConfigureRefClockRequest(
@@ -94,7 +94,7 @@ try:
         nirfsg_types.SetAttributeViStringRequest(
             vi=vi,
             channel_name="",
-            attribute=nirfsg_types.NIRFSG_ATTRIBUTE_REF_CLOCK_SOURCE,
+            attribute_id=nirfsg_types.NIRFSG_ATTRIBUTE_REF_CLOCK_SOURCE,
             value_mapped=nirfsg_types.NIRFSG_STRING_REF_CLOCK_SOURCE_ONBOARD_CLOCK,
         )
     )
