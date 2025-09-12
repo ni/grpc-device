@@ -75,6 +75,9 @@ DisableStartTriggerResponse disable_start_trigger(const StubPtr& stub, const nid
 ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
 ErrorQueryResponse error_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RoutedSignal, pb::int32>& signal, const simple_variant<SignalIdentifier, std::string>& signal_identifier, const simple_variant<OutputSignal, std::string>& output_terminal);
+GetAllNamedWaveformNamesResponse get_all_named_waveform_names(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetAllScriptNamesResponse get_all_script_names(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetScriptResponse get_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& script_name);
 GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSGAttribute& attribute_id);
 GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSGAttribute& attribute_id);
 GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSGAttribute& attribute_id);
@@ -85,6 +88,7 @@ GetChannelNameResponse get_channel_name(const StubPtr& stub, const nidevice_grpc
 GetDeembeddingSparametersResponse get_deembedding_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExternalCalibrationLastDateAndTimeResponse get_external_calibration_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetMaxSettablePowerResponse get_max_settable_power(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalibrationDateAndTimeResponse get_self_calibration_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Module, pb::int32>& module);
 GetSelfCalibrationTemperatureResponse get_self_calibration_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Module, pb::int32>& module);
 GetTerminalNameResponse get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RoutedSignal, pb::int32>& signal, const simple_variant<SignalIdentifier, std::string>& signal_identifier);

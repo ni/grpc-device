@@ -1171,6 +1171,58 @@ export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simpl
   return response;
 }
 
+GetAllNamedWaveformNamesResponse
+get_all_named_waveform_names(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAllNamedWaveformNamesRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetAllNamedWaveformNamesResponse{};
+
+  raise_if_error(
+      stub->GetAllNamedWaveformNames(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetAllScriptNamesResponse
+get_all_script_names(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetAllScriptNamesRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetAllScriptNamesResponse{};
+
+  raise_if_error(
+      stub->GetAllScriptNames(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetScriptResponse
+get_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& script_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetScriptRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_script_name(script_name);
+
+  auto response = GetScriptResponse{};
+
+  raise_if_error(
+      stub->GetScript(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetAttributeViBooleanResponse
 get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSGAttribute& attribute_id)
 {
@@ -1349,6 +1401,23 @@ get_external_calibration_last_date_and_time(const StubPtr& stub, const nidevice_
 
   raise_if_error(
       stub->GetExternalCalibrationLastDateAndTime(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetMaxSettablePowerResponse
+get_max_settable_power(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetMaxSettablePowerRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetMaxSettablePowerResponse{};
+
+  raise_if_error(
+      stub->GetMaxSettablePower(&context, request, &response),
       context);
 
   return response;

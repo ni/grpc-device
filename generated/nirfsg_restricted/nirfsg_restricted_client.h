@@ -27,6 +27,7 @@ ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Ses
 CreateDeembeddingSparameterTableResponse create_deembedding_sparameter_table(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const pb::int32& number_of_frequencies, const pb::int32& number_of_ports);
 ConfigureSparameterTableFrequenciesResponse configure_sparameter_table_frequencies(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const std::vector<double>& frequencies);
 ConfigureSparameterTableSparametersResponse configure_sparameter_table_sparameters(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const std::vector<nidevice_grpc::NIComplexNumber>& sparameter_table, const simple_variant<SParameterOrientation, pb::int32>& sparameter_orientation);
+GetDeembeddingTableNumberOfPortsResponse get_deembedding_table_number_of_ports(const StubPtr& stub, const nidevice_grpc::Session& vi);
 
 } // namespace nirfsg_restricted_grpc::experimental::client
 

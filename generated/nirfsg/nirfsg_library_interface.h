@@ -68,6 +68,9 @@ class NiRFSGLibraryInterface {
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[1024]) = 0;
   virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;
+  virtual ViStatus GetAllNamedWaveformNames(ViSession vi, ViChar waveformNames[], ViInt32 bufferSize, ViInt32* actualBufferSize) = 0;
+  virtual ViStatus GetAllScriptNames(ViSession vi, ViChar scriptNames[], ViInt32 bufferSize, ViInt32* actualBufferSize) = 0;
+  virtual ViStatus GetScript(ViSession vi, ViConstString scriptName, ViChar Script[], ViInt32 bufferSize, ViInt32* actualBufferSize) = 0;
   virtual ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value) = 0;
   virtual ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* value) = 0;
   virtual ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* value) = 0;
@@ -78,6 +81,7 @@ class NiRFSGLibraryInterface {
   virtual ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]) = 0;
   virtual ViStatus GetExternalCalibrationLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second) = 0;
+  virtual ViStatus GetMaxSettablePower(ViSession vi, ViReal64* value) = 0;
   virtual ViStatus GetSelfCalibrationDateAndTime(ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second) = 0;
   virtual ViStatus GetSelfCalibrationTemperature(ViSession vi, ViInt32 module, ViReal64* temperature) = 0;
   virtual ViStatus GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[]) = 0;

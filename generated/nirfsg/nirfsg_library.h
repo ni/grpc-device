@@ -74,6 +74,9 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[1024]) override;
   ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) override;
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) override;
+  ViStatus GetAllNamedWaveformNames(ViSession vi, ViChar waveformNames[], ViInt32 bufferSize, ViInt32* actualBufferSize) override;
+  ViStatus GetAllScriptNames(ViSession vi, ViChar scriptNames[], ViInt32 bufferSize, ViInt32* actualBufferSize) override;
+  ViStatus GetScript(ViSession vi, ViConstString scriptName, ViChar Script[], ViInt32 bufferSize, ViInt32* actualBufferSize) override;
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value) override;
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* value) override;
   ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* value) override;
@@ -84,6 +87,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts) override;
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]) override;
   ViStatus GetExternalCalibrationLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second) override;
+  ViStatus GetMaxSettablePower(ViSession vi, ViReal64* value) override;
   ViStatus GetSelfCalibrationDateAndTime(ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second) override;
   ViStatus GetSelfCalibrationTemperature(ViSession vi, ViInt32 module, ViReal64* temperature) override;
   ViStatus GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[]) override;
@@ -187,6 +191,9 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using ErrorMessagePtr = decltype(&niRFSG_error_message);
   using ErrorQueryPtr = decltype(&niRFSG_error_query);
   using ExportSignalPtr = decltype(&niRFSG_ExportSignal);
+  using GetAllNamedWaveformNamesPtr = decltype(&niRFSG_GetAllNamedWaveformNames);
+  using GetAllScriptNamesPtr = decltype(&niRFSG_GetAllScriptNames);
+  using GetScriptPtr = decltype(&niRFSG_GetScript);
   using GetAttributeViBooleanPtr = decltype(&niRFSG_GetAttributeViBoolean);
   using GetAttributeViInt32Ptr = decltype(&niRFSG_GetAttributeViInt32);
   using GetAttributeViInt64Ptr = decltype(&niRFSG_GetAttributeViInt64);
@@ -197,6 +204,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using GetDeembeddingSparametersPtr = decltype(&niRFSG_GetDeembeddingSparameters);
   using GetErrorPtr = decltype(&niRFSG_GetError);
   using GetExternalCalibrationLastDateAndTimePtr = decltype(&niRFSG_GetExternalCalibrationLastDateAndTime);
+  using GetMaxSettablePowerPtr = decltype(&niRFSG_GetMaxSettablePower);
   using GetSelfCalibrationDateAndTimePtr = decltype(&niRFSG_GetSelfCalibrationDateAndTime);
   using GetSelfCalibrationTemperaturePtr = decltype(&niRFSG_GetSelfCalibrationTemperature);
   using GetTerminalNamePtr = decltype(&niRFSG_GetTerminalName);
@@ -300,6 +308,9 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
     ErrorMessagePtr ErrorMessage;
     ErrorQueryPtr ErrorQuery;
     ExportSignalPtr ExportSignal;
+    GetAllNamedWaveformNamesPtr GetAllNamedWaveformNames;
+    GetAllScriptNamesPtr GetAllScriptNames;
+    GetScriptPtr GetScript;
     GetAttributeViBooleanPtr GetAttributeViBoolean;
     GetAttributeViInt32Ptr GetAttributeViInt32;
     GetAttributeViInt64Ptr GetAttributeViInt64;
@@ -310,6 +321,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
     GetDeembeddingSparametersPtr GetDeembeddingSparameters;
     GetErrorPtr GetError;
     GetExternalCalibrationLastDateAndTimePtr GetExternalCalibrationLastDateAndTime;
+    GetMaxSettablePowerPtr GetMaxSettablePower;
     GetSelfCalibrationDateAndTimePtr GetSelfCalibrationDateAndTime;
     GetSelfCalibrationTemperaturePtr GetSelfCalibrationTemperature;
     GetTerminalNamePtr GetTerminalName;

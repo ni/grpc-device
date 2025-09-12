@@ -47,6 +47,7 @@ public:
   ::grpc::Status CreateDeembeddingSparameterTable(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableRequest* request, CreateDeembeddingSparameterTableResponse* response) override;
   ::grpc::Status ConfigureSparameterTableFrequencies(::grpc::ServerContext* context, const ConfigureSparameterTableFrequenciesRequest* request, ConfigureSparameterTableFrequenciesResponse* response) override;
   ::grpc::Status ConfigureSparameterTableSparameters(::grpc::ServerContext* context, const ConfigureSparameterTableSparametersRequest* request, ConfigureSparameterTableSparametersResponse* response) override;
+  ::grpc::Status GetDeembeddingTableNumberOfPorts(::grpc::ServerContext* context, const GetDeembeddingTableNumberOfPortsRequest* request, GetDeembeddingTableNumberOfPortsResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;

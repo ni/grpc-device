@@ -121,5 +121,22 @@ configure_sparameter_table_sparameters(const StubPtr& stub, const nidevice_grpc:
   return response;
 }
 
+GetDeembeddingTableNumberOfPortsResponse
+get_deembedding_table_number_of_ports(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetDeembeddingTableNumberOfPortsRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = GetDeembeddingTableNumberOfPortsResponse{};
+
+  raise_if_error(
+      stub->GetDeembeddingTableNumberOfPorts(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nirfsg_restricted_grpc::experimental::client

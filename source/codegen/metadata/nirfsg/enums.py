@@ -235,6 +235,62 @@ enums = {
                 },
                 'name': 'TRIG_OUT',
                 'value': 'TrigOut'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 0 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 1 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 2 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 3 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 4 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 5 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 6 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 7 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO7',
+                'value': 'DIO/PFI7'
             }
         ]
     },
@@ -386,6 +442,62 @@ enums = {
                 },
                 'name': 'TRIG_OUT',
                 'value': 'TrigOut'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 0 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 1 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 2 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 3 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 4 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 5 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 6 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 7 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO7',
+                'value': 'DIO/PFI7'
             }
         ]
     },
@@ -510,6 +622,62 @@ enums = {
                 },
                 'name': 'TRIG_IN',
                 'value': 'TrigIn'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 0 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 1 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 2 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 3 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 4 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 5 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 6 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 7 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO7',
+                'value': 'DIO/PFI7'
             }
         ]
     },
@@ -1799,7 +1967,7 @@ enums = {
             },
             {
                 'documentation': {
-                    'description': ' PXIe DStar B trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841. \n'
+                    'description': ' PXIe DStar B trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841/5842/5860. \n'
                 },
                 'name': 'PXIE_DSTARB',
                 'value': 'PXIe_DStarB'
@@ -1824,6 +1992,69 @@ enums = {
                 },
                 'name': 'TRIG_IN',
                 'value': 'TrigIn'
+            },
+            {
+                'documentation': {
+                    'description': ' PULSE IN terminal.\n'
+                },
+                'name': 'PULSE_IN',
+                'value': 'PulseIn'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 0 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 1 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 2 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 3 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 4 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 5 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 6 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'documentation': {
+                    'description': ' PFI 7 on the front panel DIO connector.\n'
+                },
+                'name': 'DIO7',
+                'value': 'DIO/PFI7'
             }
         ]
     },

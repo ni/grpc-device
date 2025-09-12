@@ -272,6 +272,21 @@ ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifi
   return niRFSG_ExportSignal(vi, signal, signalIdentifier, outputTerminal);
 }
 
+ViStatus GetAllNamedWaveformNames(ViSession vi, ViChar waveformNames[], ViInt32 bufferSize, ViInt32* actualBufferSize)
+{
+  return niRFSG_GetAllNamedWaveformNames(vi, waveformNames, bufferSize, actualBufferSize);
+}
+
+ViStatus GetAllScriptNames(ViSession vi, ViChar scriptNames[], ViInt32 bufferSize, ViInt32* actualBufferSize)
+{
+  return niRFSG_GetAllScriptNames(vi, scriptNames, bufferSize, actualBufferSize);
+}
+
+ViStatus GetScript(ViSession vi, ViConstString scriptName, ViChar Script[], ViInt32 bufferSize, ViInt32* actualBufferSize)
+{
+  return niRFSG_GetScript(vi, scriptName, Script, bufferSize, actualBufferSize);
+}
+
 ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value)
 {
   return niRFSG_GetAttributeViBoolean(vi, channelName, attributeId, value);
@@ -320,6 +335,11 @@ ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBuf
 ViStatus GetExternalCalibrationLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second)
 {
   return niRFSG_GetExternalCalibrationLastDateAndTime(vi, year, month, day, hour, minute, second);
+}
+
+ViStatus GetMaxSettablePower(ViSession vi, ViReal64* value)
+{
+  return niRFSG_GetMaxSettablePower(vi, value);
 }
 
 ViStatus GetSelfCalibrationDateAndTime(ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second)
