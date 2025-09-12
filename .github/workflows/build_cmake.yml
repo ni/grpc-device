@@ -41,9 +41,9 @@ jobs:
     - name: Extract version values
       id: get_version
       run: |
-        version_major=$(sed -n 's/set(version_major \([0-9]*\))/\1/p' project-meta-info.txt)
-        version_minor=$(sed -n 's/set(version_minor \([0-9]*\))/\1/p' project-meta-info.txt)
-        version_update=$(sed -n 's/set(version_update \([0-9]*\))/\1/p' project-meta-info.txt)
+        version_major=$(sed -n 's/set(version_major \([0-9]*\))/\1/p' project-meta-info.cmake)
+        version_minor=$(sed -n 's/set(version_minor \([0-9]*\))/\1/p' project-meta-info.cmake)
+        version_update=$(sed -n 's/set(version_update \([0-9]*\))/\1/p' project-meta-info.cmake)
         echo "version_major=$version_major" >> $GITHUB_OUTPUT
         echo "version_minor=$version_minor" >> $GITHUB_OUTPUT
         echo "version_update=$version_update" >> $GITHUB_OUTPUT
