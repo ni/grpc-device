@@ -1312,7 +1312,6 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetDeembeddingSparameters': {
-        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
