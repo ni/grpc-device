@@ -35,13 +35,15 @@ jobs:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device'
         azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-        azure-pipeline-variables: >
-          '{"BRANCH": "main",
-          "EXPORT_NAME": "ni-grpc-device",
-          "PHASE": "d",
-          "VERSION_MAJOR": "${{ steps.get_version.outputs.version_major }}",
-          "VERSION_MINOR": "${{ steps.get_version.outputs.version_minor }}",
-          "VERSION_UPDATE": "${{ steps.get_version.outputs.version_update }}"}'
+        azure-pipeline-variables: |
+          {
+            "BRANCH": "main",
+            "EXPORT_NAME": "ni-grpc-device",
+            "PHASE": "d",
+            "VERSION_MAJOR": "${{ steps.get_version.outputs.version_major }}",
+            "VERSION_MINOR": "${{ steps.get_version.outputs.version_minor }}",
+            "VERSION_UPDATE": "${{ steps.get_version.outputs.version_update }}"
+          }
                                   
     - name: Trigger Release CI 
       uses: Azure/pipelines@v1.2
@@ -50,11 +52,14 @@ jobs:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device'
         azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-        azure-pipeline-variables: >
-          '{"BRANCH": "releases",
-          "EXPORT_NAME": "ni-grpc-device",
-          "PHASE": "f",
-          "RELEASE_BRANCH_OPTION": "--release-branch"
-          "VERSION_MAJOR": "${{ steps.get_version.outputs.version_major }}",
-          "VERSION_MINOR": "${{ steps.get_version.outputs.version_minor }}",
-          "VERSION_UPDATE": "${{ steps.get_version.outputs.version_update }}"}'
+        azure-pipeline-variables: |
+          {
+            "BRANCH": "main",
+            "EXPORT_NAME": "ni-grpc-device",
+            "PHASE": "f",
+            "RELEASE_BRANCH_OPTION": "--release-branch"
+            "VERSION_MAJOR": "${{ steps.get_version.outputs.version_major }}",
+            "VERSION_MINOR": "${{ steps.get_version.outputs.version_minor }}",
+            "VERSION_UPDATE": "${{ steps.get_version.outputs.version_update }}"
+          }
+
