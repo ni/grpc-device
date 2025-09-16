@@ -241,56 +241,64 @@ enums = {
                     'description': ' PFI 0 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO0',
-                'value': 'DIO/PFI0'
+                'value': 'DIO/PFI0',
+                'order': 1
             },
             {
                 'documentation': {
                     'description': ' PFI 1 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO1',
-                'value': 'DIO/PFI1'
+                'value': 'DIO/PFI1',
+                'order': 2
             },
             {
                 'documentation': {
                     'description': ' PFI 2 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO2',
-                'value': 'DIO/PFI2'
+                'value': 'DIO/PFI2',
+                'order': 3
             },
             {
                 'documentation': {
                     'description': ' PFI 3 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO3',
-                'value': 'DIO/PFI3'
+                'value': 'DIO/PFI3',
+                'order': 4
             },
             {
                 'documentation': {
                     'description': ' PFI 4 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO4',
-                'value': 'DIO/PFI4'
+                'value': 'DIO/PFI4',
+                'order': 5
             },
             {
                 'documentation': {
                     'description': ' PFI 5 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO5',
-                'value': 'DIO/PFI5'
+                'value': 'DIO/PFI5',
+                'order': 6
             },
             {
                 'documentation': {
                     'description': ' PFI 6 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO6',
-                'value': 'DIO/PFI6'
+                'value': 'DIO/PFI6',
+                'order': 7
             },
             {
                 'documentation': {
                     'description': ' PFI 7 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO7',
-                'value': 'DIO/PFI7'
+                'value': 'DIO/PFI7',
+                'order': 8
             }
         ]
     },
@@ -448,56 +456,64 @@ enums = {
                     'description': ' PFI 0 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO0',
-                'value': 'DIO/PFI0'
+                'value': 'DIO/PFI0',
+                'order': 9
             },
             {
                 'documentation': {
                     'description': ' PFI 1 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO1',
-                'value': 'DIO/PFI1'
+                'value': 'DIO/PFI1',
+                'order': 10
             },
             {
                 'documentation': {
                     'description': ' PFI 2 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO2',
-                'value': 'DIO/PFI2'
+                'value': 'DIO/PFI2',
+                'order': 11
             },
             {
                 'documentation': {
                     'description': ' PFI 3 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO3',
-                'value': 'DIO/PFI3'
+                'value': 'DIO/PFI3',
+                'order': 12
             },
             {
                 'documentation': {
                     'description': ' PFI 4 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO4',
-                'value': 'DIO/PFI4'
+                'value': 'DIO/PFI4',
+                'order': 13
             },
             {
                 'documentation': {
                     'description': ' PFI 5 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO5',
-                'value': 'DIO/PFI5'
+                'value': 'DIO/PFI5',
+                'order': 14
             },
             {
                 'documentation': {
                     'description': ' PFI 6 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO6',
-                'value': 'DIO/PFI6'
+                'value': 'DIO/PFI6',
+                'order': 15
             },
             {
                 'documentation': {
                     'description': ' PFI 7 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO7',
-                'value': 'DIO/PFI7'
+                'value': 'DIO/PFI7',
+                'order': 16
             }
         ]
     },
@@ -628,56 +644,64 @@ enums = {
                     'description': ' PFI 0 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO0',
-                'value': 'DIO/PFI0'
+                'value': 'DIO/PFI0',
+                'order': 17
             },
             {
                 'documentation': {
                     'description': ' PFI 1 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO1',
-                'value': 'DIO/PFI1'
+                'value': 'DIO/PFI1',
+                'order': 18
             },
             {
                 'documentation': {
                     'description': ' PFI 2 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO2',
-                'value': 'DIO/PFI2'
+                'value': 'DIO/PFI2',
+                'order': 19
             },
             {
                 'documentation': {
                     'description': ' PFI 3 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO3',
-                'value': 'DIO/PFI3'
+                'value': 'DIO/PFI3',
+                'order': 20
             },
             {
                 'documentation': {
                     'description': ' PFI 4 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO4',
-                'value': 'DIO/PFI4'
+                'value': 'DIO/PFI4',
+                'order': 21
             },
             {
                 'documentation': {
                     'description': ' PFI 5 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO5',
-                'value': 'DIO/PFI5'
+                'value': 'DIO/PFI5',
+                'order': 22
             },
             {
                 'documentation': {
                     'description': ' PFI 6 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO6',
-                'value': 'DIO/PFI6'
+                'value': 'DIO/PFI6',
+                'order': 23
             },
             {
                 'documentation': {
                     'description': ' PFI 7 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO7',
-                'value': 'DIO/PFI7'
+                'value': 'DIO/PFI7',
+                'order': 24
             }
         ]
     },
@@ -1998,63 +2022,72 @@ enums = {
                     'description': ' PULSE IN terminal.\n'
                 },
                 'name': 'PULSE_IN',
-                'value': 'PulseIn'
+                'value': 'PulseIn',
+                'order': 25
             },
             {
                 'documentation': {
                     'description': ' PFI 0 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO0',
-                'value': 'DIO/PFI0'
+                'value': 'DIO/PFI0',
+                'order': 26
             },
             {
                 'documentation': {
                     'description': ' PFI 1 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO1',
-                'value': 'DIO/PFI1'
+                'value': 'DIO/PFI1',
+                'order': 27
             },
             {
                 'documentation': {
                     'description': ' PFI 2 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO2',
-                'value': 'DIO/PFI2'
+                'value': 'DIO/PFI2',
+                'order': 28
             },
             {
                 'documentation': {
                     'description': ' PFI 3 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO3',
-                'value': 'DIO/PFI3'
+                'value': 'DIO/PFI3',
+                'order': 29
             },
             {
                 'documentation': {
                     'description': ' PFI 4 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO4',
-                'value': 'DIO/PFI4'
+                'value': 'DIO/PFI4',
+                'order': 30
             },
             {
                 'documentation': {
                     'description': ' PFI 5 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO5',
-                'value': 'DIO/PFI5'
+                'value': 'DIO/PFI5',
+                'order': 31
             },
             {
                 'documentation': {
                     'description': ' PFI 6 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO6',
-                'value': 'DIO/PFI6'
+                'value': 'DIO/PFI6',
+                'order': 32
             },
             {
                 'documentation': {
                     'description': ' PFI 7 on the front panel DIO connector.\n'
                 },
                 'name': 'DIO7',
-                'value': 'DIO/PFI7'
+                'value': 'DIO/PFI7',
+                'order': 33
             }
         ]
     },
