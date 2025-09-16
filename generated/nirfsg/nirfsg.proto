@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFSG API metadata version 21.0.0
+// This file is generated from NI-RFSG API metadata version 25.5.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFSG Metadata
 //---------------------------------------------------------------------
@@ -70,6 +70,9 @@ service NiRFSG {
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
+  rpc GetAllNamedWaveformNames(GetAllNamedWaveformNamesRequest) returns (GetAllNamedWaveformNamesResponse);
+  rpc GetAllScriptNames(GetAllScriptNamesRequest) returns (GetAllScriptNamesResponse);
+  rpc GetScript(GetScriptRequest) returns (GetScriptResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
@@ -80,6 +83,7 @@ service NiRFSG {
   rpc GetDeembeddingSparameters(GetDeembeddingSparametersRequest) returns (GetDeembeddingSparametersResponse);
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetExternalCalibrationLastDateAndTime(GetExternalCalibrationLastDateAndTimeRequest) returns (GetExternalCalibrationLastDateAndTimeResponse);
+  rpc GetMaxSettablePower(GetMaxSettablePowerRequest) returns (GetMaxSettablePowerResponse);
   rpc GetSelfCalibrationDateAndTime(GetSelfCalibrationDateAndTimeRequest) returns (GetSelfCalibrationDateAndTimeResponse);
   rpc GetSelfCalibrationTemperature(GetSelfCalibrationTemperatureRequest) returns (GetSelfCalibrationTemperatureResponse);
   rpc GetTerminalName(GetTerminalNameRequest) returns (GetTerminalNameResponse);
@@ -351,7 +355,15 @@ enum NiRFSGAttribute {
   NIRFSG_ATTRIBUTE_DEEMBEDDING_COMPENSATION_GAIN = 1150289;
   NIRFSG_ATTRIBUTE_LOAD_CONFIGURATIONS_FROM_FILE_LOAD_OPTIONS = 1150290;
   NIRFSG_ATTRIBUTE_LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS = 1150291;
+  NIRFSG_ATTRIBUTE_EXPORTED_REF_CLOCK_RATE = 1150292;
   NIRFSG_ATTRIBUTE_WRITE_WAVEFORM_NORMALIZATION = 1150293;
+  NIRFSG_ATTRIBUTE_WAVEFORM_WAVEFORM_SIZE = 1150297;
+  NIRFSG_ATTRIBUTE_PULSE_MODULATION_ACTIVE_LEVEL = 1150307;
+  NIRFSG_ATTRIBUTE_PULSE_MODULATION_SOURCE = 1150308;
+  NIRFSG_ATTRIBUTE_EXPORTED_PULSE_MODULATION_EVENT_OUTPUT_TERMINAL = 1150309;
+  NIRFSG_ATTRIBUTE_EXPORTED_PULSE_MODULATION_EVENT_ACTIVE_LEVEL = 1150310;
+  NIRFSG_ATTRIBUTE_SELECTED_PATH = 1150311;
+  NIRFSG_ATTRIBUTE_AVAILABLE_PATHS = 1150312;
   NIRFSG_ATTRIBUTE_COMPENSATE_FOR_FILTER_GROUP_DELAY = 1152832;
   NIRFSG_ATTRIBUTE_UPCONVERTER_GAIN = 1154097;
   NIRFSG_ATTRIBUTE_UPCONVERTER_CENTER_FREQUENCY = 1154098;
@@ -552,6 +564,15 @@ enum TriggerSource {
   TRIGGER_SOURCE_SYNC_START_TRIGGER = 15;
   TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER = 16;
   TRIGGER_SOURCE_TRIG_IN = 17;
+  TRIGGER_SOURCE_PULSE_IN = 18;
+  TRIGGER_SOURCE_DIO0 = 19;
+  TRIGGER_SOURCE_DIO1 = 20;
+  TRIGGER_SOURCE_DIO2 = 21;
+  TRIGGER_SOURCE_DIO3 = 22;
+  TRIGGER_SOURCE_DIO4 = 23;
+  TRIGGER_SOURCE_DIO5 = 24;
+  TRIGGER_SOURCE_DIO6 = 25;
+  TRIGGER_SOURCE_DIO7 = 26;
 }
 
 enum NiRFSGInt32AttributeValues {
@@ -757,6 +778,39 @@ enum NiRFSGStringAttributeValuesMapped {
   NIRFSG_STRING_TRIGGER_SOURCE_SYNC_START_TRIGGER = 88;
   NIRFSG_STRING_TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER = 89;
   NIRFSG_STRING_TRIGGER_SOURCE_TRIG_IN = 90;
+  NIRFSG_STRING_ANY_SIGNAL_OUTPUT_TERM_DIO0 = 91;
+  NIRFSG_STRING_ANY_SIGNAL_OUTPUT_TERM_DIO1 = 92;
+  NIRFSG_STRING_ANY_SIGNAL_OUTPUT_TERM_DIO2 = 93;
+  NIRFSG_STRING_ANY_SIGNAL_OUTPUT_TERM_DIO3 = 94;
+  NIRFSG_STRING_ANY_SIGNAL_OUTPUT_TERM_DIO4 = 95;
+  NIRFSG_STRING_ANY_SIGNAL_OUTPUT_TERM_DIO5 = 96;
+  NIRFSG_STRING_ANY_SIGNAL_OUTPUT_TERM_DIO6 = 97;
+  NIRFSG_STRING_ANY_SIGNAL_OUTPUT_TERM_DIO7 = 98;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_OUTPUT_TERM_DIO0 = 99;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_OUTPUT_TERM_DIO1 = 100;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_OUTPUT_TERM_DIO2 = 101;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_OUTPUT_TERM_DIO3 = 102;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_OUTPUT_TERM_DIO4 = 103;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_OUTPUT_TERM_DIO5 = 104;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_OUTPUT_TERM_DIO6 = 105;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_OUTPUT_TERM_DIO7 = 106;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_SOURCE_DIO0 = 107;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_SOURCE_DIO1 = 108;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_SOURCE_DIO2 = 109;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_SOURCE_DIO3 = 110;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_SOURCE_DIO4 = 111;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_SOURCE_DIO5 = 112;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_SOURCE_DIO6 = 113;
+  NIRFSG_STRING_CONFIG_LIST_TRIG_SOURCE_DIO7 = 114;
+  NIRFSG_STRING_TRIGGER_SOURCE_PULSE_IN = 115;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO0 = 116;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO1 = 117;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO2 = 118;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO3 = 119;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO4 = 120;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO5 = 121;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO6 = 122;
+  NIRFSG_STRING_TRIGGER_SOURCE_DIO7 = 123;
 }
 
 message AbortRequest {
@@ -1343,6 +1397,37 @@ message ExportSignalResponse {
   int32 status = 1;
 }
 
+message GetAllNamedWaveformNamesRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetAllNamedWaveformNamesResponse {
+  int32 status = 1;
+  string waveform_names = 2;
+  sint32 actual_buffer_size = 3;
+}
+
+message GetAllScriptNamesRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetAllScriptNamesResponse {
+  int32 status = 1;
+  string script_names = 2;
+  sint32 actual_buffer_size = 3;
+}
+
+message GetScriptRequest {
+  nidevice_grpc.Session vi = 1;
+  string script_name = 2;
+}
+
+message GetScriptResponse {
+  int32 status = 1;
+  string script = 2;
+  sint32 actual_buffer_size = 3;
+}
+
 message GetAttributeViBooleanRequest {
   nidevice_grpc.Session vi = 1;
   string channel_name = 2;
@@ -1452,6 +1537,15 @@ message GetExternalCalibrationLastDateAndTimeResponse {
   sint32 hour = 5;
   sint32 minute = 6;
   sint32 second = 7;
+}
+
+message GetMaxSettablePowerRequest {
+  nidevice_grpc.Session vi = 1;
+}
+
+message GetMaxSettablePowerResponse {
+  int32 status = 1;
+  double value = 2;
 }
 
 message GetSelfCalibrationDateAndTimeRequest {

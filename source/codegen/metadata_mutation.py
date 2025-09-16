@@ -310,7 +310,12 @@ def _add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
     """Add new enums to enums metadata, for use as the value parameter of SetAttribute APIs."""
     for type_name in attribute_enums_by_type:
         unmapped_values = {}
-        mapped_values = {}
+        # For mapped enums, we want legacy (no 'order') entries first (in encounter order),
+        # then append all ordered entries sorted by their 'order' field. We collect them
+        # separately and merge after processing all contributing enums of this type.
+        mapped_legacy_values = {}
+        mapped_ordered_values = []  # list of tuples (order, value_name, value_value)
+
         for enum_name in sorted(attribute_enums_by_type[type_name]):
             enum = enums[enum_name]
             is_mapped_enum = enum.get("generate-mappings", False)
@@ -321,16 +326,26 @@ def _add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
                 # Add a leading enum to differentiate sub-enums within the aggregate values enum.
                 value_name = _add_leading_enum_name(value_name, enum_name, enum)
                 if is_mapped_enum:
-                    mapped_values[value_name] = value["value"]
+                    if "order" in value:
+                        mapped_ordered_values.append((value["order"], value_name, value["value"]))
+                    else:
+                        mapped_legacy_values[value_name] = value["value"]
                 else:
                     unmapped_values[value_name] = value["value"]
+
+        # Now append ordered mapped entries sorted by their 'order'.
+        if mapped_ordered_values:
+            # stable sort to maintain original order in case of same order fields
+            mapped_ordered_values.sort(key=lambda t: t[0])
+            for _, value_name, value_val in mapped_ordered_values:
+                mapped_legacy_values[value_name] = value_val
 
         shortened_type_name = _get_short_enum_type_name(type_name)
         enum_value_prefix = (f"{group_name}_{shortened_type_name}").upper()
         unmapped_enum_name = _get_attribute_values_enum_name(group_name, type_name)
         mapped_enum_name = _get_attribute_values_enum_name(group_name, type_name, is_mapped=True)
         _add_enum(unmapped_enum_name, unmapped_values, enums, enum_value_prefix)
-        _add_enum(mapped_enum_name, mapped_values, enums, enum_value_prefix, is_mapped=True)
+        _add_enum(mapped_enum_name, mapped_legacy_values, enums, enum_value_prefix, is_mapped=True)
 
 
 AttributeReferencingParameter = namedtuple(

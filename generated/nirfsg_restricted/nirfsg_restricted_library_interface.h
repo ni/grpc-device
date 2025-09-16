@@ -20,6 +20,7 @@ class NiRFSGRestrictedLibraryInterface {
   virtual ViStatus CreateDeembeddingSparameterTable(ViSession vi, ViConstString port, ViConstString tableName, ViInt32 numberOfFrequencies, ViInt32 numberOfPorts) = 0;
   virtual ViStatus ConfigureSparameterTableFrequencies(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize) = 0;
   virtual ViStatus ConfigureSparameterTableSparameters(ViSession vi, ViConstString port, ViConstString tableName, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 sparameterOrientation) = 0;
+  virtual ViStatus GetDeembeddingTableNumberOfPorts(ViSession vi, ViInt32* numberOfPorts) = 0;
 };
 
 }  // namespace nirfsg_restricted_grpc

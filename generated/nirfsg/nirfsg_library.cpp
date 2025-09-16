@@ -80,6 +80,9 @@ NiRFSGLibrary::NiRFSGLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_->get_function_pointer("niRFSG_error_message"));
   function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_->get_function_pointer("niRFSG_error_query"));
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_->get_function_pointer("niRFSG_ExportSignal"));
+  function_pointers_.GetAllNamedWaveformNames = reinterpret_cast<GetAllNamedWaveformNamesPtr>(shared_library_->get_function_pointer("niRFSG_GetAllNamedWaveformNames"));
+  function_pointers_.GetAllScriptNames = reinterpret_cast<GetAllScriptNamesPtr>(shared_library_->get_function_pointer("niRFSG_GetAllScriptNames"));
+  function_pointers_.GetScript = reinterpret_cast<GetScriptPtr>(shared_library_->get_function_pointer("niRFSG_GetScript"));
   function_pointers_.GetAttributeViBoolean = reinterpret_cast<GetAttributeViBooleanPtr>(shared_library_->get_function_pointer("niRFSG_GetAttributeViBoolean"));
   function_pointers_.GetAttributeViInt32 = reinterpret_cast<GetAttributeViInt32Ptr>(shared_library_->get_function_pointer("niRFSG_GetAttributeViInt32"));
   function_pointers_.GetAttributeViInt64 = reinterpret_cast<GetAttributeViInt64Ptr>(shared_library_->get_function_pointer("niRFSG_GetAttributeViInt64"));
@@ -90,6 +93,7 @@ NiRFSGLibrary::NiRFSGLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.GetDeembeddingSparameters = reinterpret_cast<GetDeembeddingSparametersPtr>(shared_library_->get_function_pointer("niRFSG_GetDeembeddingSparameters"));
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("niRFSG_GetError"));
   function_pointers_.GetExternalCalibrationLastDateAndTime = reinterpret_cast<GetExternalCalibrationLastDateAndTimePtr>(shared_library_->get_function_pointer("niRFSG_GetExternalCalibrationLastDateAndTime"));
+  function_pointers_.GetMaxSettablePower = reinterpret_cast<GetMaxSettablePowerPtr>(shared_library_->get_function_pointer("niRFSG_GetMaxSettablePower"));
   function_pointers_.GetSelfCalibrationDateAndTime = reinterpret_cast<GetSelfCalibrationDateAndTimePtr>(shared_library_->get_function_pointer("niRFSG_GetSelfCalibrationDateAndTime"));
   function_pointers_.GetSelfCalibrationTemperature = reinterpret_cast<GetSelfCalibrationTemperaturePtr>(shared_library_->get_function_pointer("niRFSG_GetSelfCalibrationTemperature"));
   function_pointers_.GetTerminalName = reinterpret_cast<GetTerminalNamePtr>(shared_library_->get_function_pointer("niRFSG_GetTerminalName"));
@@ -575,6 +579,30 @@ ViStatus NiRFSGLibrary::ExportSignal(ViSession vi, ViInt32 signal, ViConstString
   return function_pointers_.ExportSignal(vi, signal, signalIdentifier, outputTerminal);
 }
 
+ViStatus NiRFSGLibrary::GetAllNamedWaveformNames(ViSession vi, ViChar waveformNames[], ViInt32 bufferSize, ViInt32* actualBufferSize)
+{
+  if (!function_pointers_.GetAllNamedWaveformNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAllNamedWaveformNames.");
+  }
+  return function_pointers_.GetAllNamedWaveformNames(vi, waveformNames, bufferSize, actualBufferSize);
+}
+
+ViStatus NiRFSGLibrary::GetAllScriptNames(ViSession vi, ViChar scriptNames[], ViInt32 bufferSize, ViInt32* actualBufferSize)
+{
+  if (!function_pointers_.GetAllScriptNames) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetAllScriptNames.");
+  }
+  return function_pointers_.GetAllScriptNames(vi, scriptNames, bufferSize, actualBufferSize);
+}
+
+ViStatus NiRFSGLibrary::GetScript(ViSession vi, ViConstString scriptName, ViChar Script[], ViInt32 bufferSize, ViInt32* actualBufferSize)
+{
+  if (!function_pointers_.GetScript) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetScript.");
+  }
+  return function_pointers_.GetScript(vi, scriptName, Script, bufferSize, actualBufferSize);
+}
+
 ViStatus NiRFSGLibrary::GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value)
 {
   if (!function_pointers_.GetAttributeViBoolean) {
@@ -653,6 +681,14 @@ ViStatus NiRFSGLibrary::GetExternalCalibrationLastDateAndTime(ViSession vi, ViIn
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetExternalCalibrationLastDateAndTime.");
   }
   return function_pointers_.GetExternalCalibrationLastDateAndTime(vi, year, month, day, hour, minute, second);
+}
+
+ViStatus NiRFSGLibrary::GetMaxSettablePower(ViSession vi, ViReal64* value)
+{
+  if (!function_pointers_.GetMaxSettablePower) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_GetMaxSettablePower.");
+  }
+  return function_pointers_.GetMaxSettablePower(vi, value);
 }
 
 ViStatus NiRFSGLibrary::GetSelfCalibrationDateAndTime(ViSession vi, ViInt32 module, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute, ViInt32* second)
