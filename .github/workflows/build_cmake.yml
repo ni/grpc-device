@@ -38,24 +38,6 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v4
 
-    - name: Extract version values
-      if: ${{ runner.os == 'Linux' }}
-      id: get_version
-      run: |
-        version_major=$(sed -n 's/set(version_major \([0-9]*\))/\1/p' project-meta-info.cmake)
-        version_minor=$(sed -n 's/set(version_minor \([0-9]*\))/\1/p' project-meta-info.cmake)
-        version_update=$(sed -n 's/set(version_update \([0-9]*\))/\1/p' project-meta-info.cmake)
-        echo "version_major=$version_major" >> $GITHUB_OUTPUT
-        echo "version_minor=$version_minor" >> $GITHUB_OUTPUT
-        echo "version_update=$version_update" >> $GITHUB_OUTPUT
-
-    - name: Validate Variables
-      if: ${{ runner.os == 'Linux' }}
-      run: |
-        echo "VERSION_MAJOR: ${{ steps.get_version.outputs.version_major }}"
-        echo "VERSION_MINOR: ${{ steps.get_version.outputs.version_minor }}"
-        echo "VERSION_UPDATE: ${{ steps.get_version.outputs.version_update }}"
-
     - name: Setup python3
       uses: actions/setup-python@v5
       with:
