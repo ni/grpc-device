@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 23.0.0f147
+# This file is generated from NI-DMM API metadata version 25.8.0d130
 config = {
     'additional_headers': {
         'custom/ivi_errors.h': [
             'service.cpp'
         ]
     },
-    'api_version': '23.0.0f147',
+    'api_version': '25.8.0d130',
     'c_function_prefix': 'niDMM_',
     'c_header': 'nidmm.h',
     'close_function': 'Close',

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 23.0.0f147
+# This file is generated from NI-DMM API metadata version 25.8.0d130
 attributes = {
     1050002: {
         'codegen_method': 'public',
@@ -78,6 +78,13 @@ attributes = {
         'resettable': False,
         'type': 'ViString'
     },
+    1050322: {
+        'codegen_method': 'public',
+        'grpc_type': 'nidevice_grpc.Session',
+        'name': 'IO_SESSION',
+        'resettable': False,
+        'type': 'ViSession'
+    },
     1050327: {
         'codegen_method': 'public',
         'grpc_type': 'string',
@@ -91,20 +98,6 @@ attributes = {
         'name': 'GROUP_CAPABILITIES',
         'resettable': False,
         'type': 'ViString'
-    },
-    1050503: {
-        'codegen_method': 'public',
-        'grpc_type': 'sint32',
-        'name': 'SPECIFIC_DRIVER_MAJOR_VERSION',
-        'resettable': False,
-        'type': 'ViInt32'
-    },
-    1050504: {
-        'codegen_method': 'public',
-        'grpc_type': 'sint32',
-        'name': 'SPECIFIC_DRIVER_MINOR_VERSION',
-        'resettable': False,
-        'type': 'ViInt32'
     },
     1050510: {
         'codegen_method': 'public',
@@ -152,6 +145,20 @@ attributes = {
         'codegen_method': 'public',
         'grpc_type': 'sint32',
         'name': 'SPECIFIC_DRIVER_CLASS_SPEC_MINOR_VERSION',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1050519: {
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
+        'name': 'CLASS_DRIVER_CLASS_SPEC_MAJOR_VERSION',
+        'resettable': False,
+        'type': 'ViInt32'
+    },
+    1050520: {
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
+        'name': 'CLASS_DRIVER_CLASS_SPEC_MINOR_VERSION',
         'resettable': False,
         'type': 'ViInt32'
     },

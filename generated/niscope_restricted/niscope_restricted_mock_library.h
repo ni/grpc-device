@@ -20,6 +20,8 @@ class NiScopeRestrictedMockLibrary : public niscope_restricted_grpc::NiScopeRest
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]), (override));
   MOCK_METHOD(ViStatus, GetErrorMessage, (ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]), (override));
   MOCK_METHOD(ViStatus, GetStartTimestampInformation, (ViSession vi, ViUInt32* sysTimeIn128BitsT1, ViUInt32* sysTimeIn128BitsT2, ViUInt32* sysTimeIn128BitsT3, ViUInt32* sysTimeIn128BitsT4, ViReal64* deviceTimeInAbsoluteTimeUnits), (override));
+  MOCK_METHOD(ViStatus, GetStartTimestampInformationWithChannels, (ViSession vi, ViConstString channelList, ViUInt32 numberOfChannels, ViUInt32 sysTimeIn128BitsT1Array[], ViUInt32 sysTimeIn128BitsT2Array[], ViUInt32 sysTimeIn128BitsT3Array[], ViUInt32 sysTimeIn128BitsT4Array[], ViReal64 deviceTimeInAbsoluteTimeUnitsArray[]), (override));
+  MOCK_METHOD(ViStatus, ParseNumberOfChannels, (ViSession vi, ViConstString channel, ViUInt32* numChannels), (override));
 };
 
 }  // namespace unit

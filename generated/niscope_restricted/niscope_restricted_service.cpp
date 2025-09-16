@@ -74,6 +74,67 @@ namespace niscope_restricted_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeRestrictedService::GetStartTimestampInformationWithChannels(::grpc::ServerContext* context, const GetStartTimestampInformationWithChannelsRequest* request, GetStartTimestampInformationWithChannelsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
+      auto channel_list = channel_list_mbcs.c_str();
+      ViUInt32 number_of_channels = request->number_of_channels();
+      response->mutable_sys_time_in_128_bits_t1_array()->Resize(number_of_channels, 0);
+      ViUInt32* sys_time_in_128_bits_t1_array = reinterpret_cast<ViUInt32*>(response->mutable_sys_time_in_128_bits_t1_array()->mutable_data());
+      response->mutable_sys_time_in_128_bits_t2_array()->Resize(number_of_channels, 0);
+      ViUInt32* sys_time_in_128_bits_t2_array = reinterpret_cast<ViUInt32*>(response->mutable_sys_time_in_128_bits_t2_array()->mutable_data());
+      response->mutable_sys_time_in_128_bits_t3_array()->Resize(number_of_channels, 0);
+      ViUInt32* sys_time_in_128_bits_t3_array = reinterpret_cast<ViUInt32*>(response->mutable_sys_time_in_128_bits_t3_array()->mutable_data());
+      response->mutable_sys_time_in_128_bits_t4_array()->Resize(number_of_channels, 0);
+      ViUInt32* sys_time_in_128_bits_t4_array = reinterpret_cast<ViUInt32*>(response->mutable_sys_time_in_128_bits_t4_array()->mutable_data());
+      response->mutable_device_time_in_absolute_time_units_array()->Resize(number_of_channels, 0);
+      ViReal64* device_time_in_absolute_time_units_array = response->mutable_device_time_in_absolute_time_units_array()->mutable_data();
+      auto status = library_->GetStartTimestampInformationWithChannels(vi, channel_list, number_of_channels, sys_time_in_128_bits_t1_array, sys_time_in_128_bits_t2_array, sys_time_in_128_bits_t3_array, sys_time_in_128_bits_t4_array, device_time_in_absolute_time_units_array);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiScopeRestrictedService::ParseNumberOfChannels(::grpc::ServerContext* context, const ParseNumberOfChannelsRequest* request, ParseNumberOfChannelsResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto channel_mbcs = convert_from_grpc<std::string>(request->channel());
+      auto channel = channel_mbcs.c_str();
+      ViUInt32 num_channels {};
+      auto status = library_->ParseNumberOfChannels(vi, channel, &num_channels);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_num_channels(num_channels);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiScopeRestrictedFeatureToggles::NiScopeRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

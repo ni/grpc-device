@@ -75,8 +75,6 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, GetExtCalRecommendedInterval, (ViSession vi, ViInt32* months), (override));
   MOCK_METHOD(ViStatus, GetLastCalTemp, (ViSession vi, ViInt32 calType, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, GetMeasurementPeriod, (ViSession vi, ViReal64* period), (override));
-  MOCK_METHOD(ViStatus, GetNextCoercionRecord, (ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]), (override));
-  MOCK_METHOD(ViStatus, GetNextInterchangeWarning, (ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]), (override));
   MOCK_METHOD(ViStatus, GetSelfCalSupported, (ViSession vi, ViBoolean* selfCalSupported), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 size, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
@@ -105,8 +103,8 @@ class NiDmmMockLibrary : public nidmm_grpc::NiDmmLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViReal64, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64 attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViString attributeValue), (override));
-  MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
+  MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
 };
 
 }  // namespace unit

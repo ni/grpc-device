@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 23.0.0f147
+# This file is generated from NI-DMM API metadata version 25.8.0d130
 enums = {
     'AcquisitionStatus': {
         'codegen_method': 'public',
@@ -317,6 +317,10 @@ enums = {
         'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
+            {
+                'name': 'NIDMM_VAL_RESISTANCE_NA',
+                'value': 0
+            },
             {
                 'name': 'NIDMM_VAL_1_MEGAOHM',
                 'value': 1000000
@@ -966,6 +970,10 @@ enums = {
                 'value': -1
             },
             {
+                'name': 'TRIGGER_DELAYS_VAL_AUTO_DELAY',
+                'value': -1
+            },
+            {
                 'name': 'TRIGGER_DELAYS_VAL_AUTO_DELAY_ON',
                 'value': -1
             },
@@ -994,6 +1002,10 @@ enums = {
             {
                 'name': 'CURRENT_SOURCE_VAL_1_MILLIAMP',
                 'value': 0.001
+            },
+            {
+                'name': 'INPUT_RESISTANCE_VAL_RESISTANCE_NA',
+                'value': 0
             },
             {
                 'name': 'INPUT_RESISTANCE_VAL_1_MEGAOHM',
@@ -1299,6 +1311,10 @@ enums = {
     'TriggerDelays': {
         'codegen_method': 'public',
         'values': [
+            {
+                'name': 'NIDMM_VAL_AUTO_DELAY',
+                'value': -1
+            },
             {
                 'name': 'NIDMM_VAL_AUTO_DELAY_ON',
                 'value': -1
