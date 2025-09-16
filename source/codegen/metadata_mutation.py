@@ -335,7 +335,8 @@ def _add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
 
         # Now append ordered mapped entries sorted by their 'order'.
         if mapped_ordered_values:
-            mapped_ordered_values.sort(key=lambda t: t[0]) # stable sort to maintain original order in case of same order fields
+            # stable sort to maintain original order in case of same order fields
+            mapped_ordered_values.sort(key=lambda t: t[0])
             for _, value_name, value_val in mapped_ordered_values:
                 mapped_legacy_values[value_name] = value_val
 
