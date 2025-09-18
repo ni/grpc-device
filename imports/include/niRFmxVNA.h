@@ -76,7 +76,8 @@
 #define RFMXVNA_ATTR_CORRECTION_ENABLED                                          0x00d0000b
 #define RFMXVNA_ATTR_CORRECTION_INTERPOLATION_ENABLED                            0x00d00058
 #define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_ENABLED                              0x00d0000e
-#define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_PORTS                                0x00d0000f
+#define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_FULL_PORTS                           0x00d0000f
+#define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_RESPONSE_PORTS                       0x00d00079
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_ENABLED                           0x00d00026
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_DELAY_DOMAIN                      0x00d0005f
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_DELAY                             0x00d00027
@@ -102,8 +103,6 @@
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_COAX_DELAY                      0x00d00018
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_COUNT                           0x00d00019
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_DESCRIPTION                     0x00d0001a
-#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_VCAL_ORIENTATION                0x00d00071
-#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_PORT_ASSIGNMENT                 0x00d00072
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY                 0x00d00800
 #define RFMXVNA_ATTR_SPARAMS_MEASUREMENT_ENABLED                                 0x00d01000
 #define RFMXVNA_ATTR_SPARAMS_NUMBER_OF_SPARAMETERS                               0x00d01002
@@ -1503,12 +1502,6 @@ int32 __stdcall RFmxVNA_MarkerCfgTargetValue(
    float64 targetValue
 );
 
-int32 __stdcall RFmxVNA_CfgCorrectionPortSubset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char portSubset[]
-);
-
 int32 __stdcall RFmxVNA_MarkerCfgX(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2660,14 +2653,27 @@ int32 __stdcall RFmxVNA_SetCorrectionPortSubsetEnabled(
    int32 attrVal
 );
 
-int32 __stdcall RFmxVNA_GetCorrectionPortSubsetPorts(
+int32 __stdcall RFmxVNA_GetCorrectionPortSubsetFullPorts(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 arraySize,
    char attrVal[]
 );
 
-int32 __stdcall RFmxVNA_SetCorrectionPortSubsetPorts(
+int32 __stdcall RFmxVNA_SetCorrectionPortSubsetFullPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortSubsetResponsePorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortSubsetResponsePorts(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    char attrVal[]
@@ -2970,32 +2976,6 @@ int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepDescription(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepVCalOrientation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepVCalOrientation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char attrVal[]
-);
-
-int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepPortAssignment(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepPortAssignment(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
    char attrVal[]
 );
 
@@ -3484,6 +3464,8 @@ int32 __stdcall RFmxVNA_IQGetResultsCorrectionState(
 #endif
 
 /* ---------------- Obsolete Section ------------------ */
+#define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_PORTS                                0x00d0000f
+#define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_PORTS                                0x00d0000f
 #define RFMXVNA_ATTR_NUMBER_OF_FREQUENCY_POINTS                                  0x00d00053
 // Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_METHOD
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_UNDEFINED_THRU_USING_DEFINED_THRU                          4
@@ -3568,6 +3550,25 @@ int32 __stdcall RFmxVNA_SetNumberOfFrequencyPoints(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortSubsetPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortSubsetPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_CfgCorrectionPortSubset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char portSubset[]
 );
 
 #ifdef __cplusplus

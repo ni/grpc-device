@@ -481,6 +481,7 @@ enum Standard {
   STANDARD_BR = 0;
   STANDARD_EDR = 0;
   STANDARD_LE = 1;
+  STANDARD_LE_CS = 2;
 }
 
 enum TriggerMinimumQuietTimeMode {

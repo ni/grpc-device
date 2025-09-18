@@ -376,6 +376,7 @@
 #define RFMXBT_VAL_STANDARD_BR                                                                    0
 #define RFMXBT_VAL_STANDARD_EDR                                                                   0
 #define RFMXBT_VAL_STANDARD_LE                                                                    1
+#define RFMXBT_VAL_STANDARD_LE_CS                                                                 2
 
 // Values for Boolean
 #define RFMXBT_VAL_FALSE                                                                          0

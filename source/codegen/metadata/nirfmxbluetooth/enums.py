@@ -623,6 +623,10 @@ enums = {
             {
                 'name': 'LE',
                 'value': 1
+            },
+            {
+                'name': 'LE_CS',
+                'value': 2
             }
         ]
     },
