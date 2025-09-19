@@ -15,6 +15,19 @@ jobs:
     name: Trigger Main CI
     runs-on: windows-latest
     steps:
+    - name: Checkout Repo
+      uses: actions/checkout@4
+
+    - name: Extract version values
+      id: get_version
+      run: |
+        version_major=$(sed -n 's/set(version_major \([0-9]*\))/\1/p' project-meta-info.cmake)
+        version_minor=$(sed -n 's/set(version_minor \([0-9]*\))/\1/p' project-meta-info.cmake)
+        version_update=$(sed -n 's/set(version_update \([0-9]*\))/\1/p' project-meta-info.cmake)
+        echo "version_major=$version_major" >> $GITHUB_OUTPUT
+        echo "version_minor=$version_minor" >> $GITHUB_OUTPUT
+        echo "version_update=$version_update" >> $GITHUB_OUTPUT
+
     - name: Trigger Main CI 
       uses: Azure/pipelines@v1.2
       if: ${{ github.repository == 'ni/grpc-device' && github.event.workflow_run.head_branch == 'main' }}
@@ -22,7 +35,15 @@ jobs:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device'
         azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-        azure-pipeline-variables: '{"BRANCH": "main", "EXPORT_NAME": "ni-grpc-device", "PHASE": "d"}'
+        azure-pipeline-variables: |
+          {
+            "BRANCH": "main",
+            "EXPORT_NAME": "ni-grpc-device",
+            "PHASE": "d",
+            "VERSION_MAJOR": "${{ steps.get_version.outputs.version_major }}",
+            "VERSION_MINOR": "${{ steps.get_version.outputs.version_minor }}",
+            "VERSION_UPDATE": "${{ steps.get_version.outputs.version_update }}"
+          }
                                   
     - name: Trigger Release CI 
       uses: Azure/pipelines@v1.2
@@ -31,4 +52,14 @@ jobs:
         azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
         azure-pipeline-name: 'ni-central-grpc_device'
         azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-        azure-pipeline-variables: '{"BRANCH": "releases", "EXPORT_NAME": "ni-grpc-device", "PHASE": "f", "RELEASE_BRANCH_OPTION": "--release-branch"}'
+        azure-pipeline-variables: |
+          {
+            "BRANCH": "main",
+            "EXPORT_NAME": "ni-grpc-device",
+            "PHASE": "f",
+            "RELEASE_BRANCH_OPTION": "--release-branch"
+            "VERSION_MAJOR": "${{ steps.get_version.outputs.version_major }}",
+            "VERSION_MINOR": "${{ steps.get_version.outputs.version_minor }}",
+            "VERSION_UPDATE": "${{ steps.get_version.outputs.version_update }}"
+          }
+

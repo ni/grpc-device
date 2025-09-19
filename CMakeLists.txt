@@ -1,8 +1,11 @@
 cmake_minimum_required(VERSION 3.18.0)
 
+# Include project variables
+include("${CMAKE_CURRENT_LIST_DIR}/project-meta-info.cmake")
+
 project(ni_grpc_device_server
   LANGUAGES C CXX
-  VERSION 2.13.0)
+  VERSION ${version_major}.${version_major}.${version_update})
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
