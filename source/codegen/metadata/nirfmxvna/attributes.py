@@ -59,7 +59,7 @@ attributes = {
     },
     13631503: {
         'access': 'read-write',
-        'name': 'CORRECTION_PORT_SUBSET_PORTS',
+        'name': 'CORRECTION_PORT_SUBSET_FULL_PORTS',
         'type': 'char[]'
     },
     13631504: {
@@ -446,14 +446,9 @@ attributes = {
         'name': 'TRIGGER_DELAY',
         'type': 'float64'
     },
-    13631601: {
+    13631609: {
         'access': 'read-write',
-        'name': 'CORRECTION_CALIBRATION_STEP_VCAL_ORIENTATION',
-        'type': 'char[]'
-    },
-    13631602: {
-        'access': 'read-write',
-        'name': 'CORRECTION_CALIBRATION_STEP_PORT_ASSIGNMENT',
+        'name': 'CORRECTION_PORT_SUBSET_RESPONSE_PORTS',
         'type': 'char[]'
     },
     13633536: {
