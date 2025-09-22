@@ -14,7 +14,7 @@ jobs:
         config:
         - {
             name: "Windows Build", artifact: "Windows.tar.xz",
-            os: windows-latest,
+            os: windows-2022,
             cc: "cl", cxx: "cl",
             cmake_generator: '-G "Ninja Multi-Config"',
             build_type: RelWithDebInfo
