@@ -87,7 +87,7 @@ ViStatus NiDmmRestrictedLibrary::GetErrorMessage(ViSession vi, ViStatus errorCod
   return function_pointers_.GetErrorMessage(vi, errorCode, bufferSize, errorMessage);
 }
 
-ViStatus NiDmmRestrictedLibrary::GetOpenSessionsInformation(ViRsrc resourceName, ViString infoJson, ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes)
+ViStatus NiDmmRestrictedLibrary::GetOpenSessionsInformation(ViRsrc resourceName, ViChar infoJson[], ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes)
 {
   if (!function_pointers_.GetOpenSessionsInformation) {
     throw nidevice_grpc::LibraryLoadException("Could not find niDMM_GetOpenSessionsInformation.");

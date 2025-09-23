@@ -74,14 +74,12 @@ fetch_multi_point_with_caching(const StubPtr& stub, const nidevice_grpc::Session
 }
 
 GetOpenSessionsInformationResponse
-get_open_sessions_information(const StubPtr& stub, const std::string& resource_name, const std::string& info_json, const pb::uint64& buffer_size)
+get_open_sessions_information(const StubPtr& stub, const std::string& resource_name)
 {
   ::grpc::ClientContext context;
 
   auto request = GetOpenSessionsInformationRequest{};
   request.set_resource_name(resource_name);
-  request.set_info_json(info_json);
-  request.set_buffer_size(buffer_size);
 
   auto response = GetOpenSessionsInformationResponse{};
 
