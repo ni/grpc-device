@@ -26,7 +26,7 @@ class NiDmmRestrictedLibrary : public nidmm_restricted_grpc::NiDmmRestrictedLibr
   ViStatus FetchMultiPointWithCaching(ViSession vi, ViInt32 maxTime, ViInt32 arraySize, ViReal64 readingArray[], ViInt32* actualPts, ViBoolean isMonitoring) override;
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) override;
   ViStatus GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]) override;
-  ViStatus GetOpenSessionsInformation(ViRsrc resourceName, ViString infoJson, ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes) override;
+  ViStatus GetOpenSessionsInformation(ViRsrc resourceName, ViChar infoJson[], ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes) override;
   ViStatus RequestPrivilege(ViSession vi, ViInt32 privilegeLevel) override;
 
  private:
@@ -35,7 +35,7 @@ class NiDmmRestrictedLibrary : public nidmm_restricted_grpc::NiDmmRestrictedLibr
   using FetchMultiPointWithCachingPtr = ViStatus (*)(ViSession vi, ViInt32 maxTime, ViInt32 arraySize, ViReal64 readingArray[], ViInt32* actualPts, ViBoolean isMonitoring);
   using GetErrorPtr = ViStatus (*)(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]);
   using GetErrorMessagePtr = ViStatus (*)(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]);
-  using GetOpenSessionsInformationPtr = ViStatus (*)(ViRsrc resourceName, ViString infoJson, ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes);
+  using GetOpenSessionsInformationPtr = ViStatus (*)(ViRsrc resourceName, ViChar infoJson[], ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes);
   using RequestPrivilegePtr = ViStatus (*)(ViSession vi, ViInt32 privilegeLevel);
 
   typedef struct FunctionPointers {

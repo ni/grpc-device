@@ -25,7 +25,7 @@ using namespace nidevice_grpc::experimental::client;
 AttributeWasSetByUserResponse attribute_was_set_by_user(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& rep_cap_name, const pb::int32& attribute_id);
 CachedReadStatusResponse cached_read_status(const StubPtr& stub, const nidevice_grpc::Session& vi);
 FetchMultiPointWithCachingResponse fetch_multi_point_with_caching(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& max_time, const pb::int32& array_size, const bool& is_monitoring);
-GetOpenSessionsInformationResponse get_open_sessions_information(const StubPtr& stub, const std::string& resource_name, const std::string& info_json, const pb::uint64& buffer_size);
+GetOpenSessionsInformationResponse get_open_sessions_information(const StubPtr& stub, const std::string& resource_name);
 RequestPrivilegeResponse request_privilege(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<PrivilegeLevel, pb::int32>& privilege_level);
 
 } // namespace nidmm_restricted_grpc::experimental::client

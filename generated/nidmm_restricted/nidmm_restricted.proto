@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-DMM-RESTRICTED API metadata version 25.8.0d130
+// This file is generated from NI-DMM-RESTRICTED API metadata version 26.0.0d6
 //---------------------------------------------------------------------
 // Proto file for the NI-DMM-RESTRICTED Metadata
 //---------------------------------------------------------------------
@@ -74,13 +74,12 @@ message FetchMultiPointWithCachingResponse {
 
 message GetOpenSessionsInformationRequest {
   string resource_name = 1;
-  string info_json = 2;
-  uint64 buffer_size = 3;
 }
 
 message GetOpenSessionsInformationResponse {
   int32 status = 1;
-  uint64 buffer_size_needed_in_bytes = 2;
+  string info_json = 2;
+  uint64 buffer_size_needed_in_bytes = 3;
 }
 
 message RequestPrivilegeRequest {

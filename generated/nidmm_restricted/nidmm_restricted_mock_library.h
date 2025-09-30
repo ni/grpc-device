@@ -22,7 +22,7 @@ class NiDmmRestrictedMockLibrary : public nidmm_restricted_grpc::NiDmmRestricted
   MOCK_METHOD(ViStatus, FetchMultiPointWithCaching, (ViSession vi, ViInt32 maxTime, ViInt32 arraySize, ViReal64 readingArray[], ViInt32* actualPts, ViBoolean isMonitoring), (override));
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]), (override));
   MOCK_METHOD(ViStatus, GetErrorMessage, (ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]), (override));
-  MOCK_METHOD(ViStatus, GetOpenSessionsInformation, (ViRsrc resourceName, ViString infoJson, ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes), (override));
+  MOCK_METHOD(ViStatus, GetOpenSessionsInformation, (ViRsrc resourceName, ViChar infoJson[], ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes), (override));
   MOCK_METHOD(ViStatus, RequestPrivilege, (ViSession vi, ViInt32 privilegeLevel), (override));
 };
 

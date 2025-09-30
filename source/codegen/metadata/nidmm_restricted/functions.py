@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 25.8.0d130
+# This file is generated from NI-DMM API metadata version 26.0.0d6
 functions = {
     'AttributeWasSetByUser': {
         'codegen_method': 'public',
@@ -202,15 +202,22 @@ functions = {
             },
             {
                 'cppName': 'infoJson',
-                'direction': 'in',
+                'direction': 'out',
                 'grpc_type': 'string',
                 'name': 'infoJson',
-                'type': 'ViString'
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'bufferSizeNeededInBytes'
+                },
+                'type': 'ViChar[]'
             },
             {
                 'cppName': 'bufferSize',
                 'direction': 'in',
                 'grpc_type': 'uint64',
+                'include_in_proto': False,
+                'is_size_param': True,
                 'name': 'bufferSize',
                 'type': 'ViUInt64'
             },
