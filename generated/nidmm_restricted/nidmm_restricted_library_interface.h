@@ -21,7 +21,7 @@ class NiDmmRestrictedLibraryInterface {
   virtual ViStatus FetchMultiPointWithCaching(ViSession vi, ViInt32 maxTime, ViInt32 arraySize, ViReal64 readingArray[], ViInt32* actualPts, ViBoolean isMonitoring) = 0;
   virtual ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) = 0;
   virtual ViStatus GetErrorMessage(ViSession vi, ViStatus errorCode, ViInt32 bufferSize, ViChar errorMessage[]) = 0;
-  virtual ViStatus GetOpenSessionsInformation(ViRsrc resourceName, ViString infoJson, ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes) = 0;
+  virtual ViStatus GetOpenSessionsInformation(ViRsrc resourceName, ViChar infoJson[], ViUInt64 bufferSize, ViUInt64* bufferSizeNeededInBytes) = 0;
   virtual ViStatus RequestPrivilege(ViSession vi, ViInt32 privilegeLevel) = 0;
 };
 
