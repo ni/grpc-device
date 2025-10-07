@@ -609,7 +609,9 @@ def get_buffer_size_expression(parameter: dict) -> str:
     if size_mechanism == "fixed":
         return parameter["size"]["value"]
     elif size_mechanism == "ivi-dance-with-a-twist":
-        return get_grpc_field_name_from_str(parameter["size"]["value_twist"]) + (" * 2" if 'casted_name' in parameter else "")
+        return get_grpc_field_name_from_str(parameter["size"]["value_twist"]) + (
+            " * 2" if "casted_name" in parameter else ""
+        )
     elif size_mechanism == "passed-in-by-ptr":
         return get_grpc_field_name_from_str(parameter["size"]["value"]) + "_copy"
     else:
@@ -1303,16 +1305,18 @@ def extend_input_params_with_size_params(input_parameters: List[dict], function_
         size_param = [p for p in function_metadata["parameters"] if p["name"] == size_param_name]
         input_parameters.extend(size_param)
 
+
 def has_casted_name(parameters: List[dict], parameter: dict) -> bool:
     """Check if the parameter contains a casted name."""
     for p in parameters:
-        if 'casted_name' in p and p.get("size", {}).get("value_twist") == parameter.get("name"):
+        if "casted_name" in p and p.get("size", {}).get("value_twist") == parameter.get("name"):
             return True
     return parameter.get("casted_name", False)
+
 
 def get_casted_name(parameters: List[dict], parameter: dict) -> str:
     """Get the casted name of the parameter."""
     for p in parameters:
-        if 'casted_name' in p and p.get("size", {}).get("value_twist") == parameter.get("name"):
+        if "casted_name" in p and p.get("size", {}).get("value_twist") == parameter.get("name"):
             return camel_to_snake(parameter["name"] + " * 2")
     return camel_to_snake(parameter.get("casted_name", ""))

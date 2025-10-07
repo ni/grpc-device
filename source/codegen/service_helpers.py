@@ -228,7 +228,9 @@ def expand_varargs_parameters(parameters):
     gets a number (starting at zero) appended to the parameter name.
     """
     parameters = common_helpers.get_driver_api_params(parameters)
-    updated_parameters = [ {**p, "cppName": p.get("casted_name", p.get("cppName"))} for p in parameters] 
+    updated_parameters = [
+        {**p, "cppName": p.get("casted_name", p.get("cppName"))} for p in parameters
+    ]
     if not common_helpers.has_repeated_varargs_parameter(updated_parameters):
         return updated_parameters
     # omit the varargs parameters that we're going to expand
