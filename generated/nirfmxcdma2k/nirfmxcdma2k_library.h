@@ -35,6 +35,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
   int32 ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize) override;
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved) override;
+  int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) override;
@@ -49,6 +50,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
   int32 CDAFetchCodeDomainPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalPower, float64* totalActivePower, float64* meanActivePower, float64* peakActivePower, float64* meanInactivePower, float64* peakInactivePower) override;
   int32 CDAFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* iqOriginOffset, float64* iqGainImbalance, float64* iqQuadratureError) override;
   int32 CDAFetchSymbolConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle symbolConstellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 CDAFetchSymbolConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellation[], int32 arraySize, int32* actualArraySize) override;
   int32 CDAFetchSymbolConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellationI[], float32 symbolConstellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 CDAFetchSymbolEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsSymbolEVM, float64* peakSymbolEVM, float64* rmsSymbolMagnitudeError, float64* rmsSymbolPhaseError, float64* meanSymbolPower, float64* frequencyError, float64* chipRateError) override;
   int32 CDAFetchSymbolEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolEVM[], int32 arraySize, int32* actualArraySize) override;
@@ -115,6 +117,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
   int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]) override;
   int32 ModAccCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength) override;
   int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchDetectedChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* detectedWalshCodeLength, int32* detectedWalshCodeNumber, int32* detectedBranch) override;
   int32 ModAccFetchDetectedChannelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 detectedWalshCodeLength[], int32 detectedWalshCodeNumber[], int32 detectedBranch[], int32 arraySize, int32* actualArraySize) override;
@@ -134,6 +137,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
   int32 QEVMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount) override;
   int32 QEVMCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementLength) override;
   int32 QEVMFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 QEVMFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize) override;
   int32 QEVMFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 QEVMFetchEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSEVM, float64* maximumPeakEVM, float64* meanFrequencyError, float64* meanMagnitudeError, float64* meanPhaseError, float64* meanChipRateError) override;
   int32 QEVMFetchEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 evm[], int32 arraySize, int32* actualArraySize) override;
@@ -202,6 +206,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
   using ACPFetchSpectrumPtr = decltype(&RFmxCDMA2k_ACPFetchSpectrum);
   using AbortMeasurementsPtr = decltype(&RFmxCDMA2k_AbortMeasurements);
   using AnalyzeIQ1WaveformPtr = decltype(&RFmxCDMA2k_AnalyzeIQ1Waveform);
+  using AnalyzeIQ1WaveformInterleavedIQPtr = decltype(&RFmxCDMA2k_AnalyzeIQ1Waveform);
   using AnalyzeIQ1WaveformSplitPtr = decltype(&RFmxCDMA2k_AnalyzeIQ1WaveformSplit);
   using AnalyzeSpectrum1WaveformPtr = decltype(&RFmxCDMA2k_AnalyzeSpectrum1Waveform);
   using AutoLevelPtr = decltype(&RFmxCDMA2k_AutoLevel);
@@ -216,6 +221,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
   using CDAFetchCodeDomainPowerPtr = decltype(&RFmxCDMA2k_CDAFetchCodeDomainPower);
   using CDAFetchIQImpairmentsPtr = decltype(&RFmxCDMA2k_CDAFetchIQImpairments);
   using CDAFetchSymbolConstellationTracePtr = decltype(&RFmxCDMA2k_CDAFetchSymbolConstellationTrace);
+  using CDAFetchSymbolConstellationTraceInterleavedIQPtr = decltype(&RFmxCDMA2k_CDAFetchSymbolConstellationTrace);
   using CDAFetchSymbolConstellationTraceSplitPtr = decltype(&RFmxCDMA2k_CDAFetchSymbolConstellationTraceSplit);
   using CDAFetchSymbolEVMPtr = decltype(&RFmxCDMA2k_CDAFetchSymbolEVM);
   using CDAFetchSymbolEVMTracePtr = decltype(&RFmxCDMA2k_CDAFetchSymbolEVMTrace);
@@ -282,6 +288,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
   using InitiatePtr = decltype(&RFmxCDMA2k_Initiate);
   using ModAccCfgSynchronizationModeAndIntervalPtr = decltype(&RFmxCDMA2k_ModAccCfgSynchronizationModeAndInterval);
   using ModAccFetchConstellationTracePtr = decltype(&RFmxCDMA2k_ModAccFetchConstellationTrace);
+  using ModAccFetchConstellationTraceInterleavedIQPtr = decltype(&RFmxCDMA2k_ModAccFetchConstellationTrace);
   using ModAccFetchConstellationTraceSplitPtr = decltype(&RFmxCDMA2k_ModAccFetchConstellationTraceSplit);
   using ModAccFetchDetectedChannelPtr = decltype(&RFmxCDMA2k_ModAccFetchDetectedChannel);
   using ModAccFetchDetectedChannelArrayPtr = decltype(&RFmxCDMA2k_ModAccFetchDetectedChannelArray);
@@ -301,6 +308,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
   using QEVMCfgAveragingPtr = decltype(&RFmxCDMA2k_QEVMCfgAveraging);
   using QEVMCfgMeasurementLengthPtr = decltype(&RFmxCDMA2k_QEVMCfgMeasurementLength);
   using QEVMFetchConstellationTracePtr = decltype(&RFmxCDMA2k_QEVMFetchConstellationTrace);
+  using QEVMFetchConstellationTraceInterleavedIQPtr = decltype(&RFmxCDMA2k_QEVMFetchConstellationTrace);
   using QEVMFetchConstellationTraceSplitPtr = decltype(&RFmxCDMA2k_QEVMFetchConstellationTraceSplit);
   using QEVMFetchEVMPtr = decltype(&RFmxCDMA2k_QEVMFetchEVM);
   using QEVMFetchEVMTracePtr = decltype(&RFmxCDMA2k_QEVMFetchEVMTrace);
@@ -369,6 +377,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
     ACPFetchSpectrumPtr ACPFetchSpectrum;
     AbortMeasurementsPtr AbortMeasurements;
     AnalyzeIQ1WaveformPtr AnalyzeIQ1Waveform;
+    AnalyzeIQ1WaveformInterleavedIQPtr AnalyzeIQ1WaveformInterleavedIQ;
     AnalyzeIQ1WaveformSplitPtr AnalyzeIQ1WaveformSplit;
     AnalyzeSpectrum1WaveformPtr AnalyzeSpectrum1Waveform;
     AutoLevelPtr AutoLevel;
@@ -383,6 +392,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
     CDAFetchCodeDomainPowerPtr CDAFetchCodeDomainPower;
     CDAFetchIQImpairmentsPtr CDAFetchIQImpairments;
     CDAFetchSymbolConstellationTracePtr CDAFetchSymbolConstellationTrace;
+    CDAFetchSymbolConstellationTraceInterleavedIQPtr CDAFetchSymbolConstellationTraceInterleavedIQ;
     CDAFetchSymbolConstellationTraceSplitPtr CDAFetchSymbolConstellationTraceSplit;
     CDAFetchSymbolEVMPtr CDAFetchSymbolEVM;
     CDAFetchSymbolEVMTracePtr CDAFetchSymbolEVMTrace;
@@ -449,6 +459,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
     InitiatePtr Initiate;
     ModAccCfgSynchronizationModeAndIntervalPtr ModAccCfgSynchronizationModeAndInterval;
     ModAccFetchConstellationTracePtr ModAccFetchConstellationTrace;
+    ModAccFetchConstellationTraceInterleavedIQPtr ModAccFetchConstellationTraceInterleavedIQ;
     ModAccFetchConstellationTraceSplitPtr ModAccFetchConstellationTraceSplit;
     ModAccFetchDetectedChannelPtr ModAccFetchDetectedChannel;
     ModAccFetchDetectedChannelArrayPtr ModAccFetchDetectedChannelArray;
@@ -468,6 +479,7 @@ class NiRFmxCDMA2kLibrary : public nirfmxcdma2k_grpc::NiRFmxCDMA2kLibraryInterfa
     QEVMCfgAveragingPtr QEVMCfgAveraging;
     QEVMCfgMeasurementLengthPtr QEVMCfgMeasurementLength;
     QEVMFetchConstellationTracePtr QEVMFetchConstellationTrace;
+    QEVMFetchConstellationTraceInterleavedIQPtr QEVMFetchConstellationTraceInterleavedIQ;
     QEVMFetchConstellationTraceSplitPtr QEVMFetchConstellationTraceSplit;
     QEVMFetchEVMPtr QEVMFetchEVM;
     QEVMFetchEVMTracePtr QEVMFetchEVMTrace;

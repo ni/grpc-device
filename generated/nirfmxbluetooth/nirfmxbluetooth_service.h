@@ -57,6 +57,7 @@ public:
   ::grpc::Status ACPFetchSpectrum(::grpc::ServerContext* context, const ACPFetchSpectrumRequest* request, ACPFetchSpectrumResponse* response) override;
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
   ::grpc::Status AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response) override;
+  ::grpc::Status AnalyzeIQ1WaveformInterleavedIQ(::grpc::ServerContext* context, const AnalyzeIQ1WaveformInterleavedIQRequest* request, AnalyzeIQ1WaveformInterleavedIQResponse* response) override;
   ::grpc::Status AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response) override;
   ::grpc::Status AutoDetectSignal(::grpc::ServerContext* context, const AutoDetectSignalRequest* request, AutoDetectSignalResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
@@ -124,6 +125,7 @@ public:
   ::grpc::Status ModAccFetchCSDetrendedPhaseTrace(::grpc::ServerContext* context, const ModAccFetchCSDetrendedPhaseTraceRequest* request, ModAccFetchCSDetrendedPhaseTraceResponse* response) override;
   ::grpc::Status ModAccFetchCSToneTrace(::grpc::ServerContext* context, const ModAccFetchCSToneTraceRequest* request, ModAccFetchCSToneTraceResponse* response) override;
   ::grpc::Status ModAccFetchConstellationTrace(::grpc::ServerContext* context, const ModAccFetchConstellationTraceRequest* request, ModAccFetchConstellationTraceResponse* response) override;
+  ::grpc::Status ModAccFetchConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchConstellationTraceInterleavedIQRequest* request, ModAccFetchConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status ModAccFetchConstellationTraceSplit(::grpc::ServerContext* context, const ModAccFetchConstellationTraceSplitRequest* request, ModAccFetchConstellationTraceSplitResponse* response) override;
   ::grpc::Status ModAccFetchDEVM(::grpc::ServerContext* context, const ModAccFetchDEVMRequest* request, ModAccFetchDEVMResponse* response) override;
   ::grpc::Status ModAccFetchDEVMMagnitudeError(::grpc::ServerContext* context, const ModAccFetchDEVMMagnitudeErrorRequest* request, ModAccFetchDEVMMagnitudeErrorResponse* response) override;

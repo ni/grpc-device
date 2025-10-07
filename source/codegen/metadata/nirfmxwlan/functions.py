@@ -72,6 +72,66 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AnalyzeIQ1WaveformInterleavedIQ': {
+        'cname': 'RFmxWLAN_AnalyzeIQ1Waveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'direction': 'in',
+                'name': 'iq',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reset',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AnalyzeIQ1WaveformSplit': {
         'parameters': [
             {
@@ -200,6 +260,77 @@ functions = {
                 'type': 'int32[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reset',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'AnalyzeNWaveformsIQInterleavedIQ': {
+        'cname': 'RFmxWLAN_AnalyzeNWaveformsIQ',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'direction': 'in',
+                'name': 'iq',
+                'size': {
+                    'mechanism': 'two-dimension',
+                    'value': 'iqSize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_name': 'iq_sizes',
+                'name': 'iqSize',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -483,6 +614,49 @@ functions = {
                 'type': 'NIComplexSingle[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'AutoDetectSignalAnalysisOnlyInterleavedIQ': {
+        'cname': 'RFmxWLAN_AutoDetectSignalAnalysisOnly',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'direction': 'in',
+                'name': 'iq',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -1537,6 +1711,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DSSSModAccFetchConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxWLAN_DSSSModAccFetchConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(constellation)',
+                'direction': 'out',
+                'name': 'constellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -2985,6 +3202,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'OFDMModAccCfg1ReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxWLAN_OFDMModAccCfg1ReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
+                'direction': 'in',
+                'name': 'referenceWaveform',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'OFDMModAccCfg1ReferenceWaveformSplit': {
         'parameters': [
             {
@@ -3303,6 +3563,67 @@ functions = {
                 'type': 'int32[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'OFDMModAccCfgNReferenceWaveformsInterleavedIQ': {
+        'cname': 'RFmxWLAN_OFDMModAccCfgNReferenceWaveforms',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
+                'direction': 'in',
+                'name': 'referenceWaveform',
+                'size': {
+                    'mechanism': 'two-dimension',
+                    'value': 'referenceWaveformSize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_name': 'reference_waveform_sizes',
+                'name': 'referenceWaveformSize',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'int32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -4034,6 +4355,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'OFDMModAccFetchDataConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxWLAN_OFDMModAccFetchDataConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)',
+                'direction': 'out',
+                'name': 'dataConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -5199,6 +5563,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'OFDMModAccFetchPilotConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxWLAN_OFDMModAccFetchPilotConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pilotConstellation)',
+                'direction': 'out',
+                'name': 'pilotConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'OFDMModAccFetchPilotConstellationTraceSplit': {
         'parameters': [
             {
@@ -5797,6 +6204,49 @@ functions = {
             {
                 'direction': 'out',
                 'name': 'ruSize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceDataConstellation)',
+                'direction': 'out',
+                'name': 'referenceDataConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
                 'type': 'int32'
             }
         ],
@@ -6682,6 +7132,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'OFDMModAccFetchUserDataConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxWLAN_OFDMModAccFetchUserDataConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(userDataConstellation)',
+                'direction': 'out',
+                'name': 'userDataConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'OFDMModAccFetchUserDataConstellationTraceSplit': {
         'parameters': [
             {
@@ -6760,6 +7253,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'OFDMModAccFetchUserPilotConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxWLAN_OFDMModAccFetchUserPilotConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(userPilotConstellation)',
+                'direction': 'out',
+                'name': 'userPilotConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',

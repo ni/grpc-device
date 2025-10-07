@@ -19,6 +19,7 @@ class NiRFmxGSMMockLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
  public:
   MOCK_METHOD(int32, AbortMeasurements, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
   MOCK_METHOD(int32, AnalyzeIQ1Waveform, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved), (override));
+  MOCK_METHOD(int32, AnalyzeIQ1WaveformInterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved), (override));
   MOCK_METHOD(int32, AnalyzeIQ1WaveformSplit, (niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved), (override));
   MOCK_METHOD(int32, AutoLevel, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel), (override));
   MOCK_METHOD(int32, BuildOffsetString, (char selectorString[], int32 offsetNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));
@@ -81,6 +82,7 @@ class NiRFmxGSMMockLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
   MOCK_METHOD(int32, ModAccCfgAveraging, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount), (override));
   MOCK_METHOD(int32, ModAccCfgDroopCompensationEnabled, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 droopCompensationEnabled), (override));
   MOCK_METHOD(int32, ModAccFetchConstellationTrace, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellationTrace[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, ModAccFetchConstellationTraceInterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationTrace[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, ModAccFetchConstellationTraceSplit, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationTraceI[], float32 constellationTraceQ[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, ModAccFetchDemodulatedBits, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int8 demodulatedBits[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, ModAccFetchDetectedTSC, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* detectedTSC), (override));

@@ -35,6 +35,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
   int32 ACPFetchSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 spectrum[], int32 arraySize, int32* actualArraySize) override;
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved) override;
+  int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) override;
@@ -57,6 +58,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
   int32 CDAFetchMeanSymbolMagnitudeErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 meanSymbolMagnitudeError[], int32 arraySize, int32* actualArraySize) override;
   int32 CDAFetchMeanSymbolPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 meanSymbolPhaseError[], int32 arraySize, int32* actualArraySize) override;
   int32 CDAFetchSymbolConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle symbolConstellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 CDAFetchSymbolConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellation[], int32 arraySize, int32* actualArraySize) override;
   int32 CDAFetchSymbolConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellationI[], float32 symbolConstellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 CDAFetchSymbolEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSSymbolEVM, float64* maximumPeakSymbolEVM, float64* frequencyError, float64* chipRateError, float64* meanRMSSymbolMagnitudeError, float64* meanRMSSymbolPhaseError, float64* meanSymbolPower) override;
   int32 CHPCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) override;
@@ -123,6 +125,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
   int32 ModAccFetchCodeDomainErrorTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 codeDomainError[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchCompositeEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rmsCompositeEVM, float64* peakCompositeEVM, float64* compositeRho, float64* frequencyError, float64* chipRateError, float64* rmsCompositeMagnitudeError, float64* rmsCompositePhaseError) override;
   int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchDataActiveCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPeakDataActiveCDE, int32* peakDataActiveCDESpreadingFactor, int32* peakDataActiveCDECode, int32* peakDataActiveCDENumberOfChannels) override;
   int32 ModAccFetchDataCDE(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* maximumPeakDataCDE, int32* peakDataCDESpreadingFactor, int32* peakDataCDECode) override;
@@ -211,6 +214,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
   using ACPFetchSpectrumPtr = decltype(&RFmxTDSCDMA_ACPFetchSpectrum);
   using AbortMeasurementsPtr = decltype(&RFmxTDSCDMA_AbortMeasurements);
   using AnalyzeIQ1WaveformPtr = decltype(&RFmxTDSCDMA_AnalyzeIQ1Waveform);
+  using AnalyzeIQ1WaveformInterleavedIQPtr = decltype(&RFmxTDSCDMA_AnalyzeIQ1Waveform);
   using AnalyzeIQ1WaveformSplitPtr = decltype(&RFmxTDSCDMA_AnalyzeIQ1WaveformSplit);
   using AnalyzeSpectrum1WaveformPtr = decltype(&RFmxTDSCDMA_AnalyzeSpectrum1Waveform);
   using AutoLevelPtr = decltype(&RFmxTDSCDMA_AutoLevel);
@@ -233,6 +237,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
   using CDAFetchMeanSymbolMagnitudeErrorTracePtr = decltype(&RFmxTDSCDMA_CDAFetchMeanSymbolMagnitudeErrorTrace);
   using CDAFetchMeanSymbolPhaseErrorTracePtr = decltype(&RFmxTDSCDMA_CDAFetchMeanSymbolPhaseErrorTrace);
   using CDAFetchSymbolConstellationTracePtr = decltype(&RFmxTDSCDMA_CDAFetchSymbolConstellationTrace);
+  using CDAFetchSymbolConstellationTraceInterleavedIQPtr = decltype(&RFmxTDSCDMA_CDAFetchSymbolConstellationTrace);
   using CDAFetchSymbolConstellationTraceSplitPtr = decltype(&RFmxTDSCDMA_CDAFetchSymbolConstellationTraceSplit);
   using CDAFetchSymbolEVMPtr = decltype(&RFmxTDSCDMA_CDAFetchSymbolEVM);
   using CHPCfgAveragingPtr = decltype(&RFmxTDSCDMA_CHPCfgAveraging);
@@ -299,6 +304,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
   using ModAccFetchCodeDomainErrorTracePtr = decltype(&RFmxTDSCDMA_ModAccFetchCodeDomainErrorTrace);
   using ModAccFetchCompositeEVMPtr = decltype(&RFmxTDSCDMA_ModAccFetchCompositeEVM);
   using ModAccFetchConstellationTracePtr = decltype(&RFmxTDSCDMA_ModAccFetchConstellationTrace);
+  using ModAccFetchConstellationTraceInterleavedIQPtr = decltype(&RFmxTDSCDMA_ModAccFetchConstellationTrace);
   using ModAccFetchConstellationTraceSplitPtr = decltype(&RFmxTDSCDMA_ModAccFetchConstellationTraceSplit);
   using ModAccFetchDataActiveCDEPtr = decltype(&RFmxTDSCDMA_ModAccFetchDataActiveCDE);
   using ModAccFetchDataCDEPtr = decltype(&RFmxTDSCDMA_ModAccFetchDataCDE);
@@ -387,6 +393,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
     ACPFetchSpectrumPtr ACPFetchSpectrum;
     AbortMeasurementsPtr AbortMeasurements;
     AnalyzeIQ1WaveformPtr AnalyzeIQ1Waveform;
+    AnalyzeIQ1WaveformInterleavedIQPtr AnalyzeIQ1WaveformInterleavedIQ;
     AnalyzeIQ1WaveformSplitPtr AnalyzeIQ1WaveformSplit;
     AnalyzeSpectrum1WaveformPtr AnalyzeSpectrum1Waveform;
     AutoLevelPtr AutoLevel;
@@ -409,6 +416,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
     CDAFetchMeanSymbolMagnitudeErrorTracePtr CDAFetchMeanSymbolMagnitudeErrorTrace;
     CDAFetchMeanSymbolPhaseErrorTracePtr CDAFetchMeanSymbolPhaseErrorTrace;
     CDAFetchSymbolConstellationTracePtr CDAFetchSymbolConstellationTrace;
+    CDAFetchSymbolConstellationTraceInterleavedIQPtr CDAFetchSymbolConstellationTraceInterleavedIQ;
     CDAFetchSymbolConstellationTraceSplitPtr CDAFetchSymbolConstellationTraceSplit;
     CDAFetchSymbolEVMPtr CDAFetchSymbolEVM;
     CHPCfgAveragingPtr CHPCfgAveraging;
@@ -475,6 +483,7 @@ class NiRFmxTDSCDMALibrary : public nirfmxtdscdma_grpc::NiRFmxTDSCDMALibraryInte
     ModAccFetchCodeDomainErrorTracePtr ModAccFetchCodeDomainErrorTrace;
     ModAccFetchCompositeEVMPtr ModAccFetchCompositeEVM;
     ModAccFetchConstellationTracePtr ModAccFetchConstellationTrace;
+    ModAccFetchConstellationTraceInterleavedIQPtr ModAccFetchConstellationTraceInterleavedIQ;
     ModAccFetchConstellationTraceSplitPtr ModAccFetchConstellationTraceSplit;
     ModAccFetchDataActiveCDEPtr ModAccFetchDataActiveCDE;
     ModAccFetchDataCDEPtr ModAccFetchDataCDE;

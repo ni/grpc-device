@@ -342,6 +342,29 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
   return response;
 }
 
+AnalyzeIQ1WaveformInterleavedIQResponse
+analyze_iq1_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iq, request.mutable_iq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1WaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AnalyzeIQ1WaveformSplitResponse
 analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset)
 {
@@ -784,6 +807,25 @@ cda_fetch_symbol_constellation_trace(const StubPtr& stub, const nidevice_grpc::S
 
   raise_if_error(
       stub->CDAFetchSymbolConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CDAFetchSymbolConstellationTraceInterleavedIQResponse
+cda_fetch_symbol_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CDAFetchSymbolConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = CDAFetchSymbolConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CDAFetchSymbolConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2199,6 +2241,25 @@ mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Sess
 
   raise_if_error(
       stub->ModAccFetchConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchConstellationTraceInterleavedIQResponse
+mod_acc_fetch_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;

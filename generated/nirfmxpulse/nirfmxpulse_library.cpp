@@ -29,10 +29,12 @@ NiRFmxPulseLibrary::NiRFmxPulseLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   }
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxPulse_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxPulse_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeIQ1WaveformInterleavedIQ = reinterpret_cast<AnalyzeIQ1WaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxPulse_AnalyzeIQ1Waveform"));
   function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxPulse_AnalyzeIQ1WaveformSplit"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxPulse_AutoLevel"));
   function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_->get_function_pointer("RFmxPulse_BuildSignalString"));
   function_pointers_.Cfg1ReferenceWaveform = reinterpret_cast<Cfg1ReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxPulse_Cfg1ReferenceWaveform"));
+  function_pointers_.Cfg1ReferenceWaveformInterleavedIQ = reinterpret_cast<Cfg1ReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxPulse_Cfg1ReferenceWaveform"));
   function_pointers_.Cfg1ReferenceWaveformSplit = reinterpret_cast<Cfg1ReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxPulse_Cfg1ReferenceWaveformSplit"));
   function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgDigitalEdgeTrigger"));
   function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_->get_function_pointer("RFmxPulse_CfgExternalAttenuation"));
@@ -59,6 +61,7 @@ NiRFmxPulseLibrary::NiRFmxPulseLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.FetchBurstSelectedPositionStabilityTrace = reinterpret_cast<FetchBurstSelectedPositionStabilityTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchBurstSelectedPositionStabilityTrace"));
   function_pointers_.FetchFrequencyTrace = reinterpret_cast<FetchFrequencyTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchFrequencyTrace"));
   function_pointers_.FetchIQTrace = reinterpret_cast<FetchIQTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchIQTrace"));
+  function_pointers_.FetchIQTraceInterleavedIQ = reinterpret_cast<FetchIQTraceInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxPulse_FetchIQTrace"));
   function_pointers_.FetchIQTraceSplit = reinterpret_cast<FetchIQTraceSplitPtr>(shared_library_->get_function_pointer("RFmxPulse_FetchIQTraceSplit"));
   function_pointers_.FetchIntrapulseStabilityTrace = reinterpret_cast<FetchIntrapulseStabilityTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchIntrapulseStabilityTrace"));
   function_pointers_.FetchMultipleMeasurementPointsStabilityTrace = reinterpret_cast<FetchMultipleMeasurementPointsStabilityTracePtr>(shared_library_->get_function_pointer("RFmxPulse_FetchMultipleMeasurementPointsStabilityTrace"));
@@ -147,6 +150,14 @@ int32 NiRFmxPulseLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle,
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 NiRFmxPulseLibrary::AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1WaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_AnalyzeIQ1Waveform.");
+  }
+  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+}
+
 int32 NiRFmxPulseLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
 {
   if (!function_pointers_.AnalyzeIQ1WaveformSplit) {
@@ -177,6 +188,14 @@ int32 NiRFmxPulseLibrary::Cfg1ReferenceWaveform(niRFmxInstrHandle instrumentHand
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_Cfg1ReferenceWaveform.");
   }
   return function_pointers_.Cfg1ReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize);
+}
+
+int32 NiRFmxPulseLibrary::Cfg1ReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize)
+{
+  if (!function_pointers_.Cfg1ReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_Cfg1ReferenceWaveform.");
+  }
+  return function_pointers_.Cfg1ReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize/2);
 }
 
 int32 NiRFmxPulseLibrary::Cfg1ReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize)
@@ -385,6 +404,14 @@ int32 NiRFmxPulseLibrary::FetchIQTrace(niRFmxInstrHandle instrumentHandle, char 
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchIQTrace.");
   }
   return function_pointers_.FetchIQTrace(instrumentHandle, selectorString, timeout, x0, dx, iqData, arraySize, actualArraySize);
+}
+
+int32 NiRFmxPulseLibrary::FetchIQTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqData[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.FetchIQTraceInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchIQTrace.");
+  }
+  return function_pointers_.FetchIQTraceInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(IQData), arraySize, actualArraySize);
 }
 
 int32 NiRFmxPulseLibrary::FetchIQTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqDataI[], float32 iqDataQ[], int32 arraySize, int32* actualArraySize)

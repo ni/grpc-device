@@ -58,6 +58,29 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
   return response;
 }
 
+AnalyzeIQ1WaveformInterleavedIQResponse
+analyze_iq1_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iq, request.mutable_iq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1WaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AnalyzeIQ1WaveformSplitResponse
 analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset)
 {
@@ -101,6 +124,30 @@ analyze_n_waveforms_iq(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->AnalyzeNWaveformsIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AnalyzeNWaveformsIQInterleavedIQResponse
+analyze_n_waveforms_iq_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& iq, const std::vector<pb::int32>& iq_sizes, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeNWaveformsIQInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  copy_array(x0, request.mutable_x0());
+  copy_array(dx, request.mutable_dx());
+  copy_array(iq, request.mutable_iq());
+  copy_array(iq_sizes, request.mutable_iq_sizes());
+  request.set_reset(reset);
+
+  auto response = AnalyzeNWaveformsIQInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AnalyzeNWaveformsIQInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -213,6 +260,27 @@ auto_detect_signal_analysis_only(const StubPtr& stub, const nidevice_grpc::Sessi
 
   raise_if_error(
       stub->AutoDetectSignalAnalysisOnly(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AutoDetectSignalAnalysisOnlyInterleavedIQResponse
+auto_detect_signal_analysis_only_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& iq)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AutoDetectSignalAnalysisOnlyInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iq, request.mutable_iq());
+
+  auto response = AutoDetectSignalAnalysisOnlyInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AutoDetectSignalAnalysisOnlyInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -1052,6 +1120,25 @@ dsss_mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc:
   return response;
 }
 
+DSSSModAccFetchConstellationTraceInterleavedIQResponse
+dsss_mod_acc_fetch_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DSSSModAccFetchConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DSSSModAccFetchConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DSSSModAccFetchConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DSSSModAccFetchConstellationTraceSplitResponse
 dsss_mod_acc_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -1788,6 +1875,27 @@ ofdm_mod_acc_cfg1_reference_waveform(const StubPtr& stub, const nidevice_grpc::S
   return response;
 }
 
+OFDMModAccCfg1ReferenceWaveformInterleavedIQResponse
+ofdm_mod_acc_cfg1_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccCfg1ReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform, request.mutable_reference_waveform());
+
+  auto response = OFDMModAccCfg1ReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccCfg1ReferenceWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 OFDMModAccCfg1ReferenceWaveformSplitResponse
 ofdm_mod_acc_cfg1_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform_i, const std::vector<float>& reference_waveform_q)
 {
@@ -2057,6 +2165,28 @@ ofdm_mod_acc_cfg_n_reference_waveforms(const StubPtr& stub, const nidevice_grpc:
 
   raise_if_error(
       stub->OFDMModAccCfgNReferenceWaveforms(&context, request, &response),
+      context);
+
+  return response;
+}
+
+OFDMModAccCfgNReferenceWaveformsInterleavedIQResponse
+ofdm_mod_acc_cfg_n_reference_waveforms_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& reference_waveform, const std::vector<pb::int32>& reference_waveform_sizes)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccCfgNReferenceWaveformsInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(x0, request.mutable_x0());
+  copy_array(dx, request.mutable_dx());
+  copy_array(reference_waveform, request.mutable_reference_waveform());
+  copy_array(reference_waveform_sizes, request.mutable_reference_waveform_sizes());
+
+  auto response = OFDMModAccCfgNReferenceWaveformsInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccCfgNReferenceWaveformsInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2430,6 +2560,25 @@ ofdm_mod_acc_fetch_data_constellation_trace(const StubPtr& stub, const nidevice_
 
   raise_if_error(
       stub->OFDMModAccFetchDataConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+OFDMModAccFetchDataConstellationTraceInterleavedIQResponse
+ofdm_mod_acc_fetch_data_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchDataConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchDataConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchDataConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -3062,6 +3211,25 @@ ofdm_mod_acc_fetch_pilot_constellation_trace(const StubPtr& stub, const nidevice
   return response;
 }
 
+OFDMModAccFetchPilotConstellationTraceInterleavedIQResponse
+ofdm_mod_acc_fetch_pilot_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchPilotConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchPilotConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchPilotConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 OFDMModAccFetchPilotConstellationTraceSplitResponse
 ofdm_mod_acc_fetch_pilot_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3304,6 +3472,25 @@ ofdm_mod_acc_fetch_ru_offset_and_size(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->OFDMModAccFetchRUOffsetAndSize(&context, request, &response),
+      context);
+
+  return response;
+}
+
+OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQResponse
+ofdm_mod_acc_fetch_reference_data_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -3674,6 +3861,25 @@ ofdm_mod_acc_fetch_user_data_constellation_trace(const StubPtr& stub, const nide
   return response;
 }
 
+OFDMModAccFetchUserDataConstellationTraceInterleavedIQResponse
+ofdm_mod_acc_fetch_user_data_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchUserDataConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchUserDataConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchUserDataConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 OFDMModAccFetchUserDataConstellationTraceSplitResponse
 ofdm_mod_acc_fetch_user_data_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3707,6 +3913,25 @@ ofdm_mod_acc_fetch_user_pilot_constellation_trace(const StubPtr& stub, const nid
 
   raise_if_error(
       stub->OFDMModAccFetchUserPilotConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+OFDMModAccFetchUserPilotConstellationTraceInterleavedIQResponse
+ofdm_mod_acc_fetch_user_pilot_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchUserPilotConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchUserPilotConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchUserPilotConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;

@@ -72,6 +72,7 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.AMPMCfgMeasurementSampleRate = reinterpret_cast<AMPMCfgMeasurementSampleRatePtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMCfgMeasurementSampleRate"));
   function_pointers_.AMPMCfgReferencePowerType = reinterpret_cast<AMPMCfgReferencePowerTypePtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMCfgReferencePowerType"));
   function_pointers_.AMPMCfgReferenceWaveform = reinterpret_cast<AMPMCfgReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMCfgReferenceWaveform"));
+  function_pointers_.AMPMCfgReferenceWaveformInterleavedIQ = reinterpret_cast<AMPMCfgReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMCfgReferenceWaveform"));
   function_pointers_.AMPMCfgReferenceWaveformSplit = reinterpret_cast<AMPMCfgReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMCfgReferenceWaveformSplit"));
   function_pointers_.AMPMCfgSynchronizationMethod = reinterpret_cast<AMPMCfgSynchronizationMethodPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMCfgSynchronizationMethod"));
   function_pointers_.AMPMCfgThreshold = reinterpret_cast<AMPMCfgThresholdPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMCfgThreshold"));
@@ -83,13 +84,16 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.AMPMFetchDUTCharacteristics = reinterpret_cast<AMPMFetchDUTCharacteristicsPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchDUTCharacteristics"));
   function_pointers_.AMPMFetchError = reinterpret_cast<AMPMFetchErrorPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchError"));
   function_pointers_.AMPMFetchProcessedMeanAcquiredWaveform = reinterpret_cast<AMPMFetchProcessedMeanAcquiredWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform"));
+  function_pointers_.AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ = reinterpret_cast<AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform"));
   function_pointers_.AMPMFetchProcessedMeanAcquiredWaveformSplit = reinterpret_cast<AMPMFetchProcessedMeanAcquiredWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveformSplit"));
   function_pointers_.AMPMFetchProcessedReferenceWaveform = reinterpret_cast<AMPMFetchProcessedReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchProcessedReferenceWaveform"));
+  function_pointers_.AMPMFetchProcessedReferenceWaveformInterleavedIQ = reinterpret_cast<AMPMFetchProcessedReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchProcessedReferenceWaveform"));
   function_pointers_.AMPMFetchProcessedReferenceWaveformSplit = reinterpret_cast<AMPMFetchProcessedReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchProcessedReferenceWaveformSplit"));
   function_pointers_.AMPMFetchRelativePhaseTrace = reinterpret_cast<AMPMFetchRelativePhaseTracePtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchRelativePhaseTrace"));
   function_pointers_.AMPMFetchRelativePowerTrace = reinterpret_cast<AMPMFetchRelativePowerTracePtr>(shared_library_->get_function_pointer("RFmxSpecAn_AMPMFetchRelativePowerTrace"));
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeIQ1WaveformInterleavedIQ = reinterpret_cast<AnalyzeIQ1WaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AnalyzeIQ1Waveform"));
   function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AnalyzeIQ1WaveformSplit"));
   function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AnalyzeSpectrum1Waveform"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxSpecAn_AutoLevel"));
@@ -150,20 +154,25 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.CreateListStep = reinterpret_cast<CreateListStepPtr>(shared_library_->get_function_pointer("RFmxSpecAn_CreateListStep"));
   function_pointers_.CreateSignalConfiguration = reinterpret_cast<CreateSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxSpecAn_CreateSignalConfiguration"));
   function_pointers_.DPDApplyDigitalPredistortion = reinterpret_cast<DPDApplyDigitalPredistortionPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDApplyDigitalPredistortion"));
+  function_pointers_.DPDApplyDigitalPredistortionInterleavedIQ = reinterpret_cast<DPDApplyDigitalPredistortionInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDApplyDigitalPredistortion"));
   function_pointers_.DPDApplyDigitalPredistortionSplit = reinterpret_cast<DPDApplyDigitalPredistortionSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDApplyDigitalPredistortionSplit"));
   function_pointers_.DPDApplyPreDPDSignalConditioning = reinterpret_cast<DPDApplyPreDPDSignalConditioningPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDApplyPreDPDSignalConditioning"));
+  function_pointers_.DPDApplyPreDPDSignalConditioningInterleavedIQ = reinterpret_cast<DPDApplyPreDPDSignalConditioningInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDApplyPreDPDSignalConditioning"));
   function_pointers_.DPDApplyPreDPDSignalConditioningSplit = reinterpret_cast<DPDApplyPreDPDSignalConditioningSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDApplyPreDPDSignalConditioningSplit"));
   function_pointers_.DPDCfgApplyDPDConfigurationInput = reinterpret_cast<DPDCfgApplyDPDConfigurationInputPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDConfigurationInput"));
   function_pointers_.DPDCfgApplyDPDLookupTableCorrectionType = reinterpret_cast<DPDCfgApplyDPDLookupTableCorrectionTypePtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDLookupTableCorrectionType"));
   function_pointers_.DPDCfgApplyDPDMemoryModelCorrectionType = reinterpret_cast<DPDCfgApplyDPDMemoryModelCorrectionTypePtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDMemoryModelCorrectionType"));
   function_pointers_.DPDCfgApplyDPDUserDPDPolynomial = reinterpret_cast<DPDCfgApplyDPDUserDPDPolynomialPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial"));
+  function_pointers_.DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ = reinterpret_cast<DPDCfgApplyDPDUserDPDPolynomialInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial"));
   function_pointers_.DPDCfgApplyDPDUserDPDPolynomialSplit = reinterpret_cast<DPDCfgApplyDPDUserDPDPolynomialSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit"));
   function_pointers_.DPDCfgApplyDPDUserLookupTable = reinterpret_cast<DPDCfgApplyDPDUserLookupTablePtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserLookupTable"));
+  function_pointers_.DPDCfgApplyDPDUserLookupTableInterleavedIQ = reinterpret_cast<DPDCfgApplyDPDUserLookupTableInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserLookupTable"));
   function_pointers_.DPDCfgApplyDPDUserLookupTableSplit = reinterpret_cast<DPDCfgApplyDPDUserLookupTableSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgApplyDPDUserLookupTableSplit"));
   function_pointers_.DPDCfgAveraging = reinterpret_cast<DPDCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgAveraging"));
   function_pointers_.DPDCfgDPDModel = reinterpret_cast<DPDCfgDPDModelPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgDPDModel"));
   function_pointers_.DPDCfgDUTAverageInputPower = reinterpret_cast<DPDCfgDUTAverageInputPowerPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgDUTAverageInputPower"));
   function_pointers_.DPDCfgExtractModelTargetWaveform = reinterpret_cast<DPDCfgExtractModelTargetWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgExtractModelTargetWaveform"));
+  function_pointers_.DPDCfgExtractModelTargetWaveformInterleavedIQ = reinterpret_cast<DPDCfgExtractModelTargetWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgExtractModelTargetWaveform"));
   function_pointers_.DPDCfgExtractModelTargetWaveformSplit = reinterpret_cast<DPDCfgExtractModelTargetWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgExtractModelTargetWaveformSplit"));
   function_pointers_.DPDCfgGeneralizedMemoryPolynomialCrossTerms = reinterpret_cast<DPDCfgGeneralizedMemoryPolynomialCrossTermsPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgGeneralizedMemoryPolynomialCrossTerms"));
   function_pointers_.DPDCfgIterativeDPDEnabled = reinterpret_cast<DPDCfgIterativeDPDEnabledPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgIterativeDPDEnabled"));
@@ -176,22 +185,29 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.DPDCfgMeasurementSampleRate = reinterpret_cast<DPDCfgMeasurementSampleRatePtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgMeasurementSampleRate"));
   function_pointers_.DPDCfgMemoryPolynomial = reinterpret_cast<DPDCfgMemoryPolynomialPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgMemoryPolynomial"));
   function_pointers_.DPDCfgPreviousDPDPolynomial = reinterpret_cast<DPDCfgPreviousDPDPolynomialPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgPreviousDPDPolynomial"));
+  function_pointers_.DPDCfgPreviousDPDPolynomialInterleavedIQ = reinterpret_cast<DPDCfgPreviousDPDPolynomialInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgPreviousDPDPolynomial"));
   function_pointers_.DPDCfgPreviousDPDPolynomialSplit = reinterpret_cast<DPDCfgPreviousDPDPolynomialSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgPreviousDPDPolynomialSplit"));
   function_pointers_.DPDCfgReferenceWaveform = reinterpret_cast<DPDCfgReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgReferenceWaveform"));
+  function_pointers_.DPDCfgReferenceWaveformInterleavedIQ = reinterpret_cast<DPDCfgReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgReferenceWaveform"));
   function_pointers_.DPDCfgReferenceWaveformSplit = reinterpret_cast<DPDCfgReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgReferenceWaveformSplit"));
   function_pointers_.DPDCfgSynchronizationMethod = reinterpret_cast<DPDCfgSynchronizationMethodPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDCfgSynchronizationMethod"));
   function_pointers_.DPDFetchApplyDPDPreCFRPAPR = reinterpret_cast<DPDFetchApplyDPDPreCFRPAPRPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchApplyDPDPreCFRPAPR"));
   function_pointers_.DPDFetchAverageGain = reinterpret_cast<DPDFetchAverageGainPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchAverageGain"));
   function_pointers_.DPDFetchDPDPolynomial = reinterpret_cast<DPDFetchDPDPolynomialPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchDPDPolynomial"));
+  function_pointers_.DPDFetchDPDPolynomialInterleavedIQ = reinterpret_cast<DPDFetchDPDPolynomialInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchDPDPolynomial"));
   function_pointers_.DPDFetchDPDPolynomialSplit = reinterpret_cast<DPDFetchDPDPolynomialSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchDPDPolynomialSplit"));
   function_pointers_.DPDFetchDVRModel = reinterpret_cast<DPDFetchDVRModelPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchDVRModel"));
+  function_pointers_.DPDFetchDVRModelInterleavedIQ = reinterpret_cast<DPDFetchDVRModelInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchDVRModel"));
   function_pointers_.DPDFetchDVRModelSplit = reinterpret_cast<DPDFetchDVRModelSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchDVRModelSplit"));
   function_pointers_.DPDFetchLookupTable = reinterpret_cast<DPDFetchLookupTablePtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchLookupTable"));
+  function_pointers_.DPDFetchLookupTableInterleavedIQ = reinterpret_cast<DPDFetchLookupTableInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchLookupTable"));
   function_pointers_.DPDFetchLookupTableSplit = reinterpret_cast<DPDFetchLookupTableSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchLookupTableSplit"));
   function_pointers_.DPDFetchNMSE = reinterpret_cast<DPDFetchNMSEPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchNMSE"));
   function_pointers_.DPDFetchProcessedMeanAcquiredWaveform = reinterpret_cast<DPDFetchProcessedMeanAcquiredWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform"));
+  function_pointers_.DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ = reinterpret_cast<DPDFetchProcessedMeanAcquiredWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform"));
   function_pointers_.DPDFetchProcessedMeanAcquiredWaveformSplit = reinterpret_cast<DPDFetchProcessedMeanAcquiredWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit"));
   function_pointers_.DPDFetchProcessedReferenceWaveform = reinterpret_cast<DPDFetchProcessedReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchProcessedReferenceWaveform"));
+  function_pointers_.DPDFetchProcessedReferenceWaveformInterleavedIQ = reinterpret_cast<DPDFetchProcessedReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchProcessedReferenceWaveform"));
   function_pointers_.DPDFetchProcessedReferenceWaveformSplit = reinterpret_cast<DPDFetchProcessedReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDFetchProcessedReferenceWaveformSplit"));
   function_pointers_.DeleteList = reinterpret_cast<DeleteListPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DeleteList"));
   function_pointers_.DeleteSignalConfiguration = reinterpret_cast<DeleteSignalConfigurationPtr>(shared_library_->get_function_pointer("RFmxSpecAn_DeleteSignalConfiguration"));
@@ -242,20 +258,28 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.HarmFetchTHD = reinterpret_cast<HarmFetchTHDPtr>(shared_library_->get_function_pointer("RFmxSpecAn_HarmFetchTHD"));
   function_pointers_.HarmRead = reinterpret_cast<HarmReadPtr>(shared_library_->get_function_pointer("RFmxSpecAn_HarmRead"));
   function_pointers_.IDPDCfgEqualizerCoefficients = reinterpret_cast<IDPDCfgEqualizerCoefficientsPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDCfgEqualizerCoefficients"));
+  function_pointers_.IDPDCfgEqualizerCoefficientsInterleavedIQ = reinterpret_cast<IDPDCfgEqualizerCoefficientsInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDCfgEqualizerCoefficients"));
   function_pointers_.IDPDCfgEqualizerCoefficientsSplit = reinterpret_cast<IDPDCfgEqualizerCoefficientsSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDCfgEqualizerCoefficientsSplit"));
   function_pointers_.IDPDCfgPredistortedWaveform = reinterpret_cast<IDPDCfgPredistortedWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDCfgPredistortedWaveform"));
+  function_pointers_.IDPDCfgPredistortedWaveformInterleavedIQ = reinterpret_cast<IDPDCfgPredistortedWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDCfgPredistortedWaveform"));
   function_pointers_.IDPDCfgPredistortedWaveformSplit = reinterpret_cast<IDPDCfgPredistortedWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDCfgPredistortedWaveformSplit"));
   function_pointers_.IDPDCfgReferenceWaveform = reinterpret_cast<IDPDCfgReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDCfgReferenceWaveform"));
+  function_pointers_.IDPDCfgReferenceWaveformInterleavedIQ = reinterpret_cast<IDPDCfgReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDCfgReferenceWaveform"));
   function_pointers_.IDPDCfgReferenceWaveformSplit = reinterpret_cast<IDPDCfgReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDCfgReferenceWaveformSplit"));
   function_pointers_.IDPDFetchEqualizerCoefficients = reinterpret_cast<IDPDFetchEqualizerCoefficientsPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchEqualizerCoefficients"));
+  function_pointers_.IDPDFetchEqualizerCoefficientsInterleavedIQ = reinterpret_cast<IDPDFetchEqualizerCoefficientsInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchEqualizerCoefficients"));
   function_pointers_.IDPDFetchEqualizerCoefficientsSplit = reinterpret_cast<IDPDFetchEqualizerCoefficientsSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchEqualizerCoefficientsSplit"));
   function_pointers_.IDPDFetchPredistortedWaveform = reinterpret_cast<IDPDFetchPredistortedWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchPredistortedWaveform"));
+  function_pointers_.IDPDFetchPredistortedWaveformInterleavedIQ = reinterpret_cast<IDPDFetchPredistortedWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchPredistortedWaveform"));
   function_pointers_.IDPDFetchPredistortedWaveformSplit = reinterpret_cast<IDPDFetchPredistortedWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchPredistortedWaveformSplit"));
   function_pointers_.IDPDFetchProcessedMeanAcquiredWaveform = reinterpret_cast<IDPDFetchProcessedMeanAcquiredWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveform"));
+  function_pointers_.IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ = reinterpret_cast<IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveform"));
   function_pointers_.IDPDFetchProcessedMeanAcquiredWaveformSplit = reinterpret_cast<IDPDFetchProcessedMeanAcquiredWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveformSplit"));
   function_pointers_.IDPDFetchProcessedReferenceWaveform = reinterpret_cast<IDPDFetchProcessedReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchProcessedReferenceWaveform"));
+  function_pointers_.IDPDFetchProcessedReferenceWaveformInterleavedIQ = reinterpret_cast<IDPDFetchProcessedReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchProcessedReferenceWaveform"));
   function_pointers_.IDPDFetchProcessedReferenceWaveformSplit = reinterpret_cast<IDPDFetchProcessedReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDFetchProcessedReferenceWaveformSplit"));
   function_pointers_.IDPDGetEqualizerReferenceWaveform = reinterpret_cast<IDPDGetEqualizerReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDGetEqualizerReferenceWaveform"));
+  function_pointers_.IDPDGetEqualizerReferenceWaveformInterleavedIQ = reinterpret_cast<IDPDGetEqualizerReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDGetEqualizerReferenceWaveform"));
   function_pointers_.IDPDGetEqualizerReferenceWaveformSplit = reinterpret_cast<IDPDGetEqualizerReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDGetEqualizerReferenceWaveformSplit"));
   function_pointers_.IMCfgAutoIntermodsSetup = reinterpret_cast<IMCfgAutoIntermodsSetupPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IMCfgAutoIntermodsSetup"));
   function_pointers_.IMCfgAveraging = reinterpret_cast<IMCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IMCfgAveraging"));
@@ -277,6 +301,7 @@ NiRFmxSpecAnLibrary::NiRFmxSpecAnLibrary(std::shared_ptr<nidevice_grpc::SharedLi
   function_pointers_.IQCfgAcquisition = reinterpret_cast<IQCfgAcquisitionPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IQCfgAcquisition"));
   function_pointers_.IQCfgBandwidth = reinterpret_cast<IQCfgBandwidthPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IQCfgBandwidth"));
   function_pointers_.IQFetchData = reinterpret_cast<IQFetchDataPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IQFetchData"));
+  function_pointers_.IQFetchDataInterleavedIQ = reinterpret_cast<IQFetchDataInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IQFetchData"));
   function_pointers_.IQFetchDataSplit = reinterpret_cast<IQFetchDataSplitPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IQFetchDataSplit"));
   function_pointers_.IQGetRecordsDone = reinterpret_cast<IQGetRecordsDonePtr>(shared_library_->get_function_pointer("RFmxSpecAn_IQGetRecordsDone"));
   function_pointers_.Initialize = reinterpret_cast<InitializePtr>(shared_library_->get_function_pointer("RFmxSpecAn_Initialize"));
@@ -866,6 +891,14 @@ int32 NiRFmxSpecAnLibrary::AMPMCfgReferenceWaveform(niRFmxInstrHandle instrument
   return function_pointers_.AMPMCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize, idleDurationPresent, signalType);
 }
 
+int32 NiRFmxSpecAnLibrary::AMPMCfgReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
+{
+  if (!function_pointers_.AMPMCfgReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMCfgReferenceWaveform.");
+  }
+  return function_pointers_.AMPMCfgReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize/2, idleDurationPresent, signalType);
+}
+
 int32 NiRFmxSpecAnLibrary::AMPMCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
 {
   if (!function_pointers_.AMPMCfgReferenceWaveformSplit) {
@@ -954,6 +987,14 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedMeanAcquiredWaveform(niRFmxInstrHan
   return function_pointers_.AMPMFetchProcessedMeanAcquiredWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedMeanAcquiredWaveform, arraySize, actualArraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform.");
+  }
+  return function_pointers_.AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform), arraySize, actualArraySize);
+}
+
 int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveformI[], float32 processedMeanAcquiredWaveformQ[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.AMPMFetchProcessedMeanAcquiredWaveformSplit) {
@@ -968,6 +1009,14 @@ int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedReferenceWaveform(niRFmxInstrHandle
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchProcessedReferenceWaveform.");
   }
   return function_pointers_.AMPMFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.AMPMFetchProcessedReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AMPMFetchProcessedReferenceWaveform.");
+  }
+  return function_pointers_.AMPMFetchProcessedReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform), arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::AMPMFetchProcessedReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveformI[], float32 processedReferenceWaveformQ[], int32 arraySize, int32* actualArraySize)
@@ -1008,6 +1057,14 @@ int32 NiRFmxSpecAnLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AnalyzeIQ1Waveform.");
   }
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+}
+
+int32 NiRFmxSpecAnLibrary::AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1WaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AnalyzeIQ1Waveform.");
+  }
+  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
 }
 
 int32 NiRFmxSpecAnLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -1490,6 +1547,14 @@ int32 NiRFmxSpecAnLibrary::DPDApplyDigitalPredistortion(niRFmxInstrHandle instru
   return function_pointers_.DPDApplyDigitalPredistortion(instrumentHandle, selectorString, x0In, dxIn, waveformIn, arraySizeIn, idleDurationPresent, measurementTimeout, x0Out, dxOut, waveformOut, arraySizeOut, actualArraySize, papr, powerOffset);
 }
 
+int32 NiRFmxSpecAnLibrary::DPDApplyDigitalPredistortionInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64 measurementTimeout, float64* x0Out, float64* dxOut, float32 waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr, float64* powerOffset)
+{
+  if (!function_pointers_.DPDApplyDigitalPredistortionInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyDigitalPredistortion.");
+  }
+  return function_pointers_.DPDApplyDigitalPredistortionInterleavedIQ(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn, idleDurationPresent, measurementTimeout, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr, powerOffset);
+}
+
 int32 NiRFmxSpecAnLibrary::DPDApplyDigitalPredistortionSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64 measurementTimeout, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr, float64* powerOffset)
 {
   if (!function_pointers_.DPDApplyDigitalPredistortionSplit) {
@@ -1504,6 +1569,14 @@ int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioning(niRFmxInstrHandle in
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyPreDPDSignalConditioning.");
   }
   return function_pointers_.DPDApplyPreDPDSignalConditioning(instrumentHandle, selectorString, x0In, dxIn, waveformIn, arraySizeIn, idleDurationPresent, x0Out, dxOut, waveformOut, arraySizeOut, actualArraySize, papr);
+}
+
+int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioningInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, float32 waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
+{
+  if (!function_pointers_.DPDApplyPreDPDSignalConditioningInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyPreDPDSignalConditioning.");
+  }
+  return function_pointers_.DPDApplyPreDPDSignalConditioningInterleavedIQ(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn, idleDurationPresent, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioningSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
@@ -1546,6 +1619,14 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserDPDPolynomial(niRFmxInstrHandle ins
   return function_pointers_.DPDCfgApplyDPDUserDPDPolynomial(instrumentHandle, selectorString, dpdPolynomial, arraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 dpdPolynomial[], int32 arraySize)
+{
+  if (!function_pointers_.DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial.");
+  }
+  return function_pointers_.DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(DPDPolynomial), arraySize/2);
+}
+
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 dpdPolynomialI[], float32 dpdPolynomialQ[], int32 arraySize)
 {
   if (!function_pointers_.DPDCfgApplyDPDUserDPDPolynomialSplit) {
@@ -1560,6 +1641,14 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTable(niRFmxInstrHandle instr
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserLookupTable.");
   }
   return function_pointers_.DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, lutComplexGains, arraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGains[], int32 arraySize)
+{
+  if (!function_pointers_.DPDCfgApplyDPDUserLookupTableInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserLookupTable.");
+  }
+  return function_pointers_.DPDCfgApplyDPDUserLookupTableInterleavedIQ(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(LUTComplexGains), arraySize/2);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGainsI[], float32 lutComplexGainsQ[], int32 arraySize)
@@ -1600,6 +1689,14 @@ int32 NiRFmxSpecAnLibrary::DPDCfgExtractModelTargetWaveform(niRFmxInstrHandle in
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgExtractModelTargetWaveform.");
   }
   return function_pointers_.DPDCfgExtractModelTargetWaveform(instrumentHandle, selectorString, x0, dx, targetWaveform, arraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::DPDCfgExtractModelTargetWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveform[], int32 arraySize)
+{
+  if (!function_pointers_.DPDCfgExtractModelTargetWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgExtractModelTargetWaveform.");
+  }
+  return function_pointers_.DPDCfgExtractModelTargetWaveformInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(targetWaveform), arraySize/2);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDCfgExtractModelTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize)
@@ -1698,6 +1795,14 @@ int32 NiRFmxSpecAnLibrary::DPDCfgPreviousDPDPolynomial(niRFmxInstrHandle instrum
   return function_pointers_.DPDCfgPreviousDPDPolynomial(instrumentHandle, selectorString, previousDPDPolynomial, arraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::DPDCfgPreviousDPDPolynomialInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 previousDPDPolynomial[], int32 arraySize)
+{
+  if (!function_pointers_.DPDCfgPreviousDPDPolynomialInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgPreviousDPDPolynomial.");
+  }
+  return function_pointers_.DPDCfgPreviousDPDPolynomialInterleavedIQ(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(previousDPDPolynomial), arraySize/2);
+}
+
 int32 NiRFmxSpecAnLibrary::DPDCfgPreviousDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 previousDPDPolynomialI[], float32 previousDPDPolynomialQ[], int32 arraySize)
 {
   if (!function_pointers_.DPDCfgPreviousDPDPolynomialSplit) {
@@ -1712,6 +1817,14 @@ int32 NiRFmxSpecAnLibrary::DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentH
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgReferenceWaveform.");
   }
   return function_pointers_.DPDCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize, idleDurationPresent, signalType);
+}
+
+int32 NiRFmxSpecAnLibrary::DPDCfgReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
+{
+  if (!function_pointers_.DPDCfgReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgReferenceWaveform.");
+  }
+  return function_pointers_.DPDCfgReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize/2, idleDurationPresent, signalType);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
@@ -1754,6 +1867,14 @@ int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHan
   return function_pointers_.DPDFetchDPDPolynomial(instrumentHandle, selectorString, timeout, dpdPolynomial, arraySize, actualArraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomialInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dpdPolynomial[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DPDFetchDPDPolynomialInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchDPDPolynomial.");
+  }
+  return function_pointers_.DPDFetchDPDPolynomialInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(DPDPolynomial), arraySize, actualArraySize);
+}
+
 int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dpdPolynomialI[], float32 dpdPolynomialQ[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.DPDFetchDPDPolynomialSplit) {
@@ -1770,6 +1891,14 @@ int32 NiRFmxSpecAnLibrary::DPDFetchDVRModel(niRFmxInstrHandle instrumentHandle, 
   return function_pointers_.DPDFetchDVRModel(instrumentHandle, selectorString, timeout, dvrModel, arraySize, actualArraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::DPDFetchDVRModelInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dvrModel[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DPDFetchDVRModelInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchDVRModel.");
+  }
+  return function_pointers_.DPDFetchDVRModelInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(DVRModel), arraySize, actualArraySize);
+}
+
 int32 NiRFmxSpecAnLibrary::DPDFetchDVRModelSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dvrModelI[], float32 dvrModelQ[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.DPDFetchDVRModelSplit) {
@@ -1784,6 +1913,14 @@ int32 NiRFmxSpecAnLibrary::DPDFetchLookupTable(niRFmxInstrHandle instrumentHandl
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchLookupTable.");
   }
   return function_pointers_.DPDFetchLookupTable(instrumentHandle, selectorString, timeout, inputPowers, complexGains, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::DPDFetchLookupTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], float32 complexGains[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DPDFetchLookupTableInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchLookupTable.");
+  }
+  return function_pointers_.DPDFetchLookupTableInterleavedIQ(instrumentHandle, selectorString, timeout, inputPowers, reinterpret_cast<NIComplexSingle*>(complexGains), arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDFetchLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], float32 complexGainsI[], float32 complexGainsQ[], int32 arraySize, int32* actualArraySize)
@@ -1810,6 +1947,14 @@ int32 NiRFmxSpecAnLibrary::DPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHand
   return function_pointers_.DPDFetchProcessedMeanAcquiredWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedMeanAcquiredWaveform, arraySize, actualArraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform.");
+  }
+  return function_pointers_.DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform), arraySize, actualArraySize);
+}
+
 int32 NiRFmxSpecAnLibrary::DPDFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveformI[], float32 processedMeanAcquiredWaveformQ[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.DPDFetchProcessedMeanAcquiredWaveformSplit) {
@@ -1824,6 +1969,14 @@ int32 NiRFmxSpecAnLibrary::DPDFetchProcessedReferenceWaveform(niRFmxInstrHandle 
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchProcessedReferenceWaveform.");
   }
   return function_pointers_.DPDFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::DPDFetchProcessedReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.DPDFetchProcessedReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchProcessedReferenceWaveform.");
+  }
+  return function_pointers_.DPDFetchProcessedReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform), arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDFetchProcessedReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveformI[], float32 processedReferenceWaveformQ[], int32 arraySize, int32* actualArraySize)
@@ -2226,6 +2379,14 @@ int32 NiRFmxSpecAnLibrary::IDPDCfgEqualizerCoefficients(niRFmxInstrHandle instru
   return function_pointers_.IDPDCfgEqualizerCoefficients(instrumentHandle, selectorString, x0, dx, equalizerCoefficients, arraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::IDPDCfgEqualizerCoefficientsInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 equalizerCoefficients[], int32 arraySize)
+{
+  if (!function_pointers_.IDPDCfgEqualizerCoefficientsInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDCfgEqualizerCoefficients.");
+  }
+  return function_pointers_.IDPDCfgEqualizerCoefficientsInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerCoefficients), arraySize/2);
+}
+
 int32 NiRFmxSpecAnLibrary::IDPDCfgEqualizerCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 equalizerCoefficientsI[], float32 equalizerCoefficientsQ[], int32 arraySize)
 {
   if (!function_pointers_.IDPDCfgEqualizerCoefficientsSplit) {
@@ -2240,6 +2401,14 @@ int32 NiRFmxSpecAnLibrary::IDPDCfgPredistortedWaveform(niRFmxInstrHandle instrum
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDCfgPredistortedWaveform.");
   }
   return function_pointers_.IDPDCfgPredistortedWaveform(instrumentHandle, selectorString, x0, dx, predistortedWaveform, arraySize, targetGain);
+}
+
+int32 NiRFmxSpecAnLibrary::IDPDCfgPredistortedWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 predistortedWaveform[], int32 arraySize, float64 targetGain)
+{
+  if (!function_pointers_.IDPDCfgPredistortedWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDCfgPredistortedWaveform.");
+  }
+  return function_pointers_.IDPDCfgPredistortedWaveformInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(predistortedWaveform), arraySize/2, targetGain);
 }
 
 int32 NiRFmxSpecAnLibrary::IDPDCfgPredistortedWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 predistortedWaveformI[], float32 predistortedWaveformQ[], int32 arraySize, float64 targetGain)
@@ -2258,6 +2427,14 @@ int32 NiRFmxSpecAnLibrary::IDPDCfgReferenceWaveform(niRFmxInstrHandle instrument
   return function_pointers_.IDPDCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize, idleDurationPresent, signalType);
 }
 
+int32 NiRFmxSpecAnLibrary::IDPDCfgReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
+{
+  if (!function_pointers_.IDPDCfgReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDCfgReferenceWaveform.");
+  }
+  return function_pointers_.IDPDCfgReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize/2, idleDurationPresent, signalType);
+}
+
 int32 NiRFmxSpecAnLibrary::IDPDCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
 {
   if (!function_pointers_.IDPDCfgReferenceWaveformSplit) {
@@ -2272,6 +2449,14 @@ int32 NiRFmxSpecAnLibrary::IDPDFetchEqualizerCoefficients(niRFmxInstrHandle inst
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDFetchEqualizerCoefficients.");
   }
   return function_pointers_.IDPDFetchEqualizerCoefficients(instrumentHandle, selectorString, timeout, x0, dx, equalizerCoefficients, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::IDPDFetchEqualizerCoefficientsInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 equalizerCoefficients[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.IDPDFetchEqualizerCoefficientsInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDFetchEqualizerCoefficients.");
+  }
+  return function_pointers_.IDPDFetchEqualizerCoefficientsInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerCoefficients), arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::IDPDFetchEqualizerCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 equalizerCoefficientsI[], float32 equalizerCoefficientsQ[], int32 arraySize, int32* actualArraySize)
@@ -2290,6 +2475,14 @@ int32 NiRFmxSpecAnLibrary::IDPDFetchPredistortedWaveform(niRFmxInstrHandle instr
   return function_pointers_.IDPDFetchPredistortedWaveform(instrumentHandle, selectorString, timeout, x0, dx, predistortedWaveform, papr, powerOffset, gain, arraySize, actualArraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::IDPDFetchPredistortedWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 predistortedWaveform[], float64* papr, float64* powerOffset, float64* gain, int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.IDPDFetchPredistortedWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDFetchPredistortedWaveform.");
+  }
+  return function_pointers_.IDPDFetchPredistortedWaveformInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(predistortedWaveform), papr, powerOffset, gain, arraySize, actualArraySize);
+}
+
 int32 NiRFmxSpecAnLibrary::IDPDFetchPredistortedWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 predistortedWaveformI[], float32 predistortedWaveformQ[], float64* papr, float64* powerOffset, float64* gain, int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.IDPDFetchPredistortedWaveformSplit) {
@@ -2304,6 +2497,14 @@ int32 NiRFmxSpecAnLibrary::IDPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHan
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveform.");
   }
   return function_pointers_.IDPDFetchProcessedMeanAcquiredWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedMeanAcquiredWaveform, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveform.");
+  }
+  return function_pointers_.IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform), arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::IDPDFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveformI[], float32 processedMeanAcquiredWaveformQ[], int32 arraySize, int32* actualArraySize)
@@ -2322,6 +2523,14 @@ int32 NiRFmxSpecAnLibrary::IDPDFetchProcessedReferenceWaveform(niRFmxInstrHandle
   return function_pointers_.IDPDFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
 }
 
+int32 NiRFmxSpecAnLibrary::IDPDFetchProcessedReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.IDPDFetchProcessedReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDFetchProcessedReferenceWaveform.");
+  }
+  return function_pointers_.IDPDFetchProcessedReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform), arraySize, actualArraySize);
+}
+
 int32 NiRFmxSpecAnLibrary::IDPDFetchProcessedReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveformI[], float32 processedReferenceWaveformQ[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.IDPDFetchProcessedReferenceWaveformSplit) {
@@ -2336,6 +2545,14 @@ int32 NiRFmxSpecAnLibrary::IDPDGetEqualizerReferenceWaveform(niRFmxInstrHandle i
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDGetEqualizerReferenceWaveform.");
   }
   return function_pointers_.IDPDGetEqualizerReferenceWaveform(instrumentHandle, selectorString, x0, dx, equalizerReferenceWaveform, papr, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::IDPDGetEqualizerReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* x0, float64* dx, float32 equalizerReferenceWaveform[], float64* papr, int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.IDPDGetEqualizerReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDGetEqualizerReferenceWaveform.");
+  }
+  return function_pointers_.IDPDGetEqualizerReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerReferenceWaveform), papr, arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::IDPDGetEqualizerReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* x0, float64* dx, float32 equalizerReferenceWaveformI[], float32 equalizerReferenceWaveformQ[], float64* papr, int32 arraySize, int32* actualArraySize)
@@ -2504,6 +2721,14 @@ int32 NiRFmxSpecAnLibrary::IQFetchData(niRFmxInstrHandle instrumentHandle, char 
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQFetchData.");
   }
   return function_pointers_.IQFetchData(instrumentHandle, selectorString, timeout, recordToFetch, samplesToRead, t0, dt, data, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnLibrary::IQFetchDataInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, float64* t0, float64* dt, float32 data[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.IQFetchDataInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQFetchData.");
+  }
+  return function_pointers_.IQFetchDataInterleavedIQ(instrumentHandle, selectorString, timeout, recordToFetch, samplesToRead, t0, dt, reinterpret_cast<NIComplexSingle*>(data), arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, float64* t0, float64* dt, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize)

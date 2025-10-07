@@ -899,6 +899,38 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::AnalyzeIQ1WaveformInterleavedIQ(::grpc::ServerContext* context, const AnalyzeIQ1WaveformInterleavedIQRequest* request, AnalyzeIQ1WaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto iq = const_cast<float32*>(request->iq().data());
+      int32 array_size = static_cast<int32>(request->iq().size());
+      int32 reset = request->reset();
+      auto reserved = 0;
+      auto status = library_->AnalyzeIQ1WaveformInterleavedIQ(instrument, selector_string, result_name, x0, dx, iq, array_size, reset, reserved);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5261,6 +5293,47 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchCSRSConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchCSRSConstellationInterleavedIQRequest* request, ModAccFetchCSRSConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchCSRSConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_csrs_constellation()->Resize(actual_array_size * 2, 0);
+        float32* csrs_constellation = response->mutable_csrs_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchCSRSConstellationInterleavedIQ(instrument, selector_string, timeout, csrs_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_csrs_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::ModAccFetchCSRSConstellationSplit(::grpc::ServerContext* context, const ModAccFetchCSRSConstellationSplitRequest* request, ModAccFetchCSRSConstellationSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5664,6 +5737,47 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPBCHConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchDownlinkPBCHConstellationInterleavedIQRequest* request, ModAccFetchDownlinkPBCHConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkPBCHConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_pbch_constellation()->Resize(actual_array_size * 2, 0);
+        float32* pbch_constellation = response->mutable_pbch_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkPBCHConstellationInterleavedIQ(instrument, selector_string, timeout, pbch_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_pbch_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPBCHConstellationSplit(::grpc::ServerContext* context, const ModAccFetchDownlinkPBCHConstellationSplitRequest* request, ModAccFetchDownlinkPBCHConstellationSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5745,6 +5859,47 @@ namespace nirfmxlte_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPCFICHConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchDownlinkPCFICHConstellationInterleavedIQRequest* request, ModAccFetchDownlinkPCFICHConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkPCFICHConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_pcfich_constellation()->Resize(actual_array_size * 2, 0);
+        float32* pcfich_constellation = response->mutable_pcfich_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkPCFICHConstellationInterleavedIQ(instrument, selector_string, timeout, pcfich_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_pcfich_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -5846,6 +6001,47 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPDCCHConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchDownlinkPDCCHConstellationInterleavedIQRequest* request, ModAccFetchDownlinkPDCCHConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkPDCCHConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_pdcch_constellation()->Resize(actual_array_size * 2, 0);
+        float32* pdcch_constellation = response->mutable_pdcch_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkPDCCHConstellationInterleavedIQ(instrument, selector_string, timeout, pdcch_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_pdcch_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPDCCHConstellationSplit(::grpc::ServerContext* context, const ModAccFetchDownlinkPDCCHConstellationSplitRequest* request, ModAccFetchDownlinkPDCCHConstellationSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5927,6 +6123,47 @@ namespace nirfmxlte_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchDownlinkPHICHConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchDownlinkPHICHConstellationInterleavedIQRequest* request, ModAccFetchDownlinkPHICHConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchDownlinkPHICHConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_phich_constellation()->Resize(actual_array_size * 2, 0);
+        float32* phich_constellation = response->mutable_phich_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchDownlinkPHICHConstellationInterleavedIQ(instrument, selector_string, timeout, phich_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_phich_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -6896,6 +7133,53 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchNBSynchronizationSignalConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchNBSynchronizationSignalConstellationInterleavedIQRequest* request, ModAccFetchNBSynchronizationSignalConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 nsss_constellation_actual_array_size {};
+      int32 npss_constellation_actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchNBSynchronizationSignalConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &nsss_constellation_actual_array_size, nullptr, 0, &npss_constellation_actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_nsss_constellation()->Resize(nsss_constellation_actual_array_size * 2, 0);
+        float32* nsss_constellation = response->mutable_nsss_constellation()->mutable_data();
+        response->mutable_npss_constellation()->Resize(npss_constellation_actual_array_size * 2, 0);
+        float32* npss_constellation = response->mutable_npss_constellation()->mutable_data();
+        auto npss_constellation_array_size = npss_constellation_actual_array_size;
+        auto nsss_constellation_array_size = nsss_constellation_actual_array_size;
+        status = library_->ModAccFetchNBSynchronizationSignalConstellationInterleavedIQ(instrument, selector_string, timeout, nsss_constellation, nsss_constellation_array_size, &nsss_constellation_actual_array_size, npss_constellation, npss_constellation_array_size, &npss_constellation_actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_nsss_constellation()->Resize(nsss_constellation_actual_array_size * 2, 0);
+        response->set_nsss_constellation_actual_array_size(nsss_constellation_actual_array_size * 2);
+        response->mutable_npss_constellation()->Resize(npss_constellation_actual_array_size * 2, 0);
+        response->set_npss_constellation_actual_array_size(npss_constellation_actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::ModAccFetchNBSynchronizationSignalConstellationSplit(::grpc::ServerContext* context, const ModAccFetchNBSynchronizationSignalConstellationSplitRequest* request, ModAccFetchNBSynchronizationSignalConstellationSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -6986,6 +7270,47 @@ namespace nirfmxlte_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchNPDSCHQPSKConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchNPDSCHQPSKConstellationInterleavedIQRequest* request, ModAccFetchNPDSCHQPSKConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchNPDSCHQPSKConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_qpsk_constellation()->Resize(actual_array_size * 2, 0);
+        float32* qpsk_constellation = response->mutable_qpsk_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchNPDSCHQPSKConstellationInterleavedIQ(instrument, selector_string, timeout, qpsk_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_qpsk_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -7089,6 +7414,53 @@ namespace nirfmxlte_grpc {
           }
         }
         response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchNPUSCHConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchNPUSCHConstellationTraceInterleavedIQRequest* request, ModAccFetchNPUSCHConstellationTraceInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 data_constellation_actual_array_size {};
+      int32 dmrs_constellation_actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchNPUSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &data_constellation_actual_array_size, nullptr, 0, &dmrs_constellation_actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_data_constellation()->Resize(data_constellation_actual_array_size * 2, 0);
+        float32* data_constellation = response->mutable_data_constellation()->mutable_data();
+        response->mutable_dmrs_constellation()->Resize(dmrs_constellation_actual_array_size * 2, 0);
+        float32* dmrs_constellation = response->mutable_dmrs_constellation()->mutable_data();
+        auto data_constellation_array_size = data_constellation_actual_array_size;
+        auto dmrs_constellation_array_size = dmrs_constellation_actual_array_size;
+        status = library_->ModAccFetchNPUSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, data_constellation, data_constellation_array_size, &data_constellation_actual_array_size, dmrs_constellation, dmrs_constellation_array_size, &dmrs_constellation_actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_data_constellation()->Resize(data_constellation_actual_array_size * 2, 0);
+        response->set_data_constellation_actual_array_size(data_constellation_actual_array_size * 2);
+        response->mutable_dmrs_constellation()->Resize(dmrs_constellation_actual_array_size * 2, 0);
+        response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -7286,6 +7658,47 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchNRSConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchNRSConstellationInterleavedIQRequest* request, ModAccFetchNRSConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchNRSConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_nrs_constellation()->Resize(actual_array_size * 2, 0);
+        float32* nrs_constellation = response->mutable_nrs_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchNRSConstellationInterleavedIQ(instrument, selector_string, timeout, nrs_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_nrs_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::ModAccFetchNRSConstellationSplit(::grpc::ServerContext* context, const ModAccFetchNRSConstellationSplitRequest* request, ModAccFetchNRSConstellationSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -7367,6 +7780,47 @@ namespace nirfmxlte_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH1024QAMConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchPDSCH1024QAMConstellationInterleavedIQRequest* request, ModAccFetchPDSCH1024QAMConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCH1024QAMConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_qam1024_constellation()->Resize(actual_array_size * 2, 0);
+        float32* qam1024_constellation = response->mutable_qam1024_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCH1024QAMConstellationInterleavedIQ(instrument, selector_string, timeout, qam1024_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_qam1024_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -7536,6 +7990,47 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH16QAMConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchPDSCH16QAMConstellationInterleavedIQRequest* request, ModAccFetchPDSCH16QAMConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCH16QAMConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_qam16_constellation()->Resize(actual_array_size * 2, 0);
+        float32* qam16_constellation = response->mutable_qam16_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCH16QAMConstellationInterleavedIQ(instrument, selector_string, timeout, qam16_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_qam16_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH16QAMConstellationSplit(::grpc::ServerContext* context, const ModAccFetchPDSCH16QAMConstellationSplitRequest* request, ModAccFetchPDSCH16QAMConstellationSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -7627,6 +8122,47 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH256QAMConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchPDSCH256QAMConstellationInterleavedIQRequest* request, ModAccFetchPDSCH256QAMConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCH256QAMConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_qam256_constellation()->Resize(actual_array_size * 2, 0);
+        float32* qam256_constellation = response->mutable_qam256_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCH256QAMConstellationInterleavedIQ(instrument, selector_string, timeout, qam256_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_qam256_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH256QAMConstellationSplit(::grpc::ServerContext* context, const ModAccFetchPDSCH256QAMConstellationSplitRequest* request, ModAccFetchPDSCH256QAMConstellationSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -7708,6 +8244,47 @@ namespace nirfmxlte_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCH64QAMConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchPDSCH64QAMConstellationInterleavedIQRequest* request, ModAccFetchPDSCH64QAMConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCH64QAMConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_qam64_constellation()->Resize(actual_array_size * 2, 0);
+        float32* qam64_constellation = response->mutable_qam64_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCH64QAMConstellationInterleavedIQ(instrument, selector_string, timeout, qam64_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_qam64_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -7897,6 +8474,47 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCHQPSKConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchPDSCHQPSKConstellationInterleavedIQRequest* request, ModAccFetchPDSCHQPSKConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPDSCHQPSKConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_qpsk_constellation()->Resize(actual_array_size * 2, 0);
+        float32* qpsk_constellation = response->mutable_qpsk_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPDSCHQPSKConstellationInterleavedIQ(instrument, selector_string, timeout, qpsk_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_qpsk_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::ModAccFetchPDSCHQPSKConstellationSplit(::grpc::ServerContext* context, const ModAccFetchPDSCHQPSKConstellationSplitRequest* request, ModAccFetchPDSCHQPSKConstellationSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -7990,6 +8608,50 @@ namespace nirfmxlte_grpc {
           }
         }
         response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPSSCHConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchPSSCHConstellationTraceInterleavedIQRequest* request, ModAccFetchPSSCHConstellationTraceInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPSSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_data_constellation()->Resize(actual_array_size * 2, 0);
+        float32* data_constellation = response->mutable_data_constellation()->mutable_data();
+        response->mutable_dmrs_constellation()->Resize(actual_array_size * 2, 0);
+        float32* dmrs_constellation = response->mutable_dmrs_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchPSSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, data_constellation, dmrs_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_data_constellation()->Resize(actual_array_size * 2, 0);
+        response->mutable_dmrs_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -8321,6 +8983,53 @@ namespace nirfmxlte_grpc {
           }
         }
         response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchPUSCHConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchPUSCHConstellationTraceInterleavedIQRequest* request, ModAccFetchPUSCHConstellationTraceInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 data_constellation_actual_array_size {};
+      int32 dmrs_constellation_actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchPUSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &data_constellation_actual_array_size, nullptr, 0, &dmrs_constellation_actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_data_constellation()->Resize(data_constellation_actual_array_size * 2, 0);
+        float32* data_constellation = response->mutable_data_constellation()->mutable_data();
+        response->mutable_dmrs_constellation()->Resize(dmrs_constellation_actual_array_size * 2, 0);
+        float32* dmrs_constellation = response->mutable_dmrs_constellation()->mutable_data();
+        auto data_constellation_array_size = data_constellation_actual_array_size;
+        auto dmrs_constellation_array_size = dmrs_constellation_actual_array_size;
+        status = library_->ModAccFetchPUSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, data_constellation, data_constellation_array_size, &data_constellation_actual_array_size, dmrs_constellation, dmrs_constellation_array_size, &dmrs_constellation_actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_data_constellation()->Resize(data_constellation_actual_array_size * 2, 0);
+        response->set_data_constellation_actual_array_size(data_constellation_actual_array_size * 2);
+        response->mutable_dmrs_constellation()->Resize(dmrs_constellation_actual_array_size * 2, 0);
+        response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -8789,6 +9498,47 @@ namespace nirfmxlte_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSRSConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchSRSConstellationInterleavedIQRequest* request, ModAccFetchSRSConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchSRSConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_srs_constellation()->Resize(actual_array_size * 2, 0);
+        float32* srs_constellation = response->mutable_srs_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchSRSConstellationInterleavedIQ(instrument, selector_string, timeout, srs_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_srs_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxLTEService::ModAccFetchSRSConstellationSplit(::grpc::ServerContext* context, const ModAccFetchSRSConstellationSplitRequest* request, ModAccFetchSRSConstellationSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -9191,6 +9941,50 @@ namespace nirfmxlte_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxLTEService::ModAccFetchSynchronizationSignalConstellationInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchSynchronizationSignalConstellationInterleavedIQRequest* request, ModAccFetchSynchronizationSignalConstellationInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->ModAccFetchSynchronizationSignalConstellationInterleavedIQ(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_sss_constellation()->Resize(actual_array_size * 2, 0);
+        float32* sss_constellation = response->mutable_sss_constellation()->mutable_data();
+        response->mutable_pss_constellation()->Resize(actual_array_size * 2, 0);
+        float32* pss_constellation = response->mutable_pss_constellation()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->ModAccFetchSynchronizationSignalConstellationInterleavedIQ(instrument, selector_string, timeout, sss_constellation, pss_constellation, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_sss_constellation()->Resize(actual_array_size * 2, 0);
+        response->mutable_pss_constellation()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }

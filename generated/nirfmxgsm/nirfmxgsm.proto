@@ -19,6 +19,7 @@ import "session.proto";
 service NiRFmxGSM {
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformInterleavedIQ(AnalyzeIQ1WaveformInterleavedIQRequest) returns (AnalyzeIQ1WaveformInterleavedIQResponse);
   rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildOffsetString(BuildOffsetStringRequest) returns (BuildOffsetStringResponse);
@@ -81,6 +82,7 @@ service NiRFmxGSM {
   rpc ModAccCfgAveraging(ModAccCfgAveragingRequest) returns (ModAccCfgAveragingResponse);
   rpc ModAccCfgDroopCompensationEnabled(ModAccCfgDroopCompensationEnabledRequest) returns (ModAccCfgDroopCompensationEnabledResponse);
   rpc ModAccFetchConstellationTrace(ModAccFetchConstellationTraceRequest) returns (ModAccFetchConstellationTraceResponse);
+  rpc ModAccFetchConstellationTraceInterleavedIQ(ModAccFetchConstellationTraceInterleavedIQRequest) returns (ModAccFetchConstellationTraceInterleavedIQResponse);
   rpc ModAccFetchConstellationTraceSplit(ModAccFetchConstellationTraceSplitRequest) returns (ModAccFetchConstellationTraceSplitResponse);
   rpc ModAccFetchDemodulatedBits(ModAccFetchDemodulatedBitsRequest) returns (ModAccFetchDemodulatedBitsResponse);
   rpc ModAccFetchDetectedTSC(ModAccFetchDetectedTSCRequest) returns (ModAccFetchDetectedTSCResponse);
@@ -597,6 +599,20 @@ message AnalyzeIQ1WaveformRequest {
 }
 
 message AnalyzeIQ1WaveformResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQResponse {
   int32 status = 1;
 }
 
@@ -1341,6 +1357,18 @@ message ModAccFetchConstellationTraceRequest {
 message ModAccFetchConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 constellation_trace = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float constellation_trace = 2;
   int32 actual_array_size = 3;
 }
 

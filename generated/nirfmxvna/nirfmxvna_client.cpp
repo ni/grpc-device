@@ -928,6 +928,24 @@ calkit_manager_calkit_calibration_element_s_parameter_get_s11(const StubPtr& stu
   return response;
 }
 
+CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_s11_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CalkitManagerCalkitCalibrationElementSParameterGetS11SplitResponse
 calkit_manager_calkit_calibration_element_s_parameter_get_s11_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
@@ -959,6 +977,24 @@ calkit_manager_calkit_calibration_element_s_parameter_get_s12(const StubPtr& stu
 
   raise_if_error(
       stub->CalkitManagerCalkitCalibrationElementSParameterGetS12(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_s12_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -1000,6 +1036,24 @@ calkit_manager_calkit_calibration_element_s_parameter_get_s21(const StubPtr& stu
   return response;
 }
 
+CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_s21_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CalkitManagerCalkitCalibrationElementSParameterGetS21SplitResponse
 calkit_manager_calkit_calibration_element_s_parameter_get_s21_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
@@ -1031,6 +1085,24 @@ calkit_manager_calkit_calibration_element_s_parameter_get_s22(const StubPtr& stu
 
   raise_if_error(
       stub->CalkitManagerCalkitCalibrationElementSParameterGetS22(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQResponse
+calkit_manager_calkit_calibration_element_s_parameter_get_s22_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -1960,6 +2032,35 @@ calset_get_error_term(const StubPtr& stub, const nidevice_grpc::Session& instrum
 
   raise_if_error(
       stub->CalsetGetErrorTerm(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalsetGetErrorTermInterleavedIQResponse
+calset_get_error_term_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& calset_name, const simple_variant<CalErrorTerm, pb::int32>& error_term_identifier, const std::string& measurement_port, const std::string& source_port)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalsetGetErrorTermInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_calset_name(calset_name);
+  const auto error_term_identifier_ptr = error_term_identifier.get_if<CalErrorTerm>();
+  const auto error_term_identifier_raw_ptr = error_term_identifier.get_if<pb::int32>();
+  if (error_term_identifier_ptr) {
+    request.set_error_term_identifier(*error_term_identifier_ptr);
+  }
+  else if (error_term_identifier_raw_ptr) {
+    request.set_error_term_identifier_raw(*error_term_identifier_raw_ptr);
+  }
+  request.set_measurement_port(measurement_port);
+  request.set_source_port(source_port);
+
+  auto response = CalsetGetErrorTermInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CalsetGetErrorTermInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2919,6 +3020,25 @@ iq_fetch_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, con
 
   raise_if_error(
       stub->IQFetchData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IQFetchDataInterleavedIQResponse
+iq_fetch_data_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IQFetchDataInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IQFetchDataInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IQFetchDataInterleavedIQ(&context, request, &response),
       context);
 
   return response;

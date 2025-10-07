@@ -252,6 +252,11 @@ int32 CalkitManagerCalkitCalibrationElementSParameterGetS11(niRFmxInstrHandle in
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11(instrumentHandle, selectorString, s11, arraySize, actualArraySize);
 }
 
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s11), arraySize, actualArraySize);
+}
+
 int32 CalkitManagerCalkitCalibrationElementSParameterGetS11Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11I[], float64 s11Q[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11Split(instrumentHandle, selectorString, s11I, s11Q, arraySize, actualArraySize);
@@ -260,6 +265,11 @@ int32 CalkitManagerCalkitCalibrationElementSParameterGetS11Split(niRFmxInstrHand
 int32 CalkitManagerCalkitCalibrationElementSParameterGetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12(instrumentHandle, selectorString, s12, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s12), arraySize, actualArraySize);
 }
 
 int32 CalkitManagerCalkitCalibrationElementSParameterGetS12Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12I[], float64 s12Q[], int32 arraySize, int32* actualArraySize)
@@ -272,6 +282,11 @@ int32 CalkitManagerCalkitCalibrationElementSParameterGetS21(niRFmxInstrHandle in
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21(instrumentHandle, selectorString, s21, arraySize, actualArraySize);
 }
 
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s21), arraySize, actualArraySize);
+}
+
 int32 CalkitManagerCalkitCalibrationElementSParameterGetS21Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21I[], float64 s21Q[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21Split(instrumentHandle, selectorString, s21I, s21Q, arraySize, actualArraySize);
@@ -280,6 +295,11 @@ int32 CalkitManagerCalkitCalibrationElementSParameterGetS21Split(niRFmxInstrHand
 int32 CalkitManagerCalkitCalibrationElementSParameterGetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22(instrumentHandle, selectorString, s22, arraySize, actualArraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s22), arraySize, actualArraySize);
 }
 
 int32 CalkitManagerCalkitCalibrationElementSParameterGetS22Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22I[], float64 s22Q[], int32 arraySize, int32* actualArraySize)
@@ -515,6 +535,11 @@ int32 CalsetEmbedFixtureS2p(niRFmxInstrHandle instrumentHandle, char selectorStr
 int32 CalsetGetErrorTerm(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], NIComplexSingle errorTerm[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxVNA_CalsetGetErrorTerm(instrumentHandle, selectorString, calsetName, errorTermIdentifier, measurementPort, sourcePort, errorTerm, arraySize, actualArraySize);
+}
+
+int32 CalsetGetErrorTermInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], float32 errorTerm[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_CalsetGetErrorTerm(instrumentHandle, selectorString, calsetName, errorTermIdentifier, measurementPort, sourcePort, reinterpret_cast<NIComplexSingle*>(errorTerm), arraySize, actualArraySize);
 }
 
 int32 CalsetGetErrorTermSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], float32 errorTermI[], float32 errorTermQ[], int32 arraySize, int32* actualArraySize)
@@ -760,6 +785,11 @@ int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selecto
 int32 IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxVNA_IQFetchData(instrumentHandle, selectorString, timeout, x0, dx, data, arraySize, actualArraySize);
+}
+
+int32 IQFetchDataInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 data[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxVNA_IQFetchData(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(data), arraySize, actualArraySize);
 }
 
 int32 IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize)

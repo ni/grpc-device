@@ -92,6 +92,11 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxWCDMA_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxWCDMA_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+}
+
 int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
 {
   return RFmxWCDMA_AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
@@ -527,6 +532,11 @@ int32 ModAccCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char select
   return RFmxWCDMA_ModAccCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize);
 }
 
+int32 ModAccCfgReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize)
+{
+  return RFmxWCDMA_ModAccCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize/2);
+}
+
 int32 ModAccCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize)
 {
   return RFmxWCDMA_ModAccCfgReferenceWaveformSplit(instrumentHandle, selectorString, x0, dx, referenceWaveformI, referenceWaveformQ, arraySize);
@@ -540,6 +550,11 @@ int32 ModAccCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle
 int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxWCDMA_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(constellation), arraySize, actualArraySize);
 }
 
 int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)
@@ -647,6 +662,11 @@ int32 ModAccFetchReferenceWaveform(niRFmxInstrHandle instrumentHandle, char sele
   return RFmxWCDMA_ModAccFetchReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, referenceWaveform, arraySize, actualArraySize);
 }
 
+int32 ModAccFetchReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 referenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_ModAccFetchReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize, actualArraySize);
+}
+
 int32 ModAccFetchReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxWCDMA_ModAccFetchReferenceWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, referenceWaveformI, referenceWaveformQ, arraySize, actualArraySize);
@@ -690,6 +710,11 @@ int32 QEVMCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selector
 int32 QEVMFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxWCDMA_QEVMFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 QEVMFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWCDMA_QEVMFetchConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(constellation), arraySize, actualArraySize);
 }
 
 int32 QEVMFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)

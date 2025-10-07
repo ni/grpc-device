@@ -19,13 +19,16 @@ import "session.proto";
 service NiRFmxWLAN {
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformInterleavedIQ(AnalyzeIQ1WaveformInterleavedIQRequest) returns (AnalyzeIQ1WaveformInterleavedIQResponse);
   rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AnalyzeNWaveformsIQ(AnalyzeNWaveformsIQRequest) returns (AnalyzeNWaveformsIQResponse);
+  rpc AnalyzeNWaveformsIQInterleavedIQ(AnalyzeNWaveformsIQInterleavedIQRequest) returns (AnalyzeNWaveformsIQInterleavedIQResponse);
   rpc AnalyzeNWaveformsIQSplit(AnalyzeNWaveformsIQSplitRequest) returns (AnalyzeNWaveformsIQSplitResponse);
   rpc AnalyzeNWaveformsSpectrum(AnalyzeNWaveformsSpectrumRequest) returns (AnalyzeNWaveformsSpectrumResponse);
   rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
   rpc AutoDetectSignal(AutoDetectSignalRequest) returns (AutoDetectSignalResponse);
   rpc AutoDetectSignalAnalysisOnly(AutoDetectSignalAnalysisOnlyRequest) returns (AutoDetectSignalAnalysisOnlyResponse);
+  rpc AutoDetectSignalAnalysisOnlyInterleavedIQ(AutoDetectSignalAnalysisOnlyInterleavedIQRequest) returns (AutoDetectSignalAnalysisOnlyInterleavedIQResponse);
   rpc AutoDetectSignalAnalysisOnlySplit(AutoDetectSignalAnalysisOnlySplitRequest) returns (AutoDetectSignalAnalysisOnlySplitResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildChainString(BuildChainStringRequest) returns (BuildChainStringResponse);
@@ -65,6 +68,7 @@ service NiRFmxWLAN {
   rpc DSSSModAccCfgPowerMeasurementNumberOfCustomGates(DSSSModAccCfgPowerMeasurementNumberOfCustomGatesRequest) returns (DSSSModAccCfgPowerMeasurementNumberOfCustomGatesResponse);
   rpc DSSSModAccFetchAveragePowers(DSSSModAccFetchAveragePowersRequest) returns (DSSSModAccFetchAveragePowersResponse);
   rpc DSSSModAccFetchConstellationTrace(DSSSModAccFetchConstellationTraceRequest) returns (DSSSModAccFetchConstellationTraceResponse);
+  rpc DSSSModAccFetchConstellationTraceInterleavedIQ(DSSSModAccFetchConstellationTraceInterleavedIQRequest) returns (DSSSModAccFetchConstellationTraceInterleavedIQResponse);
   rpc DSSSModAccFetchConstellationTraceSplit(DSSSModAccFetchConstellationTraceSplitRequest) returns (DSSSModAccFetchConstellationTraceSplitResponse);
   rpc DSSSModAccFetchCustomGatePowersArray(DSSSModAccFetchCustomGatePowersArrayRequest) returns (DSSSModAccFetchCustomGatePowersArrayResponse);
   rpc DSSSModAccFetchDecodedHeaderBitsTrace(DSSSModAccFetchDecodedHeaderBitsTraceRequest) returns (DSSSModAccFetchDecodedHeaderBitsTraceResponse);
@@ -104,6 +108,7 @@ service NiRFmxWLAN {
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc OFDMModAccAutoLevel(OFDMModAccAutoLevelRequest) returns (OFDMModAccAutoLevelResponse);
   rpc OFDMModAccCfg1ReferenceWaveform(OFDMModAccCfg1ReferenceWaveformRequest) returns (OFDMModAccCfg1ReferenceWaveformResponse);
+  rpc OFDMModAccCfg1ReferenceWaveformInterleavedIQ(OFDMModAccCfg1ReferenceWaveformInterleavedIQRequest) returns (OFDMModAccCfg1ReferenceWaveformInterleavedIQResponse);
   rpc OFDMModAccCfg1ReferenceWaveformSplit(OFDMModAccCfg1ReferenceWaveformSplitRequest) returns (OFDMModAccCfg1ReferenceWaveformSplitResponse);
   rpc OFDMModAccCfgAcquisitionLength(OFDMModAccCfgAcquisitionLengthRequest) returns (OFDMModAccCfgAcquisitionLengthResponse);
   rpc OFDMModAccCfgAmplitudeTrackingEnabled(OFDMModAccCfgAmplitudeTrackingEnabledRequest) returns (OFDMModAccCfgAmplitudeTrackingEnabledResponse);
@@ -115,6 +120,7 @@ service NiRFmxWLAN {
   rpc OFDMModAccCfgMeasurementLength(OFDMModAccCfgMeasurementLengthRequest) returns (OFDMModAccCfgMeasurementLengthResponse);
   rpc OFDMModAccCfgMeasurementMode(OFDMModAccCfgMeasurementModeRequest) returns (OFDMModAccCfgMeasurementModeResponse);
   rpc OFDMModAccCfgNReferenceWaveforms(OFDMModAccCfgNReferenceWaveformsRequest) returns (OFDMModAccCfgNReferenceWaveformsResponse);
+  rpc OFDMModAccCfgNReferenceWaveformsInterleavedIQ(OFDMModAccCfgNReferenceWaveformsInterleavedIQRequest) returns (OFDMModAccCfgNReferenceWaveformsInterleavedIQResponse);
   rpc OFDMModAccCfgNReferenceWaveformsSplit(OFDMModAccCfgNReferenceWaveformsSplitRequest) returns (OFDMModAccCfgNReferenceWaveformsSplitResponse);
   rpc OFDMModAccCfgNoiseCompensationEnabled(OFDMModAccCfgNoiseCompensationEnabledRequest) returns (OFDMModAccCfgNoiseCompensationEnabledResponse);
   rpc OFDMModAccCfgOptimizeDynamicRangeForEVM(OFDMModAccCfgOptimizeDynamicRangeForEVMRequest) returns (OFDMModAccCfgOptimizeDynamicRangeForEVMResponse);
@@ -133,6 +139,7 @@ service NiRFmxWLAN {
   rpc OFDMModAccFetchCustomGatePowersArray(OFDMModAccFetchCustomGatePowersArrayRequest) returns (OFDMModAccFetchCustomGatePowersArrayResponse);
   rpc OFDMModAccFetchDataAveragePower(OFDMModAccFetchDataAveragePowerRequest) returns (OFDMModAccFetchDataAveragePowerResponse);
   rpc OFDMModAccFetchDataConstellationTrace(OFDMModAccFetchDataConstellationTraceRequest) returns (OFDMModAccFetchDataConstellationTraceResponse);
+  rpc OFDMModAccFetchDataConstellationTraceInterleavedIQ(OFDMModAccFetchDataConstellationTraceInterleavedIQRequest) returns (OFDMModAccFetchDataConstellationTraceInterleavedIQResponse);
   rpc OFDMModAccFetchDataConstellationTraceSplit(OFDMModAccFetchDataConstellationTraceSplitRequest) returns (OFDMModAccFetchDataConstellationTraceSplitResponse);
   rpc OFDMModAccFetchDataPeakPower(OFDMModAccFetchDataPeakPowerRequest) returns (OFDMModAccFetchDataPeakPowerResponse);
   rpc OFDMModAccFetchDecodedEHTSIGBitsTrace(OFDMModAccFetchDecodedEHTSIGBitsTraceRequest) returns (OFDMModAccFetchDecodedEHTSIGBitsTraceResponse);
@@ -166,6 +173,7 @@ service NiRFmxWLAN {
   rpc OFDMModAccFetchPSDUCRCStatus(OFDMModAccFetchPSDUCRCStatusRequest) returns (OFDMModAccFetchPSDUCRCStatusResponse);
   rpc OFDMModAccFetchPhaseNoisePSDMeanTrace(OFDMModAccFetchPhaseNoisePSDMeanTraceRequest) returns (OFDMModAccFetchPhaseNoisePSDMeanTraceResponse);
   rpc OFDMModAccFetchPilotConstellationTrace(OFDMModAccFetchPilotConstellationTraceRequest) returns (OFDMModAccFetchPilotConstellationTraceResponse);
+  rpc OFDMModAccFetchPilotConstellationTraceInterleavedIQ(OFDMModAccFetchPilotConstellationTraceInterleavedIQRequest) returns (OFDMModAccFetchPilotConstellationTraceInterleavedIQResponse);
   rpc OFDMModAccFetchPilotConstellationTraceSplit(OFDMModAccFetchPilotConstellationTraceSplitRequest) returns (OFDMModAccFetchPilotConstellationTraceSplitResponse);
   rpc OFDMModAccFetchPreambleAveragePowers80211ac(OFDMModAccFetchPreambleAveragePowers80211acRequest) returns (OFDMModAccFetchPreambleAveragePowers80211acResponse);
   rpc OFDMModAccFetchPreambleAveragePowers80211ax(OFDMModAccFetchPreambleAveragePowers80211axRequest) returns (OFDMModAccFetchPreambleAveragePowers80211axResponse);
@@ -179,6 +187,7 @@ service NiRFmxWLAN {
   rpc OFDMModAccFetchPreamblePeakPowers80211n(OFDMModAccFetchPreamblePeakPowers80211nRequest) returns (OFDMModAccFetchPreamblePeakPowers80211nResponse);
   rpc OFDMModAccFetchPreamblePeakPowersCommon(OFDMModAccFetchPreamblePeakPowersCommonRequest) returns (OFDMModAccFetchPreamblePeakPowersCommonResponse);
   rpc OFDMModAccFetchRUOffsetAndSize(OFDMModAccFetchRUOffsetAndSizeRequest) returns (OFDMModAccFetchRUOffsetAndSizeResponse);
+  rpc OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ(OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQRequest) returns (OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQResponse);
   rpc OFDMModAccFetchReferenceDataConstellationTraceSplit(OFDMModAccFetchReferenceDataConstellationTraceSplitRequest) returns (OFDMModAccFetchReferenceDataConstellationTraceSplitResponse);
   rpc OFDMModAccFetchSIGBCRCStatus(OFDMModAccFetchSIGBCRCStatusRequest) returns (OFDMModAccFetchSIGBCRCStatusResponse);
   rpc OFDMModAccFetchSIGCRCStatus(OFDMModAccFetchSIGCRCStatusRequest) returns (OFDMModAccFetchSIGCRCStatusResponse);
@@ -198,8 +207,10 @@ service NiRFmxWLAN {
   rpc OFDMModAccFetchUnusedToneErrorMarginPerRU(OFDMModAccFetchUnusedToneErrorMarginPerRURequest) returns (OFDMModAccFetchUnusedToneErrorMarginPerRUResponse);
   rpc OFDMModAccFetchUnusedToneErrorMeanTrace(OFDMModAccFetchUnusedToneErrorMeanTraceRequest) returns (OFDMModAccFetchUnusedToneErrorMeanTraceResponse);
   rpc OFDMModAccFetchUserDataConstellationTrace(OFDMModAccFetchUserDataConstellationTraceRequest) returns (OFDMModAccFetchUserDataConstellationTraceResponse);
+  rpc OFDMModAccFetchUserDataConstellationTraceInterleavedIQ(OFDMModAccFetchUserDataConstellationTraceInterleavedIQRequest) returns (OFDMModAccFetchUserDataConstellationTraceInterleavedIQResponse);
   rpc OFDMModAccFetchUserDataConstellationTraceSplit(OFDMModAccFetchUserDataConstellationTraceSplitRequest) returns (OFDMModAccFetchUserDataConstellationTraceSplitResponse);
   rpc OFDMModAccFetchUserPilotConstellationTrace(OFDMModAccFetchUserPilotConstellationTraceRequest) returns (OFDMModAccFetchUserPilotConstellationTraceResponse);
+  rpc OFDMModAccFetchUserPilotConstellationTraceInterleavedIQ(OFDMModAccFetchUserPilotConstellationTraceInterleavedIQRequest) returns (OFDMModAccFetchUserPilotConstellationTraceInterleavedIQResponse);
   rpc OFDMModAccFetchUserPilotConstellationTraceSplit(OFDMModAccFetchUserPilotConstellationTraceSplitRequest) returns (OFDMModAccFetchUserPilotConstellationTraceSplitResponse);
   rpc OFDMModAccFetchUserPower(OFDMModAccFetchUserPowerRequest) returns (OFDMModAccFetchUserPowerResponse);
   rpc OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceRequest) returns (OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceResponse);
@@ -1238,6 +1249,20 @@ message AnalyzeIQ1WaveformResponse {
   int32 status = 1;
 }
 
+message AnalyzeIQ1WaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message AnalyzeIQ1WaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1265,6 +1290,21 @@ message AnalyzeNWaveformsIQRequest {
 }
 
 message AnalyzeNWaveformsIQResponse {
+  int32 status = 1;
+}
+
+message AnalyzeNWaveformsIQInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  repeated double x0 = 4;
+  repeated double dx = 5;
+  repeated float iq = 6;
+  repeated int32 iq_sizes = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeNWaveformsIQInterleavedIQResponse {
   int32 status = 1;
 }
 
@@ -1332,6 +1372,18 @@ message AutoDetectSignalAnalysisOnlyRequest {
 }
 
 message AutoDetectSignalAnalysisOnlyResponse {
+  int32 status = 1;
+}
+
+message AutoDetectSignalAnalysisOnlyInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float iq = 5;
+}
+
+message AutoDetectSignalAnalysisOnlyInterleavedIQResponse {
   int32 status = 1;
 }
 
@@ -1781,6 +1833,18 @@ message DSSSModAccFetchConstellationTraceRequest {
 message DSSSModAccFetchConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message DSSSModAccFetchConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DSSSModAccFetchConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float constellation = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2254,6 +2318,18 @@ message OFDMModAccCfg1ReferenceWaveformResponse {
   int32 status = 1;
 }
 
+message OFDMModAccCfg1ReferenceWaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float reference_waveform = 5;
+}
+
+message OFDMModAccCfg1ReferenceWaveformInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message OFDMModAccCfg1ReferenceWaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2394,6 +2470,19 @@ message OFDMModAccCfgNReferenceWaveformsRequest {
 }
 
 message OFDMModAccCfgNReferenceWaveformsResponse {
+  int32 status = 1;
+}
+
+message OFDMModAccCfgNReferenceWaveformsInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double x0 = 3;
+  repeated double dx = 4;
+  repeated float reference_waveform = 5;
+  repeated int32 reference_waveform_sizes = 6;
+}
+
+message OFDMModAccCfgNReferenceWaveformsInterleavedIQResponse {
   int32 status = 1;
 }
 
@@ -2628,6 +2717,18 @@ message OFDMModAccFetchDataConstellationTraceRequest {
 message OFDMModAccFetchDataConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 data_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchDataConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDataConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float data_constellation = 2;
   int32 actual_array_size = 3;
 }
 
@@ -3026,6 +3127,18 @@ message OFDMModAccFetchPilotConstellationTraceResponse {
   int32 actual_array_size = 3;
 }
 
+message OFDMModAccFetchPilotConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchPilotConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float pilot_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
 message OFDMModAccFetchPilotConstellationTraceSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3205,6 +3318,18 @@ message OFDMModAccFetchRUOffsetAndSizeResponse {
   int32 status = 1;
   int32 ru_offset = 2;
   int32 ru_size = 3;
+}
+
+message OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float reference_data_constellation = 2;
+  int32 actual_array_size = 3;
 }
 
 message OFDMModAccFetchReferenceDataConstellationTraceSplitRequest {
@@ -3463,6 +3588,18 @@ message OFDMModAccFetchUserDataConstellationTraceResponse {
   int32 actual_array_size = 3;
 }
 
+message OFDMModAccFetchUserDataConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserDataConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float user_data_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
 message OFDMModAccFetchUserDataConstellationTraceSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -3485,6 +3622,18 @@ message OFDMModAccFetchUserPilotConstellationTraceRequest {
 message OFDMModAccFetchUserPilotConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 user_pilot_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchUserPilotConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchUserPilotConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float user_pilot_constellation = 2;
   int32 actual_array_size = 3;
 }
 

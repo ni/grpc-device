@@ -853,6 +853,66 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AnalyzeIQ1WaveformInterleavedIQ': {
+        'cname': 'RFmxDemod_AnalyzeIQ1Waveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'direction': 'in',
+                'name': 'iq',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reset',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AnalyzeIQ1WaveformSplit': {
         'parameters': [
             {
@@ -1551,6 +1611,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DDemodCfgEqualizerInitialCoefficientsInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodCfgEqualizerInitialCoefficients',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerInitialCoefficients)',
+                'direction': 'in',
+                'name': 'equalizerInitialCoefficients',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DDemodCfgEqualizerInitialCoefficientsSplit': {
         'parameters': [
             {
@@ -1599,6 +1702,70 @@ functions = {
                 'type': 'float32[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DDemodCfgEqualizerInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodCfgEqualizer',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DDemodEqualizerMode',
+                'name': 'equalizerMode',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'equalizerFilterLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerInitialCoefficients)',
+                'direction': 'in',
+                'name': 'equalizerInitialCoefficients',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'equalizerTrainingCount',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'equalizerConvergenceFactor',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -2086,6 +2253,45 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DDemodCfgSymbolMapInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodCfgSymbolMap',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DDemodSymbolMapType',
+                'name': 'symbolMapType',
+                'type': 'int32'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(symbolMap)',
+                'direction': 'in',
+                'name': 'symbolMap',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DDemodCfgSymbolMapSplit': {
         'parameters': [
             {
@@ -2262,6 +2468,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DDemodFetchConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodFetchConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(constellationTrace)',
+                'direction': 'out',
+                'name': 'constellationTrace',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -2504,6 +2753,59 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DDemodFetchEqualizerCoefficientsInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodFetchEqualizerCoefficients',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerCoefficients)',
+                'direction': 'out',
+                'name': 'equalizerCoefficients',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -2950,6 +3252,69 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DDemodFetchMeasurementWaveformInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodFetchMeasurementWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(measurementWaveform)',
+                'direction': 'out',
+                'name': 'measurementWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'samplesPerSymbol',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'symbolRate',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DDemodFetchMeasurementWaveformSplit': {
         'parameters': [
             {
@@ -3048,6 +3413,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DDemodFetchOffsetConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodFetchOffsetConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(offsetConstellationTrace)',
+                'direction': 'out',
+                'name': 'offsetConstellationTrace',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -3338,6 +3746,59 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DDemodFetchReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodFetchReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
+                'direction': 'out',
+                'name': 'referenceWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DDemodFetchReferenceWaveformSplit': {
         'parameters': [
             {
@@ -3471,6 +3932,54 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DDemodGetEqualizerInitialCoefficientsInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodGetEqualizerInitialCoefficients',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerInitialCoefficients)',
+                'direction': 'out',
+                'name': 'equalizerInitialCoefficients',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DDemodGetEqualizerInitialCoefficientsSplit': {
         'parameters': [
             {
@@ -3549,6 +4058,44 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DDemodGetSymbolMapInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodGetSymbolMap',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(symbolMap)',
+                'direction': 'out',
+                'name': 'symbolMap',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -3674,6 +4221,39 @@ functions = {
                 'type': 'NIComplexSingle[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DDemodSetSymbolMapInterleavedIQ': {
+        'cname': 'RFmxDemod_DDemodSetSymbolMap',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(attrVal)',
+                'direction': 'in',
+                'name': 'attrVal',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'

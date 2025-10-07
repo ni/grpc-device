@@ -31,6 +31,7 @@ service NiRFmxInstr {
   rpc CfgMechanicalAttenuation(CfgMechanicalAttenuationRequest) returns (CfgMechanicalAttenuationResponse);
   rpc CfgRFAttenuation(CfgRFAttenuationRequest) returns (CfgRFAttenuationResponse);
   rpc CfgSParameterExternalAttenuationTable(CfgSParameterExternalAttenuationTableRequest) returns (CfgSParameterExternalAttenuationTableResponse);
+  rpc CfgSParameterExternalAttenuationTableInterleavedIQ(CfgSParameterExternalAttenuationTableInterleavedIQRequest) returns (CfgSParameterExternalAttenuationTableInterleavedIQResponse);
   rpc CfgSParameterExternalAttenuationType(CfgSParameterExternalAttenuationTypeRequest) returns (CfgSParameterExternalAttenuationTypeResponse);
   rpc CheckAcquisitionStatus(CheckAcquisitionStatusRequest) returns (CheckAcquisitionStatusResponse);
   rpc CheckIfListExists(CheckIfListExistsRequest) returns (CheckIfListExistsResponse);
@@ -42,6 +43,7 @@ service NiRFmxInstr {
   rpc EnableCalibrationPlane(EnableCalibrationPlaneRequest) returns (EnableCalibrationPlaneResponse);
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc FetchRawIQData(FetchRawIQDataRequest) returns (FetchRawIQDataResponse);
+  rpc FetchRawIQDataInterleavedIQ(FetchRawIQDataInterleavedIQRequest) returns (FetchRawIQDataInterleavedIQResponse);
   rpc GetAttributeF32(GetAttributeF32Request) returns (GetAttributeF32Response);
   rpc GetAttributeF32Array(GetAttributeF32ArrayRequest) returns (GetAttributeF32ArrayResponse);
   rpc GetAttributeF64(GetAttributeF64Request) returns (GetAttributeF64Response);
@@ -613,6 +615,23 @@ message CfgSParameterExternalAttenuationTableResponse {
   int32 status = 1;
 }
 
+message CfgSParameterExternalAttenuationTableInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string table_name = 3;
+  repeated double frequency = 4;
+  repeated double s_parameters = 5;
+  int32 number_of_ports = 6;
+  oneof s_parameter_orientation_enum {
+    SParameterOrientation s_parameter_orientation = 7;
+    int32 s_parameter_orientation_raw = 8;
+  }
+}
+
+message CfgSParameterExternalAttenuationTableInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message CfgSParameterExternalAttenuationTypeRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -734,6 +753,22 @@ message FetchRawIQDataResponse {
   double x0 = 2;
   double dx = 3;
   repeated nidevice_grpc.NIComplexNumberF32 data = 4;
+  int32 actual_array_size = 5;
+}
+
+message FetchRawIQDataInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 records_to_fetch = 4;
+  int64 samples_to_read = 5;
+}
+
+message FetchRawIQDataInterleavedIQResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float data = 4;
   int32 actual_array_size = 5;
 }
 

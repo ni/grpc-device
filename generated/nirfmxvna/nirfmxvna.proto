@@ -66,12 +66,16 @@ service NiRFmxVNA {
   rpc CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityRequest) returns (CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetFrequency(CalkitManagerCalkitCalibrationElementSParameterGetFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetFrequencyResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetS11(CalkitManagerCalkitCalibrationElementSParameterGetS11Request) returns (CalkitManagerCalkitCalibrationElementSParameterGetS11Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ(CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetS11Split(CalkitManagerCalkitCalibrationElementSParameterGetS11SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS11SplitResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetS12(CalkitManagerCalkitCalibrationElementSParameterGetS12Request) returns (CalkitManagerCalkitCalibrationElementSParameterGetS12Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ(CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetS12Split(CalkitManagerCalkitCalibrationElementSParameterGetS12SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS12SplitResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetS21(CalkitManagerCalkitCalibrationElementSParameterGetS21Request) returns (CalkitManagerCalkitCalibrationElementSParameterGetS21Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ(CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetS21Split(CalkitManagerCalkitCalibrationElementSParameterGetS21SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS21SplitResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetS22(CalkitManagerCalkitCalibrationElementSParameterGetS22Request) returns (CalkitManagerCalkitCalibrationElementSParameterGetS22Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ(CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetS22Split(CalkitManagerCalkitCalibrationElementSParameterGetS22SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetS22SplitResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityRequest) returns (CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterSetFrequency(CalkitManagerCalkitCalibrationElementSParameterSetFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetFrequencyResponse);
@@ -119,6 +123,7 @@ service NiRFmxVNA {
   rpc CalkitManagerValidateCalkit(CalkitManagerValidateCalkitRequest) returns (CalkitManagerValidateCalkitResponse);
   rpc CalsetEmbedFixtureS2p(CalsetEmbedFixtureS2pRequest) returns (CalsetEmbedFixtureS2pResponse);
   rpc CalsetGetErrorTerm(CalsetGetErrorTermRequest) returns (CalsetGetErrorTermResponse);
+  rpc CalsetGetErrorTermInterleavedIQ(CalsetGetErrorTermInterleavedIQRequest) returns (CalsetGetErrorTermInterleavedIQResponse);
   rpc CalsetGetErrorTermSplit(CalsetGetErrorTermSplitRequest) returns (CalsetGetErrorTermSplitResponse);
   rpc CalsetGetFrequencyGrid(CalsetGetFrequencyGridRequest) returns (CalsetGetFrequencyGridResponse);
   rpc CalsetLoadFromFile(CalsetLoadFromFileRequest) returns (CalsetLoadFromFileResponse);
@@ -168,6 +173,7 @@ service NiRFmxVNA {
   rpc GetMeasurementMemoryXData(GetMeasurementMemoryXDataRequest) returns (GetMeasurementMemoryXDataResponse);
   rpc GetMeasurementMemoryYData(GetMeasurementMemoryYDataRequest) returns (GetMeasurementMemoryYDataResponse);
   rpc IQFetchData(IQFetchDataRequest) returns (IQFetchDataResponse);
+  rpc IQFetchDataInterleavedIQ(IQFetchDataInterleavedIQRequest) returns (IQFetchDataInterleavedIQResponse);
   rpc IQFetchDataSplit(IQFetchDataSplitRequest) returns (IQFetchDataSplitResponse);
   rpc Initialize(InitializeRequest) returns (InitializeResponse);
   rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
@@ -1165,6 +1171,17 @@ message CalkitManagerCalkitCalibrationElementSParameterGetS11Response {
   int32 actual_array_size = 3;
 }
 
+message CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQResponse {
+  int32 status = 1;
+  repeated double s11 = 2;
+  int32 actual_array_size = 3;
+}
+
 message CalkitManagerCalkitCalibrationElementSParameterGetS11SplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1185,6 +1202,17 @@ message CalkitManagerCalkitCalibrationElementSParameterGetS12Request {
 message CalkitManagerCalkitCalibrationElementSParameterGetS12Response {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumber s12 = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQResponse {
+  int32 status = 1;
+  repeated double s12 = 2;
   int32 actual_array_size = 3;
 }
 
@@ -1211,6 +1239,17 @@ message CalkitManagerCalkitCalibrationElementSParameterGetS21Response {
   int32 actual_array_size = 3;
 }
 
+message CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQResponse {
+  int32 status = 1;
+  repeated double s21 = 2;
+  int32 actual_array_size = 3;
+}
+
 message CalkitManagerCalkitCalibrationElementSParameterGetS21SplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1231,6 +1270,17 @@ message CalkitManagerCalkitCalibrationElementSParameterGetS22Request {
 message CalkitManagerCalkitCalibrationElementSParameterGetS22Response {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumber s22 = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQResponse {
+  int32 status = 1;
+  repeated double s22 = 2;
   int32 actual_array_size = 3;
 }
 
@@ -1735,6 +1785,24 @@ message CalsetGetErrorTermRequest {
 message CalsetGetErrorTermResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 error_term = 2;
+  int32 actual_array_size = 3;
+}
+
+message CalsetGetErrorTermInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string calset_name = 3;
+  oneof error_term_identifier_enum {
+    CalErrorTerm error_term_identifier = 4;
+    int32 error_term_identifier_raw = 5;
+  }
+  string measurement_port = 6;
+  string source_port = 7;
+}
+
+message CalsetGetErrorTermInterleavedIQResponse {
+  int32 status = 1;
+  repeated float error_term = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2288,6 +2356,20 @@ message IQFetchDataResponse {
   double x0 = 2;
   double dx = 3;
   repeated nidevice_grpc.NIComplexNumberF32 data = 4;
+  int32 actual_array_size = 5;
+}
+
+message IQFetchDataInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message IQFetchDataInterleavedIQResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float data = 4;
   int32 actual_array_size = 5;
 }
 

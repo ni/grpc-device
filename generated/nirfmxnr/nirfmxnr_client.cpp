@@ -500,6 +500,29 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
   return response;
 }
 
+AnalyzeIQ1WaveformInterleavedIQResponse
+analyze_iq1_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iq, request.mutable_iq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1WaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AnalyzeIQ1WaveformSplitResponse
 analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset)
 {
@@ -543,6 +566,30 @@ analyze_n_waveforms_iq(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->AnalyzeNWaveformsIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AnalyzeNWaveformsIQInterleavedIQResponse
+analyze_n_waveforms_iq_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const std::vector<double>& x0, const std::vector<double>& dx, const std::vector<float>& iq, const std::vector<pb::int32>& iq_sizes, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeNWaveformsIQInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  copy_array(x0, request.mutable_x0());
+  copy_array(dx, request.mutable_dx());
+  copy_array(iq, request.mutable_iq());
+  copy_array(iq_sizes, request.mutable_iq_sizes());
+  request.set_reset(reset);
+
+  auto response = AnalyzeNWaveformsIQInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AnalyzeNWaveformsIQInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2263,6 +2310,27 @@ mod_acc_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session
   return response;
 }
 
+ModAccCfgReferenceWaveformInterleavedIQResponse
+mod_acc_cfg_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccCfgReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform, request.mutable_reference_waveform());
+
+  auto response = ModAccCfgReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccCfgReferenceWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccCfgReferenceWaveformSplitResponse
 mod_acc_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform_i, const std::vector<float>& reference_waveform_q)
 {
@@ -2435,6 +2503,25 @@ mod_acc_fetch_pbchdmrs_constellation_trace(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+ModAccFetchPBCHDMRSConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pbchdmrs_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPBCHDMRSConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPBCHDMRSConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPBCHDMRSConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPBCHDMRSConstellationTraceSplitResponse
 mod_acc_fetch_pbchdmrs_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2506,6 +2593,25 @@ mod_acc_fetch_pbch_data_constellation_trace(const StubPtr& stub, const nidevice_
 
   raise_if_error(
       stub->ModAccFetchPBCHDataConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPBCHDataConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pbch_data_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPBCHDataConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPBCHDataConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPBCHDataConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2587,6 +2693,25 @@ mod_acc_fetch_pdsch1024q_am_constellation_trace(const StubPtr& stub, const nidev
   return response;
 }
 
+ModAccFetchPDSCH1024QAMConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdsch1024q_am_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH1024QAMConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH1024QAMConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH1024QAMConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCH1024QAMConstellationTraceSplitResponse
 mod_acc_fetch_pdsch1024q_am_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2620,6 +2745,25 @@ mod_acc_fetch_pdsch16q_am_constellation_trace(const StubPtr& stub, const nidevic
 
   raise_if_error(
       stub->ModAccFetchPDSCH16QAMConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPDSCH16QAMConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdsch16q_am_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH16QAMConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH16QAMConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH16QAMConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2663,6 +2807,25 @@ mod_acc_fetch_pdsch256q_am_constellation_trace(const StubPtr& stub, const nidevi
   return response;
 }
 
+ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdsch256q_am_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCH256QAMConstellationTraceSplitResponse
 mod_acc_fetch_pdsch256q_am_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2696,6 +2859,25 @@ mod_acc_fetch_pdsch64q_am_constellation_trace(const StubPtr& stub, const nidevic
 
   raise_if_error(
       stub->ModAccFetchPDSCH64QAMConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdsch64q_am_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2739,6 +2921,25 @@ mod_acc_fetch_pdsch8p_sk_constellation_trace(const StubPtr& stub, const nidevice
   return response;
 }
 
+ModAccFetchPDSCH8PSKConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdsch8p_sk_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH8PSKConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH8PSKConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH8PSKConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCH8PSKConstellationTraceSplitResponse
 mod_acc_fetch_pdsch8p_sk_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2777,6 +2978,25 @@ mod_acc_fetch_pdschdmrs_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPDSCHDMRSConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdschdmrs_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCHDMRSConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCHDMRSConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCHDMRSConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCHDMRSConstellationTraceSplitResponse
 mod_acc_fetch_pdschdmrs_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2810,6 +3030,25 @@ mod_acc_fetch_pdsch_data_constellation_trace(const StubPtr& stub, const nidevice
 
   raise_if_error(
       stub->ModAccFetchPDSCHDataConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPDSCHDataConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdsch_data_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCHDataConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCHDataConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCHDataConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2872,6 +3111,25 @@ mod_acc_fetch_pdschptrs_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPDSCHPTRSConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdschptrs_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCHPTRSConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCHPTRSConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCHPTRSConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCHPTRSConstellationTraceSplitResponse
 mod_acc_fetch_pdschptrs_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2910,6 +3168,25 @@ mod_acc_fetch_pdschqpsk_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPDSCHQPSKConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdschqpsk_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCHQPSKConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCHQPSKConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCHQPSKConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCHQPSKConstellationTraceSplitResponse
 mod_acc_fetch_pdschqpsk_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2943,6 +3220,25 @@ mod_acc_fetch_pss_constellation_trace(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->ModAccFetchPSSConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPSSConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pss_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPSSConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPSSConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPSSConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -3024,6 +3320,25 @@ mod_acc_fetch_puschdmrs_constellation_trace(const StubPtr& stub, const nidevice_
   return response;
 }
 
+ModAccFetchPUSCHDMRSConstellationTraceInterleavedIQResponse
+mod_acc_fetch_puschdmrs_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPUSCHDMRSConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPUSCHDMRSConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPUSCHDMRSConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPUSCHDMRSConstellationTraceSplitResponse
 mod_acc_fetch_puschdmrs_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3057,6 +3372,25 @@ mod_acc_fetch_pusch_data_constellation_trace(const StubPtr& stub, const nidevice
 
   raise_if_error(
       stub->ModAccFetchPUSCHDataConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPUSCHDataConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pusch_data_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPUSCHDataConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPUSCHDataConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPUSCHDataConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -3114,6 +3448,25 @@ mod_acc_fetch_puschptrs_constellation_trace(const StubPtr& stub, const nidevice_
 
   raise_if_error(
       stub->ModAccFetchPUSCHPTRSConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPUSCHPTRSConstellationTraceInterleavedIQResponse
+mod_acc_fetch_puschptrs_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPUSCHPTRSConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPUSCHPTRSConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPUSCHPTRSConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -3361,6 +3714,25 @@ mod_acc_fetch_sss_constellation_trace(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->ModAccFetchSSSConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchSSSConstellationTraceInterleavedIQResponse
+mod_acc_fetch_sss_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchSSSConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchSSSConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchSSSConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;

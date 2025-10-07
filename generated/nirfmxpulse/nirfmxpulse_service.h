@@ -46,10 +46,12 @@ public:
 
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
   ::grpc::Status AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response) override;
+  ::grpc::Status AnalyzeIQ1WaveformInterleavedIQ(::grpc::ServerContext* context, const AnalyzeIQ1WaveformInterleavedIQRequest* request, AnalyzeIQ1WaveformInterleavedIQResponse* response) override;
   ::grpc::Status AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
   ::grpc::Status BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response) override;
   ::grpc::Status Cfg1ReferenceWaveform(::grpc::ServerContext* context, const Cfg1ReferenceWaveformRequest* request, Cfg1ReferenceWaveformResponse* response) override;
+  ::grpc::Status Cfg1ReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const Cfg1ReferenceWaveformInterleavedIQRequest* request, Cfg1ReferenceWaveformInterleavedIQResponse* response) override;
   ::grpc::Status Cfg1ReferenceWaveformSplit(::grpc::ServerContext* context, const Cfg1ReferenceWaveformSplitRequest* request, Cfg1ReferenceWaveformSplitResponse* response) override;
   ::grpc::Status CfgDigitalEdgeTrigger(::grpc::ServerContext* context, const CfgDigitalEdgeTriggerRequest* request, CfgDigitalEdgeTriggerResponse* response) override;
   ::grpc::Status CfgExternalAttenuation(::grpc::ServerContext* context, const CfgExternalAttenuationRequest* request, CfgExternalAttenuationResponse* response) override;
@@ -76,6 +78,7 @@ public:
   ::grpc::Status FetchBurstSelectedPositionStabilityTrace(::grpc::ServerContext* context, const FetchBurstSelectedPositionStabilityTraceRequest* request, FetchBurstSelectedPositionStabilityTraceResponse* response) override;
   ::grpc::Status FetchFrequencyTrace(::grpc::ServerContext* context, const FetchFrequencyTraceRequest* request, FetchFrequencyTraceResponse* response) override;
   ::grpc::Status FetchIQTrace(::grpc::ServerContext* context, const FetchIQTraceRequest* request, FetchIQTraceResponse* response) override;
+  ::grpc::Status FetchIQTraceInterleavedIQ(::grpc::ServerContext* context, const FetchIQTraceInterleavedIQRequest* request, FetchIQTraceInterleavedIQResponse* response) override;
   ::grpc::Status FetchIQTraceSplit(::grpc::ServerContext* context, const FetchIQTraceSplitRequest* request, FetchIQTraceSplitResponse* response) override;
   ::grpc::Status FetchIntrapulseStabilityTrace(::grpc::ServerContext* context, const FetchIntrapulseStabilityTraceRequest* request, FetchIntrapulseStabilityTraceResponse* response) override;
   ::grpc::Status FetchMultipleMeasurementPointsStabilityTrace(::grpc::ServerContext* context, const FetchMultipleMeasurementPointsStabilityTraceRequest* request, FetchMultipleMeasurementPointsStabilityTraceResponse* response) override;

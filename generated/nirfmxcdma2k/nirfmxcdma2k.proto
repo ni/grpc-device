@@ -31,6 +31,7 @@ service NiRFmxCDMA2k {
   rpc ACPFetchSpectrum(ACPFetchSpectrumRequest) returns (ACPFetchSpectrumResponse);
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformInterleavedIQ(AnalyzeIQ1WaveformInterleavedIQRequest) returns (AnalyzeIQ1WaveformInterleavedIQResponse);
   rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
@@ -45,6 +46,7 @@ service NiRFmxCDMA2k {
   rpc CDAFetchCodeDomainPower(CDAFetchCodeDomainPowerRequest) returns (CDAFetchCodeDomainPowerResponse);
   rpc CDAFetchIQImpairments(CDAFetchIQImpairmentsRequest) returns (CDAFetchIQImpairmentsResponse);
   rpc CDAFetchSymbolConstellationTrace(CDAFetchSymbolConstellationTraceRequest) returns (CDAFetchSymbolConstellationTraceResponse);
+  rpc CDAFetchSymbolConstellationTraceInterleavedIQ(CDAFetchSymbolConstellationTraceInterleavedIQRequest) returns (CDAFetchSymbolConstellationTraceInterleavedIQResponse);
   rpc CDAFetchSymbolConstellationTraceSplit(CDAFetchSymbolConstellationTraceSplitRequest) returns (CDAFetchSymbolConstellationTraceSplitResponse);
   rpc CDAFetchSymbolEVM(CDAFetchSymbolEVMRequest) returns (CDAFetchSymbolEVMResponse);
   rpc CDAFetchSymbolEVMTrace(CDAFetchSymbolEVMTraceRequest) returns (CDAFetchSymbolEVMTraceResponse);
@@ -111,6 +113,7 @@ service NiRFmxCDMA2k {
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc ModAccCfgSynchronizationModeAndInterval(ModAccCfgSynchronizationModeAndIntervalRequest) returns (ModAccCfgSynchronizationModeAndIntervalResponse);
   rpc ModAccFetchConstellationTrace(ModAccFetchConstellationTraceRequest) returns (ModAccFetchConstellationTraceResponse);
+  rpc ModAccFetchConstellationTraceInterleavedIQ(ModAccFetchConstellationTraceInterleavedIQRequest) returns (ModAccFetchConstellationTraceInterleavedIQResponse);
   rpc ModAccFetchConstellationTraceSplit(ModAccFetchConstellationTraceSplitRequest) returns (ModAccFetchConstellationTraceSplitResponse);
   rpc ModAccFetchDetectedChannel(ModAccFetchDetectedChannelRequest) returns (ModAccFetchDetectedChannelResponse);
   rpc ModAccFetchDetectedChannelArray(ModAccFetchDetectedChannelArrayRequest) returns (ModAccFetchDetectedChannelArrayResponse);
@@ -130,6 +133,7 @@ service NiRFmxCDMA2k {
   rpc QEVMCfgAveraging(QEVMCfgAveragingRequest) returns (QEVMCfgAveragingResponse);
   rpc QEVMCfgMeasurementLength(QEVMCfgMeasurementLengthRequest) returns (QEVMCfgMeasurementLengthResponse);
   rpc QEVMFetchConstellationTrace(QEVMFetchConstellationTraceRequest) returns (QEVMFetchConstellationTraceResponse);
+  rpc QEVMFetchConstellationTraceInterleavedIQ(QEVMFetchConstellationTraceInterleavedIQRequest) returns (QEVMFetchConstellationTraceInterleavedIQResponse);
   rpc QEVMFetchConstellationTraceSplit(QEVMFetchConstellationTraceSplitRequest) returns (QEVMFetchConstellationTraceSplitResponse);
   rpc QEVMFetchEVM(QEVMFetchEVMRequest) returns (QEVMFetchEVMResponse);
   rpc QEVMFetchEVMTrace(QEVMFetchEVMTraceRequest) returns (QEVMFetchEVMTraceResponse);
@@ -1099,6 +1103,20 @@ message AnalyzeIQ1WaveformResponse {
   int32 status = 1;
 }
 
+message AnalyzeIQ1WaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message AnalyzeIQ1WaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1277,6 +1295,18 @@ message CDAFetchSymbolConstellationTraceRequest {
 message CDAFetchSymbolConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 symbol_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message CDAFetchSymbolConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchSymbolConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float symbol_constellation = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2083,6 +2113,18 @@ message ModAccFetchConstellationTraceResponse {
   int32 actual_array_size = 3;
 }
 
+message ModAccFetchConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float constellation = 2;
+  int32 actual_array_size = 3;
+}
+
 message ModAccFetchConstellationTraceSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2348,6 +2390,18 @@ message QEVMFetchConstellationTraceRequest {
 message QEVMFetchConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message QEVMFetchConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message QEVMFetchConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float constellation = 2;
   int32 actual_array_size = 3;
 }
 

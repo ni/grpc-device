@@ -23,10 +23,12 @@ class NiRFmxPulseLibrary : public nirfmxpulse_grpc::NiRFmxPulseLibraryInterface 
   ::grpc::Status check_function_exists(std::string functionName);
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved) override;
+  int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 bandwidth, float64 measurementInterval, float64* referenceLevel) override;
   int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[]) override;
   int32 Cfg1ReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize) override;
+  int32 Cfg1ReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize) override;
   int32 Cfg1ReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize) override;
   int32 CfgDigitalEdgeTrigger(niRFmxInstrHandle instrumentHandle, char selectorString[], char digitalEdgeSource[], int32 digitalEdge, float64 triggerDelay, int32 enableTrigger) override;
   int32 CfgExternalAttenuation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 externalAttenuation) override;
@@ -53,6 +55,7 @@ class NiRFmxPulseLibrary : public nirfmxpulse_grpc::NiRFmxPulseLibraryInterface 
   int32 FetchBurstSelectedPositionStabilityTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 pulseAmplitudeStability[], float32 pulsePhaseStability[], float32 pulseTotalStability[], int32 arraySize, int32* actualArraySize) override;
   int32 FetchFrequencyTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 frequency[], int32 arraySize, int32* actualArraySize) override;
   int32 FetchIQTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle iqData[], int32 arraySize, int32* actualArraySize) override;
+  int32 FetchIQTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqData[], int32 arraySize, int32* actualArraySize) override;
   int32 FetchIQTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqDataI[], float32 iqDataQ[], int32 arraySize, int32* actualArraySize) override;
   int32 FetchIntrapulseStabilityTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 intrapulseAmplitudeStability[], float32 intrapulsePhaseStability[], float32 intrapulseTotalStability[], int32 arraySize, int32* actualArraySize) override;
   int32 FetchMultipleMeasurementPointsStabilityTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 pulseAverageAmplitudeStability[], float32 pulseAveragePhaseStability[], float32 pulseAverageTotalStability[], int32 arraySize, int32* actualArraySize) override;
@@ -116,10 +119,12 @@ class NiRFmxPulseLibrary : public nirfmxpulse_grpc::NiRFmxPulseLibraryInterface 
  private:
   using AbortMeasurementsPtr = decltype(&RFmxPulse_AbortMeasurements);
   using AnalyzeIQ1WaveformPtr = decltype(&RFmxPulse_AnalyzeIQ1Waveform);
+  using AnalyzeIQ1WaveformInterleavedIQPtr = decltype(&RFmxPulse_AnalyzeIQ1Waveform);
   using AnalyzeIQ1WaveformSplitPtr = decltype(&RFmxPulse_AnalyzeIQ1WaveformSplit);
   using AutoLevelPtr = decltype(&RFmxPulse_AutoLevel);
   using BuildSignalStringPtr = decltype(&RFmxPulse_BuildSignalString);
   using Cfg1ReferenceWaveformPtr = decltype(&RFmxPulse_Cfg1ReferenceWaveform);
+  using Cfg1ReferenceWaveformInterleavedIQPtr = decltype(&RFmxPulse_Cfg1ReferenceWaveform);
   using Cfg1ReferenceWaveformSplitPtr = decltype(&RFmxPulse_Cfg1ReferenceWaveformSplit);
   using CfgDigitalEdgeTriggerPtr = decltype(&RFmxPulse_CfgDigitalEdgeTrigger);
   using CfgExternalAttenuationPtr = decltype(&RFmxPulse_CfgExternalAttenuation);
@@ -146,6 +151,7 @@ class NiRFmxPulseLibrary : public nirfmxpulse_grpc::NiRFmxPulseLibraryInterface 
   using FetchBurstSelectedPositionStabilityTracePtr = decltype(&RFmxPulse_FetchBurstSelectedPositionStabilityTrace);
   using FetchFrequencyTracePtr = decltype(&RFmxPulse_FetchFrequencyTrace);
   using FetchIQTracePtr = decltype(&RFmxPulse_FetchIQTrace);
+  using FetchIQTraceInterleavedIQPtr = decltype(&RFmxPulse_FetchIQTrace);
   using FetchIQTraceSplitPtr = decltype(&RFmxPulse_FetchIQTraceSplit);
   using FetchIntrapulseStabilityTracePtr = decltype(&RFmxPulse_FetchIntrapulseStabilityTrace);
   using FetchMultipleMeasurementPointsStabilityTracePtr = decltype(&RFmxPulse_FetchMultipleMeasurementPointsStabilityTrace);
@@ -209,10 +215,12 @@ class NiRFmxPulseLibrary : public nirfmxpulse_grpc::NiRFmxPulseLibraryInterface 
   typedef struct FunctionPointers {
     AbortMeasurementsPtr AbortMeasurements;
     AnalyzeIQ1WaveformPtr AnalyzeIQ1Waveform;
+    AnalyzeIQ1WaveformInterleavedIQPtr AnalyzeIQ1WaveformInterleavedIQ;
     AnalyzeIQ1WaveformSplitPtr AnalyzeIQ1WaveformSplit;
     AutoLevelPtr AutoLevel;
     BuildSignalStringPtr BuildSignalString;
     Cfg1ReferenceWaveformPtr Cfg1ReferenceWaveform;
+    Cfg1ReferenceWaveformInterleavedIQPtr Cfg1ReferenceWaveformInterleavedIQ;
     Cfg1ReferenceWaveformSplitPtr Cfg1ReferenceWaveformSplit;
     CfgDigitalEdgeTriggerPtr CfgDigitalEdgeTrigger;
     CfgExternalAttenuationPtr CfgExternalAttenuation;
@@ -239,6 +247,7 @@ class NiRFmxPulseLibrary : public nirfmxpulse_grpc::NiRFmxPulseLibraryInterface 
     FetchBurstSelectedPositionStabilityTracePtr FetchBurstSelectedPositionStabilityTrace;
     FetchFrequencyTracePtr FetchFrequencyTrace;
     FetchIQTracePtr FetchIQTrace;
+    FetchIQTraceInterleavedIQPtr FetchIQTraceInterleavedIQ;
     FetchIQTraceSplitPtr FetchIQTraceSplit;
     FetchIntrapulseStabilityTracePtr FetchIntrapulseStabilityTrace;
     FetchMultipleMeasurementPointsStabilityTracePtr FetchMultipleMeasurementPointsStabilityTrace;

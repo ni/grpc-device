@@ -17,13 +17,16 @@ class NiRFmxWLANLibraryInterface {
 
   virtual int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) = 0;
   virtual int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved) = 0;
+  virtual int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved) = 0;
   virtual int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved) = 0;
   virtual int32 AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], NIComplexSingle iq[], int32 iqSize[], int32 arraySize, int32 reset) = 0;
+  virtual int32 AnalyzeNWaveformsIQInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iq[], int32 iqSize[], int32 arraySize, int32 reset) = 0;
   virtual int32 AnalyzeNWaveformsIQSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iqi[], float32 iqq[], int32 iqSize[], int32 arraySize, int32 reset) = 0;
   virtual int32 AnalyzeNWaveformsSpectrum(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 spectrum[], int32 spectrumSize[], int32 arraySize, int32 reset) = 0;
   virtual int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved) = 0;
   virtual int32 AutoDetectSignal(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout) = 0;
   virtual int32 AutoDetectSignalAnalysisOnly(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize) = 0;
+  virtual int32 AutoDetectSignalAnalysisOnlyInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 iq[], int32 arraySize) = 0;
   virtual int32 AutoDetectSignalAnalysisOnlySplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize) = 0;
   virtual int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval) = 0;
   virtual int32 BuildChainString(char selectorString[], int32 chainNumber, int32 selectorStringOutLength, char selectorStringOut[]) = 0;
@@ -63,6 +66,7 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 DSSSModAccCfgPowerMeasurementNumberOfCustomGates(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 numberOfCustomGates) = 0;
   virtual int32 DSSSModAccFetchAveragePowers(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* preambleAveragePowerMean, float64* headerAveragePowerMean, float64* dataAveragePowerMean, float64* ppduAveragePowerMean) = 0;
   virtual int32 DSSSModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 DSSSModAccFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 DSSSModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 DSSSModAccFetchCustomGatePowersArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 averagePowerMean[], float64 peakPowerMaximum[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 DSSSModAccFetchDecodedHeaderBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedHeaderBits[], int32 arraySize, int32* actualArraySize) = 0;
@@ -102,6 +106,7 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]) = 0;
   virtual int32 OFDMModAccAutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout) = 0;
   virtual int32 OFDMModAccCfg1ReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize) = 0;
+  virtual int32 OFDMModAccCfg1ReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize) = 0;
   virtual int32 OFDMModAccCfg1ReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize) = 0;
   virtual int32 OFDMModAccCfgAcquisitionLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 acquisitionLengthMode, float64 acquisitionLength) = 0;
   virtual int32 OFDMModAccCfgAmplitudeTrackingEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 amplitudeTrackingEnabled) = 0;
@@ -113,6 +118,7 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 OFDMModAccCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementOffset, int32 maximumMeasurementLength) = 0;
   virtual int32 OFDMModAccCfgMeasurementMode(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementMode) = 0;
   virtual int32 OFDMModAccCfgNReferenceWaveforms(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0[], float64 dx[], NIComplexSingle referenceWaveform[], int32 referenceWaveformSize[], int32 arraySize) = 0;
+  virtual int32 OFDMModAccCfgNReferenceWaveformsInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0[], float64 dx[], float32 referenceWaveform[], int32 referenceWaveformSize[], int32 arraySize) = 0;
   virtual int32 OFDMModAccCfgNReferenceWaveformsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0[], float64 dx[], float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 referenceWaveformSize[], int32 arraySize) = 0;
   virtual int32 OFDMModAccCfgNoiseCompensationEnabled(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 noiseCompensationEnabled) = 0;
   virtual int32 OFDMModAccCfgOptimizeDynamicRangeForEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 optimizeDynamicRangeForEVMEnabled, double optimizeDynamicRangeForEVMMargin) = 0;
@@ -131,6 +137,7 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 OFDMModAccFetchCustomGatePowersArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 averagePowerMean[], float64 peakPowerMaximum[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDataAveragePower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* dataAveragePowerMean) = 0;
   virtual int32 OFDMModAccFetchDataConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle dataConstellation[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 OFDMModAccFetchDataConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellation[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellationI[], float32 dataConstellationQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDataPeakPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* dataPeakPowerMaximum) = 0;
   virtual int32 OFDMModAccFetchDecodedEHTSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedEHTSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
@@ -164,6 +171,7 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 OFDMModAccFetchPSDUCRCStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* psducrcStatus) = 0;
   virtual int32 OFDMModAccFetchPhaseNoisePSDMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 phaseNoisePSDMean[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchPilotConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle pilotConstellation[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 OFDMModAccFetchPilotConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 pilotConstellation[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchPilotConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 pilotConstellationI[], float32 pilotConstellationQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchPreambleAveragePowers80211ac(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* vhtsigaAveragePowerMean, float64* vhtstfAveragePowerMean, float64* vhtltfAveragePowerMean, float64* vhtsigbAveragePowerMean) = 0;
   virtual int32 OFDMModAccFetchPreambleAveragePowers80211ax(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* rlsigAveragePowerMean, float64* hesigaAveragePowerMean, float64* hesigbAveragePowerMean, float64* hestfAveragePowerMean, float64* heltfAveragePowerMean) = 0;
@@ -177,6 +185,7 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 OFDMModAccFetchPreamblePeakPowers80211n(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* htsigPeakPowerMaximum, float64* htstfPeakPowerMaximum, float64* htdltfPeakPowerMaximum, float64* hteltfPeakPowerMaximum) = 0;
   virtual int32 OFDMModAccFetchPreamblePeakPowersCommon(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lstfPeakPowerMaximum, float64* lltfPeakPowerMaximum, float64* lsigPeakPowerMaximum) = 0;
   virtual int32 OFDMModAccFetchRUOffsetAndSize(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* ruOffset, int32* ruSize) = 0;
+  virtual int32 OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 referenceDataConstellation[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchReferenceDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 referenceDataConstellationI[], float32 referenceDataConstellationQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchSIGBCRCStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* sigbcrcStatus) = 0;
   virtual int32 OFDMModAccFetchSIGCRCStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* sigcrcStatus) = 0;
@@ -196,8 +205,10 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 OFDMModAccFetchUnusedToneErrorMarginPerRU(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 unusedToneErrorMarginPerRU[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchUnusedToneErrorMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 unusedToneError[], float32 unusedToneErrorMask[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchUserDataConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle userDataConstellation[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 OFDMModAccFetchUserDataConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 userDataConstellation[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchUserDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 userDataConstellationI[], float32 userDataConstellationQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchUserPilotConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle userPilotConstellation[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 OFDMModAccFetchUserPilotConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 userPilotConstellation[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchUserPilotConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 userPilotConstellationI[], float32 userPilotConstellationQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchUserPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* userPowerMean) = 0;
   virtual int32 OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 userStreamDataRMSEVMPerSymbolMean[], int32 arraySize, int32* actualArraySize) = 0;

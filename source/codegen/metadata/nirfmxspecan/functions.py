@@ -1434,6 +1434,61 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AMPMCfgReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_AMPMCfgReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
+                'direction': 'in',
+                'name': 'referenceWaveform',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AmpmReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'AmpmSignalType',
+                'name': 'signalType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AMPMCfgReferenceWaveformSplit': {
         'parameters': [
             {
@@ -1936,6 +1991,59 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform)',
+                'direction': 'out',
+                'name': 'processedMeanAcquiredWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AMPMFetchProcessedMeanAcquiredWaveformSplit': {
         'parameters': [
             {
@@ -2034,6 +2142,59 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'AMPMFetchProcessedReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_AMPMFetchProcessedReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform)',
+                'direction': 'out',
+                'name': 'processedReferenceWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -2265,6 +2426,66 @@ functions = {
                 'type': 'NIComplexSingle[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'reset',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'AnalyzeIQ1WaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_AnalyzeIQ1Waveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'direction': 'in',
+                'name': 'iq',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -4139,6 +4360,100 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDApplyDigitalPredistortionInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDApplyDigitalPredistortion',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0In',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dxIn',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(waveformIn)',
+                'direction': 'in',
+                'name': 'waveformIn',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySizeIn'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeIn',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdApplyDpdIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurementTimeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0Out',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dxOut',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(waveformOut)',
+                'direction': 'out',
+                'name': 'waveformOut',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeOut',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'papr',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'powerOffset',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDApplyDigitalPredistortionSplit': {
         'parameters': [
             {
@@ -4317,6 +4632,90 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeOut',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'papr',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDApplyPreDPDSignalConditioningInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDApplyPreDPDSignalConditioning',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0In',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dxIn',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(waveformIn)',
+                'direction': 'in',
+                'name': 'waveformIn',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySizeIn'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeIn',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdApplyDpdIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0Out',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dxOut',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(waveformOut)',
+                'direction': 'out',
+                'name': 'waveformOut',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -4538,6 +4937,39 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(DPDPolynomial)',
+                'direction': 'in',
+                'name': 'dpdPolynomial',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDCfgApplyDPDUserDPDPolynomialSplit': {
         'parameters': [
             {
@@ -4621,6 +5053,54 @@ functions = {
                 'type': 'NIComplexSingle[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDCfgApplyDPDUserLookupTableInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDCfgApplyDPDUserLookupTable',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'lutInputPowers',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(LUTComplexGains)',
+                'direction': 'in',
+                'name': 'lutComplexGains',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -4788,6 +5268,49 @@ functions = {
                 'type': 'NIComplexSingle[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDCfgExtractModelTargetWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDCfgExtractModelTargetWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(targetWaveform)',
+                'direction': 'in',
+                'name': 'targetWaveform',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -5152,6 +5675,39 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDCfgPreviousDPDPolynomialInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDCfgPreviousDPDPolynomial',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(previousDPDPolynomial)',
+                'direction': 'in',
+                'name': 'previousDPDPolynomial',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDCfgPreviousDPDPolynomialSplit': {
         'parameters': [
             {
@@ -5230,6 +5786,61 @@ functions = {
                 'type': 'NIComplexSingle[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdSignalType',
+                'name': 'signalType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDCfgReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDCfgReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
+                'direction': 'in',
+                'name': 'referenceWaveform',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -5432,6 +6043,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDFetchDPDPolynomialInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDFetchDPDPolynomial',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(DPDPolynomial)',
+                'direction': 'out',
+                'name': 'dpdPolynomial',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDFetchDPDPolynomialSplit': {
         'parameters': [
             {
@@ -5510,6 +6164,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDFetchDVRModelInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDFetchDVRModel',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(DVRModel)',
+                'direction': 'out',
+                'name': 'dvrModel',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -5612,6 +6309,59 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDFetchLookupTableInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDFetchLookupTable',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'inputPowers',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(complexGains)',
+                'direction': 'out',
+                'name': 'complexGains',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -5764,6 +6514,59 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform)',
+                'direction': 'out',
+                'name': 'processedMeanAcquiredWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'DPDFetchProcessedMeanAcquiredWaveformSplit': {
         'parameters': [
             {
@@ -5862,6 +6665,59 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDFetchProcessedReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_DPDFetchProcessedReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform)',
+                'direction': 'out',
+                'name': 'processedReferenceWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',
@@ -7661,6 +8517,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IDPDCfgEqualizerCoefficientsInterleavedIQ': {
+        'cname': 'RFmxSpecAn_IDPDCfgEqualizerCoefficients',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerCoefficients)',
+                'direction': 'in',
+                'name': 'equalizerCoefficients',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IDPDCfgEqualizerCoefficientsSplit': {
         'parameters': [
             {
@@ -7749,6 +8648,54 @@ functions = {
                 'type': 'NIComplexSingle[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'targetGain',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IDPDCfgPredistortedWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_IDPDCfgPredistortedWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(predistortedWaveform)',
+                'direction': 'in',
+                'name': 'predistortedWaveform',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -7854,6 +8801,61 @@ functions = {
                 'type': 'NIComplexSingle[]'
             },
             {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'IdpdReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'IdpdSignalType',
+                'name': 'signalType',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IDPDCfgReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_IDPDCfgReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
+                'direction': 'in',
+                'name': 'referenceWaveform',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
@@ -7991,6 +8993,59 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IDPDFetchEqualizerCoefficientsInterleavedIQ': {
+        'cname': 'RFmxSpecAn_IDPDFetchEqualizerCoefficients',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerCoefficients)',
+                'direction': 'out',
+                'name': 'equalizerCoefficients',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IDPDFetchEqualizerCoefficientsSplit': {
         'parameters': [
             {
@@ -8089,6 +9144,74 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'papr',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'powerOffset',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'gain',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IDPDFetchPredistortedWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_IDPDFetchPredistortedWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(predistortedWaveform)',
+                'direction': 'out',
+                'name': 'predistortedWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'out',
@@ -8245,6 +9368,59 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform)',
+                'direction': 'out',
+                'name': 'processedMeanAcquiredWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IDPDFetchProcessedMeanAcquiredWaveformSplit': {
         'parameters': [
             {
@@ -8357,6 +9533,59 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'IDPDFetchProcessedReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_IDPDFetchProcessedReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform)',
+                'direction': 'out',
+                'name': 'processedReferenceWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'IDPDFetchProcessedReferenceWaveformSplit': {
         'parameters': [
             {
@@ -8450,6 +9679,59 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'papr',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IDPDGetEqualizerReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxSpecAn_IDPDGetEqualizerReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerReferenceWaveform)',
+                'direction': 'out',
+                'name': 'equalizerReferenceWaveform',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'out',
@@ -9300,6 +10582,69 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IQFetchDataInterleavedIQ': {
+        'cname': 'RFmxSpecAn_IQFetchData',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordToFetch',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'samplesToRead',
+                'type': 'int64'
+            },
+            {
+                'direction': 'out',
+                'name': 't0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dt',
+                'type': 'float64'
+            },
+            {
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(data)',
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',

@@ -64,12 +64,16 @@ class NiRFmxVNALibraryInterface {
   virtual int32 CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS11(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s11[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS11Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11I[], float64 s11Q[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS12Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12I[], float64 s12Q[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS21(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS21Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21I[], float64 s21Q[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetS22Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22I[], float64 s22Q[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterAvailability) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSParameterSetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize) = 0;
@@ -117,6 +121,7 @@ class NiRFmxVNALibraryInterface {
   virtual int32 CalkitManagerValidateCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[]) = 0;
   virtual int32 CalsetEmbedFixtureS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char fixtureS2pFilePath[], char vnaPort[], int32 sParameterOrientation, char newCalsetName[]) = 0;
   virtual int32 CalsetGetErrorTerm(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], NIComplexSingle errorTerm[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 CalsetGetErrorTermInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], float32 errorTerm[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalsetGetErrorTermSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], float32 errorTermI[], float32 errorTermQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalsetGetFrequencyGrid(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, float64 frequencyGrid[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 CalsetLoadFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char calsetFilePath[]) = 0;
@@ -166,6 +171,7 @@ class NiRFmxVNALibraryInterface {
   virtual int32 GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementMemoryX[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 measurementMemoryY1[], float32 measurementMemoryY2[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 IQFetchDataInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 data[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) = 0;
   virtual int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut) = 0;

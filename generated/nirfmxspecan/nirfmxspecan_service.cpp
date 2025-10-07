@@ -1784,6 +1784,66 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::AMPMCfgReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const AMPMCfgReferenceWaveformInterleavedIQRequest* request, AMPMCfgReferenceWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto reference_waveform = const_cast<float32*>(request->reference_waveform().data());
+      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 signal_type;
+      switch (request->signal_type_enum_case()) {
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformInterleavedIQRequest::SignalTypeEnumCase::kSignalType: {
+          signal_type = static_cast<int32>(request->signal_type());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformInterleavedIQRequest::SignalTypeEnumCase::kSignalTypeRaw: {
+          signal_type = static_cast<int32>(request->signal_type_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::AMPMCfgReferenceWaveformInterleavedIQRequest::SignalTypeEnumCase::SIGNAL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->AMPMCfgReferenceWaveformInterleavedIQ(instrument, selector_string, x0, dx, reference_waveform, array_size, idle_duration_present, signal_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::AMPMCfgReferenceWaveformSplit(::grpc::ServerContext* context, const AMPMCfgReferenceWaveformSplitRequest* request, AMPMCfgReferenceWaveformSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2282,6 +2342,51 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ(::grpc::ServerContext* context, const AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQRequest* request, AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_processed_mean_acquired_waveform()->Resize(actual_array_size * 2, 0);
+        float32* processed_mean_acquired_waveform = response->mutable_processed_mean_acquired_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, processed_mean_acquired_waveform, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_processed_mean_acquired_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::AMPMFetchProcessedMeanAcquiredWaveformSplit(::grpc::ServerContext* context, const AMPMFetchProcessedMeanAcquiredWaveformSplitRequest* request, AMPMFetchProcessedMeanAcquiredWaveformSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2371,6 +2476,51 @@ namespace nirfmxspecan_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::AMPMFetchProcessedReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const AMPMFetchProcessedReferenceWaveformInterleavedIQRequest* request, AMPMFetchProcessedReferenceWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->AMPMFetchProcessedReferenceWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_processed_reference_waveform()->Resize(actual_array_size * 2, 0);
+        float32* processed_reference_waveform = response->mutable_processed_reference_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->AMPMFetchProcessedReferenceWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, processed_reference_waveform, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_processed_reference_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -2562,6 +2712,38 @@ namespace nirfmxspecan_grpc {
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::AnalyzeIQ1WaveformInterleavedIQ(::grpc::ServerContext* context, const AnalyzeIQ1WaveformInterleavedIQRequest* request, AnalyzeIQ1WaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto iq = const_cast<float32*>(request->iq().data());
+      int32 array_size = static_cast<int32>(request->iq().size());
+      int32 reset = request->reset();
+      auto reserved = 0;
+      auto status = library_->AnalyzeIQ1WaveformInterleavedIQ(instrument, selector_string, result_name, x0, dx, iq, array_size, reset, reserved);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -4802,6 +4984,75 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDApplyDigitalPredistortionInterleavedIQ(::grpc::ServerContext* context, const DPDApplyDigitalPredistortionInterleavedIQRequest* request, DPDApplyDigitalPredistortionInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0_in = request->x0_in();
+      float64 dx_in = request->dx_in();
+      auto waveform_in = const_cast<float32*>(request->waveform_in().data());
+      int32 array_size_in = static_cast<int32>(request->waveform_in().size());
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyDigitalPredistortionInterleavedIQRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 measurement_timeout = request->measurement_timeout();
+      float64 x0_out {};
+      float64 dx_out {};
+      int32 actual_array_size {};
+      float64 papr {};
+      float64 power_offset {};
+      while (true) {
+        auto status = library_->DPDApplyDigitalPredistortionInterleavedIQ(instrument, selector_string, x0_in, dx_in, waveform_in, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr, &power_offset);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_waveform_out()->Resize(actual_array_size * 2, 0);
+        float32* waveform_out = response->mutable_waveform_out()->mutable_data();
+        auto array_size_out = actual_array_size;
+        status = library_->DPDApplyDigitalPredistortionInterleavedIQ(instrument, selector_string, x0_in, dx_in, waveform_in, array_size_in, idle_duration_present, measurement_timeout, &x0_out, &dx_out, waveform_out, array_size_out, &actual_array_size, &papr, &power_offset);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0_out(x0_out);
+        response->set_dx_out(dx_out);
+        response->mutable_waveform_out()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        response->set_papr(papr);
+        response->set_power_offset(power_offset);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDApplyDigitalPredistortionSplit(::grpc::ServerContext* context, const DPDApplyDigitalPredistortionSplitRequest* request, DPDApplyDigitalPredistortionSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -4952,6 +5203,72 @@ namespace nirfmxspecan_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        response->set_papr(papr);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDApplyPreDPDSignalConditioningInterleavedIQ(::grpc::ServerContext* context, const DPDApplyPreDPDSignalConditioningInterleavedIQRequest* request, DPDApplyPreDPDSignalConditioningInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0_in = request->x0_in();
+      float64 dx_in = request->dx_in();
+      auto waveform_in = const_cast<float32*>(request->waveform_in().data());
+      int32 array_size_in = static_cast<int32>(request->waveform_in().size());
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningInterleavedIQRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 x0_out {};
+      float64 dx_out {};
+      int32 actual_array_size {};
+      float64 papr {};
+      while (true) {
+        auto status = library_->DPDApplyPreDPDSignalConditioningInterleavedIQ(instrument, selector_string, x0_in, dx_in, waveform_in, array_size_in, idle_duration_present, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_waveform_out()->Resize(actual_array_size * 2, 0);
+        float32* waveform_out = response->mutable_waveform_out()->mutable_data();
+        auto array_size_out = actual_array_size;
+        status = library_->DPDApplyPreDPDSignalConditioningInterleavedIQ(instrument, selector_string, x0_in, dx_in, waveform_in, array_size_in, idle_duration_present, &x0_out, &dx_out, waveform_out, array_size_out, &actual_array_size, &papr);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0_out(x0_out);
+        response->set_dx_out(dx_out);
+        response->mutable_waveform_out()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         response->set_papr(papr);
         return ::grpc::Status::OK;
       }
@@ -5195,6 +5512,32 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(::grpc::ServerContext* context, const DPDCfgApplyDPDUserDPDPolynomialInterleavedIQRequest* request, DPDCfgApplyDPDUserDPDPolynomialInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto dpd_polynomial = const_cast<float32*>(request->dpd_polynomial().data());
+      int32 array_size = static_cast<int32>(request->dpd_polynomial().size());
+      auto status = library_->DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(instrument, selector_string, dpd_polynomial, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDCfgApplyDPDUserDPDPolynomialSplit(::grpc::ServerContext* context, const DPDCfgApplyDPDUserDPDPolynomialSplitRequest* request, DPDCfgApplyDPDUserDPDPolynomialSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5268,6 +5611,49 @@ namespace nirfmxspecan_grpc {
       auto array_size = array_size_size_calculation.size;
 
       auto status = library_->DPDCfgApplyDPDUserLookupTable(instrument, selector_string, lut_input_powers, lut_complex_gains.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDCfgApplyDPDUserLookupTableInterleavedIQ(::grpc::ServerContext* context, const DPDCfgApplyDPDUserLookupTableInterleavedIQRequest* request, DPDCfgApplyDPDUserLookupTableInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto lut_input_powers = const_cast<float32*>(request->lut_input_powers().data());
+      auto lut_complex_gains = const_cast<float32*>(request->lut_complex_gains().data());
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->lut_input_powers_size(),
+        request->lut_complex_gains_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [lut_input_powers, lut_complex_gains] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        lut_input_powers = request->lut_input_powers_size() ? std::move(lut_input_powers) : nullptr;
+        lut_complex_gains = request->lut_complex_gains_size() ? std::move(lut_complex_gains) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->DPDCfgApplyDPDUserLookupTableInterleavedIQ(instrument, selector_string, lut_input_powers, lut_complex_gains, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -5448,6 +5834,34 @@ namespace nirfmxspecan_grpc {
       auto target_waveform = convert_from_grpc<NIComplexSingle>(request->target_waveform());
       int32 array_size = static_cast<int32>(request->target_waveform().size());
       auto status = library_->DPDCfgExtractModelTargetWaveform(instrument, selector_string, x0, dx, target_waveform.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDCfgExtractModelTargetWaveformInterleavedIQ(::grpc::ServerContext* context, const DPDCfgExtractModelTargetWaveformInterleavedIQRequest* request, DPDCfgExtractModelTargetWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto target_waveform = const_cast<float32*>(request->target_waveform().data());
+      int32 array_size = static_cast<int32>(request->target_waveform().size());
+      auto status = library_->DPDCfgExtractModelTargetWaveformInterleavedIQ(instrument, selector_string, x0, dx, target_waveform, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -5898,6 +6312,32 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDCfgPreviousDPDPolynomialInterleavedIQ(::grpc::ServerContext* context, const DPDCfgPreviousDPDPolynomialInterleavedIQRequest* request, DPDCfgPreviousDPDPolynomialInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto previous_dpd_polynomial = const_cast<float32*>(request->previous_dpd_polynomial().data());
+      int32 array_size = static_cast<int32>(request->previous_dpd_polynomial().size());
+      auto status = library_->DPDCfgPreviousDPDPolynomialInterleavedIQ(instrument, selector_string, previous_dpd_polynomial, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDCfgPreviousDPDPolynomialSplit(::grpc::ServerContext* context, const DPDCfgPreviousDPDPolynomialSplitRequest* request, DPDCfgPreviousDPDPolynomialSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -5988,6 +6428,66 @@ namespace nirfmxspecan_grpc {
       }
 
       auto status = library_->DPDCfgReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size, idle_duration_present, signal_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDCfgReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const DPDCfgReferenceWaveformInterleavedIQRequest* request, DPDCfgReferenceWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto reference_waveform = const_cast<float32*>(request->reference_waveform().data());
+      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 signal_type;
+      switch (request->signal_type_enum_case()) {
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformInterleavedIQRequest::SignalTypeEnumCase::kSignalType: {
+          signal_type = static_cast<int32>(request->signal_type());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformInterleavedIQRequest::SignalTypeEnumCase::kSignalTypeRaw: {
+          signal_type = static_cast<int32>(request->signal_type_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::DPDCfgReferenceWaveformInterleavedIQRequest::SignalTypeEnumCase::SIGNAL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->DPDCfgReferenceWaveformInterleavedIQ(instrument, selector_string, x0, dx, reference_waveform, array_size, idle_duration_present, signal_type);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -6219,6 +6719,47 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDFetchDPDPolynomialInterleavedIQ(::grpc::ServerContext* context, const DPDFetchDPDPolynomialInterleavedIQRequest* request, DPDFetchDPDPolynomialInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DPDFetchDPDPolynomialInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_dpd_polynomial()->Resize(actual_array_size * 2, 0);
+        float32* dpd_polynomial = response->mutable_dpd_polynomial()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DPDFetchDPDPolynomialInterleavedIQ(instrument, selector_string, timeout, dpd_polynomial, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_dpd_polynomial()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDFetchDPDPolynomialSplit(::grpc::ServerContext* context, const DPDFetchDPDPolynomialSplitRequest* request, DPDFetchDPDPolynomialSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -6300,6 +6841,47 @@ namespace nirfmxspecan_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDFetchDVRModelInterleavedIQ(::grpc::ServerContext* context, const DPDFetchDVRModelInterleavedIQRequest* request, DPDFetchDVRModelInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DPDFetchDVRModelInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_dvr_model()->Resize(actual_array_size * 2, 0);
+        float32* dvr_model = response->mutable_dvr_model()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DPDFetchDVRModelInterleavedIQ(instrument, selector_string, timeout, dvr_model, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_dvr_model()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -6394,6 +6976,50 @@ namespace nirfmxspecan_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDFetchLookupTableInterleavedIQ(::grpc::ServerContext* context, const DPDFetchLookupTableInterleavedIQRequest* request, DPDFetchLookupTableInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DPDFetchLookupTableInterleavedIQ(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_input_powers()->Resize(actual_array_size, 0);
+        float32* input_powers = response->mutable_input_powers()->mutable_data();
+        response->mutable_complex_gains()->Resize(actual_array_size * 2, 0);
+        float32* complex_gains = response->mutable_complex_gains()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DPDFetchLookupTableInterleavedIQ(instrument, selector_string, timeout, input_powers, complex_gains, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_input_powers()->Resize(actual_array_size, 0);
+        response->mutable_complex_gains()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -6529,6 +7155,51 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(::grpc::ServerContext* context, const DPDFetchProcessedMeanAcquiredWaveformInterleavedIQRequest* request, DPDFetchProcessedMeanAcquiredWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_processed_mean_acquired_waveform()->Resize(actual_array_size * 2, 0);
+        float32* processed_mean_acquired_waveform = response->mutable_processed_mean_acquired_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, processed_mean_acquired_waveform, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_processed_mean_acquired_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDFetchProcessedMeanAcquiredWaveformSplit(::grpc::ServerContext* context, const DPDFetchProcessedMeanAcquiredWaveformSplitRequest* request, DPDFetchProcessedMeanAcquiredWaveformSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -6618,6 +7289,51 @@ namespace nirfmxspecan_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::DPDFetchProcessedReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const DPDFetchProcessedReferenceWaveformInterleavedIQRequest* request, DPDFetchProcessedReferenceWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DPDFetchProcessedReferenceWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_processed_reference_waveform()->Resize(actual_array_size * 2, 0);
+        float32* processed_reference_waveform = response->mutable_processed_reference_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DPDFetchProcessedReferenceWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, processed_reference_waveform, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_processed_reference_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -8533,6 +9249,34 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::IDPDCfgEqualizerCoefficientsInterleavedIQ(::grpc::ServerContext* context, const IDPDCfgEqualizerCoefficientsInterleavedIQRequest* request, IDPDCfgEqualizerCoefficientsInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto equalizer_coefficients = const_cast<float32*>(request->equalizer_coefficients().data());
+      int32 array_size = static_cast<int32>(request->equalizer_coefficients().size());
+      auto status = library_->IDPDCfgEqualizerCoefficientsInterleavedIQ(instrument, selector_string, x0, dx, equalizer_coefficients, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::IDPDCfgEqualizerCoefficientsSplit(::grpc::ServerContext* context, const IDPDCfgEqualizerCoefficientsSplitRequest* request, IDPDCfgEqualizerCoefficientsSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -8594,6 +9338,35 @@ namespace nirfmxspecan_grpc {
       int32 array_size = static_cast<int32>(request->predistorted_waveform().size());
       float64 target_gain = request->target_gain();
       auto status = library_->IDPDCfgPredistortedWaveform(instrument, selector_string, x0, dx, predistorted_waveform.data(), array_size, target_gain);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::IDPDCfgPredistortedWaveformInterleavedIQ(::grpc::ServerContext* context, const IDPDCfgPredistortedWaveformInterleavedIQRequest* request, IDPDCfgPredistortedWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto predistorted_waveform = const_cast<float32*>(request->predistorted_waveform().data());
+      int32 array_size = static_cast<int32>(request->predistorted_waveform().size());
+      float64 target_gain = request->target_gain();
+      auto status = library_->IDPDCfgPredistortedWaveformInterleavedIQ(instrument, selector_string, x0, dx, predistorted_waveform, array_size, target_gain);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -8700,6 +9473,66 @@ namespace nirfmxspecan_grpc {
       }
 
       auto status = library_->IDPDCfgReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size, idle_duration_present, signal_type);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::IDPDCfgReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const IDPDCfgReferenceWaveformInterleavedIQRequest* request, IDPDCfgReferenceWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto reference_waveform = const_cast<float32*>(request->reference_waveform().data());
+      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 signal_type;
+      switch (request->signal_type_enum_case()) {
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformInterleavedIQRequest::SignalTypeEnumCase::kSignalType: {
+          signal_type = static_cast<int32>(request->signal_type());
+          break;
+        }
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformInterleavedIQRequest::SignalTypeEnumCase::kSignalTypeRaw: {
+          signal_type = static_cast<int32>(request->signal_type_raw());
+          break;
+        }
+        case nirfmxspecan_grpc::IDPDCfgReferenceWaveformInterleavedIQRequest::SignalTypeEnumCase::SIGNAL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->IDPDCfgReferenceWaveformInterleavedIQ(instrument, selector_string, x0, dx, reference_waveform, array_size, idle_duration_present, signal_type);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -8841,6 +9674,51 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::IDPDFetchEqualizerCoefficientsInterleavedIQ(::grpc::ServerContext* context, const IDPDFetchEqualizerCoefficientsInterleavedIQRequest* request, IDPDFetchEqualizerCoefficientsInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->IDPDFetchEqualizerCoefficientsInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_equalizer_coefficients()->Resize(actual_array_size * 2, 0);
+        float32* equalizer_coefficients = response->mutable_equalizer_coefficients()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->IDPDFetchEqualizerCoefficientsInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, equalizer_coefficients, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_equalizer_coefficients()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::IDPDFetchEqualizerCoefficientsSplit(::grpc::ServerContext* context, const IDPDFetchEqualizerCoefficientsSplitRequest* request, IDPDFetchEqualizerCoefficientsSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -8936,6 +9814,57 @@ namespace nirfmxspecan_grpc {
         response->set_power_offset(power_offset);
         response->set_gain(gain);
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::IDPDFetchPredistortedWaveformInterleavedIQ(::grpc::ServerContext* context, const IDPDFetchPredistortedWaveformInterleavedIQRequest* request, IDPDFetchPredistortedWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      float64 papr {};
+      float64 power_offset {};
+      float64 gain {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->IDPDFetchPredistortedWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, &papr, &power_offset, &gain, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_predistorted_waveform()->Resize(actual_array_size * 2, 0);
+        float32* predistorted_waveform = response->mutable_predistorted_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->IDPDFetchPredistortedWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, predistorted_waveform, &papr, &power_offset, &gain, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_predistorted_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_papr(papr);
+        response->set_power_offset(power_offset);
+        response->set_gain(gain);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -9051,6 +9980,51 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(::grpc::ServerContext* context, const IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQRequest* request, IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_processed_mean_acquired_waveform()->Resize(actual_array_size * 2, 0);
+        float32* processed_mean_acquired_waveform = response->mutable_processed_mean_acquired_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, processed_mean_acquired_waveform, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_processed_mean_acquired_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::IDPDFetchProcessedMeanAcquiredWaveformSplit(::grpc::ServerContext* context, const IDPDFetchProcessedMeanAcquiredWaveformSplitRequest* request, IDPDFetchProcessedMeanAcquiredWaveformSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -9140,6 +10114,51 @@ namespace nirfmxspecan_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::IDPDFetchProcessedReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const IDPDFetchProcessedReferenceWaveformInterleavedIQRequest* request, IDPDFetchProcessedReferenceWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->IDPDFetchProcessedReferenceWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_processed_reference_waveform()->Resize(actual_array_size * 2, 0);
+        float32* processed_reference_waveform = response->mutable_processed_reference_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->IDPDFetchProcessedReferenceWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, processed_reference_waveform, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_processed_reference_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -9240,6 +10259,52 @@ namespace nirfmxspecan_grpc {
         }
         response->set_papr(papr);
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::IDPDGetEqualizerReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const IDPDGetEqualizerReferenceWaveformInterleavedIQRequest* request, IDPDGetEqualizerReferenceWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 {};
+      float64 dx {};
+      float64 papr {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->IDPDGetEqualizerReferenceWaveformInterleavedIQ(instrument, selector_string, &x0, &dx, nullptr, &papr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_equalizer_reference_waveform()->Resize(actual_array_size * 2, 0);
+        float32* equalizer_reference_waveform = response->mutable_equalizer_reference_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->IDPDGetEqualizerReferenceWaveformInterleavedIQ(instrument, selector_string, &x0, &dx, equalizer_reference_waveform, &papr, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_equalizer_reference_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_papr(papr);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -10142,6 +11207,53 @@ namespace nirfmxspecan_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnService::IQFetchDataInterleavedIQ(::grpc::ServerContext* context, const IQFetchDataInterleavedIQRequest* request, IQFetchDataInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 record_to_fetch = request->record_to_fetch();
+      int64 samples_to_read = request->samples_to_read();
+      float64 t0 {};
+      float64 dt {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->IQFetchDataInterleavedIQ(instrument, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_data()->Resize(actual_array_size * 2, 0);
+        float32* data = response->mutable_data()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->IQFetchDataInterleavedIQ(instrument, selector_string, timeout, record_to_fetch, samples_to_read, &t0, &dt, data, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_t0(t0);
+        response->set_dt(dt);
+        response->mutable_data()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }

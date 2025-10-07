@@ -127,6 +127,11 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxDemod_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxDemod_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+}
+
 int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
 {
   return RFmxDemod_AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
@@ -247,9 +252,19 @@ int32 DDemodCfgEqualizerInitialCoefficients(niRFmxInstrHandle instrumentHandle, 
   return RFmxDemod_DDemodCfgEqualizerInitialCoefficients(instrumentHandle, selectorString, x0, dx, equalizerInitialCoefficients, arraySize);
 }
 
+int32 DDemodCfgEqualizerInitialCoefficientsInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 equalizerInitialCoefficients[], int32 arraySize)
+{
+  return RFmxDemod_DDemodCfgEqualizerInitialCoefficients(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerInitialCoefficients), arraySize/2);
+}
+
 int32 DDemodCfgEqualizerInitialCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 equalizerInitialCoefficientsI[], float32 equalizerInitialCoefficientsQ[], int32 arraySize)
 {
   return RFmxDemod_DDemodCfgEqualizerInitialCoefficientsSplit(instrumentHandle, selectorString, x0, dx, equalizerInitialCoefficientsI, equalizerInitialCoefficientsQ, arraySize);
+}
+
+int32 DDemodCfgEqualizerInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 equalizerMode, int32 equalizerFilterLength, float64 x0, float64 dx, float32 equalizerInitialCoefficients[], int32 equalizerTrainingCount, float64 equalizerConvergenceFactor, int32 arraySize)
+{
+  return RFmxDemod_DDemodCfgEqualizer(instrumentHandle, selectorString, equalizerMode, equalizerFilterLength, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerInitialCoefficients), equalizerTrainingCount, equalizerConvergenceFactor, arraySize/2);
 }
 
 int32 DDemodCfgEqualizerSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 equalizerMode, int32 equalizerFilterLength, float64 x0, float64 dx, float32 equalizerInitialCoefficientsI[], float32 equalizerInitialCoefficientsQ[], int32 equalizerTrainingCount, float64 equalizerConvergenceFactor, int32 arraySize)
@@ -322,6 +337,11 @@ int32 DDemodCfgSymbolMap(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxDemod_DDemodCfgSymbolMap(instrumentHandle, selectorString, symbolMapType, symbolMap, arraySize);
 }
 
+int32 DDemodCfgSymbolMapInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 symbolMapType, float32 symbolMap[], int32 arraySize)
+{
+  return RFmxDemod_DDemodCfgSymbolMap(instrumentHandle, selectorString, symbolMapType, reinterpret_cast<NIComplexSingle*>(symbolMap), arraySize/2);
+}
+
 int32 DDemodCfgSymbolMapSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 symbolMapType, float32 symbolMapI[], float32 symbolMapQ[], int32 arraySize)
 {
   return RFmxDemod_DDemodCfgSymbolMapSplit(instrumentHandle, selectorString, symbolMapType, symbolMapI, symbolMapQ, arraySize);
@@ -347,6 +367,11 @@ int32 DDemodFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char sel
   return RFmxDemod_DDemodFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellationTrace, arraySize, actualArraySize);
 }
 
+int32 DDemodFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationTrace[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxDemod_DDemodFetchConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(constellationTrace), arraySize, actualArraySize);
+}
+
 int32 DDemodFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationTraceI[], float32 constellationTraceQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxDemod_DDemodFetchConstellationTraceSplit(instrumentHandle, selectorString, timeout, constellationTraceI, constellationTraceQ, arraySize, actualArraySize);
@@ -370,6 +395,11 @@ int32 DDemodFetchEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorStrin
 int32 DDemodFetchEqualizerCoefficients(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle equalizerCoefficients[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxDemod_DDemodFetchEqualizerCoefficients(instrumentHandle, selectorString, timeout, x0, dx, equalizerCoefficients, arraySize, actualArraySize);
+}
+
+int32 DDemodFetchEqualizerCoefficientsInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 equalizerCoefficients[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxDemod_DDemodFetchEqualizerCoefficients(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerCoefficients), arraySize, actualArraySize);
 }
 
 int32 DDemodFetchEqualizerCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 equalizerCoefficientsI[], float32 equalizerCoefficientsQ[], int32 arraySize, int32* actualArraySize)
@@ -427,6 +457,11 @@ int32 DDemodFetchMeasurementWaveform(niRFmxInstrHandle instrumentHandle, char se
   return RFmxDemod_DDemodFetchMeasurementWaveform(instrumentHandle, selectorString, timeout, x0, dx, measurementWaveform, arraySize, actualArraySize, samplesPerSymbol, symbolRate);
 }
 
+int32 DDemodFetchMeasurementWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 measurementWaveform[], int32 arraySize, int32* actualArraySize, int32* samplesPerSymbol, float64* symbolRate)
+{
+  return RFmxDemod_DDemodFetchMeasurementWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(measurementWaveform), arraySize, actualArraySize, samplesPerSymbol, symbolRate);
+}
+
 int32 DDemodFetchMeasurementWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 measurementWaveformI[], float32 measurementWaveformQ[], int32 arraySize, int32* actualArraySize, int32* samplesPerSymbol, float64* symbolRate)
 {
   return RFmxDemod_DDemodFetchMeasurementWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, measurementWaveformI, measurementWaveformQ, arraySize, actualArraySize, samplesPerSymbol, symbolRate);
@@ -435,6 +470,11 @@ int32 DDemodFetchMeasurementWaveformSplit(niRFmxInstrHandle instrumentHandle, ch
 int32 DDemodFetchOffsetConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle offsetConstellationTrace[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxDemod_DDemodFetchOffsetConstellationTrace(instrumentHandle, selectorString, timeout, offsetConstellationTrace, arraySize, actualArraySize);
+}
+
+int32 DDemodFetchOffsetConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 offsetConstellationTrace[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxDemod_DDemodFetchOffsetConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(offsetConstellationTrace), arraySize, actualArraySize);
 }
 
 int32 DDemodFetchOffsetConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 offsetConstellationTraceI[], float32 offsetConstellationTraceQ[], int32 arraySize, int32* actualArraySize)
@@ -467,6 +507,11 @@ int32 DDemodFetchReferenceWaveform(niRFmxInstrHandle instrumentHandle, char sele
   return RFmxDemod_DDemodFetchReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, referenceWaveform, arraySize, actualArraySize);
 }
 
+int32 DDemodFetchReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 referenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxDemod_DDemodFetchReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize, actualArraySize);
+}
+
 int32 DDemodFetchReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxDemod_DDemodFetchReferenceWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, referenceWaveformI, referenceWaveformQ, arraySize, actualArraySize);
@@ -482,6 +527,11 @@ int32 DDemodGetEqualizerInitialCoefficients(niRFmxInstrHandle instrumentHandle, 
   return RFmxDemod_DDemodGetEqualizerInitialCoefficients(instrumentHandle, selectorString, x0, dx, equalizerInitialCoefficients, arraySize, actualArraySize);
 }
 
+int32 DDemodGetEqualizerInitialCoefficientsInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* x0, float64* dx, float32 equalizerInitialCoefficients[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxDemod_DDemodGetEqualizerInitialCoefficients(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerInitialCoefficients), arraySize, actualArraySize);
+}
+
 int32 DDemodGetEqualizerInitialCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* x0, float64* dx, float32 equalizerInitialCoefficientsI[], float32 equalizerInitialCoefficientsQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxDemod_DDemodGetEqualizerInitialCoefficientsSplit(instrumentHandle, selectorString, x0, dx, equalizerInitialCoefficientsI, equalizerInitialCoefficientsQ, arraySize, actualArraySize);
@@ -490,6 +540,11 @@ int32 DDemodGetEqualizerInitialCoefficientsSplit(niRFmxInstrHandle instrumentHan
 int32 DDemodGetSymbolMap(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexSingle symbolMap[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxDemod_DDemodGetSymbolMap(instrumentHandle, selectorString, symbolMap, arraySize, actualArraySize);
+}
+
+int32 DDemodGetSymbolMapInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 symbolMap[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxDemod_DDemodGetSymbolMap(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(symbolMap), arraySize, actualArraySize);
 }
 
 int32 DDemodGetSymbolMapSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 symbolMapI[], float32 symbolMapQ[], int32 arraySize, int32* actualArraySize)
@@ -505,6 +560,11 @@ int32 DDemodRead(niRFmxInstrHandle instrumentHandle, char selectorString[], floa
 int32 DDemodSetSymbolMap(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexSingle attrVal[], int32 arraySize)
 {
   return RFmxDemod_DDemodSetSymbolMap(instrumentHandle, selectorString, attrVal, arraySize);
+}
+
+int32 DDemodSetSymbolMapInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 attrVal[], int32 arraySize)
+{
+  return RFmxDemod_DDemodSetSymbolMap(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(attrVal), arraySize/2);
 }
 
 int32 DDemodSetSymbolMapSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 attrValI[], float32 attrValQ[], int32 arraySize)

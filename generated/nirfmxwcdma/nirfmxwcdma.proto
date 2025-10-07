@@ -34,6 +34,7 @@ service NiRFmxWCDMA {
   rpc ACPFetchTotalCarrierPower(ACPFetchTotalCarrierPowerRequest) returns (ACPFetchTotalCarrierPowerResponse);
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformInterleavedIQ(AnalyzeIQ1WaveformInterleavedIQRequest) returns (AnalyzeIQ1WaveformInterleavedIQResponse);
   rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
@@ -121,9 +122,11 @@ service NiRFmxWCDMA {
   rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc ModAccCfgReferenceWaveform(ModAccCfgReferenceWaveformRequest) returns (ModAccCfgReferenceWaveformResponse);
+  rpc ModAccCfgReferenceWaveformInterleavedIQ(ModAccCfgReferenceWaveformInterleavedIQRequest) returns (ModAccCfgReferenceWaveformInterleavedIQResponse);
   rpc ModAccCfgReferenceWaveformSplit(ModAccCfgReferenceWaveformSplitRequest) returns (ModAccCfgReferenceWaveformSplitResponse);
   rpc ModAccCfgSynchronizationModeAndInterval(ModAccCfgSynchronizationModeAndIntervalRequest) returns (ModAccCfgSynchronizationModeAndIntervalResponse);
   rpc ModAccFetchConstellationTrace(ModAccFetchConstellationTraceRequest) returns (ModAccFetchConstellationTraceResponse);
+  rpc ModAccFetchConstellationTraceInterleavedIQ(ModAccFetchConstellationTraceInterleavedIQRequest) returns (ModAccFetchConstellationTraceInterleavedIQResponse);
   rpc ModAccFetchConstellationTraceSplit(ModAccFetchConstellationTraceSplitRequest) returns (ModAccFetchConstellationTraceSplitResponse);
   rpc ModAccFetchDetectedChannel(ModAccFetchDetectedChannelRequest) returns (ModAccFetchDetectedChannelResponse);
   rpc ModAccFetchDetectedChannelArray(ModAccFetchDetectedChannelArrayRequest) returns (ModAccFetchDetectedChannelArrayResponse);
@@ -145,6 +148,7 @@ service NiRFmxWCDMA {
   rpc ModAccFetchRCDEArray(ModAccFetchRCDEArrayRequest) returns (ModAccFetchRCDEArrayResponse);
   rpc ModAccFetchRCDETrace(ModAccFetchRCDETraceRequest) returns (ModAccFetchRCDETraceResponse);
   rpc ModAccFetchReferenceWaveform(ModAccFetchReferenceWaveformRequest) returns (ModAccFetchReferenceWaveformResponse);
+  rpc ModAccFetchReferenceWaveformInterleavedIQ(ModAccFetchReferenceWaveformInterleavedIQRequest) returns (ModAccFetchReferenceWaveformInterleavedIQResponse);
   rpc ModAccFetchReferenceWaveformSplit(ModAccFetchReferenceWaveformSplitRequest) returns (ModAccFetchReferenceWaveformSplitResponse);
   rpc OBWCfgAveraging(OBWCfgAveragingRequest) returns (OBWCfgAveragingResponse);
   rpc OBWCfgRBWFilter(OBWCfgRBWFilterRequest) returns (OBWCfgRBWFilterResponse);
@@ -154,6 +158,7 @@ service NiRFmxWCDMA {
   rpc QEVMCfgAveraging(QEVMCfgAveragingRequest) returns (QEVMCfgAveragingResponse);
   rpc QEVMCfgMeasurementLength(QEVMCfgMeasurementLengthRequest) returns (QEVMCfgMeasurementLengthResponse);
   rpc QEVMFetchConstellationTrace(QEVMFetchConstellationTraceRequest) returns (QEVMFetchConstellationTraceResponse);
+  rpc QEVMFetchConstellationTraceInterleavedIQ(QEVMFetchConstellationTraceInterleavedIQRequest) returns (QEVMFetchConstellationTraceInterleavedIQResponse);
   rpc QEVMFetchConstellationTraceSplit(QEVMFetchConstellationTraceSplitRequest) returns (QEVMFetchConstellationTraceSplitResponse);
   rpc QEVMFetchEVM(QEVMFetchEVMRequest) returns (QEVMFetchEVMResponse);
   rpc QEVMFetchEVMTrace(QEVMFetchEVMTraceRequest) returns (QEVMFetchEVMTraceResponse);
@@ -1312,6 +1317,20 @@ message AnalyzeIQ1WaveformResponse {
   int32 status = 1;
 }
 
+message AnalyzeIQ1WaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message AnalyzeIQ1WaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2374,6 +2393,18 @@ message ModAccCfgReferenceWaveformResponse {
   int32 status = 1;
 }
 
+message ModAccCfgReferenceWaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float reference_waveform = 5;
+}
+
+message ModAccCfgReferenceWaveformInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message ModAccCfgReferenceWaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2411,6 +2442,18 @@ message ModAccFetchConstellationTraceRequest {
 message ModAccFetchConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float constellation = 2;
   int32 actual_array_size = 3;
 }
 
@@ -2714,6 +2757,20 @@ message ModAccFetchReferenceWaveformResponse {
   int32 actual_array_size = 5;
 }
 
+message ModAccFetchReferenceWaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchReferenceWaveformInterleavedIQResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float reference_waveform = 4;
+  int32 actual_array_size = 5;
+}
+
 message ModAccFetchReferenceWaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -2840,6 +2897,18 @@ message QEVMFetchConstellationTraceRequest {
 message QEVMFetchConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message QEVMFetchConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message QEVMFetchConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float constellation = 2;
   int32 actual_array_size = 3;
 }
 
