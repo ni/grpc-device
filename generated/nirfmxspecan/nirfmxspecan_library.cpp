@@ -1064,7 +1064,7 @@ int32 NiRFmxSpecAnLibrary::AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle ins
   if (!function_pointers_.AnalyzeIQ1WaveformInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_AnalyzeIQ1Waveform.");
   }
-  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 NiRFmxSpecAnLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -1624,7 +1624,7 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(niRFmxIn
   if (!function_pointers_.DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial.");
   }
-  return function_pointers_.DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(DPDPolynomial), arraySize/2);
+  return function_pointers_.DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(dpdPolynomial), arraySize/2);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 dpdPolynomialI[], float32 dpdPolynomialQ[], int32 arraySize)
@@ -1648,7 +1648,7 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTableInterleavedIQ(niRFmxInst
   if (!function_pointers_.DPDCfgApplyDPDUserLookupTableInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserLookupTable.");
   }
-  return function_pointers_.DPDCfgApplyDPDUserLookupTableInterleavedIQ(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(LUTComplexGains), arraySize/2);
+  return function_pointers_.DPDCfgApplyDPDUserLookupTableInterleavedIQ(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(lutComplexGains), arraySize/2);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGainsI[], float32 lutComplexGainsQ[], int32 arraySize)
@@ -1872,7 +1872,7 @@ int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomialInterleavedIQ(niRFmxInstrHandle 
   if (!function_pointers_.DPDFetchDPDPolynomialInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchDPDPolynomial.");
   }
-  return function_pointers_.DPDFetchDPDPolynomialInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(DPDPolynomial), arraySize, actualArraySize);
+  return function_pointers_.DPDFetchDPDPolynomialInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dpdPolynomial), arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDFetchDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dpdPolynomialI[], float32 dpdPolynomialQ[], int32 arraySize, int32* actualArraySize)
@@ -1896,7 +1896,7 @@ int32 NiRFmxSpecAnLibrary::DPDFetchDVRModelInterleavedIQ(niRFmxInstrHandle instr
   if (!function_pointers_.DPDFetchDVRModelInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDFetchDVRModel.");
   }
-  return function_pointers_.DPDFetchDVRModelInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(DVRModel), arraySize, actualArraySize);
+  return function_pointers_.DPDFetchDVRModelInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dvrModel), arraySize, actualArraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDFetchDVRModelSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dvrModelI[], float32 dvrModelQ[], int32 arraySize, int32* actualArraySize)

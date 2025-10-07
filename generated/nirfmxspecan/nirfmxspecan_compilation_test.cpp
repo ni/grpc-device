@@ -339,7 +339,7 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
 
 int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
 {
-  return RFmxSpecAn_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+  return RFmxSpecAn_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -689,7 +689,7 @@ int32 DPDCfgApplyDPDUserDPDPolynomial(niRFmxInstrHandle instrumentHandle, char s
 
 int32 DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 dpdPolynomial[], int32 arraySize)
 {
-  return RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(DPDPolynomial), arraySize/2);
+  return RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(dpdPolynomial), arraySize/2);
 }
 
 int32 DPDCfgApplyDPDUserDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 dpdPolynomialI[], float32 dpdPolynomialQ[], int32 arraySize)
@@ -704,7 +704,7 @@ int32 DPDCfgApplyDPDUserLookupTable(niRFmxInstrHandle instrumentHandle, char sel
 
 int32 DPDCfgApplyDPDUserLookupTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGains[], int32 arraySize)
 {
-  return RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(LUTComplexGains), arraySize/2);
+  return RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(lutComplexGains), arraySize/2);
 }
 
 int32 DPDCfgApplyDPDUserLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGainsI[], float32 lutComplexGainsQ[], int32 arraySize)
@@ -844,7 +844,7 @@ int32 DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorStr
 
 int32 DPDFetchDPDPolynomialInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dpdPolynomial[], int32 arraySize, int32* actualArraySize)
 {
-  return RFmxSpecAn_DPDFetchDPDPolynomial(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(DPDPolynomial), arraySize, actualArraySize);
+  return RFmxSpecAn_DPDFetchDPDPolynomial(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dpdPolynomial), arraySize, actualArraySize);
 }
 
 int32 DPDFetchDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dpdPolynomialI[], float32 dpdPolynomialQ[], int32 arraySize, int32* actualArraySize)
@@ -859,7 +859,7 @@ int32 DPDFetchDVRModel(niRFmxInstrHandle instrumentHandle, char selectorString[]
 
 int32 DPDFetchDVRModelInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dvrModel[], int32 arraySize, int32* actualArraySize)
 {
-  return RFmxSpecAn_DPDFetchDVRModel(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(DVRModel), arraySize, actualArraySize);
+  return RFmxSpecAn_DPDFetchDVRModel(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dvrModel), arraySize, actualArraySize);
 }
 
 int32 DPDFetchDVRModelSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dvrModelI[], float32 dvrModelQ[], int32 arraySize, int32* actualArraySize)

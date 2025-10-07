@@ -155,7 +155,7 @@ int32 NiRFmxPulseLibrary::AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle inst
   if (!function_pointers_.AnalyzeIQ1WaveformInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_AnalyzeIQ1Waveform.");
   }
-  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 NiRFmxPulseLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -411,7 +411,7 @@ int32 NiRFmxPulseLibrary::FetchIQTraceInterleavedIQ(niRFmxInstrHandle instrument
   if (!function_pointers_.FetchIQTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchIQTrace.");
   }
-  return function_pointers_.FetchIQTraceInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(IQData), arraySize, actualArraySize);
+  return function_pointers_.FetchIQTraceInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(iqData), arraySize, actualArraySize);
 }
 
 int32 NiRFmxPulseLibrary::FetchIQTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqDataI[], float32 iqDataQ[], int32 arraySize, int32* actualArraySize)

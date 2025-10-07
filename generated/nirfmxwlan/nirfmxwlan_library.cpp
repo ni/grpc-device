@@ -317,7 +317,7 @@ int32 NiRFmxWLANLibrary::AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instr
   if (!function_pointers_.AnalyzeIQ1WaveformInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeIQ1Waveform.");
   }
-  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 NiRFmxWLANLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -341,7 +341,7 @@ int32 NiRFmxWLANLibrary::AnalyzeNWaveformsIQInterleavedIQ(niRFmxInstrHandle inst
   if (!function_pointers_.AnalyzeNWaveformsIQInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AnalyzeNWaveformsIQ.");
   }
-  return function_pointers_.AnalyzeNWaveformsIQInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), iqSize, arraySize/2, reset);
+  return function_pointers_.AnalyzeNWaveformsIQInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), iqSize, arraySize/2, reset);
 }
 
 int32 NiRFmxWLANLibrary::AnalyzeNWaveformsIQSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iqi[], float32 iqq[], int32 iqSize[], int32 arraySize, int32 reset)
@@ -389,7 +389,7 @@ int32 NiRFmxWLANLibrary::AutoDetectSignalAnalysisOnlyInterleavedIQ(niRFmxInstrHa
   if (!function_pointers_.AutoDetectSignalAnalysisOnlyInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_AutoDetectSignalAnalysisOnly.");
   }
-  return function_pointers_.AutoDetectSignalAnalysisOnlyInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2);
+  return function_pointers_.AutoDetectSignalAnalysisOnlyInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2);
 }
 
 int32 NiRFmxWLANLibrary::AutoDetectSignalAnalysisOnlySplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize)

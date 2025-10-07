@@ -19,7 +19,7 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
 
 int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
 {
-  return RFmxWLAN_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+  return RFmxWLAN_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -34,7 +34,7 @@ int32 AnalyzeNWaveformsIQ(niRFmxInstrHandle instrumentHandle, char selectorStrin
 
 int32 AnalyzeNWaveformsIQInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iq[], int32 iqSize[], int32 arraySize, int32 reset)
 {
-  return RFmxWLAN_AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), iqSize, arraySize/2, reset);
+  return RFmxWLAN_AnalyzeNWaveformsIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), iqSize, arraySize/2, reset);
 }
 
 int32 AnalyzeNWaveformsIQSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iqi[], float32 iqq[], int32 iqSize[], int32 arraySize, int32 reset)
@@ -64,7 +64,7 @@ int32 AutoDetectSignalAnalysisOnly(niRFmxInstrHandle instrumentHandle, char sele
 
 int32 AutoDetectSignalAnalysisOnlyInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 iq[], int32 arraySize)
 {
-  return RFmxWLAN_AutoDetectSignalAnalysisOnly(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2);
+  return RFmxWLAN_AutoDetectSignalAnalysisOnly(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2);
 }
 
 int32 AutoDetectSignalAnalysisOnlySplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize)

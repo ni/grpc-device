@@ -102,7 +102,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iq)',
                 'direction': 'in',
                 'name': 'iq',
                 'size': {
@@ -1256,7 +1256,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQData)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iqData)',
                 'direction': 'out',
                 'name': 'iqData',
                 'size': {

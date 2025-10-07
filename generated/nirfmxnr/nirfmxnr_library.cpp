@@ -485,7 +485,7 @@ int32 NiRFmxNRLibrary::AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrum
   if (!function_pointers_.AnalyzeIQ1WaveformInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_AnalyzeIQ1Waveform.");
   }
-  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 NiRFmxNRLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -509,7 +509,7 @@ int32 NiRFmxNRLibrary::AnalyzeNWaveformsIQInterleavedIQ(niRFmxInstrHandle instru
   if (!function_pointers_.AnalyzeNWaveformsIQInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_AnalyzeNWaveformsIQ.");
   }
-  return function_pointers_.AnalyzeNWaveformsIQInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), iqSize, arraySize/2, reset);
+  return function_pointers_.AnalyzeNWaveformsIQInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), iqSize, arraySize/2, reset);
 }
 
 int32 NiRFmxNRLibrary::AnalyzeNWaveformsIQSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0[], float64 dx[], float32 iqi[], float32 iqq[], int32 iqSize[], int32 arraySize, int32 reset)
@@ -1269,7 +1269,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPBCHDMRSConstellationTraceInterleavedIQ(niRFmx
   if (!function_pointers_.ModAccFetchPBCHDMRSConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPBCHDMRSConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPBCHDMRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PBCHDMRSConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPBCHDMRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(pbchdmrsConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPBCHDMRSConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 pbchdmrsConstellationI[], float32 pbchdmrsConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1309,7 +1309,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPBCHDataConstellationTraceInterleavedIQ(niRFmx
   if (!function_pointers_.ModAccFetchPBCHDataConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPBCHDataConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPBCHDataConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PBCHDataConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPBCHDataConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(pbchDataConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPBCHDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 pbchDataConstellationI[], float32 pbchDataConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1349,7 +1349,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPDSCH1024QAMConstellationTraceInterleavedIQ(ni
   if (!function_pointers_.ModAccFetchPDSCH1024QAMConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPDSCH1024QAMConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPDSCH1024QAMConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(QAM1024Constellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPDSCH1024QAMConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(qam1024Constellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPDSCH1024QAMConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam1024ConstellationI[], float32 qam1024ConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1373,7 +1373,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPDSCH16QAMConstellationTraceInterleavedIQ(niRF
   if (!function_pointers_.ModAccFetchPDSCH16QAMConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPDSCH16QAMConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPDSCH16QAMConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(QAM16Constellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPDSCH16QAMConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(qam16Constellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPDSCH16QAMConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam16ConstellationI[], float32 qam16ConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1397,7 +1397,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQ(niR
   if (!function_pointers_.ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPDSCH256QAMConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(QAM256Constellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(qam256Constellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPDSCH256QAMConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam256ConstellationI[], float32 qam256ConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1421,7 +1421,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQ(niRF
   if (!function_pointers_.ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPDSCH64QAMConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(QAM64Constellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(qam64Constellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPDSCH64QAMConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam64ConstellationI[], float32 qam64ConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1445,7 +1445,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPDSCH8PSKConstellationTraceInterleavedIQ(niRFm
   if (!function_pointers_.ModAccFetchPDSCH8PSKConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPDSCH8PSKConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPDSCH8PSKConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PSK8Constellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPDSCH8PSKConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(psk8Constellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPDSCH8PSKConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 psk8ConstellationI[], float32 psk8ConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1469,7 +1469,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPDSCHDMRSConstellationTraceInterleavedIQ(niRFm
   if (!function_pointers_.ModAccFetchPDSCHDMRSConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPDSCHDMRSConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPDSCHDMRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PDSCHDMRSConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPDSCHDMRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(pdschdmrsConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPDSCHDMRSConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 pdschdmrsConstellationI[], float32 pdschdmrsConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1493,7 +1493,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPDSCHDataConstellationTraceInterleavedIQ(niRFm
   if (!function_pointers_.ModAccFetchPDSCHDataConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPDSCHDataConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPDSCHDataConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PDSCHDataConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPDSCHDataConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(pdschDataConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPDSCHDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 pdschDataConstellationI[], float32 pdschDataConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1525,7 +1525,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPDSCHPTRSConstellationTraceInterleavedIQ(niRFm
   if (!function_pointers_.ModAccFetchPDSCHPTRSConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPDSCHPTRSConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPDSCHPTRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PDSCHPTRSConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPDSCHPTRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(pdschptrsConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPDSCHPTRSConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 pdschptrsConstellationI[], float32 pdschptrsConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1549,7 +1549,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPDSCHQPSKConstellationTraceInterleavedIQ(niRFm
   if (!function_pointers_.ModAccFetchPDSCHQPSKConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPDSCHQPSKConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPDSCHQPSKConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(QPSKConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPDSCHQPSKConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(qpskConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPDSCHQPSKConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qpskConstellationI[], float32 qpskConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1573,7 +1573,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPSSConstellationTraceInterleavedIQ(niRFmxInstr
   if (!function_pointers_.ModAccFetchPSSConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPSSConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPSSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PSSConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPSSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(pssConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPSSConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 pssConstellationI[], float32 pssConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1613,7 +1613,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPUSCHDMRSConstellationTraceInterleavedIQ(niRFm
   if (!function_pointers_.ModAccFetchPUSCHDMRSConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPUSCHDMRSConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPUSCHDMRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PUSCHDMRSConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPUSCHDMRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(puschdmrsConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPUSCHDMRSConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 puschdmrsConstellationI[], float32 puschdmrsConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1637,7 +1637,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPUSCHDataConstellationTraceInterleavedIQ(niRFm
   if (!function_pointers_.ModAccFetchPUSCHDataConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPUSCHDataConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPUSCHDataConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PUSCHDataConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPUSCHDataConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(puschDataConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPUSCHDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 puschDataConstellationI[], float32 puschDataConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1669,7 +1669,7 @@ int32 NiRFmxNRLibrary::ModAccFetchPUSCHPTRSConstellationTraceInterleavedIQ(niRFm
   if (!function_pointers_.ModAccFetchPUSCHPTRSConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchPUSCHPTRSConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPUSCHPTRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(PUSCHPTRSConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPUSCHPTRSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(puschptrsConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchPUSCHPTRSConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 puschptrsConstellationI[], float32 puschptrsConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1781,7 +1781,7 @@ int32 NiRFmxNRLibrary::ModAccFetchSSSConstellationTraceInterleavedIQ(niRFmxInstr
   if (!function_pointers_.ModAccFetchSSSConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxNR_ModAccFetchSSSConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchSSSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(SSSConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchSSSConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(sssConstellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxNRLibrary::ModAccFetchSSSConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 sssConstellationI[], float32 sssConstellationQ[], int32 arraySize, int32* actualArraySize)

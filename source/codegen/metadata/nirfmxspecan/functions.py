@@ -2475,7 +2475,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iq)',
                 'direction': 'in',
                 'name': 'iq',
                 'size': {
@@ -4952,7 +4952,7 @@ functions = {
                 'type': 'char[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(DPDPolynomial)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dpdPolynomial)',
                 'direction': 'in',
                 'name': 'dpdPolynomial',
                 'size': {
@@ -5087,7 +5087,7 @@ functions = {
                 'type': 'float32[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(LUTComplexGains)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(lutComplexGains)',
                 'direction': 'in',
                 'name': 'lutComplexGains',
                 'size': {
@@ -6063,7 +6063,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(DPDPolynomial)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dpdPolynomial)',
                 'direction': 'out',
                 'name': 'dpdPolynomial',
                 'size': {
@@ -6198,7 +6198,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(DVRModel)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dvrModel)',
                 'direction': 'out',
                 'name': 'dvrModel',
                 'size': {

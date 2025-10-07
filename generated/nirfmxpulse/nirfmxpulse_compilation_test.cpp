@@ -19,7 +19,7 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
 
 int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
 {
-  return RFmxPulse_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(IQ), arraySize/2, reset, reserved);
+  return RFmxPulse_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -179,7 +179,7 @@ int32 FetchIQTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], fl
 
 int32 FetchIQTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqData[], int32 arraySize, int32* actualArraySize)
 {
-  return RFmxPulse_FetchIQTrace(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(IQData), arraySize, actualArraySize);
+  return RFmxPulse_FetchIQTrace(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(iqData), arraySize, actualArraySize);
 }
 
 int32 FetchIQTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 iqDataI[], float32 iqDataQ[], int32 arraySize, int32* actualArraySize)

@@ -786,7 +786,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iq)',
                 'direction': 'in',
                 'name': 'iq',
                 'size': {
@@ -994,7 +994,7 @@ functions = {
                 'type': 'float64[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iq)',
                 'direction': 'in',
                 'name': 'iq',
                 'size': {
@@ -4064,7 +4064,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PBCHDMRSConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pbchdmrsConstellation)',
                 'direction': 'out',
                 'grpc_name': 'pbch_dmrs_constellation',
                 'name': 'pbchdmrsConstellation',
@@ -4306,7 +4306,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PBCHDataConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pbchDataConstellation)',
                 'direction': 'out',
                 'name': 'pbchDataConstellation',
                 'size': {
@@ -4545,7 +4545,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(QAM1024Constellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qam1024Constellation)',
                 'direction': 'out',
                 'name': 'qam1024Constellation',
                 'size': {
@@ -4680,7 +4680,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(QAM16Constellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qam16Constellation)',
                 'direction': 'out',
                 'name': 'qam16Constellation',
                 'size': {
@@ -4815,7 +4815,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(QAM256Constellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qam256Constellation)',
                 'direction': 'out',
                 'name': 'qam256Constellation',
                 'size': {
@@ -4950,7 +4950,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(QAM64Constellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qam64Constellation)',
                 'direction': 'out',
                 'name': 'qam64Constellation',
                 'size': {
@@ -5085,7 +5085,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PSK8Constellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(psk8Constellation)',
                 'direction': 'out',
                 'name': 'psk8Constellation',
                 'size': {
@@ -5221,7 +5221,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PDSCHDMRSConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pdschdmrsConstellation)',
                 'direction': 'out',
                 'grpc_name': 'pdsch_dmrs_constellation',
                 'name': 'pdschdmrsConstellation',
@@ -5359,7 +5359,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PDSCHDataConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pdschDataConstellation)',
                 'direction': 'out',
                 'name': 'pdschDataConstellation',
                 'size': {
@@ -5536,7 +5536,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PDSCHPTRSConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pdschptrsConstellation)',
                 'direction': 'out',
                 'grpc_name': 'pdsch_ptrs_constellation',
                 'name': 'pdschptrsConstellation',
@@ -5674,7 +5674,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(QPSKConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qpskConstellation)',
                 'direction': 'out',
                 'name': 'qpskConstellation',
                 'size': {
@@ -5809,7 +5809,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PSSConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pssConstellation)',
                 'direction': 'out',
                 'name': 'pssConstellation',
                 'size': {
@@ -6049,7 +6049,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PUSCHDMRSConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(puschdmrsConstellation)',
                 'direction': 'out',
                 'grpc_name': 'pusch_dmrs_constellation',
                 'name': 'puschdmrsConstellation',
@@ -6187,7 +6187,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PUSCHDataConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(puschDataConstellation)',
                 'direction': 'out',
                 'name': 'puschDataConstellation',
                 'size': {
@@ -6364,7 +6364,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(PUSCHPTRSConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(puschptrsConstellation)',
                 'direction': 'out',
                 'grpc_name': 'pusch_ptrs_constellation',
                 'name': 'puschptrsConstellation',
@@ -7068,7 +7068,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(SSSConstellation)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(sssConstellation)',
                 'direction': 'out',
                 'name': 'sssConstellation',
                 'size': {

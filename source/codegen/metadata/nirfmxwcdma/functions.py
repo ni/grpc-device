@@ -670,7 +670,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(IQ)',
+                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iq)',
                 'direction': 'in',
                 'name': 'iq',
                 'size': {
