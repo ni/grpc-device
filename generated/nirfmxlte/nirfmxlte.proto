@@ -4388,8 +4388,9 @@ message ModAccFetchPSSCHConstellationTraceInterleavedIQRequest {
 message ModAccFetchPSSCHConstellationTraceInterleavedIQResponse {
   int32 status = 1;
   repeated float data_constellation = 2;
-  repeated float dmrs_constellation = 3;
-  int32 actual_array_size = 4;
+  int32 data_constellation_actual_array_size = 3;
+  repeated float dmrs_constellation = 4;
+  int32 dmrs_constellation_actual_array_size = 5;
 }
 
 message ModAccFetchPSSCHConstellationTraceSplitRequest {

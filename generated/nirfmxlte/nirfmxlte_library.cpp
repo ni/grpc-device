@@ -2138,12 +2138,12 @@ int32 NiRFmxLTELibrary::ModAccFetchPSSCHConstellationTrace(niRFmxInstrHandle ins
   return function_pointers_.ModAccFetchPSSCHConstellationTrace(instrumentHandle, selectorString, timeout, dataConstellation, dataConstellationArraySize, dataConstellationActualArraySize, dmrsConstellation, dmrsConstellationArraySize, dmrsConstellationActualArraySize);
 }
 
-int32 NiRFmxLTELibrary::ModAccFetchPSSCHConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellation[], float32 dmrsConstellation[], int32 arraySize, int32* actualArraySize)
+int32 NiRFmxLTELibrary::ModAccFetchPSSCHConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellation[], int32 dataConstellationArraySize, int32* dataConstellationActualArraySize, float32 dmrsConstellation[], int32 dmrsConstellationArraySize, int32* dmrsConstellationActualArraySize)
 {
   if (!function_pointers_.ModAccFetchPSSCHConstellationTraceInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxLTE_ModAccFetchPSSCHConstellationTrace.");
   }
-  return function_pointers_.ModAccFetchPSSCHConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dataConstellation), reinterpret_cast<NIComplexSingle*>(dmrsConstellation), arraySize, actualArraySize);
+  return function_pointers_.ModAccFetchPSSCHConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dataConstellation), dataConstellationArraySize, dataConstellationActualArraySize, reinterpret_cast<NIComplexSingle*>(dmrsConstellation), dmrsConstellationArraySize, dmrsConstellationActualArraySize);
 }
 
 int32 NiRFmxLTELibrary::ModAccFetchPSSCHConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellationI[], float32 dataConstellationQ[], int32 dataConstellationArraySize, int32* dataConstellationActualArraySize, float32 dmrsConstellationI[], float32 dmrsConstellationQ[], int32 dmrsConstellationArraySize, int32* dmrsConstellationActualArraySize)

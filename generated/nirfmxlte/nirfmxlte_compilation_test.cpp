@@ -1107,9 +1107,9 @@ int32 ModAccFetchPSSCHConstellationTrace(niRFmxInstrHandle instrumentHandle, cha
   return RFmxLTE_ModAccFetchPSSCHConstellationTrace(instrumentHandle, selectorString, timeout, dataConstellation, dataConstellationArraySize, dataConstellationActualArraySize, dmrsConstellation, dmrsConstellationArraySize, dmrsConstellationActualArraySize);
 }
 
-int32 ModAccFetchPSSCHConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellation[], float32 dmrsConstellation[], int32 arraySize, int32* actualArraySize)
+int32 ModAccFetchPSSCHConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellation[], int32 dataConstellationArraySize, int32* dataConstellationActualArraySize, float32 dmrsConstellation[], int32 dmrsConstellationArraySize, int32* dmrsConstellationActualArraySize)
 {
-  return RFmxLTE_ModAccFetchPSSCHConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dataConstellation), reinterpret_cast<NIComplexSingle*>(dmrsConstellation), arraySize, actualArraySize);
+  return RFmxLTE_ModAccFetchPSSCHConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dataConstellation), dataConstellationArraySize, dataConstellationActualArraySize, reinterpret_cast<NIComplexSingle*>(dmrsConstellation), dmrsConstellationArraySize, dmrsConstellationActualArraySize);
 }
 
 int32 ModAccFetchPSSCHConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellationI[], float32 dataConstellationQ[], int32 dataConstellationArraySize, int32* dataConstellationActualArraySize, float32 dmrsConstellationI[], float32 dmrsConstellationQ[], int32 dmrsConstellationArraySize, int32* dmrsConstellationActualArraySize)

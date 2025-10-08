@@ -8629,18 +8629,20 @@ namespace nirfmxlte_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       float64 timeout = request->timeout();
-      int32 actual_array_size {};
+      int32 data_constellation_actual_array_size {};
+      int32 dmrs_constellation_actual_array_size {};
       while (true) {
-        auto status = library_->ModAccFetchPSSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, nullptr, nullptr, 0, &actual_array_size);
+        auto status = library_->ModAccFetchPSSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &data_constellation_actual_array_size, nullptr, 0, &dmrs_constellation_actual_array_size);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
-        response->mutable_data_constellation()->Resize(actual_array_size * 2, 0);
+        response->mutable_data_constellation()->Resize(data_constellation_actual_array_size * 2, 0);
         float32* data_constellation = response->mutable_data_constellation()->mutable_data();
-        response->mutable_dmrs_constellation()->Resize(actual_array_size * 2, 0);
+        response->mutable_dmrs_constellation()->Resize(dmrs_constellation_actual_array_size * 2, 0);
         float32* dmrs_constellation = response->mutable_dmrs_constellation()->mutable_data();
-        auto array_size = actual_array_size;
-        status = library_->ModAccFetchPSSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, data_constellation, dmrs_constellation, array_size, &actual_array_size);
+        auto data_constellation_array_size = data_constellation_actual_array_size;
+        auto dmrs_constellation_array_size = dmrs_constellation_actual_array_size;
+        status = library_->ModAccFetchPSSCHConstellationTraceInterleavedIQ(instrument, selector_string, timeout, data_constellation, data_constellation_array_size, &data_constellation_actual_array_size, dmrs_constellation, dmrs_constellation_array_size, &dmrs_constellation_actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -8649,9 +8651,10 @@ namespace nirfmxlte_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        response->mutable_data_constellation()->Resize(actual_array_size * 2, 0);
-        response->mutable_dmrs_constellation()->Resize(actual_array_size * 2, 0);
-        response->set_actual_array_size(actual_array_size * 2);
+        response->mutable_data_constellation()->Resize(data_constellation_actual_array_size * 2, 0);
+        response->set_data_constellation_actual_array_size(data_constellation_actual_array_size * 2);
+        response->mutable_dmrs_constellation()->Resize(dmrs_constellation_actual_array_size * 2, 0);
+        response->set_dmrs_constellation_actual_array_size(dmrs_constellation_actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
