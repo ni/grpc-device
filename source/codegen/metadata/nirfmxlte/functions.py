@@ -8085,10 +8085,20 @@ functions = {
                 'name': 'dataConstellation',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'actualArraySize'
+                    'value': 'dataConstellationArraySize',
+                    'value_twist': 'dataConstellationActualArraySize'
                 },
                 'type': 'float32[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dataConstellationArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataConstellationActualArraySize',
+                'type': 'int32'
             },
             {
                 'casted_name': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)',
@@ -8096,19 +8106,19 @@ functions = {
                 'name': 'dmrsConstellation',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'arraySize',
-                    'value_twist': 'actualArraySize'
+                    'value': 'dmrsConstellationArraySize',
+                    'value_twist': 'dmrsConstellationActualArraySize'
                 },
                 'type': 'float32[]'
             },
             {
                 'direction': 'in',
-                'name': 'arraySize',
+                'name': 'dmrsConstellationArraySize',
                 'type': 'int32'
             },
             {
                 'direction': 'out',
-                'name': 'actualArraySize',
+                'name': 'dmrsConstellationActualArraySize',
                 'type': 'int32'
             }
         ],
