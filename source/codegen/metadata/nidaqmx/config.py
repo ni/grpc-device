@@ -2,6 +2,7 @@
 config = {
     'api_version': '23.0.0',
     'c_header': 'NIDAQmx.h',
+    'additional_headers': { 'NIDAQmxInternal.h': ['library_interface.h'] },
     'c_function_prefix': 'DAQmx',
     'service_class_prefix': 'NiDAQmx',
     'java_package': 'com.ni.grpc.nidaqmx',
