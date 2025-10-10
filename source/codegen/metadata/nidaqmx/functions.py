@@ -17499,11 +17499,6 @@ functions = {
                 'direction': 'in',
                 'is_list': True,
                 'name': 'writeArray',
-                'size': {
-                    'mechanism': 'custom-code',
-                    'python_value': '0',
-                    'value': '0'
-                },
                 'type': 'const uInt8[]'
             },
             {

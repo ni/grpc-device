@@ -12,29 +12,23 @@ namespace nidaqmx_grpc {
 
 ::grpc::Status NiDAQmxService::ReadAnalogWaveforms(::grpc::ServerContext* context, const ReadAnalogWaveformsRequest* request, ReadAnalogWaveformsResponse* response)
 {
-  // // Validate request parameters
-  // if (!request->has_task()) {
-  //   return ::grpc::Status(::grpc::StatusCode::INVALID_ARGUMENT, "Task handle is required");
-  // }
-
-  // auto task_handle = request->task().id();
-  // auto number_of_samples_per_channel = request->number_of_samples_per_channel();
-  // auto timeout = request->timeout();
-  // auto waveform_attribute_mode = request->waveform_attribute_mode();
-
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
   try {
-    // TODO: Implement the actual waveform reading logic
-    // This will need to:
-    // 1. Call the appropriate NI-DAQmx functions to read analog data
-    // 2. Convert the raw data into AnalogWaveform proto messages
-    // 3. Handle timing and channel information based on waveform_attribute_mode
-    // 4. Populate the response with the waveforms array
-    
-    // For now, return a placeholder implementation
+    auto task_grpc_session = request->task();
+    TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+
+    auto number_of_samples_per_channel = request->number_of_samples_per_channel();
+    auto timeout = request->timeout();
+    auto waveform_attribute_mode = request->waveform_attribute_mode();
+
+    // TODO: Implement the actual waveform reading logic, similar to read_analog_waveforms() in nidaqmx-python\generated\nidaqmx\_library_interpreter.py 
+    // For now, just return UNIMPLEMENTED status.
     return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "ReadAnalogWaveforms implementation pending");
   }
-  catch (const std::exception& ex) {
-    return ::grpc::Status(::grpc::StatusCode::INTERNAL, std::string("Error reading analog waveforms: ") + ex.what());
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
   }
 }
 

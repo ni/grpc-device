@@ -4,50 +4,53 @@ functions_override_metadata = {
         'codegen_method': 'CustomCodeNoLibrary',
         'parameters': [
             {
-                'name': 'taskHandle',
-                'type': 'TaskHandle',
-                'direction': 'in'
-            },
-            {
-                'name': 'numberOfSamplesPerChannel',
-                'type': 'int32',
-                'direction': 'in'
-            },
-            {
-                'name': 'timeout',
-                'type': 'float64',
-                'direction': 'in'
-            },
-            # We need to import waveforms.proto or something for this to work
-            # {
-            #     'name': 'waveforms',
-            #     'type': 'AnalogWaveform[]',
-            #     'direction': 'out'
-            # },
-            {
+                'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
-                'name': 'arraySize',
+                'is_optional_in_python': False,
+                'name': 'task',
+                'python_data_type': 'TaskHandle',
+                'python_description': '',
+                'python_type_annotation': 'TaskHandle',
+                'type': 'TaskHandle'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'numberOfSamplesPerChannel',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
                 'type': 'int32'
             },
             {
+                'ctypes_data_type': 'ctypes.c_double',
+                'direction': 'in',
+                'is_optional_in_python': True,
+                'name': 'timeout',
+                'python_data_type': 'float',
+                'python_default_value': '10.0',
+                'python_description': 'Specifies the time in seconds to wait for the device to respond before timing out.',
+                'python_type_annotation': 'Optional[float]',
+                'type': 'float64'
+            },
+            {
+                # TODO: change this to the WaveformAttributeMode enum
                 'name': 'waveformAttributeMode',
                 'type': 'int32',
                 'direction': 'in'
-            }
-        ],
-        'documentation': {
-            'description': 'Reads analog waveforms from the specified task'
-        }
+            },
+            # We need to import waveforms.proto from ni-apis for this
+            # {
+            #     'name': 'waveforms',
+            #     'type': 'repeated ni.protobuf.types.AnalogWaveformDouble',
+            #     'direction': 'out'
+            # }
+        ]
     }
 }
 
 functions_validation_suppressions = {
-    'ReadAnalogWaveforms': {
-        'parameters': {
-            # size is determined by the number of channels in the task
-            'waveforms': ['ARRAY_PARAMETER_NEEDS_SIZE']
-        }
-    },
     'WriteCtrFreq': {
         'parameters': {
             # size is determined by numSampsPerChan and how many channels are in the task
@@ -73,6 +76,12 @@ functions_validation_suppressions = {
         'parameters': {
             # size is determined by numSampsPerChan and how many channels are in the task
             'writeArray': ['ARRAY_PARAMETER_NEEDS_SIZE'],
+        }
+    },
+    'ReadAnalogWaveforms': {
+        'parameters': {
+            # size is determined by the number of channels in the task
+            'waveforms': ['ARRAY_PARAMETER_NEEDS_SIZE']
         }
     }
 }
