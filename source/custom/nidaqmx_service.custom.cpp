@@ -24,6 +24,23 @@ namespace nidaqmx_grpc {
     auto waveform_attribute_mode = request->waveform_attribute_mode();
 
     // TODO: Implement the actual waveform reading logic, similar to read_analog_waveforms() in nidaqmx-python\generated\nidaqmx\_library_interpreter.py 
+
+    // library_->InternalReadAnalogWaveformPerChan(
+    //     task,
+    //     number_of_samples_per_channel,
+    //     timeout,
+    //     nullptr,  // t0Array
+    //     nullptr,  // dtArray
+    //     0,        // timingArraySize
+    //     nullptr,  // setWfmAttrCallback
+    //     nullptr,  // setWfmAttrCallbackData
+    //     nullptr,  // readArrayPtrs
+    //     0,        // readArrayCount
+    //     0,        // arraySizeInSampsPerChan
+    //     nullptr,  // sampsPerChanRead
+    //     nullptr   // reserved
+    // );
+
     // For now, just return UNIMPLEMENTED status.
     return ::grpc::Status(::grpc::StatusCode::UNIMPLEMENTED, "ReadAnalogWaveforms implementation pending");
   }
