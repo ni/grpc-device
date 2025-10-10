@@ -468,6 +468,7 @@ WriteRawResponse write_raw(const StubPtr& stub, const nidevice_grpc::Session& ta
 BeginWriteRawResponse begin_write_raw(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps, const bool& auto_start, const double& timeout);
 WriteToTEDSFromArrayResponse write_to_teds_from_array(const StubPtr& stub, const std::string& physical_channel, const std::string& bit_stream, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options);
 WriteToTEDSFromFileResponse write_to_teds_from_file(const StubPtr& stub, const std::string& physical_channel, const std::string& file_path, const simple_variant<WriteBasicTEDSOptions, pb::int32>& basic_teds_options);
+ReadAnalogWaveformsResponse read_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task_handle, const pb::int32& number_of_samples_per_channel, const double& timeout, const pb::int32& array_size, const pb::int32& waveform_attribute_mode);
 
 } // namespace nidaqmx_grpc::experimental::client
 

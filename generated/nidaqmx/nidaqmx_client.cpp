@@ -12414,5 +12414,26 @@ write_to_teds_from_file(const StubPtr& stub, const std::string& physical_channel
   return response;
 }
 
+ReadAnalogWaveformsResponse
+read_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task_handle, const pb::int32& number_of_samples_per_channel, const double& timeout, const pb::int32& array_size, const pb::int32& waveform_attribute_mode)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadAnalogWaveformsRequest{};
+  request.mutable_task_handle()->CopyFrom(task_handle);
+  request.set_number_of_samples_per_channel(number_of_samples_per_channel);
+  request.set_timeout(timeout);
+  request.set_array_size(array_size);
+  request.set_waveform_attribute_mode(waveform_attribute_mode);
+
+  auto response = ReadAnalogWaveformsResponse{};
+
+  raise_if_error(
+      stub->ReadAnalogWaveforms(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nidaqmx_grpc::experimental::client
