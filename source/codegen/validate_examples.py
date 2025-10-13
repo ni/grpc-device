@@ -58,6 +58,9 @@ def _validate_examples(
 
     print(f"Validating examples using staging_dir: {staging_dir}")
 
+    ni_apis_root = Path(__file__).parent.parent.parent / "third_party" / "ni-apis"
+    ni_apis_root = ni_apis_root.resolve()
+
     with _create_stage_dir(staging_dir):
         _stage_client_files(artifact_location, staging_dir)
         examples_dir = staging_dir / "examples"
@@ -69,7 +72,7 @@ def _validate_examples(
         _system("poetry install")
 
         _system(
-            rf"poetry run python -m grpc_tools.protoc -I{proto_dir} --python_out=. --grpc_python_out=. --mypy_out=. --mypy_grpc_out=. {proto_files_str}"
+            rf"poetry run python -m grpc_tools.protoc -I{proto_dir} -I {ni_apis_root} -I {ni_apis_root}/ni/grpcdevice/v1/ --python_out=. --grpc_python_out=. --mypy_out=. --mypy_grpc_out=. {proto_files_str}"
         )
         for dir in examples_dir.glob(driver_glob_expression):
             if exclude and re.search(exclude, dir.as_posix()):
