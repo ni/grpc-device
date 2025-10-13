@@ -609,6 +609,8 @@ def get_buffer_size_expression(parameter: dict) -> str:
     if size_mechanism == "fixed":
         return parameter["size"]["value"]
     elif size_mechanism == "ivi-dance-with-a-twist":
+        # Double the size to accommodate interleaved I and Q input values which will be
+        # implicitly converted into NIComplexNumber while passing it to the C Driver API
         return get_grpc_field_name_from_str(parameter["size"]["value_twist"]) + (
             " * 2" if "value_converted_to_c_representation" in parameter else ""
         )
