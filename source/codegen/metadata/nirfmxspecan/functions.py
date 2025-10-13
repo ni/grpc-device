@@ -1459,20 +1459,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
                 'direction': 'in',
                 'name': 'referenceWaveform',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             },
             {
                 'direction': 'in',
@@ -2021,7 +2021,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform)',
                 'direction': 'out',
                 'name': 'processedMeanAcquiredWaveform',
                 'size': {
@@ -2029,7 +2028,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform)'
             },
             {
                 'direction': 'in',
@@ -2186,7 +2186,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform)',
                 'direction': 'out',
                 'name': 'processedReferenceWaveform',
                 'size': {
@@ -2194,7 +2193,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform)'
             },
             {
                 'direction': 'in',
@@ -2475,20 +2475,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iq)',
                 'direction': 'in',
                 'name': 'iq',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(iq)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             },
             {
                 'direction': 'in',
@@ -4385,14 +4385,14 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(waveformIn)',
                 'direction': 'in',
                 'name': 'waveformIn',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySizeIn'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(waveformIn)'
             },
             {
                 'direction': 'in',
@@ -4421,7 +4421,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(waveformOut)',
                 'direction': 'out',
                 'name': 'waveformOut',
                 'size': {
@@ -4429,7 +4428,8 @@ functions = {
                     'value': 'arraySizeOut',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(waveformOut)'
             },
             {
                 'direction': 'in',
@@ -4676,14 +4676,14 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(waveformIn)',
                 'direction': 'in',
                 'name': 'waveformIn',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySizeIn'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(waveformIn)'
             },
             {
                 'direction': 'in',
@@ -4707,7 +4707,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(waveformOut)',
                 'direction': 'out',
                 'name': 'waveformOut',
                 'size': {
@@ -4715,7 +4714,8 @@ functions = {
                     'value': 'arraySizeOut',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(waveformOut)'
             },
             {
                 'direction': 'in',
@@ -4952,20 +4952,20 @@ functions = {
                 'type': 'char[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dpdPolynomial)',
                 'direction': 'in',
                 'name': 'dpdPolynomial',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dpdPolynomial)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             }
         ],
         'returns': 'int32'
@@ -5087,7 +5087,6 @@ functions = {
                 'type': 'float32[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(lutComplexGains)',
                 'direction': 'in',
                 'name': 'lutComplexGains',
                 'size': {
@@ -5097,13 +5096,14 @@ functions = {
                     ],
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(lutComplexGains)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             }
         ],
         'returns': 'int32'
@@ -5300,20 +5300,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(targetWaveform)',
                 'direction': 'in',
                 'name': 'targetWaveform',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(targetWaveform)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             }
         ],
         'returns': 'int32'
@@ -5690,20 +5690,20 @@ functions = {
                 'type': 'char[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(previousDPDPolynomial)',
                 'direction': 'in',
                 'name': 'previousDPDPolynomial',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(previousDPDPolynomial)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             }
         ],
         'returns': 'int32'
@@ -5830,20 +5830,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
                 'direction': 'in',
                 'name': 'referenceWaveform',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             },
             {
                 'direction': 'in',
@@ -6063,7 +6063,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dpdPolynomial)',
                 'direction': 'out',
                 'name': 'dpdPolynomial',
                 'size': {
@@ -6071,7 +6070,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dpdPolynomial)'
             },
             {
                 'direction': 'in',
@@ -6198,7 +6198,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dvrModel)',
                 'direction': 'out',
                 'name': 'dvrModel',
                 'size': {
@@ -6206,7 +6205,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dvrModel)'
             },
             {
                 'direction': 'in',
@@ -6353,7 +6353,6 @@ functions = {
                 'type': 'float32[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(complexGains)',
                 'direction': 'out',
                 'name': 'complexGains',
                 'size': {
@@ -6361,7 +6360,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(complexGains)'
             },
             {
                 'direction': 'in',
@@ -6544,7 +6544,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform)',
                 'direction': 'out',
                 'name': 'processedMeanAcquiredWaveform',
                 'size': {
@@ -6552,7 +6551,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform)'
             },
             {
                 'direction': 'in',
@@ -6709,7 +6709,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform)',
                 'direction': 'out',
                 'name': 'processedReferenceWaveform',
                 'size': {
@@ -6717,7 +6716,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform)'
             },
             {
                 'direction': 'in',
@@ -8542,20 +8542,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerCoefficients)',
                 'direction': 'in',
                 'name': 'equalizerCoefficients',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(equalizerCoefficients)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             }
         ],
         'returns': 'int32'
@@ -8685,20 +8685,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(predistortedWaveform)',
                 'direction': 'in',
                 'name': 'predistortedWaveform',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(predistortedWaveform)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             },
             {
                 'direction': 'in',
@@ -8845,20 +8845,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
                 'direction': 'in',
                 'name': 'referenceWaveform',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             },
             {
                 'direction': 'in',
@@ -9023,7 +9023,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerCoefficients)',
                 'direction': 'out',
                 'name': 'equalizerCoefficients',
                 'size': {
@@ -9031,7 +9030,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(equalizerCoefficients)'
             },
             {
                 'direction': 'in',
@@ -9203,7 +9203,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(predistortedWaveform)',
                 'direction': 'out',
                 'name': 'predistortedWaveform',
                 'size': {
@@ -9211,7 +9210,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(predistortedWaveform)'
             },
             {
                 'direction': 'out',
@@ -9398,7 +9398,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform)',
                 'direction': 'out',
                 'name': 'processedMeanAcquiredWaveform',
                 'size': {
@@ -9406,7 +9405,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform)'
             },
             {
                 'direction': 'in',
@@ -9563,7 +9563,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform)',
                 'direction': 'out',
                 'name': 'processedReferenceWaveform',
                 'size': {
@@ -9571,7 +9570,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform)'
             },
             {
                 'direction': 'in',
@@ -9723,7 +9723,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(equalizerReferenceWaveform)',
                 'direction': 'out',
                 'name': 'equalizerReferenceWaveform',
                 'size': {
@@ -9731,7 +9730,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(equalizerReferenceWaveform)'
             },
             {
                 'direction': 'out',
@@ -10636,7 +10636,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(data)',
                 'direction': 'out',
                 'name': 'data',
                 'size': {
@@ -10644,7 +10643,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(data)'
             },
             {
                 'direction': 'in',

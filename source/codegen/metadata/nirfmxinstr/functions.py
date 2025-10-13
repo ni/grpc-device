@@ -445,7 +445,7 @@ functions = {
                 'type': 'int32'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexDouble*>(sParameters)',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(sParameters)',
                 'direction': 'in',
                 'name': 'sParameters',
                 'size': {
@@ -455,7 +455,7 @@ functions = {
                 'type': 'float64[]'
             },
             {
-                'casted_name': 'sParameterTableSize/2',
+                'value_converted_to_c_representation': 'sParameterTableSize/2',
                 'direction': 'in',
                 'name': 'sParameterTableSize',
                 'type': 'int32'
@@ -787,7 +787,7 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(data)',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(data)',
                 'direction': 'out',
                 'name': 'data',
                 'size': {

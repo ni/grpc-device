@@ -1180,7 +1180,6 @@ functions = {
                 'type': 'char[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexDouble*>(s11)',
                 'direction': 'out',
                 'name': 's11',
                 'size': {
@@ -1188,7 +1187,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float64[]'
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s11)'
             },
             {
                 'direction': 'in',
@@ -1300,7 +1300,6 @@ functions = {
                 'type': 'char[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexDouble*>(s12)',
                 'direction': 'out',
                 'name': 's12',
                 'size': {
@@ -1308,7 +1307,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float64[]'
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s12)'
             },
             {
                 'direction': 'in',
@@ -1420,7 +1420,6 @@ functions = {
                 'type': 'char[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexDouble*>(s21)',
                 'direction': 'out',
                 'name': 's21',
                 'size': {
@@ -1428,7 +1427,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float64[]'
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s21)'
             },
             {
                 'direction': 'in',
@@ -1540,7 +1540,6 @@ functions = {
                 'type': 'char[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexDouble*>(s22)',
                 'direction': 'out',
                 'name': 's22',
                 'size': {
@@ -1548,7 +1547,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float64[]'
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s22)'
             },
             {
                 'direction': 'in',
@@ -2803,7 +2803,6 @@ functions = {
                 'type': 'char[]'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(errorTerm)',
                 'direction': 'out',
                 'name': 'errorTerm',
                 'size': {
@@ -2811,7 +2810,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(errorTerm)'
             },
             {
                 'direction': 'in',
@@ -4357,7 +4357,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(data)',
                 'direction': 'out',
                 'name': 'data',
                 'size': {
@@ -4365,7 +4364,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(data)'
             },
             {
                 'direction': 'in',

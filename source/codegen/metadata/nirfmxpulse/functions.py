@@ -102,20 +102,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iq)',
                 'direction': 'in',
                 'name': 'iq',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(iq)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             },
             {
                 'direction': 'in',
@@ -329,20 +329,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)',
                 'direction': 'in',
                 'name': 'referenceWaveform',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             }
         ],
         'returns': 'int32'
@@ -1256,7 +1256,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iqData)',
                 'direction': 'out',
                 'name': 'iqData',
                 'size': {
@@ -1264,7 +1263,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(iqData)'
             },
             {
                 'direction': 'in',

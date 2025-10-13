@@ -813,20 +813,20 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(iq)',
                 'direction': 'in',
                 'name': 'iq',
                 'size': {
                     'mechanism': 'len',
                     'value': 'arraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(iq)'
             },
             {
-                'casted_name': 'arraySize/2',
                 'direction': 'in',
                 'name': 'arraySize',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             },
             {
                 'direction': 'in',
@@ -4312,7 +4312,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(csrsConstellation)',
                 'direction': 'out',
                 'name': 'csrsConstellation',
                 'size': {
@@ -4320,7 +4319,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(csrsConstellation)'
             },
             {
                 'direction': 'in',
@@ -4837,7 +4837,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pbchConstellation)',
                 'direction': 'out',
                 'name': 'pbchConstellation',
                 'size': {
@@ -4845,7 +4844,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(pbchConstellation)'
             },
             {
                 'direction': 'in',
@@ -4972,7 +4972,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pcfichConstellation)',
                 'direction': 'out',
                 'name': 'pcfichConstellation',
                 'size': {
@@ -4980,7 +4979,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(pcfichConstellation)'
             },
             {
                 'direction': 'in',
@@ -5107,7 +5107,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pdcchConstellation)',
                 'direction': 'out',
                 'name': 'pdcchConstellation',
                 'size': {
@@ -5115,7 +5114,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(pdcchConstellation)'
             },
             {
                 'direction': 'in',
@@ -5242,7 +5242,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(phichConstellation)',
                 'direction': 'out',
                 'name': 'phichConstellation',
                 'size': {
@@ -5250,7 +5249,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(phichConstellation)'
             },
             {
                 'direction': 'in',
@@ -6422,7 +6422,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(nsssConstellation)',
                 'direction': 'out',
                 'name': 'nsssConstellation',
                 'size': {
@@ -6430,7 +6429,8 @@ functions = {
                     'value': 'nsssConstellationArraySize',
                     'value_twist': 'nsssConstellationActualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(nsssConstellation)'
             },
             {
                 'direction': 'in',
@@ -6443,7 +6443,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(npssConstellation)',
                 'direction': 'out',
                 'name': 'npssConstellation',
                 'size': {
@@ -6451,7 +6450,8 @@ functions = {
                     'value': 'npssConstellationArraySize',
                     'value_twist': 'npssConstellationActualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(npssConstellation)'
             },
             {
                 'direction': 'in',
@@ -6608,7 +6608,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qpskConstellation)',
                 'direction': 'out',
                 'name': 'qpskConstellation',
                 'size': {
@@ -6616,7 +6615,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qpskConstellation)'
             },
             {
                 'direction': 'in',
@@ -6763,7 +6763,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)',
                 'direction': 'out',
                 'name': 'dataConstellation',
                 'size': {
@@ -6771,7 +6770,8 @@ functions = {
                     'value': 'dataConstellationArraySize',
                     'value_twist': 'dataConstellationActualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)'
             },
             {
                 'direction': 'in',
@@ -6784,7 +6784,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)',
                 'direction': 'out',
                 'name': 'dmrsConstellation',
                 'size': {
@@ -6792,7 +6791,8 @@ functions = {
                     'value': 'dmrsConstellationArraySize',
                     'value_twist': 'dmrsConstellationActualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)'
             },
             {
                 'direction': 'in',
@@ -7044,7 +7044,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(nrsConstellation)',
                 'direction': 'out',
                 'name': 'nrsConstellation',
                 'size': {
@@ -7052,7 +7051,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(nrsConstellation)'
             },
             {
                 'direction': 'in',
@@ -7179,7 +7179,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qam1024Constellation)',
                 'direction': 'out',
                 'name': 'qam1024Constellation',
                 'size': {
@@ -7187,7 +7186,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qam1024Constellation)'
             },
             {
                 'direction': 'in',
@@ -7383,7 +7383,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qam16Constellation)',
                 'direction': 'out',
                 'name': 'qam16Constellation',
                 'size': {
@@ -7391,7 +7390,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qam16Constellation)'
             },
             {
                 'direction': 'in',
@@ -7518,7 +7518,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qam256Constellation)',
                 'direction': 'out',
                 'name': 'qam256Constellation',
                 'size': {
@@ -7526,7 +7525,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qam256Constellation)'
             },
             {
                 'direction': 'in',
@@ -7653,7 +7653,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qam64Constellation)',
                 'direction': 'out',
                 'name': 'qam64Constellation',
                 'size': {
@@ -7661,7 +7660,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qam64Constellation)'
             },
             {
                 'direction': 'in',
@@ -7925,7 +7925,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(qpskConstellation)',
                 'direction': 'out',
                 'name': 'qpskConstellation',
                 'size': {
@@ -7933,7 +7932,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qpskConstellation)'
             },
             {
                 'direction': 'in',
@@ -8080,7 +8080,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)',
                 'direction': 'out',
                 'name': 'dataConstellation',
                 'size': {
@@ -8088,7 +8087,8 @@ functions = {
                     'value': 'dataConstellationArraySize',
                     'value_twist': 'dataConstellationActualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)'
             },
             {
                 'direction': 'in',
@@ -8101,7 +8101,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)',
                 'direction': 'out',
                 'name': 'dmrsConstellation',
                 'size': {
@@ -8109,7 +8108,8 @@ functions = {
                     'value': 'dmrsConstellationArraySize',
                     'value_twist': 'dmrsConstellationActualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)'
             },
             {
                 'direction': 'in',
@@ -8536,7 +8536,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)',
                 'direction': 'out',
                 'name': 'dataConstellation',
                 'size': {
@@ -8544,7 +8543,8 @@ functions = {
                     'value': 'dataConstellationArraySize',
                     'value_twist': 'dataConstellationActualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)'
             },
             {
                 'direction': 'in',
@@ -8557,7 +8557,6 @@ functions = {
                 'type': 'int32'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)',
                 'direction': 'out',
                 'name': 'dmrsConstellation',
                 'size': {
@@ -8565,7 +8564,8 @@ functions = {
                     'value': 'dmrsConstellationArraySize',
                     'value_twist': 'dmrsConstellationActualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)'
             },
             {
                 'direction': 'in',
@@ -9115,7 +9115,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(srsConstellation)',
                 'direction': 'out',
                 'name': 'srsConstellation',
                 'size': {
@@ -9123,7 +9122,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(srsConstellation)'
             },
             {
                 'direction': 'in',
@@ -9650,7 +9650,6 @@ functions = {
                 'type': 'float64'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(sssConstellation)',
                 'direction': 'out',
                 'name': 'sssConstellation',
                 'size': {
@@ -9658,10 +9657,10 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(sssConstellation)'
             },
             {
-                'casted_name': 'reinterpret_cast<NIComplexSingle*>(pssConstellation)',
                 'direction': 'out',
                 'name': 'pssConstellation',
                 'size': {
@@ -9669,7 +9668,8 @@ functions = {
                     'value': 'arraySize',
                     'value_twist': 'actualArraySize'
                 },
-                'type': 'float32[]'
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(pssConstellation)'
             },
             {
                 'direction': 'in',

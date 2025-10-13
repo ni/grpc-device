@@ -229,7 +229,8 @@ def expand_varargs_parameters(parameters):
     """
     parameters = common_helpers.get_driver_api_params(parameters)
     updated_parameters = [
-        {**p, "cppName": p.get("casted_name", p.get("cppName"))} for p in parameters
+        {**p, "cppName": p.get("value_converted_to_c_representation", p.get("cppName"))}
+        for p in parameters
     ]
     if not common_helpers.has_repeated_varargs_parameter(updated_parameters):
         return updated_parameters
