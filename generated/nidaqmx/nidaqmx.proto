@@ -11522,5 +11522,6 @@ message ReadAnalogWaveformsRequest {
 
 message ReadAnalogWaveformsResponse {
   int32 status = 1;
+  repeated ni.protobuf.types.DoubleAnalogWaveform waveforms = 2;
 }
 

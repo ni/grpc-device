@@ -40,12 +40,11 @@ functions_override_metadata = {
                 'type': 'int32',
                 'direction': 'in'
             },
-            # We need to import waveforms.proto from ni-apis for this
-            # {
-            #     'name': 'waveforms',
-            #     'type': 'repeated ni.protobuf.types.AnalogWaveformDouble',
-            #     'direction': 'out'
-            # }
+            {
+                'name': 'waveforms',
+                'type': 'repeated ni.protobuf.types.DoubleAnalogWaveform',
+                'direction': 'out'
+            }
         ]
     }
 }
