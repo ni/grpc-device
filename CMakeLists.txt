@@ -282,13 +282,15 @@ set(nidriver_service_srcs
 #----------------------------------------------------------------------
 # Proto file
 #----------------------------------------------------------------------
-get_filename_component(session_proto "imports/protobuf/session.proto" ABSOLUTE)
+get_filename_component(session_proto "third_party/ni-apis/ni/grpcdevice/v1/session.proto" ABSOLUTE)
 get_filename_component(session_utilities_proto "source/protobuf/session_utilities.proto" ABSOLUTE)
 get_filename_component(nidevice_proto "imports/protobuf/nidevice.proto" ABSOLUTE)
 get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/deviceid_restricted.proto" ABSOLUTE)
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
 get_filename_component(data_moniker_proto "imports/protobuf/data_moniker.proto" ABSOLUTE)
+get_filename_component(waveform_proto "third_party/ni-apis/ni/protobuf/types/waveform.proto" ABSOLUTE)
+get_filename_component(waveform_wrappers_proto "third_party/ni-apis/ni/protobuf/types/waveform_wrappers.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
@@ -302,7 +304,7 @@ function(GenerateGrpcSources)
   set(output_files "${GENERATE_ARGS_OUTPUT}")
   set(proto_file "${GENERATE_ARGS_PROTO}")
   if(USE_SUBMODULE_LIBS)
-    set(protobuf_includes_arg -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/)
+    set(protobuf_includes_arg -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/ -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/ -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/)
   endif()
   get_filename_component(proto_name "${proto_file}" NAME)
   get_filename_component(proto_path "${proto_file}" PATH)
@@ -370,6 +372,14 @@ set(data_moniker_proto_srcs "${proto_srcs_dir}/data_moniker.pb.cc")
 set(data_moniker_proto_hdrs "${proto_srcs_dir}/data_moniker.pb.h")
 set(data_moniker_grpc_srcs "${proto_srcs_dir}/data_moniker.grpc.pb.cc")
 set(data_moniker_grpc_hdrs "${proto_srcs_dir}/data_moniker.grpc.pb.h")
+set(waveform_proto_srcs "${proto_srcs_dir}/waveform.pb.cc")
+set(waveform_proto_hdrs "${proto_srcs_dir}/waveform.pb.h")
+set(waveform_grpc_srcs "${proto_srcs_dir}/waveform.grpc.pb.cc")
+set(waveform_grpc_hdrs "${proto_srcs_dir}/waveform.grpc.pb.h")
+set(waveform_wrappers_proto_srcs "${proto_srcs_dir}/waveform_wrappers.pb.cc")
+set(waveform_wrappers_proto_hdrs "${proto_srcs_dir}/waveform_wrappers.pb.h")
+set(waveform_wrappers_grpc_srcs "${proto_srcs_dir}/waveform_wrappers.grpc.pb.cc")
+set(waveform_wrappers_grpc_hdrs "${proto_srcs_dir}/waveform_wrappers.grpc.pb.h")
 
 GenerateGrpcSources(
   PROTO
@@ -437,6 +447,26 @@ GenerateGrpcSources(
     "${data_moniker_proto_hdrs}"
     "${data_moniker_grpc_srcs}"
     "${data_moniker_grpc_hdrs}"
+)
+
+GenerateGrpcSources(
+  PROTO
+    ${waveform_proto}
+  OUTPUT
+    "${waveform_proto_srcs}"
+    "${waveform_proto_hdrs}"
+    "${waveform_grpc_srcs}"
+    "${waveform_grpc_hdrs}"
+)
+
+GenerateGrpcSources(
+  PROTO
+    ${waveform_wrappers_proto}
+  OUTPUT
+    "${waveform_wrappers_proto_srcs}"
+    "${waveform_wrappers_proto_hdrs}"
+    "${waveform_wrappers_grpc_srcs}"
+    "${waveform_wrappers_grpc_hdrs}"
 )
 
 set(nidriver_service_library_hdrs

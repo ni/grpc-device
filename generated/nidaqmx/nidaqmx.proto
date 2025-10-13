@@ -16,6 +16,7 @@ package nidaqmx_grpc;
 
 import "session.proto";
 import "data_moniker.proto";
+import "ni/protobuf/types/waveform.proto";
 import "google/protobuf/timestamp.proto";
 
 service NiDAQmx {

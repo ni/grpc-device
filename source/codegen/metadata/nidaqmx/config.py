@@ -123,7 +123,7 @@ config = {
         'CVIAbsoluteTime': 'google.protobuf.Timestamp'
     },
     'has_moniker_streaming_apis': True,
-    'additional_protos': ['data_moniker.proto'],
+    'additional_protos': ['data_moniker.proto', 'ni/protobuf/types/waveform.proto'],
     'split_attributes_by_type': True,
     'supports_raw_attributes': True,
     'code_readiness': 'Release',
