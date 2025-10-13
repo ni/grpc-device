@@ -20,9 +20,9 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /bigobj")
 # Proto files
 get_filename_component(daqmx_proto "${CMAKE_SOURCE_DIR}/../../../generated/nidaqmx/nidaqmx.proto" ABSOLUTE)
 get_filename_component(daqmx_proto_path "${daqmx_proto}" PATH)
-get_filename_component(session_proto "${CMAKE_SOURCE_DIR}/../../../imports/protobuf/session.proto" ABSOLUTE)
+get_filename_component(session_proto "${CMAKE_SOURCE_DIR}/../../../third_party/ni-apis/ni/grpcdevice/v1/session.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
-get_filename_component(data_moniker_proto "${CMAKE_SOURCE_DIR}/../../../imports/protobuf/data_moniker.proto" ABSOLUTE)
+get_filename_component(data_moniker_proto "${CMAKE_SOURCE_DIR}/../../../third_party/ni-apis/ni/datamonikers/v1/data_moniker.proto" ABSOLUTE)
 get_filename_component(data_moniker_proto_path "${data_moniker_proto}" PATH)
 
 message(STATUS "daqmx_proto_path: ${daqmx_proto_path}")

@@ -165,7 +165,7 @@ def generate_streaming_metadata(function: dict) -> dict:
     streaming_parameters.append(
         {
             "direction": "out",
-            "grpc_type": "ni.data_monikers.Moniker",
+            "grpc_type": "ni.datamonikers.v1.Moniker",
             "name": "moniker",
             "type": "ni::data_monikers::Moniker",
         }

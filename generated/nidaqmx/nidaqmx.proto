@@ -15,7 +15,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiDAQmx";
 package nidaqmx_grpc;
 
 import "session.proto";
-import "data_moniker.proto";
+import "ni/datamonikers/v1/data_moniker.proto";
 import "google/protobuf/timestamp.proto";
 
 service NiDAQmx {
@@ -8513,7 +8513,7 @@ message BeginReadAnalogF64Request {
 
 message BeginReadAnalogF64Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadAnalogF64Response {
@@ -8539,7 +8539,7 @@ message BeginReadAnalogScalarF64Request {
 
 message BeginReadAnalogScalarF64Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadAnalogScalarF64Response {
@@ -8577,7 +8577,7 @@ message BeginReadBinaryI16Request {
 
 message BeginReadBinaryI16Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadBinaryI16Response {
@@ -8616,7 +8616,7 @@ message BeginReadBinaryI32Request {
 
 message BeginReadBinaryI32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadBinaryI32Response {
@@ -8655,7 +8655,7 @@ message BeginReadBinaryU16Request {
 
 message BeginReadBinaryU16Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadBinaryU16Response {
@@ -8694,7 +8694,7 @@ message BeginReadBinaryU32Request {
 
 message BeginReadBinaryU32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadBinaryU32Response {
@@ -8725,7 +8725,7 @@ message BeginReadCounterF64Request {
 
 message BeginReadCounterF64Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCounterF64Response {
@@ -8764,7 +8764,7 @@ message BeginReadCounterF64ExRequest {
 
 message BeginReadCounterF64ExResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCounterF64ExResponse {
@@ -8790,7 +8790,7 @@ message BeginReadCounterScalarF64Request {
 
 message BeginReadCounterScalarF64Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCounterScalarF64Response {
@@ -8815,7 +8815,7 @@ message BeginReadCounterScalarU32Request {
 
 message BeginReadCounterScalarU32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCounterScalarU32Response {
@@ -8845,7 +8845,7 @@ message BeginReadCounterU32Request {
 
 message BeginReadCounterU32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCounterU32Response {
@@ -8884,7 +8884,7 @@ message BeginReadCounterU32ExRequest {
 
 message BeginReadCounterU32ExResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCounterU32ExResponse {
@@ -8924,7 +8924,7 @@ message BeginReadCtrFreqRequest {
 
 message BeginReadCtrFreqResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCtrFreqResponse {
@@ -8952,7 +8952,7 @@ message BeginReadCtrFreqScalarRequest {
 
 message BeginReadCtrFreqScalarResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCtrFreqScalarResponse {
@@ -8992,7 +8992,7 @@ message BeginReadCtrTicksRequest {
 
 message BeginReadCtrTicksResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCtrTicksResponse {
@@ -9020,7 +9020,7 @@ message BeginReadCtrTicksScalarRequest {
 
 message BeginReadCtrTicksScalarResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCtrTicksScalarResponse {
@@ -9060,7 +9060,7 @@ message BeginReadCtrTimeRequest {
 
 message BeginReadCtrTimeResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCtrTimeResponse {
@@ -9088,7 +9088,7 @@ message BeginReadCtrTimeScalarRequest {
 
 message BeginReadCtrTimeScalarResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadCtrTimeScalarResponse {
@@ -9129,7 +9129,7 @@ message BeginReadDigitalLinesRequest {
 message BeginReadDigitalLinesResponse {
   int32 status = 1;
   int32 num_bytes_per_samp = 2;
-  ni.data_monikers.Moniker moniker = 3;
+  ni.datamonikers.v1.Moniker moniker = 3;
 }
 
 message MonikerReadDigitalLinesResponse {
@@ -9156,7 +9156,7 @@ message BeginReadDigitalScalarU32Request {
 
 message BeginReadDigitalScalarU32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadDigitalScalarU32Response {
@@ -9194,7 +9194,7 @@ message BeginReadDigitalU16Request {
 
 message BeginReadDigitalU16Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadDigitalU16Response {
@@ -9233,7 +9233,7 @@ message BeginReadDigitalU32Request {
 
 message BeginReadDigitalU32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadDigitalU32Response {
@@ -9272,7 +9272,7 @@ message BeginReadDigitalU8Request {
 
 message BeginReadDigitalU8Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadDigitalU8Response {
@@ -9325,7 +9325,7 @@ message BeginReadPowerBinaryI16Request {
 
 message BeginReadPowerBinaryI16Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadPowerBinaryI16Response {
@@ -9366,7 +9366,7 @@ message BeginReadPowerF64Request {
 
 message BeginReadPowerF64Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadPowerF64Response {
@@ -9394,7 +9394,7 @@ message BeginReadPowerScalarF64Request {
 
 message BeginReadPowerScalarF64Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadPowerScalarF64Response {
@@ -9426,7 +9426,7 @@ message BeginReadRawRequest {
 
 message BeginReadRawResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerReadRawResponse {
@@ -10743,7 +10743,7 @@ message BeginWaitForNextSampleClockRequest {
 
 message BeginWaitForNextSampleClockResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWaitForNextSampleClockResponse {
@@ -10804,7 +10804,7 @@ message BeginWriteAnalogF64Request {
 
 message BeginWriteAnalogF64Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteAnalogF64Request {
@@ -10835,7 +10835,7 @@ message BeginWriteAnalogScalarF64Request {
 
 message BeginWriteAnalogScalarF64Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteAnalogScalarF64Request {
@@ -10876,7 +10876,7 @@ message BeginWriteBinaryI16Request {
 
 message BeginWriteBinaryI16Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteBinaryI16Request {
@@ -10918,7 +10918,7 @@ message BeginWriteBinaryI32Request {
 
 message BeginWriteBinaryI32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteBinaryI32Request {
@@ -10960,7 +10960,7 @@ message BeginWriteBinaryU16Request {
 
 message BeginWriteBinaryU16Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteBinaryU16Request {
@@ -11002,7 +11002,7 @@ message BeginWriteBinaryU32Request {
 
 message BeginWriteBinaryU32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteBinaryU32Request {
@@ -11045,7 +11045,7 @@ message BeginWriteCtrFreqRequest {
 
 message BeginWriteCtrFreqResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteCtrFreqRequest {
@@ -11078,7 +11078,7 @@ message BeginWriteCtrFreqScalarRequest {
 
 message BeginWriteCtrFreqScalarResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteCtrFreqScalarRequest {
@@ -11121,7 +11121,7 @@ message BeginWriteCtrTicksRequest {
 
 message BeginWriteCtrTicksResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteCtrTicksRequest {
@@ -11154,7 +11154,7 @@ message BeginWriteCtrTicksScalarRequest {
 
 message BeginWriteCtrTicksScalarResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteCtrTicksScalarRequest {
@@ -11197,7 +11197,7 @@ message BeginWriteCtrTimeRequest {
 
 message BeginWriteCtrTimeResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteCtrTimeRequest {
@@ -11230,7 +11230,7 @@ message BeginWriteCtrTimeScalarRequest {
 
 message BeginWriteCtrTimeScalarResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteCtrTimeScalarRequest {
@@ -11272,7 +11272,7 @@ message BeginWriteDigitalLinesRequest {
 
 message BeginWriteDigitalLinesResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteDigitalLinesRequest {
@@ -11303,7 +11303,7 @@ message BeginWriteDigitalScalarU32Request {
 
 message BeginWriteDigitalScalarU32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteDigitalScalarU32Request {
@@ -11344,7 +11344,7 @@ message BeginWriteDigitalU16Request {
 
 message BeginWriteDigitalU16Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteDigitalU16Request {
@@ -11386,7 +11386,7 @@ message BeginWriteDigitalU32Request {
 
 message BeginWriteDigitalU32Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteDigitalU32Request {
@@ -11428,7 +11428,7 @@ message BeginWriteDigitalU8Request {
 
 message BeginWriteDigitalU8Response {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteDigitalU8Request {
@@ -11473,7 +11473,7 @@ message BeginWriteRawRequest {
 
 message BeginWriteRawResponse {
   int32 status = 1;
-  ni.data_monikers.Moniker moniker = 2;
+  ni.datamonikers.v1.Moniker moniker = 2;
 }
 
 message MonikerWriteRawRequest {

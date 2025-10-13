@@ -13,7 +13,7 @@ config = {
     'code_readiness': 'Release',
     'driver_name': 'NI-FPGA',
     'status_ok': 'status >= 0',
-    'additional_protos': ['data_moniker.proto'],
+    'additional_protos': ['ni/datamonikers/v1/data_moniker.proto'],
     'resource_handle_type': ['NiFpga_Session'],
     'type_to_grpc_type': {
         'NiFpga_Session': 'nidevice_grpc.Session',
