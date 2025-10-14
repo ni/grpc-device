@@ -213,7 +213,7 @@ ATTRIBUTE_SCHEMA = Schema(
         Optional("has_explicit_write_buffer_size"): bool,
         Optional("is_list"): bool,
         Optional("is_python_object"): bool,
-        Optional("lv_filter"): dict,
+        Optional("lv_filter"): list,
         Optional("python_class_name"): str,
         Optional("python_data_type"): str,
         Optional("python_description"): str,
