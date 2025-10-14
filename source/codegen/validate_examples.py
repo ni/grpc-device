@@ -74,7 +74,7 @@ def _validate_examples(
         _system("poetry install")
 
         _system(
-            rf"poetry run python -m grpc_tools.protoc -I{proto_dir} -I {ni_apis_root} -I {ni_apis_root}/ni/grpcdevice/v1/ --python_out=. --grpc_python_out=. --mypy_out=. --mypy_grpc_out=. {proto_files_str}"
+            rf"poetry run python -m grpc_tools.protoc -I{proto_dir} -I {ni_apis_root}/ni/datamonikers/v1/ -I {ni_apis_root}/ni/grpcdevice/v1/ --python_out=. --grpc_python_out=. --mypy_out=. --mypy_grpc_out=. {proto_files_str}"
         )
         for dir in examples_dir.glob(driver_glob_expression):
             if exclude and re.search(exclude, dir.as_posix()):
