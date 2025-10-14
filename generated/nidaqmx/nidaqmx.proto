@@ -15,7 +15,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiDAQmx";
 package nidaqmx_grpc;
 
 import "session.proto";
-import "ni/datamonikers/v1/data_moniker.proto";
+import "data_moniker.proto";
 import "google/protobuf/timestamp.proto";
 
 service NiDAQmx {

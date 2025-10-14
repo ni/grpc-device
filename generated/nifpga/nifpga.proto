@@ -15,7 +15,7 @@ option csharp_namespace = "NationalInstruments.Grpc.NiFpga";
 package nifpga_grpc;
 
 import "session.proto";
-import "ni/datamonikers/v1/data_moniker.proto";
+import "data_moniker.proto";
 
 service NiFpga {
   rpc Abort(AbortRequest) returns (AbortResponse);
