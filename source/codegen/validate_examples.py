@@ -53,13 +53,15 @@ def _validate_examples(
     device_name: str,
     artifact_location: Optional[str],
 ) -> None:
+    print("Initializing ni-apis submodule...")
+    _system("git submodule update --init third_party/ni-apis")
+    ni_apis_root = Path(__file__).parent.parent.parent / "third_party" / "ni-apis"
+    ni_apis_root = ni_apis_root.resolve()
+
     staging_dir = Path(__file__).parent.parent.parent / "build" / "validate_examples"
     staging_dir = staging_dir.resolve()
 
     print(f"Validating examples using staging_dir: {staging_dir}")
-
-    ni_apis_root = Path(__file__).parent.parent.parent / "third_party" / "ni-apis"
-    ni_apis_root = ni_apis_root.resolve()
 
     with _create_stage_dir(staging_dir):
         _stage_client_files(artifact_location, staging_dir)
