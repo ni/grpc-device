@@ -4397,7 +4397,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'arraySizeIn',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySizeIn/2'
             },
             {
                 'direction': 'in',
@@ -4688,7 +4689,8 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'arraySizeIn',
-                'type': 'int32'
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySizeIn/2'
             },
             {
                 'direction': 'in',

@@ -1552,7 +1552,7 @@ int32 NiRFmxSpecAnLibrary::DPDApplyDigitalPredistortionInterleavedIQ(niRFmxInstr
   if (!function_pointers_.DPDApplyDigitalPredistortionInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyDigitalPredistortion.");
   }
-  return function_pointers_.DPDApplyDigitalPredistortionInterleavedIQ(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn, idleDurationPresent, measurementTimeout, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr, powerOffset);
+  return function_pointers_.DPDApplyDigitalPredistortionInterleavedIQ(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn/2, idleDurationPresent, measurementTimeout, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr, powerOffset);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDApplyDigitalPredistortionSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64 measurementTimeout, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr, float64* powerOffset)
@@ -1576,7 +1576,7 @@ int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioningInterleavedIQ(niRFmxI
   if (!function_pointers_.DPDApplyPreDPDSignalConditioningInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyPreDPDSignalConditioning.");
   }
-  return function_pointers_.DPDApplyPreDPDSignalConditioningInterleavedIQ(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn, idleDurationPresent, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr);
+  return function_pointers_.DPDApplyPreDPDSignalConditioningInterleavedIQ(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn/2, idleDurationPresent, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDApplyPreDPDSignalConditioningSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr)

@@ -644,7 +644,7 @@ int32 DPDApplyDigitalPredistortion(niRFmxInstrHandle instrumentHandle, char sele
 
 int32 DPDApplyDigitalPredistortionInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64 measurementTimeout, float64* x0Out, float64* dxOut, float32 waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr, float64* powerOffset)
 {
-  return RFmxSpecAn_DPDApplyDigitalPredistortion(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn, idleDurationPresent, measurementTimeout, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr, powerOffset);
+  return RFmxSpecAn_DPDApplyDigitalPredistortion(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn/2, idleDurationPresent, measurementTimeout, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr, powerOffset);
 }
 
 int32 DPDApplyDigitalPredistortionSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64 measurementTimeout, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr, float64* powerOffset)
@@ -659,7 +659,7 @@ int32 DPDApplyPreDPDSignalConditioning(niRFmxInstrHandle instrumentHandle, char 
 
 int32 DPDApplyPreDPDSignalConditioningInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, float32 waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
 {
-  return RFmxSpecAn_DPDApplyPreDPDSignalConditioning(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn, idleDurationPresent, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr);
+  return RFmxSpecAn_DPDApplyPreDPDSignalConditioning(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn/2, idleDurationPresent, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr);
 }
 
 int32 DPDApplyPreDPDSignalConditioningSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
