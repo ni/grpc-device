@@ -35,15 +35,25 @@ functions_override_metadata = {
                 'type': 'float64'
             },
             {
-                # TODO: change this to the WaveformAttributeMode enum
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'in',
+                'enum': 'WaveformAttributeMode',
+                'is_optional_in_python': True,
                 'name': 'waveformAttributeMode',
-                'type': 'int32',
-                'direction': 'in'
+                'python_data_type': 'WaveformAttributeMode',
+                'python_default_value': 'WaveformAttributeMode.NONE',
+                'python_description': 'Specifies which waveform attributes to return with the waveforms.',
+                'python_type_annotation': 'Optional[nidaqmx.constants.WaveformAttributeMode]',
+                'type': 'int32'
             },
             {
+                'direction': 'out',
+                'is_optional_in_python': False,
                 'name': 'waveforms',
-                'type': 'repeated ni.protobuf.types.DoubleAnalogWaveform',
-                'direction': 'out'
+                'python_data_type': 'object',
+                'python_description': 'The waveforms read from the specified channels.',
+                'python_type_annotation': 'List[object]',
+                'type': 'repeated ni.protobuf.types.DoubleAnalogWaveform'
             }
         ]
     }
