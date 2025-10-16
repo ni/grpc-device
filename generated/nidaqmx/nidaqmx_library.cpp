@@ -268,6 +268,11 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.GetWriteAttributeString = reinterpret_cast<GetWriteAttributeStringPtr>(shared_library_->get_function_pointer("DAQmxGetWriteAttribute"));
   function_pointers_.GetWriteAttributeUInt32 = reinterpret_cast<GetWriteAttributeUInt32Ptr>(shared_library_->get_function_pointer("DAQmxGetWriteAttribute"));
   function_pointers_.GetWriteAttributeUInt64 = reinterpret_cast<GetWriteAttributeUInt64Ptr>(shared_library_->get_function_pointer("DAQmxGetWriteAttribute"));
+  function_pointers_.InternalGetLastCreatedChan = reinterpret_cast<InternalGetLastCreatedChanPtr>(shared_library_->get_function_pointer("DAQmxInternalGetLastCreatedChan"));
+  function_pointers_.InternalReadAnalogWaveformPerChan = reinterpret_cast<InternalReadAnalogWaveformPerChanPtr>(shared_library_->get_function_pointer("DAQmxInternalReadAnalogWaveformPerChan"));
+  function_pointers_.InternalReadDigitalWaveform = reinterpret_cast<InternalReadDigitalWaveformPtr>(shared_library_->get_function_pointer("DAQmxInternalReadDigitalWaveform"));
+  function_pointers_.InternalWriteAnalogWaveformPerChan = reinterpret_cast<InternalWriteAnalogWaveformPerChanPtr>(shared_library_->get_function_pointer("DAQmxInternalWriteAnalogWaveformPerChan"));
+  function_pointers_.InternalWriteDigitalWaveform = reinterpret_cast<InternalWriteDigitalWaveformPtr>(shared_library_->get_function_pointer("DAQmxInternalWriteDigitalWaveform"));
   function_pointers_.IsTaskDone = reinterpret_cast<IsTaskDonePtr>(shared_library_->get_function_pointer("DAQmxIsTaskDone"));
   function_pointers_.LoadTask = reinterpret_cast<LoadTaskPtr>(shared_library_->get_function_pointer("DAQmxLoadTask"));
   function_pointers_.PerformBridgeOffsetNullingCalEx = reinterpret_cast<PerformBridgeOffsetNullingCalExPtr>(shared_library_->get_function_pointer("DAQmxPerformBridgeOffsetNullingCalEx"));
@@ -2366,6 +2371,46 @@ int32 NiDAQmxLibrary::GetWriteAttributeUInt64(TaskHandle task, int32 attribute, 
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetWriteAttribute.");
   }
   return function_pointers_.GetWriteAttributeUInt64(task, attribute, value);
+}
+
+int32 NiDAQmxLibrary::InternalGetLastCreatedChan(char value[], uInt32 size)
+{
+  if (!function_pointers_.InternalGetLastCreatedChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxInternalGetLastCreatedChan.");
+  }
+  return function_pointers_.InternalGetLastCreatedChan(value, size);
+}
+
+int32 NiDAQmxLibrary::InternalReadAnalogWaveformPerChan(TaskHandle task, int32 numSampsPerChan, float64 timeout, int64 t0Array[], int64 dtArray[], uInt32 timingArraySize, DAQmxSetWfmAttrCallbackPtr setWfmAttrCallback, void* setWfmAttrCallbackData, float64 * readArrayPtrs[], uInt32 readArrayCount, uInt32 arraySizeInSampsPerChan, int32* sampsPerChanRead, bool32* reserved)
+{
+  if (!function_pointers_.InternalReadAnalogWaveformPerChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxInternalReadAnalogWaveformPerChan.");
+  }
+  return function_pointers_.InternalReadAnalogWaveformPerChan(task, numSampsPerChan, timeout, t0Array, dtArray, timingArraySize, setWfmAttrCallback, setWfmAttrCallbackData, readArrayPtrs, readArrayCount, arraySizeInSampsPerChan, sampsPerChanRead, reserved);
+}
+
+int32 NiDAQmxLibrary::InternalReadDigitalWaveform(TaskHandle task, int32 numSampsPerChan, float64 timeout, bool32 fillMode, int64 t0Array[], int64 dtArray[], uInt32 timingArraySize, DAQmxSetWfmAttrCallbackPtr setWfmAttrCallback, void* setWfmAttrCallbackData, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsPerChanRead, int32* numBytesPerSamp, uInt32 bytesPerChanArray[], uInt32 bytesPerChanArraySize, bool32* reserved)
+{
+  if (!function_pointers_.InternalReadDigitalWaveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxInternalReadDigitalWaveform.");
+  }
+  return function_pointers_.InternalReadDigitalWaveform(task, numSampsPerChan, timeout, fillMode, t0Array, dtArray, timingArraySize, setWfmAttrCallback, setWfmAttrCallbackData, readArray, arraySizeInBytes, sampsPerChanRead, numBytesPerSamp, bytesPerChanArray, bytesPerChanArraySize, reserved);
+}
+
+int32 NiDAQmxLibrary::InternalWriteAnalogWaveformPerChan(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, const float64 * const writeArrayPtrs[], uInt32 writeArrayCount, int32* sampsPerChanWritten, bool32* reserved)
+{
+  if (!function_pointers_.InternalWriteAnalogWaveformPerChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxInternalWriteAnalogWaveformPerChan.");
+  }
+  return function_pointers_.InternalWriteAnalogWaveformPerChan(task, numSampsPerChan, autoStart, timeout, writeArrayPtrs, writeArrayCount, sampsPerChanWritten, reserved);
+}
+
+int32 NiDAQmxLibrary::InternalWriteDigitalWaveform(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, bool32 dataLayout, const uInt8 writeArray[], const uInt32 bytesPerChanArray[], uInt32 bytesPerChanArraySize, int32* sampsPerChanWritten, bool32* reserved)
+{
+  if (!function_pointers_.InternalWriteDigitalWaveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxInternalWriteDigitalWaveform.");
+  }
+  return function_pointers_.InternalWriteDigitalWaveform(task, numSampsPerChan, autoStart, timeout, dataLayout, writeArray, bytesPerChanArray, bytesPerChanArraySize, sampsPerChanWritten, reserved);
 }
 
 int32 NiDAQmxLibrary::IsTaskDone(TaskHandle task, bool32* isTaskDone)

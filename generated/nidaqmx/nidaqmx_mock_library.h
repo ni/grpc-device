@@ -253,6 +253,11 @@ class NiDAQmxMockLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   MOCK_METHOD(int32, GetWriteAttributeString, (TaskHandle task, int32 attribute, char value[], uInt32 size), (override));
   MOCK_METHOD(int32, GetWriteAttributeUInt32, (TaskHandle task, int32 attribute, uInt32* value), (override));
   MOCK_METHOD(int32, GetWriteAttributeUInt64, (TaskHandle task, int32 attribute, uInt64* value), (override));
+  MOCK_METHOD(int32, InternalGetLastCreatedChan, (char value[], uInt32 size), (override));
+  MOCK_METHOD(int32, InternalReadAnalogWaveformPerChan, (TaskHandle task, int32 numSampsPerChan, float64 timeout, int64 t0Array[], int64 dtArray[], uInt32 timingArraySize, DAQmxSetWfmAttrCallbackPtr setWfmAttrCallback, void* setWfmAttrCallbackData, float64 * readArrayPtrs[], uInt32 readArrayCount, uInt32 arraySizeInSampsPerChan, int32* sampsPerChanRead, bool32* reserved), (override));
+  int32 InternalReadDigitalWaveform(TaskHandle task, int32 numSampsPerChan, float64 timeout, bool32 fillMode, int64 t0Array[], int64 dtArray[], uInt32 timingArraySize, DAQmxSetWfmAttrCallbackPtr setWfmAttrCallback, void* setWfmAttrCallbackData, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsPerChanRead, int32* numBytesPerSamp, uInt32 bytesPerChanArray[], uInt32 bytesPerChanArraySize, bool32* reserved) { throw std::runtime_error("Not implemented."); }
+  MOCK_METHOD(int32, InternalWriteAnalogWaveformPerChan, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, const float64 * const writeArrayPtrs[], uInt32 writeArrayCount, int32* sampsPerChanWritten, bool32* reserved), (override));
+  MOCK_METHOD(int32, InternalWriteDigitalWaveform, (TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, bool32 dataLayout, const uInt8 writeArray[], const uInt32 bytesPerChanArray[], uInt32 bytesPerChanArraySize, int32* sampsPerChanWritten, bool32* reserved), (override));
   MOCK_METHOD(int32, IsTaskDone, (TaskHandle task, bool32* isTaskDone), (override));
   MOCK_METHOD(int32, LoadTask, (const char sessionName[], TaskHandle* task), (override));
   MOCK_METHOD(int32, PerformBridgeOffsetNullingCalEx, (TaskHandle task, const char channel[], bool32 skipUnsupportedChannels), (override));

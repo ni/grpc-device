@@ -2,6 +2,7 @@
 config = {
     'api_version': '23.0.0',
     'c_header': 'NIDAQmx.h',
+    'additional_headers': { 'NIDAQmxInternalWaveform.h': ['library_interface.h'] },
     'c_function_prefix': 'DAQmx',
     'service_class_prefix': 'NiDAQmx',
     'java_package': 'com.ni.grpc.nidaqmx',
@@ -122,7 +123,7 @@ config = {
         'CVIAbsoluteTime': 'google.protobuf.Timestamp'
     },
     'has_moniker_streaming_apis': True,
-    'additional_protos': ['data_moniker.proto'],
+    'additional_protos': ['data_moniker.proto', 'ni/protobuf/types/waveform.proto'],
     'split_attributes_by_type': True,
     'supports_raw_attributes': True,
     'code_readiness': 'Release',
