@@ -1,8 +1,8 @@
 from .functions import functions
-from .functions_addon import functions_validation_suppressions
+from .functions_addon import functions_validation_suppressions, functions_override_metadata
 from .attributes import attributes
 from .enums import enums
-from .enums_addon import enums_validation_suppressions
+from .enums_addon import enums_validation_suppressions, enums_override_metadata
 from .config import config
 
 metadata = {
@@ -13,3 +13,5 @@ metadata = {
     "enums_validation_suppressions": enums_validation_suppressions,
     "config" : config
 }
+metadata['functions'].update(functions_override_metadata)
+metadata['enums'].update(enums_override_metadata)

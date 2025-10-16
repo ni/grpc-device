@@ -322,7 +322,7 @@ def filter_api_functions(functions, only_mockable_functions=True):
     """Filter function metadata to only include those to be generated into the API library."""
 
     def filter_function(function):
-        if function.get("codegen_method", "") == "no" or function.get("is_streaming_api", False):
+        if function.get("codegen_method", "") in ["no", "CustomCodeNoLibrary"] or function.get("is_streaming_api", False):
             return False
         if only_mockable_functions and not common_helpers.can_mock_function(function["parameters"]):
             return False

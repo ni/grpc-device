@@ -478,7 +478,7 @@ def pascal_to_snake(pascal_string):
 
 def filter_proto_rpc_functions(functions):
     """Return function metadata only for functions to include for generating proto rpc methods."""
-    functions_for_proto = {"public", "CustomCode", "CustomCodeCustomProtoMessage"}
+    functions_for_proto = {"public", "CustomCode", "CustomCodeCustomProtoMessage", "CustomCodeNoLibrary"}
     return [
         name
         for name, function in functions.items()
@@ -488,7 +488,7 @@ def filter_proto_rpc_functions(functions):
 
 def filter_proto_rpc_functions_for_message(functions):
     """Return function metadata only for functions to include for generating proto rpc messages."""
-    functions_for_proto = {"public", "CustomCode"}
+    functions_for_proto = {"public", "CustomCode", "CustomCodeNoLibrary"}
     return [
         name
         for name, function in functions.items()

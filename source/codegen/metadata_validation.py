@@ -145,6 +145,7 @@ FUNCTION_SCHEMA = Schema(
                 "no",
                 "python-only",
                 "CustomCodeCustomProtoMessage",
+                "CustomCodeNoLibrary",
             ),
         ),
         Optional("python_codegen_method"): And(

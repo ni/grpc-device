@@ -1,7 +1,33 @@
 # These dictionaries are applied to the generated enums dictionary at build time
 # Any changes to the API should be made here. enums.py is code generated
 
-enums_override_metadata = {}
+enums_override_metadata = {
+    'WaveformAttributeMode': {
+        'values': [
+            {
+                'documentation': {
+                    'description': 'No waveform attributes returned.'
+                },
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'documentation': {
+                    'description': 'Return timing attributes with waveforms.'
+                },
+                'name': 'TIMING',
+                'value': 1
+            },
+            {
+                'documentation': {
+                    'description': 'Return extended properties with waveforms.'
+                },
+                'name': 'EXTENDED_PROPERTIES',
+                'value': 2
+            }
+        ]
+    }
+}
 
 enums_validation_suppressions = {
     "CouplingTypes": [

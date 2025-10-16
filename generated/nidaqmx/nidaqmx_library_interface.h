@@ -8,6 +8,7 @@
 
 #include <grpcpp/grpcpp.h>
 #include <NIDAQmx.h>
+#include "NIDAQmxInternalWaveform.h"
 
 namespace nidaqmx_grpc {
 
@@ -251,6 +252,11 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetWriteAttributeString(TaskHandle task, int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetWriteAttributeUInt32(TaskHandle task, int32 attribute, uInt32* value) = 0;
   virtual int32 GetWriteAttributeUInt64(TaskHandle task, int32 attribute, uInt64* value) = 0;
+  virtual int32 InternalGetLastCreatedChan(char value[], uInt32 size) = 0;
+  virtual int32 InternalReadAnalogWaveformPerChan(TaskHandle task, int32 numSampsPerChan, float64 timeout, int64 t0Array[], int64 dtArray[], uInt32 timingArraySize, DAQmxSetWfmAttrCallbackPtr setWfmAttrCallback, void* setWfmAttrCallbackData, float64 * readArrayPtrs[], uInt32 readArrayCount, uInt32 arraySizeInSampsPerChan, int32* sampsPerChanRead, bool32* reserved) = 0;
+  virtual int32 InternalReadDigitalWaveform(TaskHandle task, int32 numSampsPerChan, float64 timeout, bool32 fillMode, int64 t0Array[], int64 dtArray[], uInt32 timingArraySize, DAQmxSetWfmAttrCallbackPtr setWfmAttrCallback, void* setWfmAttrCallbackData, uInt8 readArray[], uInt32 arraySizeInBytes, int32* sampsPerChanRead, int32* numBytesPerSamp, uInt32 bytesPerChanArray[], uInt32 bytesPerChanArraySize, bool32* reserved) = 0;
+  virtual int32 InternalWriteAnalogWaveformPerChan(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, const float64 * const writeArrayPtrs[], uInt32 writeArrayCount, int32* sampsPerChanWritten, bool32* reserved) = 0;
+  virtual int32 InternalWriteDigitalWaveform(TaskHandle task, int32 numSampsPerChan, bool32 autoStart, float64 timeout, bool32 dataLayout, const uInt8 writeArray[], const uInt32 bytesPerChanArray[], uInt32 bytesPerChanArraySize, int32* sampsPerChanWritten, bool32* reserved) = 0;
   virtual int32 IsTaskDone(TaskHandle task, bool32* isTaskDone) = 0;
   virtual int32 LoadTask(const char sessionName[], TaskHandle* task) = 0;
   virtual int32 PerformBridgeOffsetNullingCalEx(TaskHandle task, const char channel[], bool32 skipUnsupportedChannels) = 0;

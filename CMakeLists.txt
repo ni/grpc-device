@@ -289,6 +289,8 @@ get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/dev
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
 get_filename_component(data_moniker_proto "imports/protobuf/data_moniker.proto" ABSOLUTE)
+get_filename_component(precision_timestamp_proto "third_party/ni-apis/ni/protobuf/types/precision_timestamp.proto" ABSOLUTE)
+get_filename_component(waveform_proto "third_party/ni-apis/ni/protobuf/types/waveform.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
@@ -302,9 +304,7 @@ function(GenerateGrpcSources)
   set(output_files "${GENERATE_ARGS_OUTPUT}")
   set(proto_file "${GENERATE_ARGS_PROTO}")
   if(USE_SUBMODULE_LIBS)
-    set(protobuf_includes_arg 
-      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/ 
-      -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/) # for session.proto
+    set(protobuf_includes_arg -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/ -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/ -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/)
   endif()
   get_filename_component(proto_name "${proto_file}" NAME)
   get_filename_component(proto_path "${proto_file}" PATH)
@@ -372,6 +372,10 @@ set(data_moniker_proto_srcs "${proto_srcs_dir}/data_moniker.pb.cc")
 set(data_moniker_proto_hdrs "${proto_srcs_dir}/data_moniker.pb.h")
 set(data_moniker_grpc_srcs "${proto_srcs_dir}/data_moniker.grpc.pb.cc")
 set(data_moniker_grpc_hdrs "${proto_srcs_dir}/data_moniker.grpc.pb.h")
+set(precision_timestamp_proto_srcs "${proto_srcs_dir}/ni/protobuf/types/precision_timestamp.pb.cc")
+set(precision_timestamp_proto_hdrs "${proto_srcs_dir}/ni/protobuf/types/precision_timestamp.pb.h")
+set(waveform_proto_srcs "${proto_srcs_dir}/ni/protobuf/types/waveform.pb.cc")
+set(waveform_proto_hdrs "${proto_srcs_dir}/ni/protobuf/types/waveform.pb.h")
 
 GenerateGrpcSources(
   PROTO
@@ -441,6 +445,32 @@ GenerateGrpcSources(
     "${data_moniker_grpc_hdrs}"
 )
 
+# Custom generation for precision_timestamp to use correct include paths
+add_custom_command(
+  OUTPUT "${precision_timestamp_proto_srcs}" "${precision_timestamp_proto_hdrs}"
+  COMMAND ${_PROTOBUF_PROTOC}
+  ARGS --cpp_out ${proto_srcs_dir}
+    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
+    -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
+    ni/protobuf/types/precision_timestamp.proto
+  DEPENDS "${precision_timestamp_proto}"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
+  VERBATIM
+)
+
+# Custom generation for waveform to use correct include paths
+add_custom_command(
+  OUTPUT "${waveform_proto_srcs}" "${waveform_proto_hdrs}"
+  COMMAND ${_PROTOBUF_PROTOC}
+  ARGS --cpp_out ${proto_srcs_dir}
+    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
+    -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
+    ni/protobuf/types/waveform.proto
+  DEPENDS "${waveform_proto}" "${precision_timestamp_proto_hdrs}"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
+  VERBATIM
+)
+
 set(nidriver_service_library_hdrs
   ${nidriver_service_library_hdrs}
   "${session_proto_hdrs}"
@@ -454,6 +484,8 @@ set(nidriver_service_library_hdrs
   "${debugsessionproperties_restricted_grpc_hdrs}"
   "${calibrationoperations_restricted_proto_hdrs}"
   "${calibrationoperations_restricted_grpc_hdrs}"
+  "${precision_timestamp_proto_hdrs}"
+  "${waveform_proto_hdrs}"
 )
 
 foreach(api ${nidrivers})
@@ -514,6 +546,8 @@ add_executable(ni_grpc_device_server
    ${calibrationoperations_restricted_grpc_srcs}
    ${data_moniker_proto_srcs}
    ${data_moniker_grpc_srcs}
+   ${precision_timestamp_proto_srcs}
+   ${waveform_proto_srcs}
    ${nidriver_service_srcs})
 
 # Enable warnings only on source that we own, not generated code or dependencies
@@ -655,6 +689,8 @@ add_executable(IntegrationTestsRunner
     ${calibrationoperations_restricted_grpc_srcs}
     ${data_moniker_proto_srcs}
     ${data_moniker_grpc_srcs}
+    ${precision_timestamp_proto_srcs}
+    ${waveform_proto_srcs}
     ${nidriver_service_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
@@ -742,6 +778,8 @@ add_executable(UnitTestsRunner
     ${calibrationoperations_restricted_grpc_srcs}
     ${data_moniker_proto_srcs}
     ${data_moniker_grpc_srcs}
+    ${precision_timestamp_proto_srcs}
+    ${waveform_proto_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_extension.pb.cc"
@@ -879,6 +917,8 @@ set(system_test_runner_sources
   ${calibrationoperations_restricted_grpc_srcs}
   ${data_moniker_proto_srcs}
   ${data_moniker_grpc_srcs}
+  ${precision_timestamp_proto_srcs}
+  ${waveform_proto_srcs}
   ${nidriver_service_srcs}
   ${nidriver_client_srcs}
 )
