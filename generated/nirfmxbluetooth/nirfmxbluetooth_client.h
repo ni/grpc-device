@@ -35,6 +35,7 @@ ACPFetchReferenceChannelPowerResponse acp_fetch_reference_channel_power(const St
 ACPFetchSpectrumResponse acp_fetch_spectrum(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 AbortMeasurementsResponse abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 AnalyzeIQ1WaveformResponse analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<nidevice_grpc::NIComplexNumberF32>& iq, const pb::int32& reset);
+AnalyzeIQ1WaveformInterleavedIQResponse analyze_iq1_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iq, const pb::int32& reset);
 AnalyzeIQ1WaveformSplitResponse analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset);
 AutoDetectSignalResponse auto_detect_signal(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 AutoLevelResponse auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& measurement_interval);
@@ -102,6 +103,7 @@ ModAccCfgBurstSynchronizationTypeResponse mod_acc_cfg_burst_synchronization_type
 ModAccFetchCSDetrendedPhaseTraceResponse mod_acc_fetch_cs_detrended_phase_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchCSToneTraceResponse mod_acc_fetch_cs_tone_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchConstellationTraceResponse mod_acc_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+ModAccFetchConstellationTraceInterleavedIQResponse mod_acc_fetch_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchConstellationTraceSplitResponse mod_acc_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDEVMResponse mod_acc_fetch_devm(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ModAccFetchDEVMMagnitudeErrorResponse mod_acc_fetch_devm_magnitude_error(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);

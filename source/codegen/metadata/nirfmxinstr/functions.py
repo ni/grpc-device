@@ -411,6 +411,69 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CfgSParameterExternalAttenuationTableInterleavedIQ': {
+        'cname': 'RFmxInstr_CfgSParameterExternalAttenuationTable',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'tableName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequency',
+                 'size': {
+                    'mechanism': 'len',
+                    'value': 'frequencyArraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequencyArraySize',
+                'type': 'int32'
+            },
+            {
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(sParameters)',
+                'direction': 'in',
+                'name': 'sParameters',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'sParameterTableSize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'value_converted_to_c_representation': 'sParameterTableSize/2',
+                'direction': 'in',
+                'name': 'sParameterTableSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numberOfPorts',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'SParameterOrientation',
+                'name': 'sParameterOrientation',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CfgSParameterExternalAttenuationType': {
         'parameters': [
             {
@@ -662,6 +725,77 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': 'nullptr',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'pointer': True,
+                'type': 'void'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'FetchRawIQDataInterleavedIQ': {
+        'cname': 'RFmxInstr_FetchRawIQData',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'recordsToFetch',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'samplesToRead',
+                'type': 'int64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(data)',
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]'
             },
             {
                 'direction': 'in',

@@ -305,6 +305,36 @@ cfg_s_parameter_external_attenuation_table(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+CfgSParameterExternalAttenuationTableInterleavedIQResponse
+cfg_s_parameter_external_attenuation_table_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& frequency, const std::vector<double>& s_parameters, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CfgSParameterExternalAttenuationTableInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_table_name(table_name);
+  copy_array(frequency, request.mutable_frequency());
+  copy_array(s_parameters, request.mutable_s_parameters());
+  request.set_number_of_ports(number_of_ports);
+  const auto s_parameter_orientation_ptr = s_parameter_orientation.get_if<SParameterOrientation>();
+  const auto s_parameter_orientation_raw_ptr = s_parameter_orientation.get_if<pb::int32>();
+  if (s_parameter_orientation_ptr) {
+    request.set_s_parameter_orientation(*s_parameter_orientation_ptr);
+  }
+  else if (s_parameter_orientation_raw_ptr) {
+    request.set_s_parameter_orientation_raw(*s_parameter_orientation_raw_ptr);
+  }
+
+  auto response = CfgSParameterExternalAttenuationTableInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CfgSParameterExternalAttenuationTableInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CfgSParameterExternalAttenuationTypeResponse
 cfg_s_parameter_external_attenuation_type(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<SParameterType, pb::int32>& s_parameter_type)
 {
@@ -524,6 +554,27 @@ fetch_raw_iq_data(const StubPtr& stub, const nidevice_grpc::Session& instrument,
 
   raise_if_error(
       stub->FetchRawIQData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+FetchRawIQDataInterleavedIQResponse
+fetch_raw_iq_data_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& records_to_fetch, const pb::int64& samples_to_read)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchRawIQDataInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+  request.set_records_to_fetch(records_to_fetch);
+  request.set_samples_to_read(samples_to_read);
+
+  auto response = FetchRawIQDataInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->FetchRawIQDataInterleavedIQ(&context, request, &response),
       context);
 
   return response;

@@ -41,6 +41,7 @@ service NiRFmxDemod {
   rpc ADemodReadPM(ADemodReadPMRequest) returns (ADemodReadPMResponse);
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformInterleavedIQ(AnalyzeIQ1WaveformInterleavedIQRequest) returns (AnalyzeIQ1WaveformInterleavedIQResponse);
   rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
@@ -65,7 +66,9 @@ service NiRFmxDemod {
   rpc DDemodCfgEVMNormalizationReference(DDemodCfgEVMNormalizationReferenceRequest) returns (DDemodCfgEVMNormalizationReferenceResponse);
   rpc DDemodCfgEqualizer(DDemodCfgEqualizerRequest) returns (DDemodCfgEqualizerResponse);
   rpc DDemodCfgEqualizerInitialCoefficients(DDemodCfgEqualizerInitialCoefficientsRequest) returns (DDemodCfgEqualizerInitialCoefficientsResponse);
+  rpc DDemodCfgEqualizerInitialCoefficientsInterleavedIQ(DDemodCfgEqualizerInitialCoefficientsInterleavedIQRequest) returns (DDemodCfgEqualizerInitialCoefficientsInterleavedIQResponse);
   rpc DDemodCfgEqualizerInitialCoefficientsSplit(DDemodCfgEqualizerInitialCoefficientsSplitRequest) returns (DDemodCfgEqualizerInitialCoefficientsSplitResponse);
+  rpc DDemodCfgEqualizerInterleavedIQ(DDemodCfgEqualizerInterleavedIQRequest) returns (DDemodCfgEqualizerInterleavedIQResponse);
   rpc DDemodCfgEqualizerSplit(DDemodCfgEqualizerSplitRequest) returns (DDemodCfgEqualizerSplitResponse);
   rpc DDemodCfgFSKDeviation(DDemodCfgFSKDeviationRequest) returns (DDemodCfgFSKDeviationResponse);
   rpc DDemodCfgM(DDemodCfgMRequest) returns (DDemodCfgMResponse);
@@ -80,16 +83,19 @@ service NiRFmxDemod {
   rpc DDemodCfgSignalStructure(DDemodCfgSignalStructureRequest) returns (DDemodCfgSignalStructureResponse);
   rpc DDemodCfgSpectrumInverted(DDemodCfgSpectrumInvertedRequest) returns (DDemodCfgSpectrumInvertedResponse);
   rpc DDemodCfgSymbolMap(DDemodCfgSymbolMapRequest) returns (DDemodCfgSymbolMapResponse);
+  rpc DDemodCfgSymbolMapInterleavedIQ(DDemodCfgSymbolMapInterleavedIQRequest) returns (DDemodCfgSymbolMapInterleavedIQResponse);
   rpc DDemodCfgSymbolMapSplit(DDemodCfgSymbolMapSplitRequest) returns (DDemodCfgSymbolMapSplitResponse);
   rpc DDemodCfgSymbolRate(DDemodCfgSymbolRateRequest) returns (DDemodCfgSymbolRateResponse);
   rpc DDemodCfgSynchronization(DDemodCfgSynchronizationRequest) returns (DDemodCfgSynchronizationResponse);
   rpc DDemodFetchCarrierMeasurement(DDemodFetchCarrierMeasurementRequest) returns (DDemodFetchCarrierMeasurementResponse);
   rpc DDemodFetchConstellationTrace(DDemodFetchConstellationTraceRequest) returns (DDemodFetchConstellationTraceResponse);
+  rpc DDemodFetchConstellationTraceInterleavedIQ(DDemodFetchConstellationTraceInterleavedIQRequest) returns (DDemodFetchConstellationTraceInterleavedIQResponse);
   rpc DDemodFetchConstellationTraceSplit(DDemodFetchConstellationTraceSplitRequest) returns (DDemodFetchConstellationTraceSplitResponse);
   rpc DDemodFetchDemodulatedBits(DDemodFetchDemodulatedBitsRequest) returns (DDemodFetchDemodulatedBitsResponse);
   rpc DDemodFetchEVM(DDemodFetchEVMRequest) returns (DDemodFetchEVMResponse);
   rpc DDemodFetchEVMTrace(DDemodFetchEVMTraceRequest) returns (DDemodFetchEVMTraceResponse);
   rpc DDemodFetchEqualizerCoefficients(DDemodFetchEqualizerCoefficientsRequest) returns (DDemodFetchEqualizerCoefficientsResponse);
+  rpc DDemodFetchEqualizerCoefficientsInterleavedIQ(DDemodFetchEqualizerCoefficientsInterleavedIQRequest) returns (DDemodFetchEqualizerCoefficientsInterleavedIQResponse);
   rpc DDemodFetchEqualizerCoefficientsSplit(DDemodFetchEqualizerCoefficientsSplitRequest) returns (DDemodFetchEqualizerCoefficientsSplitResponse);
   rpc DDemodFetchFSKDeviationTrace(DDemodFetchFSKDeviationTraceRequest) returns (DDemodFetchFSKDeviationTraceResponse);
   rpc DDemodFetchFSKResults(DDemodFetchFSKResultsRequest) returns (DDemodFetchFSKResultsResponse);
@@ -101,22 +107,28 @@ service NiRFmxDemod {
   rpc DDemodFetchMeanQuadratureSkew(DDemodFetchMeanQuadratureSkewRequest) returns (DDemodFetchMeanQuadratureSkewResponse);
   rpc DDemodFetchMeanRhoFactor(DDemodFetchMeanRhoFactorRequest) returns (DDemodFetchMeanRhoFactorResponse);
   rpc DDemodFetchMeasurementWaveform(DDemodFetchMeasurementWaveformRequest) returns (DDemodFetchMeasurementWaveformResponse);
+  rpc DDemodFetchMeasurementWaveformInterleavedIQ(DDemodFetchMeasurementWaveformInterleavedIQRequest) returns (DDemodFetchMeasurementWaveformInterleavedIQResponse);
   rpc DDemodFetchMeasurementWaveformSplit(DDemodFetchMeasurementWaveformSplitRequest) returns (DDemodFetchMeasurementWaveformSplitResponse);
   rpc DDemodFetchOffsetConstellationTrace(DDemodFetchOffsetConstellationTraceRequest) returns (DDemodFetchOffsetConstellationTraceResponse);
+  rpc DDemodFetchOffsetConstellationTraceInterleavedIQ(DDemodFetchOffsetConstellationTraceInterleavedIQRequest) returns (DDemodFetchOffsetConstellationTraceInterleavedIQResponse);
   rpc DDemodFetchOffsetConstellationTraceSplit(DDemodFetchOffsetConstellationTraceSplitRequest) returns (DDemodFetchOffsetConstellationTraceSplitResponse);
   rpc DDemodFetchOffsetEVM(DDemodFetchOffsetEVMRequest) returns (DDemodFetchOffsetEVMResponse);
   rpc DDemodFetchOffsetEVMTrace(DDemodFetchOffsetEVMTraceRequest) returns (DDemodFetchOffsetEVMTraceResponse);
   rpc DDemodFetchPhaseError(DDemodFetchPhaseErrorRequest) returns (DDemodFetchPhaseErrorResponse);
   rpc DDemodFetchPhaseErrorTrace(DDemodFetchPhaseErrorTraceRequest) returns (DDemodFetchPhaseErrorTraceResponse);
   rpc DDemodFetchReferenceWaveform(DDemodFetchReferenceWaveformRequest) returns (DDemodFetchReferenceWaveformResponse);
+  rpc DDemodFetchReferenceWaveformInterleavedIQ(DDemodFetchReferenceWaveformInterleavedIQRequest) returns (DDemodFetchReferenceWaveformInterleavedIQResponse);
   rpc DDemodFetchReferenceWaveformSplit(DDemodFetchReferenceWaveformSplitRequest) returns (DDemodFetchReferenceWaveformSplitResponse);
   rpc DDemodFetchSyncFound(DDemodFetchSyncFoundRequest) returns (DDemodFetchSyncFoundResponse);
   rpc DDemodGetEqualizerInitialCoefficients(DDemodGetEqualizerInitialCoefficientsRequest) returns (DDemodGetEqualizerInitialCoefficientsResponse);
+  rpc DDemodGetEqualizerInitialCoefficientsInterleavedIQ(DDemodGetEqualizerInitialCoefficientsInterleavedIQRequest) returns (DDemodGetEqualizerInitialCoefficientsInterleavedIQResponse);
   rpc DDemodGetEqualizerInitialCoefficientsSplit(DDemodGetEqualizerInitialCoefficientsSplitRequest) returns (DDemodGetEqualizerInitialCoefficientsSplitResponse);
   rpc DDemodGetSymbolMap(DDemodGetSymbolMapRequest) returns (DDemodGetSymbolMapResponse);
+  rpc DDemodGetSymbolMapInterleavedIQ(DDemodGetSymbolMapInterleavedIQRequest) returns (DDemodGetSymbolMapInterleavedIQResponse);
   rpc DDemodGetSymbolMapSplit(DDemodGetSymbolMapSplitRequest) returns (DDemodGetSymbolMapSplitResponse);
   rpc DDemodRead(DDemodReadRequest) returns (DDemodReadResponse);
   rpc DDemodSetSymbolMap(DDemodSetSymbolMapRequest) returns (DDemodSetSymbolMapResponse);
+  rpc DDemodSetSymbolMapInterleavedIQ(DDemodSetSymbolMapInterleavedIQRequest) returns (DDemodSetSymbolMapInterleavedIQResponse);
   rpc DDemodSetSymbolMapSplit(DDemodSetSymbolMapSplitRequest) returns (DDemodSetSymbolMapSplitResponse);
   rpc DeleteSignalConfiguration(DeleteSignalConfigurationRequest) returns (DeleteSignalConfigurationResponse);
   rpc DisableTrigger(DisableTriggerRequest) returns (DisableTriggerResponse);
@@ -981,6 +993,20 @@ message AnalyzeIQ1WaveformResponse {
   int32 status = 1;
 }
 
+message AnalyzeIQ1WaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message AnalyzeIQ1WaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1277,6 +1303,18 @@ message DDemodCfgEqualizerInitialCoefficientsResponse {
   int32 status = 1;
 }
 
+message DDemodCfgEqualizerInitialCoefficientsInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float equalizer_initial_coefficients = 5;
+}
+
+message DDemodCfgEqualizerInitialCoefficientsInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message DDemodCfgEqualizerInitialCoefficientsSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1287,6 +1325,25 @@ message DDemodCfgEqualizerInitialCoefficientsSplitRequest {
 }
 
 message DDemodCfgEqualizerInitialCoefficientsSplitResponse {
+  int32 status = 1;
+}
+
+message DDemodCfgEqualizerInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof equalizer_mode_enum {
+    DDemodEqualizerMode equalizer_mode = 3;
+    int32 equalizer_mode_raw = 4;
+  }
+  int32 equalizer_filter_length = 5;
+  double x0 = 6;
+  double dx = 7;
+  repeated float equalizer_initial_coefficients = 8;
+  int32 equalizer_training_count = 9;
+  double equalizer_convergence_factor = 10;
+}
+
+message DDemodCfgEqualizerInterleavedIQResponse {
   int32 status = 1;
 }
 
@@ -1488,6 +1545,20 @@ message DDemodCfgSymbolMapResponse {
   int32 status = 1;
 }
 
+message DDemodCfgSymbolMapInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof symbol_map_type_enum {
+    DDemodSymbolMapType symbol_map_type = 3;
+    int32 symbol_map_type_raw = 4;
+  }
+  repeated float symbol_map = 5;
+}
+
+message DDemodCfgSymbolMapInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message DDemodCfgSymbolMapSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1550,6 +1621,18 @@ message DDemodFetchConstellationTraceRequest {
 message DDemodFetchConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 constellation_trace = 2;
+  int32 actual_array_size = 3;
+}
+
+message DDemodFetchConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DDemodFetchConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float constellation_trace = 2;
   int32 actual_array_size = 3;
 }
 
@@ -1618,6 +1701,20 @@ message DDemodFetchEqualizerCoefficientsResponse {
   double x0 = 2;
   double dx = 3;
   repeated nidevice_grpc.NIComplexNumberF32 equalizer_coefficients = 4;
+  int32 actual_array_size = 5;
+}
+
+message DDemodFetchEqualizerCoefficientsInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DDemodFetchEqualizerCoefficientsInterleavedIQResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float equalizer_coefficients = 4;
   int32 actual_array_size = 5;
 }
 
@@ -1762,6 +1859,22 @@ message DDemodFetchMeasurementWaveformResponse {
   double symbol_rate = 7;
 }
 
+message DDemodFetchMeasurementWaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DDemodFetchMeasurementWaveformInterleavedIQResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float measurement_waveform = 4;
+  int32 actual_array_size = 5;
+  int32 samples_per_symbol = 6;
+  double symbol_rate = 7;
+}
+
 message DDemodFetchMeasurementWaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1788,6 +1901,18 @@ message DDemodFetchOffsetConstellationTraceRequest {
 message DDemodFetchOffsetConstellationTraceResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 offset_constellation_trace = 2;
+  int32 actual_array_size = 3;
+}
+
+message DDemodFetchOffsetConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DDemodFetchOffsetConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float offset_constellation_trace = 2;
   int32 actual_array_size = 3;
 }
 
@@ -1872,6 +1997,20 @@ message DDemodFetchReferenceWaveformResponse {
   int32 actual_array_size = 5;
 }
 
+message DDemodFetchReferenceWaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message DDemodFetchReferenceWaveformInterleavedIQResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float reference_waveform = 4;
+  int32 actual_array_size = 5;
+}
+
 message DDemodFetchReferenceWaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1911,6 +2050,19 @@ message DDemodGetEqualizerInitialCoefficientsResponse {
   int32 actual_array_size = 5;
 }
 
+message DDemodGetEqualizerInitialCoefficientsInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message DDemodGetEqualizerInitialCoefficientsInterleavedIQResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float equalizer_initial_coefficients = 4;
+  int32 actual_array_size = 5;
+}
+
 message DDemodGetEqualizerInitialCoefficientsSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1933,6 +2085,17 @@ message DDemodGetSymbolMapRequest {
 message DDemodGetSymbolMapResponse {
   int32 status = 1;
   repeated nidevice_grpc.NIComplexNumberF32 symbol_map = 2;
+  int32 actual_array_size = 3;
+}
+
+message DDemodGetSymbolMapInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message DDemodGetSymbolMapInterleavedIQResponse {
+  int32 status = 1;
+  repeated float symbol_map = 2;
   int32 actual_array_size = 3;
 }
 
@@ -1969,6 +2132,16 @@ message DDemodSetSymbolMapRequest {
 }
 
 message DDemodSetSymbolMapResponse {
+  int32 status = 1;
+}
+
+message DDemodSetSymbolMapInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated float attr_val = 3;
+}
+
+message DDemodSetSymbolMapInterleavedIQResponse {
   int32 status = 1;
 }
 

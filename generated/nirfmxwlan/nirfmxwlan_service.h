@@ -46,13 +46,16 @@ public:
 
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
   ::grpc::Status AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response) override;
+  ::grpc::Status AnalyzeIQ1WaveformInterleavedIQ(::grpc::ServerContext* context, const AnalyzeIQ1WaveformInterleavedIQRequest* request, AnalyzeIQ1WaveformInterleavedIQResponse* response) override;
   ::grpc::Status AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response) override;
   ::grpc::Status AnalyzeNWaveformsIQ(::grpc::ServerContext* context, const AnalyzeNWaveformsIQRequest* request, AnalyzeNWaveformsIQResponse* response) override;
+  ::grpc::Status AnalyzeNWaveformsIQInterleavedIQ(::grpc::ServerContext* context, const AnalyzeNWaveformsIQInterleavedIQRequest* request, AnalyzeNWaveformsIQInterleavedIQResponse* response) override;
   ::grpc::Status AnalyzeNWaveformsIQSplit(::grpc::ServerContext* context, const AnalyzeNWaveformsIQSplitRequest* request, AnalyzeNWaveformsIQSplitResponse* response) override;
   ::grpc::Status AnalyzeNWaveformsSpectrum(::grpc::ServerContext* context, const AnalyzeNWaveformsSpectrumRequest* request, AnalyzeNWaveformsSpectrumResponse* response) override;
   ::grpc::Status AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response) override;
   ::grpc::Status AutoDetectSignal(::grpc::ServerContext* context, const AutoDetectSignalRequest* request, AutoDetectSignalResponse* response) override;
   ::grpc::Status AutoDetectSignalAnalysisOnly(::grpc::ServerContext* context, const AutoDetectSignalAnalysisOnlyRequest* request, AutoDetectSignalAnalysisOnlyResponse* response) override;
+  ::grpc::Status AutoDetectSignalAnalysisOnlyInterleavedIQ(::grpc::ServerContext* context, const AutoDetectSignalAnalysisOnlyInterleavedIQRequest* request, AutoDetectSignalAnalysisOnlyInterleavedIQResponse* response) override;
   ::grpc::Status AutoDetectSignalAnalysisOnlySplit(::grpc::ServerContext* context, const AutoDetectSignalAnalysisOnlySplitRequest* request, AutoDetectSignalAnalysisOnlySplitResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
   ::grpc::Status BuildChainString(::grpc::ServerContext* context, const BuildChainStringRequest* request, BuildChainStringResponse* response) override;
@@ -92,6 +95,7 @@ public:
   ::grpc::Status DSSSModAccCfgPowerMeasurementNumberOfCustomGates(::grpc::ServerContext* context, const DSSSModAccCfgPowerMeasurementNumberOfCustomGatesRequest* request, DSSSModAccCfgPowerMeasurementNumberOfCustomGatesResponse* response) override;
   ::grpc::Status DSSSModAccFetchAveragePowers(::grpc::ServerContext* context, const DSSSModAccFetchAveragePowersRequest* request, DSSSModAccFetchAveragePowersResponse* response) override;
   ::grpc::Status DSSSModAccFetchConstellationTrace(::grpc::ServerContext* context, const DSSSModAccFetchConstellationTraceRequest* request, DSSSModAccFetchConstellationTraceResponse* response) override;
+  ::grpc::Status DSSSModAccFetchConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const DSSSModAccFetchConstellationTraceInterleavedIQRequest* request, DSSSModAccFetchConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status DSSSModAccFetchConstellationTraceSplit(::grpc::ServerContext* context, const DSSSModAccFetchConstellationTraceSplitRequest* request, DSSSModAccFetchConstellationTraceSplitResponse* response) override;
   ::grpc::Status DSSSModAccFetchCustomGatePowersArray(::grpc::ServerContext* context, const DSSSModAccFetchCustomGatePowersArrayRequest* request, DSSSModAccFetchCustomGatePowersArrayResponse* response) override;
   ::grpc::Status DSSSModAccFetchDecodedHeaderBitsTrace(::grpc::ServerContext* context, const DSSSModAccFetchDecodedHeaderBitsTraceRequest* request, DSSSModAccFetchDecodedHeaderBitsTraceResponse* response) override;
@@ -131,6 +135,7 @@ public:
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status OFDMModAccAutoLevel(::grpc::ServerContext* context, const OFDMModAccAutoLevelRequest* request, OFDMModAccAutoLevelResponse* response) override;
   ::grpc::Status OFDMModAccCfg1ReferenceWaveform(::grpc::ServerContext* context, const OFDMModAccCfg1ReferenceWaveformRequest* request, OFDMModAccCfg1ReferenceWaveformResponse* response) override;
+  ::grpc::Status OFDMModAccCfg1ReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const OFDMModAccCfg1ReferenceWaveformInterleavedIQRequest* request, OFDMModAccCfg1ReferenceWaveformInterleavedIQResponse* response) override;
   ::grpc::Status OFDMModAccCfg1ReferenceWaveformSplit(::grpc::ServerContext* context, const OFDMModAccCfg1ReferenceWaveformSplitRequest* request, OFDMModAccCfg1ReferenceWaveformSplitResponse* response) override;
   ::grpc::Status OFDMModAccCfgAcquisitionLength(::grpc::ServerContext* context, const OFDMModAccCfgAcquisitionLengthRequest* request, OFDMModAccCfgAcquisitionLengthResponse* response) override;
   ::grpc::Status OFDMModAccCfgAmplitudeTrackingEnabled(::grpc::ServerContext* context, const OFDMModAccCfgAmplitudeTrackingEnabledRequest* request, OFDMModAccCfgAmplitudeTrackingEnabledResponse* response) override;
@@ -142,6 +147,7 @@ public:
   ::grpc::Status OFDMModAccCfgMeasurementLength(::grpc::ServerContext* context, const OFDMModAccCfgMeasurementLengthRequest* request, OFDMModAccCfgMeasurementLengthResponse* response) override;
   ::grpc::Status OFDMModAccCfgMeasurementMode(::grpc::ServerContext* context, const OFDMModAccCfgMeasurementModeRequest* request, OFDMModAccCfgMeasurementModeResponse* response) override;
   ::grpc::Status OFDMModAccCfgNReferenceWaveforms(::grpc::ServerContext* context, const OFDMModAccCfgNReferenceWaveformsRequest* request, OFDMModAccCfgNReferenceWaveformsResponse* response) override;
+  ::grpc::Status OFDMModAccCfgNReferenceWaveformsInterleavedIQ(::grpc::ServerContext* context, const OFDMModAccCfgNReferenceWaveformsInterleavedIQRequest* request, OFDMModAccCfgNReferenceWaveformsInterleavedIQResponse* response) override;
   ::grpc::Status OFDMModAccCfgNReferenceWaveformsSplit(::grpc::ServerContext* context, const OFDMModAccCfgNReferenceWaveformsSplitRequest* request, OFDMModAccCfgNReferenceWaveformsSplitResponse* response) override;
   ::grpc::Status OFDMModAccCfgNoiseCompensationEnabled(::grpc::ServerContext* context, const OFDMModAccCfgNoiseCompensationEnabledRequest* request, OFDMModAccCfgNoiseCompensationEnabledResponse* response) override;
   ::grpc::Status OFDMModAccCfgOptimizeDynamicRangeForEVM(::grpc::ServerContext* context, const OFDMModAccCfgOptimizeDynamicRangeForEVMRequest* request, OFDMModAccCfgOptimizeDynamicRangeForEVMResponse* response) override;
@@ -160,6 +166,7 @@ public:
   ::grpc::Status OFDMModAccFetchCustomGatePowersArray(::grpc::ServerContext* context, const OFDMModAccFetchCustomGatePowersArrayRequest* request, OFDMModAccFetchCustomGatePowersArrayResponse* response) override;
   ::grpc::Status OFDMModAccFetchDataAveragePower(::grpc::ServerContext* context, const OFDMModAccFetchDataAveragePowerRequest* request, OFDMModAccFetchDataAveragePowerResponse* response) override;
   ::grpc::Status OFDMModAccFetchDataConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchDataConstellationTraceRequest* request, OFDMModAccFetchDataConstellationTraceResponse* response) override;
+  ::grpc::Status OFDMModAccFetchDataConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const OFDMModAccFetchDataConstellationTraceInterleavedIQRequest* request, OFDMModAccFetchDataConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status OFDMModAccFetchDataConstellationTraceSplit(::grpc::ServerContext* context, const OFDMModAccFetchDataConstellationTraceSplitRequest* request, OFDMModAccFetchDataConstellationTraceSplitResponse* response) override;
   ::grpc::Status OFDMModAccFetchDataPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchDataPeakPowerRequest* request, OFDMModAccFetchDataPeakPowerResponse* response) override;
   ::grpc::Status OFDMModAccFetchDecodedEHTSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedEHTSIGBitsTraceRequest* request, OFDMModAccFetchDecodedEHTSIGBitsTraceResponse* response) override;
@@ -193,6 +200,7 @@ public:
   ::grpc::Status OFDMModAccFetchPSDUCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchPSDUCRCStatusRequest* request, OFDMModAccFetchPSDUCRCStatusResponse* response) override;
   ::grpc::Status OFDMModAccFetchPhaseNoisePSDMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchPhaseNoisePSDMeanTraceRequest* request, OFDMModAccFetchPhaseNoisePSDMeanTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchPilotConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchPilotConstellationTraceRequest* request, OFDMModAccFetchPilotConstellationTraceResponse* response) override;
+  ::grpc::Status OFDMModAccFetchPilotConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const OFDMModAccFetchPilotConstellationTraceInterleavedIQRequest* request, OFDMModAccFetchPilotConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status OFDMModAccFetchPilotConstellationTraceSplit(::grpc::ServerContext* context, const OFDMModAccFetchPilotConstellationTraceSplitRequest* request, OFDMModAccFetchPilotConstellationTraceSplitResponse* response) override;
   ::grpc::Status OFDMModAccFetchPreambleAveragePowers80211ac(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211acRequest* request, OFDMModAccFetchPreambleAveragePowers80211acResponse* response) override;
   ::grpc::Status OFDMModAccFetchPreambleAveragePowers80211ax(::grpc::ServerContext* context, const OFDMModAccFetchPreambleAveragePowers80211axRequest* request, OFDMModAccFetchPreambleAveragePowers80211axResponse* response) override;
@@ -206,6 +214,7 @@ public:
   ::grpc::Status OFDMModAccFetchPreamblePeakPowers80211n(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowers80211nRequest* request, OFDMModAccFetchPreamblePeakPowers80211nResponse* response) override;
   ::grpc::Status OFDMModAccFetchPreamblePeakPowersCommon(::grpc::ServerContext* context, const OFDMModAccFetchPreamblePeakPowersCommonRequest* request, OFDMModAccFetchPreamblePeakPowersCommonResponse* response) override;
   ::grpc::Status OFDMModAccFetchRUOffsetAndSize(::grpc::ServerContext* context, const OFDMModAccFetchRUOffsetAndSizeRequest* request, OFDMModAccFetchRUOffsetAndSizeResponse* response) override;
+  ::grpc::Status OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQRequest* request, OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status OFDMModAccFetchReferenceDataConstellationTraceSplit(::grpc::ServerContext* context, const OFDMModAccFetchReferenceDataConstellationTraceSplitRequest* request, OFDMModAccFetchReferenceDataConstellationTraceSplitResponse* response) override;
   ::grpc::Status OFDMModAccFetchSIGBCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchSIGBCRCStatusRequest* request, OFDMModAccFetchSIGBCRCStatusResponse* response) override;
   ::grpc::Status OFDMModAccFetchSIGCRCStatus(::grpc::ServerContext* context, const OFDMModAccFetchSIGCRCStatusRequest* request, OFDMModAccFetchSIGCRCStatusResponse* response) override;
@@ -225,8 +234,10 @@ public:
   ::grpc::Status OFDMModAccFetchUnusedToneErrorMarginPerRU(::grpc::ServerContext* context, const OFDMModAccFetchUnusedToneErrorMarginPerRURequest* request, OFDMModAccFetchUnusedToneErrorMarginPerRUResponse* response) override;
   ::grpc::Status OFDMModAccFetchUnusedToneErrorMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUnusedToneErrorMeanTraceRequest* request, OFDMModAccFetchUnusedToneErrorMeanTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchUserDataConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserDataConstellationTraceRequest* request, OFDMModAccFetchUserDataConstellationTraceResponse* response) override;
+  ::grpc::Status OFDMModAccFetchUserDataConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const OFDMModAccFetchUserDataConstellationTraceInterleavedIQRequest* request, OFDMModAccFetchUserDataConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status OFDMModAccFetchUserDataConstellationTraceSplit(::grpc::ServerContext* context, const OFDMModAccFetchUserDataConstellationTraceSplitRequest* request, OFDMModAccFetchUserDataConstellationTraceSplitResponse* response) override;
   ::grpc::Status OFDMModAccFetchUserPilotConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserPilotConstellationTraceRequest* request, OFDMModAccFetchUserPilotConstellationTraceResponse* response) override;
+  ::grpc::Status OFDMModAccFetchUserPilotConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const OFDMModAccFetchUserPilotConstellationTraceInterleavedIQRequest* request, OFDMModAccFetchUserPilotConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status OFDMModAccFetchUserPilotConstellationTraceSplit(::grpc::ServerContext* context, const OFDMModAccFetchUserPilotConstellationTraceSplitRequest* request, OFDMModAccFetchUserPilotConstellationTraceSplitResponse* response) override;
   ::grpc::Status OFDMModAccFetchUserPower(::grpc::ServerContext* context, const OFDMModAccFetchUserPowerRequest* request, OFDMModAccFetchUserPowerResponse* response) override;
   ::grpc::Status OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTrace(::grpc::ServerContext* context, const OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceRequest* request, OFDMModAccFetchUserStreamDataRMSEVMPerSymbolMeanTraceResponse* response) override;

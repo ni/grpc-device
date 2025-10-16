@@ -1075,6 +1075,43 @@ ampm_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& i
   return response;
 }
 
+AMPMCfgReferenceWaveformInterleavedIQResponse
+ampm_cfg_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AMPMCfgReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform, request.mutable_reference_waveform());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<AmpmReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<AmpmSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
+
+  auto response = AMPMCfgReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AMPMCfgReferenceWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AMPMCfgReferenceWaveformSplitResponse
 ampm_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform_i, const std::vector<float>& reference_waveform_q, const simple_variant<AmpmReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<AmpmSignalType, pb::int32>& signal_type)
 {
@@ -1326,6 +1363,25 @@ ampm_fetch_processed_mean_acquired_waveform(const StubPtr& stub, const nidevice_
   return response;
 }
 
+AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQResponse
+ampm_fetch_processed_mean_acquired_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AMPMFetchProcessedMeanAcquiredWaveformSplitResponse
 ampm_fetch_processed_mean_acquired_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -1359,6 +1415,25 @@ ampm_fetch_processed_reference_waveform(const StubPtr& stub, const nidevice_grpc
 
   raise_if_error(
       stub->AMPMFetchProcessedReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AMPMFetchProcessedReferenceWaveformInterleavedIQResponse
+ampm_fetch_processed_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AMPMFetchProcessedReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = AMPMFetchProcessedReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AMPMFetchProcessedReferenceWaveformInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -1457,6 +1532,29 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
 
   raise_if_error(
       stub->AnalyzeIQ1Waveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AnalyzeIQ1WaveformInterleavedIQResponse
+analyze_iq1_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iq, request.mutable_iq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1WaveformInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2757,6 +2855,36 @@ dpd_apply_digital_predistortion(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+DPDApplyDigitalPredistortionInterleavedIQResponse
+dpd_apply_digital_predistortion_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present, const double& measurement_timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDApplyDigitalPredistortionInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0_in(x0_in);
+  request.set_dx_in(dx_in);
+  copy_array(waveform_in, request.mutable_waveform_in());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdApplyDpdIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  request.set_measurement_timeout(measurement_timeout);
+
+  auto response = DPDApplyDigitalPredistortionInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDApplyDigitalPredistortionInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDApplyDigitalPredistortionSplitResponse
 dpd_apply_digital_predistortion_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in_i, const std::vector<float>& waveform_in_q, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present, const double& measurement_timeout)
 {
@@ -2812,6 +2940,35 @@ dpd_apply_pre_dpd_signal_conditioning(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->DPDApplyPreDPDSignalConditioning(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDApplyPreDPDSignalConditioningInterleavedIQResponse
+dpd_apply_pre_dpd_signal_conditioning_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0_in, const double& dx_in, const std::vector<float>& waveform_in, const simple_variant<DpdApplyDpdIdleDurationPresent, pb::int32>& idle_duration_present)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDApplyPreDPDSignalConditioningInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0_in(x0_in);
+  request.set_dx_in(dx_in);
+  copy_array(waveform_in, request.mutable_waveform_in());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdApplyDpdIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+
+  auto response = DPDApplyPreDPDSignalConditioningInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDApplyPreDPDSignalConditioningInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2944,6 +3101,25 @@ dpd_cfg_apply_dpd_user_dpd_polynomial(const StubPtr& stub, const nidevice_grpc::
   return response;
 }
 
+DPDCfgApplyDPDUserDPDPolynomialInterleavedIQResponse
+dpd_cfg_apply_dpd_user_dpd_polynomial_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& dpd_polynomial)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgApplyDPDUserDPDPolynomialInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(dpd_polynomial, request.mutable_dpd_polynomial());
+
+  auto response = DPDCfgApplyDPDUserDPDPolynomialInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDCfgApplyDPDUserDPDPolynomialSplitResponse
 dpd_cfg_apply_dpd_user_dpd_polynomial_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& dpd_polynomial_i, const std::vector<float>& dpd_polynomial_q)
 {
@@ -2979,6 +3155,26 @@ dpd_cfg_apply_dpd_user_lookup_table(const StubPtr& stub, const nidevice_grpc::Se
 
   raise_if_error(
       stub->DPDCfgApplyDPDUserLookupTable(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDCfgApplyDPDUserLookupTableInterleavedIQResponse
+dpd_cfg_apply_dpd_user_lookup_table_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& lut_input_powers, const std::vector<float>& lut_complex_gains)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgApplyDPDUserLookupTableInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(lut_input_powers, request.mutable_lut_input_powers());
+  copy_array(lut_complex_gains, request.mutable_lut_complex_gains());
+
+  auto response = DPDCfgApplyDPDUserLookupTableInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDCfgApplyDPDUserLookupTableInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -3093,6 +3289,27 @@ dpd_cfg_extract_model_target_waveform(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->DPDCfgExtractModelTargetWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDCfgExtractModelTargetWaveformInterleavedIQResponse
+dpd_cfg_extract_model_target_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& target_waveform)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgExtractModelTargetWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(target_waveform, request.mutable_target_waveform());
+
+  auto response = DPDCfgExtractModelTargetWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDCfgExtractModelTargetWaveformInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -3389,6 +3606,25 @@ dpd_cfg_previous_dpd_polynomial(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+DPDCfgPreviousDPDPolynomialInterleavedIQResponse
+dpd_cfg_previous_dpd_polynomial_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& previous_dpd_polynomial)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgPreviousDPDPolynomialInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(previous_dpd_polynomial, request.mutable_previous_dpd_polynomial());
+
+  auto response = DPDCfgPreviousDPDPolynomialInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDCfgPreviousDPDPolynomialInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDCfgPreviousDPDPolynomialSplitResponse
 dpd_cfg_previous_dpd_polynomial_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& previous_dpd_polynomial_i, const std::vector<float>& previous_dpd_polynomial_q)
 {
@@ -3441,6 +3677,43 @@ dpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& in
 
   raise_if_error(
       stub->DPDCfgReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDCfgReferenceWaveformInterleavedIQResponse
+dpd_cfg_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDCfgReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform, request.mutable_reference_waveform());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<DpdSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
+
+  auto response = DPDCfgReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDCfgReferenceWaveformInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -3567,6 +3840,25 @@ dpd_fetch_dpd_polynomial(const StubPtr& stub, const nidevice_grpc::Session& inst
   return response;
 }
 
+DPDFetchDPDPolynomialInterleavedIQResponse
+dpd_fetch_dpd_polynomial_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchDPDPolynomialInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchDPDPolynomialInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDFetchDPDPolynomialInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDFetchDPDPolynomialSplitResponse
 dpd_fetch_dpd_polynomial_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3605,6 +3897,25 @@ dpd_fetch_dvr_model(const StubPtr& stub, const nidevice_grpc::Session& instrumen
   return response;
 }
 
+DPDFetchDVRModelInterleavedIQResponse
+dpd_fetch_dvr_model_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchDVRModelInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchDVRModelInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDFetchDVRModelInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDFetchDVRModelSplitResponse
 dpd_fetch_dvr_model_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3638,6 +3949,25 @@ dpd_fetch_lookup_table(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->DPDFetchLookupTable(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDFetchLookupTableInterleavedIQResponse
+dpd_fetch_lookup_table_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchLookupTableInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchLookupTableInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDFetchLookupTableInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -3700,6 +4030,25 @@ dpd_fetch_processed_mean_acquired_waveform(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+DPDFetchProcessedMeanAcquiredWaveformInterleavedIQResponse
+dpd_fetch_processed_mean_acquired_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchProcessedMeanAcquiredWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchProcessedMeanAcquiredWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DPDFetchProcessedMeanAcquiredWaveformSplitResponse
 dpd_fetch_processed_mean_acquired_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -3733,6 +4082,25 @@ dpd_fetch_processed_reference_waveform(const StubPtr& stub, const nidevice_grpc:
 
   raise_if_error(
       stub->DPDFetchProcessedReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDFetchProcessedReferenceWaveformInterleavedIQResponse
+dpd_fetch_processed_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDFetchProcessedReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DPDFetchProcessedReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DPDFetchProcessedReferenceWaveformInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -4769,6 +5137,27 @@ idpd_cfg_equalizer_coefficients(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+IDPDCfgEqualizerCoefficientsInterleavedIQResponse
+idpd_cfg_equalizer_coefficients_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& equalizer_coefficients)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDCfgEqualizerCoefficientsInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(equalizer_coefficients, request.mutable_equalizer_coefficients());
+
+  auto response = IDPDCfgEqualizerCoefficientsInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IDPDCfgEqualizerCoefficientsInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IDPDCfgEqualizerCoefficientsSplitResponse
 idpd_cfg_equalizer_coefficients_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& equalizer_coefficients_i, const std::vector<float>& equalizer_coefficients_q)
 {
@@ -4808,6 +5197,28 @@ idpd_cfg_predistorted_waveform(const StubPtr& stub, const nidevice_grpc::Session
 
   raise_if_error(
       stub->IDPDCfgPredistortedWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDCfgPredistortedWaveformInterleavedIQResponse
+idpd_cfg_predistorted_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& predistorted_waveform, const double& target_gain)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDCfgPredistortedWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(predistorted_waveform, request.mutable_predistorted_waveform());
+  request.set_target_gain(target_gain);
+
+  auto response = IDPDCfgPredistortedWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IDPDCfgPredistortedWaveformInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -4873,6 +5284,43 @@ idpd_cfg_reference_waveform(const StubPtr& stub, const nidevice_grpc::Session& i
   return response;
 }
 
+IDPDCfgReferenceWaveformInterleavedIQResponse
+idpd_cfg_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform, const simple_variant<IdpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<IdpdSignalType, pb::int32>& signal_type)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDCfgReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(reference_waveform, request.mutable_reference_waveform());
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<IdpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<IdpdSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
+
+  auto response = IDPDCfgReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IDPDCfgReferenceWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IDPDCfgReferenceWaveformSplitResponse
 idpd_cfg_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& reference_waveform_i, const std::vector<float>& reference_waveform_q, const simple_variant<IdpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<IdpdSignalType, pb::int32>& signal_type)
 {
@@ -4930,6 +5378,25 @@ idpd_fetch_equalizer_coefficients(const StubPtr& stub, const nidevice_grpc::Sess
   return response;
 }
 
+IDPDFetchEqualizerCoefficientsInterleavedIQResponse
+idpd_fetch_equalizer_coefficients_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchEqualizerCoefficientsInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchEqualizerCoefficientsInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchEqualizerCoefficientsInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IDPDFetchEqualizerCoefficientsSplitResponse
 idpd_fetch_equalizer_coefficients_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -4963,6 +5430,25 @@ idpd_fetch_predistorted_waveform(const StubPtr& stub, const nidevice_grpc::Sessi
 
   raise_if_error(
       stub->IDPDFetchPredistortedWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDFetchPredistortedWaveformInterleavedIQResponse
+idpd_fetch_predistorted_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchPredistortedWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchPredistortedWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchPredistortedWaveformInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -5006,6 +5492,25 @@ idpd_fetch_processed_mean_acquired_waveform(const StubPtr& stub, const nidevice_
   return response;
 }
 
+IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQResponse
+idpd_fetch_processed_mean_acquired_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IDPDFetchProcessedMeanAcquiredWaveformSplitResponse
 idpd_fetch_processed_mean_acquired_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -5044,6 +5549,25 @@ idpd_fetch_processed_reference_waveform(const StubPtr& stub, const nidevice_grpc
   return response;
 }
 
+IDPDFetchProcessedReferenceWaveformInterleavedIQResponse
+idpd_fetch_processed_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDFetchProcessedReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = IDPDFetchProcessedReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IDPDFetchProcessedReferenceWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 IDPDFetchProcessedReferenceWaveformSplitResponse
 idpd_fetch_processed_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -5076,6 +5600,24 @@ idpd_get_equalizer_reference_waveform(const StubPtr& stub, const nidevice_grpc::
 
   raise_if_error(
       stub->IDPDGetEqualizerReferenceWaveform(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDGetEqualizerReferenceWaveformInterleavedIQResponse
+idpd_get_equalizer_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDGetEqualizerReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = IDPDGetEqualizerReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IDPDGetEqualizerReferenceWaveformInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -5581,6 +6123,27 @@ iq_fetch_data(const StubPtr& stub, const nidevice_grpc::Session& instrument, con
 
   raise_if_error(
       stub->IQFetchData(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IQFetchDataInterleavedIQResponse
+iq_fetch_data_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout, const pb::int32& record_to_fetch, const pb::int64& samples_to_read)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IQFetchDataInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+  request.set_record_to_fetch(record_to_fetch);
+  request.set_samples_to_read(samples_to_read);
+
+  auto response = IQFetchDataInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->IQFetchDataInterleavedIQ(&context, request, &response),
       context);
 
   return response;

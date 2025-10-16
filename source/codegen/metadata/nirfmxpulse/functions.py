@@ -72,6 +72,66 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AnalyzeIQ1WaveformInterleavedIQ': {
+        'cname': 'RFmxPulse_AnalyzeIQ1Waveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'iq',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(iq)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
+            },
+            {
+                'direction': 'in',
+                'name': 'reset',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AnalyzeIQ1WaveformSplit': {
         'parameters': [
             {
@@ -240,6 +300,49 @@ functions = {
                 'direction': 'in',
                 'name': 'arraySize',
                 'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'Cfg1ReferenceWaveformInterleavedIQ': {
+        'cname': 'RFmxPulse_Cfg1ReferenceWaveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'referenceWaveform',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(referenceWaveform)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
             }
         ],
         'returns': 'int32'
@@ -1109,6 +1212,59 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'FetchIQTraceInterleavedIQ': {
+        'cname': 'RFmxPulse_FetchIQTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'iqData',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(iqData)'
             },
             {
                 'direction': 'in',

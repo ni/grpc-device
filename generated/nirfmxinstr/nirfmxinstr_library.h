@@ -34,6 +34,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 CfgMechanicalAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue) override;
   int32 CfgRFAttenuation(niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue) override;
   int32 CfgSParameterExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 frequencyArraySize, NIComplexDouble sParameters[], int32 sParameterTableSize, int32 numberOfPorts, int32 sParameterOrientation) override;
+  int32 CfgSParameterExternalAttenuationTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 frequencyArraySize, float64 sParameters[], int32 sParameterTableSize, int32 numberOfPorts, int32 sParameterOrientation) override;
   int32 CfgSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterType) override;
   int32 CheckAcquisitionStatus(niRFmxInstrHandle instrumentHandle, int32* acquisitionDone) override;
   int32 CheckIfListExists(niRFmxInstrHandle instrumentHandle, char listName[], int32* listExists, int32* personality) override;
@@ -45,6 +46,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   int32 EnableCalibrationPlane(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 ExportSignal(niRFmxInstrHandle instrumentHandle, int32 exportSignalSource, char exportSignalOutputTerminal[]) override;
   int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved) override;
+  int32 FetchRawIQDataInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, float32 data[], int32 arraySize, int32* actualArraySize, void* reserved) override;
   int32 GetAttributeF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal) override;
   int32 GetAttributeF32Array(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize) override;
   int32 GetAttributeF64(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64* attrVal) override;
@@ -132,6 +134,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using CfgMechanicalAttenuationPtr = decltype(&RFmxInstr_CfgMechanicalAttenuation);
   using CfgRFAttenuationPtr = decltype(&RFmxInstr_CfgRFAttenuation);
   using CfgSParameterExternalAttenuationTablePtr = decltype(&RFmxInstr_CfgSParameterExternalAttenuationTable);
+  using CfgSParameterExternalAttenuationTableInterleavedIQPtr = decltype(&RFmxInstr_CfgSParameterExternalAttenuationTable);
   using CfgSParameterExternalAttenuationTypePtr = decltype(&RFmxInstr_CfgSParameterExternalAttenuationType);
   using CheckAcquisitionStatusPtr = decltype(&RFmxInstr_CheckAcquisitionStatus);
   using CheckIfListExistsPtr = decltype(&RFmxInstr_CheckIfListExists);
@@ -143,6 +146,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
   using EnableCalibrationPlanePtr = decltype(&RFmxInstr_EnableCalibrationPlane);
   using ExportSignalPtr = decltype(&RFmxInstr_ExportSignal);
   using FetchRawIQDataPtr = decltype(&RFmxInstr_FetchRawIQData);
+  using FetchRawIQDataInterleavedIQPtr = decltype(&RFmxInstr_FetchRawIQData);
   using GetAttributeF32Ptr = decltype(&RFmxInstr_GetAttributeF32);
   using GetAttributeF32ArrayPtr = decltype(&RFmxInstr_GetAttributeF32Array);
   using GetAttributeF64Ptr = decltype(&RFmxInstr_GetAttributeF64);
@@ -230,6 +234,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     CfgMechanicalAttenuationPtr CfgMechanicalAttenuation;
     CfgRFAttenuationPtr CfgRFAttenuation;
     CfgSParameterExternalAttenuationTablePtr CfgSParameterExternalAttenuationTable;
+    CfgSParameterExternalAttenuationTableInterleavedIQPtr CfgSParameterExternalAttenuationTableInterleavedIQ;
     CfgSParameterExternalAttenuationTypePtr CfgSParameterExternalAttenuationType;
     CheckAcquisitionStatusPtr CheckAcquisitionStatus;
     CheckIfListExistsPtr CheckIfListExists;
@@ -241,6 +246,7 @@ class NiRFmxInstrLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterface 
     EnableCalibrationPlanePtr EnableCalibrationPlane;
     ExportSignalPtr ExportSignal;
     FetchRawIQDataPtr FetchRawIQData;
+    FetchRawIQDataInterleavedIQPtr FetchRawIQDataInterleavedIQ;
     GetAttributeF32Ptr GetAttributeF32;
     GetAttributeF32ArrayPtr GetAttributeF32Array;
     GetAttributeF64Ptr GetAttributeF64;

@@ -40,6 +40,7 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.CfgMechanicalAttenuation = reinterpret_cast<CfgMechanicalAttenuationPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgMechanicalAttenuation"));
   function_pointers_.CfgRFAttenuation = reinterpret_cast<CfgRFAttenuationPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgRFAttenuation"));
   function_pointers_.CfgSParameterExternalAttenuationTable = reinterpret_cast<CfgSParameterExternalAttenuationTablePtr>(shared_library_->get_function_pointer("RFmxInstr_CfgSParameterExternalAttenuationTable"));
+  function_pointers_.CfgSParameterExternalAttenuationTableInterleavedIQ = reinterpret_cast<CfgSParameterExternalAttenuationTableInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxInstr_CfgSParameterExternalAttenuationTable"));
   function_pointers_.CfgSParameterExternalAttenuationType = reinterpret_cast<CfgSParameterExternalAttenuationTypePtr>(shared_library_->get_function_pointer("RFmxInstr_CfgSParameterExternalAttenuationType"));
   function_pointers_.CheckAcquisitionStatus = reinterpret_cast<CheckAcquisitionStatusPtr>(shared_library_->get_function_pointer("RFmxInstr_CheckAcquisitionStatus"));
   function_pointers_.CheckIfListExists = reinterpret_cast<CheckIfListExistsPtr>(shared_library_->get_function_pointer("RFmxInstr_CheckIfListExists"));
@@ -51,6 +52,7 @@ NiRFmxInstrLibrary::NiRFmxInstrLibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.EnableCalibrationPlane = reinterpret_cast<EnableCalibrationPlanePtr>(shared_library_->get_function_pointer("RFmxInstr_EnableCalibrationPlane"));
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_->get_function_pointer("RFmxInstr_ExportSignal"));
   function_pointers_.FetchRawIQData = reinterpret_cast<FetchRawIQDataPtr>(shared_library_->get_function_pointer("RFmxInstr_FetchRawIQData"));
+  function_pointers_.FetchRawIQDataInterleavedIQ = reinterpret_cast<FetchRawIQDataInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxInstr_FetchRawIQData"));
   function_pointers_.GetAttributeF32 = reinterpret_cast<GetAttributeF32Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF32"));
   function_pointers_.GetAttributeF32Array = reinterpret_cast<GetAttributeF32ArrayPtr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF32Array"));
   function_pointers_.GetAttributeF64 = reinterpret_cast<GetAttributeF64Ptr>(shared_library_->get_function_pointer("RFmxInstr_GetAttributeF64"));
@@ -240,6 +242,14 @@ int32 NiRFmxInstrLibrary::CfgSParameterExternalAttenuationTable(niRFmxInstrHandl
   return function_pointers_.CfgSParameterExternalAttenuationTable(instrumentHandle, selectorString, tableName, frequency, frequencyArraySize, sParameters, sParameterTableSize, numberOfPorts, sParameterOrientation);
 }
 
+int32 NiRFmxInstrLibrary::CfgSParameterExternalAttenuationTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 frequencyArraySize, float64 sParameters[], int32 sParameterTableSize, int32 numberOfPorts, int32 sParameterOrientation)
+{
+  if (!function_pointers_.CfgSParameterExternalAttenuationTableInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_CfgSParameterExternalAttenuationTable.");
+  }
+  return function_pointers_.CfgSParameterExternalAttenuationTableInterleavedIQ(instrumentHandle, selectorString, tableName, frequency, frequencyArraySize, reinterpret_cast<NIComplexDouble*>(sParameters), sParameterTableSize/2, numberOfPorts, sParameterOrientation);
+}
+
 int32 NiRFmxInstrLibrary::CfgSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterType)
 {
   if (!function_pointers_.CfgSParameterExternalAttenuationType) {
@@ -326,6 +336,14 @@ int32 NiRFmxInstrLibrary::FetchRawIQData(niRFmxInstrHandle instrumentHandle, cha
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_FetchRawIQData.");
   }
   return function_pointers_.FetchRawIQData(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, data, arraySize, actualArraySize, reserved);
+}
+
+int32 NiRFmxInstrLibrary::FetchRawIQDataInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, float32 data[], int32 arraySize, int32* actualArraySize, void* reserved)
+{
+  if (!function_pointers_.FetchRawIQDataInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxInstr_FetchRawIQData.");
+  }
+  return function_pointers_.FetchRawIQDataInterleavedIQ(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, reinterpret_cast<NIComplexSingle*>(data), arraySize, actualArraySize, reserved);
 }
 
 int32 NiRFmxInstrLibrary::GetAttributeF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal)

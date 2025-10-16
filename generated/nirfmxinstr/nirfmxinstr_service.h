@@ -57,6 +57,7 @@ public:
   ::grpc::Status CfgMechanicalAttenuation(::grpc::ServerContext* context, const CfgMechanicalAttenuationRequest* request, CfgMechanicalAttenuationResponse* response) override;
   ::grpc::Status CfgRFAttenuation(::grpc::ServerContext* context, const CfgRFAttenuationRequest* request, CfgRFAttenuationResponse* response) override;
   ::grpc::Status CfgSParameterExternalAttenuationTable(::grpc::ServerContext* context, const CfgSParameterExternalAttenuationTableRequest* request, CfgSParameterExternalAttenuationTableResponse* response) override;
+  ::grpc::Status CfgSParameterExternalAttenuationTableInterleavedIQ(::grpc::ServerContext* context, const CfgSParameterExternalAttenuationTableInterleavedIQRequest* request, CfgSParameterExternalAttenuationTableInterleavedIQResponse* response) override;
   ::grpc::Status CfgSParameterExternalAttenuationType(::grpc::ServerContext* context, const CfgSParameterExternalAttenuationTypeRequest* request, CfgSParameterExternalAttenuationTypeResponse* response) override;
   ::grpc::Status CheckAcquisitionStatus(::grpc::ServerContext* context, const CheckAcquisitionStatusRequest* request, CheckAcquisitionStatusResponse* response) override;
   ::grpc::Status CheckIfListExists(::grpc::ServerContext* context, const CheckIfListExistsRequest* request, CheckIfListExistsResponse* response) override;
@@ -68,6 +69,7 @@ public:
   ::grpc::Status EnableCalibrationPlane(::grpc::ServerContext* context, const EnableCalibrationPlaneRequest* request, EnableCalibrationPlaneResponse* response) override;
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
   ::grpc::Status FetchRawIQData(::grpc::ServerContext* context, const FetchRawIQDataRequest* request, FetchRawIQDataResponse* response) override;
+  ::grpc::Status FetchRawIQDataInterleavedIQ(::grpc::ServerContext* context, const FetchRawIQDataInterleavedIQRequest* request, FetchRawIQDataInterleavedIQResponse* response) override;
   ::grpc::Status GetAttributeF32(::grpc::ServerContext* context, const GetAttributeF32Request* request, GetAttributeF32Response* response) override;
   ::grpc::Status GetAttributeF32Array(::grpc::ServerContext* context, const GetAttributeF32ArrayRequest* request, GetAttributeF32ArrayResponse* response) override;
   ::grpc::Status GetAttributeF64(::grpc::ServerContext* context, const GetAttributeF64Request* request, GetAttributeF64Response* response) override;

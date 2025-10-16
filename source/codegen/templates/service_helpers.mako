@@ -957,6 +957,8 @@ ${set_response_values(normal_outputs, init_method)}\
 <%
   parameter_name = common_helpers.get_cpp_local_name(parameter)
   field_name = common_helpers.get_grpc_field_name(parameter)
+  if common_helpers.has_value_converted_to_c_representation(output_parameters, parameter):
+    parameter_name = common_helpers.get_value_converted_to_c_representation(output_parameters, parameter)
 %>\
 %   if common_helpers.is_repeating_parameter(parameter):
 <%

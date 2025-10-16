@@ -531,6 +531,66 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AnalyzeIQ1WaveformInterleavedIQ': {
+        'cname': 'RFmxTDSCDMA_AnalyzeIQ1Waveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'iq',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(iq)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
+            },
+            {
+                'direction': 'in',
+                'name': 'reset',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AnalyzeIQ1WaveformSplit': {
         'parameters': [
             {
@@ -1346,6 +1406,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CDAFetchSymbolConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxTDSCDMA_CDAFetchSymbolConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'symbolConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(symbolConstellation)'
             },
             {
                 'direction': 'in',
@@ -3472,6 +3575,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ModAccFetchConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxTDSCDMA_ModAccFetchConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'constellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(constellation)'
             },
             {
                 'direction': 'in',

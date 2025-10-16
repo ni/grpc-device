@@ -77,6 +77,11 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxTDSCDMA_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxTDSCDMA_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
+}
+
 int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
 {
   return RFmxTDSCDMA_AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
@@ -185,6 +190,11 @@ int32 CDAFetchMeanSymbolPhaseErrorTrace(niRFmxInstrHandle instrumentHandle, char
 int32 CDAFetchSymbolConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle symbolConstellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxTDSCDMA_CDAFetchSymbolConstellationTrace(instrumentHandle, selectorString, timeout, symbolConstellation, arraySize, actualArraySize);
+}
+
+int32 CDAFetchSymbolConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxTDSCDMA_CDAFetchSymbolConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(symbolConstellation), arraySize, actualArraySize);
 }
 
 int32 CDAFetchSymbolConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellationI[], float32 symbolConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -515,6 +525,11 @@ int32 ModAccFetchCompositeEVM(niRFmxInstrHandle instrumentHandle, char selectorS
 int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxTDSCDMA_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxTDSCDMA_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(constellation), arraySize, actualArraySize);
 }
 
 int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)

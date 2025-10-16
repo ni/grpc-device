@@ -3464,7 +3464,7 @@ int32 __stdcall RFmxVNA_IQGetResultsCorrectionState(
 #endif
 
 /* ---------------- Obsolete Section ------------------ */
-#define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_PORTS                                0x00d0000f
+
 #define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_PORTS                                0x00d0000f
 #define RFMXVNA_ATTR_NUMBER_OF_FREQUENCY_POINTS                                  0x00d00053
 // Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_METHOD

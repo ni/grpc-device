@@ -376,6 +376,7 @@
 #define RFMXNR_ATTR_CHP_RESULTS_COMPONENT_CARRIER_ABSOLUTE_POWER                           0x0090301d
 #define RFMXNR_ATTR_CHP_RESULTS_COMPONENT_CARRIER_RELATIVE_POWER                           0x0090301f
 #define RFMXNR_ATTR_OBW_MEASUREMENT_ENABLED                                                0x00906000
+#define RFMXNR_ATTR_OBW_POWER_INTEGRATION_METHOD                                           0x00906020
 #define RFMXNR_ATTR_OBW_SPAN_AUTO                                                          0x0090601a
 #define RFMXNR_ATTR_OBW_SPAN                                                               0x00906003
 #define RFMXNR_ATTR_OBW_RBW_FILTER_AUTO_BANDWIDTH                                          0x00906006
@@ -1056,6 +1057,10 @@
 // Values for RFMXNR_ATTR_CHP_AMPLITUDE_CORRECTION_TYPE
 #define RFMXNR_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY                              0
 #define RFMXNR_VAL_CHP_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN                           1
+
+// Values for RFMXNR_ATTR_OBW_POWER_INTEGRATION_METHOD
+#define RFMXNR_VAL_OBW_POWER_INTEGRATION_METHOD_NORMAL                                            0
+#define RFMXNR_VAL_OBW_POWER_INTEGRATION_METHOD_FROM_CENTER                                       1
 
 // Values for RFMXNR_ATTR_OBW_SPAN_AUTO
 #define RFMXNR_VAL_OBW_SPAN_AUTO_FALSE                                                            0
@@ -7179,6 +7184,18 @@ int32 __stdcall RFmxNR_OBWGetMeasurementEnabled(
 );
 
 int32 __stdcall RFmxNR_OBWSetMeasurementEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_OBWGetPowerIntegrationMethod(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_OBWSetPowerIntegrationMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

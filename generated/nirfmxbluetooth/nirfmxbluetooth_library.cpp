@@ -40,6 +40,7 @@ NiRFmxBluetoothLibrary::NiRFmxBluetoothLibrary(std::shared_ptr<nidevice_grpc::Sh
   function_pointers_.ACPFetchSpectrum = reinterpret_cast<ACPFetchSpectrumPtr>(shared_library_->get_function_pointer("RFmxBT_ACPFetchSpectrum"));
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxBT_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxBT_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeIQ1WaveformInterleavedIQ = reinterpret_cast<AnalyzeIQ1WaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxBT_AnalyzeIQ1Waveform"));
   function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxBT_AnalyzeIQ1WaveformSplit"));
   function_pointers_.AutoDetectSignal = reinterpret_cast<AutoDetectSignalPtr>(shared_library_->get_function_pointer("RFmxBT_AutoDetectSignal"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxBT_AutoLevel"));
@@ -107,6 +108,7 @@ NiRFmxBluetoothLibrary::NiRFmxBluetoothLibrary(std::shared_ptr<nidevice_grpc::Sh
   function_pointers_.ModAccFetchCSDetrendedPhaseTrace = reinterpret_cast<ModAccFetchCSDetrendedPhaseTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchCSDetrendedPhaseTrace"));
   function_pointers_.ModAccFetchCSToneTrace = reinterpret_cast<ModAccFetchCSToneTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchCSToneTrace"));
   function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchConstellationTrace"));
+  function_pointers_.ModAccFetchConstellationTraceInterleavedIQ = reinterpret_cast<ModAccFetchConstellationTraceInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchConstellationTrace"));
   function_pointers_.ModAccFetchConstellationTraceSplit = reinterpret_cast<ModAccFetchConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchConstellationTraceSplit"));
   function_pointers_.ModAccFetchDEVM = reinterpret_cast<ModAccFetchDEVMPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchDEVM"));
   function_pointers_.ModAccFetchDEVMMagnitudeError = reinterpret_cast<ModAccFetchDEVMMagnitudeErrorPtr>(shared_library_->get_function_pointer("RFmxBT_ModAccFetchDEVMMagnitudeError"));
@@ -284,6 +286,14 @@ int32 NiRFmxBluetoothLibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHan
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AnalyzeIQ1Waveform.");
   }
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+}
+
+int32 NiRFmxBluetoothLibrary::AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1WaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_AnalyzeIQ1Waveform.");
+  }
+  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 NiRFmxBluetoothLibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -820,6 +830,14 @@ int32 NiRFmxBluetoothLibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle in
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchConstellationTrace.");
   }
   return function_pointers_.ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxBluetoothLibrary::ModAccFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchConstellationTraceInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxBT_ModAccFetchConstellationTrace.");
+  }
+  return function_pointers_.ModAccFetchConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(constellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxBluetoothLibrary::ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)

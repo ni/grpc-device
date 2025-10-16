@@ -22,6 +22,8 @@
 #define RFMXGSM_ATTR_MODACC_MEASUREMENT_ENABLED                              0x00401000
 #define RFMXGSM_ATTR_MODACC_AVERAGING_ENABLED                                0x00401002
 #define RFMXGSM_ATTR_MODACC_AVERAGING_COUNT                                  0x00401004
+#define RFMXGSM_ATTR_MODACC_MEASUREMENT_INTERVAL                             0x0040102a
+#define RFMXGSM_ATTR_MODACC_MEASUREMENT_OFFSET                               0x0040102b
 #define RFMXGSM_ATTR_MODACC_DROOP_COMPENSATION_ENABLED                       0x00401005
 #define RFMXGSM_ATTR_MODACC_ALL_TRACES_ENABLED                               0x00401006
 #define RFMXGSM_ATTR_MODACC_NUMBER_OF_ANALYSIS_THREADS                       0x00401007
@@ -55,6 +57,8 @@
 #define RFMXGSM_ATTR_ORFS_AVERAGING_ENABLED                                  0x00402002
 #define RFMXGSM_ATTR_ORFS_AVERAGING_TYPE                                     0x00402003
 #define RFMXGSM_ATTR_ORFS_AVERAGING_COUNT                                    0x00402004
+#define RFMXGSM_ATTR_ORFS_MEASUREMENT_INTERVAL                               0x00402025
+#define RFMXGSM_ATTR_ORFS_MEASUREMENT_OFFSET                                 0x00402026
 #define RFMXGSM_ATTR_ORFS_MEASUREMENT_TYPE                                   0x00402005
 #define RFMXGSM_ATTR_ORFS_OFFSET_FREQUENCY_MODE                              0x00402007
 #define RFMXGSM_ATTR_ORFS_EVALUATION_SYMBOLS_START                           0x00402011
@@ -229,6 +233,10 @@
 #define RFMXGSM_VAL_MODACC_AVERAGING_ENABLED_FALSE                                                 0
 #define RFMXGSM_VAL_MODACC_AVERAGING_ENABLED_TRUE                                                  1
 
+// Values for RFMXGSM_ATTR_MODACC_MEASUREMENT_INTERVAL
+#define RFMXGSM_VAL_MODACC_MEASUREMENT_INTERVAL_NUMBER_OF_TIMESLOTS                                0
+#define RFMXGSM_VAL_MODACC_MEASUREMENT_INTERVAL_TIMESLOT_AT_OFFSET                                 1
+
 // Values for RFMXGSM_ATTR_MODACC_DROOP_COMPENSATION_ENABLED
 #define RFMXGSM_VAL_MODACC_DROOP_COMPENSATION_ENABLED_FALSE                                        0
 #define RFMXGSM_VAL_MODACC_DROOP_COMPENSATION_ENABLED_TRUE                                         1
@@ -251,6 +259,10 @@
 // Values for RFMXGSM_ATTR_ORFS_AVERAGING_TYPE
 #define RFMXGSM_VAL_ORFS_AVERAGING_TYPE_RMS                                                        0
 #define RFMXGSM_VAL_ORFS_AVERAGING_TYPE_LOG                                                        1
+
+// Values for RFMXGSM_ATTR_ORFS_MEASUREMENT_INTERVAL
+#define RFMXGSM_VAL_ORFS_MEASUREMENT_INTERVAL_NUMBER_OF_TIMESLOTS                                  0
+#define RFMXGSM_VAL_ORFS_MEASUREMENT_INTERVAL_TIMESLOT_AT_OFFSET                                   1
 
 // Values for RFMXGSM_ATTR_ORFS_MEASUREMENT_TYPE
 #define RFMXGSM_VAL_ORFS_MEASUREMENT_TYPE_MODULATION_AND_SWITCHING                                 0
@@ -1319,6 +1331,30 @@ int32 __stdcall RFmxGSM_ModAccSetAveragingCount(
    int32 attrVal
 );
 
+int32 __stdcall RFmxGSM_ModAccGetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccSetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccGetMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccSetMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxGSM_ModAccGetDroopCompensationEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1596,6 +1632,30 @@ int32 __stdcall RFmxGSM_ORFSGetAveragingCount(
 );
 
 int32 __stdcall RFmxGSM_ORFSSetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_ORFSGetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ORFSSetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_ORFSGetMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ORFSSetMeasurementOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

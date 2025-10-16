@@ -44,6 +44,7 @@ NiRFmxWCDMALibrary::NiRFmxWCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.ACPFetchTotalCarrierPower = reinterpret_cast<ACPFetchTotalCarrierPowerPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ACPFetchTotalCarrierPower"));
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxWCDMA_AbortMeasurements"));
   function_pointers_.AnalyzeIQ1Waveform = reinterpret_cast<AnalyzeIQ1WaveformPtr>(shared_library_->get_function_pointer("RFmxWCDMA_AnalyzeIQ1Waveform"));
+  function_pointers_.AnalyzeIQ1WaveformInterleavedIQ = reinterpret_cast<AnalyzeIQ1WaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxWCDMA_AnalyzeIQ1Waveform"));
   function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxWCDMA_AnalyzeIQ1WaveformSplit"));
   function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_->get_function_pointer("RFmxWCDMA_AnalyzeSpectrum1Waveform"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxWCDMA_AutoLevel"));
@@ -131,9 +132,11 @@ NiRFmxWCDMALibrary::NiRFmxWCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.InitializeFromNIRFSASession = reinterpret_cast<InitializeFromNIRFSASessionPtr>(shared_library_->get_function_pointer("RFmxWCDMA_InitializeFromNIRFSASession"));
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("RFmxWCDMA_Initiate"));
   function_pointers_.ModAccCfgReferenceWaveform = reinterpret_cast<ModAccCfgReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccCfgReferenceWaveform"));
+  function_pointers_.ModAccCfgReferenceWaveformInterleavedIQ = reinterpret_cast<ModAccCfgReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccCfgReferenceWaveform"));
   function_pointers_.ModAccCfgReferenceWaveformSplit = reinterpret_cast<ModAccCfgReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccCfgReferenceWaveformSplit"));
   function_pointers_.ModAccCfgSynchronizationModeAndInterval = reinterpret_cast<ModAccCfgSynchronizationModeAndIntervalPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccCfgSynchronizationModeAndInterval"));
   function_pointers_.ModAccFetchConstellationTrace = reinterpret_cast<ModAccFetchConstellationTracePtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchConstellationTrace"));
+  function_pointers_.ModAccFetchConstellationTraceInterleavedIQ = reinterpret_cast<ModAccFetchConstellationTraceInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchConstellationTrace"));
   function_pointers_.ModAccFetchConstellationTraceSplit = reinterpret_cast<ModAccFetchConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchConstellationTraceSplit"));
   function_pointers_.ModAccFetchDetectedChannel = reinterpret_cast<ModAccFetchDetectedChannelPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchDetectedChannel"));
   function_pointers_.ModAccFetchDetectedChannelArray = reinterpret_cast<ModAccFetchDetectedChannelArrayPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchDetectedChannelArray"));
@@ -155,6 +158,7 @@ NiRFmxWCDMALibrary::NiRFmxWCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.ModAccFetchRCDEArray = reinterpret_cast<ModAccFetchRCDEArrayPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchRCDEArray"));
   function_pointers_.ModAccFetchRCDETrace = reinterpret_cast<ModAccFetchRCDETracePtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchRCDETrace"));
   function_pointers_.ModAccFetchReferenceWaveform = reinterpret_cast<ModAccFetchReferenceWaveformPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchReferenceWaveform"));
+  function_pointers_.ModAccFetchReferenceWaveformInterleavedIQ = reinterpret_cast<ModAccFetchReferenceWaveformInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchReferenceWaveform"));
   function_pointers_.ModAccFetchReferenceWaveformSplit = reinterpret_cast<ModAccFetchReferenceWaveformSplitPtr>(shared_library_->get_function_pointer("RFmxWCDMA_ModAccFetchReferenceWaveformSplit"));
   function_pointers_.OBWCfgAveraging = reinterpret_cast<OBWCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxWCDMA_OBWCfgAveraging"));
   function_pointers_.OBWCfgRBWFilter = reinterpret_cast<OBWCfgRBWFilterPtr>(shared_library_->get_function_pointer("RFmxWCDMA_OBWCfgRBWFilter"));
@@ -164,6 +168,7 @@ NiRFmxWCDMALibrary::NiRFmxWCDMALibrary(std::shared_ptr<nidevice_grpc::SharedLibr
   function_pointers_.QEVMCfgAveraging = reinterpret_cast<QEVMCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxWCDMA_QEVMCfgAveraging"));
   function_pointers_.QEVMCfgMeasurementLength = reinterpret_cast<QEVMCfgMeasurementLengthPtr>(shared_library_->get_function_pointer("RFmxWCDMA_QEVMCfgMeasurementLength"));
   function_pointers_.QEVMFetchConstellationTrace = reinterpret_cast<QEVMFetchConstellationTracePtr>(shared_library_->get_function_pointer("RFmxWCDMA_QEVMFetchConstellationTrace"));
+  function_pointers_.QEVMFetchConstellationTraceInterleavedIQ = reinterpret_cast<QEVMFetchConstellationTraceInterleavedIQPtr>(shared_library_->get_function_pointer("RFmxWCDMA_QEVMFetchConstellationTrace"));
   function_pointers_.QEVMFetchConstellationTraceSplit = reinterpret_cast<QEVMFetchConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxWCDMA_QEVMFetchConstellationTraceSplit"));
   function_pointers_.QEVMFetchEVM = reinterpret_cast<QEVMFetchEVMPtr>(shared_library_->get_function_pointer("RFmxWCDMA_QEVMFetchEVM"));
   function_pointers_.QEVMFetchEVMTrace = reinterpret_cast<QEVMFetchEVMTracePtr>(shared_library_->get_function_pointer("RFmxWCDMA_QEVMFetchEVMTrace"));
@@ -365,6 +370,14 @@ int32 NiRFmxWCDMALibrary::AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle,
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_AnalyzeIQ1Waveform.");
   }
   return function_pointers_.AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+}
+
+int32 NiRFmxWCDMALibrary::AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  if (!function_pointers_.AnalyzeIQ1WaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_AnalyzeIQ1Waveform.");
+  }
+  return function_pointers_.AnalyzeIQ1WaveformInterleavedIQ(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 NiRFmxWCDMALibrary::AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -1063,6 +1076,14 @@ int32 NiRFmxWCDMALibrary::ModAccCfgReferenceWaveform(niRFmxInstrHandle instrumen
   return function_pointers_.ModAccCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize);
 }
 
+int32 NiRFmxWCDMALibrary::ModAccCfgReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize)
+{
+  if (!function_pointers_.ModAccCfgReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccCfgReferenceWaveform.");
+  }
+  return function_pointers_.ModAccCfgReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize/2);
+}
+
 int32 NiRFmxWCDMALibrary::ModAccCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize)
 {
   if (!function_pointers_.ModAccCfgReferenceWaveformSplit) {
@@ -1085,6 +1106,14 @@ int32 NiRFmxWCDMALibrary::ModAccFetchConstellationTrace(niRFmxInstrHandle instru
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchConstellationTrace.");
   }
   return function_pointers_.ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::ModAccFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchConstellationTraceInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchConstellationTrace.");
+  }
+  return function_pointers_.ModAccFetchConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(constellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxWCDMALibrary::ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)
@@ -1255,6 +1284,14 @@ int32 NiRFmxWCDMALibrary::ModAccFetchReferenceWaveform(niRFmxInstrHandle instrum
   return function_pointers_.ModAccFetchReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, referenceWaveform, arraySize, actualArraySize);
 }
 
+int32 NiRFmxWCDMALibrary::ModAccFetchReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 referenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.ModAccFetchReferenceWaveformInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_ModAccFetchReferenceWaveform.");
+  }
+  return function_pointers_.ModAccFetchReferenceWaveformInterleavedIQ(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize, actualArraySize);
+}
+
 int32 NiRFmxWCDMALibrary::ModAccFetchReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.ModAccFetchReferenceWaveformSplit) {
@@ -1325,6 +1362,14 @@ int32 NiRFmxWCDMALibrary::QEVMFetchConstellationTrace(niRFmxInstrHandle instrume
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMFetchConstellationTrace.");
   }
   return function_pointers_.QEVMFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWCDMALibrary::QEVMFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.QEVMFetchConstellationTraceInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWCDMA_QEVMFetchConstellationTrace.");
+  }
+  return function_pointers_.QEVMFetchConstellationTraceInterleavedIQ(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(constellation), arraySize, actualArraySize);
 }
 
 int32 NiRFmxWCDMALibrary::QEVMFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)

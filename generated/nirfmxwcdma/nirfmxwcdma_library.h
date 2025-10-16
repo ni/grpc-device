@@ -38,6 +38,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
   int32 ACPFetchTotalCarrierPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* totalCarrierPower) override;
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved) override;
+  int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AnalyzeSpectrum1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 spectrum[], int32 arraySize, int32 reset, int64 reserved) override;
   int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementInterval, float64* referenceLevel) override;
@@ -125,9 +126,11 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
   int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut) override;
   int32 Initiate(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[]) override;
   int32 ModAccCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize) override;
+  int32 ModAccCfgReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize) override;
   int32 ModAccCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize) override;
   int32 ModAccCfgSynchronizationModeAndInterval(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 synchronizationMode, int32 measurementOffset, int32 measurementLength) override;
   int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchDetectedChannel(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* detectedSpreadingFactor, int32* detectedSpreadingCode, int32* detectedModulationType, int32* detectedBranch) override;
   int32 ModAccFetchDetectedChannelArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 detectedSpreadingFactor[], int32 detectedSpreadingCode[], int32 detectedModulationType[], int32 detectedBranch[], int32 arraySize, int32* actualArraySize) override;
@@ -149,6 +152,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
   int32 ModAccFetchRCDEArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64 peakRCDE[], int32 peakRCDESpreadingFactor[], int32 peakRCDECode[], int32 peakRCDEBranch[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchRCDETrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 rcde[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 referenceWaveform[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32* actualArraySize) override;
   int32 OBWCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) override;
   int32 OBWCfgRBWFilter(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 rbwAuto, float64 rbw, int32 rbwFilterType) override;
@@ -158,6 +162,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
   int32 QEVMCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount) override;
   int32 QEVMCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 measurementLength) override;
   int32 QEVMFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 QEVMFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize) override;
   int32 QEVMFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 QEVMFetchEVM(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* meanRMSEVM, float64* maximumPeakEVM, float64* meanFrequencyError, float64* meanMagnitudeError, float64* meanPhaseError, float64* meanChipRateError) override;
   int32 QEVMFetchEVMTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 evm[], int32 arraySize, int32* actualArraySize) override;
@@ -231,6 +236,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
   using ACPFetchTotalCarrierPowerPtr = decltype(&RFmxWCDMA_ACPFetchTotalCarrierPower);
   using AbortMeasurementsPtr = decltype(&RFmxWCDMA_AbortMeasurements);
   using AnalyzeIQ1WaveformPtr = decltype(&RFmxWCDMA_AnalyzeIQ1Waveform);
+  using AnalyzeIQ1WaveformInterleavedIQPtr = decltype(&RFmxWCDMA_AnalyzeIQ1Waveform);
   using AnalyzeIQ1WaveformSplitPtr = decltype(&RFmxWCDMA_AnalyzeIQ1WaveformSplit);
   using AnalyzeSpectrum1WaveformPtr = decltype(&RFmxWCDMA_AnalyzeSpectrum1Waveform);
   using AutoLevelPtr = decltype(&RFmxWCDMA_AutoLevel);
@@ -318,9 +324,11 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
   using InitializeFromNIRFSASessionPtr = decltype(&RFmxWCDMA_InitializeFromNIRFSASession);
   using InitiatePtr = decltype(&RFmxWCDMA_Initiate);
   using ModAccCfgReferenceWaveformPtr = decltype(&RFmxWCDMA_ModAccCfgReferenceWaveform);
+  using ModAccCfgReferenceWaveformInterleavedIQPtr = decltype(&RFmxWCDMA_ModAccCfgReferenceWaveform);
   using ModAccCfgReferenceWaveformSplitPtr = decltype(&RFmxWCDMA_ModAccCfgReferenceWaveformSplit);
   using ModAccCfgSynchronizationModeAndIntervalPtr = decltype(&RFmxWCDMA_ModAccCfgSynchronizationModeAndInterval);
   using ModAccFetchConstellationTracePtr = decltype(&RFmxWCDMA_ModAccFetchConstellationTrace);
+  using ModAccFetchConstellationTraceInterleavedIQPtr = decltype(&RFmxWCDMA_ModAccFetchConstellationTrace);
   using ModAccFetchConstellationTraceSplitPtr = decltype(&RFmxWCDMA_ModAccFetchConstellationTraceSplit);
   using ModAccFetchDetectedChannelPtr = decltype(&RFmxWCDMA_ModAccFetchDetectedChannel);
   using ModAccFetchDetectedChannelArrayPtr = decltype(&RFmxWCDMA_ModAccFetchDetectedChannelArray);
@@ -342,6 +350,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
   using ModAccFetchRCDEArrayPtr = decltype(&RFmxWCDMA_ModAccFetchRCDEArray);
   using ModAccFetchRCDETracePtr = decltype(&RFmxWCDMA_ModAccFetchRCDETrace);
   using ModAccFetchReferenceWaveformPtr = decltype(&RFmxWCDMA_ModAccFetchReferenceWaveform);
+  using ModAccFetchReferenceWaveformInterleavedIQPtr = decltype(&RFmxWCDMA_ModAccFetchReferenceWaveform);
   using ModAccFetchReferenceWaveformSplitPtr = decltype(&RFmxWCDMA_ModAccFetchReferenceWaveformSplit);
   using OBWCfgAveragingPtr = decltype(&RFmxWCDMA_OBWCfgAveraging);
   using OBWCfgRBWFilterPtr = decltype(&RFmxWCDMA_OBWCfgRBWFilter);
@@ -351,6 +360,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
   using QEVMCfgAveragingPtr = decltype(&RFmxWCDMA_QEVMCfgAveraging);
   using QEVMCfgMeasurementLengthPtr = decltype(&RFmxWCDMA_QEVMCfgMeasurementLength);
   using QEVMFetchConstellationTracePtr = decltype(&RFmxWCDMA_QEVMFetchConstellationTrace);
+  using QEVMFetchConstellationTraceInterleavedIQPtr = decltype(&RFmxWCDMA_QEVMFetchConstellationTrace);
   using QEVMFetchConstellationTraceSplitPtr = decltype(&RFmxWCDMA_QEVMFetchConstellationTraceSplit);
   using QEVMFetchEVMPtr = decltype(&RFmxWCDMA_QEVMFetchEVM);
   using QEVMFetchEVMTracePtr = decltype(&RFmxWCDMA_QEVMFetchEVMTrace);
@@ -424,6 +434,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
     ACPFetchTotalCarrierPowerPtr ACPFetchTotalCarrierPower;
     AbortMeasurementsPtr AbortMeasurements;
     AnalyzeIQ1WaveformPtr AnalyzeIQ1Waveform;
+    AnalyzeIQ1WaveformInterleavedIQPtr AnalyzeIQ1WaveformInterleavedIQ;
     AnalyzeIQ1WaveformSplitPtr AnalyzeIQ1WaveformSplit;
     AnalyzeSpectrum1WaveformPtr AnalyzeSpectrum1Waveform;
     AutoLevelPtr AutoLevel;
@@ -511,9 +522,11 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
     InitializeFromNIRFSASessionPtr InitializeFromNIRFSASession;
     InitiatePtr Initiate;
     ModAccCfgReferenceWaveformPtr ModAccCfgReferenceWaveform;
+    ModAccCfgReferenceWaveformInterleavedIQPtr ModAccCfgReferenceWaveformInterleavedIQ;
     ModAccCfgReferenceWaveformSplitPtr ModAccCfgReferenceWaveformSplit;
     ModAccCfgSynchronizationModeAndIntervalPtr ModAccCfgSynchronizationModeAndInterval;
     ModAccFetchConstellationTracePtr ModAccFetchConstellationTrace;
+    ModAccFetchConstellationTraceInterleavedIQPtr ModAccFetchConstellationTraceInterleavedIQ;
     ModAccFetchConstellationTraceSplitPtr ModAccFetchConstellationTraceSplit;
     ModAccFetchDetectedChannelPtr ModAccFetchDetectedChannel;
     ModAccFetchDetectedChannelArrayPtr ModAccFetchDetectedChannelArray;
@@ -535,6 +548,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
     ModAccFetchRCDEArrayPtr ModAccFetchRCDEArray;
     ModAccFetchRCDETracePtr ModAccFetchRCDETrace;
     ModAccFetchReferenceWaveformPtr ModAccFetchReferenceWaveform;
+    ModAccFetchReferenceWaveformInterleavedIQPtr ModAccFetchReferenceWaveformInterleavedIQ;
     ModAccFetchReferenceWaveformSplitPtr ModAccFetchReferenceWaveformSplit;
     OBWCfgAveragingPtr OBWCfgAveraging;
     OBWCfgRBWFilterPtr OBWCfgRBWFilter;
@@ -544,6 +558,7 @@ class NiRFmxWCDMALibrary : public nirfmxwcdma_grpc::NiRFmxWCDMALibraryInterface 
     QEVMCfgAveragingPtr QEVMCfgAveraging;
     QEVMCfgMeasurementLengthPtr QEVMCfgMeasurementLength;
     QEVMFetchConstellationTracePtr QEVMFetchConstellationTrace;
+    QEVMFetchConstellationTraceInterleavedIQPtr QEVMFetchConstellationTraceInterleavedIQ;
     QEVMFetchConstellationTraceSplitPtr QEVMFetchConstellationTraceSplit;
     QEVMFetchEVMPtr QEVMFetchEVM;
     QEVMFetchEVMTracePtr QEVMFetchEVMTrace;

@@ -539,6 +539,29 @@ analyze_iq1_waveform(const StubPtr& stub, const nidevice_grpc::Session& instrume
   return response;
 }
 
+AnalyzeIQ1WaveformInterleavedIQResponse
+analyze_iq1_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iq, const pb::int32& reset)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AnalyzeIQ1WaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_result_name(result_name);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(iq, request.mutable_iq());
+  request.set_reset(reset);
+
+  auto response = AnalyzeIQ1WaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->AnalyzeIQ1WaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 AnalyzeIQ1WaveformSplitResponse
 analyze_iq1_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& result_name, const double& x0, const double& dx, const std::vector<float>& iqi, const std::vector<float>& iqq, const pb::int32& reset)
 {
@@ -1088,6 +1111,27 @@ d_demod_cfg_equalizer_initial_coefficients(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+DDemodCfgEqualizerInitialCoefficientsInterleavedIQResponse
+d_demod_cfg_equalizer_initial_coefficients_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& equalizer_initial_coefficients)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodCfgEqualizerInitialCoefficientsInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(equalizer_initial_coefficients, request.mutable_equalizer_initial_coefficients());
+
+  auto response = DDemodCfgEqualizerInitialCoefficientsInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodCfgEqualizerInitialCoefficientsInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodCfgEqualizerInitialCoefficientsSplitResponse
 d_demod_cfg_equalizer_initial_coefficients_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& x0, const double& dx, const std::vector<float>& equalizer_initial_coefficients_i, const std::vector<float>& equalizer_initial_coefficients_q)
 {
@@ -1105,6 +1149,38 @@ d_demod_cfg_equalizer_initial_coefficients_split(const StubPtr& stub, const nide
 
   raise_if_error(
       stub->DDemodCfgEqualizerInitialCoefficientsSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodCfgEqualizerInterleavedIQResponse
+d_demod_cfg_equalizer_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<DDemodEqualizerMode, pb::int32>& equalizer_mode, const pb::int32& equalizer_filter_length, const double& x0, const double& dx, const std::vector<float>& equalizer_initial_coefficients, const pb::int32& equalizer_training_count, const double& equalizer_convergence_factor)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodCfgEqualizerInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto equalizer_mode_ptr = equalizer_mode.get_if<DDemodEqualizerMode>();
+  const auto equalizer_mode_raw_ptr = equalizer_mode.get_if<pb::int32>();
+  if (equalizer_mode_ptr) {
+    request.set_equalizer_mode(*equalizer_mode_ptr);
+  }
+  else if (equalizer_mode_raw_ptr) {
+    request.set_equalizer_mode_raw(*equalizer_mode_raw_ptr);
+  }
+  request.set_equalizer_filter_length(equalizer_filter_length);
+  request.set_x0(x0);
+  request.set_dx(dx);
+  copy_array(equalizer_initial_coefficients, request.mutable_equalizer_initial_coefficients());
+  request.set_equalizer_training_count(equalizer_training_count);
+  request.set_equalizer_convergence_factor(equalizer_convergence_factor);
+
+  auto response = DDemodCfgEqualizerInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodCfgEqualizerInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -1482,6 +1558,33 @@ d_demod_cfg_symbol_map(const StubPtr& stub, const nidevice_grpc::Session& instru
   return response;
 }
 
+DDemodCfgSymbolMapInterleavedIQResponse
+d_demod_cfg_symbol_map_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<DDemodSymbolMapType, pb::int32>& symbol_map_type, const std::vector<float>& symbol_map)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodCfgSymbolMapInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto symbol_map_type_ptr = symbol_map_type.get_if<DDemodSymbolMapType>();
+  const auto symbol_map_type_raw_ptr = symbol_map_type.get_if<pb::int32>();
+  if (symbol_map_type_ptr) {
+    request.set_symbol_map_type(*symbol_map_type_ptr);
+  }
+  else if (symbol_map_type_raw_ptr) {
+    request.set_symbol_map_type_raw(*symbol_map_type_raw_ptr);
+  }
+  copy_array(symbol_map, request.mutable_symbol_map());
+
+  auto response = DDemodCfgSymbolMapInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodCfgSymbolMapInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodCfgSymbolMapSplitResponse
 d_demod_cfg_symbol_map_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<DDemodSymbolMapType, pb::int32>& symbol_map_type, const std::vector<float>& symbol_map_i, const std::vector<float>& symbol_map_q)
 {
@@ -1595,6 +1698,25 @@ d_demod_fetch_constellation_trace(const StubPtr& stub, const nidevice_grpc::Sess
   return response;
 }
 
+DDemodFetchConstellationTraceInterleavedIQResponse
+d_demod_fetch_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodFetchConstellationTraceSplitResponse
 d_demod_fetch_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -1685,6 +1807,25 @@ d_demod_fetch_equalizer_coefficients(const StubPtr& stub, const nidevice_grpc::S
 
   raise_if_error(
       stub->DDemodFetchEqualizerCoefficients(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodFetchEqualizerCoefficientsInterleavedIQResponse
+d_demod_fetch_equalizer_coefficients_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchEqualizerCoefficientsInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchEqualizerCoefficientsInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchEqualizerCoefficientsInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -1899,6 +2040,25 @@ d_demod_fetch_measurement_waveform(const StubPtr& stub, const nidevice_grpc::Ses
   return response;
 }
 
+DDemodFetchMeasurementWaveformInterleavedIQResponse
+d_demod_fetch_measurement_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchMeasurementWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchMeasurementWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchMeasurementWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodFetchMeasurementWaveformSplitResponse
 d_demod_fetch_measurement_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -1932,6 +2092,25 @@ d_demod_fetch_offset_constellation_trace(const StubPtr& stub, const nidevice_grp
 
   raise_if_error(
       stub->DDemodFetchOffsetConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodFetchOffsetConstellationTraceInterleavedIQResponse
+d_demod_fetch_offset_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchOffsetConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchOffsetConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchOffsetConstellationTraceInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2051,6 +2230,25 @@ d_demod_fetch_reference_waveform(const StubPtr& stub, const nidevice_grpc::Sessi
   return response;
 }
 
+DDemodFetchReferenceWaveformInterleavedIQResponse
+d_demod_fetch_reference_waveform_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodFetchReferenceWaveformInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = DDemodFetchReferenceWaveformInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodFetchReferenceWaveformInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodFetchReferenceWaveformSplitResponse
 d_demod_fetch_reference_waveform_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2107,6 +2305,24 @@ d_demod_get_equalizer_initial_coefficients(const StubPtr& stub, const nidevice_g
   return response;
 }
 
+DDemodGetEqualizerInitialCoefficientsInterleavedIQResponse
+d_demod_get_equalizer_initial_coefficients_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodGetEqualizerInitialCoefficientsInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = DDemodGetEqualizerInitialCoefficientsInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodGetEqualizerInitialCoefficientsInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DDemodGetEqualizerInitialCoefficientsSplitResponse
 d_demod_get_equalizer_initial_coefficients_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
 {
@@ -2138,6 +2354,24 @@ d_demod_get_symbol_map(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->DDemodGetSymbolMap(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodGetSymbolMapInterleavedIQResponse
+d_demod_get_symbol_map_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodGetSymbolMapInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = DDemodGetSymbolMapInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodGetSymbolMapInterleavedIQ(&context, request, &response),
       context);
 
   return response;
@@ -2194,6 +2428,25 @@ d_demod_set_symbol_map(const StubPtr& stub, const nidevice_grpc::Session& instru
 
   raise_if_error(
       stub->DDemodSetSymbolMap(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DDemodSetSymbolMapInterleavedIQResponse
+d_demod_set_symbol_map_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& attr_val)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DDemodSetSymbolMapInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(attr_val, request.mutable_attr_val());
+
+  auto response = DDemodSetSymbolMapInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->DDemodSetSymbolMapInterleavedIQ(&context, request, &response),
       context);
 
   return response;

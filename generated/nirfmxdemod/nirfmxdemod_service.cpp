@@ -907,6 +907,38 @@ namespace nirfmxdemod_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::AnalyzeIQ1WaveformInterleavedIQ(::grpc::ServerContext* context, const AnalyzeIQ1WaveformInterleavedIQRequest* request, AnalyzeIQ1WaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto iq = const_cast<float32*>(request->iq().data());
+      int32 array_size = static_cast<int32>(request->iq().size());
+      int32 reset = request->reset();
+      auto reserved = 0;
+      auto status = library_->AnalyzeIQ1WaveformInterleavedIQ(instrument, selector_string, result_name, x0, dx, iq, array_size, reset, reserved);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxDemodService::AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1740,6 +1772,34 @@ namespace nirfmxdemod_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodCfgEqualizerInitialCoefficientsInterleavedIQ(::grpc::ServerContext* context, const DDemodCfgEqualizerInitialCoefficientsInterleavedIQRequest* request, DDemodCfgEqualizerInitialCoefficientsInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto equalizer_initial_coefficients = const_cast<float32*>(request->equalizer_initial_coefficients().data());
+      int32 array_size = static_cast<int32>(request->equalizer_initial_coefficients().size());
+      auto status = library_->DDemodCfgEqualizerInitialCoefficientsInterleavedIQ(instrument, selector_string, x0, dx, equalizer_initial_coefficients, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxDemodService::DDemodCfgEqualizerInitialCoefficientsSplit(::grpc::ServerContext* context, const DDemodCfgEqualizerInitialCoefficientsSplitRequest* request, DDemodCfgEqualizerInitialCoefficientsSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1772,6 +1832,53 @@ namespace nirfmxdemod_grpc {
       auto array_size = array_size_size_calculation.size;
 
       auto status = library_->DDemodCfgEqualizerInitialCoefficientsSplit(instrument, selector_string, x0, dx, equalizer_initial_coefficients_i, equalizer_initial_coefficients_q, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodCfgEqualizerInterleavedIQ(::grpc::ServerContext* context, const DDemodCfgEqualizerInterleavedIQRequest* request, DDemodCfgEqualizerInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 equalizer_mode;
+      switch (request->equalizer_mode_enum_case()) {
+        case nirfmxdemod_grpc::DDemodCfgEqualizerInterleavedIQRequest::EqualizerModeEnumCase::kEqualizerMode: {
+          equalizer_mode = static_cast<int32>(request->equalizer_mode());
+          break;
+        }
+        case nirfmxdemod_grpc::DDemodCfgEqualizerInterleavedIQRequest::EqualizerModeEnumCase::kEqualizerModeRaw: {
+          equalizer_mode = static_cast<int32>(request->equalizer_mode_raw());
+          break;
+        }
+        case nirfmxdemod_grpc::DDemodCfgEqualizerInterleavedIQRequest::EqualizerModeEnumCase::EQUALIZER_MODE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for equalizer_mode was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 equalizer_filter_length = request->equalizer_filter_length();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto equalizer_initial_coefficients = const_cast<float32*>(request->equalizer_initial_coefficients().data());
+      int32 equalizer_training_count = request->equalizer_training_count();
+      float64 equalizer_convergence_factor = request->equalizer_convergence_factor();
+      int32 array_size = static_cast<int32>(request->equalizer_initial_coefficients().size());
+      auto status = library_->DDemodCfgEqualizerInterleavedIQ(instrument, selector_string, equalizer_mode, equalizer_filter_length, x0, dx, equalizer_initial_coefficients, equalizer_training_count, equalizer_convergence_factor, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -2359,6 +2466,48 @@ namespace nirfmxdemod_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodCfgSymbolMapInterleavedIQ(::grpc::ServerContext* context, const DDemodCfgSymbolMapInterleavedIQRequest* request, DDemodCfgSymbolMapInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 symbol_map_type;
+      switch (request->symbol_map_type_enum_case()) {
+        case nirfmxdemod_grpc::DDemodCfgSymbolMapInterleavedIQRequest::SymbolMapTypeEnumCase::kSymbolMapType: {
+          symbol_map_type = static_cast<int32>(request->symbol_map_type());
+          break;
+        }
+        case nirfmxdemod_grpc::DDemodCfgSymbolMapInterleavedIQRequest::SymbolMapTypeEnumCase::kSymbolMapTypeRaw: {
+          symbol_map_type = static_cast<int32>(request->symbol_map_type_raw());
+          break;
+        }
+        case nirfmxdemod_grpc::DDemodCfgSymbolMapInterleavedIQRequest::SymbolMapTypeEnumCase::SYMBOL_MAP_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for symbol_map_type was not specified or out of range");
+          break;
+        }
+      }
+
+      auto symbol_map = const_cast<float32*>(request->symbol_map().data());
+      int32 array_size = static_cast<int32>(request->symbol_map().size());
+      auto status = library_->DDemodCfgSymbolMapInterleavedIQ(instrument, selector_string, symbol_map_type, symbol_map, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxDemodService::DDemodCfgSymbolMapSplit(::grpc::ServerContext* context, const DDemodCfgSymbolMapSplitRequest* request, DDemodCfgSymbolMapSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2571,6 +2720,47 @@ namespace nirfmxdemod_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodFetchConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const DDemodFetchConstellationTraceInterleavedIQRequest* request, DDemodFetchConstellationTraceInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DDemodFetchConstellationTraceInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_constellation_trace()->Resize(actual_array_size * 2, 0);
+        float32* constellation_trace = response->mutable_constellation_trace()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DDemodFetchConstellationTraceInterleavedIQ(instrument, selector_string, timeout, constellation_trace, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_constellation_trace()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -2795,6 +2985,51 @@ namespace nirfmxdemod_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodFetchEqualizerCoefficientsInterleavedIQ(::grpc::ServerContext* context, const DDemodFetchEqualizerCoefficientsInterleavedIQRequest* request, DDemodFetchEqualizerCoefficientsInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DDemodFetchEqualizerCoefficientsInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_equalizer_coefficients()->Resize(actual_array_size * 2, 0);
+        float32* equalizer_coefficients = response->mutable_equalizer_coefficients()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DDemodFetchEqualizerCoefficientsInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, equalizer_coefficients, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_equalizer_coefficients()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -3197,6 +3432,55 @@ namespace nirfmxdemod_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodFetchMeasurementWaveformInterleavedIQ(::grpc::ServerContext* context, const DDemodFetchMeasurementWaveformInterleavedIQRequest* request, DDemodFetchMeasurementWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      int32 samples_per_symbol {};
+      float64 symbol_rate {};
+      while (true) {
+        auto status = library_->DDemodFetchMeasurementWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size, &samples_per_symbol, &symbol_rate);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_measurement_waveform()->Resize(actual_array_size * 2, 0);
+        float32* measurement_waveform = response->mutable_measurement_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DDemodFetchMeasurementWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, measurement_waveform, array_size, &actual_array_size, &samples_per_symbol, &symbol_rate);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_measurement_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        response->set_samples_per_symbol(samples_per_symbol);
+        response->set_symbol_rate(symbol_rate);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxDemodService::DDemodFetchMeasurementWaveformSplit(::grpc::ServerContext* context, const DDemodFetchMeasurementWaveformSplitRequest* request, DDemodFetchMeasurementWaveformSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3286,6 +3570,47 @@ namespace nirfmxdemod_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodFetchOffsetConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const DDemodFetchOffsetConstellationTraceInterleavedIQRequest* request, DDemodFetchOffsetConstellationTraceInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DDemodFetchOffsetConstellationTraceInterleavedIQ(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_offset_constellation_trace()->Resize(actual_array_size * 2, 0);
+        float32* offset_constellation_trace = response->mutable_offset_constellation_trace()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DDemodFetchOffsetConstellationTraceInterleavedIQ(instrument, selector_string, timeout, offset_constellation_trace, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_offset_constellation_trace()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -3543,6 +3868,51 @@ namespace nirfmxdemod_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodFetchReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const DDemodFetchReferenceWaveformInterleavedIQRequest* request, DDemodFetchReferenceWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DDemodFetchReferenceWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_reference_waveform()->Resize(actual_array_size * 2, 0);
+        float32* reference_waveform = response->mutable_reference_waveform()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DDemodFetchReferenceWaveformInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, reference_waveform, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_reference_waveform()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxDemodService::DDemodFetchReferenceWaveformSplit(::grpc::ServerContext* context, const DDemodFetchReferenceWaveformSplitRequest* request, DDemodFetchReferenceWaveformSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3668,6 +4038,50 @@ namespace nirfmxdemod_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodGetEqualizerInitialCoefficientsInterleavedIQ(::grpc::ServerContext* context, const DDemodGetEqualizerInitialCoefficientsInterleavedIQRequest* request, DDemodGetEqualizerInitialCoefficientsInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DDemodGetEqualizerInitialCoefficientsInterleavedIQ(instrument, selector_string, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_equalizer_initial_coefficients()->Resize(actual_array_size * 2, 0);
+        float32* equalizer_initial_coefficients = response->mutable_equalizer_initial_coefficients()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DDemodGetEqualizerInitialCoefficientsInterleavedIQ(instrument, selector_string, &x0, &dx, equalizer_initial_coefficients, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_equalizer_initial_coefficients()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxDemodService::DDemodGetEqualizerInitialCoefficientsSplit(::grpc::ServerContext* context, const DDemodGetEqualizerInitialCoefficientsSplitRequest* request, DDemodGetEqualizerInitialCoefficientsSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -3751,6 +4165,46 @@ namespace nirfmxdemod_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodGetSymbolMapInterleavedIQ(::grpc::ServerContext* context, const DDemodGetSymbolMapInterleavedIQRequest* request, DDemodGetSymbolMapInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->DDemodGetSymbolMapInterleavedIQ(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_symbol_map()->Resize(actual_array_size * 2, 0);
+        float32* symbol_map = response->mutable_symbol_map()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->DDemodGetSymbolMapInterleavedIQ(instrument, selector_string, symbol_map, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_symbol_map()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -3850,6 +4304,32 @@ namespace nirfmxdemod_grpc {
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
       int32 array_size = static_cast<int32>(request->attr_val().size());
       auto status = library_->DDemodSetSymbolMap(instrument, selector_string, attr_val.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxDemodService::DDemodSetSymbolMapInterleavedIQ(::grpc::ServerContext* context, const DDemodSetSymbolMapInterleavedIQRequest* request, DDemodSetSymbolMapInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto attr_val = const_cast<float32*>(request->attr_val().data());
+      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto status = library_->DDemodSetSymbolMapInterleavedIQ(instrument, selector_string, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

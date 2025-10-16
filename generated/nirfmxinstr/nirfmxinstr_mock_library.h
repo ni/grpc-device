@@ -30,6 +30,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, CfgMechanicalAttenuation, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 mechanicalAttenuationAuto, float64 mechanicalAttenuationValue), (override));
   MOCK_METHOD(int32, CfgRFAttenuation, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 rfAttenuationAuto, float64 rfAttenuationValue), (override));
   MOCK_METHOD(int32, CfgSParameterExternalAttenuationTable, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 frequencyArraySize, NIComplexDouble sParameters[], int32 sParameterTableSize, int32 numberOfPorts, int32 sParameterOrientation), (override));
+  MOCK_METHOD(int32, CfgSParameterExternalAttenuationTableInterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 frequencyArraySize, float64 sParameters[], int32 sParameterTableSize, int32 numberOfPorts, int32 sParameterOrientation), (override));
   MOCK_METHOD(int32, CfgSParameterExternalAttenuationType, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterType), (override));
   MOCK_METHOD(int32, CheckAcquisitionStatus, (niRFmxInstrHandle instrumentHandle, int32* acquisitionDone), (override));
   MOCK_METHOD(int32, CheckIfListExists, (niRFmxInstrHandle instrumentHandle, char listName[], int32* listExists, int32* personality), (override));
@@ -41,6 +42,7 @@ class NiRFmxInstrMockLibrary : public nirfmxinstr_grpc::NiRFmxInstrLibraryInterf
   MOCK_METHOD(int32, EnableCalibrationPlane, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
   MOCK_METHOD(int32, ExportSignal, (niRFmxInstrHandle instrumentHandle, int32 exportSignalSource, char exportSignalOutputTerminal[]), (override));
   MOCK_METHOD(int32, FetchRawIQData, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize, void* reserved), (override));
+  MOCK_METHOD(int32, FetchRawIQDataInterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, float32 data[], int32 arraySize, int32* actualArraySize, void* reserved), (override));
   MOCK_METHOD(int32, GetAttributeF32, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal), (override));
   MOCK_METHOD(int32, GetAttributeF32Array, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32 attrVal[], int32 arraySize, int32* actualArraySize), (override));
   MOCK_METHOD(int32, GetAttributeF64, (niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float64* attrVal), (override));

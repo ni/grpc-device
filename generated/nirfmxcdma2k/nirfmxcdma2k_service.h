@@ -58,6 +58,7 @@ public:
   ::grpc::Status ACPFetchSpectrum(::grpc::ServerContext* context, const ACPFetchSpectrumRequest* request, ACPFetchSpectrumResponse* response) override;
   ::grpc::Status AbortMeasurements(::grpc::ServerContext* context, const AbortMeasurementsRequest* request, AbortMeasurementsResponse* response) override;
   ::grpc::Status AnalyzeIQ1Waveform(::grpc::ServerContext* context, const AnalyzeIQ1WaveformRequest* request, AnalyzeIQ1WaveformResponse* response) override;
+  ::grpc::Status AnalyzeIQ1WaveformInterleavedIQ(::grpc::ServerContext* context, const AnalyzeIQ1WaveformInterleavedIQRequest* request, AnalyzeIQ1WaveformInterleavedIQResponse* response) override;
   ::grpc::Status AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response) override;
   ::grpc::Status AnalyzeSpectrum1Waveform(::grpc::ServerContext* context, const AnalyzeSpectrum1WaveformRequest* request, AnalyzeSpectrum1WaveformResponse* response) override;
   ::grpc::Status AutoLevel(::grpc::ServerContext* context, const AutoLevelRequest* request, AutoLevelResponse* response) override;
@@ -72,6 +73,7 @@ public:
   ::grpc::Status CDAFetchCodeDomainPower(::grpc::ServerContext* context, const CDAFetchCodeDomainPowerRequest* request, CDAFetchCodeDomainPowerResponse* response) override;
   ::grpc::Status CDAFetchIQImpairments(::grpc::ServerContext* context, const CDAFetchIQImpairmentsRequest* request, CDAFetchIQImpairmentsResponse* response) override;
   ::grpc::Status CDAFetchSymbolConstellationTrace(::grpc::ServerContext* context, const CDAFetchSymbolConstellationTraceRequest* request, CDAFetchSymbolConstellationTraceResponse* response) override;
+  ::grpc::Status CDAFetchSymbolConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const CDAFetchSymbolConstellationTraceInterleavedIQRequest* request, CDAFetchSymbolConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status CDAFetchSymbolConstellationTraceSplit(::grpc::ServerContext* context, const CDAFetchSymbolConstellationTraceSplitRequest* request, CDAFetchSymbolConstellationTraceSplitResponse* response) override;
   ::grpc::Status CDAFetchSymbolEVM(::grpc::ServerContext* context, const CDAFetchSymbolEVMRequest* request, CDAFetchSymbolEVMResponse* response) override;
   ::grpc::Status CDAFetchSymbolEVMTrace(::grpc::ServerContext* context, const CDAFetchSymbolEVMTraceRequest* request, CDAFetchSymbolEVMTraceResponse* response) override;
@@ -138,6 +140,7 @@ public:
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status ModAccCfgSynchronizationModeAndInterval(::grpc::ServerContext* context, const ModAccCfgSynchronizationModeAndIntervalRequest* request, ModAccCfgSynchronizationModeAndIntervalResponse* response) override;
   ::grpc::Status ModAccFetchConstellationTrace(::grpc::ServerContext* context, const ModAccFetchConstellationTraceRequest* request, ModAccFetchConstellationTraceResponse* response) override;
+  ::grpc::Status ModAccFetchConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const ModAccFetchConstellationTraceInterleavedIQRequest* request, ModAccFetchConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status ModAccFetchConstellationTraceSplit(::grpc::ServerContext* context, const ModAccFetchConstellationTraceSplitRequest* request, ModAccFetchConstellationTraceSplitResponse* response) override;
   ::grpc::Status ModAccFetchDetectedChannel(::grpc::ServerContext* context, const ModAccFetchDetectedChannelRequest* request, ModAccFetchDetectedChannelResponse* response) override;
   ::grpc::Status ModAccFetchDetectedChannelArray(::grpc::ServerContext* context, const ModAccFetchDetectedChannelArrayRequest* request, ModAccFetchDetectedChannelArrayResponse* response) override;
@@ -157,6 +160,7 @@ public:
   ::grpc::Status QEVMCfgAveraging(::grpc::ServerContext* context, const QEVMCfgAveragingRequest* request, QEVMCfgAveragingResponse* response) override;
   ::grpc::Status QEVMCfgMeasurementLength(::grpc::ServerContext* context, const QEVMCfgMeasurementLengthRequest* request, QEVMCfgMeasurementLengthResponse* response) override;
   ::grpc::Status QEVMFetchConstellationTrace(::grpc::ServerContext* context, const QEVMFetchConstellationTraceRequest* request, QEVMFetchConstellationTraceResponse* response) override;
+  ::grpc::Status QEVMFetchConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const QEVMFetchConstellationTraceInterleavedIQRequest* request, QEVMFetchConstellationTraceInterleavedIQResponse* response) override;
   ::grpc::Status QEVMFetchConstellationTraceSplit(::grpc::ServerContext* context, const QEVMFetchConstellationTraceSplitRequest* request, QEVMFetchConstellationTraceSplitResponse* response) override;
   ::grpc::Status QEVMFetchEVM(::grpc::ServerContext* context, const QEVMFetchEVMRequest* request, QEVMFetchEVMResponse* response) override;
   ::grpc::Status QEVMFetchEVMTrace(::grpc::ServerContext* context, const QEVMFetchEVMTraceRequest* request, QEVMFetchEVMTraceResponse* response) override;

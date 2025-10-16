@@ -104,6 +104,38 @@ namespace nirfmxpulse_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::AnalyzeIQ1WaveformInterleavedIQ(::grpc::ServerContext* context, const AnalyzeIQ1WaveformInterleavedIQRequest* request, AnalyzeIQ1WaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto result_name_mbcs = convert_from_grpc<std::string>(request->result_name());
+      char* result_name = (char*)result_name_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto iq = const_cast<float32*>(request->iq().data());
+      int32 array_size = static_cast<int32>(request->iq().size());
+      int32 reset = request->reset();
+      auto reserved = 0;
+      auto status = library_->AnalyzeIQ1WaveformInterleavedIQ(instrument, selector_string, result_name, x0, dx, iq, array_size, reset, reserved);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxPulseService::AnalyzeIQ1WaveformSplit(::grpc::ServerContext* context, const AnalyzeIQ1WaveformSplitRequest* request, AnalyzeIQ1WaveformSplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -241,6 +273,34 @@ namespace nirfmxpulse_grpc {
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
       int32 array_size = static_cast<int32>(request->reference_waveform().size());
       auto status = library_->Cfg1ReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::Cfg1ReferenceWaveformInterleavedIQ(::grpc::ServerContext* context, const Cfg1ReferenceWaveformInterleavedIQRequest* request, Cfg1ReferenceWaveformInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 x0 = request->x0();
+      float64 dx = request->dx();
+      auto reference_waveform = const_cast<float32*>(request->reference_waveform().data());
+      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto status = library_->Cfg1ReferenceWaveformInterleavedIQ(instrument, selector_string, x0, dx, reference_waveform, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -1183,6 +1243,51 @@ namespace nirfmxpulse_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxPulseService::FetchIQTraceInterleavedIQ(::grpc::ServerContext* context, const FetchIQTraceInterleavedIQRequest* request, FetchIQTraceInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchIQTraceInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_iq_data()->Resize(actual_array_size * 2, 0);
+        float32* iq_data = response->mutable_iq_data()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchIQTraceInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, iq_data, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_iq_data()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }

@@ -77,6 +77,11 @@ int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString
   return RFmxCDMA2k_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
 }
 
+int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxCDMA2k_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
+}
+
 int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
 {
   return RFmxCDMA2k_AnalyzeIQ1WaveformSplit(instrumentHandle, selectorString, resultName, x0, dx, iqi, iqq, arraySize, reset, reserved);
@@ -145,6 +150,11 @@ int32 CDAFetchIQImpairments(niRFmxInstrHandle instrumentHandle, char selectorStr
 int32 CDAFetchSymbolConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle symbolConstellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxCDMA2k_CDAFetchSymbolConstellationTrace(instrumentHandle, selectorString, timeout, symbolConstellation, arraySize, actualArraySize);
+}
+
+int32 CDAFetchSymbolConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxCDMA2k_CDAFetchSymbolConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(symbolConstellation), arraySize, actualArraySize);
 }
 
 int32 CDAFetchSymbolConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 symbolConstellationI[], float32 symbolConstellationQ[], int32 arraySize, int32* actualArraySize)
@@ -477,6 +487,11 @@ int32 ModAccFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char sel
   return RFmxCDMA2k_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
 }
 
+int32 ModAccFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxCDMA2k_ModAccFetchConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(constellation), arraySize, actualArraySize);
+}
+
 int32 ModAccFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxCDMA2k_ModAccFetchConstellationTraceSplit(instrumentHandle, selectorString, timeout, constellationI, constellationQ, arraySize, actualArraySize);
@@ -570,6 +585,11 @@ int32 QEVMCfgMeasurementLength(niRFmxInstrHandle instrumentHandle, char selector
 int32 QEVMFetchConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle constellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxCDMA2k_QEVMFetchConstellationTrace(instrumentHandle, selectorString, timeout, constellation, arraySize, actualArraySize);
+}
+
+int32 QEVMFetchConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxCDMA2k_QEVMFetchConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(constellation), arraySize, actualArraySize);
 }
 
 int32 QEVMFetchConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 constellationI[], float32 constellationQ[], int32 arraySize, int32* actualArraySize)

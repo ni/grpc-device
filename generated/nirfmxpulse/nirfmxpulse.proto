@@ -19,10 +19,12 @@ import "session.proto";
 service NiRFmxPulse {
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformInterleavedIQ(AnalyzeIQ1WaveformInterleavedIQRequest) returns (AnalyzeIQ1WaveformInterleavedIQResponse);
   rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
   rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
   rpc Cfg1ReferenceWaveform(Cfg1ReferenceWaveformRequest) returns (Cfg1ReferenceWaveformResponse);
+  rpc Cfg1ReferenceWaveformInterleavedIQ(Cfg1ReferenceWaveformInterleavedIQRequest) returns (Cfg1ReferenceWaveformInterleavedIQResponse);
   rpc Cfg1ReferenceWaveformSplit(Cfg1ReferenceWaveformSplitRequest) returns (Cfg1ReferenceWaveformSplitResponse);
   rpc CfgDigitalEdgeTrigger(CfgDigitalEdgeTriggerRequest) returns (CfgDigitalEdgeTriggerResponse);
   rpc CfgExternalAttenuation(CfgExternalAttenuationRequest) returns (CfgExternalAttenuationResponse);
@@ -49,6 +51,7 @@ service NiRFmxPulse {
   rpc FetchBurstSelectedPositionStabilityTrace(FetchBurstSelectedPositionStabilityTraceRequest) returns (FetchBurstSelectedPositionStabilityTraceResponse);
   rpc FetchFrequencyTrace(FetchFrequencyTraceRequest) returns (FetchFrequencyTraceResponse);
   rpc FetchIQTrace(FetchIQTraceRequest) returns (FetchIQTraceResponse);
+  rpc FetchIQTraceInterleavedIQ(FetchIQTraceInterleavedIQRequest) returns (FetchIQTraceInterleavedIQResponse);
   rpc FetchIQTraceSplit(FetchIQTraceSplitRequest) returns (FetchIQTraceSplitResponse);
   rpc FetchIntrapulseStabilityTrace(FetchIntrapulseStabilityTraceRequest) returns (FetchIntrapulseStabilityTraceResponse);
   rpc FetchMultipleMeasurementPointsStabilityTrace(FetchMultipleMeasurementPointsStabilityTraceRequest) returns (FetchMultipleMeasurementPointsStabilityTraceResponse);
@@ -562,6 +565,20 @@ message AnalyzeIQ1WaveformResponse {
   int32 status = 1;
 }
 
+message AnalyzeIQ1WaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQResponse {
+  int32 status = 1;
+}
+
 message AnalyzeIQ1WaveformSplitRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -608,6 +625,18 @@ message Cfg1ReferenceWaveformRequest {
 }
 
 message Cfg1ReferenceWaveformResponse {
+  int32 status = 1;
+}
+
+message Cfg1ReferenceWaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double x0 = 3;
+  double dx = 4;
+  repeated float reference_waveform = 5;
+}
+
+message Cfg1ReferenceWaveformInterleavedIQResponse {
   int32 status = 1;
 }
 
@@ -931,6 +960,20 @@ message FetchIQTraceResponse {
   double x0 = 2;
   double dx = 3;
   repeated nidevice_grpc.NIComplexNumberF32 iq_data = 4;
+  int32 actual_array_size = 5;
+}
+
+message FetchIQTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message FetchIQTraceInterleavedIQResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float iq_data = 4;
   int32 actual_array_size = 5;
 }
 

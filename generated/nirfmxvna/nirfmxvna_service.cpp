@@ -1633,6 +1633,46 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_s11()->Resize(actual_array_size * 2, 0);
+        float64* s11 = response->mutable_s11()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ(instrument, selector_string, s11, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_s11()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS11Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS11SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS11SplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1712,6 +1752,46 @@ namespace nirfmxvna_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_s12()->Resize(actual_array_size * 2, 0);
+        float64* s12 = response->mutable_s12()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ(instrument, selector_string, s12, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_s12()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -1811,6 +1891,46 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_s21()->Resize(actual_array_size * 2, 0);
+        float64* s21 = response->mutable_s21()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ(instrument, selector_string, s21, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_s21()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS21Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS21SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS21SplitResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1890,6 +2010,46 @@ namespace nirfmxvna_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQRequest* request, CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ(instrument, selector_string, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_s22()->Resize(actual_array_size * 2, 0);
+        float64* s22 = response->mutable_s22()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ(instrument, selector_string, s22, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_s22()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -3390,6 +3550,68 @@ namespace nirfmxvna_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalsetGetErrorTermInterleavedIQ(::grpc::ServerContext* context, const CalsetGetErrorTermInterleavedIQRequest* request, CalsetGetErrorTermInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto calset_name_mbcs = convert_from_grpc<std::string>(request->calset_name());
+      char* calset_name = (char*)calset_name_mbcs.c_str();
+      int32 error_term_identifier;
+      switch (request->error_term_identifier_enum_case()) {
+        case nirfmxvna_grpc::CalsetGetErrorTermInterleavedIQRequest::ErrorTermIdentifierEnumCase::kErrorTermIdentifier: {
+          error_term_identifier = static_cast<int32>(request->error_term_identifier());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetGetErrorTermInterleavedIQRequest::ErrorTermIdentifierEnumCase::kErrorTermIdentifierRaw: {
+          error_term_identifier = static_cast<int32>(request->error_term_identifier_raw());
+          break;
+        }
+        case nirfmxvna_grpc::CalsetGetErrorTermInterleavedIQRequest::ErrorTermIdentifierEnumCase::ERROR_TERM_IDENTIFIER_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for error_term_identifier was not specified or out of range");
+          break;
+        }
+      }
+
+      auto measurement_port_mbcs = convert_from_grpc<std::string>(request->measurement_port());
+      char* measurement_port = (char*)measurement_port_mbcs.c_str();
+      auto source_port_mbcs = convert_from_grpc<std::string>(request->source_port());
+      char* source_port = (char*)source_port_mbcs.c_str();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->CalsetGetErrorTermInterleavedIQ(instrument, selector_string, calset_name, error_term_identifier, measurement_port, source_port, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_error_term()->Resize(actual_array_size * 2, 0);
+        float32* error_term = response->mutable_error_term()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->CalsetGetErrorTermInterleavedIQ(instrument, selector_string, calset_name, error_term_identifier, measurement_port, source_port, error_term, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_error_term()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }
@@ -5147,6 +5369,51 @@ namespace nirfmxvna_grpc {
           }
         }
         response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::IQFetchDataInterleavedIQ(::grpc::ServerContext* context, const IQFetchDataInterleavedIQRequest* request, IQFetchDataInterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->IQFetchDataInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_data()->Resize(actual_array_size * 2, 0);
+        float32* data = response->mutable_data()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->IQFetchDataInterleavedIQ(instrument, selector_string, timeout, &x0, &dx, data, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_data()->Resize(actual_array_size * 2, 0);
+        response->set_actual_array_size(actual_array_size * 2);
         return ::grpc::Status::OK;
       }
     }

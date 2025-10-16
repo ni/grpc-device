@@ -70,12 +70,16 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   int32 CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize, int32* actualArraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetS11(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s11[], int32 arraySize, int32* actualArraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11[], int32 arraySize, int32* actualArraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetS11Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11I[], float64 s11Q[], int32 arraySize, int32* actualArraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize, int32* actualArraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12[], int32 arraySize, int32* actualArraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetS12Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12I[], float64 s12Q[], int32 arraySize, int32* actualArraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetS21(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize, int32* actualArraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21[], int32 arraySize, int32* actualArraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetS21Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21I[], float64 s21Q[], int32 arraySize, int32* actualArraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize, int32* actualArraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22[], int32 arraySize, int32* actualArraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetS22Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22I[], float64 s22Q[], int32 arraySize, int32* actualArraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32* sParameterAvailability) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterSetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize) override;
@@ -123,6 +127,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   int32 CalkitManagerValidateCalkit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calkitID[]) override;
   int32 CalsetEmbedFixtureS2p(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char fixtureS2pFilePath[], char vnaPort[], int32 sParameterOrientation, char newCalsetName[]) override;
   int32 CalsetGetErrorTerm(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], NIComplexSingle errorTerm[], int32 arraySize, int32* actualArraySize) override;
+  int32 CalsetGetErrorTermInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], float32 errorTerm[], int32 arraySize, int32* actualArraySize) override;
   int32 CalsetGetErrorTermSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, char measurementPort[], char sourcePort[], float32 errorTermI[], float32 errorTermQ[], int32 arraySize, int32* actualArraySize) override;
   int32 CalsetGetFrequencyGrid(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], int32 errorTermIdentifier, float64 frequencyGrid[], int32 arraySize, int32* actualArraySize) override;
   int32 CalsetLoadFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char calsetName[], char calsetFilePath[]) override;
@@ -172,6 +177,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   int32 GetMeasurementMemoryXData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 measurementMemoryX[], int32 arraySize, int32* actualArraySize) override;
   int32 GetMeasurementMemoryYData(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 measurementMemoryY1[], float32 measurementMemoryY2[], int32 arraySize, int32* actualArraySize) override;
   int32 IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle data[], int32 arraySize, int32* actualArraySize) override;
+  int32 IQFetchDataInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 data[], int32 arraySize, int32* actualArraySize) override;
   int32 IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize) override;
   int32 Initialize(char resourceName[], char optionString[], niRFmxInstrHandle* handleOut, int32* isNewSession) override;
   int32 InitializeFromNIRFSASession(uInt32 nirfsaSession, niRFmxInstrHandle* handleOut) override;
@@ -277,12 +283,16 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   using CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability);
   using CalkitManagerCalkitCalibrationElementSParameterGetFrequencyPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetFrequency);
   using CalkitManagerCalkitCalibrationElementSParameterGetS11Ptr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11);
+  using CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11);
   using CalkitManagerCalkitCalibrationElementSParameterGetS11SplitPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11Split);
   using CalkitManagerCalkitCalibrationElementSParameterGetS12Ptr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12);
+  using CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12);
   using CalkitManagerCalkitCalibrationElementSParameterGetS12SplitPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12Split);
   using CalkitManagerCalkitCalibrationElementSParameterGetS21Ptr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21);
+  using CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21);
   using CalkitManagerCalkitCalibrationElementSParameterGetS21SplitPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21Split);
   using CalkitManagerCalkitCalibrationElementSParameterGetS22Ptr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22);
+  using CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22);
   using CalkitManagerCalkitCalibrationElementSParameterGetS22SplitPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22Split);
   using CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability);
   using CalkitManagerCalkitCalibrationElementSParameterSetFrequencyPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFrequency);
@@ -330,6 +340,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   using CalkitManagerValidateCalkitPtr = decltype(&RFmxVNA_CalkitManagerValidateCalkit);
   using CalsetEmbedFixtureS2pPtr = decltype(&RFmxVNA_CalsetEmbedFixtureS2p);
   using CalsetGetErrorTermPtr = decltype(&RFmxVNA_CalsetGetErrorTerm);
+  using CalsetGetErrorTermInterleavedIQPtr = decltype(&RFmxVNA_CalsetGetErrorTerm);
   using CalsetGetErrorTermSplitPtr = decltype(&RFmxVNA_CalsetGetErrorTermSplit);
   using CalsetGetFrequencyGridPtr = decltype(&RFmxVNA_CalsetGetFrequencyGrid);
   using CalsetLoadFromFilePtr = decltype(&RFmxVNA_CalsetLoadFromFile);
@@ -379,6 +390,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   using GetMeasurementMemoryXDataPtr = decltype(&RFmxVNA_GetMeasurementMemoryXData);
   using GetMeasurementMemoryYDataPtr = decltype(&RFmxVNA_GetMeasurementMemoryYData);
   using IQFetchDataPtr = decltype(&RFmxVNA_IQFetchData);
+  using IQFetchDataInterleavedIQPtr = decltype(&RFmxVNA_IQFetchData);
   using IQFetchDataSplitPtr = decltype(&RFmxVNA_IQFetchDataSplit);
   using InitializePtr = decltype(&RFmxVNA_Initialize);
   using InitializeFromNIRFSASessionPtr = decltype(&RFmxVNA_InitializeFromNIRFSASession);
@@ -484,12 +496,16 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
     CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailabilityPtr CalkitManagerCalkitCalibrationElementReflectModelSetSParamAvailability;
     CalkitManagerCalkitCalibrationElementSParameterGetFrequencyPtr CalkitManagerCalkitCalibrationElementSParameterGetFrequency;
     CalkitManagerCalkitCalibrationElementSParameterGetS11Ptr CalkitManagerCalkitCalibrationElementSParameterGetS11;
+    CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQPtr CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ;
     CalkitManagerCalkitCalibrationElementSParameterGetS11SplitPtr CalkitManagerCalkitCalibrationElementSParameterGetS11Split;
     CalkitManagerCalkitCalibrationElementSParameterGetS12Ptr CalkitManagerCalkitCalibrationElementSParameterGetS12;
+    CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQPtr CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ;
     CalkitManagerCalkitCalibrationElementSParameterGetS12SplitPtr CalkitManagerCalkitCalibrationElementSParameterGetS12Split;
     CalkitManagerCalkitCalibrationElementSParameterGetS21Ptr CalkitManagerCalkitCalibrationElementSParameterGetS21;
+    CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQPtr CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ;
     CalkitManagerCalkitCalibrationElementSParameterGetS21SplitPtr CalkitManagerCalkitCalibrationElementSParameterGetS21Split;
     CalkitManagerCalkitCalibrationElementSParameterGetS22Ptr CalkitManagerCalkitCalibrationElementSParameterGetS22;
+    CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQPtr CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ;
     CalkitManagerCalkitCalibrationElementSParameterGetS22SplitPtr CalkitManagerCalkitCalibrationElementSParameterGetS22Split;
     CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailabilityPtr CalkitManagerCalkitCalibrationElementSParameterGetSParamAvailability;
     CalkitManagerCalkitCalibrationElementSParameterSetFrequencyPtr CalkitManagerCalkitCalibrationElementSParameterSetFrequency;
@@ -537,6 +553,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
     CalkitManagerValidateCalkitPtr CalkitManagerValidateCalkit;
     CalsetEmbedFixtureS2pPtr CalsetEmbedFixtureS2p;
     CalsetGetErrorTermPtr CalsetGetErrorTerm;
+    CalsetGetErrorTermInterleavedIQPtr CalsetGetErrorTermInterleavedIQ;
     CalsetGetErrorTermSplitPtr CalsetGetErrorTermSplit;
     CalsetGetFrequencyGridPtr CalsetGetFrequencyGrid;
     CalsetLoadFromFilePtr CalsetLoadFromFile;
@@ -586,6 +603,7 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
     GetMeasurementMemoryXDataPtr GetMeasurementMemoryXData;
     GetMeasurementMemoryYDataPtr GetMeasurementMemoryYData;
     IQFetchDataPtr IQFetchData;
+    IQFetchDataInterleavedIQPtr IQFetchDataInterleavedIQ;
     IQFetchDataSplitPtr IQFetchDataSplit;
     InitializePtr Initialize;
     InitializeFromNIRFSASessionPtr InitializeFromNIRFSASession;

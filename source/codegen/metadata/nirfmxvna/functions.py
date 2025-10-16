@@ -1165,6 +1165,44 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CalkitManagerCalkitCalibrationElementSParameterGetS11InterleavedIQ': {
+        'cname': 'RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS11',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's11',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s11)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CalkitManagerCalkitCalibrationElementSParameterGetS11Split': {
         'parameters': [
             {
@@ -1233,6 +1271,44 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterGetS12InterleavedIQ': {
+        'cname': 'RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS12',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's12',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s12)'
             },
             {
                 'direction': 'in',
@@ -1329,6 +1405,44 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CalkitManagerCalkitCalibrationElementSParameterGetS21InterleavedIQ': {
+        'cname': 'RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS21',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's21',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s21)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CalkitManagerCalkitCalibrationElementSParameterGetS21Split': {
         'parameters': [
             {
@@ -1397,6 +1511,44 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterGetS22InterleavedIQ': {
+        'cname': 'RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterGetS22',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 's22',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s22)'
             },
             {
                 'direction': 'in',
@@ -2601,6 +2753,65 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalsetGetErrorTermInterleavedIQ': {
+        'cname': 'RFmxVNA_CalsetGetErrorTerm',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'calsetName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CalErrorTerm',
+                'name': 'errorTermIdentifier',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurementPort',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sourcePort',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'errorTerm',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(errorTerm)'
             },
             {
                 'direction': 'in',
@@ -4102,6 +4313,59 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IQFetchDataInterleavedIQ': {
+        'cname': 'RFmxVNA_IQFetchData',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(data)'
             },
             {
                 'direction': 'in',

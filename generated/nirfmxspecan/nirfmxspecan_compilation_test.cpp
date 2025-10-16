@@ -232,6 +232,11 @@ int32 AMPMCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selector
   return RFmxSpecAn_AMPMCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize, idleDurationPresent, signalType);
 }
 
+int32 AMPMCfgReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
+{
+  return RFmxSpecAn_AMPMCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize/2, idleDurationPresent, signalType);
+}
+
 int32 AMPMCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
 {
   return RFmxSpecAn_AMPMCfgReferenceWaveformSplit(instrumentHandle, selectorString, x0, dx, referenceWaveformI, referenceWaveformQ, arraySize, idleDurationPresent, signalType);
@@ -287,6 +292,11 @@ int32 AMPMFetchProcessedMeanAcquiredWaveform(niRFmxInstrHandle instrumentHandle,
   return RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedMeanAcquiredWaveform, arraySize, actualArraySize);
 }
 
+int32 AMPMFetchProcessedMeanAcquiredWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform), arraySize, actualArraySize);
+}
+
 int32 AMPMFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveformI[], float32 processedMeanAcquiredWaveformQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_AMPMFetchProcessedMeanAcquiredWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, processedMeanAcquiredWaveformI, processedMeanAcquiredWaveformQ, arraySize, actualArraySize);
@@ -295,6 +305,11 @@ int32 AMPMFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHa
 int32 AMPMFetchProcessedReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_AMPMFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
+}
+
+int32 AMPMFetchProcessedReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_AMPMFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform), arraySize, actualArraySize);
 }
 
 int32 AMPMFetchProcessedReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveformI[], float32 processedReferenceWaveformQ[], int32 arraySize, int32* actualArraySize)
@@ -320,6 +335,11 @@ int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[
 int32 AnalyzeIQ1Waveform(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, NIComplexSingle iq[], int32 arraySize, int32 reset, int64 reserved)
 {
   return RFmxSpecAn_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, iq, arraySize, reset, reserved);
+}
+
+int32 AnalyzeIQ1WaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iq[], int32 arraySize, int32 reset, int64 reserved)
+{
+  return RFmxSpecAn_AnalyzeIQ1Waveform(instrumentHandle, selectorString, resultName, x0, dx, reinterpret_cast<NIComplexSingle*>(iq), arraySize/2, reset, reserved);
 }
 
 int32 AnalyzeIQ1WaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char resultName[], float64 x0, float64 dx, float32 iqi[], float32 iqq[], int32 arraySize, int32 reset, int64 reserved)
@@ -622,6 +642,11 @@ int32 DPDApplyDigitalPredistortion(niRFmxInstrHandle instrumentHandle, char sele
   return RFmxSpecAn_DPDApplyDigitalPredistortion(instrumentHandle, selectorString, x0In, dxIn, waveformIn, arraySizeIn, idleDurationPresent, measurementTimeout, x0Out, dxOut, waveformOut, arraySizeOut, actualArraySize, papr, powerOffset);
 }
 
+int32 DPDApplyDigitalPredistortionInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64 measurementTimeout, float64* x0Out, float64* dxOut, float32 waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr, float64* powerOffset)
+{
+  return RFmxSpecAn_DPDApplyDigitalPredistortion(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn/2, idleDurationPresent, measurementTimeout, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr, powerOffset);
+}
+
 int32 DPDApplyDigitalPredistortionSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64 measurementTimeout, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr, float64* powerOffset)
 {
   return RFmxSpecAn_DPDApplyDigitalPredistortionSplit(instrumentHandle, selectorString, x0In, dxIn, waveformInI, waveformInQ, arraySizeIn, idleDurationPresent, measurementTimeout, x0Out, dxOut, waveformOutI, waveformOutQ, arraySizeOut, actualArraySize, papr, powerOffset);
@@ -630,6 +655,11 @@ int32 DPDApplyDigitalPredistortionSplit(niRFmxInstrHandle instrumentHandle, char
 int32 DPDApplyPreDPDSignalConditioning(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, NIComplexSingle waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
 {
   return RFmxSpecAn_DPDApplyPreDPDSignalConditioning(instrumentHandle, selectorString, x0In, dxIn, waveformIn, arraySizeIn, idleDurationPresent, x0Out, dxOut, waveformOut, arraySizeOut, actualArraySize, papr);
+}
+
+int32 DPDApplyPreDPDSignalConditioningInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformIn[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, float32 waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
+{
+  return RFmxSpecAn_DPDApplyPreDPDSignalConditioning(instrumentHandle, selectorString, x0In, dxIn, reinterpret_cast<NIComplexSingle*>(waveformIn), arraySizeIn/2, idleDurationPresent, x0Out, dxOut, reinterpret_cast<NIComplexSingle*>(waveformOut), arraySizeOut, actualArraySize, papr);
 }
 
 int32 DPDApplyPreDPDSignalConditioningSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0In, float64 dxIn, float32 waveformInI[], float32 waveformInQ[], int32 arraySizeIn, int32 idleDurationPresent, float64* x0Out, float64* dxOut, float32 waveformOutI[], float32 waveformOutQ[], int32 arraySizeOut, int32* actualArraySize, float64* papr)
@@ -657,6 +687,11 @@ int32 DPDCfgApplyDPDUserDPDPolynomial(niRFmxInstrHandle instrumentHandle, char s
   return RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial(instrumentHandle, selectorString, dpdPolynomial, arraySize);
 }
 
+int32 DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 dpdPolynomial[], int32 arraySize)
+{
+  return RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomial(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(dpdPolynomial), arraySize/2);
+}
+
 int32 DPDCfgApplyDPDUserDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 dpdPolynomialI[], float32 dpdPolynomialQ[], int32 arraySize)
 {
   return RFmxSpecAn_DPDCfgApplyDPDUserDPDPolynomialSplit(instrumentHandle, selectorString, dpdPolynomialI, dpdPolynomialQ, arraySize);
@@ -665,6 +700,11 @@ int32 DPDCfgApplyDPDUserDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, c
 int32 DPDCfgApplyDPDUserLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], NIComplexSingle lutComplexGains[], int32 arraySize)
 {
   return RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, lutComplexGains, arraySize);
+}
+
+int32 DPDCfgApplyDPDUserLookupTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGains[], int32 arraySize)
+{
+  return RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(lutComplexGains), arraySize/2);
 }
 
 int32 DPDCfgApplyDPDUserLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGainsI[], float32 lutComplexGainsQ[], int32 arraySize)
@@ -690,6 +730,11 @@ int32 DPDCfgDUTAverageInputPower(niRFmxInstrHandle instrumentHandle, char select
 int32 DPDCfgExtractModelTargetWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle targetWaveform[], int32 arraySize)
 {
   return RFmxSpecAn_DPDCfgExtractModelTargetWaveform(instrumentHandle, selectorString, x0, dx, targetWaveform, arraySize);
+}
+
+int32 DPDCfgExtractModelTargetWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveform[], int32 arraySize)
+{
+  return RFmxSpecAn_DPDCfgExtractModelTargetWaveform(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(targetWaveform), arraySize/2);
 }
 
 int32 DPDCfgExtractModelTargetWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 targetWaveformI[], float32 targetWaveformQ[], int32 arraySize)
@@ -752,6 +797,11 @@ int32 DPDCfgPreviousDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selec
   return RFmxSpecAn_DPDCfgPreviousDPDPolynomial(instrumentHandle, selectorString, previousDPDPolynomial, arraySize);
 }
 
+int32 DPDCfgPreviousDPDPolynomialInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 previousDPDPolynomial[], int32 arraySize)
+{
+  return RFmxSpecAn_DPDCfgPreviousDPDPolynomial(instrumentHandle, selectorString, reinterpret_cast<NIComplexSingle*>(previousDPDPolynomial), arraySize/2);
+}
+
 int32 DPDCfgPreviousDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 previousDPDPolynomialI[], float32 previousDPDPolynomialQ[], int32 arraySize)
 {
   return RFmxSpecAn_DPDCfgPreviousDPDPolynomialSplit(instrumentHandle, selectorString, previousDPDPolynomialI, previousDPDPolynomialQ, arraySize);
@@ -760,6 +810,11 @@ int32 DPDCfgPreviousDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char 
 int32 DPDCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
 {
   return RFmxSpecAn_DPDCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize, idleDurationPresent, signalType);
+}
+
+int32 DPDCfgReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
+{
+  return RFmxSpecAn_DPDCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize/2, idleDurationPresent, signalType);
 }
 
 int32 DPDCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
@@ -787,6 +842,11 @@ int32 DPDFetchDPDPolynomial(niRFmxInstrHandle instrumentHandle, char selectorStr
   return RFmxSpecAn_DPDFetchDPDPolynomial(instrumentHandle, selectorString, timeout, dpdPolynomial, arraySize, actualArraySize);
 }
 
+int32 DPDFetchDPDPolynomialInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dpdPolynomial[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_DPDFetchDPDPolynomial(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dpdPolynomial), arraySize, actualArraySize);
+}
+
 int32 DPDFetchDPDPolynomialSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dpdPolynomialI[], float32 dpdPolynomialQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_DPDFetchDPDPolynomialSplit(instrumentHandle, selectorString, timeout, dpdPolynomialI, dpdPolynomialQ, arraySize, actualArraySize);
@@ -797,6 +857,11 @@ int32 DPDFetchDVRModel(niRFmxInstrHandle instrumentHandle, char selectorString[]
   return RFmxSpecAn_DPDFetchDVRModel(instrumentHandle, selectorString, timeout, dvrModel, arraySize, actualArraySize);
 }
 
+int32 DPDFetchDVRModelInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dvrModel[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_DPDFetchDVRModel(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(dvrModel), arraySize, actualArraySize);
+}
+
 int32 DPDFetchDVRModelSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dvrModelI[], float32 dvrModelQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_DPDFetchDVRModelSplit(instrumentHandle, selectorString, timeout, dvrModelI, dvrModelQ, arraySize, actualArraySize);
@@ -805,6 +870,11 @@ int32 DPDFetchDVRModelSplit(niRFmxInstrHandle instrumentHandle, char selectorStr
 int32 DPDFetchLookupTable(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], NIComplexSingle complexGains[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_DPDFetchLookupTable(instrumentHandle, selectorString, timeout, inputPowers, complexGains, arraySize, actualArraySize);
+}
+
+int32 DPDFetchLookupTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], float32 complexGains[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_DPDFetchLookupTable(instrumentHandle, selectorString, timeout, inputPowers, reinterpret_cast<NIComplexSingle*>(complexGains), arraySize, actualArraySize);
 }
 
 int32 DPDFetchLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 inputPowers[], float32 complexGainsI[], float32 complexGainsQ[], int32 arraySize, int32* actualArraySize)
@@ -822,6 +892,11 @@ int32 DPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHandle instrumentHandle, 
   return RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedMeanAcquiredWaveform, arraySize, actualArraySize);
 }
 
+int32 DPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform), arraySize, actualArraySize);
+}
+
 int32 DPDFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveformI[], float32 processedMeanAcquiredWaveformQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_DPDFetchProcessedMeanAcquiredWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, processedMeanAcquiredWaveformI, processedMeanAcquiredWaveformQ, arraySize, actualArraySize);
@@ -830,6 +905,11 @@ int32 DPDFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHan
 int32 DPDFetchProcessedReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_DPDFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
+}
+
+int32 DPDFetchProcessedReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_DPDFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform), arraySize, actualArraySize);
 }
 
 int32 DPDFetchProcessedReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveformI[], float32 processedReferenceWaveformQ[], int32 arraySize, int32* actualArraySize)
@@ -1082,6 +1162,11 @@ int32 IDPDCfgEqualizerCoefficients(niRFmxInstrHandle instrumentHandle, char sele
   return RFmxSpecAn_IDPDCfgEqualizerCoefficients(instrumentHandle, selectorString, x0, dx, equalizerCoefficients, arraySize);
 }
 
+int32 IDPDCfgEqualizerCoefficientsInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 equalizerCoefficients[], int32 arraySize)
+{
+  return RFmxSpecAn_IDPDCfgEqualizerCoefficients(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerCoefficients), arraySize/2);
+}
+
 int32 IDPDCfgEqualizerCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 equalizerCoefficientsI[], float32 equalizerCoefficientsQ[], int32 arraySize)
 {
   return RFmxSpecAn_IDPDCfgEqualizerCoefficientsSplit(instrumentHandle, selectorString, x0, dx, equalizerCoefficientsI, equalizerCoefficientsQ, arraySize);
@@ -1090,6 +1175,11 @@ int32 IDPDCfgEqualizerCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char
 int32 IDPDCfgPredistortedWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, NIComplexSingle predistortedWaveform[], int32 arraySize, float64 targetGain)
 {
   return RFmxSpecAn_IDPDCfgPredistortedWaveform(instrumentHandle, selectorString, x0, dx, predistortedWaveform, arraySize, targetGain);
+}
+
+int32 IDPDCfgPredistortedWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 predistortedWaveform[], int32 arraySize, float64 targetGain)
+{
+  return RFmxSpecAn_IDPDCfgPredistortedWaveform(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(predistortedWaveform), arraySize/2, targetGain);
 }
 
 int32 IDPDCfgPredistortedWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 predistortedWaveformI[], float32 predistortedWaveformQ[], int32 arraySize, float64 targetGain)
@@ -1102,6 +1192,11 @@ int32 IDPDCfgReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selector
   return RFmxSpecAn_IDPDCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, referenceWaveform, arraySize, idleDurationPresent, signalType);
 }
 
+int32 IDPDCfgReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveform[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
+{
+  return RFmxSpecAn_IDPDCfgReferenceWaveform(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(referenceWaveform), arraySize/2, idleDurationPresent, signalType);
+}
+
 int32 IDPDCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 x0, float64 dx, float32 referenceWaveformI[], float32 referenceWaveformQ[], int32 arraySize, int32 idleDurationPresent, int32 signalType)
 {
   return RFmxSpecAn_IDPDCfgReferenceWaveformSplit(instrumentHandle, selectorString, x0, dx, referenceWaveformI, referenceWaveformQ, arraySize, idleDurationPresent, signalType);
@@ -1110,6 +1205,11 @@ int32 IDPDCfgReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char sel
 int32 IDPDFetchEqualizerCoefficients(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle equalizerCoefficients[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_IDPDFetchEqualizerCoefficients(instrumentHandle, selectorString, timeout, x0, dx, equalizerCoefficients, arraySize, actualArraySize);
+}
+
+int32 IDPDFetchEqualizerCoefficientsInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 equalizerCoefficients[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_IDPDFetchEqualizerCoefficients(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerCoefficients), arraySize, actualArraySize);
 }
 
 int32 IDPDFetchEqualizerCoefficientsSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 equalizerCoefficientsI[], float32 equalizerCoefficientsQ[], int32 arraySize, int32* actualArraySize)
@@ -1122,6 +1222,11 @@ int32 IDPDFetchPredistortedWaveform(niRFmxInstrHandle instrumentHandle, char sel
   return RFmxSpecAn_IDPDFetchPredistortedWaveform(instrumentHandle, selectorString, timeout, x0, dx, predistortedWaveform, papr, powerOffset, gain, arraySize, actualArraySize);
 }
 
+int32 IDPDFetchPredistortedWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 predistortedWaveform[], float64* papr, float64* powerOffset, float64* gain, int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_IDPDFetchPredistortedWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(predistortedWaveform), papr, powerOffset, gain, arraySize, actualArraySize);
+}
+
 int32 IDPDFetchPredistortedWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 predistortedWaveformI[], float32 predistortedWaveformQ[], float64* papr, float64* powerOffset, float64* gain, int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_IDPDFetchPredistortedWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, predistortedWaveformI, predistortedWaveformQ, papr, powerOffset, gain, arraySize, actualArraySize);
@@ -1130,6 +1235,11 @@ int32 IDPDFetchPredistortedWaveformSplit(niRFmxInstrHandle instrumentHandle, cha
 int32 IDPDFetchProcessedMeanAcquiredWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, NIComplexSingle processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedMeanAcquiredWaveform, arraySize, actualArraySize);
+}
+
+int32 IDPDFetchProcessedMeanAcquiredWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_IDPDFetchProcessedMeanAcquiredWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedMeanAcquiredWaveform), arraySize, actualArraySize);
 }
 
 int32 IDPDFetchProcessedMeanAcquiredWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedMeanAcquiredWaveformI[], float32 processedMeanAcquiredWaveformQ[], int32 arraySize, int32* actualArraySize)
@@ -1142,6 +1252,11 @@ int32 IDPDFetchProcessedReferenceWaveform(niRFmxInstrHandle instrumentHandle, ch
   return RFmxSpecAn_IDPDFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveform, arraySize, actualArraySize);
 }
 
+int32 IDPDFetchProcessedReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveform[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_IDPDFetchProcessedReferenceWaveform(instrumentHandle, selectorString, timeout, x0, dx, reinterpret_cast<NIComplexSingle*>(processedReferenceWaveform), arraySize, actualArraySize);
+}
+
 int32 IDPDFetchProcessedReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 processedReferenceWaveformI[], float32 processedReferenceWaveformQ[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_IDPDFetchProcessedReferenceWaveformSplit(instrumentHandle, selectorString, timeout, x0, dx, processedReferenceWaveformI, processedReferenceWaveformQ, arraySize, actualArraySize);
@@ -1150,6 +1265,11 @@ int32 IDPDFetchProcessedReferenceWaveformSplit(niRFmxInstrHandle instrumentHandl
 int32 IDPDGetEqualizerReferenceWaveform(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* x0, float64* dx, NIComplexSingle equalizerReferenceWaveform[], float64* papr, int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_IDPDGetEqualizerReferenceWaveform(instrumentHandle, selectorString, x0, dx, equalizerReferenceWaveform, papr, arraySize, actualArraySize);
+}
+
+int32 IDPDGetEqualizerReferenceWaveformInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* x0, float64* dx, float32 equalizerReferenceWaveform[], float64* papr, int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_IDPDGetEqualizerReferenceWaveform(instrumentHandle, selectorString, x0, dx, reinterpret_cast<NIComplexSingle*>(equalizerReferenceWaveform), papr, arraySize, actualArraySize);
 }
 
 int32 IDPDGetEqualizerReferenceWaveformSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64* x0, float64* dx, float32 equalizerReferenceWaveformI[], float32 equalizerReferenceWaveformQ[], float64* papr, int32 arraySize, int32* actualArraySize)
@@ -1255,6 +1375,11 @@ int32 IQCfgBandwidth(niRFmxInstrHandle instrumentHandle, char selectorString[], 
 int32 IQFetchData(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxSpecAn_IQFetchData(instrumentHandle, selectorString, timeout, recordToFetch, samplesToRead, t0, dt, data, arraySize, actualArraySize);
+}
+
+int32 IQFetchDataInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, float64* t0, float64* dt, float32 data[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxSpecAn_IQFetchData(instrumentHandle, selectorString, timeout, recordToFetch, samplesToRead, t0, dt, reinterpret_cast<NIComplexSingle*>(data), arraySize, actualArraySize);
 }
 
 int32 IQFetchDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, float64* t0, float64* dt, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize)

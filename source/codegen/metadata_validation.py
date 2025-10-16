@@ -126,6 +126,7 @@ PARAM_SCHEMA = Schema(
         Optional("is_grpc_enum"): bool,
         Optional("return_on_error_key"): str,
         Optional("is_streaming_type"): bool,
+        Optional("value_converted_to_c_representation"): str,
     }
 )
 

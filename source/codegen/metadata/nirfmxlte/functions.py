@@ -783,6 +783,66 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AnalyzeIQ1WaveformInterleavedIQ': {
+        'cname': 'RFmxLTE_AnalyzeIQ1Waveform',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resultName',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'x0',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'dx',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'iq',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(iq)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
+            },
+            {
+                'direction': 'in',
+                'name': 'reset',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'hardcoded_value': '0',
+                'include_in_proto': False,
+                'name': 'reserved',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'AnalyzeIQ1WaveformSplit': {
         'parameters': [
             {
@@ -4232,6 +4292,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchCSRSConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchCSRSConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'csrsConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(csrsConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchCSRSConstellationSplit': {
         'parameters': [
             {
@@ -4714,6 +4817,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchDownlinkPBCHConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchDownlinkPBCHConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'pbchConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(pbchConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchDownlinkPBCHConstellationSplit': {
         'parameters': [
             {
@@ -4792,6 +4938,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ModAccFetchDownlinkPCFICHConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchDownlinkPCFICHConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'pcfichConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(pcfichConstellation)'
             },
             {
                 'direction': 'in',
@@ -4898,6 +5087,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchDownlinkPDCCHConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchDownlinkPDCCHConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'pdcchConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(pdcchConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchDownlinkPDCCHConstellationSplit': {
         'parameters': [
             {
@@ -4976,6 +5208,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ModAccFetchDownlinkPHICHConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchDownlinkPHICHConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'phichConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(phichConstellation)'
             },
             {
                 'direction': 'in',
@@ -6127,6 +6402,70 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchNBSynchronizationSignalConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchNBSynchronizationSignalConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'nsssConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'nsssConstellationArraySize',
+                    'value_twist': 'nsssConstellationActualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(nsssConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'nsssConstellationArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'nsssConstellationActualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'npssConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'npssConstellationArraySize',
+                    'value_twist': 'npssConstellationActualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(npssConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'npssConstellationArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'npssConstellationActualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchNBSynchronizationSignalConstellationSplit': {
         'parameters': [
             {
@@ -6249,6 +6588,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchNPDSCHQPSKConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchNPDSCHQPSKConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'qpskConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qpskConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchNPDSCHQPSKConstellationSplit': {
         'parameters': [
             {
@@ -6347,6 +6729,70 @@ functions = {
                     'value_twist': 'dmrsConstellationActualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dmrsConstellationArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dmrsConstellationActualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ModAccFetchNPUSCHConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchNPUSCHConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'dataConstellationArraySize',
+                    'value_twist': 'dataConstellationActualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'dataConstellationArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataConstellationActualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dmrsConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'dmrsConstellationArraySize',
+                    'value_twist': 'dmrsConstellationActualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)'
             },
             {
                 'direction': 'in',
@@ -6578,6 +7024,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchNRSConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchNRSConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'nrsConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(nrsConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchNRSConstellationSplit': {
         'parameters': [
             {
@@ -6656,6 +7145,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ModAccFetchPDSCH1024QAMConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchPDSCH1024QAMConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'qam1024Constellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qam1024Constellation)'
             },
             {
                 'direction': 'in',
@@ -6831,6 +7363,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchPDSCH16QAMConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchPDSCH16QAMConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'qam16Constellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qam16Constellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchPDSCH16QAMConstellationSplit': {
         'parameters': [
             {
@@ -6923,6 +7498,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchPDSCH256QAMConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchPDSCH256QAMConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'qam256Constellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qam256Constellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchPDSCH256QAMConstellationSplit': {
         'parameters': [
             {
@@ -7001,6 +7619,49 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ModAccFetchPDSCH64QAMConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchPDSCH64QAMConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'qam64Constellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qam64Constellation)'
             },
             {
                 'direction': 'in',
@@ -7244,6 +7905,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchPDSCHQPSKConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchPDSCHQPSKConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'qpskConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(qpskConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchPDSCHQPSKConstellationSplit': {
         'parameters': [
             {
@@ -7342,6 +8046,70 @@ functions = {
                     'value_twist': 'dmrsConstellationActualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dmrsConstellationArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dmrsConstellationActualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ModAccFetchPSSCHConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchPSSCHConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'dataConstellationArraySize',
+                    'value_twist': 'dataConstellationActualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'dataConstellationArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataConstellationActualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dmrsConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'dmrsConstellationArraySize',
+                    'value_twist': 'dmrsConstellationActualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)'
             },
             {
                 'direction': 'in',
@@ -7734,6 +8502,70 @@ functions = {
                     'value_twist': 'dmrsConstellationActualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'dmrsConstellationArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dmrsConstellationActualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ModAccFetchPUSCHConstellationTraceInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchPUSCHConstellationTrace',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'dataConstellationArraySize',
+                    'value_twist': 'dataConstellationActualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dataConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'dataConstellationArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dataConstellationActualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'dmrsConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'dmrsConstellationArraySize',
+                    'value_twist': 'dmrsConstellationActualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(dmrsConstellation)'
             },
             {
                 'direction': 'in',
@@ -8263,6 +9095,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ModAccFetchSRSConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchSRSConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'srsConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(srsConstellation)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'ModAccFetchSRSConstellationSplit': {
         'parameters': [
             {
@@ -8741,6 +9616,60 @@ functions = {
                     'value_twist': 'actualArraySize'
                 },
                 'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'ModAccFetchSynchronizationSignalConstellationInterleavedIQ': {
+        'cname': 'RFmxLTE_ModAccFetchSynchronizationSignalConstellation',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'sssConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(sssConstellation)'
+            },
+            {
+                'direction': 'out',
+                'name': 'pssConstellation',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySize',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'float32[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(pssConstellation)'
             },
             {
                 'direction': 'in',

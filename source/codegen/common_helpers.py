@@ -609,7 +609,11 @@ def get_buffer_size_expression(parameter: dict) -> str:
     if size_mechanism == "fixed":
         return parameter["size"]["value"]
     elif size_mechanism == "ivi-dance-with-a-twist":
-        return get_grpc_field_name_from_str(parameter["size"]["value_twist"])
+        # Double the size to accommodate interleaved I and Q input values which will be
+        # implicitly converted into NIComplexNumber while passing it to the C Driver API
+        return get_grpc_field_name_from_str(parameter["size"]["value_twist"]) + (
+            " * 2" if "value_converted_to_c_representation" in parameter else ""
+        )
     elif size_mechanism == "passed-in-by-ptr":
         return get_grpc_field_name_from_str(parameter["size"]["value"]) + "_copy"
     else:
@@ -1302,3 +1306,23 @@ def extend_input_params_with_size_params(input_parameters: List[dict], function_
         size_param_name = get_size_param(param)
         size_param = [p for p in function_metadata["parameters"] if p["name"] == size_param_name]
         input_parameters.extend(size_param)
+
+
+def has_value_converted_to_c_representation(parameters: List[dict], parameter: dict) -> bool:
+    """Check if the parameter contains a casted name."""
+    for p in parameters:
+        if "value_converted_to_c_representation" in p and p.get("size", {}).get(
+            "value_twist"
+        ) == parameter.get("name"):
+            return True
+    return parameter.get("value_converted_to_c_representation", False)
+
+
+def get_value_converted_to_c_representation(parameters: List[dict], parameter: dict) -> str:
+    """Get the casted name of the parameter."""
+    for p in parameters:
+        if "value_converted_to_c_representation" in p and p.get("size", {}).get(
+            "value_twist"
+        ) == parameter.get("name"):
+            return camel_to_snake(parameter["name"] + " * 2")
+    return camel_to_snake(parameter.get("value_converted_to_c_representation", ""))
