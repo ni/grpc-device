@@ -133,7 +133,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
 
     // Get the number of channels
     uInt32 num_channels = 0;
-    auto status = library_->GetTaskAttributeUInt32(task, 8571 /* READ_ATTRIBUTE_NUM_CHANS */, &num_channels);
+    auto status = library_->GetReadAttributeUInt32(task, 8571 /* READ_ATTRIBUTE_NUM_CHANS */, &num_channels);
     if (!status_ok(status)) {
       return ConvertApiErrorStatusForTaskHandle(context, status, task);
     }
@@ -224,6 +224,13 @@ int32 CVICALLBACK SetWfmAttrCallback(
 
       // Set timing information if requested
       if (waveform_attribute_mode & 1 /* WAVEFORM_ATTRIBUTE_MODE_TIMING */) {
+        // Check if DAQmx provided timing information
+        if (dt_array[i] == 0) {
+          // No timing information available - task likely not configured with sample clock timing
+          return ::grpc::Status(::grpc::FAILED_PRECONDITION, 
+            "Timing information requested but not available. Task must be configured with sample clock timing (e.g., CfgSampClkTiming) to provide timing information.");
+        }
+
         auto* t0 = waveform->mutable_t0();
         // Convert from 100ns ticks (DAQmx format) to PrecisionTimestamp
         // t0_array[i] contains 100ns ticks since Jan 1, 0001
@@ -236,8 +243,8 @@ int32 CVICALLBACK SetWfmAttrCallback(
         t0->set_seconds(seconds);
         t0->set_fractional_seconds(fractional_seconds);
 
-        // Set sample interval (dt)
-        waveform->set_dt(static_cast<double>(dt_array[i]) * 100e-9); // Convert 100ns ticks to seconds
+        // Set sample interval (dt) - convert 100ns ticks to seconds
+        waveform->set_dt(static_cast<double>(dt_array[i]) * 1e-7); // 100ns = 1e-7 seconds
       }
     }
 
