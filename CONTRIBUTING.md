@@ -68,6 +68,19 @@ Build a release build for use in a production environment:
 > cmake --build . --config Release
 ```
 
+### Build with Ninja
+
+Build faster by using Ninja:
+
+```
+> "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Auxiliary\Build\vcvars64.bat"
+> mkdir build
+> cd build
+> cmake .. -G "Ninja Multi-Config"
+> cmake --build .
+
+```
+
 ## Building on Linux
 
 ### Prerequisites
