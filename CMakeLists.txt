@@ -289,10 +289,8 @@ get_filename_component(deviceid_restricted_proto "source/protobuf_restricted/dev
 get_filename_component(debugsessionproperties_restricted_proto "source/protobuf_restricted/debugsessionproperties_restricted.proto" ABSOLUTE)
 get_filename_component(calibrationoperations_restricted_proto "source/protobuf_restricted/calibrationoperations_restricted.proto" ABSOLUTE)
 get_filename_component(data_moniker_proto "imports/protobuf/data_moniker.proto" ABSOLUTE)
-get_filename_component(waveform_proto_abs "third_party/ni-apis/ni/protobuf/types/waveform.proto" ABSOLUTE)
-get_filename_component(precision_timestamp_proto_abs "third_party/ni-apis/ni/protobuf/types/precision_timestamp.proto" ABSOLUTE)
-set(waveform_proto "ni/protobuf/types/waveform.proto")
-set(precision_timestamp_proto "ni/protobuf/types/precision_timestamp.proto")
+get_filename_component(precision_timestamp_proto "third_party/ni-apis/ni/protobuf/types/precision_timestamp.proto" ABSOLUTE)
+get_filename_component(waveform_proto "third_party/ni-apis/ni/protobuf/types/waveform.proto" ABSOLUTE)
 get_filename_component(session_proto_path "${session_proto}" PATH)
 
 #----------------------------------------------------------------------
@@ -300,29 +298,16 @@ get_filename_component(session_proto_path "${session_proto}" PATH)
 # Usage: GenerateGrpcSources(PROTO <path> OUTPUT <path>...)
 #----------------------------------------------------------------------
 function(GenerateGrpcSources)
-  set(oneValueArgs PROTO PROTO_PATH PROTO_DEP)
-  set(multiValueArgs OUTPUT DEPENDS)
+  set(oneValueArgs PROTO)
+  set(multiValueArgs OUTPUT)
   cmake_parse_arguments(GENERATE_ARGS "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
   set(output_files "${GENERATE_ARGS_OUTPUT}")
   set(proto_file "${GENERATE_ARGS_PROTO}")
-  set(override_proto_path "${GENERATE_ARGS_PROTO_PATH}")
-  set(proto_dep_file "${GENERATE_ARGS_PROTO_DEP}")
-  set(additional_depends "${GENERATE_ARGS_DEPENDS}")
   if(USE_SUBMODULE_LIBS)
     set(protobuf_includes_arg -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/ -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/ -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/)
   endif()
   get_filename_component(proto_name "${proto_file}" NAME)
-  if(override_proto_path)
-    set(proto_path "${override_proto_path}")
-  else()
-    get_filename_component(proto_path "${proto_file}" PATH)
-  endif()
-  # Use the dependency file if specified, otherwise use the proto file itself
-  if(proto_dep_file)
-    set(dependency_file "${proto_dep_file}")
-  else()
-    set(dependency_file "${proto_file}")
-  endif()
+  get_filename_component(proto_path "${proto_file}" PATH)
   # Asssumption: all outputs are in the same directory: use the zero-th.
   list(GET output_files 0 proto_srcs)
   get_filename_component(proto_out_path "${proto_srcs}" PATH)
@@ -343,7 +328,7 @@ function(GenerateGrpcSources)
       COMMAND ${CMAKE_COMMAND} -E echo \#include \"custom/xnetsocket_winsock2_compatibility.h\" > ${proto_srcs_dir}/nixnetsocket.pb.h.tmp
       COMMAND ${CMAKE_COMMAND} -E cat ${proto_srcs_dir}/nixnetsocket.pb.h >> ${proto_srcs_dir}/nixnetsocket.pb.h.tmp
       COMMAND ${CMAKE_COMMAND} -E cat ${proto_srcs_dir}/nixnetsocket.pb.h.tmp > ${proto_srcs_dir}/nixnetsocket.pb.h
-      DEPENDS "${dependency_file}" "${session_proto}" ${additional_depends}
+      DEPENDS "${proto_file}" "${session_proto}"
       VERBATIM)
   else()
     add_custom_command(
@@ -356,7 +341,7 @@ function(GenerateGrpcSources)
         -I ${CMAKE_SOURCE_DIR}/imports/protobuf
         --plugin=protoc-gen-grpc=${_GRPC_CPP_PLUGIN_EXECUTABLE}
         ${proto_file}
-      DEPENDS "${dependency_file}" "${session_proto}" ${additional_depends}
+      DEPENDS "${proto_file}" "${session_proto}"
       VERBATIM)
   endif()
 endfunction()
@@ -387,14 +372,10 @@ set(data_moniker_proto_srcs "${proto_srcs_dir}/data_moniker.pb.cc")
 set(data_moniker_proto_hdrs "${proto_srcs_dir}/data_moniker.pb.h")
 set(data_moniker_grpc_srcs "${proto_srcs_dir}/data_moniker.grpc.pb.cc")
 set(data_moniker_grpc_hdrs "${proto_srcs_dir}/data_moniker.grpc.pb.h")
-set(waveform_proto_srcs "${proto_srcs_dir}/waveform.pb.cc")
-set(waveform_proto_hdrs "${proto_srcs_dir}/waveform.pb.h")
-set(waveform_grpc_srcs "${proto_srcs_dir}/waveform.grpc.pb.cc")
-set(waveform_grpc_hdrs "${proto_srcs_dir}/waveform.grpc.pb.h")
-set(precision_timestamp_proto_srcs "${proto_srcs_dir}/precision_timestamp.pb.cc")
-set(precision_timestamp_proto_hdrs "${proto_srcs_dir}/precision_timestamp.pb.h")
-set(precision_timestamp_grpc_srcs "${proto_srcs_dir}/precision_timestamp.grpc.pb.cc")
-set(precision_timestamp_grpc_hdrs "${proto_srcs_dir}/precision_timestamp.grpc.pb.h")
+set(precision_timestamp_proto_srcs "${proto_srcs_dir}/ni/protobuf/types/precision_timestamp.pb.cc")
+set(precision_timestamp_proto_hdrs "${proto_srcs_dir}/ni/protobuf/types/precision_timestamp.pb.h")
+set(waveform_proto_srcs "${proto_srcs_dir}/ni/protobuf/types/waveform.pb.cc")
+set(waveform_proto_hdrs "${proto_srcs_dir}/ni/protobuf/types/waveform.pb.h")
 
 GenerateGrpcSources(
   PROTO
@@ -464,65 +445,29 @@ GenerateGrpcSources(
     "${data_moniker_grpc_hdrs}"
 )
 
-# Generate waveform proto with correct descriptor table names but custom file locations
+# Custom generation for precision_timestamp to use correct include paths
 add_custom_command(
-  OUTPUT 
-    "${waveform_proto_srcs}"
-    "${waveform_proto_hdrs}"
-    "${waveform_grpc_srcs}" 
-    "${waveform_grpc_hdrs}"
+  OUTPUT "${precision_timestamp_proto_srcs}" "${precision_timestamp_proto_hdrs}"
   COMMAND ${_PROTOBUF_PROTOC}
-  ARGS --grpc_out ${proto_srcs_dir}
-    --cpp_out ${proto_srcs_dir}
-    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis
-    -I ${CMAKE_SOURCE_DIR}/imports/protobuf
-    --plugin=protoc-gen-grpc=${_GRPC_CPP_PLUGIN_EXECUTABLE}
-    ni/protobuf/types/waveform.proto
-  COMMAND ${CMAKE_COMMAND} -E copy 
-    "${proto_srcs_dir}/ni/protobuf/types/waveform.pb.cc"
-    "${waveform_proto_srcs}"
-  COMMAND ${CMAKE_COMMAND} -E copy
-    "${proto_srcs_dir}/ni/protobuf/types/waveform.pb.h" 
-    "${waveform_proto_hdrs}"
-  COMMAND ${CMAKE_COMMAND} -E copy
-    "${proto_srcs_dir}/ni/protobuf/types/waveform.grpc.pb.cc"
-    "${waveform_grpc_srcs}"
-  COMMAND ${CMAKE_COMMAND} -E copy
-    "${proto_srcs_dir}/ni/protobuf/types/waveform.grpc.pb.h"
-    "${waveform_grpc_hdrs}"
-  DEPENDS "${waveform_proto_abs}" "${precision_timestamp_proto_srcs}"
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/ni-apis
+  ARGS --cpp_out ${proto_srcs_dir}
+    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
+    -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
+    ni/protobuf/types/precision_timestamp.proto
+  DEPENDS "${precision_timestamp_proto}"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
   VERBATIM
 )
 
-# Generate precision_timestamp proto with correct descriptor table names but custom file locations  
+# Custom generation for waveform to use correct include paths
 add_custom_command(
-  OUTPUT 
-    "${precision_timestamp_proto_srcs}"
-    "${precision_timestamp_proto_hdrs}"
-    "${precision_timestamp_grpc_srcs}"
-    "${precision_timestamp_grpc_hdrs}"
+  OUTPUT "${waveform_proto_srcs}" "${waveform_proto_hdrs}"
   COMMAND ${_PROTOBUF_PROTOC}
-  ARGS --grpc_out ${proto_srcs_dir}
-    --cpp_out ${proto_srcs_dir}
-    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis
-    -I ${CMAKE_SOURCE_DIR}/imports/protobuf
-    --plugin=protoc-gen-grpc=${_GRPC_CPP_PLUGIN_EXECUTABLE}
-    ni/protobuf/types/precision_timestamp.proto
-  COMMAND ${CMAKE_COMMAND} -E copy
-    "${proto_srcs_dir}/ni/protobuf/types/precision_timestamp.pb.cc"
-    "${precision_timestamp_proto_srcs}"
-  COMMAND ${CMAKE_COMMAND} -E copy
-    "${proto_srcs_dir}/ni/protobuf/types/precision_timestamp.pb.h"
-    "${precision_timestamp_proto_hdrs}"
-  COMMAND ${CMAKE_COMMAND} -E copy
-    "${proto_srcs_dir}/ni/protobuf/types/precision_timestamp.grpc.pb.cc"
-    "${precision_timestamp_grpc_srcs}"
-  COMMAND ${CMAKE_COMMAND} -E copy
-    "${proto_srcs_dir}/ni/protobuf/types/precision_timestamp.grpc.pb.h"
-    "${precision_timestamp_grpc_hdrs}"
-  DEPENDS "${precision_timestamp_proto_abs}"
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/ni-apis
+  ARGS --cpp_out ${proto_srcs_dir}
+    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
+    -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
+    ni/protobuf/types/waveform.proto
+  DEPENDS "${waveform_proto}" "${precision_timestamp_proto_hdrs}"
+  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
   VERBATIM
 )
 
@@ -539,40 +484,20 @@ set(nidriver_service_library_hdrs
   "${debugsessionproperties_restricted_grpc_hdrs}"
   "${calibrationoperations_restricted_proto_hdrs}"
   "${calibrationoperations_restricted_grpc_hdrs}"
-  "${waveform_proto_hdrs}"
-  "${waveform_grpc_hdrs}"
   "${precision_timestamp_proto_hdrs}"
-  "${precision_timestamp_grpc_hdrs}"
+  "${waveform_proto_hdrs}"
 )
 
 foreach(api ${nidrivers})
-  # Add waveform dependencies for APIs that use waveform types
-  if(api STREQUAL "nidaqmx")
-    GenerateGrpcSources(
-      PROTO
-        ${service_output_dir}/${api}/${api}.proto
-      OUTPUT
-        "${proto_srcs_dir}/${api}.pb.cc"
-        "${proto_srcs_dir}/${api}.pb.h"
-        "${proto_srcs_dir}/${api}.grpc.pb.cc"
-        "${proto_srcs_dir}/${api}.grpc.pb.h"
-      DEPENDS
-        "${waveform_proto_srcs}"
-        "${waveform_proto_hdrs}"
-        "${precision_timestamp_proto_srcs}"
-        "${precision_timestamp_proto_hdrs}"
-    )
-  else()
-    GenerateGrpcSources(
-      PROTO
-        ${service_output_dir}/${api}/${api}.proto
-      OUTPUT
-        "${proto_srcs_dir}/${api}.pb.cc"
-        "${proto_srcs_dir}/${api}.pb.h"
-        "${proto_srcs_dir}/${api}.grpc.pb.cc"
-        "${proto_srcs_dir}/${api}.grpc.pb.h"
-    )
-  endif()
+  GenerateGrpcSources(
+    PROTO
+      ${service_output_dir}/${api}/${api}.proto
+    OUTPUT
+      "${proto_srcs_dir}/${api}.pb.cc"
+      "${proto_srcs_dir}/${api}.pb.h"
+      "${proto_srcs_dir}/${api}.grpc.pb.cc"
+      "${proto_srcs_dir}/${api}.grpc.pb.h"
+  )
   set(nidriver_service_library_hdrs
     ${nidriver_service_library_hdrs}
     "${proto_srcs_dir}/${api}.pb.h"
@@ -621,10 +546,8 @@ add_executable(ni_grpc_device_server
    ${calibrationoperations_restricted_grpc_srcs}
    ${data_moniker_proto_srcs}
    ${data_moniker_grpc_srcs}
-   ${waveform_proto_srcs}
-   ${waveform_grpc_srcs}
    ${precision_timestamp_proto_srcs}
-   ${precision_timestamp_grpc_srcs}
+   ${waveform_proto_srcs}
    ${nidriver_service_srcs})
 
 # Enable warnings only on source that we own, not generated code or dependencies
@@ -766,10 +689,8 @@ add_executable(IntegrationTestsRunner
     ${calibrationoperations_restricted_grpc_srcs}
     ${data_moniker_proto_srcs}
     ${data_moniker_grpc_srcs}
-    ${waveform_proto_srcs}
-    ${waveform_grpc_srcs}
     ${precision_timestamp_proto_srcs}
-    ${precision_timestamp_grpc_srcs}
+    ${waveform_proto_srcs}
     ${nidriver_service_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
@@ -857,6 +778,8 @@ add_executable(UnitTestsRunner
     ${calibrationoperations_restricted_grpc_srcs}
     ${data_moniker_proto_srcs}
     ${data_moniker_grpc_srcs}
+    ${precision_timestamp_proto_srcs}
+    ${waveform_proto_srcs}
     "${proto_srcs_dir}/nifake.pb.cc"
     "${proto_srcs_dir}/nifake.grpc.pb.cc"
     "${proto_srcs_dir}/nifake_extension.pb.cc"
@@ -994,10 +917,8 @@ set(system_test_runner_sources
   ${calibrationoperations_restricted_grpc_srcs}
   ${data_moniker_proto_srcs}
   ${data_moniker_grpc_srcs}
-  ${waveform_proto_srcs}
-  ${waveform_grpc_srcs}
   ${precision_timestamp_proto_srcs}
-  ${precision_timestamp_grpc_srcs}
+  ${waveform_proto_srcs}
   ${nidriver_service_srcs}
   ${nidriver_client_srcs}
 )
