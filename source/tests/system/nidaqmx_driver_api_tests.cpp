@@ -65,6 +65,7 @@ class NiDAQmxDriverApiTests : public Test {
   const std::string DEVICE_NAME{"gRPCSystemTestDAQ"};
   const std::string ANY_DEVICE_MODEL{"[[ANY_DEVICE_MODEL]]"};
   const std::string AI_CHANNEL{"gRPCSystemTestDAQ/ai0"};
+  const std::string AI_CHANNEL_1{"gRPCSystemTestDAQ/ai1"};
   const std::string AO_CHANNEL{"gRPCSystemTestDAQ/ao0"};
 
   NiDAQmxDriverApiTests()
@@ -175,6 +176,19 @@ class NiDAQmxDriverApiTests : public Test {
   ::grpc::Status create_ai_voltage_chan(double min_val, double max_val, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
   {
     auto request = create_ai_voltage_request(min_val, max_val);
+    return create_ai_voltage_chan(request, response);
+  }
+
+  ::grpc::Status create_two_ai_voltage_chans(double min_val, double max_val, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
+  {
+    CreateAIVoltageChanRequest request;
+    set_request_session_name(request);
+    request.set_physical_channel("gRPCSystemTestDAQ/ai0:1");  // This creates channels ai0 and ai1
+    request.set_name_to_assign_to_channel("ai0:1");
+    request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT);
+    request.set_min_val(min_val);
+    request.set_max_val(max_val);
+    request.set_units(VoltageUnits2::VOLTAGE_UNITS2_VOLTS);
     return create_ai_voltage_chan(request, response);
   }
 
@@ -1501,7 +1515,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithNoAttributeMode_ReturnsWav
   const auto NUM_SAMPLES = 1000;
   const auto TIMEOUT = 10.0;
   CreateAIVoltageChanResponse create_channel_response;
-  auto create_channel_status = create_ai_voltage_chan(-1.0, 1.0, create_channel_response);
+  auto create_channel_status = create_two_ai_voltage_chans(-1.0, 1.0, create_channel_response);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   start_task();
@@ -1511,15 +1525,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithNoAttributeMode_ReturnsWav
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
-  EXPECT_EQ(read_response.waveforms_size(), 1);  // One channel
+  EXPECT_EQ(read_response.waveforms_size(), 2);
   
-  const auto& waveform = read_response.waveforms(0);
-  EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
-  
-  // Verify data is in expected range (simulated device should provide sine wave between -1 and 1)
-  for (const auto& sample : waveform.y_data()) {
-    EXPECT_GE(sample, -1.0);
-    EXPECT_LE(sample, 1.0);
+  for (int i = 0; i < read_response.waveforms_size(); ++i) {
+    const auto& waveform = read_response.waveforms(i);
+    EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
+    
+    for (const auto& sample : waveform.y_data()) {
+      EXPECT_GE(sample, -1.0);
+      EXPECT_LE(sample, 1.0);
+    }
   }
 }
 
@@ -1528,10 +1543,9 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingMode_ReturnsWaveform
   const auto NUM_SAMPLES = 100;
   const auto TIMEOUT = 10.0;
   CreateAIVoltageChanResponse create_channel_response;
-  auto create_channel_status = create_ai_voltage_chan(-5.0, 5.0, create_channel_response);
+  auto create_channel_status = create_two_ai_voltage_chans(-5.0, 5.0, create_channel_response);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
-  // Configure sample clock timing to enable timing information
   auto timing_request = create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, NUM_SAMPLES);
   CfgSampClkTimingResponse timing_response;
   auto timing_status = cfg_samp_clk_timing(timing_request, timing_response);
@@ -1544,19 +1558,18 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingMode_ReturnsWaveform
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
-  EXPECT_EQ(read_response.waveforms_size(), 1);  // One channel
+  EXPECT_EQ(read_response.waveforms_size(), 2);
   
-  const auto& waveform = read_response.waveforms(0);
-  EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
-  
-  // Verify timing information is present
-  EXPECT_TRUE(waveform.has_t0());
-  EXPECT_GT(waveform.dt(), 0.0);  // Sample interval should be positive
-  
-  // Verify data is in expected range
-  for (const auto& sample : waveform.y_data()) {
-    EXPECT_GE(sample, -5.0);
-    EXPECT_LE(sample, 5.0);
+  for (int i = 0; i < read_response.waveforms_size(); ++i) {
+    const auto& waveform = read_response.waveforms(i);
+    EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
+    EXPECT_TRUE(waveform.has_t0());
+    EXPECT_GT(waveform.dt(), 0.0);
+    
+    for (const auto& sample : waveform.y_data()) {
+      EXPECT_GE(sample, -5.0);
+      EXPECT_LE(sample, 5.0);
+    }
   }
 }
 
@@ -1565,7 +1578,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithExtendedPropertiesMode_Ret
   const auto NUM_SAMPLES = 50;
   const auto TIMEOUT = 10.0;
   CreateAIVoltageChanResponse create_channel_response;
-  auto create_channel_status = create_ai_voltage_chan(-2.0, 2.0, create_channel_response);
+  auto create_channel_status = create_two_ai_voltage_chans(-2.0, 2.0, create_channel_response);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   start_task();
@@ -1575,40 +1588,39 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithExtendedPropertiesMode_Ret
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
-  EXPECT_EQ(read_response.waveforms_size(), 1);  // One channel
+  EXPECT_EQ(read_response.waveforms_size(), 2);
   
-  const auto& waveform = read_response.waveforms(0);
-  EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
-  
-  // Verify extended properties (attributes) are present
-  EXPECT_GT(waveform.attributes_size(), 0);  // Should have some attributes
-  
-  // Check for expected waveform attributes that should be present
-  // Based on debug output: NI_ChannelName and NI_UnitDescription
-  bool has_channel_name = false;
-  bool has_units = false;
-  for (const auto& attr_pair : waveform.attributes()) {
-    const auto& attr_name = attr_pair.first;
-    const auto& attr_value = attr_pair.second;
+  for (int i = 0; i < read_response.waveforms_size(); ++i) {
+    const auto& waveform = read_response.waveforms(i);
+    EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
+    EXPECT_GT(waveform.attributes_size(), 0);
     
-    if (attr_name == "NI_ChannelName" && attr_value.has_string_value()) {
-      if (attr_value.string_value() == "ai0") {  // Expected channel name
-        has_channel_name = true;
+    bool has_channel_name = false;
+    bool has_units = false;
+    std::string expected_channel_name = (i == 0) ? "ai0" : "ai1";
+    
+    for (const auto& attr_pair : waveform.attributes()) {
+      const auto& attr_name = attr_pair.first;
+      const auto& attr_value = attr_pair.second;
+      
+      if (attr_name == "NI_ChannelName" && attr_value.has_string_value()) {
+        if (attr_value.string_value() == expected_channel_name) {
+          has_channel_name = true;
+        }
+      }
+      if (attr_name == "NI_UnitDescription" && attr_value.has_string_value()) {
+        if (attr_value.string_value() == "Volts") {
+          has_units = true;
+        }
       }
     }
-    if (attr_name == "NI_UnitDescription" && attr_value.has_string_value()) {
-      if (attr_value.string_value() == "Volts") {
-        has_units = true;
-      }
+    EXPECT_TRUE(has_channel_name);
+    EXPECT_TRUE(has_units);
+    
+    for (const auto& sample : waveform.y_data()) {
+      EXPECT_GE(sample, -2.0);
+      EXPECT_LE(sample, 2.0);
     }
-  }
-  EXPECT_TRUE(has_channel_name);  // Should have channel name attribute
-  EXPECT_TRUE(has_units);  // Should have units attribute set to "Volts"
-  
-  // Verify data is in expected range
-  for (const auto& sample : waveform.y_data()) {
-    EXPECT_GE(sample, -2.0);
-    EXPECT_LE(sample, 2.0);
   }
 }
 
@@ -1617,10 +1629,9 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertie
   const auto NUM_SAMPLES = 75;
   const auto TIMEOUT = 10.0;
   CreateAIVoltageChanResponse create_channel_response;
-  auto create_channel_status = create_ai_voltage_chan(-3.0, 3.0, create_channel_response);
+  auto create_channel_status = create_two_ai_voltage_chans(-3.0, 3.0, create_channel_response);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
-  // Configure sample clock timing to enable timing information
   auto timing_request = create_cfg_samp_clk_timing_request(2000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, NUM_SAMPLES);
   CfgSampClkTimingResponse timing_response;
   auto timing_status = cfg_samp_clk_timing(timing_request, timing_response);
@@ -1628,7 +1639,6 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertie
 
   start_task();
   ReadAnalogWaveformsResponse read_response;
-  // Use bitwise OR to combine TIMING and EXTENDED_PROPERTIES modes
   const auto combined_mode = static_cast<WaveformAttributeMode>(
     static_cast<int32>(WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) | 
     static_cast<int32>(WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES)
@@ -1638,44 +1648,41 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertie
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
-  EXPECT_EQ(read_response.waveforms_size(), 1);  // One channel
+  EXPECT_EQ(read_response.waveforms_size(), 2);
   
-  const auto& waveform = read_response.waveforms(0);
-  EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
-  
-  // Verify timing information is present (from TIMING mode)
-  EXPECT_TRUE(waveform.has_t0());
-  EXPECT_GT(waveform.dt(), 0.0);  // Sample interval should be positive
-  
-  // Verify extended properties (attributes) are present (from EXTENDED_PROPERTIES mode)
-  EXPECT_GT(waveform.attributes_size(), 0);  // Should have some attributes
-  
-  // Check for expected waveform attributes that should be present
-  // Based on debug output: NI_ChannelName and NI_UnitDescription
-  bool has_channel_name = false;
-  bool has_units = false;
-  for (const auto& attr_pair : waveform.attributes()) {
-    const auto& attr_name = attr_pair.first;
-    const auto& attr_value = attr_pair.second;
+  for (int i = 0; i < read_response.waveforms_size(); ++i) {
+    const auto& waveform = read_response.waveforms(i);
+    EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
+    EXPECT_TRUE(waveform.has_t0());
+    EXPECT_GT(waveform.dt(), 0.0);
+    EXPECT_GT(waveform.attributes_size(), 0);
     
-    if (attr_name == "NI_ChannelName" && attr_value.has_string_value()) {
-      if (attr_value.string_value() == "ai0") {  // Expected channel name
-        has_channel_name = true;
+    bool has_channel_name = false;
+    bool has_units = false;
+    std::string expected_channel_name = (i == 0) ? "ai0" : "ai1";
+    
+    for (const auto& attr_pair : waveform.attributes()) {
+      const auto& attr_name = attr_pair.first;
+      const auto& attr_value = attr_pair.second;
+      
+      if (attr_name == "NI_ChannelName" && attr_value.has_string_value()) {
+        if (attr_value.string_value() == expected_channel_name) {
+          has_channel_name = true;
+        }
+      }
+      if (attr_name == "NI_UnitDescription" && attr_value.has_string_value()) {
+        if (attr_value.string_value() == "Volts") {
+          has_units = true;
+        }
       }
     }
-    if (attr_name == "NI_UnitDescription" && attr_value.has_string_value()) {
-      if (attr_value.string_value() == "Volts") {
-        has_units = true;
-      }
+    EXPECT_TRUE(has_channel_name);
+    EXPECT_TRUE(has_units);
+    
+    for (const auto& sample : waveform.y_data()) {
+      EXPECT_GE(sample, -3.0);
+      EXPECT_LE(sample, 3.0);
     }
-  }
-  EXPECT_TRUE(has_channel_name);  // Should have channel name attribute
-  EXPECT_TRUE(has_units);  // Should have units attribute set to "Volts"
-  
-  // Verify data is in expected range
-  for (const auto& sample : waveform.y_data()) {
-    EXPECT_GE(sample, -3.0);
-    EXPECT_LE(sample, 3.0);
   }
 }
 
