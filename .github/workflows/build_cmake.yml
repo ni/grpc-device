@@ -26,7 +26,7 @@ jobs:
             glibc_version: "2_31",
             cmake_generator: '-G "Ninja"',
             build_type: RelWithDebInfo,
-            cmake_flags: "-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=-O1 -g -DNDEBUG"
+            cmake_flags: '"-DCMAKE_CXX_FLAGS_RELWITHDEBINFO=-O1 -g -DNDEBUG"'
           }
 
     steps:
