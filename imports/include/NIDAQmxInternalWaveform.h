@@ -19,7 +19,7 @@ extern "C"
     // - String values are in the encoding used by the DLL (MBCS for nicaiu.dll, UTF-8 for nicai_utf8.dll).
     // - callbackData is used to pass an object instance into the callback.
     // - The callback returns an error code.
-    typedef int32(__CFUNC *DAQmxSetWfmAttrCallbackPtr)(uInt32 channelIndex, const char attributeName[], int32 attributeType, const void *value, uInt32 valueSizeInBytes, void *callbackData);
+    typedef int32(CVICALLBACK *DAQmxSetWfmAttrCallbackPtr)(uInt32 channelIndex, const char attributeName[], int32 attributeType, const void *value, uInt32 valueSizeInBytes, void *callbackData);
     // int64 t0 and dt use the same format as .NET System.DateTime and System.TimeSpan: 100 ns ticks
     // with an epoch of Jan 1, 0001. The t0 and dt arrays are optional and may be NULL.
     int32 __CFUNC DAQmxInternalReadAnalogWaveformPerChan(TaskHandle taskHandle, int32 numSampsPerChan, float64 timeout, int64 t0Array[], int64 dtArray[], uInt32 timingArraySize, DAQmxSetWfmAttrCallbackPtr setWfmAttrCallback, void *setWfmAttrCallbackData, float64 *readArrayPtrs[], uInt32 readArrayCount, uInt32 arraySizeInSampsPerChan, int32 *sampsPerChanRead, bool32 *reserved);

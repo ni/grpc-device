@@ -93,6 +93,7 @@ jobs:
         --clean-first
         --config ${{ matrix.config.build_type }}
         -j ${{ steps.cpu-cores.outputs.count }}
+        --verbose
 
     # The generated source in git must match the output of workflow builds.
     # If this step fails, something is changing during build. Either:
