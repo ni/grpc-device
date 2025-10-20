@@ -304,7 +304,10 @@ function(GenerateGrpcSources)
   set(output_files "${GENERATE_ARGS_OUTPUT}")
   set(proto_file "${GENERATE_ARGS_PROTO}")
   if(USE_SUBMODULE_LIBS)
-    set(protobuf_includes_arg -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/ -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/ -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/)
+    set(protobuf_includes_arg 
+      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
+      -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/ # for session.proto
+      -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/)
   endif()
   get_filename_component(proto_name "${proto_file}" NAME)
   get_filename_component(proto_path "${proto_file}" PATH)
@@ -344,6 +347,34 @@ function(GenerateGrpcSources)
       DEPENDS "${proto_file}" "${session_proto}"
       VERBATIM)
   endif()
+endfunction()
+
+#----------------------------------------------------------------------
+# Generate sources from ni-apis proto files
+# Usage: GenerateNiApisProtoSources(PROTO_PATH <relative_path> OUTPUT_SRCS <var> OUTPUT_HDRS <var> [DEPENDS <dependency>...])
+#----------------------------------------------------------------------
+function(GenerateNiApisProtoSources)
+  set(oneValueArgs PROTO_PATH OUTPUT_SRCS OUTPUT_HDRS)
+  set(multiValueArgs DEPENDS)
+  cmake_parse_arguments(GEN_ARGS "" "${oneValueArgs}" "${multiValueArgs}" ${ARGN})
+  
+  set(proto_srcs "${proto_srcs_dir}/${GEN_ARGS_PROTO_PATH}.pb.cc")
+  set(proto_hdrs "${proto_srcs_dir}/${GEN_ARGS_PROTO_PATH}.pb.h")
+  
+  add_custom_command(
+    OUTPUT "${proto_srcs}" "${proto_hdrs}"
+    COMMAND ${_PROTOBUF_PROTOC}
+    ARGS --cpp_out ${proto_srcs_dir}
+      -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
+      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
+      ${GEN_ARGS_PROTO_PATH}.proto
+    DEPENDS "${CMAKE_SOURCE_DIR}/third_party/ni-apis/${GEN_ARGS_PROTO_PATH}.proto" ${GEN_ARGS_DEPENDS}
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
+    VERBATIM
+  )
+  
+  set(${GEN_ARGS_OUTPUT_SRCS} "${proto_srcs}" PARENT_SCOPE)
+  set(${GEN_ARGS_OUTPUT_HDRS} "${proto_hdrs}" PARENT_SCOPE)
 endfunction()
 
 set(session_proto_srcs "${proto_srcs_dir}/session.pb.cc")
@@ -445,30 +476,17 @@ GenerateGrpcSources(
     "${data_moniker_grpc_hdrs}"
 )
 
-# Custom generation for precision_timestamp to use correct include paths
-add_custom_command(
-  OUTPUT "${precision_timestamp_proto_srcs}" "${precision_timestamp_proto_hdrs}"
-  COMMAND ${_PROTOBUF_PROTOC}
-  ARGS --cpp_out ${proto_srcs_dir}
-    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
-    -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
-    ni/protobuf/types/precision_timestamp.proto
-  DEPENDS "${precision_timestamp_proto}"
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
-  VERBATIM
+GenerateNiApisProtoSources(
+  PROTO_PATH "ni/protobuf/types/precision_timestamp"
+  OUTPUT_SRCS precision_timestamp_proto_srcs
+  OUTPUT_HDRS precision_timestamp_proto_hdrs
 )
 
-# Custom generation for waveform to use correct include paths
-add_custom_command(
-  OUTPUT "${waveform_proto_srcs}" "${waveform_proto_hdrs}"
-  COMMAND ${_PROTOBUF_PROTOC}
-  ARGS --cpp_out ${proto_srcs_dir}
-    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
-    -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
-    ni/protobuf/types/waveform.proto
-  DEPENDS "${waveform_proto}" "${precision_timestamp_proto_hdrs}"
-  WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/third_party/ni-apis/
-  VERBATIM
+GenerateNiApisProtoSources(
+  PROTO_PATH "ni/protobuf/types/waveform"
+  OUTPUT_SRCS waveform_proto_srcs
+  OUTPUT_HDRS waveform_proto_hdrs
+  DEPENDS "${precision_timestamp_proto_hdrs}"
 )
 
 set(nidriver_service_library_hdrs
