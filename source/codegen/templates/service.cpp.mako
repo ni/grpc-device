@@ -56,13 +56,6 @@ resource_repository_deps = service_helpers.get_driver_shared_resource_repository
 #include <server/data_moniker_service.h>
 % endif
 
-% if any_non_mockable_functions:
-#ifdef __GNUC__
-#pragma GCC push_options
-#pragma GCC optimize("-fno-var-tracking-assignments")
-#endif
-% endif
-
 namespace ${config["namespace_component"]}_grpc {
 
   using nidevice_grpc::converters::allocate_output_storage;
@@ -201,12 +194,6 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
   {
   }
 } // namespace ${config["namespace_component"]}_grpc
-
-% if any_non_mockable_functions:
-#ifdef __GNUC__
-#pragma GCC pop_options
-#endif
-% endif
 
 % if any(input_custom_types) or any(output_custom_types):
 namespace nidevice_grpc {

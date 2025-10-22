@@ -18,6 +18,12 @@ if(MSVC)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /std:c17") # Needed for boringssl
 endif()
 
+# GCC-specific flags
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-var-tracking-assignments")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fno-var-tracking-assignments")
+endif()
+
 #----------------------------------------------------------------------
 # Use C++17 (needed for shared_mutex support on Linux)
 #----------------------------------------------------------------------
