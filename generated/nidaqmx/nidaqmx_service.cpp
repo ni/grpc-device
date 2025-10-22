@@ -15,6 +15,9 @@
 #include <server/callback_router.h>
 #include <server/server_reactor.h>
 #include "nidaqmx_library.h"
+#ifdef __GNUC__
+#pragma GCC optimize("-fno-var-tracking-assignments")
+#endif
 #include <server/data_moniker_service.h>
 
 namespace nidaqmx_grpc {

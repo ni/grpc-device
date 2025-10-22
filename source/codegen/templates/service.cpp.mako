@@ -51,6 +51,9 @@ resource_repository_deps = service_helpers.get_driver_shared_resource_repository
 % endif
 % if any_non_mockable_functions:
 #include "${module_name}_library.h"
+#ifdef __GNUC__
+#pragma GCC optimize("-fno-var-tracking-assignments")
+#endif
 % endif
 % if streaming_functions_to_generate:
 #include <server/data_moniker_service.h>
