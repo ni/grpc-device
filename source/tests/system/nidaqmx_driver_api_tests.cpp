@@ -2,6 +2,7 @@
 #include <google/protobuf/util/time_util.h>
 
 #include <algorithm>
+#include <chrono>
 #include <cstring>
 #include <nlohmann/json.hpp>
 #include <random>
@@ -1566,6 +1567,18 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingMode_ReturnsWaveform
     const auto& waveform = read_response.waveforms(i);
     EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
     EXPECT_TRUE(waveform.has_t0());
+        
+    // Get current time in seconds since year 1 AD (Jan 1, 0001) - .NET DateTime epoch
+    // This matches the format used by DAQmxInternalReadAnalogWaveformPerChan
+    // From year 1 AD to 1970-01-01 is 719162 days * 24 * 3600 = 62135596800 seconds
+    const auto epoch_offset_year1_to_1970 = 62135596800LL;
+    auto now = std::chrono::duration_cast<std::chrono::seconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+    auto now_since_year1 = now + epoch_offset_year1_to_1970;
+    const auto& timestamp = waveform.t0();
+    EXPECT_NEAR(timestamp.seconds(), now_since_year1, 1);
+    EXPECT_NE(timestamp.fractional_seconds(), 0);
+    
     EXPECT_GT(waveform.dt(), 0.0);
     
     for (const auto& sample : waveform.y_data()) {

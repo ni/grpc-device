@@ -1,6 +1,7 @@
 #include <nidaqmx/nidaqmx_service.h>
 #include <vector>
 #include <memory>
+#include <cstdint>
 #include "NIDAQmxInternalWaveform.h"
 
 namespace nidaqmx_grpc {
@@ -214,14 +215,12 @@ int32 CVICALLBACK SetWfmAttrCallback(
 
         auto* t0 = waveform->mutable_t0();
         // Convert from 100ns ticks (DAQmx format) to PrecisionTimestamp
-        // t0_array[i] contains 100ns ticks since Jan 1, 0001
-        // PrecisionTimestamp expects seconds and fractional seconds
-        const int64 seconds = t0_array[i] / TICKS_PER_SECOND;
-        const int64 fractional_ticks = t0_array[i] % TICKS_PER_SECOND;
-        const double fractional_seconds = static_cast<double>(fractional_ticks) / TICKS_PER_SECOND;
+        // t0_array[i] contains 100ns ticks since Jan 1, 0001 (.NET DateTime epoch)
+        const int64_t seconds = t0_array[i] / TICKS_PER_SECOND;
+        const int64_t fractional_ticks = t0_array[i] % TICKS_PER_SECOND;
         
         t0->set_seconds(seconds);
-        t0->set_fractional_seconds(fractional_seconds);
+        t0->set_fractional_seconds(fractional_ticks);
 
         // Set sample interval (dt) - convert 100ns ticks to seconds
         waveform->set_dt(static_cast<double>(dt_array[i]) * TICKS_TO_SECONDS);
