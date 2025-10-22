@@ -77,6 +77,9 @@ For Debian/Ubuntu, install git, cmake (3.18.0 or newer), and mako:
 > sudo apt-get update
 > sudo apt-get install git
 > sudo apt-get install cmake
+> sudo apt-get install g++
+> sudo apt-get install python3-venv  # for ensurepip
+> sudo apt-get install ninja-build   # optional
 > python -m pip install mako
 ```
 
