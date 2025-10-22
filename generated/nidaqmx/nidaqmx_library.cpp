@@ -8,6 +8,10 @@
 #include "version.h"
 
 #include <memory>
+#ifdef __GNUC__
+#pragma GCC push_options
+#pragma GCC optimize("-fno-var-tracking-assignments")
+#endif
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "nicaiu.dll";
@@ -3712,3 +3716,6 @@ int32 NiDAQmxLibrary::WriteToTEDSFromFile(const char physicalChannel[], const ch
 bool NiDAQmxLibrary::is_runtime_environment_set() const { return this->runtime_environment_set_; }
 
 }  // namespace nidaqmx_grpc
+#ifdef __GNUC__
+#pragma GCC pop_options
+#endif

@@ -35,6 +35,12 @@ if set_runtime_environment_supported:
 % endif
 
 #include <memory>
+% if module_name == "nidaqmx":
+#ifdef __GNUC__
+#pragma GCC push_options
+#pragma GCC optimize("-fno-var-tracking-assignments")
+#endif
+% endif
 
 #if defined(_MSC_VER)
 static const char* kLibraryName = "${windows_library_name}";
@@ -104,3 +110,8 @@ bool ${class_name}::is_runtime_environment_set() const { return this->runtime_en
 
 % endif
 }  // namespace ${config["namespace_component"]}_grpc
+% if module_name == "nidaqmx":
+#ifdef __GNUC__
+#pragma GCC pop_options
+#endif
+% endif
