@@ -1526,6 +1526,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithNoAttributeMode_ReturnsWav
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1559,6 +1560,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingMode_ReturnsWaveform
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1589,6 +1591,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithExtendedPropertiesMode_Ret
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1649,6 +1652,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertie
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);

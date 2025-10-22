@@ -54,6 +54,18 @@ functions_override_metadata = {
                 'python_description': 'The waveforms read from the specified channels.',
                 'python_type_annotation': 'List[object]',
                 'type': 'repeated ni.protobuf.types.DoubleAnalogWaveform'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'out',
+                'is_optional_in_python': False,
+                'is_streaming_type': True,
+                'name': 'sampsPerChanRead',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
+                'return_on_error_key': 'ni-samps-per-chan-read',
+                'type': 'int32'
             }
         ]
     }

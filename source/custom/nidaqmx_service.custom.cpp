@@ -228,6 +228,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
       }
     }
 
+    response->set_samps_per_chan_read(samples_per_chan_read);
     response->set_status(status);
     return ::grpc::Status::OK;
   }
