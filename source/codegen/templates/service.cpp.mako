@@ -51,12 +51,16 @@ resource_repository_deps = service_helpers.get_driver_shared_resource_repository
 % endif
 % if any_non_mockable_functions:
 #include "${module_name}_library.h"
-#ifdef __GNUC__
-#pragma GCC optimize("-fno-var-tracking-assignments")
-#endif
 % endif
 % if streaming_functions_to_generate:
 #include <server/data_moniker_service.h>
+% endif
+
+% if any_non_mockable_functions:
+#ifdef __GNUC__
+#pragma GCC push_options
+#pragma GCC optimize("-fno-var-tracking-assignments")
+#endif
 % endif
 
 namespace ${config["namespace_component"]}_grpc {
@@ -197,6 +201,12 @@ ${mako_helper.define_simple_method_body(function_name=function_name, function_da
   {
   }
 } // namespace ${config["namespace_component"]}_grpc
+
+% if any_non_mockable_functions:
+#ifdef __GNUC__
+#pragma GCC pop_options
+#endif
+% endif
 
 % if any(input_custom_types) or any(output_custom_types):
 namespace nidevice_grpc {
