@@ -80,7 +80,6 @@ For Debian/Ubuntu, install git, cmake (3.18.0 or newer), and mako:
 > sudo apt-get install g++
 > sudo apt-get install python3-venv  # for ensurepip
 > sudo apt-get install ninja-build   # optional
-> python -m pip install mako
 ```
 
 For NI Linux RT, install packagegroup-core-buildessential, git, git-perltools, cmake (3.18.0 or newer), python3-utils, and mako:
