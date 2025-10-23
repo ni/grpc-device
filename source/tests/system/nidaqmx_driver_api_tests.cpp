@@ -1255,6 +1255,42 @@ class NiDAQmxDriverApiTests : public Test {
     return now + epoch_offset_year1_to_1970;
   }
 
+  std::vector<uint8_t> get_expected_data_for_line(int32 num_samples, int32 line_number) const
+  {
+    std::vector<uint8_t> data;
+    // Simulated digital signals "count" from 0 in binary within each group of 8 lines.
+    // Each line represents a bit in the binary representation of the sample number.
+    // - line 0 represents bit 0 (LSB) - alternates every sample: 0,1,0,1,0,1,0,1...
+    // - line 1 represents bit 1 - alternates every 2 samples:    0,0,1,1,0,0,1,1...
+    // - line 2 represents bit 2 - alternates every 4 samples:    0,0,0,0,1,1,1,1...
+    line_number %= 8;
+    for (int32 sample_num = 0; sample_num < num_samples; ++sample_num) {
+      uint8_t bit_value = (sample_num >> line_number) & 1;
+      data.push_back(bit_value);
+    }
+    return data;
+  }
+
+  void verify_digital_waveform_data(
+      const std::string& y_data,
+      int32 num_samples,
+      int32 signals_per_sample,
+      int32 line_offset) const
+  {
+    for (int32 sample = 0; sample < num_samples; ++sample) {
+      for (int32 line = 0; line < signals_per_sample; ++line) {
+        int32 line_number = line + line_offset;
+        auto expected_data = get_expected_data_for_line(num_samples, line_number);
+        uint8_t actual_value = static_cast<uint8_t>(y_data[sample * signals_per_sample + line]);
+        uint8_t expected_value = expected_data[sample];
+        EXPECT_EQ(actual_value, expected_value) 
+          << "Mismatch at sample " << sample << ", line " << line_number
+          << ": expected " << static_cast<int>(expected_value) 
+          << ", got " << static_cast<int>(actual_value);
+      }
+    }
+  }
+
   DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<NiDAQmx::Stub> nidaqmx_stub_;
@@ -1777,10 +1813,12 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithNoAttributeMode_ReturnsWa
   const auto& waveform0 = read_response.waveforms(0);
   EXPECT_EQ(waveform0.signal_count(), 3); // 3 lines in port0 (line0:2 means 0,1,2)
   EXPECT_EQ(static_cast<int32>(waveform0.y_data().size()), NUM_SAMPLES * 3); // 3 bytes per sample
+  verify_digital_waveform_data(waveform0.y_data(), NUM_SAMPLES, 3, 0);
   
   const auto& waveform1 = read_response.waveforms(1);
   EXPECT_EQ(waveform1.signal_count(), 2); // 2 lines in port0 (line4:5 means 4,5)
   EXPECT_EQ(static_cast<int32>(waveform1.y_data().size()), NUM_SAMPLES * 2); // 2 bytes per sample
+  verify_digital_waveform_data(waveform1.y_data(), NUM_SAMPLES, 2, 4);
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingMode_ReturnsWaveformDataWithTimingInfo)

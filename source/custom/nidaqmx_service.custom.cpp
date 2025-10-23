@@ -393,13 +393,25 @@ template<typename WaveformType>
       const uInt32 bytes_per_chan = bytes_per_chan_array[i];
       waveform->set_signal_count(static_cast<int32>(bytes_per_chan));
 
-      // Data layout: samples_per_chan_read x num_channels x max_bytes_per_chan
+      // Data layout: all samples for each channel are grouped together
+      // Channel 0: all its samples, Channel 1: all its samples, etc.
+      // Within each channel, samples are sequential: Sample0, Sample1, Sample2, ...
+      // Within each sample, signals are sequential: Signal0, Signal1, Signal2, ...
       std::string y_data;
       y_data.reserve(samples_per_chan_read * bytes_per_chan);
       
+      // Calculate offset to start of this channel's data
+      const uInt32 channel_start = i * samples_per_chan_read * max_bytes_per_chan;
+      
       for (int32 sample = 0; sample < samples_per_chan_read; ++sample) {
-        const uInt32 sample_offset = sample * num_channels * max_bytes_per_chan + i * max_bytes_per_chan;
-        y_data.append(reinterpret_cast<const char*>(&read_array[sample_offset]), bytes_per_chan);
+        // Within this channel, find the start of this sample
+        const uInt32 sample_start = channel_start + sample * max_bytes_per_chan;
+        
+        // Copy all signals for this sample (up to bytes_per_chan)
+        for (uInt32 signal = 0; signal < bytes_per_chan; ++signal) {
+          const uInt32 offset = sample_start + signal;
+          y_data.append(reinterpret_cast<const char*>(&read_array[offset]), 1);
+        }
       }
       
       waveform->set_y_data(std::move(y_data));
