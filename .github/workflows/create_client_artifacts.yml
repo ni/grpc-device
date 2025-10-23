@@ -25,6 +25,10 @@ jobs:
     - name: Checkout Repo
       uses: actions/checkout@v4
 
+    - name: Initialize ni-apis submodule
+      run: |
+        git submodule update --init third_party/ni-apis
+        
     - name: Setup python3
       uses: actions/setup-python@v5
       with:
