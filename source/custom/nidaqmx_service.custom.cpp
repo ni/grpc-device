@@ -236,4 +236,18 @@ int32 CVICALLBACK SetWfmAttrCallback(
   }
 }
 
+::grpc::Status NiDAQmxService::ReadDigitalWaveforms(::grpc::ServerContext* context, const ReadDigitalWaveformsRequest* request, ReadDigitalWaveformsResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  
+  // TODO: Implement ReadDigitalWaveforms functionality
+  // For now, return an empty response with status 0
+  response->set_status(0);
+  response->set_samps_per_chan_read(0);
+  
+  return ::grpc::Status::OK;
+}
+
 }  // namespace nidaqmx_grpc
