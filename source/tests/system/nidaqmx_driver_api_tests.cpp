@@ -454,6 +454,23 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
+  ::grpc::Status read_digital_waveforms(
+      int32 number_of_samples_per_channel,
+      double timeout = 10.0,
+      WaveformAttributeMode waveform_attribute_mode = WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE,
+      ReadDigitalWaveformsResponse& response = ThrowawayResponse<ReadDigitalWaveformsResponse>::response())
+  {
+    ::grpc::ClientContext context;
+    ReadDigitalWaveformsRequest request;
+    set_request_session_name(request);
+    request.set_number_of_samples_per_channel(number_of_samples_per_channel);
+    request.set_timeout(timeout);
+    request.set_waveform_attribute_mode(waveform_attribute_mode);
+    auto status = stub()->ReadDigitalWaveforms(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
   ::grpc::Status write_analog_f64(
       const std::vector<double>& data,
       WriteAnalogF64Response& response)
@@ -1701,6 +1718,153 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertie
       EXPECT_LE(sample, 3.0);
     }
   }
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithNoAttributeMode_ReturnsWaveformData)
+{
+  const auto NUM_SAMPLES = 100;
+  const auto TIMEOUT = 10.0;
+  CreateDIChanResponse create_channel_response;
+  auto create_channel_status = create_di_chan(create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  ReadDigitalWaveformsResponse read_response;
+  auto read_status = read_digital_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
+  stop_task();
+
+  EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(read_response.waveforms_size(), 1);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  
+  const auto& waveform = read_response.waveforms(0);
+  EXPECT_GT(waveform.signal_count(), 0);
+  EXPECT_EQ(static_cast<int32>(waveform.y_data().size()), NUM_SAMPLES * waveform.signal_count());
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingMode_ReturnsWaveformDataWithTimingInfo)
+{
+  const auto NUM_SAMPLES = 50;
+  const auto TIMEOUT = 10.0;
+  CreateDIChanResponse create_channel_response;
+  auto create_channel_status = create_di_chan(create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  auto timing_request = create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, NUM_SAMPLES);
+  CfgSampClkTimingResponse timing_response;
+  auto timing_status = cfg_samp_clk_timing(timing_request, timing_response);
+  EXPECT_SUCCESS(timing_status, timing_response);
+
+  start_task();
+  ReadDigitalWaveformsResponse read_response;
+  auto read_status = read_digital_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING, read_response);
+  stop_task();
+
+  EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(read_response.waveforms_size(), 1);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  
+  const auto& waveform = read_response.waveforms(0);
+  EXPECT_GT(waveform.signal_count(), 0);
+  EXPECT_EQ(static_cast<int32>(waveform.y_data().size()), NUM_SAMPLES * waveform.signal_count());
+  EXPECT_TRUE(waveform.has_t0());
+  
+  // Get current time in seconds since year 1 AD (Jan 1, 0001) - .NET DateTime epoch
+  const auto epoch_offset_year1_to_1970 = 62135596800LL;
+  auto now = std::chrono::duration_cast<std::chrono::seconds>(
+      std::chrono::system_clock::now().time_since_epoch()).count();
+  auto now_since_year1 = now + epoch_offset_year1_to_1970;
+  const auto& timestamp = waveform.t0();
+  EXPECT_NEAR(timestamp.seconds(), now_since_year1, 1);
+  EXPECT_NE(timestamp.fractional_seconds(), 0);
+  EXPECT_GT(waveform.dt(), 0.0);
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithExtendedPropertiesMode_ReturnsWaveformDataWithAttributes)
+{
+  const auto NUM_SAMPLES = 50;
+  const auto TIMEOUT = 10.0;
+  CreateDIChanResponse create_channel_response;
+  auto create_channel_status = create_di_chan(create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  ReadDigitalWaveformsResponse read_response;
+  auto read_status = read_digital_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES, read_response);
+  stop_task();
+
+  EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(read_response.waveforms_size(), 1);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  
+  const auto& waveform = read_response.waveforms(0);
+  EXPECT_GT(waveform.signal_count(), 0);
+  EXPECT_EQ(static_cast<int32>(waveform.y_data().size()), NUM_SAMPLES * waveform.signal_count());
+  EXPECT_GT(waveform.attributes_size(), 0);
+  
+  bool has_channel_name = false;
+  for (const auto& attr_pair : waveform.attributes()) {
+    const auto& attr_name = attr_pair.first;
+    const auto& attr_value = attr_pair.second;
+    
+    if (attr_name == "NI_ChannelName" && attr_value.has_string_value()) {
+      if (attr_value.string_value() == "di") {
+        has_channel_name = true;
+      }
+    }
+  }
+  EXPECT_TRUE(has_channel_name);
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingAndExtendedPropertiesMode_ReturnsWaveformDataWithTimingAndAttributes)
+{
+  const auto NUM_SAMPLES = 50;
+  const auto TIMEOUT = 10.0;
+  CreateDIChanResponse create_channel_response;
+  auto create_channel_status = create_di_chan(create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  auto timing_request = create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, NUM_SAMPLES);
+  CfgSampClkTimingResponse timing_response;
+  auto timing_status = cfg_samp_clk_timing(timing_request, timing_response);
+  EXPECT_SUCCESS(timing_status, timing_response);
+
+  const auto combined_mode = static_cast<WaveformAttributeMode>(
+    WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING | 
+    WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES);
+
+  start_task();
+  ReadDigitalWaveformsResponse read_response;
+  auto read_status = read_digital_waveforms(NUM_SAMPLES, TIMEOUT, combined_mode, read_response);
+  stop_task();
+
+  EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(read_response.waveforms_size(), 1);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  
+  const auto& waveform = read_response.waveforms(0);
+  EXPECT_GT(waveform.signal_count(), 0);
+  EXPECT_EQ(static_cast<int32>(waveform.y_data().size()), NUM_SAMPLES * waveform.signal_count());
+  EXPECT_TRUE(waveform.has_t0());
+  EXPECT_GT(waveform.dt(), 0.0);
+  EXPECT_GT(waveform.attributes_size(), 0);
+  
+  bool has_channel_name = false;
+  for (const auto& attr_pair : waveform.attributes()) {
+    const auto& attr_name = attr_pair.first;
+    const auto& attr_value = attr_pair.second;
+    
+    if (attr_name == "NI_ChannelName" && attr_value.has_string_value()) {
+      if (attr_value.string_value() == "di") {
+        has_channel_name = true;
+      }
+    }
+  }
+  EXPECT_TRUE(has_channel_name);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
