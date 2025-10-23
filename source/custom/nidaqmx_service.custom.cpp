@@ -106,6 +106,96 @@ int32 CVICALLBACK SetWfmAttrCallback(
   }
 }
 
+template<typename RequestType>
+::grpc::Status ParseWaveformAttributeMode(const RequestType* request, int32& waveform_attribute_mode)
+{
+  switch (request->waveform_attribute_mode_enum_case()) {
+    case RequestType::WaveformAttributeModeEnumCase::kWaveformAttributeMode: {
+      waveform_attribute_mode = static_cast<int32>(request->waveform_attribute_mode());
+      break;
+    }
+    case RequestType::WaveformAttributeModeEnumCase::kWaveformAttributeModeRaw: {
+      waveform_attribute_mode = static_cast<int32>(request->waveform_attribute_mode_raw());
+      break;
+    }
+    case RequestType::WaveformAttributeModeEnumCase::WAVEFORM_ATTRIBUTE_MODE_ENUM_NOT_SET: {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for waveform_attribute_mode was not specified or out of range");
+    }
+  }
+  return ::grpc::Status::OK;
+}
+
+void SetupTimingArrays(int32 waveform_attribute_mode, uInt32 num_channels,
+                      std::vector<int64>& t0_array, std::vector<int64>& dt_array,
+                      int64*& t0_ptr, int64*& dt_ptr, uInt32& timing_array_size)
+{
+  if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
+    t0_array.resize(num_channels, 0);
+    dt_array.resize(num_channels, 0);
+    t0_ptr = t0_array.data();
+    dt_ptr = dt_array.data();
+    timing_array_size = num_channels;
+  }
+}
+
+void SetupAnalogCallbackData(int32 waveform_attribute_mode, uInt32 num_channels,
+                            std::unique_ptr<WaveformCallbackData>& callback_data,
+                            DAQmxSetWfmAttrCallbackPtr& callback_ptr,
+                            ReadAnalogWaveformsResponse* response)
+{
+  if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES) {
+    callback_data = std::make_unique<WaveformCallbackData>(false);
+    callback_data->analog_waveforms.resize(num_channels);
+    callback_ptr = SetWfmAttrCallback;
+    
+    for (uInt32 i = 0; i < num_channels; ++i) {
+      callback_data->analog_waveforms[i] = response->mutable_waveforms(i);
+    }
+  }
+}
+
+void SetupDigitalCallbackData(int32 waveform_attribute_mode, uInt32 num_channels,
+                             std::unique_ptr<WaveformCallbackData>& callback_data,
+                             DAQmxSetWfmAttrCallbackPtr& callback_ptr,
+                             ReadDigitalWaveformsResponse* response)
+{
+  if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES) {
+    callback_data = std::make_unique<WaveformCallbackData>(true);
+    callback_data->digital_waveforms.resize(num_channels);
+    callback_ptr = SetWfmAttrCallback;
+    
+    for (uInt32 i = 0; i < num_channels; ++i) {
+      callback_data->digital_waveforms[i] = response->mutable_waveforms(i);
+    }
+  }
+}
+
+template<typename WaveformType>
+::grpc::Status ProcessWaveformTiming(int32 waveform_attribute_mode, uInt32 channel_index,
+                                    const std::vector<int64>& t0_array, const std::vector<int64>& dt_array,
+                                    WaveformType* waveform)
+{
+  if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
+    if (dt_array[channel_index] == 0) {
+      return ::grpc::Status(::grpc::FAILED_PRECONDITION, 
+        "Timing information requested but not available. Task must be configured with sample clock timing (e.g., CfgSampClkTiming) to provide timing information.");
+    }
+
+    // Convert from 100ns ticks (DAQmx format) to PrecisionTimestamp
+    // t0_array[i] contains 100ns ticks since Jan 1, 0001 (.NET DateTime epoch)
+    auto* t0 = waveform->mutable_t0();
+    const int64_t seconds = t0_array[channel_index] / TICKS_PER_SECOND;
+    const int64_t fractional_ticks = t0_array[channel_index] % TICKS_PER_SECOND;
+    
+    t0->set_seconds(seconds);
+    t0->set_fractional_seconds(fractional_ticks);
+
+    // Set sample interval (dt) - convert 100ns ticks to seconds
+    waveform->set_dt(static_cast<double>(dt_array[channel_index]) * TICKS_TO_SECONDS);
+  }
+  return ::grpc::Status::OK;
+}
+
 ::grpc::Status NiDAQmxService::ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task)
 {
   // This implementation assumes this method is always called on the same thread where the error occurred.
@@ -127,19 +217,9 @@ int32 CVICALLBACK SetWfmAttrCallback(
     const auto timeout = request->timeout();
     
     int32 waveform_attribute_mode;
-    switch (request->waveform_attribute_mode_enum_case()) {
-      case nidaqmx_grpc::ReadAnalogWaveformsRequest::WaveformAttributeModeEnumCase::kWaveformAttributeMode: {
-        waveform_attribute_mode = static_cast<int32>(request->waveform_attribute_mode());
-        break;
-      }
-      case nidaqmx_grpc::ReadAnalogWaveformsRequest::WaveformAttributeModeEnumCase::kWaveformAttributeModeRaw: {
-        waveform_attribute_mode = static_cast<int32>(request->waveform_attribute_mode_raw());
-        break;
-      }
-      case nidaqmx_grpc::ReadAnalogWaveformsRequest::WaveformAttributeModeEnumCase::WAVEFORM_ATTRIBUTE_MODE_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for waveform_attribute_mode was not specified or out of range");
-        break;
-      }
+    auto parse_status = ParseWaveformAttributeMode(request, waveform_attribute_mode);
+    if (!parse_status.ok()) {
+      return parse_status;
     }
 
     uInt32 num_channels = 0;
@@ -165,13 +245,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
     int64* dt_ptr = nullptr;
     uInt32 timing_array_size = 0;
     
-    if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
-      t0_array.resize(num_channels, 0);
-      dt_array.resize(num_channels, 0);
-      t0_ptr = t0_array.data();
-      dt_ptr = dt_array.data();
-      timing_array_size = num_channels;
-    }
+    SetupTimingArrays(waveform_attribute_mode, num_channels, t0_array, dt_array, t0_ptr, dt_ptr, timing_array_size);
 
     std::unique_ptr<WaveformCallbackData> callback_data;
     DAQmxSetWfmAttrCallbackPtr callback_ptr = nullptr;
@@ -180,15 +254,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
       response->add_waveforms();
     }
     
-    if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES) {
-      callback_data = std::make_unique<WaveformCallbackData>(false); // false = analog waveforms
-      callback_data->analog_waveforms.resize(num_channels);
-      callback_ptr = SetWfmAttrCallback;
-      
-      for (uInt32 i = 0; i < num_channels; ++i) {
-        callback_data->analog_waveforms[i] = response->mutable_waveforms(i);
-      }
-    }
+    SetupAnalogCallbackData(waveform_attribute_mode, num_channels, callback_data, callback_ptr, response);
 
     int32 samples_per_chan_read = 0;
     status = library_->InternalReadAnalogWaveformPerChan(
@@ -220,23 +286,9 @@ int32 CVICALLBACK SetWfmAttrCallback(
         y_data->Add(read_arrays[i][j]);
       }
 
-      if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
-        if (dt_array[i] == 0) {
-          return ::grpc::Status(::grpc::FAILED_PRECONDITION, 
-            "Timing information requested but not available. Task must be configured with sample clock timing (e.g., CfgSampClkTiming) to provide timing information.");
-        }
-
-        auto* t0 = waveform->mutable_t0();
-        // Convert from 100ns ticks (DAQmx format) to PrecisionTimestamp
-        // t0_array[i] contains 100ns ticks since Jan 1, 0001 (.NET DateTime epoch)
-        const int64_t seconds = t0_array[i] / TICKS_PER_SECOND;
-        const int64_t fractional_ticks = t0_array[i] % TICKS_PER_SECOND;
-        
-        t0->set_seconds(seconds);
-        t0->set_fractional_seconds(fractional_ticks);
-
-        // Set sample interval (dt) - convert 100ns ticks to seconds
-        waveform->set_dt(static_cast<double>(dt_array[i]) * TICKS_TO_SECONDS);
+      auto timing_status = ProcessWaveformTiming(waveform_attribute_mode, i, t0_array, dt_array, waveform);
+      if (!timing_status.ok()) {
+        return timing_status;
       }
     }
 
@@ -262,19 +314,9 @@ int32 CVICALLBACK SetWfmAttrCallback(
     const auto timeout = request->timeout();
     
     int32 waveform_attribute_mode;
-    switch (request->waveform_attribute_mode_enum_case()) {
-      case nidaqmx_grpc::ReadDigitalWaveformsRequest::WaveformAttributeModeEnumCase::kWaveformAttributeMode: {
-        waveform_attribute_mode = static_cast<int32>(request->waveform_attribute_mode());
-        break;
-      }
-      case nidaqmx_grpc::ReadDigitalWaveformsRequest::WaveformAttributeModeEnumCase::kWaveformAttributeModeRaw: {
-        waveform_attribute_mode = static_cast<int32>(request->waveform_attribute_mode_raw());
-        break;
-      }
-      case nidaqmx_grpc::ReadDigitalWaveformsRequest::WaveformAttributeModeEnumCase::WAVEFORM_ATTRIBUTE_MODE_ENUM_NOT_SET: {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for waveform_attribute_mode was not specified or out of range");
-        break;
-      }
+    auto parse_status = ParseWaveformAttributeMode(request, waveform_attribute_mode);
+    if (!parse_status.ok()) {
+      return parse_status;
     }
 
     uInt32 num_channels = 0;
@@ -307,13 +349,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
     int64* dt_ptr = nullptr;
     uInt32 timing_array_size = 0;
     
-    if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
-      t0_array.resize(num_channels, 0);
-      dt_array.resize(num_channels, 0);
-      t0_ptr = t0_array.data();
-      dt_ptr = dt_array.data();
-      timing_array_size = num_channels;
-    }
+    SetupTimingArrays(waveform_attribute_mode, num_channels, t0_array, dt_array, t0_ptr, dt_ptr, timing_array_size);
 
     std::unique_ptr<WaveformCallbackData> callback_data;
     DAQmxSetWfmAttrCallbackPtr callback_ptr = nullptr;
@@ -322,17 +358,8 @@ int32 CVICALLBACK SetWfmAttrCallback(
       response->add_waveforms();
     }
     
-    if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES) {
-      callback_data = std::make_unique<WaveformCallbackData>(true); // true = digital waveforms
-      callback_data->digital_waveforms.resize(num_channels);
-      callback_ptr = SetWfmAttrCallback;
-      
-      for (uInt32 i = 0; i < num_channels; ++i) {
-        callback_data->digital_waveforms[i] = response->mutable_waveforms(i);
-      }
-    }
+    SetupDigitalCallbackData(waveform_attribute_mode, num_channels, callback_data, callback_ptr, response);
 
-    // Array to get actual bytes per channel
     std::vector<uInt32> bytes_per_chan_array(num_channels);
     
     int32 samples_per_chan_read = 0;
@@ -360,14 +387,12 @@ int32 CVICALLBACK SetWfmAttrCallback(
       return ConvertApiErrorStatusForTaskHandle(context, status, task);
     }
 
-    // Extract data for each channel
     for (uInt32 i = 0; i < num_channels; ++i) {
       auto* waveform = response->mutable_waveforms(i);
       
       const uInt32 bytes_per_chan = bytes_per_chan_array[i];
       waveform->set_signal_count(static_cast<int32>(bytes_per_chan));
 
-      // Extract data for this channel
       // Data layout: samples_per_chan_read x num_channels x max_bytes_per_chan
       std::string y_data;
       y_data.reserve(samples_per_chan_read * bytes_per_chan);
@@ -379,23 +404,9 @@ int32 CVICALLBACK SetWfmAttrCallback(
       
       waveform->set_y_data(std::move(y_data));
 
-      if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
-        if (dt_array[i] == 0) {
-          return ::grpc::Status(::grpc::FAILED_PRECONDITION, 
-            "Timing information requested but not available. Task must be configured with sample clock timing (e.g., CfgSampClkTiming) to provide timing information.");
-        }
-
-        auto* t0 = waveform->mutable_t0();
-        // Convert from 100ns ticks (DAQmx format) to PrecisionTimestamp
-        // t0_array[i] contains 100ns ticks since Jan 1, 0001 (.NET DateTime epoch)
-        const int64_t seconds = t0_array[i] / TICKS_PER_SECOND;
-        const int64_t fractional_ticks = t0_array[i] % TICKS_PER_SECOND;
-        
-        t0->set_seconds(seconds);
-        t0->set_fractional_seconds(fractional_ticks);
-
-        // Set sample interval (dt) - convert 100ns ticks to seconds
-        waveform->set_dt(static_cast<double>(dt_array[i]) * TICKS_TO_SECONDS);
+      auto timing_status = ProcessWaveformTiming(waveform_attribute_mode, i, t0_array, dt_array, waveform);
+      if (!timing_status.ok()) {
+        return timing_status;
       }
     }
 

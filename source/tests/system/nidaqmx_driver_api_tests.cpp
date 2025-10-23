@@ -1244,6 +1244,17 @@ class NiDAQmxDriverApiTests : public Test {
     EXPECT_THAT(data, Each(Not(Gt(max_val))));
   }
 
+  int64_t get_current_time_since_year1_ad() const
+  {
+    // Get current time in seconds since year 1 AD (Jan 1, 0001) - .NET DateTime epoch
+    // This matches the format used by DAQmxInternalReadAnalogWaveformPerChan
+    // From year 1 AD to 1970-01-01 is 719162 days * 24 * 3600 = 62135596800 seconds
+    constexpr auto epoch_offset_year1_to_1970 = 62135596800LL;
+    auto now = std::chrono::duration_cast<std::chrono::seconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();
+    return now + epoch_offset_year1_to_1970;
+  }
+
   DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<NiDAQmx::Stub> nidaqmx_stub_;
@@ -1616,13 +1627,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingMode_ReturnsWaveform
     EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
     EXPECT_TRUE(waveform.has_t0());
         
-    // Get current time in seconds since year 1 AD (Jan 1, 0001) - .NET DateTime epoch
-    // This matches the format used by DAQmxInternalReadAnalogWaveformPerChan
-    // From year 1 AD to 1970-01-01 is 719162 days * 24 * 3600 = 62135596800 seconds
-    const auto epoch_offset_year1_to_1970 = 62135596800LL;
-    auto now = std::chrono::duration_cast<std::chrono::seconds>(
-        std::chrono::system_clock::now().time_since_epoch()).count();
-    auto now_since_year1 = now + epoch_offset_year1_to_1970;
+    auto now_since_year1 = get_current_time_since_year1_ad();
     const auto& timestamp = waveform.t0();
     EXPECT_NEAR(timestamp.seconds(), now_since_year1, 1);
     EXPECT_NE(timestamp.fractional_seconds(), 0);
@@ -1769,12 +1774,10 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithNoAttributeMode_ReturnsWa
   EXPECT_EQ(read_response.waveforms_size(), 2); // Two channels: di_port0 and di_port0_lines45
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
   
-  // Verify first channel (port0 with 3 lines: 0,1,2)
   const auto& waveform0 = read_response.waveforms(0);
   EXPECT_EQ(waveform0.signal_count(), 3); // 3 lines in port0 (line0:2 means 0,1,2)
   EXPECT_EQ(static_cast<int32>(waveform0.y_data().size()), NUM_SAMPLES * 3); // 3 bytes per sample
   
-  // Verify second channel (port0 with 2 lines: 4,5)  
   const auto& waveform1 = read_response.waveforms(1);
   EXPECT_EQ(waveform1.signal_count(), 2); // 2 lines in port0 (line4:5 means 4,5)
   EXPECT_EQ(static_cast<int32>(waveform1.y_data().size()), NUM_SAMPLES * 2); // 2 bytes per sample
@@ -1803,21 +1806,15 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingMode_ReturnsWavefor
   EXPECT_EQ(read_response.waveforms_size(), 2); // Two channels: di_port0 and di_port0_lines45
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
   
-  // Get current time in seconds since year 1 AD (Jan 1, 0001) - .NET DateTime epoch
-  const auto epoch_offset_year1_to_1970 = 62135596800LL;
-  auto now = std::chrono::duration_cast<std::chrono::seconds>(
-      std::chrono::system_clock::now().time_since_epoch()).count();
-  auto now_since_year1 = now + epoch_offset_year1_to_1970;
+  auto now_since_year1 = get_current_time_since_year1_ad();
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
     
-    // Verify signal counts for each channel
     int expected_signal_count = (i == 0) ? 3 : 2; // port0 lines 0:2 has 3 lines, lines 4:5 has 2 lines
     EXPECT_EQ(waveform.signal_count(), expected_signal_count);
     EXPECT_EQ(static_cast<int32>(waveform.y_data().size()), NUM_SAMPLES * expected_signal_count);
     
-    // Verify timing information
     EXPECT_TRUE(waveform.has_t0());
     const auto& timestamp = waveform.t0();
     EXPECT_NEAR(timestamp.seconds(), now_since_year1, 1);
@@ -1847,25 +1844,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithExtendedPropertiesMode_Re
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
     
-    // Verify signal counts for each channel
     int expected_signal_count = (i == 0) ? 3 : 2; // port0 lines 0:2 has 3 lines, lines 4:5 has 2 lines
     EXPECT_EQ(waveform.signal_count(), expected_signal_count);
     EXPECT_EQ(static_cast<int32>(waveform.y_data().size()), NUM_SAMPLES * expected_signal_count);
     EXPECT_GT(waveform.attributes_size(), 0);
     
-    // Verify channel names
     std::string expected_channel_name = (i == 0) ? "di_port0" : "di_port0_lines45";
     bool has_channel_name = false;
     for (const auto& attr_pair : waveform.attributes()) {
       const auto& attr_name = attr_pair.first;
       const auto& attr_value = attr_pair.second;
-      
-      // Debug: print all attributes to see what's available
-      std::cout << "Channel " << i << " attribute: " << attr_name;
-      if (attr_value.has_string_value()) {
-        std::cout << " = \"" << attr_value.string_value() << "\"";
-      }
-      std::cout << std::endl;
       
       if (attr_name == "NI_ChannelName" && attr_value.has_string_value()) {
         if (attr_value.string_value() == expected_channel_name) {
@@ -1907,19 +1895,15 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingAndExtendedProperti
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
     
-    // Verify signal counts for each channel
     int expected_signal_count = (i == 0) ? 3 : 2; // port0 lines 0:2 has 3 lines, lines 4:5 has 2 lines
     EXPECT_EQ(waveform.signal_count(), expected_signal_count);
     EXPECT_EQ(static_cast<int32>(waveform.y_data().size()), NUM_SAMPLES * expected_signal_count);
     
-    // Verify timing information
     EXPECT_TRUE(waveform.has_t0());
     EXPECT_GT(waveform.dt(), 0.0);
     
-    // Verify attributes
     EXPECT_GT(waveform.attributes_size(), 0);
     
-    // Verify channel names
     std::string expected_channel_name = (i == 0) ? "di_port0" : "di_port0_lines45";
     bool has_channel_name = false;
     for (const auto& attr_pair : waveform.attributes()) {
