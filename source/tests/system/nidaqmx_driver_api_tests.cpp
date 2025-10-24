@@ -487,7 +487,7 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     ReadDigitalWaveformsRequest request;
     set_request_session_name(request);
-    request.set_number_of_samples_per_channel(number_of_samples_per_channel);
+    request.set_num_samps_per_chan(number_of_samples_per_channel);
     request.set_timeout(timeout);
     request.set_waveform_attribute_mode(waveform_attribute_mode);
     auto status = stub()->ReadDigitalWaveforms(&context, request, &response);
@@ -1843,7 +1843,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingMode_ReturnsWavefor
   EXPECT_EQ(read_response.waveforms_size(), 2); // Two channels: di_port0 and di_port0_lines45
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
   
-  auto now_since_year1 = get_current_time_since_year1_ad();
+  auto now_since_year1 = get_seconds_since_year1();
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);

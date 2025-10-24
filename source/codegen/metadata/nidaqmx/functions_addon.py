@@ -87,7 +87,7 @@ functions_override_metadata = {
                 'ctypes_data_type': 'ctypes.c_int',
                 'direction': 'in',
                 'is_optional_in_python': False,
-                'name': 'numberOfSamplesPerChannel',
+                'name': 'numSampsPerChan',
                 'python_data_type': 'int',
                 'python_description': '',
                 'python_type_annotation': 'int',
