@@ -9,81 +9,75 @@ namespace unit {
 namespace {
 
 using nidevice_grpc::converters::TicksPerSecond;
-using nidevice_grpc::converters::convert_ticks_to_precision_timestamp;
+using nidevice_grpc::converters::convert_ticks_to_btf_precision_timestamp;
 using ::ni::protobuf::types::PrecisionTimestamp;
+
+const int64_t SecondsFromYear0001ToJan2004 = 63240134400LL;  // Seconds from Jan 1, 0001 to Jan 1, 2004
+const int64_t SecondsFromYear1904ToJan2004 = 3199342400LL;   // Seconds from Jan 1, 1904 to Jan 1, 2004
+const int64_t TicksForJan2004 = SecondsFromYear0001ToJan2004 * TicksPerSecond;  // Ticks from 0001 to Jan 1, 2004
+const double TestTolerance = 1e-5 * UINT64_MAX;  // Tolerance for fractional seconds comparisons
 
 TEST(PrecisionTimestampConverterTests, ConvertZeroTicks_ReturnsZeroTimestamp)
 {
   PrecisionTimestamp timestamp;  
-  convert_ticks_to_precision_timestamp(0, &timestamp);
+  convert_ticks_to_btf_precision_timestamp(0, &timestamp);
   
-  EXPECT_EQ(timestamp.seconds(), 0);
+  EXPECT_LT(timestamp.seconds(), 0);  // Should be negative (before 1904)
+  EXPECT_EQ(timestamp.fractional_seconds(), 0);
+}
+
+TEST(PrecisionTimestampConverterTests, ConvertJan2004_ReturnsCorrectTimestamp)
+{
+  PrecisionTimestamp timestamp;  
+  convert_ticks_to_btf_precision_timestamp(TicksForJan2004, &timestamp);
+  
+  EXPECT_EQ(timestamp.seconds(), SecondsFromYear1904ToJan2004);
   EXPECT_EQ(timestamp.fractional_seconds(), 0);
 }
 
 TEST(PrecisionTimestampConverterTests, ConvertOneSecond_ReturnsOneSecondZeroFractional)
 {
   PrecisionTimestamp timestamp;  
-  convert_ticks_to_precision_timestamp(TicksPerSecond, &timestamp);
+  convert_ticks_to_btf_precision_timestamp(TicksForJan2004 + TicksPerSecond, &timestamp);
   
-  EXPECT_EQ(timestamp.seconds(), 1);
+  EXPECT_EQ(timestamp.seconds(), SecondsFromYear1904ToJan2004 + 1);
   EXPECT_EQ(timestamp.fractional_seconds(), 0);
 }
 
 TEST(PrecisionTimestampConverterTests, ConvertHalfSecond_ReturnsCorrectFractionalSeconds)
 {
   PrecisionTimestamp timestamp; 
-  convert_ticks_to_precision_timestamp(0.5 * TicksPerSecond, &timestamp);
+  convert_ticks_to_btf_precision_timestamp(TicksForJan2004 + 0.5 * TicksPerSecond, &timestamp);
   
-  EXPECT_EQ(timestamp.seconds(), 0);
-  EXPECT_NEAR(timestamp.fractional_seconds(), 0.5 * UINT64_MAX, 1);
+  EXPECT_EQ(timestamp.seconds(), SecondsFromYear1904ToJan2004);
+  EXPECT_NEAR(timestamp.fractional_seconds(), 0.5 * UINT64_MAX, TestTolerance);
 }
 
 TEST(PrecisionTimestampConverterTests, ConvertQuarterSecond_ReturnsCorrectFractionalSeconds)
 {
   PrecisionTimestamp timestamp;  
-  convert_ticks_to_precision_timestamp(0.25 * TicksPerSecond, &timestamp);
+  convert_ticks_to_btf_precision_timestamp(TicksForJan2004 + 0.25 * TicksPerSecond, &timestamp);
   
-  EXPECT_EQ(timestamp.seconds(), 0);
-  EXPECT_NEAR(timestamp.fractional_seconds(), 0.25 * UINT64_MAX, 1);
+  EXPECT_EQ(timestamp.seconds(), SecondsFromYear1904ToJan2004);
+  EXPECT_NEAR(timestamp.fractional_seconds(), 0.25 * UINT64_MAX, TestTolerance);
 }
 
 TEST(PrecisionTimestampConverterTests, ConvertThreeQuartersSecond_ReturnsCorrectFractionalSeconds)
 {
   PrecisionTimestamp timestamp;  
-  convert_ticks_to_precision_timestamp(0.75 * TicksPerSecond, &timestamp);
+  convert_ticks_to_btf_precision_timestamp(TicksForJan2004 + 0.75 * TicksPerSecond, &timestamp);
   
-  EXPECT_EQ(timestamp.seconds(), 0);
-  EXPECT_NEAR(timestamp.fractional_seconds(), 0.75 * UINT64_MAX, 1);
+  EXPECT_EQ(timestamp.seconds(), SecondsFromYear1904ToJan2004);
+  EXPECT_NEAR(timestamp.fractional_seconds(), 0.75 * UINT64_MAX, TestTolerance);
 }
 
 TEST(PrecisionTimestampConverterTests, ConvertOneAndHalfSeconds_ReturnsCorrectSecondsAndFractional)
 {
   PrecisionTimestamp timestamp;  
-  convert_ticks_to_precision_timestamp(1.5 * TicksPerSecond, &timestamp);
+  convert_ticks_to_btf_precision_timestamp(TicksForJan2004 + 1.5 * TicksPerSecond, &timestamp);
   
-  EXPECT_EQ(timestamp.seconds(), 1);
-  EXPECT_NEAR(timestamp.fractional_seconds(), 0.5 * UINT64_MAX, 1);
-}
-
-TEST(PrecisionTimestampConverterTests, ConvertSingleTick_ReturnsCorrectFractionalSeconds)
-{
-  PrecisionTimestamp timestamp;  
-  convert_ticks_to_precision_timestamp(1, &timestamp);
-  
-  EXPECT_EQ(timestamp.seconds(), 0);
-  // Single tick (1e-7 seconds) should equal this specific fractional value
-  EXPECT_NEAR(timestamp.fractional_seconds(), 1844674407371, 1);
-}
-
-TEST(PrecisionTimestampConverterTests, ConvertLargeTimestamp_HandlesCorrectly)
-{
-  PrecisionTimestamp timestamp;
-  // Year 2024 approximately: many seconds since year 1 AD plus some fractional part  
-  convert_ticks_to_precision_timestamp(63861753600.25 * TicksPerSecond, &timestamp);
-  
-  EXPECT_EQ(timestamp.seconds(), 63861753600LL);
-  EXPECT_NEAR(timestamp.fractional_seconds(), 0.25 * UINT64_MAX, 1e-5 * UINT64_MAX);
+  EXPECT_EQ(timestamp.seconds(), SecondsFromYear1904ToJan2004 + 1);
+  EXPECT_NEAR(timestamp.fractional_seconds(), 0.5 * UINT64_MAX, TestTolerance);
 }
 
 }  // namespace

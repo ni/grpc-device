@@ -341,6 +341,7 @@ inline void convert_to_grpc(const SmtSpectrumInfoType& input, nidevice_grpc::Smt
 }
 
 const int64 SecondsFromCVI1904EpochTo1970Epoch = 2082844800LL;
+const int64 SecondsFrom0001EpochTo1904Epoch = 60040792000LL;  // Seconds from Jan 1, 0001 to Jan 1, 1904
 const double TwoToSixtyFour = (double)(1 << 31) * (double)(1 << 31) * (double)(1 << 2);
 const double NanosecondsPerSecond = 1000000000.0;
 const int64 TicksPerSecond = 1e7; // each tick is 100ns
@@ -371,13 +372,16 @@ inline CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& valu
   return cviTime;
 }
 
-// Convert ticks (100ns since Jan 1, 0001) to PrecisionTimestamp
-inline void convert_ticks_to_precision_timestamp(int64 ticks, ::ni::protobuf::types::PrecisionTimestamp* timestamp)
+// Convert ticks to PrecisionTimestamp
+// ticks are 100ns each, and are relative to an epoch of Jan 1, 0001
+// Precision Timestamp has seconds and fractions of seconds at 2^-64 resolution, relative to an epoch of January 1, 1904.
+inline void convert_ticks_to_btf_precision_timestamp(int64 ticks, ::ni::protobuf::types::PrecisionTimestamp* timestamp)
 {
-  const double seconds = static_cast<double>(ticks) * SecondsPerTick;
-  const int64 seconds_int = static_cast<int64>(std::floor(seconds));
+  const double seconds_since_0001 = static_cast<double>(ticks) * SecondsPerTick;
+  const double seconds_since_1904 = seconds_since_0001 - SecondsFrom0001EpochTo1904Epoch;
+  const int64 seconds_int = static_cast<int64>(std::floor(seconds_since_1904));
   timestamp->set_seconds(seconds_int);
-  const double fractional_seconds = std::abs(seconds - static_cast<double>(seconds_int));
+  const double fractional_seconds = std::abs(seconds_since_1904 - static_cast<double>(seconds_int));
   const uint64_t fractional_seconds_uint = static_cast<uint64_t>(fractional_seconds * UINT64_MAX);
   timestamp->set_fractional_seconds(fractional_seconds_uint);
 }
