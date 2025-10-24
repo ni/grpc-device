@@ -93,6 +93,10 @@ class _ArtifactLocations:
         return self.repo_root / "third_party" / "ni-apis" / "ni" / "grpcdevice" / "v1"
 
     @property
+    def protobuftypes_protos(self) -> Path:
+        return self.repo_root / "third_party" / "ni-apis" / "ni" / "protobuf" / "types"
+
+    @property
     def metadata_dir(self) -> Path:
         return self.repo_root / "source" / "codegen" / "metadata"
 
@@ -126,6 +130,9 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
         copy2(file, proto_path)
 
     for file in artifact_locations.grpcdevice_protos.glob("*.proto"):
+        copy2(file, proto_path)
+
+    for file in artifact_locations.protobuftypes_protos.glob("*.proto"):
         copy2(file, proto_path)
 
     for file in _get_release_proto_files(artifact_locations, readiness):

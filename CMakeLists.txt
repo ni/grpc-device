@@ -771,6 +771,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/ni_fake_non_ivi_service_tests.cpp"
     "source/tests/unit/ni_fake_service_tests.cpp"
     "source/tests/unit/nimxlc_terminal_adaptor_converters_tests.cpp"
+    "source/tests/unit/precision_timestamp_converter_tests.cpp"
     "source/tests/unit/shared_library_tests.cpp"
     "source/tests/unit/syscfg_library_tests.cpp"
     "source/tests/unit/syscfg_resource_accessor_tests.cpp"

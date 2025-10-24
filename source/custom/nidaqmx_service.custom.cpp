@@ -2,23 +2,22 @@
 #include <vector>
 #include <memory>
 #include <cstdint>
+#include <server/converters.h>
 #include "NIDAQmxInternalWaveform.h"
 
 namespace nidaqmx_grpc {
 
-constexpr int64 TICKS_PER_SECOND = 10000000; // 100ns ticks per second
-constexpr double TICKS_TO_SECONDS = 1e-7; // Convert 100ns ticks to seconds
+using nidevice_grpc::converters::convert_to_grpc;
+using nidevice_grpc::converters::convert_ticks_to_precision_timestamp;
+using nidevice_grpc::converters::SecondsPerTick;
+using google::protobuf::RepeatedPtrField;
+using ::ni::protobuf::types::DoubleAnalogWaveform;
 
 // Returns true if it's safe to use outputs of a method with the given status.
 inline bool status_ok(int32 status)
 {
   return status >= 0;
 }
-
-// Callback data structure to pass waveform pointers to the callback
-struct WaveformCallbackData {
-  std::vector<::ni::protobuf::types::DoubleAnalogWaveform*> waveforms;
-};
 
 // Callback function for setting waveform attributes
 int32 CVICALLBACK SetWfmAttrCallback(
@@ -30,12 +29,12 @@ int32 CVICALLBACK SetWfmAttrCallback(
     void* callback_data)
 {
   try {
-    const auto* data = static_cast<const WaveformCallbackData*>(callback_data);
-    if (!data || channel_index >= data->waveforms.size()) {
+    auto* waveforms = static_cast<RepeatedPtrField<DoubleAnalogWaveform>*>(callback_data);
+    if (!waveforms || channel_index >= static_cast<uInt32>(waveforms->size())) {
       return -1;
     }
 
-    auto* waveform = data->waveforms[channel_index];
+    auto* waveform = waveforms->Mutable(channel_index);
     if (!waveform) {
       return -1;
     }
@@ -74,7 +73,8 @@ int32 CVICALLBACK SetWfmAttrCallback(
       case DAQmx_Val_WfmAttrType_String:
         if (value_size_in_bytes > 0) {
           const char* str_val = static_cast<const char*>(value);
-          const std::string string_val(str_val, value_size_in_bytes - 1);
+          std::string string_val;
+          convert_to_grpc(std::string(str_val), &string_val);
           attr_value.set_string_value(string_val);
         } else {
           return -1;
@@ -88,7 +88,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
     (*attributes)[attribute_name] = attr_value;
     return 0;
   }
-  catch (...) {
+  catch (const std::exception&) {
     return -1;
   }
 }
@@ -110,7 +110,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
     auto task_grpc_session = request->task();
     TaskHandle task = session_repository_->access_session(task_grpc_session.name());
 
-    const auto number_of_samples_per_channel = request->number_of_samples_per_channel();
+    const auto number_of_samples_per_channel = request->num_samps_per_chan();
     const auto timeout = request->timeout();
     
     int32 waveform_attribute_mode;
@@ -136,7 +136,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
     }
 
     if (num_channels == 0) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No channels found in task");
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No channels to read");
     }
 
     std::vector<std::vector<float64>> read_arrays(num_channels);
@@ -160,21 +160,15 @@ int32 CVICALLBACK SetWfmAttrCallback(
       timing_array_size = num_channels;
     }
 
-    std::unique_ptr<WaveformCallbackData> callback_data;
     DAQmxSetWfmAttrCallbackPtr callback_ptr = nullptr;
-    
+
+    response->mutable_waveforms()->Reserve(num_channels);
     for (uInt32 i = 0; i < num_channels; ++i) {
       response->add_waveforms();
     }
     
     if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES) {
-      callback_data = std::make_unique<WaveformCallbackData>();
-      callback_data->waveforms.resize(num_channels);
       callback_ptr = SetWfmAttrCallback;
-      
-      for (uInt32 i = 0; i < num_channels; ++i) {
-        callback_data->waveforms[i] = response->mutable_waveforms(i);
-      }
     }
 
     int32 samples_per_chan_read = 0;
@@ -186,7 +180,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
         dt_ptr,
         timing_array_size,
         callback_ptr,
-        callback_data.get(),
+        response->mutable_waveforms(),
         read_array_ptrs.data(),
         num_channels,
         number_of_samples_per_channel,
@@ -203,27 +197,12 @@ int32 CVICALLBACK SetWfmAttrCallback(
       
       auto* y_data = waveform->mutable_y_data();
       y_data->Reserve(samples_per_chan_read);
-      for (int32 j = 0; j < samples_per_chan_read; ++j) {
-        y_data->Add(read_arrays[i][j]);
-      }
+      y_data->Add(read_arrays[i].data(), read_arrays[i].data() + samples_per_chan_read);
 
       if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
-        if (dt_array[i] == 0) {
-          return ::grpc::Status(::grpc::FAILED_PRECONDITION, 
-            "Timing information requested but not available. Task must be configured with sample clock timing (e.g., CfgSampClkTiming) to provide timing information.");
-        }
-
-        auto* t0 = waveform->mutable_t0();
-        // Convert from 100ns ticks (DAQmx format) to PrecisionTimestamp
-        // t0_array[i] contains 100ns ticks since Jan 1, 0001 (.NET DateTime epoch)
-        const int64_t seconds = t0_array[i] / TICKS_PER_SECOND;
-        const int64_t fractional_ticks = t0_array[i] % TICKS_PER_SECOND;
-        
-        t0->set_seconds(seconds);
-        t0->set_fractional_seconds(fractional_ticks);
-
-        // Set sample interval (dt) - convert 100ns ticks to seconds
-        waveform->set_dt(static_cast<double>(dt_array[i]) * TICKS_TO_SECONDS);
+        auto* waveform_t0 = waveform->mutable_t0();
+        convert_ticks_to_precision_timestamp(t0_array[i], waveform_t0);
+        waveform->set_dt(static_cast<double>(dt_array[i]) * SecondsPerTick);
       }
     }
 

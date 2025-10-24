@@ -12415,13 +12415,13 @@ write_to_teds_from_file(const StubPtr& stub, const std::string& physical_channel
 }
 
 ReadAnalogWaveformsResponse
-read_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& number_of_samples_per_channel, const double& timeout, const simple_variant<WaveformAttributeMode, pb::int32>& waveform_attribute_mode)
+read_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<WaveformAttributeMode, pb::int32>& waveform_attribute_mode)
 {
   ::grpc::ClientContext context;
 
   auto request = ReadAnalogWaveformsRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_number_of_samples_per_channel(number_of_samples_per_channel);
+  request.set_num_samps_per_chan(num_samps_per_chan);
   request.set_timeout(timeout);
   const auto waveform_attribute_mode_ptr = waveform_attribute_mode.get_if<WaveformAttributeMode>();
   const auto waveform_attribute_mode_raw_ptr = waveform_attribute_mode.get_if<pb::int32>();
