@@ -132,8 +132,10 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
     for file in artifact_locations.grpcdevice_protos.glob("*.proto"):
         copy2(file, proto_path)
 
+    protobuf_types_path = proto_path / "ni" / "protobuf" / "types"
+    protobuf_types_path.mkdir(parents=True, exist_ok=True)
     for file in artifact_locations.protobuftypes_protos.glob("*.proto"):
-        copy2(file, proto_path)
+        copy2(file, protobuf_types_path)
 
     for file in _get_release_proto_files(artifact_locations, readiness):
         copy2(file, proto_path)
