@@ -44,39 +44,6 @@ TEST(PrecisionTimestampConverterTests, ConvertOneSecondOfTicks_ReturnsOneSecond)
   EXPECT_EQ(timestamp.fractional_seconds(), 0);
 }
 
-// Parameterized test for fractional seconds
-struct FractionalSecondsTestParam {
-  double fraction;
-  int64_t ticks_offset;
-  uint64_t expected_fractional_seconds;
-  std::string description;
-};
-
-class PrecisionTimestampConverterFractionalSecondsTests : public ::testing::TestWithParam<FractionalSecondsTestParam> {};
-
-TEST_P(PrecisionTimestampConverterFractionalSecondsTests, ConvertFractionalSeconds_ReturnsCorrectFractionalSeconds)
-{
-  const auto& param = GetParam();
-  PrecisionTimestamp timestamp;
-  convert_dot_net_daqmx_ticks_to_btf_precision_timestamp(EpochTicks + param.ticks_offset, &timestamp);
-
-  EXPECT_EQ(timestamp.seconds(), 0) << "Failed for " << param.description;
-  EXPECT_EQ(timestamp.fractional_seconds(), param.expected_fractional_seconds) << "Failed for " << param.description;
-}
-
-INSTANTIATE_TEST_SUITE_P(
-  FractionalSecondsTests,
-  PrecisionTimestampConverterFractionalSecondsTests,
-  ::testing::Values(
-    FractionalSecondsTestParam{0.25, DotNetTicksPerSecond / 4, static_cast<uint64_t>(0.25 * TwoToSixtyFour), "quarter second"},
-    FractionalSecondsTestParam{0.5, DotNetTicksPerSecond / 2, static_cast<uint64_t>(0.5 * TwoToSixtyFour), "half second"},
-    FractionalSecondsTestParam{0.75, DotNetTicksPerSecond / 2 + DotNetTicksPerSecond / 4, static_cast<uint64_t>(0.75 * TwoToSixtyFour), "three quarters second"},
-    FractionalSecondsTestParam{0.25, 2500000, 0x4000000000000000ULL, "quarter second (literal)"},
-    FractionalSecondsTestParam{0.5, 5000000, 0x8000000000000000ULL, "half second (literal)"},
-    FractionalSecondsTestParam{0.75, 7500000, 0xC000000000000000ULL, "three quarters second (literal)"}
-  )
-);
-
 // Parameterized test for seconds and fractional combinations
 struct SecondsAndFractionalTestParam {
   int64_t seconds;
@@ -101,7 +68,15 @@ INSTANTIATE_TEST_SUITE_P(
   SecondsAndFractionalTests,
   PrecisionTimestampConverterSecondsAndFractionalTests,
   ::testing::Values(
-    SecondsAndFractionalTestParam{1, 0.5, 1 * DotNetTicksPerSecond + DotNetTicksPerSecond / 2, "one and half seconds"}
+    SecondsAndFractionalTestParam{0, 0.25, DotNetTicksPerSecond / 4, "quarter second"},
+    SecondsAndFractionalTestParam{0, 0.5, DotNetTicksPerSecond / 2, "half second"},
+    SecondsAndFractionalTestParam{0, 0.75, DotNetTicksPerSecond / 2 + DotNetTicksPerSecond / 4, "three quarters second"},
+    SecondsAndFractionalTestParam{0, 0.25, 2500000, "quarter second (literal)"},
+    SecondsAndFractionalTestParam{0, 0.5, 5000000, "half second (literal)"},
+    SecondsAndFractionalTestParam{0, 0.75, 7500000, "three quarters second (literal)"},
+    SecondsAndFractionalTestParam{1, 0.5, 1 * DotNetTicksPerSecond + DotNetTicksPerSecond / 2, "one and half seconds"},
+    SecondsAndFractionalTestParam{2, 0.25, 2 * DotNetTicksPerSecond + DotNetTicksPerSecond / 4, "two and quarter seconds"},
+    SecondsAndFractionalTestParam{3, 0.75, 3 * DotNetTicksPerSecond + DotNetTicksPerSecond / 2 + DotNetTicksPerSecond / 4, "three and three quarters seconds"}
   )
 );
 

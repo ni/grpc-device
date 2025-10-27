@@ -196,7 +196,6 @@ int32 CVICALLBACK SetWfmAttrCallback(
       auto* waveform = response->mutable_waveforms(i);
       
       auto* y_data = waveform->mutable_y_data();
-      y_data->Reserve(samples_per_chan_read);
       y_data->Add(read_arrays[i].data(), read_arrays[i].data() + samples_per_chan_read);
 
       if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
