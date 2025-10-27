@@ -71,12 +71,40 @@ INSTANTIATE_TEST_SUITE_P(
     SecondsAndFractionalTestParam{0, 0.25, DotNetTicksPerSecond / 4, "quarter second"},
     SecondsAndFractionalTestParam{0, 0.5, DotNetTicksPerSecond / 2, "half second"},
     SecondsAndFractionalTestParam{0, 0.75, DotNetTicksPerSecond / 2 + DotNetTicksPerSecond / 4, "three quarters second"},
-    SecondsAndFractionalTestParam{0, 0.25, 2500000, "quarter second (literal)"},
-    SecondsAndFractionalTestParam{0, 0.5, 5000000, "half second (literal)"},
-    SecondsAndFractionalTestParam{0, 0.75, 7500000, "three quarters second (literal)"},
     SecondsAndFractionalTestParam{1, 0.5, 1 * DotNetTicksPerSecond + DotNetTicksPerSecond / 2, "one and half seconds"},
     SecondsAndFractionalTestParam{2, 0.25, 2 * DotNetTicksPerSecond + DotNetTicksPerSecond / 4, "two and quarter seconds"},
     SecondsAndFractionalTestParam{3, 0.75, 3 * DotNetTicksPerSecond + DotNetTicksPerSecond / 2 + DotNetTicksPerSecond / 4, "three and three quarters seconds"}
+  )
+);
+
+// Parameterized test for literal tick values
+struct LiteralTestParam {
+  int64_t dot_net_ticks;
+  uint64_t btf_fractional_ticks;
+  std::string description;
+};
+
+class PrecisionTimestampConverterLiteralTests : public ::testing::TestWithParam<LiteralTestParam> {};
+
+TEST_P(PrecisionTimestampConverterLiteralTests, ConvertLiteralTicks_ReturnsCorrectValues)
+{
+  const auto& param = GetParam();
+  PrecisionTimestamp timestamp;
+  convert_dot_net_daqmx_ticks_to_btf_precision_timestamp(EpochTicks + param.dot_net_ticks, &timestamp);
+
+  EXPECT_EQ(timestamp.seconds(), 0) << "Failed for " << param.description;
+  EXPECT_EQ(timestamp.fractional_seconds(), param.btf_fractional_ticks) << "Failed for " << param.description;
+}
+
+INSTANTIATE_TEST_SUITE_P(
+  LiteralTests,
+  PrecisionTimestampConverterLiteralTests,
+  ::testing::Values(
+    LiteralTestParam{0000000, 0x0000000000000000ULL, "zero fractional seconds"},
+    LiteralTestParam{2500000, 0x4000000000000000ULL, "quarter second"},
+    LiteralTestParam{5000000, 0x8000000000000000ULL, "half second"},
+    LiteralTestParam{7500000, 0xC000000000000000ULL, "three quarters second"},
+    LiteralTestParam{9999999, 0xFFFFFE5280D65800ULL, "99.99999% of a second"}
   )
 );
 
