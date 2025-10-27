@@ -3161,7 +3161,7 @@ dpd_cfg_apply_dpd_user_lookup_table(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 DPDCfgApplyDPDUserLookupTableInterleavedIQResponse
-dpd_cfg_apply_dpd_user_lookup_table_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& lut_input_powers, const std::vector<float>& lut_complex_gains, const pb::int32& array_size)
+dpd_cfg_apply_dpd_user_lookup_table_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<float>& lut_input_powers, const std::vector<float>& lut_complex_gains)
 {
   ::grpc::ClientContext context;
 
@@ -3170,7 +3170,6 @@ dpd_cfg_apply_dpd_user_lookup_table_interleaved_iq(const StubPtr& stub, const ni
   request.set_selector_string(selector_string);
   copy_array(lut_input_powers, request.mutable_lut_input_powers());
   copy_array(lut_complex_gains, request.mutable_lut_complex_gains());
-  request.set_array_size(array_size);
 
   auto response = DPDCfgApplyDPDUserLookupTableInterleavedIQResponse{};
 

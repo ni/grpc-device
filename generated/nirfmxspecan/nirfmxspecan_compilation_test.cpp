@@ -702,9 +702,9 @@ int32 DPDCfgApplyDPDUserLookupTable(niRFmxInstrHandle instrumentHandle, char sel
   return RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, lutComplexGains, arraySize);
 }
 
-int32 DPDCfgApplyDPDUserLookupTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGains[], int32 arraySize)
+int32 DPDCfgApplyDPDUserLookupTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGains[])
 {
-  return RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(lutComplexGains), arraySize/2);
+  return RFmxSpecAn_DPDCfgApplyDPDUserLookupTable(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(lutComplexGains));
 }
 
 int32 DPDCfgApplyDPDUserLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGainsI[], float32 lutComplexGainsQ[], int32 arraySize)

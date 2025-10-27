@@ -4841,7 +4841,6 @@ message DPDCfgApplyDPDUserLookupTableInterleavedIQRequest {
   string selector_string = 2;
   repeated float lut_input_powers = 3;
   repeated float lut_complex_gains = 4;
-  int32 array_size = 5;
 }
 
 message DPDCfgApplyDPDUserLookupTableInterleavedIQResponse {

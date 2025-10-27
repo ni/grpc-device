@@ -156,7 +156,7 @@ class NiRFmxSpecAnMockLibrary : public nirfmxspecan_grpc::NiRFmxSpecAnLibraryInt
   MOCK_METHOD(int32, DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], float32 dpdPolynomial[], int32 arraySize), (override));
   MOCK_METHOD(int32, DPDCfgApplyDPDUserDPDPolynomialSplit, (niRFmxInstrHandle instrumentHandle, char selectorString[], float32 dpdPolynomialI[], float32 dpdPolynomialQ[], int32 arraySize), (override));
   MOCK_METHOD(int32, DPDCfgApplyDPDUserLookupTable, (niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], NIComplexSingle lutComplexGains[], int32 arraySize), (override));
-  MOCK_METHOD(int32, DPDCfgApplyDPDUserLookupTableInterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGains[], int32 arraySize), (override));
+  MOCK_METHOD(int32, DPDCfgApplyDPDUserLookupTableInterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGains[]), (override));
   MOCK_METHOD(int32, DPDCfgApplyDPDUserLookupTableSplit, (niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGainsI[], float32 lutComplexGainsQ[], int32 arraySize), (override));
   MOCK_METHOD(int32, DPDCfgAveraging, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount), (override));
   MOCK_METHOD(int32, DPDCfgDPDModel, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 dpdModel), (override));
