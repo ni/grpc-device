@@ -9,8 +9,8 @@
 namespace nidaqmx_grpc {
 
 using nidevice_grpc::converters::convert_to_grpc;
-using nidevice_grpc::converters::convert_ticks_to_btf_precision_timestamp;
-using nidevice_grpc::converters::SecondsPerTick;
+using nidevice_grpc::converters::convert_dot_net_daqmx_ticks_to_btf_precision_timestamp;
+using nidevice_grpc::converters::DotNetTicksPerSecond;
 using google::protobuf::RepeatedPtrField;
 using ::ni::protobuf::types::DoubleAnalogWaveform;
 
@@ -286,12 +286,12 @@ template<typename WaveformType>
       auto* waveform = response->mutable_waveforms(i);
       
       auto* y_data = waveform->mutable_y_data();
-      y_data->Reserve(samples_per_chan_read);
       y_data->Add(read_arrays[i].data(), read_arrays[i].data() + samples_per_chan_read);
 
-      auto timing_status = ProcessWaveformTiming(waveform_attribute_mode, i, t0_array, dt_array, waveform);
-      if (!timing_status.ok()) {
-        return timing_status;
+      if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
+        auto* waveform_t0 = waveform->mutable_t0();
+        convert_dot_net_daqmx_ticks_to_btf_precision_timestamp(t0_array[i], waveform_t0);
+        waveform->set_dt(static_cast<double>(dt_array[i]) / DotNetTicksPerSecond);
       }
     }
 

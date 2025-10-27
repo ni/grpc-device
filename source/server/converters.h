@@ -11,6 +11,7 @@
 #include <utf8.h>
 
 #include <algorithm>
+#include <cmath>
 #include <limits>
 #include <numeric>
 #include <string>
@@ -341,11 +342,10 @@ inline void convert_to_grpc(const SmtSpectrumInfoType& input, nidevice_grpc::Smt
 }
 
 const int64 SecondsFromCVI1904EpochTo1970Epoch = 2082844800LL;
-const int64 SecondsFrom0001EpochTo1904Epoch = 60040792000LL;  // Seconds from Jan 1, 0001 to Jan 1, 1904
+const int64 SecondsFromDAQmx0001EpochToCVI1904Epoch = -((static_cast<int64>(0xfffffff2) << 32) | 0x0493b980); // extracted from NITYPES_ABSOLUTETIME_EPOCH_BIAS_FROM_0001 in ni-central/src/platform_services/abstractions/niatomicd/nitypes/source/nitypes/time/AbsoluteTime.h
 const double TwoToSixtyFour = (double)(1 << 31) * (double)(1 << 31) * (double)(1 << 2);
 const double NanosecondsPerSecond = 1000000000.0;
-const int64 TicksPerSecond = 1e7; // each tick is 100ns
-const double SecondsPerTick = 1e-7;
+const int64 DotNetTicksPerSecond = 1e7; // each tick is 100ns
 
 template <>
 inline void convert_to_grpc(const CVIAbsoluteTime& value, google::protobuf::Timestamp* timestamp)
@@ -372,18 +372,21 @@ inline CVIAbsoluteTime convert_from_grpc(const google::protobuf::Timestamp& valu
   return cviTime;
 }
 
-// Convert ticks to PrecisionTimestamp
-// ticks are 100ns each, and are relative to an epoch of Jan 1, 0001
-// Precision Timestamp has seconds and fractions of seconds at 2^-64 resolution, relative to an epoch of January 1, 1904.
-inline void convert_ticks_to_btf_precision_timestamp(int64 ticks, ::ni::protobuf::types::PrecisionTimestamp* timestamp)
+// Convert .NET/DAQmx ticks (100ns since Jan 1, 0001) to NI-BTF PrecisionTimestamp
+inline void convert_dot_net_daqmx_ticks_to_btf_precision_timestamp(int64 dot_net_ticks, ::ni::protobuf::types::PrecisionTimestamp* timestamp)
 {
-  const double seconds_since_0001 = static_cast<double>(ticks) * SecondsPerTick;
-  const double seconds_since_1904 = seconds_since_0001 - SecondsFrom0001EpochTo1904Epoch;
-  const int64 seconds_int = static_cast<int64>(std::floor(seconds_since_1904));
-  timestamp->set_seconds(seconds_int);
-  const double fractional_seconds = std::abs(seconds_since_1904 - static_cast<double>(seconds_int));
-  const uint64_t fractional_seconds_uint = static_cast<uint64_t>(fractional_seconds * UINT64_MAX);
-  timestamp->set_fractional_seconds(fractional_seconds_uint);
+  const int64 dot_net_ticks_since_1904 = dot_net_ticks - SecondsFromDAQmx0001EpochToCVI1904Epoch * DotNetTicksPerSecond;
+  const double total_seconds = static_cast<double>(dot_net_ticks_since_1904) / DotNetTicksPerSecond;
+  double integer_part;
+  double fractional_part = std::modf(total_seconds, &integer_part);
+  
+  if (fractional_part < 0) {
+    integer_part -= 1;
+    fractional_part += 1;
+  }
+  
+  timestamp->set_seconds(static_cast<int64>(integer_part));
+  timestamp->set_fractional_seconds(static_cast<uint64_t>(fractional_part * TwoToSixtyFour));
 }
 
 // Or together input_array and input_raw to implement the "bitfield_as_enum_array" feature for inputs.
