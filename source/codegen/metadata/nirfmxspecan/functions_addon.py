@@ -94,6 +94,12 @@ functions_override_metadata = {
                 },
                 'type': 'float32[]',
                 'value_converted_to_c_representation': 'reinterpret_cast<NIComplexSingle*>(lutComplexGains)'
+            },
+            {
+                'direction': 'in',
+                'include_in_proto': False,
+                'name': 'arraySize',
+                'type': 'int32',
             }
         ],
         'returns': 'int32'
