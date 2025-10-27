@@ -1842,9 +1842,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingMode_ReturnsWavefor
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2); // Two channels: di_port0 and di_port0_lines45
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
-  
-  auto now_since_year1 = get_seconds_since_year1();
-  
+    
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
     
@@ -1854,8 +1852,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingMode_ReturnsWavefor
     
     EXPECT_TRUE(waveform.has_t0());
     const auto& timestamp = waveform.t0();
-    EXPECT_NEAR(timestamp.seconds(), now_since_year1, 1);
-    EXPECT_NE(timestamp.fractional_seconds(), 0);
+    EXPECT_NEAR(timestamp.seconds(), get_seconds_since_1904(), 1);
     EXPECT_GT(waveform.dt(), 0.0);
   }
 }

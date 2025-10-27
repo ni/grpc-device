@@ -154,49 +154,16 @@ void SetupTimingArrays(int32 waveform_attribute_mode, uInt32 num_channels,
   }
 }
 
-// void SetupAnalogCallbackData(int32 waveform_attribute_mode, uInt32 num_channels,
-//                             std::unique_ptr<WaveformCallbackData>& callback_data,
-//                             DAQmxSetWfmAttrCallbackPtr& callback_ptr,
-//                             ReadAnalogWaveformsResponse* response)
-// {
-//   if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES) {
-//     callback_data = std::make_unique<WaveformCallbackData>(false);
-//     callback_data->analog_waveforms.resize(num_channels);
-//     callback_ptr = SetWfmAttrCallback;
-    
-//     for (uInt32 i = 0; i < num_channels; ++i) {
-//       callback_data->analog_waveforms[i] = response->mutable_waveforms(i);
-//     }
-//   }
-// }
-
-// void SetupDigitalCallbackData(int32 waveform_attribute_mode, uInt32 num_channels,
-//                              std::unique_ptr<WaveformCallbackData>& callback_data,
-//                              DAQmxSetWfmAttrCallbackPtr& callback_ptr,
-//                              ReadDigitalWaveformsResponse* response)
-// {
-//   if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES) {
-//     callback_data = std::make_unique<WaveformCallbackData>(true);
-//     callback_data->digital_waveforms.resize(num_channels);
-//     callback_ptr = SetWfmAttrCallback;
-    
-//     for (uInt32 i = 0; i < num_channels; ++i) {
-//       callback_data->digital_waveforms[i] = response->mutable_waveforms(i);
-//     }
-//   }
-// }
-
 template<typename WaveformType>
-::grpc::Status ProcessWaveformTiming(int32 waveform_attribute_mode, uInt32 channel_index,
+void ProcessWaveformTiming(int32 waveform_attribute_mode, uInt32 channel_index,
                                     const std::vector<int64>& t0_array, const std::vector<int64>& dt_array,
                                     WaveformType* waveform)
 {
   if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
     auto* waveform_t0 = waveform->mutable_t0();
-    convert_ticks_to_btf_precision_timestamp(t0_array[channel_index], waveform_t0);
-    waveform->set_dt(static_cast<double>(dt_array[channel_index]) * SecondsPerTick);
+    convert_dot_net_daqmx_ticks_to_btf_precision_timestamp(t0_array[channel_index], waveform_t0);
+    waveform->set_dt(static_cast<double>(dt_array[channel_index]) / DotNetTicksPerSecond);
   }
-  return ::grpc::Status::OK;
 }
 
 ::grpc::Status NiDAQmxService::ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task)
@@ -288,11 +255,7 @@ template<typename WaveformType>
       auto* y_data = waveform->mutable_y_data();
       y_data->Add(read_arrays[i].data(), read_arrays[i].data() + samples_per_chan_read);
 
-      if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
-        auto* waveform_t0 = waveform->mutable_t0();
-        convert_dot_net_daqmx_ticks_to_btf_precision_timestamp(t0_array[i], waveform_t0);
-        waveform->set_dt(static_cast<double>(dt_array[i]) / DotNetTicksPerSecond);
-      }
+      ProcessWaveformTiming(waveform_attribute_mode, i, t0_array, dt_array, waveform);
     }
 
     response->set_samps_per_chan_read(samples_per_chan_read);
@@ -421,10 +384,7 @@ template<typename WaveformType>
       
       waveform->set_y_data(std::move(y_data));
 
-      auto timing_status = ProcessWaveformTiming(waveform_attribute_mode, i, t0_array, dt_array, waveform);
-      if (!timing_status.ok()) {
-        return timing_status;
-      }
+      ProcessWaveformTiming(waveform_attribute_mode, i, t0_array, dt_array, waveform);
     }
 
     response->set_samps_per_chan_read(samples_per_chan_read);
