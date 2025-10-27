@@ -12,6 +12,7 @@
 #include "device_server.h"
 #include "enumerate_devices.h"
 #include "nidaqmx/nidaqmx_client.h"
+#include "server/converters.h"
 #include "tests/utilities/async_helpers.h"
 #include "tests/utilities/scope_exit.h"
 #include "tests/utilities/test_helpers.h"
@@ -19,6 +20,7 @@
 using namespace ::testing;
 using namespace nidaqmx_grpc;
 using google::protobuf::uint32;
+using nidevice_grpc::converters::SecondsFromCVI1904EpochTo1970Epoch;
 namespace client = nidaqmx_grpc::experimental::client;
 
 namespace ni {
@@ -1189,14 +1191,12 @@ class NiDAQmxDriverApiTests : public Test {
     EXPECT_THAT(data, Each(Not(Gt(max_val))));
   }
 
-  // Get number of seconds since year 1 AD (Jan 1, 0001) - .NET DateTime epoch
-  // From year 1 AD to 1970-01-01 is 719162 days * 24 * 3600 = 62135596800 seconds
-  int64_t get_seconds_since_year1() const
-  {
-    const auto epoch_offset_year1_to_1970 = 62135596800LL;
+  // Get number of seconds since 1904 epoch (CVI/BTF epoch) for comparison with waveform timestamps
+  int64_t get_seconds_since_1904() const
+  {    
     auto now = std::chrono::duration_cast<std::chrono::seconds>(
-        std::chrono::system_clock::now().time_since_epoch()).count();
-    return now + epoch_offset_year1_to_1970;
+        std::chrono::system_clock::now().time_since_epoch()).count();    
+    return now + SecondsFromCVI1904EpochTo1970Epoch;
   }
 
   DeviceServerInterface* device_server_;
@@ -1577,7 +1577,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingMode_ReturnsWaveform
     const auto& waveform = read_response.waveforms(i);
     EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
     EXPECT_TRUE(waveform.has_t0());
-    EXPECT_NEAR(waveform.t0().seconds(), get_seconds_since_year1(), 1);    
+    EXPECT_NEAR(waveform.t0().seconds(), get_seconds_since_1904(), 1);    
     EXPECT_GT(waveform.dt(), 0.0);
     
     for (const auto& sample : waveform.y_data()) {
@@ -1674,7 +1674,7 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertie
     const auto& waveform = read_response.waveforms(i);
     EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
     EXPECT_TRUE(waveform.has_t0());
-    EXPECT_NEAR(waveform.t0().seconds(), get_seconds_since_year1(), 1);
+    EXPECT_NEAR(waveform.t0().seconds(), get_seconds_since_1904(), 1);
     EXPECT_GT(waveform.dt(), 0.0);
     EXPECT_GT(waveform.attributes_size(), 0);
     
