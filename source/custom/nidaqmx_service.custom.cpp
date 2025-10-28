@@ -354,8 +354,8 @@ void ProcessWaveformTiming(
       const uInt32 bytes_per_chan = bytes_per_chan_array[channel];
       waveform->set_signal_count(static_cast<int32>(bytes_per_chan));
 
-      std::string y_data;
-      y_data.reserve(samples_per_chan_read * bytes_per_chan);
+      auto* y_data = waveform->mutable_y_data();
+      y_data->reserve(samples_per_chan_read * bytes_per_chan);
       
       // Data layout: grouped by scan number (interleaved)
       // Sample 0: Channel 0 signals, Channel 1 signals, Channel 2 signals, ...
@@ -366,11 +366,9 @@ void ProcessWaveformTiming(
         const uInt32 channel_offset = sample_start + channel * max_bytes_per_chan;
         for (uInt32 signal = 0; signal < bytes_per_chan; ++signal) {
           const uInt32 offset = channel_offset + signal;
-          y_data.append(reinterpret_cast<const char*>(&read_array[offset]), 1);
+          y_data->append(reinterpret_cast<const char*>(&read_array[offset]), 1);
         }
       }
-      
-      waveform->set_y_data(std::move(y_data));
 
       ProcessWaveformTiming(waveform_attribute_mode, channel, t0_array, dt_array, waveform);
     }
