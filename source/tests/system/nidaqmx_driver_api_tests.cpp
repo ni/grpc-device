@@ -2,6 +2,7 @@
 #include <google/protobuf/util/time_util.h>
 
 #include <algorithm>
+#include <chrono>
 #include <cstring>
 #include <nlohmann/json.hpp>
 #include <random>
@@ -11,6 +12,7 @@
 #include "device_server.h"
 #include "enumerate_devices.h"
 #include "nidaqmx/nidaqmx_client.h"
+#include "server/converters.h"
 #include "tests/utilities/async_helpers.h"
 #include "tests/utilities/scope_exit.h"
 #include "tests/utilities/test_helpers.h"
@@ -18,6 +20,7 @@
 using namespace ::testing;
 using namespace nidaqmx_grpc;
 using google::protobuf::uint32;
+using nidevice_grpc::converters::SecondsFromCVI1904EpochTo1970Epoch;
 namespace client = nidaqmx_grpc::experimental::client;
 
 namespace ni {
@@ -65,6 +68,7 @@ class NiDAQmxDriverApiTests : public Test {
   const std::string DEVICE_NAME{"gRPCSystemTestDAQ"};
   const std::string ANY_DEVICE_MODEL{"[[ANY_DEVICE_MODEL]]"};
   const std::string AI_CHANNEL{"gRPCSystemTestDAQ/ai0"};
+  const std::string AI_CHANNEL_1{"gRPCSystemTestDAQ/ai1"};
   const std::string AO_CHANNEL{"gRPCSystemTestDAQ/ao0"};
 
   NiDAQmxDriverApiTests()
@@ -145,12 +149,12 @@ class NiDAQmxDriverApiTests : public Test {
     return clear_task(task());
   }
 
-  CreateAIVoltageChanRequest create_ai_voltage_request(double min_val, double max_val, const std::string& custom_scale_name = "")
+  CreateAIVoltageChanRequest create_ai_voltage_request(double min_val, double max_val, const std::string& custom_scale_name = "", const std::string& physical_channel = "gRPCSystemTestDAQ/ai0", const std::string& channel_name = "ai0")
   {
     CreateAIVoltageChanRequest request;
     set_request_session_name(request);
-    request.set_physical_channel("gRPCSystemTestDAQ/ai0");
-    request.set_name_to_assign_to_channel("ai0");
+    request.set_physical_channel(physical_channel);
+    request.set_name_to_assign_to_channel(channel_name);
     request.set_terminal_config(InputTermCfgWithDefault::INPUT_TERM_CFG_WITH_DEFAULT_CFG_DEFAULT);
     request.set_min_val(min_val);
     request.set_max_val(max_val);
@@ -175,6 +179,12 @@ class NiDAQmxDriverApiTests : public Test {
   ::grpc::Status create_ai_voltage_chan(double min_val, double max_val, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
   {
     auto request = create_ai_voltage_request(min_val, max_val);
+    return create_ai_voltage_chan(request, response);
+  }
+
+  ::grpc::Status create_ai_voltage_chan(const std::string& physical_channel, const std::string& channel_name, double min_val, double max_val, CreateAIVoltageChanResponse& response = ThrowawayResponse<CreateAIVoltageChanResponse>::response())
+  {
+    auto request = create_ai_voltage_request(min_val, max_val, "", physical_channel, channel_name);
     return create_ai_voltage_chan(request, response);
   }
 
@@ -420,6 +430,23 @@ class NiDAQmxDriverApiTests : public Test {
     auto reader = stub()->AsyncReadAnalogF64(&context, request, &completion_queue);
     reader->Finish(&response, &status, tag);
     return reader;
+  }
+
+  ::grpc::Status read_analog_waveforms(
+      int32 num_samps_per_chan,
+      double timeout = 10.0,
+      WaveformAttributeMode waveform_attribute_mode = WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE,
+      ReadAnalogWaveformsResponse& response = ThrowawayResponse<ReadAnalogWaveformsResponse>::response())
+  {
+    ::grpc::ClientContext context;
+    ReadAnalogWaveformsRequest request;
+    set_request_session_name(request);
+    request.set_num_samps_per_chan(num_samps_per_chan);
+    request.set_timeout(timeout);
+    request.set_waveform_attribute_mode(waveform_attribute_mode);
+    auto status = stub()->ReadAnalogWaveforms(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
   }
 
   ::grpc::Status write_analog_f64(
@@ -1164,6 +1191,14 @@ class NiDAQmxDriverApiTests : public Test {
     EXPECT_THAT(data, Each(Not(Gt(max_val))));
   }
 
+  // Get number of seconds since 1904 epoch (CVI/BTF epoch) for comparison with waveform timestamps
+  int64_t get_seconds_since_1904() const
+  {    
+    auto now = std::chrono::duration_cast<std::chrono::seconds>(
+        std::chrono::system_clock::now().time_since_epoch()).count();    
+    return now + SecondsFromCVI1904EpochTo1970Epoch;
+  }
+
   DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<NiDAQmx::Stub> nidaqmx_stub_;
@@ -1477,6 +1512,199 @@ TEST_F(NiDAQmxDriverApiTests, SetPolynomialForwardCoefficients_GetPolynomialForw
   EXPECT_SUCCESS(response);
   auto actual = std::vector<double>{response.value().cbegin(), response.value().cend()};
   EXPECT_THAT(actual, ContainerEq(COEFFICIENTS));
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithNoAttributeMode_ReturnsWaveformData)
+{
+  const auto NUM_SAMPLES = 1000;
+  const auto TIMEOUT = 10.0;
+  CreateAIVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai0", "ai0", -1.0, 1.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai1", "ai1", -1.0, 1.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  ReadAnalogWaveformsResponse read_response;
+  auto read_status = read_analog_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
+  stop_task();
+
+  EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(read_response.waveforms_size(), 2);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  
+  for (int i = 0; i < read_response.waveforms_size(); ++i) {
+    const auto& waveform = read_response.waveforms(i);
+    EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);    
+    EXPECT_FALSE(waveform.has_t0());
+    EXPECT_EQ(waveform.dt(), 0.0);    
+    EXPECT_EQ(waveform.attributes_size(), 0);
+    
+    for (const auto& sample : waveform.y_data()) {
+      EXPECT_GE(sample, -1.0);
+      EXPECT_LE(sample, 1.0);
+    }
+  }
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingMode_ReturnsWaveformDataWithTimingInfo)
+{
+  const auto NUM_SAMPLES = 100;
+  const auto TIMEOUT = 10.0;
+  CreateAIVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai0", "ai0", -5.0, 5.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai1", "ai1", -5.0, 5.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  auto timing_request = create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, NUM_SAMPLES);
+  CfgSampClkTimingResponse timing_response;
+  auto timing_status = cfg_samp_clk_timing(timing_request, timing_response);
+  EXPECT_SUCCESS(timing_status, timing_response);
+
+  start_task();
+  ReadAnalogWaveformsResponse read_response;
+  auto read_status = read_analog_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING, read_response);
+  stop_task();
+
+  EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(read_response.waveforms_size(), 2);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  
+  for (int i = 0; i < read_response.waveforms_size(); ++i) {
+    const auto& waveform = read_response.waveforms(i);
+    EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
+    EXPECT_TRUE(waveform.has_t0());
+    EXPECT_NEAR(waveform.t0().seconds(), get_seconds_since_1904(), 1);    
+    EXPECT_GT(waveform.dt(), 0.0);
+    
+    for (const auto& sample : waveform.y_data()) {
+      EXPECT_GE(sample, -5.0);
+      EXPECT_LE(sample, 5.0);
+    }
+  }
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithExtendedPropertiesMode_ReturnsWaveformDataWithAttributes)
+{
+  const auto NUM_SAMPLES = 50;
+  const auto TIMEOUT = 10.0;
+  CreateAIVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai0", "ai0", -2.0, 2.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai1", "ai1", -2.0, 2.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  ReadAnalogWaveformsResponse read_response;
+  auto read_status = read_analog_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES, read_response);
+  stop_task();
+
+  EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(read_response.waveforms_size(), 2);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  
+  for (int i = 0; i < read_response.waveforms_size(); ++i) {
+    const auto& waveform = read_response.waveforms(i);
+    EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
+    EXPECT_GT(waveform.attributes_size(), 0);
+    
+    bool has_channel_name = false;
+    bool has_units = false;
+    std::string expected_channel_name = (i == 0) ? "ai0" : "ai1";
+    
+    for (const auto& attr_pair : waveform.attributes()) {
+      const auto& attr_name = attr_pair.first;
+      const auto& attr_value = attr_pair.second;
+      
+      if (attr_name == "NI_ChannelName" && attr_value.has_string_value()) {
+        if (attr_value.string_value() == expected_channel_name) {
+          has_channel_name = true;
+        }
+      }
+      if (attr_name == "NI_UnitDescription" && attr_value.has_string_value()) {
+        if (attr_value.string_value() == "Volts") {
+          has_units = true;
+        }
+      }
+    }
+    EXPECT_TRUE(has_channel_name);
+    EXPECT_TRUE(has_units);
+    
+    for (const auto& sample : waveform.y_data()) {
+      EXPECT_GE(sample, -2.0);
+      EXPECT_LE(sample, 2.0);
+    }
+  }
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertiesMode_ReturnsWaveformDataWithTimingAndAttributes)
+{
+  const auto NUM_SAMPLES = 75;
+  const auto TIMEOUT = 10.0;
+  CreateAIVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai0", "ai0", -3.0, 3.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai1", "ai1", -3.0, 3.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  auto timing_request = create_cfg_samp_clk_timing_request(2000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, NUM_SAMPLES);
+  CfgSampClkTimingResponse timing_response;
+  auto timing_status = cfg_samp_clk_timing(timing_request, timing_response);
+  EXPECT_SUCCESS(timing_status, timing_response);
+
+  start_task();
+  ReadAnalogWaveformsResponse read_response;
+  const auto combined_mode = static_cast<WaveformAttributeMode>(
+    static_cast<int32>(WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) | 
+    static_cast<int32>(WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES)
+  );
+  auto read_status = read_analog_waveforms(NUM_SAMPLES, TIMEOUT, combined_mode, read_response);
+  stop_task();
+
+  EXPECT_SUCCESS(read_status, read_response);
+  EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(read_response.waveforms_size(), 2);
+  EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  
+  for (int i = 0; i < read_response.waveforms_size(); ++i) {
+    const auto& waveform = read_response.waveforms(i);
+    EXPECT_EQ(waveform.y_data_size(), NUM_SAMPLES);
+    EXPECT_TRUE(waveform.has_t0());
+    EXPECT_NEAR(waveform.t0().seconds(), get_seconds_since_1904(), 1);
+    EXPECT_GT(waveform.dt(), 0.0);
+    EXPECT_GT(waveform.attributes_size(), 0);
+    
+    bool has_channel_name = false;
+    bool has_units = false;
+    std::string expected_channel_name = (i == 0) ? "ai0" : "ai1";
+    
+    for (const auto& attr_pair : waveform.attributes()) {
+      const auto& attr_name = attr_pair.first;
+      const auto& attr_value = attr_pair.second;
+      
+      if (attr_name == "NI_ChannelName" && attr_value.has_string_value()) {
+        if (attr_value.string_value() == expected_channel_name) {
+          has_channel_name = true;
+        }
+      }
+      if (attr_name == "NI_UnitDescription" && attr_value.has_string_value()) {
+        if (attr_value.string_value() == "Volts") {
+          has_units = true;
+        }
+      }
+    }
+    EXPECT_TRUE(has_channel_name);
+    EXPECT_TRUE(has_units);
+    
+    for (const auto& sample : waveform.y_data()) {
+      EXPECT_GE(sample, -3.0);
+      EXPECT_LE(sample, 3.0);
+    }
+  }
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
