@@ -8,7 +8,7 @@
 namespace nidaqmx_grpc {
 
 using nidevice_grpc::converters::convert_to_grpc;
-using nidevice_grpc::converters::convert_dot_net_daqmx_ticks_to_btf_precision_timestamp;
+using nidevice_grpc::converters::convert_dot_net_ticks_to_precision_timestamp;
 using nidevice_grpc::converters::DotNetTicksPerSecond;
 using google::protobuf::RepeatedPtrField;
 using ::ni::protobuf::types::DoubleAnalogWaveform;
@@ -200,7 +200,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
 
       if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
         auto* waveform_t0 = waveform->mutable_t0();
-        convert_dot_net_daqmx_ticks_to_btf_precision_timestamp(t0_array[i], waveform_t0);
+        convert_dot_net_ticks_to_precision_timestamp(t0_array[i], waveform_t0);
         waveform->set_dt(static_cast<double>(dt_array[i]) / DotNetTicksPerSecond);
       }
     }
