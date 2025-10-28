@@ -48,7 +48,6 @@ TEST(PrecisionTimestampConverterTests, ConvertOneSecondOfTicks_ReturnsOneSecond)
 struct SecondsAndFractionalTestParam {
   int64_t ticks_offset;
   int64_t seconds;
-  double fraction;
   uint64_t btf_fractional_ticks;
 };
 
@@ -68,21 +67,21 @@ INSTANTIATE_TEST_SUITE_P(
   SecondsAndFractionalTests,
   PrecisionTimestampConverterSecondsAndFractionalTests,
   ::testing::Values(
-    SecondsAndFractionalTestParam{  0000000,  0, 0.00,      0x0000000000000000ULL},
-    SecondsAndFractionalTestParam{  2500000,  0, 0.25,      0x4000000000000000ULL},
-    SecondsAndFractionalTestParam{  5000000,  0, 0.50,      0x8000000000000000ULL},
-    SecondsAndFractionalTestParam{  7500000,  0, 0.75,      0xC000000000000000ULL},
-    SecondsAndFractionalTestParam{  9999999,  0, 0.9999999, 0xFFFFFE5280D65800ULL},
-    SecondsAndFractionalTestParam{ 12500000,  1, 0.25,      0x4000000000000000ULL},
-    SecondsAndFractionalTestParam{ 25000000,  2, 0.50,      0x8000000000000000ULL},
-    SecondsAndFractionalTestParam{ 37500000,  3, 0.75,      0xC000000000000000ULL},
-    SecondsAndFractionalTestParam{ -2500000, -0, 0.25,      0x4000000000000000ULL},
-    SecondsAndFractionalTestParam{ -5000000, -0, 0.50,      0x8000000000000000ULL},
-    SecondsAndFractionalTestParam{ -7500000, -0, 0.75,      0xC000000000000000ULL},
-    SecondsAndFractionalTestParam{ -9999999, -0, 0.9999999, 0xFFFFFE5280D65800ULL},
-    SecondsAndFractionalTestParam{-12500000, -1, 0.25,      0x4000000000000000ULL},
-    SecondsAndFractionalTestParam{-25000000, -2, 0.25,      0x8000000000000000ULL},
-    SecondsAndFractionalTestParam{-37500000, -3, 0.75,      0xC000000000000000ULL}
+    SecondsAndFractionalTestParam{  0000000,  0, 0x0000000000000000ULL},
+    SecondsAndFractionalTestParam{  2500000,  0, 0x4000000000000000ULL},
+    SecondsAndFractionalTestParam{  5000000,  0, 0x8000000000000000ULL},
+    SecondsAndFractionalTestParam{  7500000,  0, 0xC000000000000000ULL},
+    SecondsAndFractionalTestParam{  9999999,  0, 0xFFFFFE5280D65800ULL},
+    SecondsAndFractionalTestParam{ 12500000,  1, 0x4000000000000000ULL},
+    SecondsAndFractionalTestParam{ 25000000,  2, 0x8000000000000000ULL},
+    SecondsAndFractionalTestParam{ 37500000,  3, 0xC000000000000000ULL},
+    SecondsAndFractionalTestParam{ -2500000, -0, 0x4000000000000000ULL},
+    SecondsAndFractionalTestParam{ -5000000, -0, 0x8000000000000000ULL},
+    SecondsAndFractionalTestParam{ -7500000, -0, 0xC000000000000000ULL},
+    SecondsAndFractionalTestParam{ -9999999, -0, 0xFFFFFE5280D65800ULL},
+    SecondsAndFractionalTestParam{-12500000, -1, 0x4000000000000000ULL},
+    SecondsAndFractionalTestParam{-25000000, -2, 0x8000000000000000ULL},
+    SecondsAndFractionalTestParam{-37500000, -3, 0xC000000000000000ULL}
   )
 );
 
