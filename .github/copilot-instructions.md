@@ -11,7 +11,7 @@ This repository requires specific environment setup before building. **Always** 
 
 ### Critical: Preferred Build Method
 
-**Always use the copilot-build.ps1 script for all builds (recommended for Copilot):**
+**Always use the copilot-build.ps1 script for all builds:**
 
 ```powershell
 # Default Debug build
@@ -29,7 +29,7 @@ This repository requires specific environment setup before building. **Always** 
 ```
 
 This script automatically handles the Visual Studio environment setup and is much more Copilot-friendly since it avoids complex command chaining that often requires manual approval.
-Any parameters you pass into this script will be passed along into the cmake command. However, you should prefer to do simple full builds instead of targetted builds. Ninja is good
+Any parameters you pass into this script will be passed along into the cmake command. However, you should prefer to do simple full builds instead of targeted builds. Ninja is good
 at doing incremental builds quickly.
 
 ### Testing
