@@ -336,7 +336,7 @@ void ProcessWaveformTiming(int32 waveform_attribute_mode, uInt32 channel_index,
         task,
         number_of_samples_per_channel,
         timeout,
-        false, // fillMode: false = GROUP_BY_SCAN_NUMBER (interleaved)
+        1, // fillMode: 1 = GROUP_BY_SCAN_NUMBER (interleaved)
         t0_ptr,
         dt_ptr,
         timing_array_size,
@@ -355,36 +355,31 @@ void ProcessWaveformTiming(int32 waveform_attribute_mode, uInt32 channel_index,
       return ConvertApiErrorStatusForTaskHandle(context, status, task);
     }
 
-    for (uInt32 i = 0; i < num_channels; ++i) {
-      auto* waveform = response->mutable_waveforms(i);
-      
-      const uInt32 bytes_per_chan = bytes_per_chan_array[i];
+    for (uInt32 channel = 0; channel < num_channels; ++channel) {
+      auto* waveform = response->mutable_waveforms(channel);
+
+      const uInt32 bytes_per_chan = bytes_per_chan_array[channel];
       waveform->set_signal_count(static_cast<int32>(bytes_per_chan));
 
-      // Data layout: all samples for each channel are grouped together
-      // Channel 0: all its samples, Channel 1: all its samples, etc.
-      // Within each channel, samples are sequential: Sample0, Sample1, Sample2, ...
-      // Within each sample, signals are sequential: Signal0, Signal1, Signal2, ...
       std::string y_data;
       y_data.reserve(samples_per_chan_read * bytes_per_chan);
       
-      // Calculate offset to start of this channel's data
-      const uInt32 channel_start = i * samples_per_chan_read * max_bytes_per_chan;
-      
+      // Data layout: grouped by scan number (interleaved)
+      // Sample 0: Channel 0 signals, Channel 1 signals, Channel 2 signals, ...
+      // Sample 1: Channel 0 signals, Channel 1 signals, Channel 2 signals, ...
+      // Within each channel's data in a sample, signals are sequential: Signal0, Signal1, Signal2, ...
       for (int32 sample = 0; sample < samples_per_chan_read; ++sample) {
-        // Within this channel, find the start of this sample
-        const uInt32 sample_start = channel_start + sample * max_bytes_per_chan;
-        
-        // Copy all signals for this sample (up to bytes_per_chan)
+        const uInt32 sample_start = sample * num_channels * max_bytes_per_chan;
+        const uInt32 channel_offset = sample_start + channel * max_bytes_per_chan;
         for (uInt32 signal = 0; signal < bytes_per_chan; ++signal) {
-          const uInt32 offset = sample_start + signal;
+          const uInt32 offset = channel_offset + signal;
           y_data.append(reinterpret_cast<const char*>(&read_array[offset]), 1);
         }
       }
       
       waveform->set_y_data(std::move(y_data));
 
-      ProcessWaveformTiming(waveform_attribute_mode, i, t0_array, dt_array, waveform);
+      ProcessWaveformTiming(waveform_attribute_mode, channel, t0_array, dt_array, waveform);
     }
 
     response->set_samps_per_chan_read(samples_per_chan_read);
