@@ -86,7 +86,7 @@ int32 CVICALLBACK SetWfmAttrCallbackTemplated(
         return -1;
     }
     
-    (*attributes)[attribute_name] = attr_value;    
+    (*attributes)[attribute_name] = attr_value;
     return 0;
   }
   catch (const std::exception&) {
@@ -94,7 +94,6 @@ int32 CVICALLBACK SetWfmAttrCallbackTemplated(
   }
 }
 
-// Wrapper functions for each waveform type
 int32 CVICALLBACK SetAnalogWfmAttrCallback(
     const uInt32 channel_index,
     const char attribute_name[],
@@ -120,27 +119,30 @@ int32 CVICALLBACK SetDigitalWfmAttrCallback(
 }
 
 template<typename RequestType>
-::grpc::Status ParseWaveformAttributeMode(const RequestType* request, int32& waveform_attribute_mode)
+int32 ParseWaveformAttributeMode(const RequestType* request)
 {
   switch (request->waveform_attribute_mode_enum_case()) {
     case RequestType::WaveformAttributeModeEnumCase::kWaveformAttributeMode: {
-      waveform_attribute_mode = static_cast<int32>(request->waveform_attribute_mode());
-      break;
+      return static_cast<int32>(request->waveform_attribute_mode());
     }
     case RequestType::WaveformAttributeModeEnumCase::kWaveformAttributeModeRaw: {
-      waveform_attribute_mode = static_cast<int32>(request->waveform_attribute_mode_raw());
-      break;
+      return static_cast<int32>(request->waveform_attribute_mode_raw());
     }
     case RequestType::WaveformAttributeModeEnumCase::WAVEFORM_ATTRIBUTE_MODE_ENUM_NOT_SET: {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for waveform_attribute_mode was not specified or out of range");
+      return 0;
     }
   }
-  return ::grpc::Status::OK;
+  return 0;
 }
 
-void SetupTimingArrays(int32 waveform_attribute_mode, uInt32 num_channels,
-                      std::vector<int64>& t0_array, std::vector<int64>& dt_array,
-                      int64*& t0_ptr, int64*& dt_ptr, uInt32& timing_array_size)
+void SetupTimingArrays(
+    int32 waveform_attribute_mode,
+    uInt32 num_channels,
+    std::vector<int64>& t0_array,
+    std::vector<int64>& dt_array,
+    int64*& t0_ptr,
+    int64*& dt_ptr,
+    uInt32& timing_array_size)
 {
   if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
     t0_array.resize(num_channels, 0);
@@ -152,9 +154,11 @@ void SetupTimingArrays(int32 waveform_attribute_mode, uInt32 num_channels,
 }
 
 template<typename WaveformType>
-void ProcessWaveformTiming(int32 waveform_attribute_mode, uInt32 channel_index,
-                                    const std::vector<int64>& t0_array, const std::vector<int64>& dt_array,
-                                    WaveformType* waveform)
+void ProcessWaveformTiming(
+    int32 waveform_attribute_mode,
+    uInt32 channel_index,
+    const std::vector<int64>& t0_array, const std::vector<int64>& dt_array,
+    WaveformType* waveform)
 {
   if (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) {
     auto* waveform_t0 = waveform->mutable_t0();
@@ -183,11 +187,7 @@ void ProcessWaveformTiming(int32 waveform_attribute_mode, uInt32 channel_index,
     const auto number_of_samples_per_channel = request->num_samps_per_chan();
     const auto timeout = request->timeout();
     
-    int32 waveform_attribute_mode;
-    auto parse_status = ParseWaveformAttributeMode(request, waveform_attribute_mode);
-    if (!parse_status.ok()) {
-      return parse_status;
-    }
+    int32 waveform_attribute_mode = ParseWaveformAttributeMode(request);
 
     uInt32 num_channels = 0;
     auto status = library_->GetReadAttributeUInt32(task, ReadUInt32Attribute::READ_ATTRIBUTE_NUM_CHANS, &num_channels);
@@ -276,11 +276,7 @@ void ProcessWaveformTiming(int32 waveform_attribute_mode, uInt32 channel_index,
     const auto number_of_samples_per_channel = request->num_samps_per_chan();
     const auto timeout = request->timeout();
     
-    int32 waveform_attribute_mode;
-    auto parse_status = ParseWaveformAttributeMode(request, waveform_attribute_mode);
-    if (!parse_status.ok()) {
-      return parse_status;
-    }
+    int32 waveform_attribute_mode = ParseWaveformAttributeMode(request);
 
     uInt32 num_channels = 0;
     auto status = library_->GetReadAttributeUInt32(task, ReadUInt32Attribute::READ_ATTRIBUTE_NUM_CHANS, &num_channels);
@@ -333,7 +329,7 @@ void ProcessWaveformTiming(int32 waveform_attribute_mode, uInt32 channel_index,
         task,
         number_of_samples_per_channel,
         timeout,
-        1, // fillMode: 1 = GROUP_BY_SCAN_NUMBER (interleaved)
+        GROUP_BY_GROUP_BY_SCAN_NUMBER,
         t0_ptr,
         dt_ptr,
         timing_array_size,
