@@ -4,7 +4,6 @@
 #include <cstdint>
 #include <server/converters.h>
 #include "NIDAQmxInternalWaveform.h"
-#include "ni/protobuf/types/waveform.pb.h"
 
 namespace nidaqmx_grpc {
 
@@ -41,6 +40,7 @@ int32 CVICALLBACK SetWfmAttrCallbackTemplated(
       return -1;
     }
 
+    auto* attributes = waveform->mutable_attributes();
     ::ni::protobuf::types::WaveformAttributeValue attr_value;
     
     switch (attribute_type) {
@@ -86,10 +86,7 @@ int32 CVICALLBACK SetWfmAttrCallbackTemplated(
         return -1;
     }
     
-    // Insert the attribute into the waveform's attributes map
-    auto* attributes_map = waveform->mutable_attributes();
-    (*attributes_map)[attribute_name] = std::move(attr_value);
-    
+    (*attributes)[attribute_name] = attr_value;    
     return 0;
   }
   catch (const std::exception&) {
