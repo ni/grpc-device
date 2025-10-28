@@ -1648,7 +1648,7 @@ int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTableInterleavedIQ(niRFmxInst
   if (!function_pointers_.DPDCfgApplyDPDUserLookupTableInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDCfgApplyDPDUserLookupTable.");
   }
-  return function_pointers_.DPDCfgApplyDPDUserLookupTableInterleavedIQ(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(lutComplexGains), arraySize/2);
+  return function_pointers_.DPDCfgApplyDPDUserLookupTableInterleavedIQ(instrumentHandle, selectorString, lutInputPowers, reinterpret_cast<NIComplexSingle*>(lutComplexGains), arraySize);
 }
 
 int32 NiRFmxSpecAnLibrary::DPDCfgApplyDPDUserLookupTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float32 lutInputPowers[], float32 lutComplexGainsI[], float32 lutComplexGainsQ[], int32 arraySize)

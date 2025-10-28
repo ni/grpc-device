@@ -5624,49 +5624,6 @@ namespace nirfmxspecan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxSpecAnService::DPDCfgApplyDPDUserLookupTableInterleavedIQ(::grpc::ServerContext* context, const DPDCfgApplyDPDUserLookupTableInterleavedIQRequest* request, DPDCfgApplyDPDUserLookupTableInterleavedIQResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto instrument_grpc_session = request->instrument();
-      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
-      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
-      char* selector_string = (char*)selector_string_mbcs.c_str();
-      auto lut_input_powers = const_cast<float32*>(request->lut_input_powers().data());
-      auto lut_complex_gains = const_cast<float32*>(request->lut_complex_gains().data());
-      auto array_size_determine_from_sizes = std::array<int, 2>
-      {
-        request->lut_input_powers_size(),
-        request->lut_complex_gains_size()
-      };
-      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
-
-      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [lut_input_powers, lut_complex_gains] do not match");
-      }
-      // NULL out optional params with zero sizes.
-      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
-        lut_input_powers = request->lut_input_powers_size() ? std::move(lut_input_powers) : nullptr;
-        lut_complex_gains = request->lut_complex_gains_size() ? std::move(lut_complex_gains) : nullptr;
-      }
-      auto array_size = array_size_size_calculation.size;
-
-      auto status = library_->DPDCfgApplyDPDUserLookupTableInterleavedIQ(instrument, selector_string, lut_input_powers, lut_complex_gains, array_size);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxSpecAnService::DPDCfgApplyDPDUserLookupTableSplit(::grpc::ServerContext* context, const DPDCfgApplyDPDUserLookupTableSplitRequest* request, DPDCfgApplyDPDUserLookupTableSplitResponse* response)
   {
     if (context->IsCancelled()) {
