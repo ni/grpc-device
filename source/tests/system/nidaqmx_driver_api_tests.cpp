@@ -322,48 +322,21 @@ class NiDAQmxDriverApiTests : public Test {
     return create_ao_voltage_chan(request, response);
   }
 
-  ::grpc::Status create_di_chan(CreateDIChanResponse& response = ThrowawayResponse<CreateDIChanResponse>::response())
+  ::grpc::Status create_di_chan(
+    CreateDIChanResponse& response = ThrowawayResponse<CreateDIChanResponse>::response(),
+    const std::string& lines = "gRPCSystemTestDAQ/port0/line0",
+    const std::string& name = "di",
+    LineGrouping line_grouping = LineGrouping::LINE_GROUPING_CHAN_PER_LINE)
   {
     ::grpc::ClientContext context;
     CreateDIChanRequest request;
     set_request_session_name(request);
-    request.set_lines("gRPCSystemTestDAQ/port0/line0");
-    request.set_name_to_assign_to_lines("di");
-    request.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
+    request.set_lines(lines);
+    request.set_name_to_assign_to_lines(name);
+    request.set_line_grouping(line_grouping);
     auto status = stub()->CreateDIChan(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
-  }
-
-  ::grpc::Status create_multi_di_chans(CreateDIChanResponse& response = ThrowawayResponse<CreateDIChanResponse>::response())
-  {
-    // Create first channel with multiple lines (port0/line0:2 = lines 0,1,2)
-    {
-      ::grpc::ClientContext context1;
-      CreateDIChanRequest request1;
-      set_request_session_name(request1);
-      request1.set_lines("gRPCSystemTestDAQ/port0/line0:2");
-      request1.set_name_to_assign_to_lines("di_port0");
-      request1.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
-      auto status1 = stub()->CreateDIChan(&context1, request1, &response);
-      if (!status1.ok()) {
-        client::raise_if_error(status1, context1);
-        return status1;
-      }
-    }
-    
-    // Create second channel with multiple lines (port0/line4:5 = lines 4,5)
-    {
-      ::grpc::ClientContext context2;
-      CreateDIChanRequest request2;
-      set_request_session_name(request2);
-      request2.set_lines("gRPCSystemTestDAQ/port0/line4:5");
-      request2.set_name_to_assign_to_lines("di_port0_lines45");
-      request2.set_line_grouping(LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
-      auto status2 = stub()->CreateDIChan(&context2, request2, &response);
-      client::raise_if_error(status2, context2);
-      return status2;
-    }
   }
 
   CreateDOChanResponse create_do_chan(CreateDOChanResponse& response = ThrowawayResponse<CreateDOChanResponse>::response())
@@ -1796,7 +1769,9 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithNoAttributeMode_ReturnsWa
   const auto NUM_SAMPLES = 100;
   const auto TIMEOUT = 10.0;
   CreateDIChanResponse create_channel_response;
-  auto create_channel_status = create_multi_di_chans(create_channel_response);
+  auto create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line0:2", "di_port0", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line4:5", "di_port0_lines45", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   start_task();
@@ -1825,7 +1800,9 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingMode_ReturnsWavefor
   const auto NUM_SAMPLES = 50;
   const auto TIMEOUT = 10.0;
   CreateDIChanResponse create_channel_response;
-  auto create_channel_status = create_multi_di_chans(create_channel_response);
+  auto create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line0:2", "di_port0", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line4:5", "di_port0_lines45", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   auto timing_request = create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, NUM_SAMPLES);
@@ -1862,7 +1839,9 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithExtendedPropertiesMode_Re
   const auto NUM_SAMPLES = 50;
   const auto TIMEOUT = 10.0;
   CreateDIChanResponse create_channel_response;
-  auto create_channel_status = create_multi_di_chans(create_channel_response);
+  auto create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line0:2", "di_port0", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line4:5", "di_port0_lines45", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   start_task();
@@ -1904,7 +1883,9 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingAndExtendedProperti
   const auto NUM_SAMPLES = 50;
   const auto TIMEOUT = 10.0;
   CreateDIChanResponse create_channel_response;
-  auto create_channel_status = create_multi_di_chans(create_channel_response);
+  auto create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line0:2", "di_port0", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line4:5", "di_port0_lines45", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   auto timing_request = create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, NUM_SAMPLES);
