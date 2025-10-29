@@ -214,4 +214,72 @@ int32 CVICALLBACK SetWfmAttrCallback(
   }
 }
 
+::grpc::Status NiDAQmxService::WriteAnalogWaveforms(::grpc::ServerContext* context, const WriteAnalogWaveformsRequest* request, WriteAnalogWaveformsResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    auto task_grpc_session = request->task();
+    TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+
+    const auto number_of_samples_per_channel = request->num_samps_per_chan();
+    const auto timeout = request->timeout();
+    const auto auto_start = request->auto_start();
+
+    uInt32 num_channels = 0;
+    auto status = library_->GetWriteAttributeUInt32(task, WriteUInt32Attribute::WRITE_ATTRIBUTE_NUM_CHANS, &num_channels);
+    if (!status_ok(status)) {
+      return ConvertApiErrorStatusForTaskHandle(context, status, task);
+    }
+
+    if (num_channels == 0) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No channels to write");
+    }
+
+    const auto& waveforms = request->waveforms();
+    if (static_cast<uInt32>(waveforms.size()) != num_channels) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Write cannot be performed, because the number of channels in the data does not match the number of channels in the task.");
+    }
+
+    std::vector<std::vector<float64>> write_arrays(num_channels);
+    std::vector<const float64*> write_array_ptrs(num_channels);
+    
+    for (uInt32 i = 0; i < num_channels; ++i) {
+      const auto& waveform = waveforms[i];
+      const auto& y_data = waveform.y_data();
+      
+      if (y_data.size() != number_of_samples_per_channel) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The waveforms must all have the same sample count.");
+      }
+      
+      write_arrays[i].assign(y_data.begin(), y_data.end());
+      write_array_ptrs[i] = write_arrays[i].data();
+    }
+
+    int32 samples_per_chan_written = 0;
+    status = library_->InternalWriteAnalogWaveformPerChan(
+        task,
+        number_of_samples_per_channel,
+        auto_start,
+        timeout,
+        write_array_ptrs.data(),
+        num_channels,
+        &samples_per_chan_written,
+        nullptr
+    );
+
+    if (!status_ok(status)) {
+      return ConvertApiErrorStatusForTaskHandle(context, status, task);
+    }
+
+    response->set_samps_per_chan_written(samples_per_chan_written);
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
+  }
+}
+
 }  // namespace nidaqmx_grpc

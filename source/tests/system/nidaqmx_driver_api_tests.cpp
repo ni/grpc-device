@@ -322,6 +322,18 @@ class NiDAQmxDriverApiTests : public Test {
     return create_ao_voltage_chan(request, response);
   }
 
+  ::grpc::Status create_ao_voltage_chan(const std::string& physical_channel, const std::string& channel_name, double min_val, double max_val, CreateAOVoltageChanResponse& response = ThrowawayResponse<CreateAOVoltageChanResponse>::response())
+  {
+    CreateAOVoltageChanRequest request;
+    set_request_session_name(request);
+    request.set_physical_channel(physical_channel);
+    request.set_name_to_assign_to_channel(channel_name);
+    request.set_min_val(min_val);
+    request.set_max_val(max_val);
+    request.set_units(VoltageUnits2::VOLTAGE_UNITS2_VOLTS);
+    return create_ao_voltage_chan(request, response);
+  }
+
   ::grpc::Status create_di_chan(CreateDIChanResponse& response = ThrowawayResponse<CreateDIChanResponse>::response())
   {
     ::grpc::ClientContext context;
@@ -445,6 +457,36 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_timeout(timeout);
     request.set_waveform_attribute_mode(waveform_attribute_mode);
     auto status = stub()->ReadAnalogWaveforms(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+  ::grpc::Status write_analog_waveforms(
+      const std::vector<std::vector<double>>& waveform_data,
+      bool auto_start = false,
+      double timeout = 10.0,
+      WriteAnalogWaveformsResponse& response = ThrowawayResponse<WriteAnalogWaveformsResponse>::response())
+  {
+    ::grpc::ClientContext context;
+    WriteAnalogWaveformsRequest request;
+    set_request_session_name(request);
+    
+    if (waveform_data.empty()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No waveform data provided");
+    }
+    
+    int32 num_samps_per_chan = static_cast<int32>(waveform_data[0].size());
+    request.set_num_samps_per_chan(num_samps_per_chan);
+    request.set_auto_start(auto_start);
+    request.set_timeout(timeout);
+    
+    for (const auto& channel_data : waveform_data) {
+      auto* waveform = request.add_waveforms();
+      auto* y_data = waveform->mutable_y_data();
+      y_data->Add(channel_data.begin(), channel_data.end());
+    }
+    
+    auto status = stub()->WriteAnalogWaveforms(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
   }
@@ -1705,6 +1747,161 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertie
       EXPECT_LE(sample, 3.0);
     }
   }
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_SingleChannel_Succeeds)
+{
+  const double AO_MIN = -5.0;
+  const double AO_MAX = 5.0;
+  const auto NUM_SAMPLES = 1000;
+  const auto TIMEOUT = 10.0;
+  
+  CreateAOVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ao_voltage_chan(AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  // Generate waveform data for single channel
+  std::vector<std::vector<double>> waveform_data(1);
+  waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
+  
+  WriteAnalogWaveformsResponse write_response;
+  auto write_status = write_analog_waveforms(waveform_data, false, TIMEOUT, write_response);
+  stop_task();
+
+  EXPECT_SUCCESS(write_status, write_response);
+  EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MultipleChannels_Succeeds)
+{
+  const double AO_MIN = -3.0;
+  const double AO_MAX = 3.0;
+  const auto NUM_SAMPLES = 500;
+  const auto TIMEOUT = 10.0;
+  
+  CreateAOVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ao_voltage_chan("gRPCSystemTestDAQ/ao0", "ao0", AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_ao_voltage_chan("gRPCSystemTestDAQ/ao1", "ao1", AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  // Generate waveform data for two channels
+  std::vector<std::vector<double>> waveform_data(2);
+  waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
+  waveform_data[1] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
+  
+  WriteAnalogWaveformsResponse write_response;
+  auto write_status = write_analog_waveforms(waveform_data, false, TIMEOUT, write_response);
+  stop_task();
+
+  EXPECT_SUCCESS(write_status, write_response);
+  EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_WithAutoStart_Succeeds)
+{
+  const double AO_MIN = -2.0;
+  const double AO_MAX = 2.0;
+  const auto NUM_SAMPLES = 100;
+  const auto TIMEOUT = 10.0;
+  
+  CreateAOVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ao_voltage_chan(AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  // Don't start task manually since we're using auto_start
+  std::vector<std::vector<double>> waveform_data(1);
+  waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
+  
+  WriteAnalogWaveformsResponse write_response;
+  auto write_status = write_analog_waveforms(waveform_data, true, TIMEOUT, write_response);
+  stop_task();
+
+  EXPECT_SUCCESS(write_status, write_response);
+  EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_WithOutOfRangeValue_ReturnsInvalidAODataError)
+{
+  const double AO_MIN = 0.0;
+  const double AO_MAX = 5.0;
+  const auto NUM_SAMPLES = 100;
+  
+  CreateAOVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ao_voltage_chan(AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  EXPECT_THROW_DRIVER_ERROR({
+    std::vector<std::vector<double>> waveform_data(1);
+    waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
+    waveform_data[0][50] = AO_MAX + 10.0;  // Out of range value
+    
+    WriteAnalogWaveformsResponse write_response;
+    write_analog_waveforms(waveform_data, false, 10.0, write_response);
+  }, INVALID_AO_DATA_WRITE_ERROR);
+  
+  stop_task();
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MismatchedNumberOfWaveforms_ReturnsError)
+{
+  const double AO_MIN = -1.0;
+  const double AO_MAX = 1.0;
+  const auto NUM_SAMPLES = 100;
+  
+  CreateAOVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ao_voltage_chan(AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  // Provide waveforms for 2 channels but task only has 1 channel
+  std::vector<std::vector<double>> waveform_data(2);
+  waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
+  waveform_data[1] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
+  
+  WriteAnalogWaveformsResponse write_response;
+  EXPECT_THROW({
+    write_analog_waveforms(waveform_data, false, 10.0, write_response);
+  }, std::exception);
+  
+  stop_task();
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MismatchedSampleCounts_ReturnsError)
+{
+  const double AO_MIN = -1.0;
+  const double AO_MAX = 1.0;
+  const auto NUM_SAMPLES = 100;
+  
+  CreateAOVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ao_voltage_chan("gRPCSystemTestDAQ/ao0", "ao0", AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_ao_voltage_chan("gRPCSystemTestDAQ/ao1", "ao1", AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  // Provide waveforms with different sample counts
+  std::vector<std::vector<double>> waveform_data(2);
+  waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
+  waveform_data[1] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES / 2);  // Different count
+  
+  WriteAnalogWaveformsResponse write_response;
+  EXPECT_THROW({
+    write_analog_waveforms(waveform_data, false, 10.0, write_response);
+  }, std::exception);
+  
+  stop_task();
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
