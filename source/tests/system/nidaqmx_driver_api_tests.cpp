@@ -1762,7 +1762,6 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_SingleChannel_Succeeds)
 
   start_task();
   
-  // Generate waveform data for single channel
   std::vector<std::vector<double>> waveform_data(1);
   waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   
@@ -1790,7 +1789,6 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MultipleChannels_Succeeds)
 
   start_task();
   
-  // Generate waveform data for two channels
   std::vector<std::vector<double>> waveform_data(2);
   waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   waveform_data[1] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
