@@ -2518,7 +2518,7 @@ functions = {
         'adaptor_parameter': {
             'description': 'Indicates the newly created channel object.',
             'direction': 'output',
-            'python_adaptor': 'self._create_calculated_power_chan(voltage_physical_channel, name_to_assign_to_channel)',
+            'python_adaptor': 'self._create_chan(voltage_physical_channel, name_to_assign_to_channel)',
             'python_data_type': 'nidaqmx.task.channels.AIChannel'
         },
         'calling_convention': 'StdCall',
