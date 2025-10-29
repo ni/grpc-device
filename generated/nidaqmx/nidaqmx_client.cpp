@@ -1112,6 +1112,56 @@ create_ai_bridge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, c
   return response;
 }
 
+CreateAICalculatedPowerChanResponse
+create_ai_calculated_power_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& voltage_physical_channel, const std::string& current_physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& voltage_min_val, const double& voltage_max_val, const double& current_min_val, const double& current_max_val, const simple_variant<PowerUnits, pb::int32>& units, const simple_variant<CurrentShuntResistorLocationWithDefault, pb::int32>& shunt_resistor_loc, const double& ext_shunt_resistor_val, const std::string& custom_scale_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CreateAICalculatedPowerChanRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_voltage_physical_channel(voltage_physical_channel);
+  request.set_current_physical_channel(current_physical_channel);
+  request.set_name_to_assign_to_channel(name_to_assign_to_channel);
+  const auto terminal_config_ptr = terminal_config.get_if<InputTermCfgWithDefault>();
+  const auto terminal_config_raw_ptr = terminal_config.get_if<pb::int32>();
+  if (terminal_config_ptr) {
+    request.set_terminal_config(*terminal_config_ptr);
+  }
+  else if (terminal_config_raw_ptr) {
+    request.set_terminal_config_raw(*terminal_config_raw_ptr);
+  }
+  request.set_voltage_min_val(voltage_min_val);
+  request.set_voltage_max_val(voltage_max_val);
+  request.set_current_min_val(current_min_val);
+  request.set_current_max_val(current_max_val);
+  const auto units_ptr = units.get_if<PowerUnits>();
+  const auto units_raw_ptr = units.get_if<pb::int32>();
+  if (units_ptr) {
+    request.set_units(*units_ptr);
+  }
+  else if (units_raw_ptr) {
+    request.set_units_raw(*units_raw_ptr);
+  }
+  const auto shunt_resistor_loc_ptr = shunt_resistor_loc.get_if<CurrentShuntResistorLocationWithDefault>();
+  const auto shunt_resistor_loc_raw_ptr = shunt_resistor_loc.get_if<pb::int32>();
+  if (shunt_resistor_loc_ptr) {
+    request.set_shunt_resistor_loc(*shunt_resistor_loc_ptr);
+  }
+  else if (shunt_resistor_loc_raw_ptr) {
+    request.set_shunt_resistor_loc_raw(*shunt_resistor_loc_raw_ptr);
+  }
+  request.set_ext_shunt_resistor_val(ext_shunt_resistor_val);
+  request.set_custom_scale_name(custom_scale_name);
+
+  auto response = CreateAICalculatedPowerChanResponse{};
+
+  raise_if_error(
+      stub->CreateAICalculatedPowerChan(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CreateAIChargeChanResponse
 create_ai_charge_chan(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& physical_channel, const std::string& name_to_assign_to_channel, const simple_variant<InputTermCfgWithDefault, pb::int32>& terminal_config, const double& min_val, const double& max_val, const simple_variant<ChargeUnits, pb::int32>& units, const std::string& custom_scale_name)
 {
