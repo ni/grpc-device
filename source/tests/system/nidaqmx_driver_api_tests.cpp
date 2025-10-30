@@ -1772,6 +1772,7 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_SingleChannel_Succeeds)
   EXPECT_SUCCESS(write_status, write_response);
   EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+  EXPECT_GT(write_response.samps_per_chan_written(), 0);
 }
 
 TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MultipleChannels_Succeeds)
@@ -1800,6 +1801,7 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MultipleChannels_Succeeds)
   EXPECT_SUCCESS(write_status, write_response);
   EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+  EXPECT_GT(write_response.samps_per_chan_written(), 0);
 }
 
 TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_WithAutoStart_Succeeds)
@@ -1824,6 +1826,7 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_WithAutoStart_Succeeds)
   EXPECT_SUCCESS(write_status, write_response);
   EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+  EXPECT_GT(write_response.samps_per_chan_written(), 0);
 }
 
 TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_WithOutOfRangeValue_ReturnsInvalidAODataError)
@@ -1867,10 +1870,10 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MismatchedNumberOfWaveforms_R
   waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   waveform_data[1] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   
-  WriteAnalogWaveformsResponse write_response;
-  EXPECT_THROW({
+  EXPECT_THROW_GRPC_INVALID_ARGUMENT({
+    WriteAnalogWaveformsResponse write_response;
     write_analog_waveforms(waveform_data, false, 10.0, write_response);
-  }, std::exception);
+  });
   
   stop_task();
 }
@@ -1894,10 +1897,10 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MismatchedSampleCounts_Return
   waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   waveform_data[1] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES / 2);  // Different count
   
-  WriteAnalogWaveformsResponse write_response;
-  EXPECT_THROW({
+  EXPECT_THROW_GRPC_INVALID_ARGUMENT({
+    WriteAnalogWaveformsResponse write_response;
     write_analog_waveforms(waveform_data, false, 10.0, write_response);
-  }, std::exception);
+  });
   
   stop_task();
 }
