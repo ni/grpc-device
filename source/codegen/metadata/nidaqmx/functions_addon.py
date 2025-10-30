@@ -171,13 +171,13 @@ functions_validation_suppressions = {
     },
     'ReadAnalogWaveforms': {
         'parameters': {
-            # size is determined by the number of channels in the task
+            # size is determined by the Read.ChannelsToRead property
             'waveforms': ['ARRAY_PARAMETER_NEEDS_SIZE']
         }
     },
     'ReadDigitalWaveforms': {
         'parameters': {
-            # size is determined by the number of channels in the task
+            # size is determined by the Read.ChannelsToRead property
             'waveforms': ['ARRAY_PARAMETER_NEEDS_SIZE']
         }
     }
