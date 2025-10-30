@@ -1487,7 +1487,7 @@ TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_EmptyWaveforms_Fails)
 
   EXPECT_FALSE(write_status.ok());
   EXPECT_EQ(write_status.error_code(), ::grpc::StatusCode::INVALID_ARGUMENT);
-  EXPECT_THAT(write_status.error_message(), HasSubstr("Number of waveforms must match number of channels"));
+  EXPECT_THAT(write_status.error_message(), HasSubstr("number of channels in the task does not match the number of waveforms"));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadU8DigitalData_Succeeds)

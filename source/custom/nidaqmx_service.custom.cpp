@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include <cstdint>
+#include <cstring>
 #include <server/converters.h>
 #include "NIDAQmxInternalWaveform.h"
 
@@ -429,11 +430,9 @@ void SetWaveformTiming(
       // Sample 1: Channel 0 signals, Channel 1 signals, Channel 2 signals, ...
       // Within each channel's data in a sample, signals are sequential: Signal0, Signal1, Signal2, ...
       for (int32 sample = 0; sample < number_of_samples_per_channel; ++sample) {
-        const uInt32 base_index = sample * num_channels * max_bytes_per_chan + channel * max_bytes_per_chan;
-        for (int32 signal = 0; signal < signal_count; ++signal) {
-          const uInt32 data_index = sample * signal_count + signal;
-          write_array[base_index + signal] = static_cast<uInt8>(y_data[data_index]);
-        }
+        const uInt32 dest_index = sample * num_channels * max_bytes_per_chan + channel * max_bytes_per_chan;
+        const uInt32 src_index = sample * signal_count;
+        std::memcpy(&write_array[dest_index], &y_data[src_index], signal_count);
       }
     }
 
