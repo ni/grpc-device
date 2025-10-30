@@ -14,6 +14,8 @@ using google::protobuf::RepeatedPtrField;
 using ::ni::protobuf::types::DoubleAnalogWaveform;
 using ::ni::protobuf::types::DigitalWaveform;
 
+namespace {
+
 // Returns true if it's safe to use outputs of a method with the given status.
 inline bool status_ok(int32 status)
 {
@@ -42,7 +44,7 @@ struct TimingData {
 
 // Universal callback function for setting waveform attributes (both analog and digital)
 template<typename WaveformCollectionType>
-static int32 CVICALLBACK SetWfmAttrCallbackTemplated(
+int32 CVICALLBACK SetWfmAttrCallback(
     const uInt32 channel_index,
     const char attribute_name[],
     const int32 attribute_type,
@@ -116,7 +118,7 @@ static int32 CVICALLBACK SetWfmAttrCallbackTemplated(
 }
 
 template<typename RequestType>
-static int32 GetWaveformAttributeMode(const RequestType* request)
+int32 GetWaveformAttributeMode(const RequestType* request)
 {
   switch (request->waveform_attribute_mode_enum_case()) {
     case RequestType::WaveformAttributeModeEnumCase::kWaveformAttributeMode: {
@@ -133,7 +135,7 @@ static int32 GetWaveformAttributeMode(const RequestType* request)
 }
 
 template<typename WaveformType>
-static void SetWaveformTiming(
+void SetWaveformTiming(
     uInt32 channel_index,
     const TimingData& timing_data,
     WaveformType* waveform)
@@ -142,6 +144,8 @@ static void SetWaveformTiming(
   convert_dot_net_ticks_to_precision_timestamp(timing_data.t0_array[channel_index], waveform_t0);
   waveform->set_dt(static_cast<double>(timing_data.dt_array[channel_index]) / DotNetTicksPerSecond);
 }
+
+} // anonymous namespace
 
 ::grpc::Status NiDAQmxService::ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task)
 {
@@ -194,7 +198,7 @@ static void SetWaveformTiming(
 
     DAQmxSetWfmAttrCallbackPtr callback_ptr = nullptr;
     if (extended_properties_enabled) {
-      callback_ptr = &SetWfmAttrCallbackTemplated<RepeatedPtrField<DoubleAnalogWaveform>>;
+      callback_ptr = &SetWfmAttrCallback<RepeatedPtrField<DoubleAnalogWaveform>>;
     }
 
     int32 samples_per_chan_read = 0;
@@ -288,7 +292,7 @@ static void SetWaveformTiming(
 
     DAQmxSetWfmAttrCallbackPtr callback_ptr = nullptr;
     if (extended_properties_enabled) {
-      callback_ptr = &SetWfmAttrCallbackTemplated<RepeatedPtrField<DigitalWaveform>>;
+      callback_ptr = &SetWfmAttrCallback<RepeatedPtrField<DigitalWaveform>>;
     }
 
     std::vector<uInt32> bytes_per_chan_array(num_channels);
