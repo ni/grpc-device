@@ -344,6 +344,16 @@ class NiDAQmxDriverApiTests : public Test {
     return client::create_do_chan(stub(), task(), "gRPCSystemTestDAQ/port1/line0", "do", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
   }
 
+  ::grpc::Status create_do_chan(
+      CreateDOChanResponse& response,
+      const std::string& lines,
+      const std::string& name_to_assign_to_channel,
+      LineGrouping line_grouping)
+  {
+    response = client::create_do_chan(stub(), task(), lines, name_to_assign_to_channel, line_grouping);
+    return ::grpc::Status::OK;
+  }
+
   ::grpc::Status create_ci_freq_chan(CreateCIFreqChanResponse& response)
   {
     ::grpc::ClientContext context;
@@ -466,6 +476,27 @@ class NiDAQmxDriverApiTests : public Test {
     request.set_timeout(timeout);
     request.set_waveform_attribute_mode(waveform_attribute_mode);
     auto status = stub()->ReadDigitalWaveforms(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+  ::grpc::Status write_digital_waveforms(
+      int32 number_of_samples_per_channel,
+      const std::vector<ni::protobuf::types::DigitalWaveform>& waveforms,
+      bool auto_start = false,
+      double timeout = 10.0,
+      WriteDigitalWaveformsResponse& response = ThrowawayResponse<WriteDigitalWaveformsResponse>::response())
+  {
+    ::grpc::ClientContext context;
+    WriteDigitalWaveformsRequest request;
+    set_request_session_name(request);
+    request.set_num_samps_per_chan(number_of_samples_per_channel);
+    request.set_auto_start(auto_start);
+    request.set_timeout(timeout);
+    for (const auto& waveform : waveforms) {
+      *request.add_waveforms() = waveform;
+    }
+    auto status = stub()->WriteDigitalWaveforms(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
   }
@@ -1256,6 +1287,28 @@ class NiDAQmxDriverApiTests : public Test {
     }
   }
 
+  ni::protobuf::types::DigitalWaveform create_test_digital_waveform(
+      int32 num_samples,
+      int32 signal_count,
+      int32 line_offset = 0) const
+  {
+    ni::protobuf::types::DigitalWaveform waveform;
+    waveform.set_signal_count(signal_count);
+    
+    auto* y_data = waveform.mutable_y_data();
+    y_data->reserve(num_samples * signal_count);
+    
+    for (int32 sample = 0; sample < num_samples; ++sample) {
+      for (int32 line = 0; line < signal_count; ++line) {
+        int32 line_number = line + line_offset;
+        auto expected_data = get_expected_data_for_line(num_samples, line_number);
+        y_data->push_back(expected_data[sample]);
+      }
+    }
+    
+    return waveform;
+  }
+
   DeviceServerInterface* device_server_;
   std::unique_ptr<::nidevice_grpc::Session> driver_session_;
   std::unique_ptr<NiDAQmx::Stub> nidaqmx_stub_;
@@ -1366,6 +1419,75 @@ TEST_F(NiDAQmxDriverApiTests, WriteU8DigitalData_Succeeds)
 
   EXPECT_SUCCESS(status, response);
   EXPECT_EQ(4, response.samps_per_chan_written());
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_Succeeds)
+{
+  const auto NUM_SAMPLES = 50;
+  const auto TIMEOUT = 10.0;
+  CreateDOChanResponse create_channel_response;
+  auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0:2", "do_port1", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line4:5", "do_port1_lines45", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  // Create test waveforms
+  std::vector<ni::protobuf::types::DigitalWaveform> waveforms;
+  waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 3, 0)); // 3 lines starting at line 0
+  waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 2, 4)); // 2 lines starting at line 4
+
+  start_task();
+  WriteDigitalWaveformsResponse write_response;
+  auto write_status = write_digital_waveforms(NUM_SAMPLES, waveforms, false, TIMEOUT, write_response);
+  stop_task();
+
+  EXPECT_SUCCESS(write_status, write_response);
+  EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_WithAutoStart_Succeeds)
+{
+  const auto NUM_SAMPLES = 25;
+  const auto TIMEOUT = 10.0;
+  CreateDOChanResponse create_channel_response;
+  auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0", "do_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  // Create test waveform for single channel
+  std::vector<ni::protobuf::types::DigitalWaveform> waveforms;
+  waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 1, 0)); // 1 line starting at line 0
+
+  WriteDigitalWaveformsResponse write_response;
+  auto write_status = write_digital_waveforms(NUM_SAMPLES, waveforms, true, TIMEOUT, write_response);
+
+  EXPECT_SUCCESS(write_status, write_response);
+  EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_EmptyWaveforms_Fails)
+{
+  const auto NUM_SAMPLES = 10;
+  CreateDOChanResponse create_channel_response;
+  auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0", "do_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  std::vector<ni::protobuf::types::DigitalWaveform> waveforms; // Empty waveforms
+
+  // Use direct stub call without raise_if_error to check for gRPC errors
+  ::grpc::ClientContext context;
+  WriteDigitalWaveformsRequest request;
+  WriteDigitalWaveformsResponse response;
+  set_request_session_name(request);
+  request.set_num_samps_per_chan(NUM_SAMPLES);
+  request.set_auto_start(false);
+  request.set_timeout(10.0);
+  auto write_status = stub()->WriteDigitalWaveforms(&context, request, &response);
+
+  EXPECT_FALSE(write_status.ok());
+  EXPECT_EQ(write_status.error_code(), ::grpc::StatusCode::INVALID_ARGUMENT);
+  EXPECT_THAT(write_status.error_message(), HasSubstr("Number of waveforms must match number of channels"));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadU8DigitalData_Succeeds)
