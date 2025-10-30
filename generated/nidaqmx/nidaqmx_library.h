@@ -60,6 +60,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 CreateAIAccelChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, int32 currentExcitSource, float64 currentExcitVal, const char customScaleName[]) override;
   int32 CreateAIAccelChargeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, float64 sensitivity, int32 sensitivityUnits, const char customScaleName[]) override;
   int32 CreateAIBridgeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], float64 minVal, float64 maxVal, int32 units, int32 bridgeConfig, int32 voltageExcitSource, float64 voltageExcitVal, float64 nominalBridgeResistance, const char customScaleName[]) override;
+  int32 CreateAICalculatedPowerChan(TaskHandle task, const char voltagePhysicalChannel[], const char currentPhysicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 voltageMinVal, float64 voltageMaxVal, float64 currentMinVal, float64 currentMaxVal, int32 units, int32 shuntResistorLoc, float64 extShuntResistorVal, const char customScaleName[]) override;
   int32 CreateAIChargeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[]) override;
   int32 CreateAICurrentChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 shuntResistorLoc, float64 extShuntResistorVal, const char customScaleName[]) override;
   int32 CreateAICurrentRMSChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, int32 shuntResistorLoc, float64 extShuntResistorVal, const char customScaleName[]) override;
@@ -470,6 +471,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using CreateAIAccelChanPtr = decltype(&DAQmxCreateAIAccelChan);
   using CreateAIAccelChargeChanPtr = decltype(&DAQmxCreateAIAccelChargeChan);
   using CreateAIBridgeChanPtr = decltype(&DAQmxCreateAIBridgeChan);
+  using CreateAICalculatedPowerChanPtr = decltype(&DAQmxCreateAICalculatedPowerChan);
   using CreateAIChargeChanPtr = decltype(&DAQmxCreateAIChargeChan);
   using CreateAICurrentChanPtr = decltype(&DAQmxCreateAICurrentChan);
   using CreateAICurrentRMSChanPtr = decltype(&DAQmxCreateAICurrentRMSChan);
@@ -879,6 +881,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     CreateAIAccelChanPtr CreateAIAccelChan;
     CreateAIAccelChargeChanPtr CreateAIAccelChargeChan;
     CreateAIBridgeChanPtr CreateAIBridgeChan;
+    CreateAICalculatedPowerChanPtr CreateAICalculatedPowerChan;
     CreateAIChargeChanPtr CreateAIChargeChan;
     CreateAICurrentChanPtr CreateAICurrentChan;
     CreateAICurrentRMSChanPtr CreateAICurrentRMSChan;

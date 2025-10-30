@@ -202,6 +202,11 @@ int32 CreateAIBridgeChan(TaskHandle task, const char physicalChannel[], const ch
   return DAQmxCreateAIBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, customScaleName);
 }
 
+int32 CreateAICalculatedPowerChan(TaskHandle task, const char voltagePhysicalChannel[], const char currentPhysicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 voltageMinVal, float64 voltageMaxVal, float64 currentMinVal, float64 currentMaxVal, int32 units, int32 shuntResistorLoc, float64 extShuntResistorVal, const char customScaleName[])
+{
+  return DAQmxCreateAICalculatedPowerChan(task, voltagePhysicalChannel, currentPhysicalChannel, nameToAssignToChannel, terminalConfig, voltageMinVal, voltageMaxVal, currentMinVal, currentMaxVal, units, shuntResistorLoc, extShuntResistorVal, customScaleName);
+}
+
 int32 CreateAIChargeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[])
 {
   return DAQmxCreateAIChargeChan(task, physicalChannel, nameToAssignToChannel, terminalConfig, minVal, maxVal, units, customScaleName);

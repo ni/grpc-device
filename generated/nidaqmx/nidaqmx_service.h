@@ -131,6 +131,7 @@ public:
   ::grpc::Status CreateAIAccelChan(::grpc::ServerContext* context, const CreateAIAccelChanRequest* request, CreateAIAccelChanResponse* response) override;
   ::grpc::Status CreateAIAccelChargeChan(::grpc::ServerContext* context, const CreateAIAccelChargeChanRequest* request, CreateAIAccelChargeChanResponse* response) override;
   ::grpc::Status CreateAIBridgeChan(::grpc::ServerContext* context, const CreateAIBridgeChanRequest* request, CreateAIBridgeChanResponse* response) override;
+  ::grpc::Status CreateAICalculatedPowerChan(::grpc::ServerContext* context, const CreateAICalculatedPowerChanRequest* request, CreateAICalculatedPowerChanResponse* response) override;
   ::grpc::Status CreateAIChargeChan(::grpc::ServerContext* context, const CreateAIChargeChanRequest* request, CreateAIChargeChanResponse* response) override;
   ::grpc::Status CreateAICurrentChan(::grpc::ServerContext* context, const CreateAICurrentChanRequest* request, CreateAICurrentChanResponse* response) override;
   ::grpc::Status CreateAICurrentRMSChan(::grpc::ServerContext* context, const CreateAICurrentRMSChanRequest* request, CreateAICurrentRMSChanResponse* response) override;
