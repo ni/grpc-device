@@ -16,6 +16,9 @@ using ::ni::protobuf::types::DoubleAnalogWaveform;
 using ::ni::protobuf::types::DigitalWaveform;
 
 namespace {
+using ::ni::protobuf::types::DigitalWaveform;
+
+namespace {
 
 // Returns true if it's safe to use outputs of a method with the given status.
 inline bool status_ok(int32 status)
@@ -23,6 +26,28 @@ inline bool status_ok(int32 status)
   return status >= 0;
 }
 
+// Encapsulates timing arrays and pointers for waveform operations
+struct TimingData {
+  std::vector<int64> t0_array;
+  std::vector<int64> dt_array;
+  int64* t0_ptr = nullptr;
+  int64* dt_ptr = nullptr;
+  uInt32 timing_array_size = 0;
+
+  TimingData(uInt32 num_channels) {
+    if (num_channels == 0) {
+      return;
+    }
+    t0_array.resize(num_channels, 0);
+    dt_array.resize(num_channels, 0);
+    t0_ptr = t0_array.data();
+    dt_ptr = dt_array.data();
+    timing_array_size = num_channels;
+  }
+};
+
+// Universal callback function for setting waveform attributes (both analog and digital)
+template<typename WaveformCollectionType>
 // Encapsulates timing arrays and pointers for waveform operations
 struct TimingData {
   std::vector<int64> t0_array;
@@ -54,6 +79,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
     void* callback_data)
 {
   try {
+    auto* waveforms = static_cast<WaveformCollectionType*>(callback_data);
     auto* waveforms = static_cast<WaveformCollectionType*>(callback_data);
     if (!waveforms || channel_index >= static_cast<uInt32>(waveforms->size())) {
       return -1;
@@ -148,6 +174,36 @@ void SetWaveformTiming(
 
 } // anonymous namespace
 
+template<typename RequestType>
+int32 GetWaveformAttributeMode(const RequestType* request)
+{
+  switch (request->waveform_attribute_mode_enum_case()) {
+    case RequestType::WaveformAttributeModeEnumCase::kWaveformAttributeMode: {
+      return static_cast<int32>(request->waveform_attribute_mode());
+    }
+    case RequestType::WaveformAttributeModeEnumCase::kWaveformAttributeModeRaw: {
+      return static_cast<int32>(request->waveform_attribute_mode_raw());
+    }
+    case RequestType::WaveformAttributeModeEnumCase::WAVEFORM_ATTRIBUTE_MODE_ENUM_NOT_SET: {
+      return 0;
+    }
+  }
+  return 0;
+}
+
+template<typename WaveformType>
+void SetWaveformTiming(
+    uInt32 channel_index,
+    const TimingData& timing_data,
+    WaveformType* waveform)
+{
+  auto* waveform_t0 = waveform->mutable_t0();
+  convert_dot_net_ticks_to_precision_timestamp(timing_data.t0_array[channel_index], waveform_t0);
+  waveform->set_dt(static_cast<double>(timing_data.dt_array[channel_index]) / DotNetTicksPerSecond);
+}
+
+} // anonymous namespace
+
 ::grpc::Status NiDAQmxService::ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task)
 {
   // This implementation assumes this method is always called on the same thread where the error occurred.
@@ -167,6 +223,7 @@ void SetWaveformTiming(
 
     const auto number_of_samples_per_channel = request->num_samps_per_chan();
     const auto timeout = request->timeout();
+    
     
     uInt32 num_channels = 0;
     auto status = library_->GetReadAttributeUInt32(task, ReadUInt32Attribute::READ_ATTRIBUTE_NUM_CHANS, &num_channels);
@@ -200,6 +257,15 @@ void SetWaveformTiming(
     DAQmxSetWfmAttrCallbackPtr callback_ptr = nullptr;
     if (extended_properties_enabled) {
       callback_ptr = &SetWfmAttrCallback<RepeatedPtrField<DoubleAnalogWaveform>>;
+    int32 waveform_attribute_mode = GetWaveformAttributeMode(request);
+    const bool timing_enabled = (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) != 0;
+    const bool extended_properties_enabled = (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES) != 0;
+
+    TimingData timing_data(timing_enabled ? num_channels : 0);
+
+    DAQmxSetWfmAttrCallbackPtr callback_ptr = nullptr;
+    if (extended_properties_enabled) {
+      callback_ptr = &SetWfmAttrCallback<RepeatedPtrField<DoubleAnalogWaveform>>;
     }
 
     int32 samples_per_chan_read = 0;
@@ -207,6 +273,9 @@ void SetWaveformTiming(
         task,
         number_of_samples_per_channel,
         timeout,
+        timing_data.t0_array.data(),
+        timing_data.dt_array.data(),
+        timing_data.timing_array_size,
         timing_data.t0_array.data(),
         timing_data.dt_array.data(),
         timing_data.timing_array_size,
@@ -223,6 +292,64 @@ void SetWaveformTiming(
       return ConvertApiErrorStatusForTaskHandle(context, status, task);
     }
 
+    for (uInt32 channel = 0; channel < num_channels; ++channel) {
+      auto* waveform = response->mutable_waveforms(channel);
+
+      auto* y_data = waveform->mutable_y_data();
+      y_data->Add(read_arrays[channel].data(), read_arrays[channel].data() + samples_per_chan_read);
+
+      if (timing_enabled) {
+        SetWaveformTiming(channel, timing_data, waveform);
+      }
+    }
+
+    response->set_samps_per_chan_read(samples_per_chan_read);
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
+  }
+}
+
+::grpc::Status NiDAQmxService::ReadDigitalWaveforms(::grpc::ServerContext* context, const ReadDigitalWaveformsRequest* request, ReadDigitalWaveformsResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    auto task_grpc_session = request->task();
+    TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+
+    const auto number_of_samples_per_channel = request->num_samps_per_chan();
+    const auto timeout = request->timeout();
+    
+    uInt32 num_channels = 0;
+    auto status = library_->GetReadAttributeUInt32(task, ReadUInt32Attribute::READ_ATTRIBUTE_NUM_CHANS, &num_channels);
+    if (!status_ok(status)) {
+      return ConvertApiErrorStatusForTaskHandle(context, status, task);
+    }
+
+    if (num_channels == 0) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No channels to read");
+    }
+
+    // Get the maximum number of lines per channel to calculate array size
+    uInt32 max_bytes_per_chan = 0;
+    status = library_->GetReadAttributeUInt32(task, ReadUInt32Attribute::READ_ATTRIBUTE_DIGITAL_LINES_BYTES_PER_CHAN, &max_bytes_per_chan);
+    if (!status_ok(status)) {
+      return ConvertApiErrorStatusForTaskHandle(context, status, task);
+    }
+
+    if (max_bytes_per_chan == 0) {
+      return ::grpc::Status(::grpc::UNKNOWN, "Digital lines bytes per channel is 0");
+    }
+
+    // Calculate total array size needed (samples * channels * max_bytes_per_chan)
+    const uInt32 array_size = number_of_samples_per_channel * num_channels * max_bytes_per_chan;
+    std::vector<uInt8> read_array(array_size);
+
+    response->mutable_waveforms()->Reserve(num_channels);
     for (uInt32 channel = 0; channel < num_channels; ++channel) {
       auto* waveform = response->mutable_waveforms(channel);
 
@@ -329,7 +456,68 @@ void SetWaveformTiming(
       const uInt32 bytes_per_chan = bytes_per_chan_array[channel];
       waveform->set_signal_count(static_cast<int32>(bytes_per_chan));
 
+      response->add_waveforms();
+    }
+    
+    int32 waveform_attribute_mode = GetWaveformAttributeMode(request);
+    const bool timing_enabled = (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) != 0;
+    const bool extended_properties_enabled = (waveform_attribute_mode & WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES) != 0;
+
+    TimingData timing_data(timing_enabled ? num_channels : 0);
+
+    DAQmxSetWfmAttrCallbackPtr callback_ptr = nullptr;
+    if (extended_properties_enabled) {
+      callback_ptr = &SetWfmAttrCallback<RepeatedPtrField<DigitalWaveform>>;
+    }
+
+    std::vector<uInt32> bytes_per_chan_array(num_channels);
+    
+    int32 samples_per_chan_read = 0;
+    int32 num_bytes_per_samp = 0;
+    status = library_->InternalReadDigitalWaveform(
+        task,
+        number_of_samples_per_channel,
+        timeout,
+        GROUP_BY_GROUP_BY_SCAN_NUMBER,
+        timing_data.t0_array.data(),
+        timing_data.dt_array.data(),
+        timing_data.timing_array_size,
+        callback_ptr,
+        response->mutable_waveforms(),
+        read_array.data(),
+        array_size,
+        &samples_per_chan_read,
+        &num_bytes_per_samp,
+        bytes_per_chan_array.data(),
+        num_channels,
+        nullptr
+    );
+
+    if (!status_ok(status)) {
+      return ConvertApiErrorStatusForTaskHandle(context, status, task);
+    }
+
+    for (uInt32 channel = 0; channel < num_channels; ++channel) {
+      auto* waveform = response->mutable_waveforms(channel);
+
+      const uInt32 bytes_per_chan = bytes_per_chan_array[channel];
+      waveform->set_signal_count(static_cast<int32>(bytes_per_chan));
+
       auto* y_data = waveform->mutable_y_data();
+      y_data->reserve(samples_per_chan_read * bytes_per_chan);
+      
+      // Data layout: grouped by scan number (interleaved)
+      // Sample 0: Channel 0 signals, Channel 1 signals, Channel 2 signals, ...
+      // Sample 1: Channel 0 signals, Channel 1 signals, Channel 2 signals, ...
+      // Within each channel's data in a sample, signals are sequential: Signal0, Signal1, Signal2, ...
+      for (int32 sample = 0; sample < samples_per_chan_read; ++sample) {
+        const uInt32 sample_start = sample * num_channels * max_bytes_per_chan;
+        const uInt32 channel_offset = sample_start + channel * max_bytes_per_chan;
+        y_data->append(reinterpret_cast<const char*>(&read_array[channel_offset]), bytes_per_chan);
+      }
+
+      if (timing_enabled) {
+        SetWaveformTiming(channel, timing_data, waveform);
       y_data->reserve(samples_per_chan_read * bytes_per_chan);
       
       // Data layout: grouped by scan number (interleaved)
