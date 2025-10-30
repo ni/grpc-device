@@ -220,12 +220,13 @@ int32 CVICALLBACK SetWfmAttrCallback(
     return ::grpc::Status::CANCELLED;
   }
   try {
-    auto task_grpc_session = request->task();
-    TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+    const auto task_grpc_session = request->task();
+    const TaskHandle task = session_repository_->access_session(task_grpc_session.name());
 
-    const auto number_of_samples_per_channel = request->num_samps_per_chan();
-    const auto timeout = request->timeout();
-    const auto auto_start = request->auto_start();
+    const int32 number_of_samples_per_channel = request->num_samps_per_chan();
+    const double timeout = request->timeout();
+    const bool auto_start = request->auto_start();
+    const auto& waveforms = request->waveforms();
 
     uInt32 num_channels = 0;
     auto status = library_->GetWriteAttributeUInt32(task, WriteUInt32Attribute::WRITE_ATTRIBUTE_NUM_CHANS, &num_channels);
@@ -237,24 +238,29 @@ int32 CVICALLBACK SetWfmAttrCallback(
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No channels to write");
     }
 
-    const auto& waveforms = request->waveforms();
+    if (number_of_samples_per_channel <= 0) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Number of samples per channel must be positive");
+    }
+
     if (static_cast<uInt32>(waveforms.size()) != num_channels) {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Write cannot be performed, because the number of channels in the data does not match the number of channels in the task.");
     }
 
-    std::vector<std::vector<float64>> write_arrays(num_channels);
-    std::vector<const float64*> write_array_ptrs(num_channels);
-    
-    for (uInt32 i = 0; i < num_channels; ++i) {
-      const auto& waveform = waveforms[i];
+    for (uInt32 channel_index = 0; channel_index < num_channels; ++channel_index) {
+      const auto& waveform = waveforms[channel_index];
       const auto& y_data = waveform.y_data();
       
-      if (y_data.size() != number_of_samples_per_channel) {
+      if (static_cast<int32>(y_data.size()) != number_of_samples_per_channel) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The waveforms must all have the same sample count.");
       }
-      
-      write_arrays[i].assign(y_data.begin(), y_data.end());
-      write_array_ptrs[i] = write_arrays[i].data();
+    }
+
+    std::vector<const float64*> write_array_ptrs(num_channels);
+    
+    for (uInt32 channel_index = 0; channel_index < num_channels; ++channel_index) {
+      const auto& waveform = waveforms[channel_index];
+      const auto& y_data = waveform.y_data();
+      write_array_ptrs[channel_index] = y_data.data();
     }
 
     int32 samples_per_chan_written = 0;
