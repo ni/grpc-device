@@ -1431,7 +1431,6 @@ TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_Succeeds)
   create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line4:5", "do_port1_lines45", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
-  // Create test waveforms
   std::vector<ni::protobuf::types::DigitalWaveform> waveforms;
   waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 3, 0)); // 3 lines starting at line 0
   waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 2, 4)); // 2 lines starting at line 4
@@ -1454,7 +1453,6 @@ TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_WithAutoStart_Succeeds)
   auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0", "do_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
-  // Create test waveform for single channel
   std::vector<ni::protobuf::types::DigitalWaveform> waveforms;
   waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 1, 0)); // 1 line starting at line 0
 
