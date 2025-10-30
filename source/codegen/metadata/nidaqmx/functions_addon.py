@@ -170,13 +170,13 @@ functions_validation_suppressions = {
     },
     'ReadAnalogWaveforms': {
         'parameters': {
-            # size is determined by the number of channels in the task
+            # size is determined by the Read.ChannelsToRead property
             'waveforms': ['ARRAY_PARAMETER_NEEDS_SIZE']
         }
     },
     'WriteAnalogWaveforms': {
         'parameters': {
-            # size is determined by the number of channels in the task
+            # size is determined by the Write.NumChans property
             'waveforms': ['ARRAY_PARAMETER_NEEDS_SIZE']
         }
     }
