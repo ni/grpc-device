@@ -12441,5 +12441,26 @@ read_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, c
   return response;
 }
 
+WriteAnalogWaveformsResponse
+write_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const std::vector<ni::protobuf::types::DoubleAnalogWaveform>& waveforms, const bool& auto_start, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = WriteAnalogWaveformsRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  copy_array(waveforms, request.mutable_waveforms());
+  request.set_auto_start(auto_start);
+  request.set_timeout(timeout);
+
+  auto response = WriteAnalogWaveformsResponse{};
+
+  raise_if_error(
+      stub->WriteAnalogWaveforms(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nidaqmx_grpc::experimental::client

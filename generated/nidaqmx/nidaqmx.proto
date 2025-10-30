@@ -467,6 +467,7 @@ service NiDAQmx {
   rpc WriteToTEDSFromArray(WriteToTEDSFromArrayRequest) returns (WriteToTEDSFromArrayResponse);
   rpc WriteToTEDSFromFile(WriteToTEDSFromFileRequest) returns (WriteToTEDSFromFileResponse);
   rpc ReadAnalogWaveforms(ReadAnalogWaveformsRequest) returns (ReadAnalogWaveformsResponse);
+  rpc WriteAnalogWaveforms(WriteAnalogWaveformsRequest) returns (WriteAnalogWaveformsResponse);
 }
 
 enum BufferUInt32Attribute {
@@ -11533,5 +11534,18 @@ message ReadAnalogWaveformsResponse {
   int32 status = 1;
   repeated ni.protobuf.types.DoubleAnalogWaveform waveforms = 2;
   int32 samps_per_chan_read = 3;
+}
+
+message WriteAnalogWaveformsRequest {
+  nidevice_grpc.Session task = 1;
+  int32 num_samps_per_chan = 2;
+  repeated ni.protobuf.types.DoubleAnalogWaveform waveforms = 3;
+  bool auto_start = 4;
+  double timeout = 5;
+}
+
+message WriteAnalogWaveformsResponse {
+  int32 status = 1;
+  int32 samps_per_chan_written = 2;
 }
 
