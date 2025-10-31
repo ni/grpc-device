@@ -11,7 +11,7 @@
 
 #include <memory>
 
-#include <nidmmRemoteDebug.h> // for ViSession
+#include <nidmm.h> // for ViSession
 
 namespace grpc {
 class ServerBuilder;
