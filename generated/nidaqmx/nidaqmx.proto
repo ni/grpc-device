@@ -11538,10 +11538,9 @@ message ReadAnalogWaveformsResponse {
 
 message WriteAnalogWaveformsRequest {
   nidevice_grpc.Session task = 1;
-  int32 num_samps_per_chan = 2;
-  repeated ni.protobuf.types.DoubleAnalogWaveform waveforms = 3;
-  bool auto_start = 4;
-  double timeout = 5;
+  bool auto_start = 2;
+  double timeout = 3;
+  repeated ni.protobuf.types.DoubleAnalogWaveform waveforms = 4;
 }
 
 message WriteAnalogWaveformsResponse {

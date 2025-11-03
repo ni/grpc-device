@@ -12442,16 +12442,15 @@ read_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, c
 }
 
 WriteAnalogWaveformsResponse
-write_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const std::vector<ni::protobuf::types::DoubleAnalogWaveform>& waveforms, const bool& auto_start, const double& timeout)
+write_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout, const std::vector<ni::protobuf::types::DoubleAnalogWaveform>& waveforms)
 {
   ::grpc::ClientContext context;
 
   auto request = WriteAnalogWaveformsRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_num_samps_per_chan(num_samps_per_chan);
-  copy_array(waveforms, request.mutable_waveforms());
   request.set_auto_start(auto_start);
   request.set_timeout(timeout);
+  copy_array(waveforms, request.mutable_waveforms());
 
   auto response = WriteAnalogWaveformsResponse{};
 

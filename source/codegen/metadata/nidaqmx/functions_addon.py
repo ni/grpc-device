@@ -84,25 +84,6 @@ functions_override_metadata = {
                 'type': 'TaskHandle'
             },
             {
-                'ctypes_data_type': 'ctypes.c_int',
-                'direction': 'in',
-                'is_optional_in_python': False,
-                'name': 'numSampsPerChan',
-                'python_data_type': 'int',
-                'python_description': '',
-                'python_type_annotation': 'int',
-                'type': 'int32'
-            },
-            {
-                'direction': 'in',
-                'is_optional_in_python': False,
-                'name': 'waveforms',
-                'python_data_type': 'object',
-                'python_description': 'The waveforms to write to the specified channels.',
-                'python_type_annotation': 'List[object]',
-                'type': 'repeated ni.protobuf.types.DoubleAnalogWaveform'
-            },
-            {
                 'ctypes_data_type': 'ctypes.c_bool',
                 'direction': 'in',
                 'is_optional_in_python': True,
@@ -123,6 +104,15 @@ functions_override_metadata = {
                 'python_description': 'Specifies the time in seconds to wait for the device to respond before timing out.',
                 'python_type_annotation': 'Optional[float]',
                 'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'waveforms',
+                'python_data_type': 'object',
+                'python_description': 'The waveforms to write to the specified channels.',
+                'python_type_annotation': 'List[object]',
+                'type': 'repeated ni.protobuf.types.DoubleAnalogWaveform'
             },
             {
                 'ctypes_data_type': 'ctypes.c_int',

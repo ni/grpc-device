@@ -475,8 +475,6 @@ class NiDAQmxDriverApiTests : public Test {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No waveform data provided");
     }
     
-    int32 num_samps_per_chan = static_cast<int32>(waveform_data[0].size());
-    request.set_num_samps_per_chan(num_samps_per_chan);
     request.set_auto_start(auto_start);
     request.set_timeout(timeout);
     
@@ -1870,10 +1868,16 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MismatchedNumberOfWaveforms_R
   waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   waveform_data[1] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   
-  EXPECT_THROW_GRPC_INVALID_ARGUMENT({
-    WriteAnalogWaveformsResponse write_response;
-    write_analog_waveforms(waveform_data, false, 10.0, write_response);
-  });
+  EXPECT_THROW({
+    try {
+      WriteAnalogWaveformsResponse write_response;
+      write_analog_waveforms(waveform_data, false, 10.0, write_response);
+    }
+    catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
+      EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
+      throw;
+    }
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
   
   stop_task();
 }
@@ -1901,6 +1905,30 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MismatchedSampleCounts_Return
     WriteAnalogWaveformsResponse write_response;
     write_analog_waveforms(waveform_data, false, 10.0, write_response);
   });
+  
+  stop_task();
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_ZeroSamples_Succeeds)
+{
+  const double AO_MIN = -1.0;
+  const double AO_MAX = 1.0;
+  
+  CreateAOVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ao_voltage_chan("gRPCSystemTestDAQ/ao0", "ao0", AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  // Provide waveforms with zero samples
+  std::vector<std::vector<double>> waveform_data(1);
+  waveform_data[0] = {};  // Empty waveform
+  
+  WriteAnalogWaveformsResponse write_response;
+  auto write_status = write_analog_waveforms(waveform_data, false, 10.0, write_response);
+  
+  EXPECT_SUCCESS(write_status, write_response);
+  EXPECT_EQ(write_response.samps_per_chan_written(), 0);
   
   stop_task();
 }

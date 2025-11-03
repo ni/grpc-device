@@ -223,29 +223,17 @@ int32 CVICALLBACK SetWfmAttrCallback(
     const auto task_grpc_session = request->task();
     const TaskHandle task = session_repository_->access_session(task_grpc_session.name());
 
-    const int32 number_of_samples_per_channel = request->num_samps_per_chan();
     const double timeout = request->timeout();
     const bool auto_start = request->auto_start();
     const auto& waveforms = request->waveforms();
 
-    uInt32 num_channels = 0;
-    auto status = library_->GetWriteAttributeUInt32(task, WriteUInt32Attribute::WRITE_ATTRIBUTE_NUM_CHANS, &num_channels);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForTaskHandle(context, status, task);
+    if (waveforms.empty()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No waveforms provided");
     }
 
-    if (num_channels == 0) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No channels to write");
-    }
-
-    if (number_of_samples_per_channel <= 0) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Number of samples per channel must be positive");
-    }
-
-    if (static_cast<uInt32>(waveforms.size()) != num_channels) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Write cannot be performed, because the number of channels in the data does not match the number of channels in the task.");
-    }
-
+    const uInt32 num_channels = static_cast<uInt32>(waveforms.size());
+    const int32 number_of_samples_per_channel = static_cast<int32>(waveforms[0].y_data().size());
+    
     for (uInt32 channel_index = 0; channel_index < num_channels; ++channel_index) {
       const auto& waveform = waveforms[channel_index];
       const auto& y_data = waveform.y_data();
@@ -264,7 +252,7 @@ int32 CVICALLBACK SetWfmAttrCallback(
     }
 
     int32 samples_per_chan_written = 0;
-    status = library_->InternalWriteAnalogWaveformPerChan(
+    auto status = library_->InternalWriteAnalogWaveformPerChan(
         task,
         number_of_samples_per_channel,
         auto_start,
