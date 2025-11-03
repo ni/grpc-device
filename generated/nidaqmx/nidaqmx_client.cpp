@@ -12441,6 +12441,33 @@ read_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, c
   return response;
 }
 
+ReadDigitalWaveformsResponse
+read_digital_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<WaveformAttributeMode, pb::int32>& waveform_attribute_mode)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ReadDigitalWaveformsRequest{};
+  request.mutable_task()->CopyFrom(task);
+  request.set_num_samps_per_chan(num_samps_per_chan);
+  request.set_timeout(timeout);
+  const auto waveform_attribute_mode_ptr = waveform_attribute_mode.get_if<WaveformAttributeMode>();
+  const auto waveform_attribute_mode_raw_ptr = waveform_attribute_mode.get_if<pb::int32>();
+  if (waveform_attribute_mode_ptr) {
+    request.set_waveform_attribute_mode(*waveform_attribute_mode_ptr);
+  }
+  else if (waveform_attribute_mode_raw_ptr) {
+    request.set_waveform_attribute_mode_raw(*waveform_attribute_mode_raw_ptr);
+  }
+
+  auto response = ReadDigitalWaveformsResponse{};
+
+  raise_if_error(
+      stub->ReadDigitalWaveforms(&context, request, &response),
+      context);
+
+  return response;
+}
+
 WriteAnalogWaveformsResponse
 write_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout, const std::vector<ni::protobuf::types::DoubleAnalogWaveform>& waveforms)
 {
