@@ -11555,10 +11555,9 @@ message ReadDigitalWaveformsResponse {
 
 message WriteDigitalWaveformsRequest {
   nidevice_grpc.Session task = 1;
-  int32 num_samps_per_chan = 2;
-  bool auto_start = 3;
-  double timeout = 4;
-  repeated ni.protobuf.types.DigitalWaveform waveforms = 5;
+  bool auto_start = 2;
+  double timeout = 3;
+  repeated ni.protobuf.types.DigitalWaveform waveforms = 4;
 }
 
 message WriteDigitalWaveformsResponse {

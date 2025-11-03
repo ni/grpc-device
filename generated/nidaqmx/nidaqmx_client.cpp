@@ -12469,13 +12469,12 @@ read_digital_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, 
 }
 
 WriteDigitalWaveformsResponse
-write_digital_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const bool& auto_start, const double& timeout, const std::vector<ni::protobuf::types::DigitalWaveform>& waveforms)
+write_digital_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout, const std::vector<ni::protobuf::types::DigitalWaveform>& waveforms)
 {
   ::grpc::ClientContext context;
 
   auto request = WriteDigitalWaveformsRequest{};
   request.mutable_task()->CopyFrom(task);
-  request.set_num_samps_per_chan(num_samps_per_chan);
   request.set_auto_start(auto_start);
   request.set_timeout(timeout);
   copy_array(waveforms, request.mutable_waveforms());

@@ -365,53 +365,31 @@ void SetWaveformTiming(
     auto task_grpc_session = request->task();
     TaskHandle task = session_repository_->access_session(task_grpc_session.name());
 
-    const auto number_of_samples_per_channel = request->num_samps_per_chan();
     const auto auto_start = request->auto_start();
     const auto timeout = request->timeout();
     const auto& waveforms = request->waveforms();
     
-    uInt32 num_channels = 0;
-    auto status = library_->GetWriteAttributeUInt32(task, WriteUInt32Attribute::WRITE_ATTRIBUTE_NUM_CHANS, &num_channels);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForTaskHandle(context, status, task);
+    if (waveforms.empty()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No waveforms provided");
     }
 
-    if (num_channels == 0) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No channels to write");
-    }
-
-    if (static_cast<uInt32>(waveforms.size()) != num_channels) {
-      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Write cannot be performed, because the number of channels in the task does not match the number of waveforms provided");
-    }
+    const uInt32 num_channels = static_cast<uInt32>(waveforms.size());
+    const int32 number_of_samples_per_channel = static_cast<int32>(waveforms[0].y_data().size() / waveforms[0].signal_count());
 
     uInt32 max_bytes_per_chan = 0;
-    status = library_->GetWriteAttributeUInt32(task, WriteUInt32Attribute::WRITE_ATTRIBUTE_DIGITAL_LINES_BYTES_PER_CHAN, &max_bytes_per_chan);
-    if (!status_ok(status)) {
-      return ConvertApiErrorStatusForTaskHandle(context, status, task);
-    }
-
-    if (max_bytes_per_chan == 0) {
-      return ::grpc::Status(::grpc::UNKNOWN, "Digital lines per channel is 0");
+    for (const auto& waveform : waveforms) {
+      const auto signal_count = waveform.signal_count();
+      max_bytes_per_chan = std::max(max_bytes_per_chan, static_cast<uInt32>(signal_count));
     }
 
     std::vector<uInt32> bytes_per_chan_array(num_channels);
     for (uInt32 channel = 0; channel < num_channels; ++channel) {
       const auto& waveform = waveforms[channel];
       const auto signal_count = waveform.signal_count();
-      
-      if (signal_count <= 0) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Signal count must be positive");
-      }
-      
-      if (static_cast<uInt32>(signal_count) > max_bytes_per_chan) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Specified read or write operation failed, because the number of lines in the data does not match the number of lines in the channel");
-      }
-      
       const auto& y_data = waveform.y_data();
-      const auto expected_data_size = number_of_samples_per_channel * signal_count;
       
-      if (y_data.size() != expected_data_size) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "Waveform data size does not match expected size");
+      if (y_data.size() != number_of_samples_per_channel * signal_count) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The waveforms must all have the same sample count.");
       }
       
       bytes_per_chan_array[channel] = static_cast<uInt32>(signal_count);
@@ -437,7 +415,7 @@ void SetWaveformTiming(
     }
 
     int32 samples_per_chan_written = 0;
-    status = library_->InternalWriteDigitalWaveform(
+    auto status = library_->InternalWriteDigitalWaveform(
         task,
         number_of_samples_per_channel,
         auto_start,

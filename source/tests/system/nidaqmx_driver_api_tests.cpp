@@ -490,7 +490,6 @@ class NiDAQmxDriverApiTests : public Test {
     ::grpc::ClientContext context;
     WriteDigitalWaveformsRequest request;
     set_request_session_name(request);
-    request.set_num_samps_per_chan(number_of_samples_per_channel);
     request.set_auto_start(auto_start);
     request.set_timeout(timeout);
     for (const auto& waveform : waveforms) {
@@ -1478,14 +1477,13 @@ TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_EmptyWaveforms_Fails)
   WriteDigitalWaveformsRequest request;
   WriteDigitalWaveformsResponse response;
   set_request_session_name(request);
-  request.set_num_samps_per_chan(NUM_SAMPLES);
   request.set_auto_start(false);
   request.set_timeout(10.0);
   auto write_status = stub()->WriteDigitalWaveforms(&context, request, &response);
 
   EXPECT_FALSE(write_status.ok());
   EXPECT_EQ(write_status.error_code(), ::grpc::StatusCode::INVALID_ARGUMENT);
-  EXPECT_THAT(write_status.error_message(), HasSubstr("number of channels in the task does not match the number of waveforms"));
+  EXPECT_THAT(write_status.error_message(), HasSubstr("No waveforms provided"));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadU8DigitalData_Succeeds)
