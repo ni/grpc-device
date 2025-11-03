@@ -672,6 +672,20 @@ add_custom_command(
    COMMAND  ${PYTHON_EXE} ${codegen_dir}/generate_server_capabilities.py ${metadata_dir}/
             -o $<TARGET_FILE_DIR:ni_grpc_device_server>/)
 
+#----------------------------------------------------------------------
+# Split binary into release and debug symbols for Linux/GCC
+#----------------------------------------------------------------------
+if(CMAKE_SYSTEM_NAME STREQUAL Linux)
+  add_custom_command(
+     TARGET ni_grpc_device_server POST_BUILD
+     COMMAND  ${CMAKE_OBJCOPY} ARGS --only-keep-debug $<TARGET_FILE:ni_grpc_device_server>
+              $<TARGET_FILE:ni_grpc_device_server>.dbg
+     COMMAND  ${CMAKE_OBJCOPY} ARGS --strip-debug $<TARGET_FILE:ni_grpc_device_server>
+     COMMAND  ${CMAKE_OBJCOPY} ARGS --add-gnu-debuglink=$<TARGET_FILE:ni_grpc_device_server>.dbg
+              $<TARGET_FILE:ni_grpc_device_server>
+     DEPENDS  ni_grpc_device_server)
+endif()
+
 # Link test executable against gtest
 add_executable(IntegrationTestsRunner
     "imports/include/nierr_Status.cpp"
