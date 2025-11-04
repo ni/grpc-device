@@ -12,7 +12,7 @@ Indicates the most recent driver version used to test builds of the current sour
 |NI Driver|Version Tested (Windows)|Version Tested (Linux) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;|Version Tested (Linux RT)|
 | :------------------------ | :------------ | :------------ | :------------ |
 | FPGA Interface            | 2024 Q2       | 2024 Q2       | 2024 Q2       |
-| NI-DAQmx                  | 2023 Q1       | 2023 Q1       | 2023 Q1       |
+| NI-DAQmx                  | 2025 Q4       | 2025 Q4       | 2025 Q4       |
 | NI-DCPower                | 2023 Q1       | 2023 Q1       | 2023 Q1       |
 | NI-Digital Pattern Driver | 2023 Q1       | Not Supported | Not Supported |
 | NI-DMM                    | 2025 Q4       | 2025 Q4       | 2025 Q4       |
