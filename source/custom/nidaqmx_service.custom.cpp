@@ -236,6 +236,7 @@ void SetWaveformTiming(
 
     response->set_samps_per_chan_read(samples_per_chan_read);
     response->set_status(status);
+    context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samples_per_chan_read));
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::NonDriverException& ex) {
@@ -349,6 +350,7 @@ void SetWaveformTiming(
 
     response->set_samps_per_chan_read(samples_per_chan_read);
     response->set_status(status);
+    context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samples_per_chan_read));
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::NonDriverException& ex) {
@@ -411,6 +413,7 @@ void SetWaveformTiming(
 
     response->set_samps_per_chan_written(samples_per_chan_written);
     response->set_status(status);
+    context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samples_per_chan_written));
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::NonDriverException& ex) {
@@ -496,6 +499,7 @@ void SetWaveformTiming(
 
     response->set_samps_per_chan_written(samples_per_chan_written);
     response->set_status(status);
+    context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samples_per_chan_written));
     return ::grpc::Status::OK;
   }
   catch (nidevice_grpc::NonDriverException& ex) {
