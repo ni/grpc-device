@@ -139,6 +139,65 @@ functions_override_metadata = {
             }
         ]
     },
+    'WriteAnalogWaveforms': {
+        'returns': 'int32',
+        'codegen_method': 'CustomCodeNoLibrary',
+        'parameters': [
+            {
+                'ctypes_data_type': 'ctypes.TaskHandle',
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'task',
+                'python_data_type': 'TaskHandle',
+                'python_description': '',
+                'python_type_annotation': 'TaskHandle',
+                'type': 'TaskHandle'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_bool',
+                'direction': 'in',
+                'is_optional_in_python': True,
+                'name': 'autoStart',
+                'python_data_type': 'bool',
+                'python_default_value': 'False',
+                'python_description': 'Specifies whether to automatically start the task after writing.',
+                'python_type_annotation': 'Optional[bool]',
+                'type': 'bool32'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_double',
+                'direction': 'in',
+                'is_optional_in_python': True,
+                'name': 'timeout',
+                'python_data_type': 'float',
+                'python_default_value': '10.0',
+                'python_description': 'Specifies the time in seconds to wait for the device to respond before timing out.',
+                'python_type_annotation': 'Optional[float]',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'is_optional_in_python': False,
+                'name': 'waveforms',
+                'python_data_type': 'object',
+                'python_description': 'The waveforms to write to the specified channels.',
+                'python_type_annotation': 'List[object]',
+                'type': 'repeated ni.protobuf.types.DoubleAnalogWaveform'
+            },
+            {
+                'ctypes_data_type': 'ctypes.c_int',
+                'direction': 'out',
+                'is_optional_in_python': False,
+                'is_streaming_type': True,
+                'name': 'sampsPerChanWritten',
+                'python_data_type': 'int',
+                'python_description': '',
+                'python_type_annotation': 'int',
+                'return_on_error_key': 'ni-samps-per-chan-written',
+                'type': 'int32'
+            }
+        ]
+    },
     'WriteDigitalWaveforms': {
         'returns': 'int32',
         'codegen_method': 'CustomCodeNoLibrary',
@@ -237,6 +296,12 @@ functions_validation_suppressions = {
     'ReadDigitalWaveforms': {
         'parameters': {
             # size is determined by the Read.ChannelsToRead property
+            'waveforms': ['ARRAY_PARAMETER_NEEDS_SIZE']
+        }
+    },
+    'WriteAnalogWaveforms': {
+        'parameters': {
+            # size is determined by the Write.NumChans property
             'waveforms': ['ARRAY_PARAMETER_NEEDS_SIZE']
         }
     },

@@ -7,8 +7,7 @@
 #define NIDMM_RESTRICTED_GRPC_LIBRARY_WRAPPER_H
 
 #include <grpcpp/grpcpp.h>
-#include <nidmmRemoteDebug.h>
-#include "nidmmPrivate.h"
+#include <nidmm.h>
 
 namespace nidmm_restricted_grpc {
 
