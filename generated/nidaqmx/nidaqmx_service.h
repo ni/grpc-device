@@ -540,6 +540,7 @@ public:
   ::grpc::Status WriteToTEDSFromFile(::grpc::ServerContext* context, const WriteToTEDSFromFileRequest* request, WriteToTEDSFromFileResponse* response) override;
   ::grpc::Status ReadAnalogWaveforms(::grpc::ServerContext* context, const ReadAnalogWaveformsRequest* request, ReadAnalogWaveformsResponse* response) override;
   ::grpc::Status ReadDigitalWaveforms(::grpc::ServerContext* context, const ReadDigitalWaveformsRequest* request, ReadDigitalWaveformsResponse* response) override;
+  ::grpc::Status WriteAnalogWaveforms(::grpc::ServerContext* context, const WriteAnalogWaveformsRequest* request, WriteAnalogWaveformsResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
