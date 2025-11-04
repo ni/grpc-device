@@ -122,12 +122,30 @@ jobs:
         LICENSE
         ThirdPartyNotices.txt
 
+    - name: Tar Linux Server Debug Symbols
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
+      run: >-
+        tar -cvzf ni-grpc-device-server-linux-glibc${{ matrix.config.glibc_version }}-x64-debug-symbols.tar.gz
+        -C ${GITHUB_WORKSPACE}/build
+        ni_grpc_device_server.dbg
+        -C ${GITHUB_WORKSPACE}
+        LICENSE
+        ThirdPartyNotices.txt
+
     - name: Upload Linux Server Binaries Artifact
       uses: actions/upload-artifact@v4
       if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
       with:
         name: ni-grpc-device-server-linux-glibc${{ matrix.config.glibc_version }}-x64
         path: ni-grpc-device-server-linux-glibc${{ matrix.config.glibc_version }}-x64.tar.gz
+        retention-days: 5
+
+    - name: Upload Linux Server Debug Symbols Artifact
+      uses: actions/upload-artifact@v4
+      if: ${{ (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) && (runner.os == 'Linux') }}
+      with:
+        name: ni-grpc-device-server-linux-glibc${{ matrix.config.glibc_version }}-x64-debug-symbols
+        path: ni-grpc-device-server-linux-glibc${{ matrix.config.glibc_version }}-x64-debug-symbols.tar.gz
         retention-days: 5
 
     - name: Tar Linux Test Binaries
