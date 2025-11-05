@@ -2340,13 +2340,13 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_InvalidNumSampsPerChan_Returns
 
   start_task();
   
+  ::grpc::ClientContext context;
   EXPECT_THROW({
-    ::grpc::ClientContext context;
     ReadAnalogWaveformsResponse read_response;
     auto read_status = read_analog_waveforms(context, INVALID_NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
-    
-    EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), "0");
   }, nidevice_grpc::experimental::client::grpc_driver_error);
+  
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), "0");
   
   stop_task();
 }
@@ -2361,13 +2361,13 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_InvalidNumSampsPerChan_Return
 
   start_task();
   
+  ::grpc::ClientContext context;
   EXPECT_THROW({
-    ::grpc::ClientContext context;
     ReadDigitalWaveformsResponse read_response;
     auto read_status = read_digital_waveforms(context, INVALID_NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
-    
-    EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), "0");
   }, nidevice_grpc::experimental::client::grpc_driver_error);
+  
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), "0");
   
   stop_task();
 }
@@ -2389,13 +2389,13 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_TriggerNeverArrives_ReturnsEr
 
   std::vector<std::vector<double>> waveform_data(1, std::vector<double>(NUM_SAMPLES, 1.0));
 
+  ::grpc::ClientContext context;
   EXPECT_THROW({
-    ::grpc::ClientContext context;
     WriteAnalogWaveformsResponse write_response;
     auto write_status = write_analog_waveforms(context, waveform_data, false, TIMEOUT, write_response);
-    
-    EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), "0");
   }, nidevice_grpc::experimental::client::grpc_driver_error);
+  
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), "0");
 }
 
 TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_TriggerNeverArrives_ReturnsErrorAndZeroMetadata)
@@ -2413,13 +2413,13 @@ TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_TriggerNeverArrives_ReturnsE
   std::vector<ni::protobuf::types::DigitalWaveform> waveforms;
   waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 1, 0));
 
+  ::grpc::ClientContext context;
   EXPECT_THROW({
-    ::grpc::ClientContext context;
     WriteDigitalWaveformsResponse write_response;
     auto write_status = write_digital_waveforms(context, NUM_SAMPLES, waveforms, false, TIMEOUT, write_response);
-    
-    EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), "0");
   }, nidevice_grpc::experimental::client::grpc_driver_error);
+  
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), "0");
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
