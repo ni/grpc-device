@@ -22,9 +22,6 @@ namespace nidmm_restricted_grpc {
   using nidevice_grpc::converters::convert_to_grpc;
   using nidevice_grpc::converters::MatchState;
 
-  const auto kErrorReadBufferTooSmall = -200229;
-  const auto kWarningCAPIStringTruncatedToFitBuffer = 200026;
-
   NiDmmRestrictedService::NiDmmRestrictedService(
       LibrarySharedPtr library,
       ResourceRepositorySharedPtr resource_repository,
@@ -120,49 +117,6 @@ namespace nidmm_restricted_grpc {
       response->set_status(status);
       response->set_actual_pts(actual_pts);
       return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiDmmRestrictedService::GetOpenSessionsInformation(::grpc::ServerContext* context, const GetOpenSessionsInformationRequest* request, GetOpenSessionsInformationResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
-      ViRsrc resource_name = (ViRsrc)resource_name_mbcs.c_str();
-      ViUInt64 buffer_size_needed_in_bytes {};
-      while (true) {
-        auto status = library_->GetOpenSessionsInformation(resource_name, nullptr, 0, &buffer_size_needed_in_bytes);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, 0);
-        }
-        std::string info_json;
-        if (buffer_size_needed_in_bytes > 0) {
-            info_json.resize(buffer_size_needed_in_bytes - 1);
-        }
-        auto buffer_size = buffer_size_needed_in_bytes;
-        status = library_->GetOpenSessionsInformation(resource_name, (ViChar*)info_json.data(), buffer_size, &buffer_size_needed_in_bytes);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, 0);
-        }
-        response->set_status(status);
-        std::string info_json_utf8;
-        convert_to_grpc(info_json, &info_json_utf8);
-        response->set_info_json(info_json_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_info_json()));
-        response->set_buffer_size_needed_in_bytes(buffer_size_needed_in_bytes);
-        return ::grpc::Status::OK;
-      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
