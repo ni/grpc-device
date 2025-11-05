@@ -279,7 +279,8 @@ void SetWaveformTiming(
     }
 
     // Calculate total array size needed (samples * channels * max_bytes_per_chan)
-    const uInt32 array_size = number_of_samples_per_channel * num_channels * max_bytes_per_chan;
+    const uInt32 num_samples = (number_of_samples_per_channel > 0) ? number_of_samples_per_channel : 1;
+    const uInt32 array_size = num_samples * num_channels * max_bytes_per_chan;
     std::vector<uInt8> read_array(array_size);
 
     response->mutable_waveforms()->Reserve(num_channels);
