@@ -1081,6 +1081,18 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
+  ::grpc::Status cfg_digital_edge_start_trigger_that_never_arrives(CfgDigEdgeStartTrigResponse& response)
+  {
+    ::grpc::ClientContext context;
+    CfgDigEdgeStartTrigRequest request;
+    set_request_session_name(request);
+    request.set_trigger_source("PFI0");
+    request.set_trigger_edge(Edge1::EDGE1_RISING);
+    auto status = stub()->CfgDigEdgeStartTrig(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
   ::grpc::Status save_task(SaveTaskResponse& response)
   {
     ::grpc::ClientContext context;
@@ -2316,6 +2328,98 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_ZeroSamples_Succeeds)
   EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), std::to_string(0));
   
   stop_task();
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_InvalidNumSampsPerChan_ReturnsErrorAndZeroMetadata)
+{
+  const auto INVALID_NUM_SAMPLES = -2;
+  const auto TIMEOUT = 10.0;
+  CreateAIVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai0", "ai0", -1.0, 1.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  EXPECT_THROW({
+    ::grpc::ClientContext context;
+    ReadAnalogWaveformsResponse read_response;
+    auto read_status = read_analog_waveforms(context, INVALID_NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
+    
+    EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), "0");
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
+  
+  stop_task();
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_InvalidNumSampsPerChan_ReturnsErrorAndZeroMetadata)
+{
+  const auto INVALID_NUM_SAMPLES = -2;
+  const auto TIMEOUT = 10.0;
+  CreateDIChanResponse create_channel_response;
+  auto create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line0", "di_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  EXPECT_THROW({
+    ::grpc::ClientContext context;
+    ReadDigitalWaveformsResponse read_response;
+    auto read_status = read_digital_waveforms(context, INVALID_NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
+    
+    EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), "0");
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
+  
+  stop_task();
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_TriggerNeverArrives_ReturnsErrorAndZeroMetadata)
+{
+  const double AO_MIN = -1.0;
+  const double AO_MAX = 1.0;
+  const auto NUM_SAMPLES = 10;
+  const auto TIMEOUT = 1.0;
+  
+  CreateAOVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ao_voltage_chan("gRPCSystemTestDAQ/ao0", "ao0", AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  CfgDigEdgeStartTrigResponse trigger_response;
+  auto trigger_status = cfg_digital_edge_start_trigger_that_never_arrives(trigger_response);
+  EXPECT_SUCCESS(trigger_status, trigger_response);
+
+  std::vector<std::vector<double>> waveform_data(1, std::vector<double>(NUM_SAMPLES, 1.0));
+
+  EXPECT_THROW({
+    ::grpc::ClientContext context;
+    WriteAnalogWaveformsResponse write_response;
+    auto write_status = write_analog_waveforms(context, waveform_data, false, TIMEOUT, write_response);
+    
+    EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), "0");
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_TriggerNeverArrives_ReturnsErrorAndZeroMetadata)
+{
+  const auto NUM_SAMPLES = 10;
+  const auto TIMEOUT = 1.0;
+  CreateDOChanResponse create_channel_response;
+  auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0", "do_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  CfgDigEdgeStartTrigResponse trigger_response;
+  auto trigger_status = cfg_digital_edge_start_trigger_that_never_arrives(trigger_response);
+  EXPECT_SUCCESS(trigger_status, trigger_response);
+
+  std::vector<ni::protobuf::types::DigitalWaveform> waveforms;
+  waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 1, 0));
+
+  EXPECT_THROW({
+    ::grpc::ClientContext context;
+    WriteDigitalWaveformsResponse write_response;
+    auto write_status = write_digital_waveforms(context, NUM_SAMPLES, waveforms, false, TIMEOUT, write_response);
+    
+    EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), "0");
+  }, nidevice_grpc::experimental::client::grpc_driver_error);
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)
