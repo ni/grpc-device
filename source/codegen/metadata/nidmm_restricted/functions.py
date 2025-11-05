@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-DMM API metadata version 26.0.0d64
+# This file is generated from NI-DMM API metadata version 26.0.0d9999
 functions = {
     'AttributeWasSetByUser': {
         'codegen_method': 'public',
@@ -191,7 +191,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'GetOpenSessionsInformation': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'cppName': 'resourceName',
