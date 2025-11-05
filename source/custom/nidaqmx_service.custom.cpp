@@ -181,11 +181,10 @@ void SetWaveformTiming(
     std::vector<std::vector<float64>> read_arrays(num_channels);
     std::vector<float64*> read_array_ptrs(num_channels);
     
-    if (number_of_samples_per_channel > 0) {
-      for (uInt32 i = 0; i < num_channels; ++i) {
-        read_arrays[i].resize(number_of_samples_per_channel);
-        read_array_ptrs[i] = read_arrays[i].data();
-      }
+    const uInt32 size = (number_of_samples_per_channel > 0) ? number_of_samples_per_channel : 1;
+    for (uInt32 i = 0; i < num_channels; ++i) {
+      read_arrays[i].resize(size);
+      read_array_ptrs[i] = read_arrays[i].data();
     }
 
     response->mutable_waveforms()->Reserve(num_channels);
