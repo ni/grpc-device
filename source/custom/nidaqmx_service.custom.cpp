@@ -17,6 +17,8 @@ using ::ni::protobuf::types::DigitalWaveform;
 
 namespace {
 
+constexpr int32 READ_ALL_AVAILABLE = -1;
+
 // Returns true if it's safe to use outputs of a method with the given status.
 inline bool status_ok(int32 status)
 {
@@ -165,7 +167,7 @@ void SetWaveformTiming(
     auto task_grpc_session = request->task();
     TaskHandle task = session_repository_->access_session(task_grpc_session.name());
 
-    const auto number_of_samples_per_channel = request->num_samps_per_chan();
+    auto number_of_samples_per_channel = request->num_samps_per_chan();
     const auto timeout = request->timeout();
     
     uInt32 num_channels = 0;
@@ -176,6 +178,15 @@ void SetWaveformTiming(
 
     if (num_channels == 0) {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No channels to read");
+    }
+
+    if (number_of_samples_per_channel == READ_ALL_AVAILABLE) {
+      uInt32 default_number = 0;
+      status = library_->GetDefaultNumberOfSamplesToRead(task, &default_number);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      number_of_samples_per_channel = static_cast<int32>(default_number);
     }
 
     std::vector<std::vector<float64>> read_arrays(num_channels);
@@ -254,7 +265,7 @@ void SetWaveformTiming(
     auto task_grpc_session = request->task();
     TaskHandle task = session_repository_->access_session(task_grpc_session.name());
 
-    const auto number_of_samples_per_channel = request->num_samps_per_chan();
+    auto number_of_samples_per_channel = request->num_samps_per_chan();
     const auto timeout = request->timeout();
     
     uInt32 num_channels = 0;
@@ -265,6 +276,15 @@ void SetWaveformTiming(
 
     if (num_channels == 0) {
       return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No channels to read");
+    }
+
+    if (number_of_samples_per_channel == READ_ALL_AVAILABLE) {
+      uInt32 default_number = 0;
+      status = library_->GetDefaultNumberOfSamplesToRead(task, &default_number);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      number_of_samples_per_channel = static_cast<int32>(default_number);
     }
 
     // Get the maximum number of lines per channel to calculate array size

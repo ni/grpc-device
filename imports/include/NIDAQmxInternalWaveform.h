@@ -51,6 +51,12 @@ extern "C"
     // DONumLines[i]. Each channel's data must still be padded to maxDataWidth. If not specified, the
     // data is assumed to be in the correct format and no validation is performed.
     int32 __CFUNC DAQmxInternalWriteDigitalWaveform(TaskHandle taskHandle, int32 numSampsPerChan, bool32 autoStart, float64 timeout, bool32 dataLayout, const uInt8 writeArray[], const uInt32 bytesPerChanArray[], uInt32 bytesPerChanArraySize, int32 *sampsPerChanWritten, bool32 *reserved);
+
+    /******************************************************************************
+    *** NI-DAQmx Internal Attribute Get/Set/Reset Function Declarations **********
+    ******************************************************************************/
+    //*** Get function for DAQmx_DefaultNumberOfSamplesToRead ***
+    int32 __CFUNC DAQmxGetDefaultNumberOfSamplesToRead(TaskHandle taskHandle, uInt32 *data);
 #ifdef __cplusplus
 }
 #endif

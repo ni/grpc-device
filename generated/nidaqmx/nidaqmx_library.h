@@ -166,6 +166,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   int32 GetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32* value) override;
   int32 GetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, char value[], uInt32 size) override;
   int32 GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32* value) override;
+  int32 GetDefaultNumberOfSamplesToRead(TaskHandle task, uInt32* data) override;
   int32 GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value) override;
   int32 GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value) override;
   int32 GetDeviceAttributeDoubleArray(const char deviceName[], int32 attribute, float64 value[], uInt32 size) override;
@@ -576,6 +577,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetChanAttributeInt32Ptr = decltype(&DAQmxGetChanAttribute);
   using GetChanAttributeStringPtr = decltype(&DAQmxGetChanAttribute);
   using GetChanAttributeUInt32Ptr = decltype(&DAQmxGetChanAttribute);
+  using GetDefaultNumberOfSamplesToReadPtr = int32 (*)(TaskHandle task, uInt32* data);
   using GetDeviceAttributeBoolPtr = decltype(&DAQmxGetDeviceAttribute);
   using GetDeviceAttributeDoublePtr = decltype(&DAQmxGetDeviceAttribute);
   using GetDeviceAttributeDoubleArrayPtr = decltype(&DAQmxGetDeviceAttribute);
@@ -985,6 +987,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
     GetChanAttributeInt32Ptr GetChanAttributeInt32;
     GetChanAttributeStringPtr GetChanAttributeString;
     GetChanAttributeUInt32Ptr GetChanAttributeUInt32;
+    GetDefaultNumberOfSamplesToReadPtr GetDefaultNumberOfSamplesToRead;
     GetDeviceAttributeBoolPtr GetDeviceAttributeBool;
     GetDeviceAttributeDoublePtr GetDeviceAttributeDouble;
     GetDeviceAttributeDoubleArrayPtr GetDeviceAttributeDoubleArray;

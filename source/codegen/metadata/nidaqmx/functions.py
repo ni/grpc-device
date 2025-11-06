@@ -13472,6 +13472,24 @@ functions = {
         'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
+    'GetDefaultNumberOfSamplesToRead': {
+        'calling_convention': 'StdCall',
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'task',
+                'type': 'TaskHandle'
+            },
+            {
+                'direction': 'out',
+                'name': 'data',
+                'type': 'uInt32'
+            }
+        ],
+        'python_codegen_method': 'no',
+        'returns': 'int32'
+    },
     'GetDeviceAttributeBool': {
         'calling_convention': 'Cdecl',
         'cname': 'DAQmxGetDeviceAttribute',
