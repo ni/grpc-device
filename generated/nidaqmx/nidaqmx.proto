@@ -165,6 +165,7 @@ service NiDAQmx {
   rpc GetChanAttributeInt32(GetChanAttributeInt32Request) returns (GetChanAttributeInt32Response);
   rpc GetChanAttributeString(GetChanAttributeStringRequest) returns (GetChanAttributeStringResponse);
   rpc GetChanAttributeUInt32(GetChanAttributeUInt32Request) returns (GetChanAttributeUInt32Response);
+  rpc GetDefaultNumberOfSamplesToRead(GetDefaultNumberOfSamplesToReadRequest) returns (GetDefaultNumberOfSamplesToReadResponse);
   rpc GetDeviceAttributeBool(GetDeviceAttributeBoolRequest) returns (GetDeviceAttributeBoolResponse);
   rpc GetDeviceAttributeDouble(GetDeviceAttributeDoubleRequest) returns (GetDeviceAttributeDoubleResponse);
   rpc GetDeviceAttributeDoubleArray(GetDeviceAttributeDoubleArrayRequest) returns (GetDeviceAttributeDoubleArrayResponse);
@@ -7212,6 +7213,15 @@ message GetChanAttributeUInt32Request {
 message GetChanAttributeUInt32Response {
   int32 status = 1;
   uint32 value = 2;
+}
+
+message GetDefaultNumberOfSamplesToReadRequest {
+  nidevice_grpc.Session task = 1;
+}
+
+message GetDefaultNumberOfSamplesToReadResponse {
+  int32 status = 1;
+  uint32 data = 2;
 }
 
 message GetDeviceAttributeBoolRequest {

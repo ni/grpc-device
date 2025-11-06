@@ -10408,6 +10408,30 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::GetDefaultNumberOfSamplesToRead(::grpc::ServerContext* context, const GetDefaultNumberOfSamplesToReadRequest* request, GetDefaultNumberOfSamplesToReadResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      uInt32 data {};
+      auto status = library_->GetDefaultNumberOfSamplesToRead(task, &data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      response->set_data(data);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::GetDeviceAttributeBool(::grpc::ServerContext* context, const GetDeviceAttributeBoolRequest* request, GetDeviceAttributeBoolResponse* response)
   {
     if (context->IsCancelled()) {

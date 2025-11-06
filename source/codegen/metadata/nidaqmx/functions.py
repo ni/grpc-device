@@ -13474,20 +13474,23 @@ functions = {
     },
     'GetDefaultNumberOfSamplesToRead': {
         'calling_convention': 'StdCall',
-        'codegen_method': 'private',
         'parameters': [
             {
+                'ctypes_data_type': 'ctypes.TaskHandle',
                 'direction': 'in',
                 'name': 'task',
+                'python_data_type': 'TaskHandle',
                 'type': 'TaskHandle'
             },
             {
+                'ctypes_data_type': 'ctypes.c_uint32',
                 'direction': 'out',
                 'name': 'data',
+                'python_data_type': 'int',
                 'type': 'uInt32'
             }
         ],
-        'python_codegen_method': 'no',
+        'python_codegen_method': 'CustomCode',
         'returns': 'int32'
     },
     'GetDeviceAttributeBool': {

@@ -577,7 +577,7 @@ class NiDAQmxLibrary : public nidaqmx_grpc::NiDAQmxLibraryInterface {
   using GetChanAttributeInt32Ptr = decltype(&DAQmxGetChanAttribute);
   using GetChanAttributeStringPtr = decltype(&DAQmxGetChanAttribute);
   using GetChanAttributeUInt32Ptr = decltype(&DAQmxGetChanAttribute);
-  using GetDefaultNumberOfSamplesToReadPtr = int32 (*)(TaskHandle task, uInt32* data);
+  using GetDefaultNumberOfSamplesToReadPtr = decltype(&DAQmxGetDefaultNumberOfSamplesToRead);
   using GetDeviceAttributeBoolPtr = decltype(&DAQmxGetDeviceAttribute);
   using GetDeviceAttributeDoublePtr = decltype(&DAQmxGetDeviceAttribute);
   using GetDeviceAttributeDoubleArrayPtr = decltype(&DAQmxGetDeviceAttribute);
