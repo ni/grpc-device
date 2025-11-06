@@ -35,6 +35,8 @@ typedef ::google::protobuf::uint64 uInt64;
 typedef double float64;
 
 constexpr auto DAQMX_SUCCESS = 0;
+constexpr auto DAQMX_ERROR_INVALID_NUMBER_SAMPLES_TO_READ = -200096;
+constexpr auto DAQMX_ERROR_CANNOT_WRITE_WHEN_AUTO_START_FALSE_AND_TASK_NOT_RUNNING = -200846;
 constexpr auto SAMPLES_NOT_YET_AVAILABLE_ERROR = -200284;
 constexpr auto SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR = -200233;
 constexpr auto INVALID_AO_DATA_WRITE_ERROR = -200561;
@@ -356,6 +358,16 @@ class NiDAQmxDriverApiTests : public Test {
     return client::create_do_chan(stub(), task(), "gRPCSystemTestDAQ/port1/line0", "do", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
   }
 
+  ::grpc::Status create_do_chan(
+      CreateDOChanResponse& response,
+      const std::string& lines,
+      const std::string& name_to_assign_to_channel,
+      LineGrouping line_grouping)
+  {
+    response = client::create_do_chan(stub(), task(), lines, name_to_assign_to_channel, line_grouping);
+    return ::grpc::Status::OK;
+  }
+
   ::grpc::Status create_ci_freq_chan(CreateCIFreqChanResponse& response)
   {
     ::grpc::ClientContext context;
@@ -449,12 +461,12 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   ::grpc::Status read_analog_waveforms(
+      ::grpc::ClientContext& context,
       int32 num_samps_per_chan,
       double timeout = 10.0,
       WaveformAttributeMode waveform_attribute_mode = WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE,
       ReadAnalogWaveformsResponse& response = ThrowawayResponse<ReadAnalogWaveformsResponse>::response())
   {
-    ::grpc::ClientContext context;
     ReadAnalogWaveformsRequest request;
     set_request_session_name(request);
     request.set_num_samps_per_chan(num_samps_per_chan);
@@ -466,12 +478,12 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   ::grpc::Status read_digital_waveforms(
+      ::grpc::ClientContext& context,
       int32 number_of_samples_per_channel,
       double timeout = 10.0,
       WaveformAttributeMode waveform_attribute_mode = WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE,
       ReadDigitalWaveformsResponse& response = ThrowawayResponse<ReadDigitalWaveformsResponse>::response())
   {
-    ::grpc::ClientContext context;
     ReadDigitalWaveformsRequest request;
     set_request_session_name(request);
     request.set_num_samps_per_chan(number_of_samples_per_channel);
@@ -483,12 +495,12 @@ class NiDAQmxDriverApiTests : public Test {
   }
 
   ::grpc::Status write_analog_waveforms(
+      ::grpc::ClientContext& context,
       const std::vector<std::vector<double>>& waveform_data,
       bool auto_start = false,
       double timeout = 10.0,
       WriteAnalogWaveformsResponse& response = ThrowawayResponse<WriteAnalogWaveformsResponse>::response())
   {
-    ::grpc::ClientContext context;
     WriteAnalogWaveformsRequest request;
     set_request_session_name(request);
     
@@ -506,6 +518,26 @@ class NiDAQmxDriverApiTests : public Test {
     }
     
     auto status = stub()->WriteAnalogWaveforms(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
+  ::grpc::Status write_digital_waveforms(
+      ::grpc::ClientContext& context,
+      int32 number_of_samples_per_channel,
+      const std::vector<ni::protobuf::types::DigitalWaveform>& waveforms,
+      bool auto_start = false,
+      double timeout = 10.0,
+      WriteDigitalWaveformsResponse& response = ThrowawayResponse<WriteDigitalWaveformsResponse>::response())
+  {
+    WriteDigitalWaveformsRequest request;
+    set_request_session_name(request);
+    request.set_auto_start(auto_start);
+    request.set_timeout(timeout);
+    for (const auto& waveform : waveforms) {
+      *request.add_waveforms() = waveform;
+    }
+    auto status = stub()->WriteDigitalWaveforms(&context, request, &response);
     client::raise_if_error(status, context);
     return status;
   }
@@ -1051,6 +1083,18 @@ class NiDAQmxDriverApiTests : public Test {
     return status;
   }
 
+  ::grpc::Status cfg_digital_edge_start_trigger_that_never_arrives(CfgDigEdgeStartTrigResponse& response)
+  {
+    ::grpc::ClientContext context;
+    CfgDigEdgeStartTrigRequest request;
+    set_request_session_name(request);
+    request.set_trigger_source("PFI0");
+    request.set_trigger_edge(Edge1::EDGE1_RISING);
+    auto status = stub()->CfgDigEdgeStartTrig(&context, request, &response);
+    client::raise_if_error(status, context);
+    return status;
+  }
+
   ::grpc::Status save_task(SaveTaskResponse& response)
   {
     ::grpc::ClientContext context;
@@ -1252,6 +1296,14 @@ class NiDAQmxDriverApiTests : public Test {
     EXPECT_THAT(data, Each(Not(Gt(max_val))));
   }
 
+  std::string get_from_trailing_metadata(const ::grpc::ClientContext& context, const std::string& key) const
+  {
+    auto trailing_metadata = context.GetServerTrailingMetadata();
+    auto metadata_iter = trailing_metadata.find(key);
+    EXPECT_NE(metadata_iter, trailing_metadata.end()) << "Trailing metadata key '" << key << "' not found";
+    return metadata_iter != trailing_metadata.end() ? std::string(metadata_iter->second.data(), metadata_iter->second.size()) : "";
+  }
+
   // Get number of seconds since 1904 epoch (CVI/BTF epoch) for comparison with waveform timestamps
   int64_t get_seconds_since_1904() const
   {    
@@ -1294,6 +1346,28 @@ class NiDAQmxDriverApiTests : public Test {
           << ", got " << static_cast<int>(actual_value);
       }
     }
+  }
+
+  ni::protobuf::types::DigitalWaveform create_test_digital_waveform(
+      int32 num_samples,
+      int32 signal_count,
+      int32 line_offset = 0) const
+  {
+    ni::protobuf::types::DigitalWaveform waveform;
+    waveform.set_signal_count(signal_count);
+    
+    auto* y_data = waveform.mutable_y_data();
+    y_data->reserve(num_samples * signal_count);
+    
+    for (int32 sample = 0; sample < num_samples; ++sample) {
+      for (int32 line = 0; line < signal_count; ++line) {
+        int32 line_number = line + line_offset;
+        auto expected_data = get_expected_data_for_line(num_samples, line_number);
+        y_data->push_back(expected_data[sample]);
+      }
+    }
+    
+    return waveform;
   }
 
   DeviceServerInterface* device_server_;
@@ -1406,6 +1480,76 @@ TEST_F(NiDAQmxDriverApiTests, WriteU8DigitalData_Succeeds)
 
   EXPECT_SUCCESS(status, response);
   EXPECT_EQ(4, response.samps_per_chan_written());
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_Succeeds)
+{
+  const auto NUM_SAMPLES = 50;
+  const auto TIMEOUT = 10.0;
+  CreateDOChanResponse create_channel_response;
+  auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0:2", "do_port1", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+  create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line4:5", "do_port1_lines45", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  std::vector<ni::protobuf::types::DigitalWaveform> waveforms;
+  waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 3, 0)); // 3 lines starting at line 0
+  waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 2, 4)); // 2 lines starting at line 4
+
+  start_task();
+  ::grpc::ClientContext context;
+  WriteDigitalWaveformsResponse write_response;
+  auto write_status = write_digital_waveforms(context, NUM_SAMPLES, waveforms, false, TIMEOUT, write_response);
+  stop_task();
+
+  EXPECT_SUCCESS(write_status, write_response);
+  EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), std::to_string(NUM_SAMPLES));
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_WithAutoStart_Succeeds)
+{
+  const auto NUM_SAMPLES = 25;
+  const auto TIMEOUT = 10.0;
+  CreateDOChanResponse create_channel_response;
+  auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0", "do_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  std::vector<ni::protobuf::types::DigitalWaveform> waveforms;
+  waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 1, 0)); // 1 line starting at line 0
+
+  ::grpc::ClientContext context;
+  WriteDigitalWaveformsResponse write_response;
+  auto write_status = write_digital_waveforms(context, NUM_SAMPLES, waveforms, true, TIMEOUT, write_response);
+
+  EXPECT_SUCCESS(write_status, write_response);
+  EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
+  EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), std::to_string(NUM_SAMPLES));
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_EmptyWaveforms_Fails)
+{
+  const auto NUM_SAMPLES = 10;
+  CreateDOChanResponse create_channel_response;
+  auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0", "do_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  std::vector<ni::protobuf::types::DigitalWaveform> waveforms; // Empty waveforms
+
+  // Use direct stub call without raise_if_error to check for gRPC errors
+  ::grpc::ClientContext context;
+  WriteDigitalWaveformsRequest request;
+  WriteDigitalWaveformsResponse response;
+  set_request_session_name(request);
+  request.set_auto_start(false);
+  request.set_timeout(10.0);
+  auto write_status = stub()->WriteDigitalWaveforms(&context, request, &response);
+
+  EXPECT_FALSE(write_status.ok());
+  EXPECT_EQ(write_status.error_code(), ::grpc::StatusCode::INVALID_ARGUMENT);
+  EXPECT_THAT(write_status.error_message(), HasSubstr("No waveforms provided"));
 }
 
 TEST_F(NiDAQmxDriverApiTests, ReadU8DigitalData_Succeeds)
@@ -1622,14 +1766,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithNoAttributeMode_ReturnsWav
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   start_task();
+  ::grpc::ClientContext context;
   ReadAnalogWaveformsResponse read_response;
-  auto read_status = read_analog_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
+  auto read_status = read_analog_waveforms(context, NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2);
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(NUM_SAMPLES));
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1661,14 +1807,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingMode_ReturnsWaveform
   EXPECT_SUCCESS(timing_status, timing_response);
 
   start_task();
+  ::grpc::ClientContext context;
   ReadAnalogWaveformsResponse read_response;
-  auto read_status = read_analog_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING, read_response);
+  auto read_status = read_analog_waveforms(context, NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2);
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(NUM_SAMPLES));
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1695,14 +1843,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithExtendedPropertiesMode_Ret
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   start_task();
+  ::grpc::ClientContext context;
   ReadAnalogWaveformsResponse read_response;
-  auto read_status = read_analog_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES, read_response);
+  auto read_status = read_analog_waveforms(context, NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2);
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(NUM_SAMPLES));
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1754,18 +1904,20 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertie
   EXPECT_SUCCESS(timing_status, timing_response);
 
   start_task();
+  ::grpc::ClientContext context;
   ReadAnalogWaveformsResponse read_response;
   const auto combined_mode = static_cast<WaveformAttributeMode>(
     static_cast<int32>(WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING) | 
     static_cast<int32>(WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES)
   );
-  auto read_status = read_analog_waveforms(NUM_SAMPLES, TIMEOUT, combined_mode, read_response);
+  auto read_status = read_analog_waveforms(context, NUM_SAMPLES, TIMEOUT, combined_mode, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2);
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(NUM_SAMPLES));
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1815,14 +1967,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithNoAttributeMode_ReturnsWa
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   start_task();
+  ::grpc::ClientContext context;
   ReadDigitalWaveformsResponse read_response;
-  auto read_status = read_digital_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
+  auto read_status = read_digital_waveforms(context, NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2); // Two channels: di_port0 and di_port0_lines45
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(NUM_SAMPLES));
   
   const auto& waveform0 = read_response.waveforms(0);
   EXPECT_EQ(waveform0.signal_count(), 3); // 3 lines in port0 (line0:2 means 0,1,2)
@@ -1851,14 +2005,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingMode_ReturnsWavefor
   EXPECT_SUCCESS(timing_status, timing_response);
 
   start_task();
+  ::grpc::ClientContext context;
   ReadDigitalWaveformsResponse read_response;
-  auto read_status = read_digital_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING, read_response);
+  auto read_status = read_digital_waveforms(context, NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_TIMING, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2); // Two channels: di_port0 and di_port0_lines45
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(NUM_SAMPLES));
     
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1885,14 +2041,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithExtendedPropertiesMode_Re
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
 
   start_task();
+  ::grpc::ClientContext context;
   ReadDigitalWaveformsResponse read_response;
-  auto read_status = read_digital_waveforms(NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES, read_response);
+  auto read_status = read_digital_waveforms(context, NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2); // Two channels: di_port0 and di_port0_lines45
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(NUM_SAMPLES));
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1938,14 +2096,16 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingAndExtendedProperti
     WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_EXTENDED_PROPERTIES);
 
   start_task();
+  ::grpc::ClientContext context;
   ReadDigitalWaveformsResponse read_response;
-  auto read_status = read_digital_waveforms(NUM_SAMPLES, TIMEOUT, combined_mode, read_response);
+  auto read_status = read_digital_waveforms(context, NUM_SAMPLES, TIMEOUT, combined_mode, read_response);
   stop_task();
 
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2); // Two channels: di_port0 and di_port0_lines45
   EXPECT_EQ(read_response.samps_per_chan_read(), NUM_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(NUM_SAMPLES));
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
@@ -1991,14 +2151,16 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_SingleChannel_Succeeds)
   std::vector<std::vector<double>> waveform_data(1);
   waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   
+  ::grpc::ClientContext context;
   WriteAnalogWaveformsResponse write_response;
-  auto write_status = write_analog_waveforms(waveform_data, false, TIMEOUT, write_response);
+  auto write_status = write_analog_waveforms(context, waveform_data, false, TIMEOUT, write_response);
   stop_task();
 
   EXPECT_SUCCESS(write_status, write_response);
   EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
   EXPECT_GT(write_response.samps_per_chan_written(), 0);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), std::to_string(NUM_SAMPLES));
 }
 
 TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MultipleChannels_Succeeds)
@@ -2020,14 +2182,16 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MultipleChannels_Succeeds)
   waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   waveform_data[1] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   
+  ::grpc::ClientContext context;
   WriteAnalogWaveformsResponse write_response;
-  auto write_status = write_analog_waveforms(waveform_data, false, TIMEOUT, write_response);
+  auto write_status = write_analog_waveforms(context, waveform_data, false, TIMEOUT, write_response);
   stop_task();
 
   EXPECT_SUCCESS(write_status, write_response);
   EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
   EXPECT_GT(write_response.samps_per_chan_written(), 0);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), std::to_string(NUM_SAMPLES));
 }
 
 TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_WithAutoStart_Succeeds)
@@ -2045,14 +2209,16 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_WithAutoStart_Succeeds)
   std::vector<std::vector<double>> waveform_data(1);
   waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
   
+  ::grpc::ClientContext context;
   WriteAnalogWaveformsResponse write_response;
-  auto write_status = write_analog_waveforms(waveform_data, true, TIMEOUT, write_response);
+  auto write_status = write_analog_waveforms(context, waveform_data, true, TIMEOUT, write_response);
   stop_task();
 
   EXPECT_SUCCESS(write_status, write_response);
   EXPECT_EQ(write_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(write_response.samps_per_chan_written(), NUM_SAMPLES);
   EXPECT_GT(write_response.samps_per_chan_written(), 0);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), std::to_string(NUM_SAMPLES));
 }
 
 TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_WithOutOfRangeValue_ReturnsInvalidAODataError)
@@ -2072,8 +2238,9 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_WithOutOfRangeValue_ReturnsIn
     waveform_data[0] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES);
     waveform_data[0][50] = AO_MAX + 10.0;  // Out of range value
     
+    ::grpc::ClientContext context;
     WriteAnalogWaveformsResponse write_response;
-    write_analog_waveforms(waveform_data, false, 10.0, write_response);
+    write_analog_waveforms(context, waveform_data, false, 10.0, write_response);
   }, INVALID_AO_DATA_WRITE_ERROR);
   
   stop_task();
@@ -2098,8 +2265,9 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MismatchedNumberOfWaveforms_R
   
   EXPECT_THROW({
     try {
+      ::grpc::ClientContext context;
       WriteAnalogWaveformsResponse write_response;
-      write_analog_waveforms(waveform_data, false, 10.0, write_response);
+      write_analog_waveforms(context, waveform_data, false, 10.0, write_response);
     }
     catch (const nidevice_grpc::experimental::client::grpc_driver_error& ex) {
       EXPECT_EQ(::grpc::StatusCode::UNKNOWN, ex.StatusCode());
@@ -2130,8 +2298,9 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_MismatchedSampleCounts_Return
   waveform_data[1] = generate_random_data(AO_MIN, AO_MAX, NUM_SAMPLES / 2);  // Different count
   
   EXPECT_THROW_GRPC_INVALID_ARGUMENT({
+    ::grpc::ClientContext context;
     WriteAnalogWaveformsResponse write_response;
-    write_analog_waveforms(waveform_data, false, 10.0, write_response);
+    write_analog_waveforms(context, waveform_data, false, 10.0, write_response);
   });
   
   stop_task();
@@ -2152,13 +2321,99 @@ TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_ZeroSamples_Succeeds)
   std::vector<std::vector<double>> waveform_data(1);
   waveform_data[0] = {};  // Empty waveform
   
+  ::grpc::ClientContext context;
   WriteAnalogWaveformsResponse write_response;
-  auto write_status = write_analog_waveforms(waveform_data, false, 10.0, write_response);
+  auto write_status = write_analog_waveforms(context, waveform_data, false, 10.0, write_response);
   
   EXPECT_SUCCESS(write_status, write_response);
   EXPECT_EQ(write_response.samps_per_chan_written(), 0);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), std::to_string(0));
   
   stop_task();
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_InvalidNumSampsPerChan_ReturnsErrorAndZeroMetadata)
+{
+  const auto INVALID_NUM_SAMPLES = -2;
+  const auto TIMEOUT = 10.0;
+  CreateAIVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai0", "ai0", -1.0, 1.0, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  ::grpc::ClientContext context;
+  EXPECT_THROW_DRIVER_ERROR({
+    ReadAnalogWaveformsResponse read_response;
+    auto read_status = read_analog_waveforms(context, INVALID_NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
+  }, DAQMX_ERROR_INVALID_NUMBER_SAMPLES_TO_READ);
+  
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), "0");
+  
+  stop_task();
+}
+
+TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_InvalidNumSampsPerChan_ReturnsErrorAndZeroMetadata)
+{
+  const auto INVALID_NUM_SAMPLES = -2;
+  const auto TIMEOUT = 10.0;
+  CreateDIChanResponse create_channel_response;
+  auto create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line0", "di_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  start_task();
+  
+  ::grpc::ClientContext context;
+  EXPECT_THROW_DRIVER_ERROR({
+    ReadDigitalWaveformsResponse read_response;
+    auto read_status = read_digital_waveforms(context, INVALID_NUM_SAMPLES, TIMEOUT, WaveformAttributeMode::WAVEFORM_ATTRIBUTE_MODE_NONE, read_response);
+  }, DAQMX_ERROR_INVALID_NUMBER_SAMPLES_TO_READ);
+  
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), "0");
+  
+  stop_task();
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_TaskNotRunning_ReturnsErrorAndZeroMetadata)
+{
+  const double AO_MIN = -1.0;
+  const double AO_MAX = 1.0;
+  const auto NUM_SAMPLES = 10;
+  const auto TIMEOUT = 1.0;
+  
+  CreateAOVoltageChanResponse create_channel_response;
+  auto create_channel_status = create_ao_voltage_chan("gRPCSystemTestDAQ/ao0", "ao0", AO_MIN, AO_MAX, create_channel_response);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  std::vector<std::vector<double>> waveform_data(1, std::vector<double>(NUM_SAMPLES, 1.0));
+
+  ::grpc::ClientContext context;
+  EXPECT_THROW_DRIVER_ERROR({
+    WriteAnalogWaveformsResponse write_response;
+    auto write_status = write_analog_waveforms(context, waveform_data, false, TIMEOUT, write_response);
+  }, DAQMX_ERROR_CANNOT_WRITE_WHEN_AUTO_START_FALSE_AND_TASK_NOT_RUNNING);
+  
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), "0");
+}
+
+TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_TaskNotRunning_ReturnsErrorAndZeroMetadata)
+{
+  const auto NUM_SAMPLES = 10;
+  const auto TIMEOUT = 1.0;
+  CreateDOChanResponse create_channel_response;
+  auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0", "do_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
+  EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  std::vector<ni::protobuf::types::DigitalWaveform> waveforms;
+  waveforms.push_back(create_test_digital_waveform(NUM_SAMPLES, 1, 0));
+
+  ::grpc::ClientContext context;
+  EXPECT_THROW_DRIVER_ERROR({
+    WriteDigitalWaveformsResponse write_response;
+    auto write_status = write_digital_waveforms(context, NUM_SAMPLES, waveforms, false, TIMEOUT, write_response);
+  }, DAQMX_ERROR_CANNOT_WRITE_WHEN_AUTO_START_FALSE_AND_TASK_NOT_RUNNING);
+  
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-written"), "0");
 }
 
 TEST_F(NiDAQmxDriverApiTests, AOVoltageChannel_WriteAOData_Succeeds)

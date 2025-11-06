@@ -2,6 +2,7 @@
 #include <vector>
 #include <memory>
 #include <cstdint>
+#include <cstring>
 #include <server/converters.h>
 #include "NIDAQmxInternalWaveform.h"
 
@@ -180,8 +181,9 @@ void SetWaveformTiming(
     std::vector<std::vector<float64>> read_arrays(num_channels);
     std::vector<float64*> read_array_ptrs(num_channels);
     
+    const uInt32 size = (number_of_samples_per_channel > 0) ? number_of_samples_per_channel : 1;
     for (uInt32 i = 0; i < num_channels; ++i) {
-      read_arrays[i].resize(number_of_samples_per_channel);
+      read_arrays[i].resize(size);
       read_array_ptrs[i] = read_arrays[i].data();
     }
 
@@ -218,6 +220,7 @@ void SetWaveformTiming(
         nullptr
     );
 
+    context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samples_per_chan_read));
     if (!status_ok(status)) {
       return ConvertApiErrorStatusForTaskHandle(context, status, task);
     }
@@ -276,7 +279,8 @@ void SetWaveformTiming(
     }
 
     // Calculate total array size needed (samples * channels * max_bytes_per_chan)
-    const uInt32 array_size = number_of_samples_per_channel * num_channels * max_bytes_per_chan;
+    const uInt32 num_samples = (number_of_samples_per_channel > 0) ? number_of_samples_per_channel : 1;
+    const uInt32 array_size = num_samples * num_channels * max_bytes_per_chan;
     std::vector<uInt8> read_array(array_size);
 
     response->mutable_waveforms()->Reserve(num_channels);
@@ -318,6 +322,7 @@ void SetWaveformTiming(
         nullptr
     );
 
+    context->AddTrailingMetadata("ni-samps-per-chan-read", std::to_string(samples_per_chan_read));
     if (!status_ok(status)) {
       return ConvertApiErrorStatusForTaskHandle(context, status, task);
     }
@@ -404,6 +409,93 @@ void SetWaveformTiming(
         nullptr
     );
 
+    context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samples_per_chan_written));
+    if (!status_ok(status)) {
+      return ConvertApiErrorStatusForTaskHandle(context, status, task);
+    }
+
+    response->set_samps_per_chan_written(samples_per_chan_written);
+    response->set_status(status);
+    return ::grpc::Status::OK;
+  }
+  catch (nidevice_grpc::NonDriverException& ex) {
+    return ex.GetStatus();
+  }
+}
+
+::grpc::Status NiDAQmxService::WriteDigitalWaveforms(::grpc::ServerContext* context, const WriteDigitalWaveformsRequest* request, WriteDigitalWaveformsResponse* response)
+{
+  if (context->IsCancelled()) {
+    return ::grpc::Status::CANCELLED;
+  }
+  try {
+    auto task_grpc_session = request->task();
+    TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+
+    const auto auto_start = request->auto_start();
+    const auto timeout = request->timeout();
+    const auto& waveforms = request->waveforms();
+    
+    if (waveforms.empty()) {
+      return ::grpc::Status(::grpc::INVALID_ARGUMENT, "No waveforms provided");
+    }
+
+    const uInt32 num_channels = static_cast<uInt32>(waveforms.size());
+    const int32 number_of_samples_per_channel = static_cast<int32>(waveforms[0].y_data().size() / waveforms[0].signal_count());
+
+    uInt32 max_bytes_per_chan = 0;
+    for (const auto& waveform : waveforms) {
+      const auto signal_count = waveform.signal_count();
+      max_bytes_per_chan = std::max(max_bytes_per_chan, static_cast<uInt32>(signal_count));
+    }
+
+    std::vector<uInt32> bytes_per_chan_array(num_channels);
+    for (uInt32 channel = 0; channel < num_channels; ++channel) {
+      const auto& waveform = waveforms[channel];
+      const auto signal_count = waveform.signal_count();
+      const auto& y_data = waveform.y_data();
+      
+      if (y_data.size() != number_of_samples_per_channel * signal_count) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The waveforms must all have the same sample count.");
+      }
+      
+      bytes_per_chan_array[channel] = static_cast<uInt32>(signal_count);
+    }
+
+    const uInt32 array_size = number_of_samples_per_channel * num_channels * max_bytes_per_chan;
+    std::vector<uInt8> write_array(array_size, 0);
+
+    for (uInt32 channel = 0; channel < num_channels; ++channel) {
+      const auto& waveform = waveforms[channel];
+      const auto signal_count = waveform.signal_count();
+      const auto& y_data = waveform.y_data();
+
+      // Data layout: grouped by scan number (interleaved)
+      // Sample 0: Channel 0 signals, Channel 1 signals, Channel 2 signals, ...
+      // Sample 1: Channel 0 signals, Channel 1 signals, Channel 2 signals, ...
+      // Within each channel's data in a sample, signals are sequential: Signal0, Signal1, Signal2, ...
+      for (int32 sample = 0; sample < number_of_samples_per_channel; ++sample) {
+        const uInt32 dest_index = sample * num_channels * max_bytes_per_chan + channel * max_bytes_per_chan;
+        const uInt32 src_index = sample * signal_count;
+        std::memcpy(&write_array[dest_index], &y_data[src_index], signal_count);
+      }
+    }
+
+    int32 samples_per_chan_written = 0;
+    auto status = library_->InternalWriteDigitalWaveform(
+        task,
+        number_of_samples_per_channel,
+        auto_start,
+        timeout,
+        GROUP_BY_GROUP_BY_SCAN_NUMBER,
+        write_array.data(),
+        bytes_per_chan_array.data(),
+        num_channels,
+        &samples_per_chan_written,
+        nullptr
+    );
+
+    context->AddTrailingMetadata("ni-samps-per-chan-written", std::to_string(samples_per_chan_written));
     if (!status_ok(status)) {
       return ConvertApiErrorStatusForTaskHandle(context, status, task);
     }

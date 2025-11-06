@@ -471,6 +471,7 @@ WriteToTEDSFromFileResponse write_to_teds_from_file(const StubPtr& stub, const s
 ReadAnalogWaveformsResponse read_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<WaveformAttributeMode, pb::int32>& waveform_attribute_mode);
 ReadDigitalWaveformsResponse read_digital_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const pb::int32& num_samps_per_chan, const double& timeout, const simple_variant<WaveformAttributeMode, pb::int32>& waveform_attribute_mode);
 WriteAnalogWaveformsResponse write_analog_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout, const std::vector<ni::protobuf::types::DoubleAnalogWaveform>& waveforms);
+WriteDigitalWaveformsResponse write_digital_waveforms(const StubPtr& stub, const nidevice_grpc::Session& task, const bool& auto_start, const double& timeout, const std::vector<ni::protobuf::types::DigitalWaveform>& waveforms);
 
 } // namespace nidaqmx_grpc::experimental::client
 
