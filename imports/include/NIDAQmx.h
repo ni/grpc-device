@@ -737,11 +737,11 @@ typedef uInt32             CalHandle;
 #define DAQmx_Carrier_SerialNum                                          0x2A8A // Indicates the serial number of the device carrier. This value is zero if the carrier does not have a serial number.
 #define DAQmx_FieldDAQ_DevName                                           0x3171 // Indicates the parent device which this bank is located in.
 #define DAQmx_FieldDAQ_BankDevNames                                      0x3178 // Indicates an array containing the names of the banks in the FieldDAQ.
-#define DAQmx_Dev_IDPin_PinNames                                         0x31F1 // xx Indicates the names of all the ID Pins on this device.
-#define DAQmx_Dev_IDPin_PinStatuses                                      0x31F2 // xx Indicates status of each ID Pin.
-#define DAQmx_Dev_IDPin_MemFamilyCodes                                   0x31F3 // xx Indicates the family code of the memory connected to each ID Pin. Each array element corresponds to an ID Pin. The array contains 0 for each ID Pin with no memory connected.
-#define DAQmx_Dev_IDPin_MemSerialNums                                    0x31F4 // xx Indicates the serial number of the memory connected to each ID Pin. Each array element corresponds to an ID Pin. The array contains an empty string for each ID Pin with no memory connected.
-#define DAQmx_Dev_IDPin_MemSizes                                         0x31F5 // xx Indicates the size in bytes of the memory connected to each ID Pin. Each array element corresponds to an ID Pin. The array contains 0 for each ID Pin with no memory connected.
+#define DAQmx_Dev_IDPin_PinNames                                         0x31F1 // Indicates the names of all the ID Pins on this device.
+#define DAQmx_Dev_IDPin_PinStatuses                                      0x31F2 // Indicates status of each ID Pin.
+#define DAQmx_Dev_IDPin_MemFamilyCodes                                   0x31F3 // Indicates the family code of the memory connected to each ID Pin. Each array element corresponds to an ID Pin. The array contains 0 for each ID Pin with no memory connected.
+#define DAQmx_Dev_IDPin_MemSerialNums                                    0x31F4 // Indicates the serial number of the memory connected to each ID Pin. Each array element corresponds to an ID Pin. The array contains an empty string for each ID Pin with no memory connected.
+#define DAQmx_Dev_IDPin_MemSizes                                         0x31F5 // Indicates the size in bytes of the memory connected to each ID Pin. Each array element corresponds to an ID Pin. The array contains 0 for each ID Pin with no memory connected.
 #define DAQmx_Dev_Chassis_ModuleDevNames                                 0x29B6 // Indicates an array containing the names of the modules in the chassis.
 #define DAQmx_Dev_AnlgTrigSupported                                      0x2984 // Indicates if the device supports analog triggering.
 #define DAQmx_Dev_DigTrigSupported                                       0x2985 // Indicates if the device supports digital triggering.
@@ -2496,6 +2496,8 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_T_Type_TC                                               10086 // T
 #define DAQmx_Val_B_Type_TC                                               10047 // B
 #define DAQmx_Val_E_Type_TC                                               10055 // E
+#define DAQmx_Val_A_Type_TC                                               16208 // A
+#define DAQmx_Val_C_Type_TC                                               16209 // C
 
 //*** Values for DAQmx_SyncPulse_Time_Timescale ***
 //*** Values for DAQmx_FirstSampTimestamp_Timescale ***
@@ -2896,6 +2898,8 @@ int32 __CFUNC     DAQmxCreateCOPulseChanTime     (TaskHandle taskHandle, const c
 int32 __CFUNC     DAQmxCreateCOPulseChanTicks    (TaskHandle taskHandle, const char counter[], const char nameToAssignToChannel[], const char sourceTerminal[], int32 idleState, int32 initialDelay, int32 lowTicks, int32 highTicks);
 
 int32 __CFUNC     DAQmxCreateAIPowerChan       (TaskHandle taskHandle, const char physicalChannel[], const char nameToAssignToChannel[], float64 voltageSetpoint, float64 currentSetpoint, bool32 outputEnable);
+
+int32 __CFUNC     DAQmxCreateAICalculatedPowerChan       (TaskHandle taskHandle, const char voltagePhysicalChannel[], const char currentPhysicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 voltageMinVal, float64 voltageMaxVal, float64 currentMinVal, float64 currentMaxVal, int32 units, int32 shuntResistorLoc, float64 extShuntResistorVal, const char customScaleName[]);
 
 int32 __CFUNC     DAQmxGetAIChanCalCalDate       (TaskHandle taskHandle, const char channelName[], uInt32 *year, uInt32 *month, uInt32 *day, uInt32 *hour, uInt32 *minute);
 int32 __CFUNC     DAQmxSetAIChanCalCalDate       (TaskHandle taskHandle, const char channelName[], uInt32 year, uInt32 month, uInt32 day, uInt32 hour, uInt32 minute);
@@ -3452,6 +3456,7 @@ int32 __CFUNC     DAQmxGet4305CalAdjustPoints    (CalHandle calHandle, float64* 
 int32 __CFUNC     DAQmxAdjust4305Cal             (CalHandle calHandle, float64 refVoltage);
 int32 __CFUNC     DAQmxAdjust4309Cal             (CalHandle calHandle, float64 refVoltage);
 int32 __CFUNC     DAQmxAdjust4310Cal             (CalHandle calHandle, float64 refVoltage);
+int32 __CFUNC     DAQmxAdjust4311Cal             (CalHandle calHandle, float64 rangeMax, float64 rangeMin, float64 refVoltage);
 int32 __CFUNC     DAQmxAdjust4353Cal             (CalHandle calHandle, const char channelNames[], float64 refVal);
 int32 __CFUNC     DAQmxAdjust4357Cal             (CalHandle calHandle, const char channelNames[], const float64 refVals[], int32 numRefVals);
 int32 __CFUNC     DAQmxSetup4322Cal              (CalHandle calHandle, const char channelNames[], int32 outputType, float64 outputVal);
@@ -3593,6 +3598,8 @@ int32 __CFUNC     DAQmxAdjust9266Cal(CalHandle calHandle, const char channelName
 int32 __CFUNC     DAQmxGet9269CalAdjustPoints(CalHandle calHandle, int32* adjustmentPoints, uInt32 bufferSize);
 int32 __CFUNC     DAQmxSetup9269Cal(CalHandle calHandle, const char channelNames[], int32 value);
 int32 __CFUNC     DAQmxAdjust9269Cal(CalHandle calHandle, const char channelNames[], float64 value);
+int32 __CFUNC     DAQmxGet9320CalAdjustPoints(CalHandle calHandle, float64* adjustmentPoints, uInt32 bufferSize);
+int32 __CFUNC     DAQmxAdjust9320Cal(CalHandle calHandle, const char channelNames[], float64 value);
 int32 __CFUNC     DAQmxGet9628AICalAdjustPoints(CalHandle calHandle, float64 rangeMin, float64 rangeMax, float64* adjustmentPoints, uInt32 bufferSize);
 int32 __CFUNC     DAQmxAdjust9628AICal(CalHandle calHandle, const char channelNames[], float64 rangeMin, float64 rangeMax, float64 value);
 int32 __CFUNC     DAQmxGet9629AICalAdjustPoints(CalHandle calHandle, float64 rangeMin, float64 rangeMax, float64* adjustmentPoints, uInt32 bufferSize);

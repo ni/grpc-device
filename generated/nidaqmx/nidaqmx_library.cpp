@@ -67,6 +67,7 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.CreateAIAccelChan = reinterpret_cast<CreateAIAccelChanPtr>(shared_library_->get_function_pointer("DAQmxCreateAIAccelChan"));
   function_pointers_.CreateAIAccelChargeChan = reinterpret_cast<CreateAIAccelChargeChanPtr>(shared_library_->get_function_pointer("DAQmxCreateAIAccelChargeChan"));
   function_pointers_.CreateAIBridgeChan = reinterpret_cast<CreateAIBridgeChanPtr>(shared_library_->get_function_pointer("DAQmxCreateAIBridgeChan"));
+  function_pointers_.CreateAICalculatedPowerChan = reinterpret_cast<CreateAICalculatedPowerChanPtr>(shared_library_->get_function_pointer("DAQmxCreateAICalculatedPowerChan"));
   function_pointers_.CreateAIChargeChan = reinterpret_cast<CreateAIChargeChanPtr>(shared_library_->get_function_pointer("DAQmxCreateAIChargeChan"));
   function_pointers_.CreateAICurrentChan = reinterpret_cast<CreateAICurrentChanPtr>(shared_library_->get_function_pointer("DAQmxCreateAICurrentChan"));
   function_pointers_.CreateAICurrentRMSChan = reinterpret_cast<CreateAICurrentRMSChanPtr>(shared_library_->get_function_pointer("DAQmxCreateAICurrentRMSChan"));
@@ -763,6 +764,14 @@ int32 NiDAQmxLibrary::CreateAIBridgeChan(TaskHandle task, const char physicalCha
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAIBridgeChan.");
   }
   return function_pointers_.CreateAIBridgeChan(task, physicalChannel, nameToAssignToChannel, minVal, maxVal, units, bridgeConfig, voltageExcitSource, voltageExcitVal, nominalBridgeResistance, customScaleName);
+}
+
+int32 NiDAQmxLibrary::CreateAICalculatedPowerChan(TaskHandle task, const char voltagePhysicalChannel[], const char currentPhysicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 voltageMinVal, float64 voltageMaxVal, float64 currentMinVal, float64 currentMaxVal, int32 units, int32 shuntResistorLoc, float64 extShuntResistorVal, const char customScaleName[])
+{
+  if (!function_pointers_.CreateAICalculatedPowerChan) {
+    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxCreateAICalculatedPowerChan.");
+  }
+  return function_pointers_.CreateAICalculatedPowerChan(task, voltagePhysicalChannel, currentPhysicalChannel, nameToAssignToChannel, terminalConfig, voltageMinVal, voltageMaxVal, currentMinVal, currentMaxVal, units, shuntResistorLoc, extShuntResistorVal, customScaleName);
 }
 
 int32 NiDAQmxLibrary::CreateAIChargeChan(TaskHandle task, const char physicalChannel[], const char nameToAssignToChannel[], int32 terminalConfig, float64 minVal, float64 maxVal, int32 units, const char customScaleName[])

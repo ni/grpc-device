@@ -3759,6 +3759,89 @@ namespace nidaqmx_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiDAQmxService::CreateAICalculatedPowerChan(::grpc::ServerContext* context, const CreateAICalculatedPowerChanRequest* request, CreateAICalculatedPowerChanResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto task_grpc_session = request->task();
+      TaskHandle task = session_repository_->access_session(task_grpc_session.name());
+      auto voltage_physical_channel_mbcs = convert_from_grpc<std::string>(request->voltage_physical_channel());
+      auto voltage_physical_channel = voltage_physical_channel_mbcs.c_str();
+      auto current_physical_channel_mbcs = convert_from_grpc<std::string>(request->current_physical_channel());
+      auto current_physical_channel = current_physical_channel_mbcs.c_str();
+      auto name_to_assign_to_channel_mbcs = convert_from_grpc<std::string>(request->name_to_assign_to_channel());
+      auto name_to_assign_to_channel = name_to_assign_to_channel_mbcs.c_str();
+      int32 terminal_config;
+      switch (request->terminal_config_enum_case()) {
+        case nidaqmx_grpc::CreateAICalculatedPowerChanRequest::TerminalConfigEnumCase::kTerminalConfig: {
+          terminal_config = static_cast<int32>(request->terminal_config());
+          break;
+        }
+        case nidaqmx_grpc::CreateAICalculatedPowerChanRequest::TerminalConfigEnumCase::kTerminalConfigRaw: {
+          terminal_config = static_cast<int32>(request->terminal_config_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAICalculatedPowerChanRequest::TerminalConfigEnumCase::TERMINAL_CONFIG_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for terminal_config was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 voltage_min_val = request->voltage_min_val();
+      float64 voltage_max_val = request->voltage_max_val();
+      float64 current_min_val = request->current_min_val();
+      float64 current_max_val = request->current_max_val();
+      int32 units;
+      switch (request->units_enum_case()) {
+        case nidaqmx_grpc::CreateAICalculatedPowerChanRequest::UnitsEnumCase::kUnits: {
+          units = static_cast<int32>(request->units());
+          break;
+        }
+        case nidaqmx_grpc::CreateAICalculatedPowerChanRequest::UnitsEnumCase::kUnitsRaw: {
+          units = static_cast<int32>(request->units_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAICalculatedPowerChanRequest::UnitsEnumCase::UNITS_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for units was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 shunt_resistor_loc;
+      switch (request->shunt_resistor_loc_enum_case()) {
+        case nidaqmx_grpc::CreateAICalculatedPowerChanRequest::ShuntResistorLocEnumCase::kShuntResistorLoc: {
+          shunt_resistor_loc = static_cast<int32>(request->shunt_resistor_loc());
+          break;
+        }
+        case nidaqmx_grpc::CreateAICalculatedPowerChanRequest::ShuntResistorLocEnumCase::kShuntResistorLocRaw: {
+          shunt_resistor_loc = static_cast<int32>(request->shunt_resistor_loc_raw());
+          break;
+        }
+        case nidaqmx_grpc::CreateAICalculatedPowerChanRequest::ShuntResistorLocEnumCase::SHUNT_RESISTOR_LOC_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for shunt_resistor_loc was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 ext_shunt_resistor_val = request->ext_shunt_resistor_val();
+      auto custom_scale_name_mbcs = convert_from_grpc<std::string>(request->custom_scale_name());
+      auto custom_scale_name = custom_scale_name_mbcs.c_str();
+      auto status = library_->CreateAICalculatedPowerChan(task, voltage_physical_channel, current_physical_channel, name_to_assign_to_channel, terminal_config, voltage_min_val, voltage_max_val, current_min_val, current_max_val, units, shunt_resistor_loc, ext_shunt_resistor_val, custom_scale_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForTaskHandle(context, status, task);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiDAQmxService::CreateAIChargeChan(::grpc::ServerContext* context, const CreateAIChargeChanRequest* request, CreateAIChargeChanResponse* response)
   {
     if (context->IsCancelled()) {
