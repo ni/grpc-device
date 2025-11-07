@@ -1959,12 +1959,18 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_WithTimingAndExtendedPropertie
 
 TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_ReadAllAvailable_ReturnsAvailableSamples)
 {
+  const auto FINITE_SAMPLES = 100;
   const auto TIMEOUT = 10.0;
   CreateAIVoltageChanResponse create_channel_response;
   auto create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai0", "ai0", -1.0, 1.0, create_channel_response);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
   create_channel_status = create_ai_voltage_chan("gRPCSystemTestDAQ/ai1", "ai1", -1.0, 1.0, create_channel_response);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  auto timing_request = create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLES);
+  CfgSampClkTimingResponse timing_response;
+  auto timing_status = cfg_samp_clk_timing(timing_request, timing_response);
+  EXPECT_SUCCESS(timing_status, timing_response);
 
   start_task();
   ::grpc::ClientContext context;
@@ -1975,12 +1981,12 @@ TEST_F(NiDAQmxDriverApiTests, ReadAnalogWaveforms_ReadAllAvailable_ReturnsAvaila
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2);
-  EXPECT_EQ(read_response.samps_per_chan_read(), 1);
-  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(read_response.samps_per_chan_read()));
+  EXPECT_EQ(read_response.samps_per_chan_read(), FINITE_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(FINITE_SAMPLES));
   
   for (int i = 0; i < read_response.waveforms_size(); ++i) {
     const auto& waveform = read_response.waveforms(i);
-    EXPECT_EQ(waveform.y_data_size(), read_response.samps_per_chan_read());    
+    EXPECT_EQ(waveform.y_data_size(), FINITE_SAMPLES);    
     EXPECT_FALSE(waveform.has_t0());
     EXPECT_EQ(waveform.dt(), 0.0);    
     EXPECT_EQ(waveform.attributes_size(), 0);
@@ -2173,12 +2179,18 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_WithTimingAndExtendedProperti
 
 TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_ReadAllAvailable_ReturnsAvailableSamples)
 {
+  const auto FINITE_SAMPLES = 75;
   const auto TIMEOUT = 10.0;
   CreateDIChanResponse create_channel_response;
   auto create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line0:2", "di_port0", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
   create_channel_status = create_di_chan(create_channel_response, "gRPCSystemTestDAQ/port0/line4:5", "di_port0_lines45", LineGrouping::LINE_GROUPING_CHAN_FOR_ALL_LINES);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);
+
+  auto timing_request = create_cfg_samp_clk_timing_request(1000.0, Edge1::EDGE1_RISING, AcquisitionType::ACQUISITION_TYPE_FINITE_SAMPS, FINITE_SAMPLES);
+  CfgSampClkTimingResponse timing_response;
+  auto timing_status = cfg_samp_clk_timing(timing_request, timing_response);
+  EXPECT_SUCCESS(timing_status, timing_response);
 
   start_task();
   ::grpc::ClientContext context;
@@ -2189,18 +2201,18 @@ TEST_F(NiDAQmxDriverApiTests, ReadDigitalWaveforms_ReadAllAvailable_ReturnsAvail
   EXPECT_SUCCESS(read_status, read_response);
   EXPECT_EQ(read_response.status(), DAQMX_SUCCESS);
   EXPECT_EQ(read_response.waveforms_size(), 2); // Two channels: di_port0 and di_port0_lines45
-  EXPECT_EQ(read_response.samps_per_chan_read(), 1);
-  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(read_response.samps_per_chan_read()));
+  EXPECT_EQ(read_response.samps_per_chan_read(), FINITE_SAMPLES);
+  EXPECT_EQ(get_from_trailing_metadata(context, "ni-samps-per-chan-read"), std::to_string(FINITE_SAMPLES));
   
   const auto& waveform0 = read_response.waveforms(0);
   EXPECT_EQ(waveform0.signal_count(), 3); // 3 lines in port0 (line0:2 means 0,1,2)
-  EXPECT_EQ(static_cast<int32>(waveform0.y_data().size()), read_response.samps_per_chan_read() * 3); // 3 bytes per sample
-  verify_digital_waveform_data(waveform0.y_data(), read_response.samps_per_chan_read(), 3, 0);
+  EXPECT_EQ(static_cast<int32>(waveform0.y_data().size()), FINITE_SAMPLES * 3); // 3 bytes per sample
+  verify_digital_waveform_data(waveform0.y_data(), FINITE_SAMPLES, 3, 0);
   
   const auto& waveform1 = read_response.waveforms(1);
   EXPECT_EQ(waveform1.signal_count(), 2); // 2 lines in port0 (line4:5 means 4,5)
-  EXPECT_EQ(static_cast<int32>(waveform1.y_data().size()), read_response.samps_per_chan_read() * 2); // 2 bytes per sample
-  verify_digital_waveform_data(waveform1.y_data(), read_response.samps_per_chan_read(), 2, 4);
+  EXPECT_EQ(static_cast<int32>(waveform1.y_data().size()), FINITE_SAMPLES * 2); // 2 bytes per sample
+  verify_digital_waveform_data(waveform1.y_data(), FINITE_SAMPLES, 2, 4);
 }
 
 TEST_F(NiDAQmxDriverApiTests, WriteAnalogWaveforms_SingleChannel_Succeeds)
