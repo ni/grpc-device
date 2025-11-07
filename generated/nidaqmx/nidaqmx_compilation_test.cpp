@@ -732,11 +732,6 @@ int32 GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attrib
   return DAQmxGetChanAttribute(task, channel, attribute, value);
 }
 
-int32 GetDefaultNumberOfSamplesToRead(TaskHandle task, uInt32* data)
-{
-  return DAQmxGetDefaultNumberOfSamplesToRead(task, data);
-}
-
 int32 GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value)
 {
   return DAQmxGetDeviceAttribute(deviceName, attribute, value);

@@ -167,7 +167,6 @@ GetChanAttributeDoubleArrayResponse get_chan_attribute_double_array(const StubPt
 GetChanAttributeInt32Response get_chan_attribute_int32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelInt32Attribute, pb::int32>& attribute);
 GetChanAttributeStringResponse get_chan_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelStringAttribute, pb::int32>& attribute);
 GetChanAttributeUInt32Response get_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& task, const std::string& channel, const simple_variant<ChannelUInt32Attribute, pb::int32>& attribute);
-GetDefaultNumberOfSamplesToReadResponse get_default_number_of_samples_to_read(const StubPtr& stub, const nidevice_grpc::Session& task);
 GetDeviceAttributeBoolResponse get_device_attribute_bool(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceBoolAttribute, pb::int32>& attribute);
 GetDeviceAttributeDoubleResponse get_device_attribute_double(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceDoubleAttribute, pb::int32>& attribute);
 GetDeviceAttributeDoubleArrayResponse get_device_attribute_double_array(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceDoubleArrayAttribute, pb::int32>& attribute);

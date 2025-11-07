@@ -173,7 +173,6 @@ NiDAQmxLibrary::NiDAQmxLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInter
   function_pointers_.GetChanAttributeInt32 = reinterpret_cast<GetChanAttributeInt32Ptr>(shared_library_->get_function_pointer("DAQmxGetChanAttribute"));
   function_pointers_.GetChanAttributeString = reinterpret_cast<GetChanAttributeStringPtr>(shared_library_->get_function_pointer("DAQmxGetChanAttribute"));
   function_pointers_.GetChanAttributeUInt32 = reinterpret_cast<GetChanAttributeUInt32Ptr>(shared_library_->get_function_pointer("DAQmxGetChanAttribute"));
-  function_pointers_.GetDefaultNumberOfSamplesToRead = reinterpret_cast<GetDefaultNumberOfSamplesToReadPtr>(shared_library_->get_function_pointer("DAQmxGetDefaultNumberOfSamplesToRead"));
   function_pointers_.GetDeviceAttributeBool = reinterpret_cast<GetDeviceAttributeBoolPtr>(shared_library_->get_function_pointer("DAQmxGetDeviceAttribute"));
   function_pointers_.GetDeviceAttributeDouble = reinterpret_cast<GetDeviceAttributeDoublePtr>(shared_library_->get_function_pointer("DAQmxGetDeviceAttribute"));
   function_pointers_.GetDeviceAttributeDoubleArray = reinterpret_cast<GetDeviceAttributeDoubleArrayPtr>(shared_library_->get_function_pointer("DAQmxGetDeviceAttribute"));
@@ -1612,14 +1611,6 @@ int32 NiDAQmxLibrary::GetChanAttributeUInt32(TaskHandle task, const char channel
     throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetChanAttribute.");
   }
   return function_pointers_.GetChanAttributeUInt32(task, channel, attribute, value);
-}
-
-int32 NiDAQmxLibrary::GetDefaultNumberOfSamplesToRead(TaskHandle task, uInt32* data)
-{
-  if (!function_pointers_.GetDefaultNumberOfSamplesToRead) {
-    throw nidevice_grpc::LibraryLoadException("Could not find DAQmxGetDefaultNumberOfSamplesToRead.");
-  }
-  return function_pointers_.GetDefaultNumberOfSamplesToRead(task, data);
 }
 
 int32 NiDAQmxLibrary::GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value)

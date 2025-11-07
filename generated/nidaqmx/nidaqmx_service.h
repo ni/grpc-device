@@ -237,7 +237,6 @@ public:
   ::grpc::Status GetChanAttributeInt32(::grpc::ServerContext* context, const GetChanAttributeInt32Request* request, GetChanAttributeInt32Response* response) override;
   ::grpc::Status GetChanAttributeString(::grpc::ServerContext* context, const GetChanAttributeStringRequest* request, GetChanAttributeStringResponse* response) override;
   ::grpc::Status GetChanAttributeUInt32(::grpc::ServerContext* context, const GetChanAttributeUInt32Request* request, GetChanAttributeUInt32Response* response) override;
-  ::grpc::Status GetDefaultNumberOfSamplesToRead(::grpc::ServerContext* context, const GetDefaultNumberOfSamplesToReadRequest* request, GetDefaultNumberOfSamplesToReadResponse* response) override;
   ::grpc::Status GetDeviceAttributeBool(::grpc::ServerContext* context, const GetDeviceAttributeBoolRequest* request, GetDeviceAttributeBoolResponse* response) override;
   ::grpc::Status GetDeviceAttributeDouble(::grpc::ServerContext* context, const GetDeviceAttributeDoubleRequest* request, GetDeviceAttributeDoubleResponse* response) override;
   ::grpc::Status GetDeviceAttributeDoubleArray(::grpc::ServerContext* context, const GetDeviceAttributeDoubleArrayRequest* request, GetDeviceAttributeDoubleArrayResponse* response) override;

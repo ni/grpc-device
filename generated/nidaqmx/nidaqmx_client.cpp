@@ -5067,23 +5067,6 @@ get_chan_attribute_uint32(const StubPtr& stub, const nidevice_grpc::Session& tas
   return response;
 }
 
-GetDefaultNumberOfSamplesToReadResponse
-get_default_number_of_samples_to_read(const StubPtr& stub, const nidevice_grpc::Session& task)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetDefaultNumberOfSamplesToReadRequest{};
-  request.mutable_task()->CopyFrom(task);
-
-  auto response = GetDefaultNumberOfSamplesToReadResponse{};
-
-  raise_if_error(
-      stub->GetDefaultNumberOfSamplesToRead(&context, request, &response),
-      context);
-
-  return response;
-}
-
 GetDeviceAttributeBoolResponse
 get_device_attribute_bool(const StubPtr& stub, const std::string& device_name, const simple_variant<DeviceBoolAttribute, pb::int32>& attribute)
 {

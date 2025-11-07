@@ -159,7 +159,6 @@ class NiDAQmxLibraryInterface {
   virtual int32 GetChanAttributeInt32(TaskHandle task, const char channel[], int32 attribute, int32* value) = 0;
   virtual int32 GetChanAttributeString(TaskHandle task, const char channel[], int32 attribute, char value[], uInt32 size) = 0;
   virtual int32 GetChanAttributeUInt32(TaskHandle task, const char channel[], int32 attribute, uInt32* value) = 0;
-  virtual int32 GetDefaultNumberOfSamplesToRead(TaskHandle task, uInt32* data) = 0;
   virtual int32 GetDeviceAttributeBool(const char deviceName[], int32 attribute, bool32* value) = 0;
   virtual int32 GetDeviceAttributeDouble(const char deviceName[], int32 attribute, float64* value) = 0;
   virtual int32 GetDeviceAttributeDoubleArray(const char deviceName[], int32 attribute, float64 value[], uInt32 size) = 0;

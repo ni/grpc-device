@@ -182,7 +182,7 @@ void SetWaveformTiming(
 
     if (number_of_samples_per_channel == READ_ALL_AVAILABLE) {
       uInt32 default_number = 0;
-      status = library_->GetDefaultNumberOfSamplesToRead(task, &default_number);
+      status = library_->GetReadAttributeUInt32(task, DAQmx_DefaultNumberOfSamplesToRead, &default_number);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
@@ -280,7 +280,7 @@ void SetWaveformTiming(
 
     if (number_of_samples_per_channel == READ_ALL_AVAILABLE) {
       uInt32 default_number = 0;
-      status = library_->GetDefaultNumberOfSamplesToRead(task, &default_number);
+      status = library_->GetReadAttributeUInt32(task, DAQmx_DefaultNumberOfSamplesToRead, &default_number);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForTaskHandle(context, status, task);
       }
