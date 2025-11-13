@@ -547,6 +547,7 @@ private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task);
+  bool IsInternalAttribute(int32 attribute, const std::string& data_type);
 
   NiDAQmxFeatureToggles feature_toggles_;
 };

@@ -16,6 +16,7 @@
 #include "tests/utilities/async_helpers.h"
 #include "tests/utilities/scope_exit.h"
 #include "tests/utilities/test_helpers.h"
+#include "NIDAQmxInternalWaveform.h"
 
 using namespace ::testing;
 using namespace nidaqmx_grpc;
@@ -3601,6 +3602,18 @@ TEST_F(NiDAQmxDriverApiTests, SetWrongDataTypeAttribute_ReturnsNotValidError)
   EXPECT_THROW_DRIVER_ERROR({
     client::get_device_attribute_bool(stub(), DEVICE_NAME, DeviceStringAttribute::DEVICE_ATTRIBUTE_AO_PHYSICAL_CHANS);
   }, SPECIFIED_ATTRIBUTE_NOT_VALID_ERROR);
+}
+
+TEST_F(NiDAQmxDriverApiTests, GetReadAttributeUInt32_DAQmxDefaultNumberOfSamplesToRead_RawAttribute_Succeeds)
+{
+  CreateAIVoltageChanResponse channel_response;
+  auto channel_status = create_ai_voltage_chan(-10.0, 10.0, channel_response);
+  
+  auto response = client::get_read_attribute_uint32(stub(), task(), DAQmx_DefaultNumberOfSamplesToRead);
+  
+  EXPECT_SUCCESS(channel_status, channel_response);  
+  EXPECT_SUCCESS(response);
+  EXPECT_EQ(response.value(), 1);
 }
 
 }  // namespace

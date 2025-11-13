@@ -150,6 +150,11 @@ void SetWaveformTiming(
 
 } // anonymous namespace
 
+bool NiDAQmxService::IsInternalAttribute(int32 attribute, const std::string& data_type)
+{
+  return attribute == DAQmx_DefaultNumberOfSamplesToRead && data_type == "ReadUInt32Attribute";
+}
+
 ::grpc::Status NiDAQmxService::ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task)
 {
   // This implementation assumes this method is always called on the same thread where the error occurred.
