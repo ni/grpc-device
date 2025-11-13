@@ -619,7 +619,7 @@ ${initialize_standard_input_param(parameter)}
 % endif
 % if validate_attribute_enum: # raw validation can be overridden with a toggle.
 % if config["namespace_component"] == "nidaqmx":
-        auto ${parameter_name}_is_valid = ${check_enum_is_valid} || IsInternalAttribute(${parameter_name}, "${parameter['enum']}") || feature_toggles_.is_allow_undefined_attributes_enabled;
+        auto ${parameter_name}_is_valid = ${check_enum_is_valid} || IsInternalAttribute(${parameter_name}, ${parameter['enum']}_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
 % else:
         auto ${parameter_name}_is_valid = ${check_enum_is_valid} || feature_toggles_.is_allow_undefined_attributes_enabled;
 % endif

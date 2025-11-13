@@ -117,7 +117,7 @@ private:
   ::grpc::Status ConvertApiErrorStatusFor${cpp_handle_type}(::grpc::ServerContextBase* context, int32_t status, ${resource_handle_type} ${config["session_handle_parameter_name"]});
 % endfor
 % if config["namespace_component"] == "nidaqmx":
-  bool IsInternalAttribute(int32 attribute, const std::string& data_type);
+  bool IsInternalAttribute(int32 attribute, const google::protobuf::EnumDescriptor* attribute_enum_descriptor);
 % endif
 % if common_helpers.has_viboolean_array_param(functions):
   void Copy(const std::vector<ViBoolean>& input, google::protobuf::RepeatedField<bool>* output);
