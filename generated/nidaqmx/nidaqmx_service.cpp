@@ -9961,7 +9961,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetBufferAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::BufferUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::BufferUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, BufferUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetBufferAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -10004,7 +10004,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetCalInfoAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::CalibrationInfoBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::CalibrationInfoBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetCalInfoAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10047,7 +10047,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetCalInfoAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::CalibrationInfoDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::CalibrationInfoDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetCalInfoAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10090,7 +10090,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetCalInfoAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::CalibrationInfoStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::CalibrationInfoStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetCalInfoAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10152,7 +10152,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetCalInfoAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::CalibrationInfoUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::CalibrationInfoUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetCalInfoAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -10197,7 +10197,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetChanAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetChanAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10242,7 +10242,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetChanAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetChanAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10287,7 +10287,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetChanAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelDoubleArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelDoubleArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetChanAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10345,7 +10345,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetChanAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetChanAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -10396,7 +10396,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetChanAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetChanAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10460,7 +10460,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetChanAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetChanAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -10503,7 +10503,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetDeviceAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::DeviceBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::DeviceBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetDeviceAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10546,7 +10546,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetDeviceAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::DeviceDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::DeviceDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetDeviceAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10589,7 +10589,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetDeviceAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::DeviceDoubleArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::DeviceDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceDoubleArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetDeviceAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10645,7 +10645,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetDeviceAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::DeviceInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::DeviceInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetDeviceAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -10694,7 +10694,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetDeviceAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::DeviceInt32ArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::DeviceInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceInt32ArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetDeviceAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10764,7 +10764,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetDeviceAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::DeviceStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::DeviceStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetDeviceAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -10826,7 +10826,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetDeviceAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::DeviceUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::DeviceUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetDeviceAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -10869,7 +10869,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetDeviceAttributeUInt32ArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::DeviceUInt32ArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::DeviceUInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceUInt32ArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetDeviceAttributeUInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11126,7 +11126,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetExportedSignalAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11169,7 +11169,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetExportedSignalAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11212,7 +11212,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetExportedSignalAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -11261,7 +11261,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetExportedSignalAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11323,7 +11323,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetExportedSignalAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetExportedSignalAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -11578,7 +11578,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPersistedChanAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PersistedChannelBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PersistedChannelBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedChannelBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPersistedChanAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11621,7 +11621,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPersistedChanAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PersistedChannelStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PersistedChannelStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedChannelStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPersistedChanAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11683,7 +11683,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPersistedScaleAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PersistedScaleBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PersistedScaleBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedScaleBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPersistedScaleAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11726,7 +11726,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPersistedScaleAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PersistedScaleStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PersistedScaleStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedScaleStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPersistedScaleAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11788,7 +11788,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPersistedTaskAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PersistedTaskBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PersistedTaskBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedTaskBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPersistedTaskAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11831,7 +11831,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPersistedTaskAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PersistedTaskStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PersistedTaskStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedTaskStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPersistedTaskAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11893,7 +11893,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPhysicalChanAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PhysicalChannelBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PhysicalChannelBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11936,7 +11936,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPhysicalChanAttributeBytesRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PhysicalChannelBytesAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PhysicalChannelBytesAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelBytesAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeBytesRequest::AttributeEnumCase::kAttributeRaw: {
@@ -11992,7 +11992,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPhysicalChanAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PhysicalChannelDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PhysicalChannelDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12035,7 +12035,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPhysicalChanAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PhysicalChannelDoubleArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PhysicalChannelDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelDoubleArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12091,7 +12091,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPhysicalChanAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PhysicalChannelInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PhysicalChannelInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -12140,7 +12140,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPhysicalChanAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PhysicalChannelInt32ArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PhysicalChannelInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelInt32ArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12210,7 +12210,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPhysicalChanAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PhysicalChannelStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PhysicalChannelStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12272,7 +12272,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPhysicalChanAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PhysicalChannelUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PhysicalChannelUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -12315,7 +12315,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetPhysicalChanAttributeUInt32ArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::PhysicalChannelUInt32ArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::PhysicalChannelUInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelUInt32ArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeUInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12371,7 +12371,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetReadAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12414,7 +12414,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetReadAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12457,7 +12457,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetReadAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -12506,7 +12506,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetReadAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12568,7 +12568,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetReadAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -12611,7 +12611,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetReadAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadUInt64Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadUInt64Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetReadAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
@@ -12654,7 +12654,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetRealTimeAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::RealTimeBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::RealTimeBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetRealTimeAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12697,7 +12697,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetRealTimeAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::RealTimeInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::RealTimeInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetRealTimeAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -12746,7 +12746,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetRealTimeAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::RealTimeUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::RealTimeUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetRealTimeAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -12813,7 +12813,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetScaleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ScaleDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ScaleDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetScaleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12856,7 +12856,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetScaleAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ScaleDoubleArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ScaleDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleDoubleArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetScaleAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -12912,7 +12912,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetScaleAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ScaleInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ScaleInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetScaleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -12961,7 +12961,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetScaleAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ScaleStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ScaleStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetScaleAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13125,7 +13125,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetSystemInfoAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::SystemStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::SystemStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, SystemStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetSystemInfoAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13185,7 +13185,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetSystemInfoAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::SystemUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::SystemUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, SystemUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetSystemInfoAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -13228,7 +13228,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTaskAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TaskBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TaskBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TaskBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTaskAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13271,7 +13271,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTaskAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TaskStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TaskStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TaskStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTaskAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13333,7 +13333,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTaskAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TaskUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TaskUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TaskUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTaskAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -13376,7 +13376,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13419,7 +13419,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13464,7 +13464,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeExBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeExBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13509,7 +13509,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeExDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeExDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13554,7 +13554,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeExInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeExInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -13605,7 +13605,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeExStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeExStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13669,7 +13669,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeExTimestampRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingTimestampAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeExTimestampRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13714,7 +13714,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeExUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeExUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -13759,7 +13759,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeExUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt64Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeExUInt64Request::AttributeEnumCase::kAttributeRaw: {
@@ -13802,7 +13802,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -13851,7 +13851,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13913,7 +13913,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeTimestampRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingTimestampAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeTimestampRequest::AttributeEnumCase::kAttributeRaw: {
@@ -13956,7 +13956,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -13999,7 +13999,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt64Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
@@ -14042,7 +14042,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTrigAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14085,7 +14085,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTrigAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14128,7 +14128,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerDoubleArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerDoubleArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTrigAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14184,7 +14184,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTrigAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -14233,7 +14233,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerInt32ArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerInt32ArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTrigAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14303,7 +14303,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTrigAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14365,7 +14365,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeTimestampRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerTimestampAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerTimestampAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTrigAttributeTimestampRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14408,7 +14408,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetTrigAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetTrigAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -14453,7 +14453,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWatchdogAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WatchdogBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WatchdogBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWatchdogAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14498,7 +14498,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWatchdogAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WatchdogDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WatchdogDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWatchdogAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14543,7 +14543,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWatchdogAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WatchdogInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WatchdogInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWatchdogAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -14594,7 +14594,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWatchdogAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WatchdogStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WatchdogStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWatchdogAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14656,7 +14656,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWriteAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14699,7 +14699,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWriteAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14742,7 +14742,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWriteAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -14791,7 +14791,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWriteAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -14853,7 +14853,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWriteAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -14896,7 +14896,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteUInt64Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteUInt64Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
@@ -17792,7 +17792,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetBufferAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::BufferResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::BufferResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, BufferResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetBufferAttributeRequest::AttributeEnumCase::kAttributeRaw: {
@@ -17835,7 +17835,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetChanAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetChanAttributeRequest::AttributeEnumCase::kAttributeRaw: {
@@ -17898,7 +17898,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetExportedSignalAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetExportedSignalAttributeRequest::AttributeEnumCase::kAttributeRaw: {
@@ -17939,7 +17939,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetReadAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetReadAttributeRequest::AttributeEnumCase::kAttributeRaw: {
@@ -17980,7 +17980,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetRealTimeAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::RealTimeResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::RealTimeResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetRealTimeAttributeRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18021,7 +18021,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetTimingAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetTimingAttributeRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18064,7 +18064,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetTimingAttributeExRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetTimingAttributeExRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18105,7 +18105,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetTrigAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetTrigAttributeRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18148,7 +18148,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetWatchdogAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WatchdogResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WatchdogResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetWatchdogAttributeRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18189,7 +18189,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::ResetWriteAttributeRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteResetAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteResetAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::ResetWriteAttributeRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18597,7 +18597,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetBufferAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::BufferUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::BufferUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, BufferUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetBufferAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -18639,7 +18639,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetCalInfoAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::CalibrationInfoBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::CalibrationInfoBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetCalInfoAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18681,7 +18681,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetCalInfoAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::CalibrationInfoDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::CalibrationInfoDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetCalInfoAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18723,7 +18723,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetCalInfoAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::CalibrationInfoStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::CalibrationInfoStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetCalInfoAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18766,7 +18766,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetCalInfoAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::CalibrationInfoUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::CalibrationInfoUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetCalInfoAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -18810,7 +18810,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetChanAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetChanAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18854,7 +18854,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetChanAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetChanAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18898,7 +18898,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetChanAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelDoubleArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelDoubleArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetChanAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -18943,7 +18943,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetChanAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetChanAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -19002,7 +19002,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetChanAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetChanAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19047,7 +19047,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetChanAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ChannelUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ChannelUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetChanAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -19211,7 +19211,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetExportedSignalAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19253,7 +19253,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetExportedSignalAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19295,7 +19295,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetExportedSignalAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -19352,7 +19352,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetExportedSignalAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19395,7 +19395,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetExportedSignalAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ExportSignalUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ExportSignalUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetExportedSignalAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -19460,7 +19460,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetReadAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19502,7 +19502,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetReadAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19544,7 +19544,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetReadAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -19601,7 +19601,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetReadAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19644,7 +19644,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetReadAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -19686,7 +19686,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetReadAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ReadUInt64Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ReadUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadUInt64Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetReadAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
@@ -19728,7 +19728,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetRealTimeAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::RealTimeBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::RealTimeBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetRealTimeAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19770,7 +19770,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetRealTimeAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::RealTimeInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::RealTimeInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetRealTimeAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -19827,7 +19827,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetRealTimeAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::RealTimeUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::RealTimeUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetRealTimeAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -19869,7 +19869,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetScaleAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ScaleDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ScaleDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetScaleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19911,7 +19911,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetScaleAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ScaleDoubleArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ScaleDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleDoubleArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetScaleAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -19954,7 +19954,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetScaleAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ScaleInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ScaleInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetScaleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -20011,7 +20011,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetScaleAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::ScaleStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::ScaleStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetScaleAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20100,7 +20100,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20142,7 +20142,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20186,7 +20186,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeExBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeExBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20230,7 +20230,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeExDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeExDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20274,7 +20274,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeExInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeExInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -20333,7 +20333,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeExStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeExStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20378,7 +20378,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeExTimestampRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingTimestampAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeExTimestampRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20422,7 +20422,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeExUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeExUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -20466,7 +20466,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeExUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt64Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeExUInt64Request::AttributeEnumCase::kAttributeRaw: {
@@ -20508,7 +20508,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -20565,7 +20565,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20608,7 +20608,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeTimestampRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingTimestampAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeTimestampRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20650,7 +20650,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -20692,7 +20692,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt64Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
@@ -20734,7 +20734,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTrigAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20776,7 +20776,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTrigAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20818,7 +20818,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeDoubleArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerDoubleArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerDoubleArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTrigAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20861,7 +20861,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTrigAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -20918,7 +20918,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeInt32ArrayRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerInt32ArrayAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerInt32ArrayAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTrigAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
@@ -20961,7 +20961,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTrigAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -21004,7 +21004,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeTimestampRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerTimestampAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerTimestampAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTrigAttributeTimestampRequest::AttributeEnumCase::kAttributeRaw: {
@@ -21046,7 +21046,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetTrigAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::TriggerUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::TriggerUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetTrigAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -21090,7 +21090,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWatchdogAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WatchdogBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WatchdogBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWatchdogAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -21134,7 +21134,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWatchdogAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WatchdogDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WatchdogDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWatchdogAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -21178,7 +21178,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWatchdogAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WatchdogInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WatchdogInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWatchdogAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -21237,7 +21237,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWatchdogAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WatchdogStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WatchdogStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWatchdogAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -21280,7 +21280,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeBoolRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteBoolAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteBoolAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWriteAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
@@ -21322,7 +21322,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeDoubleRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteDoubleAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteDoubleAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWriteAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
@@ -21364,7 +21364,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWriteAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -21421,7 +21421,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeStringRequest::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteStringAttribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteStringAttribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWriteAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
@@ -21464,7 +21464,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeUInt32Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteUInt32Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteUInt32Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWriteAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
@@ -21506,7 +21506,7 @@ namespace nidaqmx_grpc {
       switch (request->attribute_enum_case()) {
         case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::kAttribute: {
           attribute = static_cast<int32>(request->attribute());
-          attribute = nidaqmx_grpc::WriteUInt64Attribute_IsValid(attribute) ? attribute : 0;
+          attribute = nidaqmx_grpc::WriteUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteUInt64Attribute_descriptor()) ? attribute : 0;
           break;
         }
         case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
