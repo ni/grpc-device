@@ -570,8 +570,9 @@ ${initialize_standard_input_param(parameter)}
   if has_unmapped_enum:
     enum_request_snippet = f'request->{field_name}()'
     check_enum_is_valid = f"{namespace_prefix}{parameter['enum']}_IsValid({parameter_name})"
+    check_enum_raw_is_valid = check_enum_is_valid
     if config["namespace_component"] == "nidaqmx":
-      check_enum_is_valid += f" || IsInternalAttribute({parameter_name}, {parameter['enum']}_descriptor())"
+          check_enum_raw_is_valid += f" || IsInternalAttribute({parameter_name}, {parameter['enum']}_descriptor())"
 
   raw_request_snippet = f'request->{field_name}_raw()'
   validate_attribute_enum = parameter.get("raw_attribute", False)
@@ -620,7 +621,7 @@ ${initialize_standard_input_param(parameter)}
         ${parameter_name} = static_cast<${parameter['type']}>(${raw_request_snippet});
 % endif
 % if validate_attribute_enum: # raw validation can be overridden with a toggle.
-        auto ${parameter_name}_is_valid = ${check_enum_is_valid} || feature_toggles_.is_allow_undefined_attributes_enabled;
+        auto ${parameter_name}_is_valid = ${check_enum_raw_is_valid} || feature_toggles_.is_allow_undefined_attributes_enabled;
         ${parameter_name} = ${parameter_name}_is_valid ? ${parameter_name} : 0;
 % endif
         break;

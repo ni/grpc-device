@@ -43,12 +43,6 @@ jobs:
       with:
         python-version: '3.x'
 
-    - name: Install build dependencies (Ubuntu)
-      if: ${{ runner.os == 'Linux' }}
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y gcc-9 g++-9
-
     - name: Install nasm
       if: ${{ runner.os == 'Windows' }}
       run: choco install nasm
@@ -82,12 +76,13 @@ jobs:
       env:
           CC: ${{ matrix.config.cc }}
           CXX: ${{ matrix.config.cxx }}
-      run: |
-        echo "Using CC=${CC} and CXX=${CXX}"
-        which ${CC} || echo "Warning: ${CC} not found"
-        which ${CXX} || echo "Warning: ${CXX} not found"
-        cmake -S . -B build -D CMAKE_BUILD_TYPE=${{ matrix.config.build_type }} ${{ matrix.config.cmake_generator }}
-
+      run: >
+        cmake
+        -S .
+        -B build
+        -D CMAKE_BUILD_TYPE=${{ matrix.config.build_type }}
+        ${{ matrix.config.cmake_generator }}
+        
     # It is preferable to do a clean build to ensure all object files are
     # deleted and then rebuilt from scratch, which can help resolve
     # inconsistencies and errors.
