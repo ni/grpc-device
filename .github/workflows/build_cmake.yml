@@ -22,8 +22,8 @@ jobs:
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
             os: ubuntu-22.04,
-            cc: "gcc-9", cxx: "g++-9",
-            glibc_version: "2_31",
+            cc: "gcc-13", cxx: "g++-13",
+            glibc_version: "2_38",
             cmake_generator: '-G "Ninja"',
             build_type: RelWithDebInfo
           }

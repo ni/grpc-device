@@ -33,12 +33,12 @@ jobs:
 
     - uses: actions/download-artifact@v4
       with:
-        name: ni-grpc-device-server-linux-glibc2_31-x64
+        name: ni-grpc-device-server-linux-glibc2_38-x64
         path: downloads/artifacts
 
     - uses: actions/download-artifact@v4
       with:
-        name: ni-grpc-device-server-linux-glibc2_31-x64-debug-symbols
+        name: ni-grpc-device-server-linux-glibc2_38-x64-debug-symbols
         path: downloads/artifacts
 
     - uses: actions/download-artifact@v4
