@@ -5,6 +5,7 @@
 #include <cstring>
 #include <server/converters.h>
 #include "NIDAQmxInternalWaveform.h"
+#include <google/protobuf/descriptor.h>
 
 namespace nidaqmx_grpc {
 
@@ -149,6 +150,12 @@ void SetWaveformTiming(
 }
 
 } // anonymous namespace
+
+bool NiDAQmxService::IsInternalAttribute(int32 attribute, const google::protobuf::EnumDescriptor* attribute_enum_descriptor)
+{
+  return attribute == DAQmx_DefaultNumberOfSamplesToRead && 
+         attribute_enum_descriptor == nidaqmx_grpc::ReadUInt32Attribute_descriptor();
+}
 
 ::grpc::Status NiDAQmxService::ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task)
 {

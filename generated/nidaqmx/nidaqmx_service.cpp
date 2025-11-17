@@ -9966,7 +9966,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetBufferAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::BufferUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::BufferUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, BufferUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10009,7 +10009,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetCalInfoAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10052,7 +10052,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetCalInfoAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10095,7 +10095,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetCalInfoAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10157,7 +10157,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetCalInfoAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10202,7 +10202,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetChanAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10247,7 +10247,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetChanAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10292,7 +10292,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetChanAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelDoubleArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10350,7 +10350,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetChanAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10401,7 +10401,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetChanAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10465,7 +10465,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetChanAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10508,7 +10508,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetDeviceAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::DeviceBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::DeviceBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10551,7 +10551,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetDeviceAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::DeviceDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::DeviceDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10594,7 +10594,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetDeviceAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::DeviceDoubleArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::DeviceDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceDoubleArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10650,7 +10650,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetDeviceAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::DeviceInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::DeviceInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10699,7 +10699,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetDeviceAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::DeviceInt32ArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::DeviceInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceInt32ArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10769,7 +10769,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetDeviceAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::DeviceStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::DeviceStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10831,7 +10831,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetDeviceAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::DeviceUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::DeviceUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -10874,7 +10874,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetDeviceAttributeUInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::DeviceUInt32ArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::DeviceUInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, DeviceUInt32ArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11131,7 +11131,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetExportedSignalAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11174,7 +11174,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetExportedSignalAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11217,7 +11217,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetExportedSignalAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11266,7 +11266,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetExportedSignalAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11328,7 +11328,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetExportedSignalAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11583,7 +11583,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPersistedChanAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PersistedChannelBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PersistedChannelBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedChannelBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11626,7 +11626,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPersistedChanAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PersistedChannelStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PersistedChannelStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedChannelStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11688,7 +11688,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPersistedScaleAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PersistedScaleBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PersistedScaleBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedScaleBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11731,7 +11731,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPersistedScaleAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PersistedScaleStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PersistedScaleStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedScaleStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11793,7 +11793,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPersistedTaskAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PersistedTaskBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PersistedTaskBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedTaskBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11836,7 +11836,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPersistedTaskAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PersistedTaskStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PersistedTaskStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PersistedTaskStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11898,7 +11898,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11941,7 +11941,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeBytesRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelBytesAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelBytesAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelBytesAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -11997,7 +11997,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12040,7 +12040,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelDoubleArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelDoubleArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12096,7 +12096,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12145,7 +12145,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelInt32ArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelInt32ArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12215,7 +12215,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12277,7 +12277,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12320,7 +12320,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetPhysicalChanAttributeUInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelUInt32ArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::PhysicalChannelUInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, PhysicalChannelUInt32ArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12376,7 +12376,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetReadAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12419,7 +12419,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetReadAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12462,7 +12462,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetReadAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12511,7 +12511,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetReadAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12573,7 +12573,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetReadAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12616,7 +12616,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetReadAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadUInt64Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadUInt64Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12659,7 +12659,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetRealTimeAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::RealTimeBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::RealTimeBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12702,7 +12702,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetRealTimeAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::RealTimeInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::RealTimeInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12751,7 +12751,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetRealTimeAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::RealTimeUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::RealTimeUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12818,7 +12818,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetScaleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12861,7 +12861,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetScaleAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleDoubleArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12917,7 +12917,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetScaleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ScaleInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ScaleInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -12966,7 +12966,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetScaleAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ScaleStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ScaleStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13130,7 +13130,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetSystemInfoAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::SystemStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::SystemStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, SystemStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13190,7 +13190,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetSystemInfoAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::SystemUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::SystemUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, SystemUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13233,7 +13233,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTaskAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TaskBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TaskBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TaskBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13276,7 +13276,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTaskAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TaskStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TaskStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TaskStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13338,7 +13338,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTaskAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TaskUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TaskUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TaskUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13381,7 +13381,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13424,7 +13424,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13469,7 +13469,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeExBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13514,7 +13514,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeExDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13559,7 +13559,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeExInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13610,7 +13610,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeExStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13674,7 +13674,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeExTimestampRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingTimestampAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13719,7 +13719,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeExUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13764,7 +13764,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeExUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt64Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13807,7 +13807,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13856,7 +13856,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13918,7 +13918,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeTimestampRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingTimestampAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -13961,7 +13961,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14004,7 +14004,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTimingAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt64Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14047,7 +14047,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTrigAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14090,7 +14090,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTrigAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14133,7 +14133,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTrigAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerDoubleArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14189,7 +14189,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTrigAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14238,7 +14238,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTrigAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerInt32ArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerInt32ArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14308,7 +14308,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTrigAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14370,7 +14370,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTrigAttributeTimestampRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerTimestampAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerTimestampAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14413,7 +14413,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetTrigAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14458,7 +14458,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWatchdogAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WatchdogBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WatchdogBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14503,7 +14503,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWatchdogAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WatchdogDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WatchdogDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14548,7 +14548,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWatchdogAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WatchdogInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WatchdogInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14599,7 +14599,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWatchdogAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WatchdogStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WatchdogStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14661,7 +14661,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWriteAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14704,7 +14704,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWriteAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14747,7 +14747,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWriteAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14796,7 +14796,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWriteAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14858,7 +14858,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWriteAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -14901,7 +14901,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::GetWriteAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteUInt64Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -17797,7 +17797,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetBufferAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::BufferResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::BufferResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, BufferResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -17840,7 +17840,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetChanAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -17903,7 +17903,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetExportedSignalAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -17944,7 +17944,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetReadAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -17985,7 +17985,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetRealTimeAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::RealTimeResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::RealTimeResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18026,7 +18026,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetTimingAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18069,7 +18069,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetTimingAttributeExRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18110,7 +18110,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetTrigAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18153,7 +18153,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetWatchdogAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WatchdogResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WatchdogResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18194,7 +18194,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::ResetWriteAttributeRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteResetAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteResetAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteResetAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18602,7 +18602,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetBufferAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::BufferUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::BufferUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, BufferUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18644,7 +18644,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetCalInfoAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18686,7 +18686,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetCalInfoAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18728,7 +18728,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetCalInfoAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18771,7 +18771,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetCalInfoAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::CalibrationInfoUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, CalibrationInfoUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18815,7 +18815,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetChanAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18859,7 +18859,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetChanAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18903,7 +18903,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetChanAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelDoubleArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -18948,7 +18948,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetChanAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19007,7 +19007,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetChanAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19052,7 +19052,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetChanAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ChannelUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ChannelUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ChannelUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19216,7 +19216,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetExportedSignalAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19258,7 +19258,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetExportedSignalAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19300,7 +19300,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetExportedSignalAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19357,7 +19357,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetExportedSignalAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19400,7 +19400,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetExportedSignalAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ExportSignalUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ExportSignalUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ExportSignalUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19465,7 +19465,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetReadAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19507,7 +19507,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetReadAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19549,7 +19549,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetReadAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19606,7 +19606,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetReadAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19649,7 +19649,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetReadAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19691,7 +19691,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetReadAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ReadUInt64Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ReadUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ReadUInt64Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19733,7 +19733,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetRealTimeAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::RealTimeBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::RealTimeBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19775,7 +19775,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetRealTimeAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::RealTimeInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::RealTimeInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19832,7 +19832,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetRealTimeAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::RealTimeUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::RealTimeUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, RealTimeUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19874,7 +19874,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetScaleAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19916,7 +19916,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetScaleAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ScaleDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleDoubleArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -19959,7 +19959,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetScaleAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ScaleInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ScaleInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20016,7 +20016,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetScaleAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::ScaleStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::ScaleStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, ScaleStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20105,7 +20105,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20147,7 +20147,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20191,7 +20191,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeExBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20235,7 +20235,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeExDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20279,7 +20279,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeExInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20338,7 +20338,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeExStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20383,7 +20383,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeExTimestampRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingTimestampAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20427,7 +20427,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeExUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20471,7 +20471,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeExUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt64Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20513,7 +20513,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20570,7 +20570,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20613,7 +20613,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeTimestampRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingTimestampAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20655,7 +20655,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20697,7 +20697,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTimingAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TimingUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TimingUInt64Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20739,7 +20739,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTrigAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20781,7 +20781,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTrigAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20823,7 +20823,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTrigAttributeDoubleArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerDoubleArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerDoubleArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20866,7 +20866,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTrigAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20923,7 +20923,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTrigAttributeInt32ArrayRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerInt32ArrayAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerInt32ArrayAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerInt32ArrayAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -20966,7 +20966,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTrigAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21009,7 +21009,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTrigAttributeTimestampRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerTimestampAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerTimestampAttribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerTimestampAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21051,7 +21051,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetTrigAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::TriggerUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::TriggerUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, TriggerUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21095,7 +21095,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWatchdogAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WatchdogBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WatchdogBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21139,7 +21139,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWatchdogAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WatchdogDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WatchdogDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21183,7 +21183,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWatchdogAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WatchdogInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WatchdogInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21242,7 +21242,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWatchdogAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WatchdogStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WatchdogStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WatchdogStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21285,7 +21285,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWriteAttributeBoolRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteBoolAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteBoolAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteBoolAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21327,7 +21327,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWriteAttributeDoubleRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteDoubleAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteDoubleAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteDoubleAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21369,7 +21369,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWriteAttributeInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21426,7 +21426,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWriteAttributeStringRequest::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteStringAttribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteStringAttribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteStringAttribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21469,7 +21469,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWriteAttributeUInt32Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteUInt32Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteUInt32Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteUInt32Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }
@@ -21511,7 +21511,7 @@ namespace nidaqmx_grpc {
         }
         case nidaqmx_grpc::SetWriteAttributeUInt64Request::AttributeEnumCase::kAttributeRaw: {
           attribute = static_cast<int32>(request->attribute_raw());
-          auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attribute_IsValid(attribute) || feature_toggles_.is_allow_undefined_attributes_enabled;
+          auto attribute_is_valid = nidaqmx_grpc::WriteUInt64Attribute_IsValid(attribute) || IsInternalAttribute(attribute, WriteUInt64Attribute_descriptor()) || feature_toggles_.is_allow_undefined_attributes_enabled;
           attribute = attribute_is_valid ? attribute : 0;
           break;
         }

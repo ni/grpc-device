@@ -547,6 +547,7 @@ private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForTaskHandle(::grpc::ServerContextBase* context, int32_t status, TaskHandle task);
+  bool IsInternalAttribute(int32 attribute, const google::protobuf::EnumDescriptor* attribute_enum_descriptor);
 
   NiDAQmxFeatureToggles feature_toggles_;
 };
