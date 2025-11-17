@@ -22,8 +22,8 @@ jobs:
         - {
             name: "Ubuntu Build", artifact: "Linux.tar.xz",
             os: ubuntu-22.04,
-            cc: "gcc-9", cxx: "g++-9",
-            glibc_version: "2_31",
+            cc: "gcc-13", cxx: "g++-13",
+            glibc_version: "2_38",
             cmake_generator: '-G "Ninja"',
             build_type: RelWithDebInfo
           }
@@ -42,6 +42,13 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.x'
+
+    - name: Install build dependencies (Ubuntu)
+      if: ${{ runner.os == 'Linux' }}
+      run: |
+        sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+        sudo apt-get update
+        sudo apt-get install -y gcc-13 g++-13
 
     - name: Install nasm
       if: ${{ runner.os == 'Windows' }}
