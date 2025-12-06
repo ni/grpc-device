@@ -1643,6 +1643,18 @@ enums = {
             }
         ]
     },
+    'ObwPowerIntegrationMethod': {
+        'values': [
+            {
+                'name': 'NORMAL',
+                'value': 0
+            },
+            {
+                'name': 'FROM_CENTER',
+                'value': 1
+            }
+        ]
+    },
     'ObwRbwAutoBandwidth': {
         'values': [
             {

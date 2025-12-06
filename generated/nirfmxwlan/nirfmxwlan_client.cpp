@@ -2641,6 +2641,25 @@ ofdm_mod_acc_fetch_decoded_ehtsig_bits_trace(const StubPtr& stub, const nidevice
   return response;
 }
 
+OFDMModAccFetchDecodedELRSIGBitsTraceResponse
+ofdm_mod_acc_fetch_decoded_elrsig_bits_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchDecodedELRSIGBitsTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchDecodedELRSIGBitsTraceResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchDecodedELRSIGBitsTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 OFDMModAccFetchDecodedLSIGBitsTraceResponse
 ofdm_mod_acc_fetch_decoded_lsig_bits_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {
@@ -2731,6 +2750,25 @@ ofdm_mod_acc_fetch_decoded_service_bits_trace(const StubPtr& stub, const nidevic
 
   raise_if_error(
       stub->OFDMModAccFetchDecodedServiceBitsTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+OFDMModAccFetchDecodedUHRSIGBitsTraceResponse
+ofdm_mod_acc_fetch_decoded_uhrsig_bits_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchDecodedUHRSIGBitsTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchDecodedUHRSIGBitsTraceResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchDecodedUHRSIGBitsTrace(&context, request, &response),
       context);
 
   return response;

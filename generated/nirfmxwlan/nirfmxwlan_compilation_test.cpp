@@ -637,6 +637,11 @@ int32 OFDMModAccFetchDecodedEHTSIGBitsTrace(niRFmxInstrHandle instrumentHandle, 
   return RFmxWLAN_OFDMModAccFetchDecodedEHTSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedEHTSIGBits, arraySize, actualArraySize);
 }
 
+int32 OFDMModAccFetchDecodedELRSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedELRSIGBits[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWLAN_OFDMModAccFetchDecodedELRSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedELRSIGBits, arraySize, actualArraySize);
+}
+
 int32 OFDMModAccFetchDecodedLSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedLSIGBits[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxWLAN_OFDMModAccFetchDecodedLSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedLSIGBits, arraySize, actualArraySize);
@@ -660,6 +665,11 @@ int32 OFDMModAccFetchDecodedSIGBitsTrace(niRFmxInstrHandle instrumentHandle, cha
 int32 OFDMModAccFetchDecodedServiceBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedServiceBits[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxWLAN_OFDMModAccFetchDecodedServiceBitsTrace(instrumentHandle, selectorString, timeout, decodedServiceBits, arraySize, actualArraySize);
+}
+
+int32 OFDMModAccFetchDecodedUHRSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedUHRSIGBits[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWLAN_OFDMModAccFetchDecodedUHRSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedUHRSIGBits, arraySize, actualArraySize);
 }
 
 int32 OFDMModAccFetchDecodedUSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedUSIGBits[], int32 arraySize, int32* actualArraySize)

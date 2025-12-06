@@ -603,7 +603,7 @@
 #define RFMXNR_VAL_DOWNLINK_TEST_MODEL_TM3_1B                                                     9
 
 // Values for RFMXNR_ATTR_DOWNLINK_TEST_MODEL_MODULATION_TYPE
-#define RFMXNR_VAL_DOWNLINK_TEST_MODEL_MODULATION_TYPE_Standard                                   0
+#define RFMXNR_VAL_DOWNLINK_TEST_MODEL_MODULATION_TYPE_STANDARD                                   0
 #define RFMXNR_VAL_DOWNLINK_TEST_MODEL_MODULATION_TYPE_QPSK                                       1
 #define RFMXNR_VAL_DOWNLINK_TEST_MODEL_MODULATION_TYPE_QAM16                                      2
 #define RFMXNR_VAL_DOWNLINK_TEST_MODEL_MODULATION_TYPE_QAM64                                      3
@@ -878,8 +878,8 @@
 #define RFMXNR_VAL_MODACC_AVERAGING_ENABLED_TRUE                                                  1
 
 // Values for RFMXNR_ATTR_MODACC_AUTO_LEVEL_ALLOW_OVERFLOW
-#define RFMXNR_VAL_MODACC_ATUO_LEVEL_ALLOW_OVERFLOW_FALSE                                         0
-#define RFMXNR_VAL_MODACC_ATUO_LEVEL_ALLOW_OVERFLOW_TRUE                                          1
+#define RFMXNR_VAL_MODACC_AUTO_LEVEL_ALLOW_OVERFLOW_FALSE                                         0
+#define RFMXNR_VAL_MODACC_AUTO_LEVEL_ALLOW_OVERFLOW_TRUE                                          1
 
 // Values for RFMXNR_ATTR_MODACC_SHORT_FRAME_ENABLED
 #define RFMXNR_VAL_MODACC_SHORT_FRAME_ENABLED_FALSE                                               0
@@ -8212,6 +8212,13 @@ int32 __stdcall RFmxNR_PVTGetResultsPeakWindowedOFFPowerTime(
 
 // Values for RFMXNR_ATTR_FREQUENCY_RANGE
 #define RFMXNR_VAL_FREQUENCY_RANGE_RANGE2                                                         1
+
+// Values for RFMXNR_ATTR_MODACC_AUTO_LEVEL_ALLOW_OVERFLOW
+#define RFMXNR_VAL_MODACC_ATUO_LEVEL_ALLOW_OVERFLOW_FALSE                                         0
+#define RFMXNR_VAL_MODACC_ATUO_LEVEL_ALLOW_OVERFLOW_TRUE                                          1
+
+// Values for RFMXNR_ATTR_DOWNLINK_TEST_MODEL_MODULATION_TYPE
+#define RFMXNR_VAL_DOWNLINK_TEST_MODEL_MODULATION_TYPE_Standard                                   0
 
 #ifdef __cplusplus
 extern "C"

@@ -4751,6 +4751,47 @@ namespace nirfmxwlan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedELRSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedELRSIGBitsTraceRequest* request, OFDMModAccFetchDecodedELRSIGBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedELRSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_decoded_elr_sig_bits()->Resize(actual_array_size, 0);
+        int32* decoded_elr_sig_bits = reinterpret_cast<int32*>(response->mutable_decoded_elr_sig_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDecodedELRSIGBitsTrace(instrument, selector_string, timeout, decoded_elr_sig_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_decoded_elr_sig_bits()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedLSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedLSIGBitsTraceRequest* request, OFDMModAccFetchDecodedLSIGBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {
@@ -4945,6 +4986,47 @@ namespace nirfmxwlan_grpc {
         }
         response->set_status(status);
         response->mutable_decoded_service_bits()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedUHRSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedUHRSIGBitsTraceRequest* request, OFDMModAccFetchDecodedUHRSIGBitsTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedUHRSIGBitsTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_decoded_uhr_sig_bits()->Resize(actual_array_size, 0);
+        int32* decoded_uhr_sig_bits = reinterpret_cast<int32*>(response->mutable_decoded_uhr_sig_bits()->mutable_data());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchDecodedUHRSIGBitsTrace(instrument, selector_string, timeout, decoded_uhr_sig_bits, array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->mutable_decoded_uhr_sig_bits()->Resize(actual_array_size, 0);
         response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }

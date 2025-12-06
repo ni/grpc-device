@@ -17,18 +17,18 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-Digital Pattern Driver | 2023 Q1       | Not Supported | Not Supported |
 | NI-DMM                    | 2025 Q4       | 2025 Q4       | 2025 Q4       |
 | NI-FGEN                   | 2023 Q1       | 2023 Q1       | 2023 Q1       |
-| NI-RFmx Bluetooth         | 2025 Q4       | Not Supported | Not Supported |
+| NI-RFmx Bluetooth         | 2026 Q1       | Not Supported | Not Supported |
 | NI-RFmx CDMA2k            | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx Demod             | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx GSM               | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx LTE               | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx Pulse             | 2025 Q1       | Not Supported | Not Supported |
-| NI-RFmx NR                | 2025 Q2       | Not Supported | Not Supported |
+| NI-RFmx NR                | 2026 Q1       | Not Supported | Not Supported |
 | NI-RFmx SpecAn            | 2025 Q4       | Not Supported | Not Supported |
 | NI-RFmx TD-SCDMA          | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx VNA               | 2025 Q4       | Not Supported | Not Supported |
 | NI-RFmx WCDMA             | 2025 Q1       | Not Supported | Not Supported |
-| NI-RFmx WLAN              | 2025 Q4       | Not Supported | Not Supported |
+| NI-RFmx WLAN              | 2026 Q1       | Not Supported | Not Supported |
 | NI-RFSA                   | 21.0.0        | 21.0.0        | Not Supported |
 | NI-RFSG                   | 2025 Q3       | 2025 Q3       | 2025 Q3       |
 | NI-SCOPE                  | 2023 Q2       | 2023 Q2       | 2023 Q2       |

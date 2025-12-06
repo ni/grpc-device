@@ -67,6 +67,9 @@
 #define RFMXWLAN_ATTR_OFDM_NUMBER_OF_SIG_SYMBOLS                                        0x00a0003b
 #define RFMXWLAN_ATTR_OFDM_DCM_ENABLED                                                  0x00a00021
 #define RFMXWLAN_ATTR_OFDM_2xLDPC_ENABLED                                               0x00a00041
+#define RFMXWLAN_ATTR_OFDM_IM_PILOTS_ENABLED                                            0x00a00042
+#define RFMXWLAN_ATTR_OFDM_UNEQUAL_MODULATION_ENABLED                                   0x00a00043
+#define RFMXWLAN_ATTR_OFDM_UNEQUAL_MODULATION_PATTERN_INDEX                             0x00a00044
 #define RFMXWLAN_ATTR_OFDM_NUMBER_OF_LTF_SYMBOLS                                        0x00a00022
 #define RFMXWLAN_ATTR_OFDM_MU_MIMO_LTF_MODE_ENABLED                                     0x00a00029
 #define RFMXWLAN_ATTR_OFDM_PREAMBLE_PUNCTURING_ENABLED                                  0x00a0002f
@@ -159,6 +162,7 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE                  0x00a0406a
 #define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_SMOOTHING_LENGTH                    0x00a0406b
 #define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_RELATIVE_DELAY_SPREAD               0x00a040b7
+#define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_LTF_AVERAGING_ENABLED               0x00a040e0
 #define RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED                       0x00a04087
 #define RFMXWLAN_ATTR_OFDMMODACC_POWER_MEASUREMENT_ENABLED                              0x00a04017
 #define RFMXWLAN_ATTR_OFDMMODACC_POWER_NUMBER_OF_CUSTOM_GATES                           0x00a04018
@@ -306,13 +310,20 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_FEC_CODING_TYPE                                0x00a040aa
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_RU_SIZE                                        0x00a04033
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_RU_OFFSET_MRU_INDEX                            0x00a04034
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_RU_TYPE                                        0x00a040e1
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_DISTRIBUTION_BANDWIDTH                         0x00a040e2
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_NUMBER_OF_USERS                                0x00a04035
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_NUMBER_OF_HE_SIG_B_SYMBOLS                     0x00a04036
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_NUMBER_OF_SIG_SYMBOLS                          0x00a040e7
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_GUARD_INTERVAL_TYPE                            0x00a04037
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_LTF_SIZE                                       0x00a04038
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_NUMBER_OF_SPACE_TIME_STREAMS                   0x00a04039
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_SPACE_TIME_STREAM_OFFSET                       0x00a04090
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_DCM_ENABLED                                    0x00a040ab
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_2xLDPC_ENABLED                                 0x00a040e3
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_IM_PILOTS_ENABLED                              0x00a040e4
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_UNEQUAL_MODULATION_ENABLED                     0x00a040e5
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_UNEQUAL_MODULATION_PATTERN_INDEX               0x00a040e6
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_L_SIG_PARITY_CHECK_STATUS                      0x00a04088
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_SIG_CRC_STATUS                                 0x00a04089
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_SIG_B_CRC_STATUS                               0x00a0408a
@@ -520,6 +531,14 @@
 #define RFMXWLAN_VAL_OFDM_2xLDPC_ENABLED_FALSE                                                      0
 #define RFMXWLAN_VAL_OFDM_2xLDPC_ENABLED_TRUE                                                       1
 
+// Values for RFMXWLAN_ATTR_OFDM_IM_PILOTS_ENABLED
+#define RFMXWLAN_VAL_OFDM_IM_PILOTS_ENABLED_FALSE                                                   0
+#define RFMXWLAN_VAL_OFDM_IM_PILOTS_ENABLED_TRUE                                                    1
+
+// Values for RFMXWLAN_ATTR_OFDM_UNEQUAL_MODULATION_ENABLED
+#define RFMXWLAN_VAL_OFDM_UNEQUAL_MODULATION_ENABLED_FALSE                                          0
+#define RFMXWLAN_VAL_OFDM_UNEQUAL_MODULATION_ENABLED_TRUE                                           1
+
 // Values for RFMXWLAN_ATTR_OFDM_MU_MIMO_LTF_MODE_ENABLED
 #define RFMXWLAN_VAL_OFDM_MU_MIMO_LTF_MODE_ENABLED_FALSE                                            0
 #define RFMXWLAN_VAL_OFDM_MU_MIMO_LTF_MODE_ENABLED_TRUE                                             1
@@ -696,6 +715,10 @@
 #define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE_TRIANGULAR_SMOOTHING          1
 #define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_INTERPOLATION_TYPE_WIENER_FILTER                 2
 
+// Values for RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_LTF_AVERAGING_ENABLED
+#define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_LTF_AVERAGING_ENABLED_FALSE                      0
+#define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_LTF_AVERAGING_ENABLED_TRUE                       1
+
 // Values for RFMXWLAN_ATTR_OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED
 #define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED_FALSE                              0
 #define RFMXWLAN_VAL_OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED_TRUE                               1
@@ -764,9 +787,25 @@
 #define RFMXWLAN_VAL_OFDMMODACC_FEC_CODING_TYPE_BCC                                                 0
 #define RFMXWLAN_VAL_OFDMMODACC_FEC_CODING_TYPE_LDPC                                                1
 
+// Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_RU_TYPE
+#define RFMXWLAN_VAL_OFDMMODACC_RU_TYPE_RRU                                                         0
+#define RFMXWLAN_VAL_OFDMMODACC_RU_TYPE_DRU                                                         1
+
 // Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_DCM_ENABLED
 #define RFMXWLAN_VAL_OFDMMODACC_DCM_ENABLED_FALSE                                                   0
 #define RFMXWLAN_VAL_OFDMMODACC_DCM_ENABLED_TRUE                                                    1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_2xLDPC_ENABLED
+#define RFMXWLAN_VAL_OFDMMODACC_2xLDPC_ENABLED_FALSE                                                0
+#define RFMXWLAN_VAL_OFDMMODACC_2xLDPC_ENABLED_TRUE                                                 1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_IM_PILOTS_ENABLED
+#define RFMXWLAN_VAL_OFDMMODACC_IM_PILOTS_ENABLED_FALSE                                             0
+#define RFMXWLAN_VAL_OFDMMODACC_IM_PILOTS_ENABLED_TRUE                                              1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_UNEQUAL_MODULATION_ENABLED
+#define RFMXWLAN_VAL_OFDMMODACC_UNEQUAL_MODULATION_ENABLED_FALSE                                    0
+#define RFMXWLAN_VAL_OFDMMODACC_UNEQUAL_MODULATION_ENABLED_TRUE                                     1
 
 // Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_L_SIG_PARITY_CHECK_STATUS
 #define RFMXWLAN_VAL_OFDMMODACC_L_SIG_PARITY_CHECK_STATUS_NOT_APPLICABLE                            -1
@@ -2231,6 +2270,24 @@ int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedEHTSIGBitsTrace(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedUHRSIGBitsTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 decodedUHRSIGBits[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedELRSIGBitsTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 decodedELRSIGBits[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccFetchEVMSubcarrierIndices(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3554,6 +3611,42 @@ int32 __stdcall RFmxWLAN_SetOFDM2xLDPCEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxWLAN_GetOFDMIMPilotsEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_SetOFDMIMPilotsEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxWLAN_GetOFDMUnequalModulationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_SetOFDMUnequalModulationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxWLAN_GetOFDMUnequalModulationPatternIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_SetOFDMUnequalModulationPatternIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxWLAN_GetOFDMNumberOfLTFSymbols(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4501,6 +4594,18 @@ int32 __stdcall RFmxWLAN_OFDMModAccSetChannelEstimationRelativeDelaySpread(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetChannelEstimationLTFAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccSetChannelEstimationLTFAveragingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetChannelEstimationLLTFEnabled(
@@ -5517,6 +5622,18 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsRUOffsetMRUIndex(
    int32 *attrVal
 );
 
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsRUType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsDistributionBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsNumberOfUsers(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5524,6 +5641,12 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsNumberOfUsers(
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsNumberOfHESIGBSymbols(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsNumberOfSIGSymbols(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
@@ -5554,6 +5677,30 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsSpaceTimeStreamOffset(
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsDCMEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResults2xLDPCEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsIMPilotsEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUnequalModulationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsUnequalModulationPatternIndex(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal

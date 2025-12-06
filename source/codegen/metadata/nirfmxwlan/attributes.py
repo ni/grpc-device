@@ -322,6 +322,23 @@ attributes = {
         'name': 'OFDM_2xLDPC_ENABLED',
         'type': 'int32'
     },
+    10485826: {
+        'access': 'read-write',
+        'enum': 'OfdmIMPilotsEnabled',
+        'name': 'OFDM_IM_PILOTS_ENABLED',
+        'type': 'int32'
+    },
+    10485827: {
+        'access': 'read-write',
+        'enum': 'OfdmUnequalModulationEnabled',
+        'name': 'OFDM_UNEQUAL_MODULATION_ENABLED',
+        'type': 'int32'
+    },
+    10485828: {
+        'access': 'read-write',
+        'name': 'OFDM_UNEQUAL_MODULATION_PATTERN_INDEX',
+        'type': 'int32'
+    },
     10489852: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',
@@ -1752,6 +1769,51 @@ attributes = {
         'access': 'read-write',
         'name': 'OFDMMODACC_RESULTS_POWER_ELR_MARK_PEAK_POWER_MAXIMUM',
         'type': 'float64'
+    },
+    10502368: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccChannelEstimationLtfAveragingEnabled',
+        'name': 'OFDMMODACC_CHANNEL_ESTIMATION_LTF_AVERAGING_ENABLED',
+        'type': 'int32'
+    },
+    10502369: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccRUType',
+        'name': 'OFDMMODACC_RESULTS_RU_TYPE',
+        'type': 'int32'
+    },
+    10502370: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_DISTRIBUTION_BANDWIDTH',
+        'type': 'float64'
+    },
+    10502371: {
+        'access': 'read-write',
+        'enum': 'OfdmModAcc2xLdpcEnabled',
+        'name': 'OFDMMODACC_RESULTS_2xLDPC_ENABLED',
+        'type': 'int32'
+    },
+    10502372: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccIMPilotsEnabled',
+        'name': 'OFDMMODACC_RESULTS_IM_PILOTS_ENABLED',
+        'type': 'int32'
+    },
+    10502373: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccUnequalModulationEnabled',
+        'name': 'OFDMMODACC_RESULTS_UNEQUAL_MODULATION_ENABLED',
+        'type': 'int32'
+    },
+    10502374: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_UNEQUAL_MODULATION_PATTERN_INDEX',
+        'type': 'int32'
+    },
+    10502375: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_NUMBER_OF_SIG_SYMBOLS',
+        'type': 'int32'
     },
     10506240: {
         'access': 'read-write',

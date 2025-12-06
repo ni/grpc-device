@@ -194,7 +194,7 @@ attributes = {
     },
     11534400: {
         'access': 'read-write',
-        'enum': 'VdhtModeEnabled',
+        'enum': 'VhdtModeEnabled',
         'name': 'VHDT_MODE_ENABLED',
         'type': 'int32'
     },
@@ -660,6 +660,28 @@ attributes = {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_FREQUENCY_ERROR_W0_PLUS_W1_MAXIMUM',
         'type': 'float64'
+    },
+    11550781: {
+        'access': 'read-write',
+        'enum': 'ModAccIQMismatchCorrectionEnabled',
+        'name': 'MODACC_IQ_MISMATCH_CORRECTION_ENABLED',
+        'type': 'int32'
+    },
+    11550782: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_IQ_GAIN_IMBALANCE_MEAN',
+        'type': 'float64'
+    },
+    11550783: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_QUADRATURE_ERROR_MEAN',
+        'type': 'float64'
+    },
+    11550784: {
+        'access': 'read-write',
+        'enum': 'ModAccFrequencyTrackingEnabled',
+        'name': 'MODACC_FREQUENCY_TRACKING_ENABLED',
+        'type': 'int32'
     },
     11554816: {
         'access': 'read-write',

@@ -153,11 +153,13 @@ NiRFmxWLANLibrary::NiRFmxWLANLibrary(std::shared_ptr<nidevice_grpc::SharedLibrar
   function_pointers_.OFDMModAccFetchDataConstellationTraceSplit = reinterpret_cast<OFDMModAccFetchDataConstellationTraceSplitPtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDataConstellationTraceSplit"));
   function_pointers_.OFDMModAccFetchDataPeakPower = reinterpret_cast<OFDMModAccFetchDataPeakPowerPtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDataPeakPower"));
   function_pointers_.OFDMModAccFetchDecodedEHTSIGBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedEHTSIGBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedEHTSIGBitsTrace"));
+  function_pointers_.OFDMModAccFetchDecodedELRSIGBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedELRSIGBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedELRSIGBitsTrace"));
   function_pointers_.OFDMModAccFetchDecodedLSIGBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedLSIGBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedLSIGBitsTrace"));
   function_pointers_.OFDMModAccFetchDecodedPSDUBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedPSDUBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedPSDUBitsTrace"));
   function_pointers_.OFDMModAccFetchDecodedSIGBBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedSIGBBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedSIGBBitsTrace"));
   function_pointers_.OFDMModAccFetchDecodedSIGBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedSIGBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedSIGBitsTrace"));
   function_pointers_.OFDMModAccFetchDecodedServiceBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedServiceBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedServiceBitsTrace"));
+  function_pointers_.OFDMModAccFetchDecodedUHRSIGBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedUHRSIGBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedUHRSIGBitsTrace"));
   function_pointers_.OFDMModAccFetchDecodedUSIGBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedUSIGBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedUSIGBitsTrace"));
   function_pointers_.OFDMModAccFetchEVMSubcarrierIndices = reinterpret_cast<OFDMModAccFetchEVMSubcarrierIndicesPtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchEVMSubcarrierIndices"));
   function_pointers_.OFDMModAccFetchFrequencyErrorCCDF10Percent = reinterpret_cast<OFDMModAccFetchFrequencyErrorCCDF10PercentPtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchFrequencyErrorCCDF10Percent"));
@@ -1304,6 +1306,14 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedEHTSIGBitsTrace(niRFmxInstrHandle
   return function_pointers_.OFDMModAccFetchDecodedEHTSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedEHTSIGBits, arraySize, actualArraySize);
 }
 
+int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedELRSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedELRSIGBits[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.OFDMModAccFetchDecodedELRSIGBitsTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedELRSIGBitsTrace.");
+  }
+  return function_pointers_.OFDMModAccFetchDecodedELRSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedELRSIGBits, arraySize, actualArraySize);
+}
+
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedLSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedLSIGBits[], int32 arraySize, int32* actualArraySize)
 {
   if (!function_pointers_.OFDMModAccFetchDecodedLSIGBitsTrace) {
@@ -1342,6 +1352,14 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedServiceBitsTrace(niRFmxInstrHandl
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedServiceBitsTrace.");
   }
   return function_pointers_.OFDMModAccFetchDecodedServiceBitsTrace(instrumentHandle, selectorString, timeout, decodedServiceBits, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedUHRSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedUHRSIGBits[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.OFDMModAccFetchDecodedUHRSIGBitsTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedUHRSIGBitsTrace.");
+  }
+  return function_pointers_.OFDMModAccFetchDecodedUHRSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedUHRSIGBits, arraySize, actualArraySize);
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedUSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedUSIGBits[], int32 arraySize, int32* actualArraySize)
