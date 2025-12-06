@@ -2020,6 +2020,12 @@ attributes = {
         'name': 'OBW_SPAN_AUTO',
         'type': 'int32'
     },
+    9461792: {
+        'access': 'read-write',
+        'enum': 'ObwPowerIntegrationMethod',
+        'name': 'OBW_POWER_INTEGRATION_METHOD',
+        'type': 'int32'
+    },
     9465856: {
         'access': 'read-write',
         'name': 'TXP_MEASUREMENT_ENABLED',

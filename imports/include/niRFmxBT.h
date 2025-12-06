@@ -63,6 +63,8 @@
 #define RFMXBT_ATTR_MODACC_MEASUREMENT_ENABLED                                                     0x00b04000
 #define RFMXBT_ATTR_MODACC_BURST_SYNCHRONIZATION_TYPE                                              0x00b0402b
 #define RFMXBT_ATTR_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED                                     0x00b04003
+#define RFMXBT_ATTR_MODACC_IQ_MISMATCH_CORRECTION_ENABLED                                          0x00b0403d
+#define RFMXBT_ATTR_MODACC_FREQUENCY_TRACKING_ENABLED                                              0x00b04040
 #define RFMXBT_ATTR_MODACC_AVERAGING_ENABLED                                                       0x00b04004
 #define RFMXBT_ATTR_MODACC_AVERAGING_COUNT                                                         0x00b04005
 #define RFMXBT_ATTR_MODACC_ALL_TRACES_ENABLED                                                      0x00b04006
@@ -108,6 +110,8 @@
 #define RFMXBT_ATTR_MODACC_RESULTS_CONTROL_HEADER_RMS_EVM_MEAN                                     0x00b04037
 #define RFMXBT_ATTR_MODACC_RESULTS_PAYLOAD_RMS_EVM_MEAN                                            0x00b04038
 #define RFMXBT_ATTR_MODACC_RESULTS_IQ_ORIGIN_OFFSET_MEAN                                           0x00b04023
+#define RFMXBT_ATTR_MODACC_RESULTS_IQ_GAIN_IMBALANCE_MEAN                                          0x00b0403e
+#define RFMXBT_ATTR_MODACC_RESULTS_QUADRATURE_ERROR_MEAN                                           0x00b0403f
 #define RFMXBT_ATTR_MODACC_RESULTS_CLOCK_DRIFT_MEAN                                                0x00b04032
 #define RFMXBT_ATTR_MODACC_RESULTS_PREAMBLE_START_TIME_MEAN                                        0x00b04033
 #define RFMXBT_ATTR_MODACC_RESULTS_FRACTIONAL_TIME_OFFSET_MEAN                                     0x00b04039
@@ -302,6 +306,14 @@
 // Values for RFMXBT_ATTR_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED
 #define RFMXBT_VAL_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_FALSE                               0
 #define RFMXBT_VAL_MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED_TRUE                                1
+
+// Values for RFMXBT_ATTR_MODACC_IQ_MISMATCH_CORRECTION_ENABLED
+#define RFMXBT_VAL_MODACC_IQ_MISMATCH_CORRECTION_ENABLED_FALSE                                    0
+#define RFMXBT_VAL_MODACC_IQ_MISMATCH_CORRECTION_ENABLED_TRUE                                     1
+
+// Values for RFMXBT_ATTR_MODACC_FREQUENCY_TRACKING_ENABLED
+#define RFMXBT_VAL_MODACC_FREQUENCY_TRACKING_ENABLED_FALSE                                        0
+#define RFMXBT_VAL_MODACC_FREQUENCY_TRACKING_ENABLED_TRUE                                         1
 
 // Values for RFMXBT_ATTR_MODACC_AVERAGING_ENABLED
 #define RFMXBT_VAL_MODACC_AVERAGING_ENABLED_FALSE                                                 0
@@ -2065,6 +2077,30 @@ int32 __stdcall RFmxBT_ModAccSetIQOriginOffsetCorrectionEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxBT_ModAccGetIQMismatchCorrectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccSetIQMismatchCorrectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetFrequencyTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccSetFrequencyTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxBT_ModAccGetAveragingEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2354,6 +2390,18 @@ int32 __stdcall RFmxBT_ModAccGetResultsPayloadRMSEVMMean(
 );
 
 int32 __stdcall RFmxBT_ModAccGetResultsIQOriginOffsetMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsIQGainImbalanceMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_ModAccGetResultsQuadratureErrorMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

@@ -141,11 +141,13 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 OFDMModAccFetchDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 dataConstellationI[], float32 dataConstellationQ[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDataPeakPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* dataPeakPowerMaximum) = 0;
   virtual int32 OFDMModAccFetchDecodedEHTSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedEHTSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 OFDMModAccFetchDecodedELRSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedELRSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedLSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedLSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedPSDUBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedPSDUBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedSIGBBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedSIGBBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedServiceBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedServiceBits[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 OFDMModAccFetchDecodedUHRSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedUHRSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedUSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedUSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchEVMSubcarrierIndices(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 subcarrierIndices[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchFrequencyErrorCCDF10Percent(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* frequencyErrorCCDF10Percent) = 0;
