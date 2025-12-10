@@ -195,5 +195,221 @@ functions = {
             }
         ],
         'returns': 'int32'
+    },
+    'DPDApplyDigitalPredistortionToWaveformFromTDMSFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'measurementTimeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformIndex',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0Out',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dxOut',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'waveformOut',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeOut',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'PAPR',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'powerOffset',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformIndex',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'x0Out',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'dxOut',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'waveformOut',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'arraySizeOut',
+                    'value_twist': 'actualArraySize'
+                },
+                'type': 'NIComplexSingle[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySizeOut',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'PAPR',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'DPDLoadReferenceWaveformFromTDMSFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'DpdSignalType',
+                'name': 'signalType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformIndex',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'IDPDLoadReferenceWaveformFromTDMSFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformFilePath',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'IdpdReferenceWaveformIdleDurationPresent',
+                'name': 'idleDurationPresent',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'enum': 'IdpdSignalType',
+                'name': 'signalType',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'waveformIndex',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
     }
 }

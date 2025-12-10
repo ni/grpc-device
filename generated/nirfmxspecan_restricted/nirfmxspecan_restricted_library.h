@@ -26,6 +26,10 @@ class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFm
   int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
   int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) override;
   int32 IQFetchDataOverrideBehavior(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, int32 deleteOnFetch, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize) override;
+  int32 DPDApplyDigitalPredistortionToWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, float64 measurementTimeout, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR, float64* powerOffset) override;
+  int32 DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR) override;
+  int32 DPDLoadReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex) override;
+  int32 IDPDLoadReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex) override;
 
  private:
   using AMPMLoadReferenceWaveformFromTDMSFilePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex);
@@ -33,6 +37,10 @@ class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFm
   using GetErrorPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
   using GetErrorStringPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]);
   using IQFetchDataOverrideBehaviorPtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, int32 deleteOnFetch, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize);
+  using DPDApplyDigitalPredistortionToWaveformFromTDMSFilePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, float64 measurementTimeout, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR, float64* powerOffset);
+  using DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFilePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR);
+  using DPDLoadReferenceWaveformFromTDMSFilePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex);
+  using IDPDLoadReferenceWaveformFromTDMSFilePtr = int32 (*)(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex);
 
   typedef struct FunctionPointers {
     AMPMLoadReferenceWaveformFromTDMSFilePtr AMPMLoadReferenceWaveformFromTDMSFile;
@@ -40,6 +48,10 @@ class NiRFmxSpecAnRestrictedLibrary : public nirfmxspecan_restricted_grpc::NiRFm
     GetErrorPtr GetError;
     GetErrorStringPtr GetErrorString;
     IQFetchDataOverrideBehaviorPtr IQFetchDataOverrideBehavior;
+    DPDApplyDigitalPredistortionToWaveformFromTDMSFilePtr DPDApplyDigitalPredistortionToWaveformFromTDMSFile;
+    DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFilePtr DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile;
+    DPDLoadReferenceWaveformFromTDMSFilePtr DPDLoadReferenceWaveformFromTDMSFile;
+    IDPDLoadReferenceWaveformFromTDMSFilePtr IDPDLoadReferenceWaveformFromTDMSFile;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;

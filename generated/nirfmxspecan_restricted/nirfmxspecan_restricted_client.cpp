@@ -101,5 +101,134 @@ iq_fetch_data_override_behavior(const StubPtr& stub, const nidevice_grpc::Sessio
   return response;
 }
 
+DPDApplyDigitalPredistortionToWaveformFromTDMSFileResponse
+dpd_apply_digital_predistortion_to_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const double& measurement_timeout, const pb::int32& waveform_index)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest{};
+  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.set_selector_string(selector_string);
+  request.set_waveform_file_path(waveform_file_path);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  request.set_measurement_timeout(measurement_timeout);
+  request.set_waveform_index(waveform_index);
+
+  auto response = DPDApplyDigitalPredistortionToWaveformFromTDMSFileResponse{};
+
+  raise_if_error(
+      stub->DPDApplyDigitalPredistortionToWaveformFromTDMSFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileResponse
+dpd_apply_pre_dpd_signal_conditioning_to_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const pb::int32& waveform_index)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest{};
+  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.set_selector_string(selector_string);
+  request.set_waveform_file_path(waveform_file_path);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  request.set_waveform_index(waveform_index);
+
+  auto response = DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileResponse{};
+
+  raise_if_error(
+      stub->DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
+DPDLoadReferenceWaveformFromTDMSFileResponse
+dpd_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type, const pb::int32& waveform_index)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DPDLoadReferenceWaveformFromTDMSFileRequest{};
+  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.set_selector_string(selector_string);
+  request.set_waveform_file_path(waveform_file_path);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<DpdSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
+  request.set_waveform_index(waveform_index);
+
+  auto response = DPDLoadReferenceWaveformFromTDMSFileResponse{};
+
+  raise_if_error(
+      stub->DPDLoadReferenceWaveformFromTDMSFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IDPDLoadReferenceWaveformFromTDMSFileResponse
+idpd_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<IdpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<IdpdSignalType, pb::int32>& signal_type, const pb::int32& waveform_index)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IDPDLoadReferenceWaveformFromTDMSFileRequest{};
+  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.set_selector_string(selector_string);
+  request.set_waveform_file_path(waveform_file_path);
+  const auto idle_duration_present_ptr = idle_duration_present.get_if<IdpdReferenceWaveformIdleDurationPresent>();
+  const auto idle_duration_present_raw_ptr = idle_duration_present.get_if<pb::int32>();
+  if (idle_duration_present_ptr) {
+    request.set_idle_duration_present(*idle_duration_present_ptr);
+  }
+  else if (idle_duration_present_raw_ptr) {
+    request.set_idle_duration_present_raw(*idle_duration_present_raw_ptr);
+  }
+  const auto signal_type_ptr = signal_type.get_if<IdpdSignalType>();
+  const auto signal_type_raw_ptr = signal_type.get_if<pb::int32>();
+  if (signal_type_ptr) {
+    request.set_signal_type(*signal_type_ptr);
+  }
+  else if (signal_type_raw_ptr) {
+    request.set_signal_type_raw(*signal_type_raw_ptr);
+  }
+  request.set_waveform_index(waveform_index);
+
+  auto response = IDPDLoadReferenceWaveformFromTDMSFileResponse{};
+
+  raise_if_error(
+      stub->IDPDLoadReferenceWaveformFromTDMSFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
 
 } // namespace nirfmxspecan_restricted_grpc::experimental::client

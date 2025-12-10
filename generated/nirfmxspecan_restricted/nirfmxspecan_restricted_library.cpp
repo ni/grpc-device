@@ -32,6 +32,10 @@ NiRFmxSpecAnRestrictedLibrary::NiRFmxSpecAnRestrictedLibrary(std::shared_ptr<nid
   function_pointers_.GetError = reinterpret_cast<GetErrorPtr>(shared_library_->get_function_pointer("RFmxSpecAn_GetError"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("RFmxSpecAn_GetErrorString"));
   function_pointers_.IQFetchDataOverrideBehavior = reinterpret_cast<IQFetchDataOverrideBehaviorPtr>(shared_library_->get_function_pointer("RFmxSpecAn_IQFetchDataOverrideBehavior"));
+  function_pointers_.DPDApplyDigitalPredistortionToWaveformFromTDMSFile = reinterpret_cast<DPDApplyDigitalPredistortionToWaveformFromTDMSFilePtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDApplyDigitalPredistortionToWaveformFromTDMSFile"));
+  function_pointers_.DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile = reinterpret_cast<DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFilePtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile"));
+  function_pointers_.DPDLoadReferenceWaveformFromTDMSFile = reinterpret_cast<DPDLoadReferenceWaveformFromTDMSFilePtr>(shared_library_->get_function_pointer("RFmxSpecAn_DPDLoadReferenceWaveformFromTDMSFile"));
+  function_pointers_.IDPDLoadReferenceWaveformFromTDMSFile = reinterpret_cast<IDPDLoadReferenceWaveformFromTDMSFilePtr>(shared_library_->get_function_pointer("RFmxSpecAn_IDPDLoadReferenceWaveformFromTDMSFile"));
 }
 
 NiRFmxSpecAnRestrictedLibrary::~NiRFmxSpecAnRestrictedLibrary()
@@ -83,6 +87,38 @@ int32 NiRFmxSpecAnRestrictedLibrary::IQFetchDataOverrideBehavior(niRFmxInstrHand
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IQFetchDataOverrideBehavior.");
   }
   return function_pointers_.IQFetchDataOverrideBehavior(instrumentHandle, selectorString, timeout, recordToFetch, samplesToRead, deleteOnFetch, t0, dt, data, arraySize, actualArraySize);
+}
+
+int32 NiRFmxSpecAnRestrictedLibrary::DPDApplyDigitalPredistortionToWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, float64 measurementTimeout, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR, float64* powerOffset)
+{
+  if (!function_pointers_.DPDApplyDigitalPredistortionToWaveformFromTDMSFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyDigitalPredistortionToWaveformFromTDMSFile.");
+  }
+  return function_pointers_.DPDApplyDigitalPredistortionToWaveformFromTDMSFile(instrumentHandle, selectorString, waveformFilePath, idleDurationPresent, measurementTimeout, waveformIndex, x0Out, dxOut, waveformOut, arraySizeOut, actualArraySize, PAPR, powerOffset);
+}
+
+int32 NiRFmxSpecAnRestrictedLibrary::DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR)
+{
+  if (!function_pointers_.DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile.");
+  }
+  return function_pointers_.DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(instrumentHandle, selectorString, waveformFilePath, idleDurationPresent, waveformIndex, x0Out, dxOut, waveformOut, arraySizeOut, actualArraySize, PAPR);
+}
+
+int32 NiRFmxSpecAnRestrictedLibrary::DPDLoadReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex)
+{
+  if (!function_pointers_.DPDLoadReferenceWaveformFromTDMSFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_DPDLoadReferenceWaveformFromTDMSFile.");
+  }
+  return function_pointers_.DPDLoadReferenceWaveformFromTDMSFile(instrumentHandle, selectorString, waveformFilePath, idleDurationPresent, signalType, waveformIndex);
+}
+
+int32 NiRFmxSpecAnRestrictedLibrary::IDPDLoadReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex)
+{
+  if (!function_pointers_.IDPDLoadReferenceWaveformFromTDMSFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxSpecAn_IDPDLoadReferenceWaveformFromTDMSFile.");
+  }
+  return function_pointers_.IDPDLoadReferenceWaveformFromTDMSFile(instrumentHandle, selectorString, waveformFilePath, idleDurationPresent, signalType, waveformIndex);
 }
 
 }  // namespace nirfmxspecan_restricted_grpc

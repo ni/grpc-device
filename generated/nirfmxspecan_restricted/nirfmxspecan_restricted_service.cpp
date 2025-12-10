@@ -205,6 +205,269 @@ namespace nirfmxspecan_restricted_grpc {
     }
   }
 
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnRestrictedService::DPDApplyDigitalPredistortionToWaveformFromTDMSFile(::grpc::ServerContext* context, const DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest* request, DPDApplyDigitalPredistortionToWaveformFromTDMSFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_handle_grpc_session = request->instrument_handle();
+      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
+      char* waveform_file_path = (char*)waveform_file_path_mbcs.c_str();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_restricted_grpc::DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      float64 measurement_timeout = request->measurement_timeout();
+      int32 waveform_index = request->waveform_index();
+      float64 x0_out {};
+      float64 dx_out {};
+      int32 actual_array_size {};
+      float64 papr {};
+      float64 power_offset {};
+      while (true) {
+        auto status = library_->DPDApplyDigitalPredistortionToWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, measurement_timeout, waveform_index, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr, &power_offset);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+        }
+        std::vector<NIComplexSingle> waveform_out(actual_array_size, NIComplexSingle());
+        auto array_size_out = actual_array_size;
+        status = library_->DPDApplyDigitalPredistortionToWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, measurement_timeout, waveform_index, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &papr, &power_offset);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+        }
+        response->set_status(status);
+        response->set_x0_out(x0_out);
+        response->set_dx_out(dx_out);
+        convert_to_grpc(waveform_out, response->mutable_waveform_out());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_waveform_out()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_waveform_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        response->set_papr(papr);
+        response->set_power_offset(power_offset);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnRestrictedService::DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(::grpc::ServerContext* context, const DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest* request, DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_handle_grpc_session = request->instrument_handle();
+      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
+      char* waveform_file_path = (char*)waveform_file_path_mbcs.c_str();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_restricted_grpc::DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 waveform_index = request->waveform_index();
+      float64 x0_out {};
+      float64 dx_out {};
+      int32 actual_array_size {};
+      float64 papr {};
+      while (true) {
+        auto status = library_->DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, waveform_index, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+        }
+        std::vector<NIComplexSingle> waveform_out(actual_array_size, NIComplexSingle());
+        auto array_size_out = actual_array_size;
+        status = library_->DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, waveform_index, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &papr);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+        }
+        response->set_status(status);
+        response->set_x0_out(x0_out);
+        response->set_dx_out(dx_out);
+        convert_to_grpc(waveform_out, response->mutable_waveform_out());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_waveform_out()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_waveform_out()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        response->set_papr(papr);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnRestrictedService::DPDLoadReferenceWaveformFromTDMSFile(::grpc::ServerContext* context, const DPDLoadReferenceWaveformFromTDMSFileRequest* request, DPDLoadReferenceWaveformFromTDMSFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_handle_grpc_session = request->instrument_handle();
+      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
+      char* waveform_file_path = (char*)waveform_file_path_mbcs.c_str();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_restricted_grpc::DPDLoadReferenceWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::DPDLoadReferenceWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::DPDLoadReferenceWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 signal_type;
+      switch (request->signal_type_enum_case()) {
+        case nirfmxspecan_restricted_grpc::DPDLoadReferenceWaveformFromTDMSFileRequest::SignalTypeEnumCase::kSignalType: {
+          signal_type = static_cast<int32>(request->signal_type());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::DPDLoadReferenceWaveformFromTDMSFileRequest::SignalTypeEnumCase::kSignalTypeRaw: {
+          signal_type = static_cast<int32>(request->signal_type_raw());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::DPDLoadReferenceWaveformFromTDMSFileRequest::SignalTypeEnumCase::SIGNAL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 waveform_index = request->waveform_index();
+      auto status = library_->DPDLoadReferenceWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, signal_type, waveform_index);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxSpecAnRestrictedService::IDPDLoadReferenceWaveformFromTDMSFile(::grpc::ServerContext* context, const IDPDLoadReferenceWaveformFromTDMSFileRequest* request, IDPDLoadReferenceWaveformFromTDMSFileResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_handle_grpc_session = request->instrument_handle();
+      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
+      char* waveform_file_path = (char*)waveform_file_path_mbcs.c_str();
+      int32 idle_duration_present;
+      switch (request->idle_duration_present_enum_case()) {
+        case nirfmxspecan_restricted_grpc::IDPDLoadReferenceWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::IDPDLoadReferenceWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::kIdleDurationPresentRaw: {
+          idle_duration_present = static_cast<int32>(request->idle_duration_present_raw());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::IDPDLoadReferenceWaveformFromTDMSFileRequest::IdleDurationPresentEnumCase::IDLE_DURATION_PRESENT_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for idle_duration_present was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 signal_type;
+      switch (request->signal_type_enum_case()) {
+        case nirfmxspecan_restricted_grpc::IDPDLoadReferenceWaveformFromTDMSFileRequest::SignalTypeEnumCase::kSignalType: {
+          signal_type = static_cast<int32>(request->signal_type());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::IDPDLoadReferenceWaveformFromTDMSFileRequest::SignalTypeEnumCase::kSignalTypeRaw: {
+          signal_type = static_cast<int32>(request->signal_type_raw());
+          break;
+        }
+        case nirfmxspecan_restricted_grpc::IDPDLoadReferenceWaveformFromTDMSFileRequest::SignalTypeEnumCase::SIGNAL_TYPE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for signal_type was not specified or out of range");
+          break;
+        }
+      }
+
+      int32 waveform_index = request->waveform_index();
+      auto status = library_->IDPDLoadReferenceWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, signal_type, waveform_index);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
 
   NiRFmxSpecAnRestrictedFeatureToggles::NiRFmxSpecAnRestrictedFeatureToggles(
     const nidevice_grpc::FeatureToggles& feature_toggles)

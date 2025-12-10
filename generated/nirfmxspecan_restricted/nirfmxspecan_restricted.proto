@@ -20,6 +20,10 @@ service NiRFmxSpecAnRestricted {
   rpc AMPMLoadReferenceWaveformFromTDMSFile(AMPMLoadReferenceWaveformFromTDMSFileRequest) returns (AMPMLoadReferenceWaveformFromTDMSFileResponse);
   rpc CacheResult(CacheResultRequest) returns (CacheResultResponse);
   rpc IQFetchDataOverrideBehavior(IQFetchDataOverrideBehaviorRequest) returns (IQFetchDataOverrideBehaviorResponse);
+  rpc DPDApplyDigitalPredistortionToWaveformFromTDMSFile(DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest) returns (DPDApplyDigitalPredistortionToWaveformFromTDMSFileResponse);
+  rpc DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest) returns (DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileResponse);
+  rpc DPDLoadReferenceWaveformFromTDMSFile(DPDLoadReferenceWaveformFromTDMSFileRequest) returns (DPDLoadReferenceWaveformFromTDMSFileResponse);
+  rpc IDPDLoadReferenceWaveformFromTDMSFile(IDPDLoadReferenceWaveformFromTDMSFileRequest) returns (IDPDLoadReferenceWaveformFromTDMSFileResponse);
 }
 
 enum IQDeleteOnFetch {
@@ -36,6 +40,26 @@ enum AmpmReferenceWaveformIdleDurationPresent {
 enum AmpmSignalType {
   AMPM_SIGNAL_TYPE_MODULATED = 0;
   AMPM_SIGNAL_TYPE_TONES = 1;
+}
+
+enum DpdReferenceWaveformIdleDurationPresent {
+  DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE = 0;
+  DPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE = 1;
+}
+
+enum DpdSignalType {
+  DPD_SIGNAL_TYPE_MODULATED = 0;
+  DPD_SIGNAL_TYPE_TONES = 1;
+}
+
+enum IdpdReferenceWaveformIdleDurationPresent {
+  IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_FALSE = 0;
+  IDPD_REFERENCE_WAVEFORM_IDLE_DURATION_PRESENT_TRUE = 1;
+}
+
+enum IdpdSignalType {
+  IDPD_SIGNAL_TYPE_MODULATED = 0;
+  IDPD_SIGNAL_TYPE_TONES = 1;
 }
 
 message AMPMLoadReferenceWaveformFromTDMSFileRequest {
@@ -86,5 +110,85 @@ message IQFetchDataOverrideBehaviorResponse {
   double dt = 3;
   repeated nidevice_grpc.NIComplexNumberF32 data = 4;
   int32 actual_array_size = 5;
+}
+
+message DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest {
+  nidevice_grpc.Session instrument_handle = 1;
+  string selector_string = 2;
+  string waveform_file_path = 3;
+  oneof idle_duration_present_enum {
+    DpdReferenceWaveformIdleDurationPresent idle_duration_present = 4;
+    int32 idle_duration_present_raw = 5;
+  }
+  double measurement_timeout = 6;
+  int32 waveform_index = 7;
+}
+
+message DPDApplyDigitalPredistortionToWaveformFromTDMSFileResponse {
+  int32 status = 1;
+  double x0_out = 2;
+  double dx_out = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 waveform_out = 4;
+  int32 actual_array_size = 5;
+  double papr = 6;
+  double power_offset = 7;
+}
+
+message DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest {
+  nidevice_grpc.Session instrument_handle = 1;
+  string selector_string = 2;
+  string waveform_file_path = 3;
+  oneof idle_duration_present_enum {
+    DpdReferenceWaveformIdleDurationPresent idle_duration_present = 4;
+    int32 idle_duration_present_raw = 5;
+  }
+  int32 waveform_index = 6;
+}
+
+message DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileResponse {
+  int32 status = 1;
+  double x0_out = 2;
+  double dx_out = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 waveform_out = 4;
+  int32 actual_array_size = 5;
+  double papr = 6;
+}
+
+message DPDLoadReferenceWaveformFromTDMSFileRequest {
+  nidevice_grpc.Session instrument_handle = 1;
+  string selector_string = 2;
+  string waveform_file_path = 3;
+  oneof idle_duration_present_enum {
+    DpdReferenceWaveformIdleDurationPresent idle_duration_present = 4;
+    int32 idle_duration_present_raw = 5;
+  }
+  oneof signal_type_enum {
+    DpdSignalType signal_type = 6;
+    int32 signal_type_raw = 7;
+  }
+  int32 waveform_index = 8;
+}
+
+message DPDLoadReferenceWaveformFromTDMSFileResponse {
+  int32 status = 1;
+}
+
+message IDPDLoadReferenceWaveformFromTDMSFileRequest {
+  nidevice_grpc.Session instrument_handle = 1;
+  string selector_string = 2;
+  string waveform_file_path = 3;
+  oneof idle_duration_present_enum {
+    IdpdReferenceWaveformIdleDurationPresent idle_duration_present = 4;
+    int32 idle_duration_present_raw = 5;
+  }
+  oneof signal_type_enum {
+    IdpdSignalType signal_type = 6;
+    int32 signal_type_raw = 7;
+  }
+  int32 waveform_index = 8;
+}
+
+message IDPDLoadReferenceWaveformFromTDMSFileResponse {
+  int32 status = 1;
 }
 

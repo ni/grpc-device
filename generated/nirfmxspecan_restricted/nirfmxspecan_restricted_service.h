@@ -45,6 +45,10 @@ public:
   ::grpc::Status AMPMLoadReferenceWaveformFromTDMSFile(::grpc::ServerContext* context, const AMPMLoadReferenceWaveformFromTDMSFileRequest* request, AMPMLoadReferenceWaveformFromTDMSFileResponse* response) override;
   ::grpc::Status CacheResult(::grpc::ServerContext* context, const CacheResultRequest* request, CacheResultResponse* response) override;
   ::grpc::Status IQFetchDataOverrideBehavior(::grpc::ServerContext* context, const IQFetchDataOverrideBehaviorRequest* request, IQFetchDataOverrideBehaviorResponse* response) override;
+  ::grpc::Status DPDApplyDigitalPredistortionToWaveformFromTDMSFile(::grpc::ServerContext* context, const DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest* request, DPDApplyDigitalPredistortionToWaveformFromTDMSFileResponse* response) override;
+  ::grpc::Status DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(::grpc::ServerContext* context, const DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest* request, DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileResponse* response) override;
+  ::grpc::Status DPDLoadReferenceWaveformFromTDMSFile(::grpc::ServerContext* context, const DPDLoadReferenceWaveformFromTDMSFileRequest* request, DPDLoadReferenceWaveformFromTDMSFileResponse* response) override;
+  ::grpc::Status IDPDLoadReferenceWaveformFromTDMSFile(::grpc::ServerContext* context, const IDPDLoadReferenceWaveformFromTDMSFileRequest* request, IDPDLoadReferenceWaveformFromTDMSFileResponse* response) override;
 private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
