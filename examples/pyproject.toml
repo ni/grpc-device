@@ -10,9 +10,9 @@ python = ">=3.9,<3.12"
 grpcio = "^1.49.1"
 
 [tool.poetry.group.dev.dependencies]
-grpcio-tools = ">=1.49.1"
+grpcio-tools = "1.49.1"
 mypy = ">=1.0"
-mypy-protobuf = ">=3.6.0"
+mypy-protobuf = "3.6.0"
 types-protobuf = ">=5.28.3.20241203"
 types-grpcio = ">=1.0"
 black = ">=23.3.0"
