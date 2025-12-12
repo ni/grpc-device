@@ -20,6 +20,10 @@ class NiRFmxSpecAnRestrictedLibraryInterface {
   virtual int32 GetError(niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;
   virtual int32 GetErrorString(niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]) = 0;
   virtual int32 IQFetchDataOverrideBehavior(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, int32 deleteOnFetch, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 DPDApplyDigitalPredistortionToWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, float64 measurementTimeout, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR, float64* powerOffset) = 0;
+  virtual int32 DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR) = 0;
+  virtual int32 DPDLoadReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex) = 0;
+  virtual int32 IDPDLoadReferenceWaveformFromTDMSFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex) = 0;
 };
 
 }  // namespace nirfmxspecan_restricted_grpc

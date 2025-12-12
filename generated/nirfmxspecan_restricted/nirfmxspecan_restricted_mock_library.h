@@ -22,6 +22,10 @@ class NiRFmxSpecAnRestrictedMockLibrary : public nirfmxspecan_restricted_grpc::N
   MOCK_METHOD(int32, GetError, (niRFmxInstrHandle instrumentHandle, int32* errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
   MOCK_METHOD(int32, GetErrorString, (niRFmxInstrHandle instrumentHandle, int32 errorCode, int32 errorDescriptionBufferSize, char errorDescription[]), (override));
   MOCK_METHOD(int32, IQFetchDataOverrideBehavior, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordToFetch, int64 samplesToRead, int32 deleteOnFetch, float64* t0, float64* dt, NIComplexSingle data[], int32 arraySize, int32* actualArraySize), (override));
+  MOCK_METHOD(int32, DPDApplyDigitalPredistortionToWaveformFromTDMSFile, (niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, float64 measurementTimeout, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR, float64* powerOffset), (override));
+  MOCK_METHOD(int32, DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile, (niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 waveformIndex, float64* x0Out, float64* dxOut, NIComplexSingle waveformOut[], int32 arraySizeOut, int32* actualArraySize, float64* PAPR), (override));
+  MOCK_METHOD(int32, DPDLoadReferenceWaveformFromTDMSFile, (niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex), (override));
+  MOCK_METHOD(int32, IDPDLoadReferenceWaveformFromTDMSFile, (niRFmxInstrHandle instrumentHandle, char selectorString[], char waveformFilePath[], int32 idleDurationPresent, int32 signalType, int32 waveformIndex), (override));
 };
 
 }  // namespace unit

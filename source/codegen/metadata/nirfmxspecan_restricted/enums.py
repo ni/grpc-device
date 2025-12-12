@@ -38,5 +38,53 @@ enums = {
                 'value': 1
             }
         ]
+    },
+    'DpdReferenceWaveformIdleDurationPresent': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'DpdSignalType': {
+        'values': [
+            {
+                'name': 'MODULATED',
+                'value': 0
+            },
+            {
+                'name': 'TONES',
+                'value': 1
+            }
+        ]
+    },
+    'IdpdReferenceWaveformIdleDurationPresent': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'IdpdSignalType': {
+        'values': [
+            {
+                'name': 'MODULATED',
+                'value': 0
+            },
+            {
+                'name': 'TONES',
+                'value': 1
+            }
+        ]
     }
 }
