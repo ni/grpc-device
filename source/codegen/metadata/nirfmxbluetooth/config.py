@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '25.8.0',
+    'api_version': '26.0.0',
     'c_header': 'niRFmxBT.h',
     'c_function_prefix': 'RFmxBT_',
     'service_class_prefix': 'NiRFmxBluetooth',

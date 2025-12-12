@@ -415,6 +415,32 @@ enums = {
             }
         ]
     },
+    'ModAccFrequencyTrackingEnabled': {
+        'enum-value-prefix': 'MODACC_FREQUENCY_TRACKING_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'ModAccIQMismatchCorrectionEnabled': {
+        'enum-value-prefix': 'MODACC_IQ_MISMATCH_CORRECTION_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'ModAccIQOriginOffsetCorrectionEnabled': {
         'enum-value-prefix': 'MODACC_IQ_ORIGIN_OFFSET_CORRECTION_ENABLED',
         'values': [
@@ -703,7 +729,7 @@ enums = {
             }
         ]
     },
-    'VdhtModeEnabled': {
+    'VhdtModeEnabled': {
         'values': [
             {
                 'name': 'FALSE',

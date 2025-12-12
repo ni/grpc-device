@@ -553,6 +553,18 @@ enums = {
             }
         ]
     },
+    'OfdmIMPilotsEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'OfdmLtfSize': {
         'values': [
             {
@@ -574,6 +586,19 @@ enums = {
         ]
     },
     'OfdmMUMimoLtfModeEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'OfdmModAcc2xLdpcEnabled': {
+        'enum-value-prefix': 'OFDMMODACC2X_LDPC_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -695,6 +720,19 @@ enums = {
     },
     'OfdmModAccChannelEstimationLLtfEnabled': {
         'enum-value-prefix': 'OFDMMODACC_CHANNEL_ESTIMATION_L_LTF_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'OfdmModAccChannelEstimationLtfAveragingEnabled': {
+        'enum-value-prefix': 'OFDMMODACC_CHANNEL_ESTIMATION_LTF_AVERAGING_ENABLED',
         'values': [
             {
                 'name': 'FALSE',
@@ -892,6 +930,19 @@ enums = {
             {
                 'name': 'PREAMBLE_PILOTS_AND_DATA',
                 'value': 4
+            }
+        ]
+    },
+    'OfdmModAccIMPilotsEnabled': {
+        'enum-value-prefix': 'OFDMMODACC_IM_PILOTS_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
             }
         ]
     },
@@ -1133,6 +1184,19 @@ enums = {
             }
         ]
     },
+    'OfdmModAccRUType': {
+        'enum-value-prefix': 'OFDMMODACC_RU_TYPE',
+        'values': [
+            {
+                'name': 'RRU',
+                'value': 0
+            },
+            {
+                'name': 'DRU',
+                'value': 1
+            }
+        ]
+    },
     'OfdmModAccSigBCrcStatus': {
         'enum-value-prefix': 'OFDMMODACC_SIG_B_CRC_STATUS',
         'values': [
@@ -1223,6 +1287,19 @@ enums = {
             },
             {
                 'name': 'PASS',
+                'value': 1
+            }
+        ]
+    },
+    'OfdmModAccUnequalModulationEnabled': {
+        'enum-value-prefix': 'OFDMMODACC_UNEQUAL_MODULATION_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
                 'value': 1
             }
         ]
@@ -1406,6 +1483,18 @@ enums = {
             {
                 'name': 'D',
                 'value': 3
+            }
+        ]
+    },
+    'OfdmUnequalModulationEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
             }
         ]
     },
