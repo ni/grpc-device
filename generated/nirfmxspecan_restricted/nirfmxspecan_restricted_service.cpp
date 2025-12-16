@@ -213,8 +213,8 @@ namespace nirfmxspecan_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
@@ -243,19 +243,19 @@ namespace nirfmxspecan_restricted_grpc {
       float64 papr {};
       float64 power_offset {};
       while (true) {
-        auto status = library_->DPDApplyDigitalPredistortionToWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, measurement_timeout, waveform_index, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr, &power_offset);
+        auto status = library_->DPDApplyDigitalPredistortionToWaveformFromTDMSFile(instrument, selector_string, waveform_file_path, idle_duration_present, measurement_timeout, waveform_index, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr, &power_offset);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> waveform_out(actual_array_size, NIComplexSingle());
         auto array_size_out = actual_array_size;
-        status = library_->DPDApplyDigitalPredistortionToWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, measurement_timeout, waveform_index, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &papr, &power_offset);
+        status = library_->DPDApplyDigitalPredistortionToWaveformFromTDMSFile(instrument, selector_string, waveform_file_path, idle_duration_present, measurement_timeout, waveform_index, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &papr, &power_offset);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0_out(x0_out);
@@ -287,8 +287,8 @@ namespace nirfmxspecan_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
@@ -315,19 +315,19 @@ namespace nirfmxspecan_restricted_grpc {
       int32 actual_array_size {};
       float64 papr {};
       while (true) {
-        auto status = library_->DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, waveform_index, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr);
+        auto status = library_->DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(instrument, selector_string, waveform_file_path, idle_duration_present, waveform_index, &x0_out, &dx_out, nullptr, 0, &actual_array_size, &papr);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         std::vector<NIComplexSingle> waveform_out(actual_array_size, NIComplexSingle());
         auto array_size_out = actual_array_size;
-        status = library_->DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, waveform_index, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &papr);
+        status = library_->DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFile(instrument, selector_string, waveform_file_path, idle_duration_present, waveform_index, &x0_out, &dx_out, waveform_out.data(), array_size_out, &actual_array_size, &papr);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
         response->set_x0_out(x0_out);
@@ -358,8 +358,8 @@ namespace nirfmxspecan_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
@@ -397,9 +397,9 @@ namespace nirfmxspecan_restricted_grpc {
       }
 
       int32 waveform_index = request->waveform_index();
-      auto status = library_->DPDLoadReferenceWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, signal_type, waveform_index);
+      auto status = library_->DPDLoadReferenceWaveformFromTDMSFile(instrument, selector_string, waveform_file_path, idle_duration_present, signal_type, waveform_index);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -417,8 +417,8 @@ namespace nirfmxspecan_restricted_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_handle_grpc_session = request->instrument_handle();
-      niRFmxInstrHandle instrument_handle = session_repository_->access_session(instrument_handle_grpc_session.name());
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto waveform_file_path_mbcs = convert_from_grpc<std::string>(request->waveform_file_path());
@@ -456,9 +456,9 @@ namespace nirfmxspecan_restricted_grpc {
       }
 
       int32 waveform_index = request->waveform_index();
-      auto status = library_->IDPDLoadReferenceWaveformFromTDMSFile(instrument_handle, selector_string, waveform_file_path, idle_duration_present, signal_type, waveform_index);
+      auto status = library_->IDPDLoadReferenceWaveformFromTDMSFile(instrument, selector_string, waveform_file_path, idle_duration_present, signal_type, waveform_index);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument_handle);
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
