@@ -2,7 +2,7 @@
 config = {
     "code_readiness": "Release",
     "is_restricted": True,
-    "api_version": "21.0.0",
+    "api_version": "26.0.0",
     "c_header": "niRFmxSpecAn.h",
     "c_function_prefix": "RFmxSpecAn_",
     "service_class_prefix": "NiRFmxSpecAnRestricted",

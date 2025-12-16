@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXSPECAN-RESTRICTED API metadata version 21.0.0
+// This file is generated from NI-RFMXSPECAN-RESTRICTED API metadata version 26.0.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXSPECAN-RESTRICTED Metadata
 //---------------------------------------------------------------------
@@ -113,7 +113,7 @@ message IQFetchDataOverrideBehaviorResponse {
 }
 
 message DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string waveform_file_path = 3;
   oneof idle_duration_present_enum {
@@ -135,7 +135,7 @@ message DPDApplyDigitalPredistortionToWaveformFromTDMSFileResponse {
 }
 
 message DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string waveform_file_path = 3;
   oneof idle_duration_present_enum {
@@ -155,7 +155,7 @@ message DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileResponse {
 }
 
 message DPDLoadReferenceWaveformFromTDMSFileRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string waveform_file_path = 3;
   oneof idle_duration_present_enum {
@@ -174,7 +174,7 @@ message DPDLoadReferenceWaveformFromTDMSFileResponse {
 }
 
 message IDPDLoadReferenceWaveformFromTDMSFileRequest {
-  nidevice_grpc.Session instrument_handle = 1;
+  nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
   string waveform_file_path = 3;
   oneof idle_duration_present_enum {
