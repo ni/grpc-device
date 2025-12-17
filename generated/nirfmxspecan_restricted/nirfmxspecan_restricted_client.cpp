@@ -102,12 +102,12 @@ iq_fetch_data_override_behavior(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 DPDApplyDigitalPredistortionToWaveformFromTDMSFileResponse
-dpd_apply_digital_predistortion_to_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const double& measurement_timeout, const pb::int32& waveform_index)
+dpd_apply_digital_predistortion_to_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const double& measurement_timeout, const pb::int32& waveform_index)
 {
   ::grpc::ClientContext context;
 
   auto request = DPDApplyDigitalPredistortionToWaveformFromTDMSFileRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_waveform_file_path(waveform_file_path);
   const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
@@ -131,12 +131,12 @@ dpd_apply_digital_predistortion_to_waveform_from_tdms_file(const StubPtr& stub, 
 }
 
 DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileResponse
-dpd_apply_pre_dpd_signal_conditioning_to_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const pb::int32& waveform_index)
+dpd_apply_pre_dpd_signal_conditioning_to_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const pb::int32& waveform_index)
 {
   ::grpc::ClientContext context;
 
   auto request = DPDApplyPreDPDSignalConditioningToWaveformFromTDMSFileRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_waveform_file_path(waveform_file_path);
   const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
@@ -159,12 +159,12 @@ dpd_apply_pre_dpd_signal_conditioning_to_waveform_from_tdms_file(const StubPtr& 
 }
 
 DPDLoadReferenceWaveformFromTDMSFileResponse
-dpd_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type, const pb::int32& waveform_index)
+dpd_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<DpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<DpdSignalType, pb::int32>& signal_type, const pb::int32& waveform_index)
 {
   ::grpc::ClientContext context;
 
   auto request = DPDLoadReferenceWaveformFromTDMSFileRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_waveform_file_path(waveform_file_path);
   const auto idle_duration_present_ptr = idle_duration_present.get_if<DpdReferenceWaveformIdleDurationPresent>();
@@ -195,12 +195,12 @@ dpd_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_g
 }
 
 IDPDLoadReferenceWaveformFromTDMSFileResponse
-idpd_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument_handle, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<IdpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<IdpdSignalType, pb::int32>& signal_type, const pb::int32& waveform_index)
+idpd_load_reference_waveform_from_tdms_file(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& waveform_file_path, const simple_variant<IdpdReferenceWaveformIdleDurationPresent, pb::int32>& idle_duration_present, const simple_variant<IdpdSignalType, pb::int32>& signal_type, const pb::int32& waveform_index)
 {
   ::grpc::ClientContext context;
 
   auto request = IDPDLoadReferenceWaveformFromTDMSFileRequest{};
-  request.mutable_instrument_handle()->CopyFrom(instrument_handle);
+  request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_waveform_file_path(waveform_file_path);
   const auto idle_duration_present_ptr = idle_duration_present.get_if<IdpdReferenceWaveformIdleDurationPresent>();
