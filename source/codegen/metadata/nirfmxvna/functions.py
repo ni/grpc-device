@@ -600,6 +600,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'connector_ids',
                 'name': 'connectorIDs',
                 'size': {
                     'mechanism': 'ivi-dance',
@@ -1902,6 +1903,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_name': 'connector_ids',
                 'name': 'connectorIDs',
                 'type': 'char[]'
             },
@@ -2258,6 +2260,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'calibration_element_ids',
                 'name': 'calibrationElementIDs',
                 'size': {
                     'mechanism': 'ivi-dance',
@@ -2288,6 +2291,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'connector_ids',
                 'name': 'connectorIDs',
                 'size': {
                     'mechanism': 'ivi-dance',
@@ -2595,6 +2599,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_name': 'calkit_ids',
                 'name': 'calkitIDs',
                 'size': {
                     'mechanism': 'ivi-dance',

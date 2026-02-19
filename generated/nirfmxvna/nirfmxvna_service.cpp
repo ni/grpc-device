@@ -902,11 +902,11 @@ namespace nirfmxvna_grpc {
         }
         int32 array_size = status;
 
-        std::string connector_i_ds;
+        std::string connector_ids;
         if (array_size > 0) {
-            connector_i_ds.resize(array_size - 1);
+            connector_ids.resize(array_size - 1);
         }
-        status = library_->CalkitManagerCalkitCalibrationElementGetPortConnectors(instrument, selector_string, array_size, (char*)connector_i_ds.data());
+        status = library_->CalkitManagerCalkitCalibrationElementGetPortConnectors(instrument, selector_string, array_size, (char*)connector_ids.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -915,10 +915,10 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        std::string connector_i_ds_utf8;
-        convert_to_grpc(connector_i_ds, &connector_i_ds_utf8);
-        response->set_connector_i_ds(connector_i_ds_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_i_ds()));
+        std::string connector_ids_utf8;
+        convert_to_grpc(connector_ids, &connector_ids_utf8);
+        response->set_connector_ids(connector_ids_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_ids()));
         return ::grpc::Status::OK;
       }
     }
@@ -2412,10 +2412,10 @@ namespace nirfmxvna_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      auto connector_i_ds_mbcs = convert_from_grpc<std::string>(request->connector_i_ds());
-      char* connector_i_ds = (char*)connector_i_ds_mbcs.c_str();
+      auto connector_ids_mbcs = convert_from_grpc<std::string>(request->connector_ids());
+      char* connector_ids = (char*)connector_ids_mbcs.c_str();
       int32 array_size = request->array_size();
-      auto status = library_->CalkitManagerCalkitCalibrationElementSetPortConnectors(instrument, selector_string, connector_i_ds, array_size);
+      auto status = library_->CalkitManagerCalkitCalibrationElementSetPortConnectors(instrument, selector_string, connector_ids, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -2883,11 +2883,11 @@ namespace nirfmxvna_grpc {
         }
         int32 array_size = status;
 
-        std::string calibration_element_i_ds;
+        std::string calibration_element_ids;
         if (array_size > 0) {
-            calibration_element_i_ds.resize(array_size - 1);
+            calibration_element_ids.resize(array_size - 1);
         }
-        status = library_->CalkitManagerCalkitGetCalibrationElementIDs(instrument, selector_string, array_size, (char*)calibration_element_i_ds.data());
+        status = library_->CalkitManagerCalkitGetCalibrationElementIDs(instrument, selector_string, array_size, (char*)calibration_element_ids.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -2896,10 +2896,10 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        std::string calibration_element_i_ds_utf8;
-        convert_to_grpc(calibration_element_i_ds, &calibration_element_i_ds_utf8);
-        response->set_calibration_element_i_ds(calibration_element_i_ds_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calibration_element_i_ds()));
+        std::string calibration_element_ids_utf8;
+        convert_to_grpc(calibration_element_ids, &calibration_element_ids_utf8);
+        response->set_calibration_element_ids(calibration_element_ids_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calibration_element_ids()));
         return ::grpc::Status::OK;
       }
     }
@@ -2928,11 +2928,11 @@ namespace nirfmxvna_grpc {
         }
         int32 array_size = status;
 
-        std::string connector_i_ds;
+        std::string connector_ids;
         if (array_size > 0) {
-            connector_i_ds.resize(array_size - 1);
+            connector_ids.resize(array_size - 1);
         }
-        status = library_->CalkitManagerCalkitGetConnectorIDs(instrument, selector_string, array_size, (char*)connector_i_ds.data());
+        status = library_->CalkitManagerCalkitGetConnectorIDs(instrument, selector_string, array_size, (char*)connector_ids.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -2941,10 +2941,10 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        std::string connector_i_ds_utf8;
-        convert_to_grpc(connector_i_ds, &connector_i_ds_utf8);
-        response->set_connector_i_ds(connector_i_ds_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_i_ds()));
+        std::string connector_ids_utf8;
+        convert_to_grpc(connector_ids, &connector_ids_utf8);
+        response->set_connector_ids(connector_ids_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_ids()));
         return ::grpc::Status::OK;
       }
     }
@@ -3339,11 +3339,11 @@ namespace nirfmxvna_grpc {
         }
         int32 array_size = status;
 
-        std::string calkit_i_ds;
+        std::string calkit_ids;
         if (array_size > 0) {
-            calkit_i_ds.resize(array_size - 1);
+            calkit_ids.resize(array_size - 1);
         }
-        status = library_->CalkitManagerGetCalkitIDs(instrument, selector_string, array_size, (char*)calkit_i_ds.data());
+        status = library_->CalkitManagerGetCalkitIDs(instrument, selector_string, array_size, (char*)calkit_ids.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -3352,10 +3352,10 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        std::string calkit_i_ds_utf8;
-        convert_to_grpc(calkit_i_ds, &calkit_i_ds_utf8);
-        response->set_calkit_i_ds(calkit_i_ds_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calkit_i_ds()));
+        std::string calkit_ids_utf8;
+        convert_to_grpc(calkit_ids, &calkit_ids_utf8);
+        response->set_calkit_ids(calkit_ids_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calkit_ids()));
         return ::grpc::Status::OK;
       }
     }
