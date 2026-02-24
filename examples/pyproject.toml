@@ -6,7 +6,7 @@ authors = ["Christian Aguilar <christian.aguilar@ni.com>"]
 package-mode = false
 
 [tool.poetry.dependencies]
-python = ">=3.10,<3.12"
+python = ">=3.10,<3.14"
 grpcio = "^1.78.1"
 
 [tool.poetry.group.dev.dependencies]
