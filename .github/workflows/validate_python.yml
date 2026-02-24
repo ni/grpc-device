@@ -35,4 +35,4 @@ jobs:
 
     - name: Validate examples (except aio)
       run: |
-        python source/codegen/validate_examples.py --exclude="-aio\.py$"
+        python source/codegen/validate_examples.py --exclude=".*-aio\.py$"
