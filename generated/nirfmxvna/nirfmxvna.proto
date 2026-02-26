@@ -915,7 +915,7 @@ message CalkitManagerCalkitCalibrationElementGetPortConnectorsRequest {
 
 message CalkitManagerCalkitCalibrationElementGetPortConnectorsResponse {
   int32 status = 1;
-  string connector_i_ds = 2;
+  string connector_ids = 2;
 }
 
 message CalkitManagerCalkitCalibrationElementGetSParameterDefinitionRequest {
@@ -1413,7 +1413,7 @@ message CalkitManagerCalkitCalibrationElementSetMinimumFrequencyResponse {
 message CalkitManagerCalkitCalibrationElementSetPortConnectorsRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  string connector_i_ds = 3;
+  string connector_ids = 3;
   int32 array_size = 4;
 }
 
@@ -1575,7 +1575,7 @@ message CalkitManagerCalkitGetCalibrationElementIDsRequest {
 
 message CalkitManagerCalkitGetCalibrationElementIDsResponse {
   int32 status = 1;
-  string calibration_element_i_ds = 2;
+  string calibration_element_ids = 2;
 }
 
 message CalkitManagerCalkitGetConnectorIDsRequest {
@@ -1585,7 +1585,7 @@ message CalkitManagerCalkitGetConnectorIDsRequest {
 
 message CalkitManagerCalkitGetConnectorIDsResponse {
   int32 status = 1;
-  string connector_i_ds = 2;
+  string connector_ids = 2;
 }
 
 message CalkitManagerCalkitGetDescriptionRequest {
@@ -1720,7 +1720,7 @@ message CalkitManagerGetCalkitIDsRequest {
 
 message CalkitManagerGetCalkitIDsResponse {
   int32 status = 1;
-  string calkit_i_ds = 2;
+  string calkit_ids = 2;
 }
 
 message CalkitManagerImportCalkitRequest {
