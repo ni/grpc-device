@@ -205,6 +205,9 @@ service NiRFmxLTE {
   rpc ModAccFetchNBSynchronizationSignalConstellation(ModAccFetchNBSynchronizationSignalConstellationRequest) returns (ModAccFetchNBSynchronizationSignalConstellationResponse);
   rpc ModAccFetchNBSynchronizationSignalConstellationInterleavedIQ(ModAccFetchNBSynchronizationSignalConstellationInterleavedIQRequest) returns (ModAccFetchNBSynchronizationSignalConstellationInterleavedIQResponse);
   rpc ModAccFetchNBSynchronizationSignalConstellationSplit(ModAccFetchNBSynchronizationSignalConstellationSplitRequest) returns (ModAccFetchNBSynchronizationSignalConstellationSplitResponse);
+  rpc ModAccFetchNPDSCH16QAMConstellation(ModAccFetchNPDSCH16QAMConstellationRequest) returns (ModAccFetchNPDSCH16QAMConstellationResponse);
+  rpc ModAccFetchNPDSCH16QAMConstellationInterleavedIQ(ModAccFetchNPDSCH16QAMConstellationInterleavedIQRequest) returns (ModAccFetchNPDSCH16QAMConstellationInterleavedIQResponse);
+  rpc ModAccFetchNPDSCH16QAMConstellationSplit(ModAccFetchNPDSCH16QAMConstellationSplitRequest) returns (ModAccFetchNPDSCH16QAMConstellationSplitResponse);
   rpc ModAccFetchNPDSCHQPSKConstellation(ModAccFetchNPDSCHQPSKConstellationRequest) returns (ModAccFetchNPDSCHQPSKConstellationResponse);
   rpc ModAccFetchNPDSCHQPSKConstellationInterleavedIQ(ModAccFetchNPDSCHQPSKConstellationInterleavedIQRequest) returns (ModAccFetchNPDSCHQPSKConstellationInterleavedIQResponse);
   rpc ModAccFetchNPDSCHQPSKConstellationSplit(ModAccFetchNPDSCHQPSKConstellationSplitRequest) returns (ModAccFetchNPDSCHQPSKConstellationSplitResponse);
@@ -490,6 +493,7 @@ enum NiRFmxLTEAttribute {
   NIRFMXLTE_ATTRIBUTE_ACP_NOISE_CALIBRATION_AVERAGING_COUNT = 3149897;
   NIRFMXLTE_ATTRIBUTE_ACP_NOISE_CALIBRATION_AVERAGING_AUTO = 3149898;
   NIRFMXLTE_ATTRIBUTE_ACP_NOISE_CALIBRATION_MODE = 3149899;
+  NIRFMXLTE_ATTRIBUTE_ACP_NUMBER_OF_STANDALONE_NB_IOT_OFFSETS = 3149904;
   NIRFMXLTE_ATTRIBUTE_CHP_MEASUREMENT_ENABLED = 3158016;
   NIRFMXLTE_ATTRIBUTE_CHP_COMPONENT_CARRIER_INTEGRATION_BANDWIDTH = 3158018;
   NIRFMXLTE_ATTRIBUTE_CHP_NUMBER_OF_ANALYSIS_THREADS = 3158019;
@@ -637,10 +641,12 @@ enum NiRFmxLTEAttribute {
   NIRFMXLTE_ATTRIBUTE_NSSS_POWER = 3162249;
   NIRFMXLTE_ATTRIBUTE_NPDSCH_POWER = 3162250;
   NIRFMXLTE_ATTRIBUTE_NPDSCH_ENABLED = 3162251;
+  NIRFMXLTE_ATTRIBUTE_NPDSCH_MODULATION_TYPE = 3162252;
   NIRFMXLTE_ATTRIBUTE_MODACC_RESULTS_MEAN_RMS_NPSS_EVM = 3162254;
   NIRFMXLTE_ATTRIBUTE_MODACC_RESULTS_MEAN_RMS_NSSS_EVM = 3162255;
   NIRFMXLTE_ATTRIBUTE_MODACC_RESULTS_NPDSCH_MEAN_RMS_EVM = 3162256;
   NIRFMXLTE_ATTRIBUTE_MODACC_RESULTS_NPDSCH_MEAN_RMS_QPSK_EVM = 3162257;
+  NIRFMXLTE_ATTRIBUTE_MODACC_RESULTS_NPDSCH_MEAN_RMS_16QAM_EVM = 3162258;
   NIRFMXLTE_ATTRIBUTE_MODACC_RESULTS_MEAN_RMS_NRS_EVM = 3162259;
   NIRFMXLTE_ATTRIBUTE_MODACC_RESULTS_DOWNLINK_NRS_TRANSMIT_POWER = 3162260;
   NIRFMXLTE_ATTRIBUTE_OBW_MEASUREMENT_ENABLED = 3170304;
@@ -1476,6 +1482,8 @@ enum NiRFmxLTEInt32AttributeValues {
   NIRFMXLTE_INT32_NPUSCH_MODULATION_TYPE_QPSK = 1;
   NIRFMXLTE_INT32_NPDSCH_ENABLED_FALSE = 0;
   NIRFMXLTE_INT32_NPDSCH_ENABLED_TRUE = 1;
+  NIRFMXLTE_INT32_NPDSCH_MODULATION_TYPE_QPSK = 0;
+  NIRFMXLTE_INT32_NPDSCH_MODULATION_TYPE_QAM16 = 1;
   NIRFMXLTE_INT32_OBW_AMPLITUDE_CORRECTION_TYPE_RF_CENTER_FREQUENCY = 0;
   NIRFMXLTE_INT32_OBW_AMPLITUDE_CORRECTION_TYPE_SPECTRUM_FREQUENCY_BIN = 1;
   NIRFMXLTE_INT32_OBW_AVERAGING_ENABLED_FALSE = 0;
@@ -3970,6 +3978,43 @@ message ModAccFetchNBSynchronizationSignalConstellationSplitResponse {
   repeated float npss_constellation_i = 5;
   repeated float npss_constellation_q = 6;
   int32 npss_constellation_actual_array_size = 7;
+}
+
+message ModAccFetchNPDSCH16QAMConstellationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchNPDSCH16QAMConstellationResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 qam16_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchNPDSCH16QAMConstellationInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchNPDSCH16QAMConstellationInterleavedIQResponse {
+  int32 status = 1;
+  repeated float qam16_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchNPDSCH16QAMConstellationSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchNPDSCH16QAMConstellationSplitResponse {
+  int32 status = 1;
+  repeated float qam16_constellation_i = 2;
+  repeated float qam16_constellation_q = 3;
+  int32 actual_array_size = 4;
 }
 
 message ModAccFetchNPDSCHQPSKConstellationRequest {

@@ -31,6 +31,49 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'AutoPortExtensionMeasure': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'enum': 'CorrectionPortExtensionAutoStandard',
+                'name': 'standard',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'port',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'AutoPortExtensionReset': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'BuildCalibrationElementString': {
         'parameters': [
             {

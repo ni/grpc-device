@@ -17,6 +17,16 @@ int32 AutoDetectvCalOrientation(niRFmxInstrHandle instrumentHandle, char selecto
   return RFmxVNA_AutoDetectvCalOrientation(instrumentHandle, selectorString);
 }
 
+int32 AutoPortExtensionMeasure(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 standard, char port[])
+{
+  return RFmxVNA_AutoPortExtensionMeasure(instrumentHandle, selectorString, standard, port);
+}
+
+int32 AutoPortExtensionReset(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_AutoPortExtensionReset(instrumentHandle, selectorString);
+}
+
 int32 BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[])
 {
   return RFmxVNA_BuildCalibrationElementString(selectorString, calibrationElementID, selectorStringOutLength, selectorStringOut);

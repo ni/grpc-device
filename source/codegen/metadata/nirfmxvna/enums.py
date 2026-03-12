@@ -315,6 +315,54 @@ enums = {
             }
         ]
     },
+    'CorrectionPortExtensionAutoFrequencyMode': {
+        'values': [
+            {
+                'name': 'SWEEP',
+                'value': 0
+            },
+            {
+                'name': 'USER',
+                'value': 1
+            }
+        ]
+    },
+    'CorrectionPortExtensionAutoLossEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'CorrectionPortExtensionAutoRegularizationEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'CorrectionPortExtensionAutoStandard': {
+        'values': [
+            {
+                'name': 'OPEN',
+                'value': 0
+            },
+            {
+                'name': 'SHORT',
+                'value': 1
+            }
+        ]
+    },
     'CorrectionPortExtensionDCLossEnabled': {
         'values': [
             {

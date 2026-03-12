@@ -67,6 +67,18 @@ enums = {
             }
         ]
     },
+    'AutoPreambleDetectionEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'ChannelSoundingPacketFormat': {
         'values': [
             {

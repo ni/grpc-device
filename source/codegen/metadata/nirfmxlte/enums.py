@@ -1430,6 +1430,18 @@ enums = {
             }
         ]
     },
+    'NpdschModulationType': {
+        'values': [
+            {
+                'name': 'QPSK',
+                'value': 0
+            },
+            {
+                'name': 'QAM16',
+                'value': 1
+            }
+        ]
+    },
     'ObwAmplitudeCorrectionType': {
         'values': [
             {

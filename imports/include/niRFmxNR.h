@@ -253,6 +253,7 @@
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_64QAM_RMS_EVM_MEAN                                0x00904057
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_256QAM_RMS_EVM_MEAN                               0x00904058
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_1024QAM_RMS_EVM_MEAN                              0x00904073
+#define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_4096QAM_RMS_EVM_MEAN                              0x009040b2
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_8PSK_RMS_EVM_MEAN                                 0x00904091
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_DATA_RMS_EVM_MEAN                                 0x00904059
 #define RFMXNR_ATTR_MODACC_RESULTS_PDSCH_DATA_PEAK_EVM_MAXIMUM                             0x0090405a
@@ -640,6 +641,7 @@
 #define RFMXNR_VAL_PUSCH_MODULATION_TYPE_QAM256                                                   4
 #define RFMXNR_VAL_PUSCH_MODULATION_TYPE_QAM1024                                                  5
 #define RFMXNR_VAL_PUSCH_MODULATION_TYPE_PSK8                                                     100
+#define RFMXNR_VAL_PUSCH_MODULATION_TYPE_QAM4096                                                  6
 
 // Values for RFMXNR_ATTR_PUSCH_DMRS_RELEASE_VERSION
 #define RFMXNR_VAL_PUSCH_DMRS_RELEASE_VERSION_RELEASE15                                           0
@@ -692,6 +694,7 @@
 #define RFMXNR_VAL_PDSCH_MODULATION_TYPE_QAM256                                                   4
 #define RFMXNR_VAL_PDSCH_MODULATION_TYPE_QAM1024                                                  5
 #define RFMXNR_VAL_PDSCH_MODULATION_TYPE_PSK8                                                     100
+#define RFMXNR_VAL_PDSCH_MODULATION_TYPE_QAM4096                                                  6
 
 // Values for RFMXNR_ATTR_PDSCH_DMRS_RELEASE_VERSION
 #define RFMXNR_VAL_PDSCH_DMRS_RELEASE_VERSION_RELEASE15                                           0
@@ -903,6 +906,7 @@
 #define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_QAM256                             4
 #define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_QAM1024                            5
 #define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_PSK8                               100
+#define RFMXNR_VAL_MODACC_RESULTS_SCH_DETECTED_MODULATION_TYPE_QAM4096                            6
 
 // Values for RFMXNR_ATTR_MODACC_RESULTS_NOISE_COMPENSATION_APPLIED
 #define RFMXNR_VAL_MODACC_RESULTS_NOISE_COMPENSATION_APPLIED_FALSE                                0
@@ -1118,6 +1122,10 @@
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS21_REL_17_ONWARDS                                       10
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS04N                                                     11
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS05N                                                     12
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS09N                                                     13
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS10N                                                     14
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS11N                                                     15
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS12N                                                     16
 
 // Values for RFMXNR_ATTR_SEM_DOWNLINK_MASK_TYPE
 #define RFMXNR_VAL_SEM_DOWNLINK_MASK_TYPE_STANDARD                                                0
@@ -2449,6 +2457,25 @@ int32 __stdcall RFmxNR_ModAccFetchPBCHDMRSRMSEVMPerSymbolMeanTrace(
    float64* x0,
    float64* dx,
    float32 PBCHDMRSRMSEVMPerSymbolMean[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH4096QAMConstellationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle QAM4096Constellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxNR_ModAccFetchPDSCH4096QAMConstellationTraceSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 QAM4096ConstellationI[],
+   float32 QAM4096ConstellationQ[],
    int32 arraySize,
    int32* actualArraySize
 );
@@ -6080,6 +6107,12 @@ int32 __stdcall RFmxNR_ModAccGetResultsPDSCH256QAMRMSEVMMean(
 );
 
 int32 __stdcall RFmxNR_ModAccGetResultsPDSCH1024QAMRMSEVMMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxNR_ModAccGetResultsPDSCH4096QAMRMSEVMMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

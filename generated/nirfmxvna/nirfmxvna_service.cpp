@@ -96,6 +96,72 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::AutoPortExtensionMeasure(::grpc::ServerContext* context, const AutoPortExtensionMeasureRequest* request, AutoPortExtensionMeasureResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 standard;
+      switch (request->standard_enum_case()) {
+        case nirfmxvna_grpc::AutoPortExtensionMeasureRequest::StandardEnumCase::kStandard: {
+          standard = static_cast<int32>(request->standard());
+          break;
+        }
+        case nirfmxvna_grpc::AutoPortExtensionMeasureRequest::StandardEnumCase::kStandardRaw: {
+          standard = static_cast<int32>(request->standard_raw());
+          break;
+        }
+        case nirfmxvna_grpc::AutoPortExtensionMeasureRequest::StandardEnumCase::STANDARD_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for standard was not specified or out of range");
+          break;
+        }
+      }
+
+      auto port_mbcs = convert_from_grpc<std::string>(request->port());
+      char* port = (char*)port_mbcs.c_str();
+      auto status = library_->AutoPortExtensionMeasure(instrument, selector_string, standard, port);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::AutoPortExtensionReset(::grpc::ServerContext* context, const AutoPortExtensionResetRequest* request, AutoPortExtensionResetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->AutoPortExtensionReset(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::BuildCalibrationElementString(::grpc::ServerContext* context, const BuildCalibrationElementStringRequest* request, BuildCalibrationElementStringResponse* response)
   {
     if (context->IsCancelled()) {
