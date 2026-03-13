@@ -1806,21 +1806,19 @@ namespace nirfsg_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-
+      ViInt32 actual_buffer_size {};
       while (true) {
-        auto status = library_->GetAllNamedWaveformNames(vi, nullptr, 0, nullptr);
+        auto status = library_->GetAllNamedWaveformNames(vi, nullptr, 0, &actual_buffer_size);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
-        ViInt32 buffer_size = status;
-
         std::string waveform_names;
-        if (buffer_size > 0) {
-            waveform_names.resize(buffer_size - 1);
+        if (actual_buffer_size > 0) {
+            waveform_names.resize(actual_buffer_size - 1);
         }
-        ViInt32 actual_buffer_size {};
+        auto buffer_size = actual_buffer_size;
         status = library_->GetAllNamedWaveformNames(vi, (ViChar*)waveform_names.data(), buffer_size, &actual_buffer_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -1851,21 +1849,19 @@ namespace nirfsg_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-
+      ViInt32 actual_buffer_size {};
       while (true) {
-        auto status = library_->GetAllScriptNames(vi, nullptr, 0, nullptr);
+        auto status = library_->GetAllScriptNames(vi, nullptr, 0, &actual_buffer_size);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
-        ViInt32 buffer_size = status;
-
         std::string script_names;
-        if (buffer_size > 0) {
-            script_names.resize(buffer_size - 1);
+        if (actual_buffer_size > 0) {
+            script_names.resize(actual_buffer_size - 1);
         }
-        ViInt32 actual_buffer_size {};
+        auto buffer_size = actual_buffer_size;
         status = library_->GetAllScriptNames(vi, (ViChar*)script_names.data(), buffer_size, &actual_buffer_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
@@ -1898,21 +1894,19 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto script_name_mbcs = convert_from_grpc<std::string>(request->script_name());
       auto script_name = script_name_mbcs.c_str();
-
+      ViInt32 actual_buffer_size {};
       while (true) {
-        auto status = library_->GetScript(vi, script_name, nullptr, 0, nullptr);
+        auto status = library_->GetScript(vi, script_name, nullptr, 0, &actual_buffer_size);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
-        ViInt32 buffer_size = status;
-
         std::string script;
-        if (buffer_size > 0) {
-            script.resize(buffer_size - 1);
+        if (actual_buffer_size > 0) {
+            script.resize(actual_buffer_size - 1);
         }
-        ViInt32 actual_buffer_size {};
+        auto buffer_size = actual_buffer_size;
         status = library_->GetScript(vi, script_name, (ViChar*)script.data(), buffer_size, &actual_buffer_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
