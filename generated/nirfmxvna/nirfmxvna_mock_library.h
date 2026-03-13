@@ -19,6 +19,8 @@ class NiRFmxVNAMockLibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
  public:
   MOCK_METHOD(int32, AbortMeasurements, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
   MOCK_METHOD(int32, AutoDetectvCalOrientation, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
+  MOCK_METHOD(int32, AutoPortExtensionMeasure, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 standard, char port[]), (override));
+  MOCK_METHOD(int32, AutoPortExtensionReset, (niRFmxInstrHandle instrumentHandle, char selectorString[]), (override));
   MOCK_METHOD(int32, BuildCalibrationElementString, (char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildCalkitString, (char selectorString[], char calkitID[], int32 selectorStringOutLength, char selectorStringOut[]), (override));
   MOCK_METHOD(int32, BuildCalstepString, (char selectorString[], int32 calstepNumber, int32 selectorStringOutLength, char selectorStringOut[]), (override));

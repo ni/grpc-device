@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-rfmxvna API metadata version 25.8.0
+// This file is generated from NI-rfmxvna API metadata version 26.3.0
 //---------------------------------------------------------------------
 // Proto file for the NI-rfmxvna Metadata
 //---------------------------------------------------------------------
@@ -19,6 +19,8 @@ import "session.proto";
 service NiRFmxVNA {
   rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
   rpc AutoDetectvCalOrientation(AutoDetectvCalOrientationRequest) returns (AutoDetectvCalOrientationResponse);
+  rpc AutoPortExtensionMeasure(AutoPortExtensionMeasureRequest) returns (AutoPortExtensionMeasureResponse);
+  rpc AutoPortExtensionReset(AutoPortExtensionResetRequest) returns (AutoPortExtensionResetResponse);
   rpc BuildCalibrationElementString(BuildCalibrationElementStringRequest) returns (BuildCalibrationElementStringResponse);
   rpc BuildCalkitString(BuildCalkitStringRequest) returns (BuildCalkitStringResponse);
   rpc BuildCalstepString(BuildCalstepStringRequest) returns (BuildCalstepStringResponse);
@@ -316,6 +318,11 @@ enum NiRFmxVNAAttribute {
   NIRFMXVNA_ATTRIBUTE_CW_FREQUENCY = 13631594;
   NIRFMXVNA_ATTRIBUTE_TRIGGER_DELAY = 13631600;
   NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_SUBSET_RESPONSE_PORTS = 13631609;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_AUTO_LOSS_ENABLED = 13631610;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_AUTO_REGULARIZATION_ENABLED = 13631611;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_AUTO_FREQUENCY_MODE = 13631612;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_AUTO_START_FREQUENCY = 13631613;
+  NIRFMXVNA_ATTRIBUTE_CORRECTION_PORT_EXTENSION_AUTO_STOP_FREQUENCY = 13631614;
   NIRFMXVNA_ATTRIBUTE_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY = 13633536;
   NIRFMXVNA_ATTRIBUTE_SPARAMS_MEASUREMENT_ENABLED = 13635584;
   NIRFMXVNA_ATTRIBUTE_SPARAMS_NUMBER_OF_SPARAMETERS = 13635586;
@@ -434,6 +441,11 @@ enum CalkitManagerCalkitTrlReferencePlane {
   CALKIT_MANAGER_CALKIT_TRL_REFERENCE_PLANE_REFLECT = 1;
 }
 
+enum CorrectionPortExtensionAutoStandard {
+  CORRECTION_PORT_EXTENSION_AUTO_STANDARD_OPEN = 0;
+  CORRECTION_PORT_EXTENSION_AUTO_STANDARD_SHORT = 1;
+}
+
 enum FrequencyReferenceSource {
   FREQUENCY_REFERENCE_SOURCE_UNSPECIFIED = 0;
   FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK = 1;
@@ -527,6 +539,12 @@ enum NiRFmxVNAInt32AttributeValues {
   NIRFMXVNA_INT32_CORRECTION_ENABLED_TRUE = 1;
   NIRFMXVNA_INT32_CORRECTION_INTERPOLATION_ENABLED_FALSE = 0;
   NIRFMXVNA_INT32_CORRECTION_INTERPOLATION_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_AUTO_FREQUENCY_MODE_SWEEP = 0;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_AUTO_FREQUENCY_MODE_USER = 1;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_AUTO_LOSS_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_AUTO_LOSS_ENABLED_TRUE = 1;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_AUTO_REGULARIZATION_ENABLED_FALSE = 0;
+  NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_AUTO_REGULARIZATION_ENABLED_TRUE = 1;
   NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_DC_LOSS_ENABLED_FALSE = 0;
   NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_DC_LOSS_ENABLED_TRUE = 1;
   NIRFMXVNA_INT32_CORRECTION_PORT_EXTENSION_DELAY_DOMAIN_DELAY = 0;
@@ -687,6 +705,29 @@ message AutoDetectvCalOrientationRequest {
 }
 
 message AutoDetectvCalOrientationResponse {
+  int32 status = 1;
+}
+
+message AutoPortExtensionMeasureRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof standard_enum {
+    CorrectionPortExtensionAutoStandard standard = 3;
+    int32 standard_raw = 4;
+  }
+  string port = 5;
+}
+
+message AutoPortExtensionMeasureResponse {
+  int32 status = 1;
+}
+
+message AutoPortExtensionResetRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message AutoPortExtensionResetResponse {
   int32 status = 1;
 }
 

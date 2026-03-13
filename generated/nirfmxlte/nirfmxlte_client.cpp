@@ -4022,6 +4022,63 @@ mod_acc_fetch_nb_synchronization_signal_constellation_split(const StubPtr& stub,
   return response;
 }
 
+ModAccFetchNPDSCH16QAMConstellationResponse
+mod_acc_fetch_npdsch16q_am_constellation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchNPDSCH16QAMConstellationRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchNPDSCH16QAMConstellationResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchNPDSCH16QAMConstellation(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchNPDSCH16QAMConstellationInterleavedIQResponse
+mod_acc_fetch_npdsch16q_am_constellation_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchNPDSCH16QAMConstellationInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchNPDSCH16QAMConstellationInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchNPDSCH16QAMConstellationInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchNPDSCH16QAMConstellationSplitResponse
+mod_acc_fetch_npdsch16q_am_constellation_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchNPDSCH16QAMConstellationSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchNPDSCH16QAMConstellationSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchNPDSCH16QAMConstellationSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchNPDSCHQPSKConstellationResponse
 mod_acc_fetch_npdschqpsk_constellation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

@@ -24,6 +24,8 @@ using namespace nidevice_grpc::experimental::client;
 
 AbortMeasurementsResponse abort_measurements(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 AutoDetectvCalOrientationResponse auto_detectv_cal_orientation(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
+AutoPortExtensionMeasureResponse auto_port_extension_measure(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<CorrectionPortExtensionAutoStandard, pb::int32>& standard, const std::string& port);
+AutoPortExtensionResetResponse auto_port_extension_reset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
 BuildCalibrationElementStringResponse build_calibration_element_string(const StubPtr& stub, const std::string& selector_string, const std::string& calibration_element_id);
 BuildCalkitStringResponse build_calkit_string(const StubPtr& stub, const std::string& selector_string, const std::string& calkit_id);
 BuildCalstepStringResponse build_calstep_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& calstep_number);

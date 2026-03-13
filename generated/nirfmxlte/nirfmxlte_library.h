@@ -209,6 +209,9 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   int32 ModAccFetchNBSynchronizationSignalConstellation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle nsssConstellation[], int32 nsssConstellationArraySize, int32* nsssConstellationActualArraySize, NIComplexSingle npssConstellation[], int32 npssConstellationArraySize, int32* npssConstellationActualArraySize) override;
   int32 ModAccFetchNBSynchronizationSignalConstellationInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 nsssConstellation[], int32 nsssConstellationArraySize, int32* nsssConstellationActualArraySize, float32 npssConstellation[], int32 npssConstellationArraySize, int32* npssConstellationActualArraySize) override;
   int32 ModAccFetchNBSynchronizationSignalConstellationSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 nsssConstellationI[], float32 nsssConstellationQ[], int32 nsssConstellationArraySize, int32* nsssConstellationActualArraySize, float32 npssConstellationI[], float32 npssConstellationQ[], int32 npssConstellationArraySize, int32* npssConstellationActualArraySize) override;
+  int32 ModAccFetchNPDSCH16QAMConstellation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle qam16Constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchNPDSCH16QAMConstellationInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam16Constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchNPDSCH16QAMConstellationSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam16ConstellationI[], float32 qam16ConstellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchNPDSCHQPSKConstellation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle qpskConstellation[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchNPDSCHQPSKConstellationInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qpskConstellation[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchNPDSCHQPSKConstellationSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qpskConstellationI[], float32 qpskConstellationQ[], int32 arraySize, int32* actualArraySize) override;
@@ -549,6 +552,9 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
   using ModAccFetchNBSynchronizationSignalConstellationPtr = decltype(&RFmxLTE_ModAccFetchNBSynchronizationSignalConstellation);
   using ModAccFetchNBSynchronizationSignalConstellationInterleavedIQPtr = decltype(&RFmxLTE_ModAccFetchNBSynchronizationSignalConstellation);
   using ModAccFetchNBSynchronizationSignalConstellationSplitPtr = decltype(&RFmxLTE_ModAccFetchNBSynchronizationSignalConstellationSplit);
+  using ModAccFetchNPDSCH16QAMConstellationPtr = decltype(&RFmxLTE_ModAccFetchNPDSCH16QAMConstellation);
+  using ModAccFetchNPDSCH16QAMConstellationInterleavedIQPtr = decltype(&RFmxLTE_ModAccFetchNPDSCH16QAMConstellation);
+  using ModAccFetchNPDSCH16QAMConstellationSplitPtr = decltype(&RFmxLTE_ModAccFetchNPDSCH16QAMConstellationSplit);
   using ModAccFetchNPDSCHQPSKConstellationPtr = decltype(&RFmxLTE_ModAccFetchNPDSCHQPSKConstellation);
   using ModAccFetchNPDSCHQPSKConstellationInterleavedIQPtr = decltype(&RFmxLTE_ModAccFetchNPDSCHQPSKConstellation);
   using ModAccFetchNPDSCHQPSKConstellationSplitPtr = decltype(&RFmxLTE_ModAccFetchNPDSCHQPSKConstellationSplit);
@@ -889,6 +895,9 @@ class NiRFmxLTELibrary : public nirfmxlte_grpc::NiRFmxLTELibraryInterface {
     ModAccFetchNBSynchronizationSignalConstellationPtr ModAccFetchNBSynchronizationSignalConstellation;
     ModAccFetchNBSynchronizationSignalConstellationInterleavedIQPtr ModAccFetchNBSynchronizationSignalConstellationInterleavedIQ;
     ModAccFetchNBSynchronizationSignalConstellationSplitPtr ModAccFetchNBSynchronizationSignalConstellationSplit;
+    ModAccFetchNPDSCH16QAMConstellationPtr ModAccFetchNPDSCH16QAMConstellation;
+    ModAccFetchNPDSCH16QAMConstellationInterleavedIQPtr ModAccFetchNPDSCH16QAMConstellationInterleavedIQ;
+    ModAccFetchNPDSCH16QAMConstellationSplitPtr ModAccFetchNPDSCH16QAMConstellationSplit;
     ModAccFetchNPDSCHQPSKConstellationPtr ModAccFetchNPDSCHQPSKConstellation;
     ModAccFetchNPDSCHQPSKConstellationInterleavedIQPtr ModAccFetchNPDSCHQPSKConstellationInterleavedIQ;
     ModAccFetchNPDSCHQPSKConstellationSplitPtr ModAccFetchNPDSCHQPSKConstellationSplit;

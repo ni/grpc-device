@@ -1804,6 +1804,10 @@ enums = {
             {
                 'name': 'PSK8',
                 'value': 100
+            },
+            {
+                'name': 'QAM4096',
+                'value': 6
             }
         ]
     },
@@ -1997,6 +2001,10 @@ enums = {
             {
                 'name': 'PSK8',
                 'value': 100
+            },
+            {
+                'name': 'QAM4096',
+                'value': 6
             }
         ]
     },
@@ -2161,6 +2169,10 @@ enums = {
             {
                 'name': 'PSK8',
                 'value': 100
+            },
+            {
+                'name': 'QAM4096',
+                'value': 6
             }
         ]
     },
@@ -2417,6 +2429,22 @@ enums = {
             {
                 'name': 'NS05N',
                 'value': 12
+            },
+            {
+                'name': 'NS09N',
+                'value': 13
+            },
+            {
+                'name': 'NS10N',
+                'value': 14
+            },
+            {
+                'name': 'NS11N',
+                'value': 15
+            },
+            {
+                'name': 'NS12N',
+                'value': 16
             }
         ]
     },

@@ -53,6 +53,51 @@ auto_detectv_cal_orientation(const StubPtr& stub, const nidevice_grpc::Session& 
   return response;
 }
 
+AutoPortExtensionMeasureResponse
+auto_port_extension_measure(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<CorrectionPortExtensionAutoStandard, pb::int32>& standard, const std::string& port)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AutoPortExtensionMeasureRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto standard_ptr = standard.get_if<CorrectionPortExtensionAutoStandard>();
+  const auto standard_raw_ptr = standard.get_if<pb::int32>();
+  if (standard_ptr) {
+    request.set_standard(*standard_ptr);
+  }
+  else if (standard_raw_ptr) {
+    request.set_standard_raw(*standard_raw_ptr);
+  }
+  request.set_port(port);
+
+  auto response = AutoPortExtensionMeasureResponse{};
+
+  raise_if_error(
+      stub->AutoPortExtensionMeasure(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AutoPortExtensionResetResponse
+auto_port_extension_reset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AutoPortExtensionResetRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = AutoPortExtensionResetResponse{};
+
+  raise_if_error(
+      stub->AutoPortExtensionReset(&context, request, &response),
+      context);
+
+  return response;
+}
+
 BuildCalibrationElementStringResponse
 build_calibration_element_string(const StubPtr& stub, const std::string& selector_string, const std::string& calibration_element_id)
 {

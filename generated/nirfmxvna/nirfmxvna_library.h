@@ -23,6 +23,8 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 AutoDetectvCalOrientation(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
+  int32 AutoPortExtensionMeasure(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 standard, char port[]) override;
+  int32 AutoPortExtensionReset(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildCalkitString(char selectorString[], char calkitID[], int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildCalstepString(char selectorString[], int32 calstepNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
@@ -236,6 +238,8 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
  private:
   using AbortMeasurementsPtr = decltype(&RFmxVNA_AbortMeasurements);
   using AutoDetectvCalOrientationPtr = decltype(&RFmxVNA_AutoDetectvCalOrientation);
+  using AutoPortExtensionMeasurePtr = decltype(&RFmxVNA_AutoPortExtensionMeasure);
+  using AutoPortExtensionResetPtr = decltype(&RFmxVNA_AutoPortExtensionReset);
   using BuildCalibrationElementStringPtr = decltype(&RFmxVNA_BuildCalibrationElementString);
   using BuildCalkitStringPtr = decltype(&RFmxVNA_BuildCalkitString);
   using BuildCalstepStringPtr = decltype(&RFmxVNA_BuildCalstepString);
@@ -449,6 +453,8 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   typedef struct FunctionPointers {
     AbortMeasurementsPtr AbortMeasurements;
     AutoDetectvCalOrientationPtr AutoDetectvCalOrientation;
+    AutoPortExtensionMeasurePtr AutoPortExtensionMeasure;
+    AutoPortExtensionResetPtr AutoPortExtensionReset;
     BuildCalibrationElementStringPtr BuildCalibrationElementString;
     BuildCalkitStringPtr BuildCalkitString;
     BuildCalstepStringPtr BuildCalstepString;

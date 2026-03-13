@@ -451,6 +451,34 @@ attributes = {
         'name': 'CORRECTION_PORT_SUBSET_RESPONSE_PORTS',
         'type': 'char[]'
     },
+    13631610: {
+        'access': 'read-write',
+        'enum': 'CorrectionPortExtensionAutoLossEnabled',
+        'name': 'CORRECTION_PORT_EXTENSION_AUTO_LOSS_ENABLED',
+        'type': 'int32'
+    },
+    13631611: {
+        'access': 'read-write',
+        'enum': 'CorrectionPortExtensionAutoRegularizationEnabled',
+        'name': 'CORRECTION_PORT_EXTENSION_AUTO_REGULARIZATION_ENABLED',
+        'type': 'int32'
+    },
+    13631612: {
+        'access': 'read-write',
+        'enum': 'CorrectionPortExtensionAutoFrequencyMode',
+        'name': 'CORRECTION_PORT_EXTENSION_AUTO_FREQUENCY_MODE',
+        'type': 'int32'
+    },
+    13631613: {
+        'access': 'read-write',
+        'name': 'CORRECTION_PORT_EXTENSION_AUTO_START_FREQUENCY',
+        'type': 'float64'
+    },
+    13631614: {
+        'access': 'read-write',
+        'name': 'CORRECTION_PORT_EXTENSION_AUTO_STOP_FREQUENCY',
+        'type': 'float64'
+    },
     13633536: {
         'access': 'read-write',
         'name': 'CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY',

@@ -947,6 +947,21 @@ int32 ModAccFetchNBSynchronizationSignalConstellationSplit(niRFmxInstrHandle ins
   return RFmxLTE_ModAccFetchNBSynchronizationSignalConstellationSplit(instrumentHandle, selectorString, timeout, nsssConstellationI, nsssConstellationQ, nsssConstellationArraySize, nsssConstellationActualArraySize, npssConstellationI, npssConstellationQ, npssConstellationArraySize, npssConstellationActualArraySize);
 }
 
+int32 ModAccFetchNPDSCH16QAMConstellation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle qam16Constellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxLTE_ModAccFetchNPDSCH16QAMConstellation(instrumentHandle, selectorString, timeout, qam16Constellation, arraySize, actualArraySize);
+}
+
+int32 ModAccFetchNPDSCH16QAMConstellationInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam16Constellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxLTE_ModAccFetchNPDSCH16QAMConstellation(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(qam16Constellation), arraySize, actualArraySize);
+}
+
+int32 ModAccFetchNPDSCH16QAMConstellationSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam16ConstellationI[], float32 qam16ConstellationQ[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxLTE_ModAccFetchNPDSCH16QAMConstellationSplit(instrumentHandle, selectorString, timeout, qam16ConstellationI, qam16ConstellationQ, arraySize, actualArraySize);
+}
+
 int32 ModAccFetchNPDSCHQPSKConstellation(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle qpskConstellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxLTE_ModAccFetchNPDSCHQPSKConstellation(instrumentHandle, selectorString, timeout, qpskConstellation, arraySize, actualArraySize);

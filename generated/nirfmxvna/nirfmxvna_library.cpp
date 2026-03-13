@@ -29,6 +29,8 @@ NiRFmxVNALibrary::NiRFmxVNALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   }
   function_pointers_.AbortMeasurements = reinterpret_cast<AbortMeasurementsPtr>(shared_library_->get_function_pointer("RFmxVNA_AbortMeasurements"));
   function_pointers_.AutoDetectvCalOrientation = reinterpret_cast<AutoDetectvCalOrientationPtr>(shared_library_->get_function_pointer("RFmxVNA_AutoDetectvCalOrientation"));
+  function_pointers_.AutoPortExtensionMeasure = reinterpret_cast<AutoPortExtensionMeasurePtr>(shared_library_->get_function_pointer("RFmxVNA_AutoPortExtensionMeasure"));
+  function_pointers_.AutoPortExtensionReset = reinterpret_cast<AutoPortExtensionResetPtr>(shared_library_->get_function_pointer("RFmxVNA_AutoPortExtensionReset"));
   function_pointers_.BuildCalibrationElementString = reinterpret_cast<BuildCalibrationElementStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildCalibrationElementString"));
   function_pointers_.BuildCalkitString = reinterpret_cast<BuildCalkitStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildCalkitString"));
   function_pointers_.BuildCalstepString = reinterpret_cast<BuildCalstepStringPtr>(shared_library_->get_function_pointer("RFmxVNA_BuildCalstepString"));
@@ -265,6 +267,22 @@ int32 NiRFmxVNALibrary::AutoDetectvCalOrientation(niRFmxInstrHandle instrumentHa
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_AutoDetectvCalOrientation.");
   }
   return function_pointers_.AutoDetectvCalOrientation(instrumentHandle, selectorString);
+}
+
+int32 NiRFmxVNALibrary::AutoPortExtensionMeasure(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 standard, char port[])
+{
+  if (!function_pointers_.AutoPortExtensionMeasure) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_AutoPortExtensionMeasure.");
+  }
+  return function_pointers_.AutoPortExtensionMeasure(instrumentHandle, selectorString, standard, port);
+}
+
+int32 NiRFmxVNALibrary::AutoPortExtensionReset(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  if (!function_pointers_.AutoPortExtensionReset) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_AutoPortExtensionReset.");
+  }
+  return function_pointers_.AutoPortExtensionReset(instrumentHandle, selectorString);
 }
 
 int32 NiRFmxVNALibrary::BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[])
