@@ -1,0 +1,1154 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-RFMXWLANGEN API metadata version 26.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-RFMXWLANGEN Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxwlangen";
+option java_outer_classname = "NiRFmxWLANGen";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxWLANGen";
+
+package nirfmxwlangen_grpc;
+
+import "nidevice.proto";
+import "session.proto";
+
+service NiRFmxWLANGen {
+  rpc ChannelNumberToCarrierFrequency(ChannelNumberToCarrierFrequencyRequest) returns (ChannelNumberToCarrierFrequencyResponse);
+  rpc ChannelNumberToCarrierFrequency80211abgjpn(ChannelNumberToCarrierFrequency80211abgjpnRequest) returns (ChannelNumberToCarrierFrequency80211abgjpnResponse);
+  rpc ChannelNumberToCarrierFrequency80211ac(ChannelNumberToCarrierFrequency80211acRequest) returns (ChannelNumberToCarrierFrequency80211acResponse);
+  rpc ChannelNumberToCarrierFrequency80211af(ChannelNumberToCarrierFrequency80211afRequest) returns (ChannelNumberToCarrierFrequency80211afResponse);
+  rpc ChannelNumberToCarrierFrequency80211ah(ChannelNumberToCarrierFrequency80211ahRequest) returns (ChannelNumberToCarrierFrequency80211ahResponse);
+  rpc ChannelNumberToCarrierFrequency80211ax(ChannelNumberToCarrierFrequency80211axRequest) returns (ChannelNumberToCarrierFrequency80211axResponse);
+  rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse);
+  rpc CreateAndWriteWaveformsToFile(CreateAndWriteWaveformsToFileRequest) returns (CreateAndWriteWaveformsToFileResponse);
+  rpc CreateMIMOWaveformsComplexF64(CreateMIMOWaveformsComplexF64Request) returns (CreateMIMOWaveformsComplexF64Response);
+  rpc CreateMIMOWaveformsComplexF64InterleavedIQ(CreateMIMOWaveformsComplexF64InterleavedIQRequest) returns (CreateMIMOWaveformsComplexF64InterleavedIQResponse);
+  rpc CreateTriggerFrameMSDU(CreateTriggerFrameMSDURequest) returns (CreateTriggerFrameMSDUResponse);
+  rpc CreateWaveformComplexF64(CreateWaveformComplexF64Request) returns (CreateWaveformComplexF64Response);
+  rpc CreateWaveformComplexF64InterleavedIQ(CreateWaveformComplexF64InterleavedIQRequest) returns (CreateWaveformComplexF64InterleavedIQResponse);
+  rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
+  rpc GetNumberOfUsersFromRUAllocation(GetNumberOfUsersFromRUAllocationRequest) returns (GetNumberOfUsersFromRUAllocationResponse);
+  rpc GetScalarAttributeF64(GetScalarAttributeF64Request) returns (GetScalarAttributeF64Response);
+  rpc GetScalarAttributeI32(GetScalarAttributeI32Request) returns (GetScalarAttributeI32Response);
+  rpc GetVectorAttributeF64(GetVectorAttributeF64Request) returns (GetVectorAttributeF64Response);
+  rpc GetVectorAttributeI32(GetVectorAttributeI32Request) returns (GetVectorAttributeI32Response);
+  rpc LoadConfigurationFromFile(LoadConfigurationFromFileRequest) returns (LoadConfigurationFromFileResponse);
+  rpc OpenSession(OpenSessionRequest) returns (OpenSessionResponse);
+  rpc RFSGClearDatabase(RFSGClearDatabaseRequest) returns (RFSGClearDatabaseResponse);
+  rpc RFSGConfigureFrequencyMultipleLO(RFSGConfigureFrequencyMultipleLORequest) returns (RFSGConfigureFrequencyMultipleLOResponse);
+  rpc RFSGConfigureFrequencySingleLO(RFSGConfigureFrequencySingleLORequest) returns (RFSGConfigureFrequencySingleLOResponse);
+  rpc RFSGConfigureMultipleDeviceSynchronization(RFSGConfigureMultipleDeviceSynchronizationRequest) returns (RFSGConfigureMultipleDeviceSynchronizationResponse);
+  rpc RFSGConfigurePowerLevel(RFSGConfigurePowerLevelRequest) returns (RFSGConfigurePowerLevelResponse);
+  rpc RFSGConfigureScript(RFSGConfigureScriptRequest) returns (RFSGConfigureScriptResponse);
+  rpc RFSGCreateAndDownloadMIMOWaveforms(RFSGCreateAndDownloadMIMOWaveformsRequest) returns (RFSGCreateAndDownloadMIMOWaveformsResponse);
+  rpc RFSGCreateAndDownloadWaveform(RFSGCreateAndDownloadWaveformRequest) returns (RFSGCreateAndDownloadWaveformResponse);
+  rpc RFSGForceTClkSynchronization(RFSGForceTClkSynchronizationRequest) returns (RFSGForceTClkSynchronizationResponse);
+  rpc RFSGInsertRFBlankingMarkerPositions(RFSGInsertRFBlankingMarkerPositionsRequest) returns (RFSGInsertRFBlankingMarkerPositionsResponse);
+  rpc RFSGMultipleDeviceInitiate(RFSGMultipleDeviceInitiateRequest) returns (RFSGMultipleDeviceInitiateResponse);
+  rpc RFSGReadAndDownloadWaveformsFromFile(RFSGReadAndDownloadWaveformsFromFileRequest) returns (RFSGReadAndDownloadWaveformsFromFileResponse);
+  rpc RFSGRetrieveBurstStartLocations(RFSGRetrieveBurstStartLocationsRequest) returns (RFSGRetrieveBurstStartLocationsResponse);
+  rpc RFSGRetrieveBurstStopLocations(RFSGRetrieveBurstStopLocationsRequest) returns (RFSGRetrieveBurstStopLocationsResponse);
+  rpc RFSGRetrieveIQRate(RFSGRetrieveIQRateRequest) returns (RFSGRetrieveIQRateResponse);
+  rpc RFSGRetrieveIQRateAllWaveforms(RFSGRetrieveIQRateAllWaveformsRequest) returns (RFSGRetrieveIQRateAllWaveformsResponse);
+  rpc RFSGRetrieveMinimumPAPRAllWaveforms(RFSGRetrieveMinimumPAPRAllWaveformsRequest) returns (RFSGRetrieveMinimumPAPRAllWaveformsResponse);
+  rpc RFSGRetrievePAPR(RFSGRetrievePAPRRequest) returns (RFSGRetrievePAPRResponse);
+  rpc RFSGRetrieveRFBlankingMarkerPositions(RFSGRetrieveRFBlankingMarkerPositionsRequest) returns (RFSGRetrieveRFBlankingMarkerPositionsResponse);
+  rpc RFSGRetrieveWaveformSize(RFSGRetrieveWaveformSizeRequest) returns (RFSGRetrieveWaveformSizeResponse);
+  rpc RFSGStoreBurstStartLocations(RFSGStoreBurstStartLocationsRequest) returns (RFSGStoreBurstStartLocationsResponse);
+  rpc RFSGStoreBurstStopLocations(RFSGStoreBurstStopLocationsRequest) returns (RFSGStoreBurstStopLocationsResponse);
+  rpc RFSGStoreIQRate(RFSGStoreIQRateRequest) returns (RFSGStoreIQRateResponse);
+  rpc RFSGStorePAPR(RFSGStorePAPRRequest) returns (RFSGStorePAPRResponse);
+  rpc RFSGStoreRFBlankingMarkerPositions(RFSGStoreRFBlankingMarkerPositionsRequest) returns (RFSGStoreRFBlankingMarkerPositionsResponse);
+  rpc ReadBurstStartLocationsFromFile(ReadBurstStartLocationsFromFileRequest) returns (ReadBurstStartLocationsFromFileResponse);
+  rpc ReadBurstStopLocationsFromFile(ReadBurstStopLocationsFromFileRequest) returns (ReadBurstStopLocationsFromFileResponse);
+  rpc ReadWaveformFromFile(ReadWaveformFromFileRequest) returns (ReadWaveformFromFileResponse);
+  rpc ReadWaveformFromFileInterleavedIQ(ReadWaveformFromFileInterleavedIQRequest) returns (ReadWaveformFromFileInterleavedIQResponse);
+  rpc ResetSession(ResetSessionRequest) returns (ResetSessionResponse);
+  rpc SaveConfigurationToFile(SaveConfigurationToFileRequest) returns (SaveConfigurationToFileResponse);
+  rpc SetOFDMPacketExtensionThresholds(SetOFDMPacketExtensionThresholdsRequest) returns (SetOFDMPacketExtensionThresholdsResponse);
+  rpc SetScalarAttributeF64(SetScalarAttributeF64Request) returns (SetScalarAttributeF64Response);
+  rpc SetScalarAttributeI32(SetScalarAttributeI32Request) returns (SetScalarAttributeI32Response);
+  rpc SetVectorAttributeF64(SetVectorAttributeF64Request) returns (SetVectorAttributeF64Response);
+  rpc SetVectorAttributeI32(SetVectorAttributeI32Request) returns (SetVectorAttributeI32Response);
+}
+
+enum NiRFmxWLANGenAttribute {
+  NIRFMXWLANGEN_ATTRIBUTE_UNSPECIFIED = 0;
+  NIRFMXWLANGEN_ATTRIBUTE_CARRIER_FREQUENCY = 0;
+  NIRFMXWLANGEN_ATTRIBUTE_POWER_LEVEL = 1;
+  NIRFMXWLANGEN_ATTRIBUTE_OVERSAMPLING_FACTOR = 2;
+  NIRFMXWLANGEN_ATTRIBUTE_IDLE_INTERVAL = 3;
+  NIRFMXWLANGEN_ATTRIBUTE_DSSS_PREAMBLE_TYPE = 4;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_DATA_LENGTH = 5;
+  NIRFMXWLANGEN_ATTRIBUTE_NUMBER_OF_FRAMES = 6;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_DATA_TYPE = 7;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_PN_ORDER = 8;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_PN_SEED = 9;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_USER_DEFINED_BITS = 10;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_HEADER_ENABLED = 11;
+  NIRFMXWLANGEN_ATTRIBUTE_SUBCARRIER_MASK = 12;
+  NIRFMXWLANGEN_ATTRIBUTE_LOCKED_CLOCK_BIT_ENABLED = 13;
+  NIRFMXWLANGEN_ATTRIBUTE_HEADER_ENCODER_ENABLED = 14;
+  NIRFMXWLANGEN_ATTRIBUTE_HEADER_INTERLEAVER_ENABLED = 15;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_SCRAMBLER_ENABLED = 16;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_SCRAMBLER_SEED = 17;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_ENCODER_ENABLED = 18;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_INTERLEAVER_ENABLED = 19;
+  NIRFMXWLANGEN_ATTRIBUTE_CARRIER_FREQUENCY_OFFSET = 20;
+  NIRFMXWLANGEN_ATTRIBUTE_IQ_GAIN_IMBALANCE = 21;
+  NIRFMXWLANGEN_ATTRIBUTE_I_DC_OFFSET = 22;
+  NIRFMXWLANGEN_ATTRIBUTE_Q_DC_OFFSET = 23;
+  NIRFMXWLANGEN_ATTRIBUTE_QUADRATURE_SKEW = 24;
+  NIRFMXWLANGEN_ATTRIBUTE_SAMPLE_CLOCK_OFFSET = 25;
+  NIRFMXWLANGEN_ATTRIBUTE_PULSE_SHAPING_FILTER_TYPE = 26;
+  NIRFMXWLANGEN_ATTRIBUTE_PULSE_SHAPING_FILTER_PARAMETER = 27;
+  NIRFMXWLANGEN_ATTRIBUTE_DSSS_WINDOW_LENGTH = 29;
+  NIRFMXWLANGEN_ATTRIBUTE_PEAK_TO_AVERAGE_POWER_RATIO = 30;
+  NIRFMXWLANGEN_ATTRIBUTE_STANDARD = 31;
+  NIRFMXWLANGEN_ATTRIBUTE_OFDM_DATA_RATE = 32;
+  NIRFMXWLANGEN_ATTRIBUTE_DSSS_DATA_RATE = 33;
+  NIRFMXWLANGEN_ATTRIBUTE_IQ_RATE = 35;
+  NIRFMXWLANGEN_ATTRIBUTE_WAVEFORM_SCALING_FACTOR = 36;
+  NIRFMXWLANGEN_ATTRIBUTE_IQ_WAVEFORM_SIZE = 37;
+  NIRFMXWLANGEN_ATTRIBUTE_HEADROOM = 40;
+  NIRFMXWLANGEN_ATTRIBUTE_MCS_INDEX = 41;
+  NIRFMXWLANGEN_ATTRIBUTE_CHANNEL_BANDWIDTH = 42;
+  NIRFMXWLANGEN_ATTRIBUTE_80211N_PLCP_FRAME_FORMAT = 43;
+  NIRFMXWLANGEN_ATTRIBUTE_NUMBER_OF_EXTENSION_SPATIAL_STREAMS = 46;
+  NIRFMXWLANGEN_ATTRIBUTE_NUMBER_OF_TRANSMIT_CHANNELS = 47;
+  NIRFMXWLANGEN_ATTRIBUTE_STBC_INDEX = 49;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_QOS_CONTROL_ENABLED = 53;
+  NIRFMXWLANGEN_ATTRIBUTE_PULSE_SHAPING_FILTER_ENABLED = 54;
+  NIRFMXWLANGEN_ATTRIBUTE_MAPPING_MATRIX_TYPE = 55;
+  NIRFMXWLANGEN_ATTRIBUTE_COMPATIBILITY_VERSION = 56;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_FRAME_CONTROL = 57;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_DURATION_OR_ID = 58;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS1_ENABLED = 59;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS1 = 60;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS2_ENABLED = 61;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS2 = 62;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS3_ENABLED = 63;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS3 = 64;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_SEQUENCE_CONTROL_ENABLED = 65;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_SEQUENCE_CONTROL = 66;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS4_ENABLED = 67;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS4 = 68;
+  NIRFMXWLANGEN_ATTRIBUTE_FEC_CODING_TYPE = 70;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_QOS_CONTROL = 71;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_HT_CONTROL_ENABLED = 72;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_HT_CONTROL = 73;
+  NIRFMXWLANGEN_ATTRIBUTE_WINDOWING_METHOD = 74;
+  NIRFMXWLANGEN_ATTRIBUTE_NUMBER_OF_SEGMENTS = 75;
+  NIRFMXWLANGEN_ATTRIBUTE_NUMBER_OF_SPACE_TIME_STREAMS = 76;
+  NIRFMXWLANGEN_ATTRIBUTE_STBC_ALL_STREAMS_ENABLED = 77;
+  NIRFMXWLANGEN_ATTRIBUTE_SWAP_I_AND_Q_ENABLED = 78;
+  NIRFMXWLANGEN_ATTRIBUTE_TIMING_SKEW = 79;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_SEQUENCE_NUMBER_INCREMENT_ENABLED = 80;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_SEQUENCE_NUMBER_INCREMENT_INTERVAL = 81;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_FRAGMENT_NUMBER_INCREMENT_ENABLED = 82;
+  NIRFMXWLANGEN_ATTRIBUTE_MPDU_LENGTH = 83;
+  NIRFMXWLANGEN_ATTRIBUTE_NOT_SOUNDING_BIT = 86;
+  NIRFMXWLANGEN_ATTRIBUTE_AUTO_HEADROOM_ENABLED = 87;
+  NIRFMXWLANGEN_ATTRIBUTE_ACTUAL_HEADROOM = 88;
+  NIRFMXWLANGEN_ATTRIBUTE_ACTUAL_OFDM_DATA_RATE = 89;
+  NIRFMXWLANGEN_ATTRIBUTE_RF_BLANKING_ENABLED = 90;
+  NIRFMXWLANGEN_ATTRIBUTE_RF_BLANKING_MARKER_POSITIONS = 91;
+  NIRFMXWLANGEN_ATTRIBUTE_NUMBER_OF_DATA_SYMBOLS = 94;
+  NIRFMXWLANGEN_ATTRIBUTE_PPDU_TYPE = 95;
+  NIRFMXWLANGEN_ATTRIBUTE_ALL_IQ_IMPAIRMENTS_ENABLED = 96;
+  NIRFMXWLANGEN_ATTRIBUTE_AWGN_ENABLED = 97;
+  NIRFMXWLANGEN_ATTRIBUTE_CARRIER_TO_NOISE_RATIO = 98;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_FCS_ENABLED = 100;
+  NIRFMXWLANGEN_ATTRIBUTE_MAXIMUM_HARDWARE_IQ_RATE = 102;
+  NIRFMXWLANGEN_ATTRIBUTE_AMPDU_ENABLED = 103;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_NUMBER_OF_MPDUS = 104;
+  NIRFMXWLANGEN_ATTRIBUTE_SAMPLE_CLOCK_RATE_FACTOR = 107;
+  NIRFMXWLANGEN_ATTRIBUTE_PULSE_SHAPING_FILTER_LENGTH = 112;
+  NIRFMXWLANGEN_ATTRIBUTE_NUMBER_OF_USERS = 115;
+  NIRFMXWLANGEN_ATTRIBUTE_LO_SHARING_ENABLED = 118;
+  NIRFMXWLANGEN_ATTRIBUTE_80211AH_PREAMBLE_TYPE = 119;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_FRAME_FORMAT = 120;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS1_LENGTH = 121;
+  NIRFMXWLANGEN_ATTRIBUTE_MAC_ADDRESS2_LENGTH = 122;
+  NIRFMXWLANGEN_ATTRIBUTE_GUARD_INTERVAL_TYPE = 123;
+  NIRFMXWLANGEN_ATTRIBUTE_TRANSMISSION_MODE = 124;
+  NIRFMXWLANGEN_ATTRIBUTE_OFDM_WINDOW_LENGTH = 125;
+  NIRFMXWLANGEN_ATTRIBUTE_NON_HT_MODULATION_MODE = 127;
+  NIRFMXWLANGEN_ATTRIBUTE_RU_SIZE = 132;
+  NIRFMXWLANGEN_ATTRIBUTE_RU_OFFSET_MRU_INDEX = 133;
+  NIRFMXWLANGEN_ATTRIBUTE_MULTI_SEGMENT_GENERATION_MODE = 134;
+  NIRFMXWLANGEN_ATTRIBUTE_TIME_DELAY = 135;
+  NIRFMXWLANGEN_ATTRIBUTE_RELATIVE_POWER = 136;
+  NIRFMXWLANGEN_ATTRIBUTE_LTF_SIZE = 144;
+  NIRFMXWLANGEN_ATTRIBUTE_DUAL_CARRIER_MODULATION_ENABLED = 154;
+  NIRFMXWLANGEN_ATTRIBUTE_PACKET_EXTENSION_DURATION = 159;
+  NIRFMXWLANGEN_ATTRIBUTE_HE_SIG_B_MCS_INDEX = 161;
+  NIRFMXWLANGEN_ATTRIBUTE_HE_SIG_B_DUAL_CARRIER_MODULATION_ENABLED = 162;
+  NIRFMXWLANGEN_ATTRIBUTE_STA_ID = 163;
+  NIRFMXWLANGEN_ATTRIBUTE_POWER_BOOST_FACTOR = 164;
+  NIRFMXWLANGEN_ATTRIBUTE_NUMBER_OF_LTF_SYMBOLS = 165;
+  NIRFMXWLANGEN_ATTRIBUTE_FULLSCALE_BACKOFF = 168;
+  NIRFMXWLANGEN_ATTRIBUTE_AVERAGE_POWER_REFERENCE = 170;
+  NIRFMXWLANGEN_ATTRIBUTE_TRIGGER_FRAME_AP_TX_POWER = 172;
+  NIRFMXWLANGEN_ATTRIBUTE_TRIGGER_FRAME_TARGET_RSSI = 173;
+  NIRFMXWLANGEN_ATTRIBUTE_BURST_START_LOCATIONS = 174;
+  NIRFMXWLANGEN_ATTRIBUTE_BURST_STOP_LOCATIONS = 175;
+  NIRFMXWLANGEN_ATTRIBUTE_LO_FREQUENCY_OFFSET_MODE = 176;
+  NIRFMXWLANGEN_ATTRIBUTE_LO_FREQUENCY_OFFSET = 177;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_AUTO_NUMBER_OF_MPDUS = 178;
+  NIRFMXWLANGEN_ATTRIBUTE_AUTO_PAYLOAD_DATA_LENGTH_MODE = 179;
+  NIRFMXWLANGEN_ATTRIBUTE_L_SIG_LENGTH = 180;
+  NIRFMXWLANGEN_ATTRIBUTE_PRE_FEC_PADDING_FACTOR = 181;
+  NIRFMXWLANGEN_ATTRIBUTE_PE_DISAMBIGUITY = 182;
+  NIRFMXWLANGEN_ATTRIBUTE_LDPC_EXTRA_SYMBOL_SEGMENT = 183;
+  NIRFMXWLANGEN_ATTRIBUTE_BSS_COLOR = 184;
+  NIRFMXWLANGEN_ATTRIBUTE_SPATIAL_MAPPING_MODE = 185;
+  NIRFMXWLANGEN_ATTRIBUTE_MU_MIMO_LTF_MODE_ENABLED = 186;
+  NIRFMXWLANGEN_ATTRIBUTE_SPACE_TIME_STREAM_OFFSET = 187;
+  NIRFMXWLANGEN_ATTRIBUTE_PAYLOAD_MAC_FRAME_TYPE = 188;
+  NIRFMXWLANGEN_ATTRIBUTE_TRIGGER_FRAME_MAC_PADDING_DURATION = 189;
+  NIRFMXWLANGEN_ATTRIBUTE_TRIGGER_FRAME_CS_REQUIRED = 190;
+  NIRFMXWLANGEN_ATTRIBUTE_PREAMBLE_PUNCTURING_ENABLED = 191;
+  NIRFMXWLANGEN_ATTRIBUTE_PRIMARY_20MHZ_CHANNEL_INDEX = 192;
+  NIRFMXWLANGEN_ATTRIBUTE_PREAMBLE_PUNCTURING_MASK = 193;
+  NIRFMXWLANGEN_ATTRIBUTE_SIGNAL_BANDWIDTH = 194;
+  NIRFMXWLANGEN_ATTRIBUTE_NOMINAL_PACKET_PADDING = 195;
+  NIRFMXWLANGEN_ATTRIBUTE_TRIGGER_FRAME_AID12 = 196;
+  NIRFMXWLANGEN_ATTRIBUTE_IDLE_INTERVAL_MODE = 199;
+  NIRFMXWLANGEN_ATTRIBUTE_RUN_TIME_SCALING = 201;
+  NIRFMXWLANGEN_ATTRIBUTE_WAVEFORM_FILE_VERSION = 202;
+  NIRFMXWLANGEN_ATTRIBUTE_MIDAMBLE_PERIODICITY = 204;
+  NIRFMXWLANGEN_ATTRIBUTE_RU_ALLOCATION_MODE = 205;
+  NIRFMXWLANGEN_ATTRIBUTE_RU_ALLOCATION = 206;
+  NIRFMXWLANGEN_ATTRIBUTE_USER_ENABLED = 207;
+  NIRFMXWLANGEN_ATTRIBUTE_FRAME_DURATION = 209;
+  NIRFMXWLANGEN_ATTRIBUTE_UNFRAMED_DATA_MODULATION_ENABLED = 210;
+  NIRFMXWLANGEN_ATTRIBUTE_OVERSAMPLING_RATIO = 211;
+  NIRFMXWLANGEN_ATTRIBUTE_SIG_MCS_INDEX = 212;
+  NIRFMXWLANGEN_ATTRIBUTE_SIG_COMPRESSION_ENABLED = 213;
+  NIRFMXWLANGEN_ATTRIBUTE_PHASE_ROTATION_COEFFICIENT_1 = 214;
+  NIRFMXWLANGEN_ATTRIBUTE_PHASE_ROTATION_COEFFICIENT_2 = 215;
+  NIRFMXWLANGEN_ATTRIBUTE_PHASE_ROTATION_COEFFICIENT_3 = 216;
+  NIRFMXWLANGEN_ATTRIBUTE_CYCLIC_TIME_SHIFT = 217;
+  NIRFMXWLANGEN_ATTRIBUTE_RU_TYPE = 222;
+  NIRFMXWLANGEN_ATTRIBUTE_HYBRID_LO_SHARING_MODE = 223;
+  NIRFMXWLANGEN_ATTRIBUTE_MULTI_CHASSIS_TCLK_SYNCHRONIZATION_MODE = 224;
+  NIRFMXWLANGEN_ATTRIBUTE_LO_SPLITTER_LOSS = 225;
+  NIRFMXWLANGEN_ATTRIBUTE_LO_SPLITTER_LOSS_FREQUENCY = 226;
+  NIRFMXWLANGEN_ATTRIBUTE_DISTRIBUTION_BANDWIDTH = 227;
+  NIRFMXWLANGEN_ATTRIBUTE_2XLDPC_ENABLED = 228;
+  NIRFMXWLANGEN_ATTRIBUTE_UNEQUAL_MODULATION_ENABLED = 229;
+  NIRFMXWLANGEN_ATTRIBUTE_UNEQUAL_MODULATION_PATTERN_INDEX = 230;
+  NIRFMXWLANGEN_ATTRIBUTE_CHANNELIZATION = 231;
+  NIRFMXWLANGEN_ATTRIBUTE_HE_SIG_B_COMPRESSION_MODE = 232;
+  NIRFMXWLANGEN_ATTRIBUTE_INTERFERENCE_MITIGATION_PILOTS_ENABLED = 233;
+}
+
+enum CompatibilityVersion {
+  COMPATIBILITY_VERSION_UNSPECIFIED = 0;
+  COMPATIBILITY_VERSION_010000 = 10000;
+  COMPATIBILITY_VERSION_020000 = 20000;
+  COMPATIBILITY_VERSION_030000 = 30000;
+  COMPATIBILITY_VERSION_040000 = 40000;
+  COMPATIBILITY_VERSION_050000 = 50000;
+  COMPATIBILITY_VERSION_060000 = 60000;
+}
+
+enum LOSource {
+  LO_SOURCE_EXTERNAL = 0;
+  LO_SOURCE_ONBOARD = 2;
+  LO_SOURCE_SG_SA_SHARED = 3;
+}
+
+enum TvhtMode {
+  TVHT_MODE_1 = 0;
+  TVHT_MODE_2C = 1;
+  TVHT_MODE_2N = 2;
+  TVHT_MODE_4C = 3;
+  TVHT_MODE_4N = 4;
+}
+
+enum NiRFmxWLANGenInt32AttributeValues {
+  option allow_alias = true;
+  NIRFMXWLANGEN_INT32_UNSPECIFIED = 0;
+  NIRFMXWLANGEN_INT32_ALL_IQ_IMPAIRMENTS_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_ALL_IQ_IMPAIRMENTS_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_AMPDU_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_AMPDU_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_AUTO_HEADROOM_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_AUTO_HEADROOM_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_AUTO_PAYLOAD_DATA_LENGTH_MODE_DISABLED = 0;
+  NIRFMXWLANGEN_INT32_AUTO_PAYLOAD_DATA_LENGTH_MODE_L_SIG_LENGTH = 1;
+  NIRFMXWLANGEN_INT32_AUTO_PAYLOAD_DATA_LENGTH_MODE_FRAME_DURATION = 2;
+  NIRFMXWLANGEN_INT32_AVERAGE_POWER_REFERENCE_NON_BOOSTED_FIELDS = 0;
+  NIRFMXWLANGEN_INT32_AVERAGE_POWER_REFERENCE_POWER_BOOSTED_FIELDS = 1;
+  NIRFMXWLANGEN_INT32_AVERAGE_POWER_REFERENCE_ENTIRE_PACKET = 2;
+  NIRFMXWLANGEN_INT32_AWGN_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_AWGN_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_CHANNELIZATION_320_MHZ_1 = 0;
+  NIRFMXWLANGEN_INT32_CHANNELIZATION_320_MHZ_2 = 1;
+  NIRFMXWLANGEN_INT32_COMPATIBILITY_VERSION_010000 = 10000;
+  NIRFMXWLANGEN_INT32_COMPATIBILITY_VERSION_020000 = 20000;
+  NIRFMXWLANGEN_INT32_COMPATIBILITY_VERSION_030000 = 30000;
+  NIRFMXWLANGEN_INT32_COMPATIBILITY_VERSION_040000 = 40000;
+  NIRFMXWLANGEN_INT32_COMPATIBILITY_VERSION_050000 = 50000;
+  NIRFMXWLANGEN_INT32_COMPATIBILITY_VERSION_060000 = 60000;
+  NIRFMXWLANGEN_INT32_DSSS_DATA_RATE_1 = 0;
+  NIRFMXWLANGEN_INT32_DSSS_DATA_RATE_2 = 1;
+  NIRFMXWLANGEN_INT32_DSSS_DATA_RATE_5P_5_CCK = 2;
+  NIRFMXWLANGEN_INT32_DSSS_DATA_RATE_5P_5_PBCC = 3;
+  NIRFMXWLANGEN_INT32_DSSS_DATA_RATE_11_CCK = 4;
+  NIRFMXWLANGEN_INT32_DSSS_DATA_RATE_11_PBCC = 5;
+  NIRFMXWLANGEN_INT32_DSSS_DATA_RATE_22 = 6;
+  NIRFMXWLANGEN_INT32_DSSS_DATA_RATE_33 = 7;
+  NIRFMXWLANGEN_INT32_DSSS_PREAMBLE_TYPE_SHORT = 0;
+  NIRFMXWLANGEN_INT32_DSSS_PREAMBLE_TYPE_LONG = 1;
+  NIRFMXWLANGEN_INT32_DUAL_CARRIER_MODULATION_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_DUAL_CARRIER_MODULATION_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_FEC_CODING_TYPE_BCC = 0;
+  NIRFMXWLANGEN_INT32_FEC_CODING_TYPE_LDPC = 1;
+  NIRFMXWLANGEN_INT32_GUARD_INTERVAL_TYPE_ONE_BY_FOUR = 0;
+  NIRFMXWLANGEN_INT32_GUARD_INTERVAL_TYPE_ONE_BY_EIGHT = 1;
+  NIRFMXWLANGEN_INT32_GUARD_INTERVAL_TYPE_ONE_BY_SIXTEEN = 2;
+  NIRFMXWLANGEN_INT32_HE_SIG_B_COMPRESSION_MODE_AUTO = 0;
+  NIRFMXWLANGEN_INT32_HE_SIG_B_COMPRESSION_MODE_MANUAL = 1;
+  NIRFMXWLANGEN_INT32_HE_SIG_B_DUAL_CARRIER_MODULATION_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_HE_SIG_B_DUAL_CARRIER_MODULATION_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_HEADER_ENCODER_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_HEADER_ENCODER_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_HEADER_INTERLEAVER_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_HEADER_INTERLEAVER_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_HYBRID_LO_SHARING_MODE_DISABLED = 0;
+  NIRFMXWLANGEN_INT32_HYBRID_LO_SHARING_MODE_MODE_0 = 1;
+  NIRFMXWLANGEN_INT32_IDLE_INTERVAL_MODE_SPLIT = 0;
+  NIRFMXWLANGEN_INT32_IDLE_INTERVAL_MODE_POST_BURST = 1;
+  NIRFMXWLANGEN_INT32_INTERFERENCE_MITIGATION_PILOTS_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_INTERFERENCE_MITIGATION_PILOTS_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_LO_FREQUENCY_OFFSET_MODE_AUTO = 0;
+  NIRFMXWLANGEN_INT32_LO_FREQUENCY_OFFSET_MODE_USER_DEFINED = 1;
+  NIRFMXWLANGEN_INT32_LO_FREQUENCY_OFFSET_MODE_DISABLED = 2;
+  NIRFMXWLANGEN_INT32_LO_SHARING_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_LO_SHARING_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_LOCKED_CLOCK_BIT_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_LOCKED_CLOCK_BIT_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_LTF_SIZE_4X = 0;
+  NIRFMXWLANGEN_INT32_LTF_SIZE_AUTO = -1;
+  NIRFMXWLANGEN_INT32_LTF_SIZE_2X = 1;
+  NIRFMXWLANGEN_INT32_LTF_SIZE_1X = 2;
+  NIRFMXWLANGEN_INT32_MU_MIMO_LTF_MODE_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MU_MIMO_LTF_MODE_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_ADDRESS1_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_ADDRESS1_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_ADDRESS2_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_ADDRESS2_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_ADDRESS3_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_ADDRESS3_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_ADDRESS4_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_ADDRESS4_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_FCS_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_FCS_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_FRAGMENT_NUMBER_INCREMENT_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_FRAGMENT_NUMBER_INCREMENT_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_FRAME_FORMAT_LONG = 0;
+  NIRFMXWLANGEN_INT32_MAC_FRAME_FORMAT_SHORT = 1;
+  NIRFMXWLANGEN_INT32_MAC_HT_CONTROL_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_HT_CONTROL_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_HEADER_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_HEADER_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_QOS_CONTROL_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_QOS_CONTROL_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_SEQUENCE_CONTROL_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_SEQUENCE_CONTROL_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAC_SEQUENCE_NUMBER_INCREMENT_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_MAC_SEQUENCE_NUMBER_INCREMENT_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_MAPPING_MATRIX_TYPE_DIRECT = 0;
+  NIRFMXWLANGEN_INT32_MAPPING_MATRIX_TYPE_HADAMARD = 1;
+  NIRFMXWLANGEN_INT32_MAPPING_MATRIX_TYPE_FOURIER = 2;
+  NIRFMXWLANGEN_INT32_MAPPING_MATRIX_TYPE_USER_DEFINED = 3;
+  NIRFMXWLANGEN_INT32_MIDAMBLE_PERIODICITY_NONE = 0;
+  NIRFMXWLANGEN_INT32_MIDAMBLE_PERIODICITY_TEN_SYMBOLS = 1;
+  NIRFMXWLANGEN_INT32_MIDAMBLE_PERIODICITY_TWENTY_SYMBOLS = 2;
+  NIRFMXWLANGEN_INT32_MULTI_CHASSIS_T_CLK_SYNCHRONIZATION_MODE_AUTO = 0;
+  NIRFMXWLANGEN_INT32_MULTI_CHASSIS_T_CLK_SYNCHRONIZATION_MODE_TIMING_MODULE = 1;
+  NIRFMXWLANGEN_INT32_MULTI_SEGMENT_GENERATION_MODE_SINGLE_GENERATOR = 0;
+  NIRFMXWLANGEN_INT32_MULTI_SEGMENT_GENERATION_MODE_MULTIPLE_GENERATORS = 1;
+  NIRFMXWLANGEN_INT32_NOMINAL_PACKET_PADDING_0US = 0;
+  NIRFMXWLANGEN_INT32_NOMINAL_PACKET_PADDING_AUTO = -1;
+  NIRFMXWLANGEN_INT32_NOMINAL_PACKET_PADDING_8US = 1;
+  NIRFMXWLANGEN_INT32_NOMINAL_PACKET_PADDING_16US = 2;
+  NIRFMXWLANGEN_INT32_NOMINAL_PACKET_PADDING_20US = 3;
+  NIRFMXWLANGEN_INT32_NON_HT_MODULATION_MODE_OFF = 0;
+  NIRFMXWLANGEN_INT32_NON_HT_MODULATION_MODE_ON = 1;
+  NIRFMXWLANGEN_INT32_OFDM_DATA_RATE_6 = 0;
+  NIRFMXWLANGEN_INT32_OFDM_DATA_RATE_9 = 1;
+  NIRFMXWLANGEN_INT32_OFDM_DATA_RATE_12 = 2;
+  NIRFMXWLANGEN_INT32_OFDM_DATA_RATE_18 = 3;
+  NIRFMXWLANGEN_INT32_OFDM_DATA_RATE_24 = 4;
+  NIRFMXWLANGEN_INT32_OFDM_DATA_RATE_36 = 5;
+  NIRFMXWLANGEN_INT32_OFDM_DATA_RATE_48 = 6;
+  NIRFMXWLANGEN_INT32_OFDM_DATA_RATE_54 = 7;
+  NIRFMXWLANGEN_INT32_PAYLOAD_AUTO_NUMBER_OF_MPDUS_FALSE = 0;
+  NIRFMXWLANGEN_INT32_PAYLOAD_AUTO_NUMBER_OF_MPDUS_TRUE = 1;
+  NIRFMXWLANGEN_INT32_PAYLOAD_DATA_TYPE_USER_DEFINED_PATTERN = 0;
+  NIRFMXWLANGEN_INT32_PAYLOAD_DATA_TYPE_PN_SEQUENCE = 1;
+  NIRFMXWLANGEN_INT32_PAYLOAD_ENCODER_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_PAYLOAD_ENCODER_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_PAYLOAD_INTERLEAVER_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_PAYLOAD_INTERLEAVER_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_PAYLOAD_MAC_FRAME_TYPE_GENERAL_FRAME = 0;
+  NIRFMXWLANGEN_INT32_PAYLOAD_MAC_FRAME_TYPE_DATA_FRAME = 1;
+  NIRFMXWLANGEN_INT32_PAYLOAD_MAC_FRAME_TYPE_TRIGGER_FRAME = 2;
+  NIRFMXWLANGEN_INT32_PAYLOAD_SCRAMBLER_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_PAYLOAD_SCRAMBLER_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_PHASE_ROTATION_COEFFICIENT1_PLUS_ONE = 0;
+  NIRFMXWLANGEN_INT32_PHASE_ROTATION_COEFFICIENT1_MINUS_ONE = 1;
+  NIRFMXWLANGEN_INT32_PHASE_ROTATION_COEFFICIENT2_PLUS_ONE = 0;
+  NIRFMXWLANGEN_INT32_PHASE_ROTATION_COEFFICIENT2_MINUS_ONE = 1;
+  NIRFMXWLANGEN_INT32_PHASE_ROTATION_COEFFICIENT3_PLUS_ONE = 0;
+  NIRFMXWLANGEN_INT32_PHASE_ROTATION_COEFFICIENT3_MINUS_ONE = 1;
+  NIRFMXWLANGEN_INT32_PLCP_FRAME_FORMAT80211N_80211N_PLCP_FRAME_FORMAT_MIXED = 0;
+  NIRFMXWLANGEN_INT32_PLCP_FRAME_FORMAT80211N_80211N_PLCP_FRAME_FORMAT_GREENFIELD = 1;
+  NIRFMXWLANGEN_INT32_PPDU_TYPE_SU_PPDU = 0;
+  NIRFMXWLANGEN_INT32_PPDU_TYPE_MU_PPDU = 1;
+  NIRFMXWLANGEN_INT32_PPDU_TYPE_EXTENDED_RANGE_SU_PPDU = 2;
+  NIRFMXWLANGEN_INT32_PPDU_TYPE_TRIGGER_BASED_PPDU = 3;
+  NIRFMXWLANGEN_INT32_PPDU_TYPE_ELR_PPDU = 4;
+  NIRFMXWLANGEN_INT32_PREAMBLE_PUNCTURING_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_PREAMBLE_PUNCTURING_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_PREAMBLE_TYPE80211AH_80211AH_PREAMBLE_TYPE_SHORT = 0;
+  NIRFMXWLANGEN_INT32_PREAMBLE_TYPE80211AH_80211AH_PREAMBLE_TYPE_LONG = 1;
+  NIRFMXWLANGEN_INT32_PULSE_SHAPING_FILTER_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_PULSE_SHAPING_FILTER_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_PULSE_SHAPING_FILTER_TYPE_RECTANGULAR = 0;
+  NIRFMXWLANGEN_INT32_PULSE_SHAPING_FILTER_TYPE_RAISED_COSINE = 1;
+  NIRFMXWLANGEN_INT32_PULSE_SHAPING_FILTER_TYPE_ROOT_RAISED_COSINE = 2;
+  NIRFMXWLANGEN_INT32_PULSE_SHAPING_FILTER_TYPE_GAUSSIAN = 3;
+  NIRFMXWLANGEN_INT32_RF_BLANKING_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_RF_BLANKING_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_RU_ALLOCATION_MODE_INDIVIDUAL = 0;
+  NIRFMXWLANGEN_INT32_RU_ALLOCATION_MODE_GROUP = 1;
+  NIRFMXWLANGEN_INT32_RU_SIZE_26 = 26;
+  NIRFMXWLANGEN_INT32_RU_SIZE_52 = 52;
+  NIRFMXWLANGEN_INT32_RU_SIZE_106 = 106;
+  NIRFMXWLANGEN_INT32_RU_SIZE_242 = 242;
+  NIRFMXWLANGEN_INT32_RU_SIZE_484 = 484;
+  NIRFMXWLANGEN_INT32_RU_SIZE_996 = 996;
+  NIRFMXWLANGEN_INT32_RU_SIZE_2X_996 = 1992;
+  NIRFMXWLANGEN_INT32_RU_SIZE_4X_996 = 3984;
+  NIRFMXWLANGEN_INT32_RU_SIZE_52_PLUS_26 = 78;
+  NIRFMXWLANGEN_INT32_RU_SIZE_106_PLUS_26 = 132;
+  NIRFMXWLANGEN_INT32_RU_SIZE_484_PLUS_242 = 726;
+  NIRFMXWLANGEN_INT32_RU_SIZE_996_PLUS_484 = 1480;
+  NIRFMXWLANGEN_INT32_RU_SIZE_996_PLUS_484_PLUS_242 = 1722;
+  NIRFMXWLANGEN_INT32_RU_SIZE_2X_996_PLUS_484 = 2476;
+  NIRFMXWLANGEN_INT32_RU_SIZE_3X_996 = 2988;
+  NIRFMXWLANGEN_INT32_RU_SIZE_3X_996_PLUS_484 = 3472;
+  NIRFMXWLANGEN_INT32_RU_TYPE_RRU = 0;
+  NIRFMXWLANGEN_INT32_RU_TYPE_DRU = 1;
+  NIRFMXWLANGEN_INT32_SIG_COMPRESSION_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_SIG_COMPRESSION_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_SPATIAL_MAPPING_MODE_COMMON = 0;
+  NIRFMXWLANGEN_INT32_SPATIAL_MAPPING_MODE_USER_SPECIFIC = 1;
+  NIRFMXWLANGEN_INT32_STANDARD_80211AG_OFDM = 0;
+  NIRFMXWLANGEN_INT32_STANDARD_80211J_OFDM = 7;
+  NIRFMXWLANGEN_INT32_STANDARD_80211P_OFDM = 8;
+  NIRFMXWLANGEN_INT32_STANDARD_80211BG_DSSS = 1;
+  NIRFMXWLANGEN_INT32_STANDARD_80211G_DSSS_OFDM = 2;
+  NIRFMXWLANGEN_INT32_STANDARD_80211N_MIMO_OFDM = 3;
+  NIRFMXWLANGEN_INT32_STANDARD_80211AC_MIMO_OFDM = 4;
+  NIRFMXWLANGEN_INT32_STANDARD_80211AH_MIMO_OFDM = 5;
+  NIRFMXWLANGEN_INT32_STANDARD_80211AF_MIMO_OFDM = 6;
+  NIRFMXWLANGEN_INT32_STANDARD_80211AX_MIMO_OFDM = 9;
+  NIRFMXWLANGEN_INT32_STANDARD_80211BE_MIMO_OFDM = 10;
+  NIRFMXWLANGEN_INT32_STANDARD_80211BN_MIMO_OFDM = 11;
+  NIRFMXWLANGEN_INT32_STBC_ALL_STREAMS_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_STBC_ALL_STREAMS_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_SWAP_I_AND_Q_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_SWAP_I_AND_Q_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_TRANSMISSION_MODE_DOWNLINK = 0;
+  NIRFMXWLANGEN_INT32_TRANSMISSION_MODE_UPLINK = 1;
+  NIRFMXWLANGEN_INT32_TRIGGER_FRAME_MAC_PADDING_DURATION_PADDING_DURATION_0US = 0;
+  NIRFMXWLANGEN_INT32_TRIGGER_FRAME_MAC_PADDING_DURATION_PADDING_DURATION_8US = 1;
+  NIRFMXWLANGEN_INT32_TRIGGER_FRAME_MAC_PADDING_DURATION_PADDING_DURATION_16US = 2;
+  NIRFMXWLANGEN_INT32_TWOX_LDPC_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_TWOX_LDPC_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_UNEQUAL_MODULATION_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_UNEQUAL_MODULATION_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_UNFRAMED_DATA_MODULATION_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_UNFRAMED_DATA_MODULATION_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_USER_ENABLED_FALSE = 0;
+  NIRFMXWLANGEN_INT32_USER_ENABLED_TRUE = 1;
+  NIRFMXWLANGEN_INT32_WAVEFORM_FILE_VERSION_1_0 = 0;
+  NIRFMXWLANGEN_INT32_WAVEFORM_FILE_VERSION_2_0 = 1;
+  NIRFMXWLANGEN_INT32_WINDOWING_METHOD_CENTERED_AT_SYMBOL_BOUNDARY = 0;
+  NIRFMXWLANGEN_INT32_WINDOWING_METHOD_STARTING_AT_SYMBOL_BOUNDARY = 1;
+}
+
+message ChannelNumberToCarrierFrequencyRequest {
+  int32 frequency_band = 1;
+  double channel_bandwidth = 2;
+  int32 channel_number = 3;
+  int32 secondary_factor = 4;
+  double channel_starting_factor = 5;
+}
+
+message ChannelNumberToCarrierFrequencyResponse {
+  int32 status = 1;
+  double carrier_frequency = 2;
+}
+
+message ChannelNumberToCarrierFrequency80211abgjpnRequest {
+  double channel_starting_frequency = 1;
+  double channel_bandwidth = 2;
+  int32 channel_number = 3;
+  int32 secondary_factor = 4;
+}
+
+message ChannelNumberToCarrierFrequency80211abgjpnResponse {
+  int32 status = 1;
+  double carrier_frequency = 2;
+}
+
+message ChannelNumberToCarrierFrequency80211acRequest {
+  double channel_starting_frequency = 1;
+  int32 channel_number = 2;
+}
+
+message ChannelNumberToCarrierFrequency80211acResponse {
+  int32 status = 1;
+  double carrier_frequency = 2;
+}
+
+message ChannelNumberToCarrierFrequency80211afRequest {
+  double channel_starting_frequency = 1;
+  double channel_bandwidth = 2;
+  int32 channel_number = 3;
+  oneof tvht_mode_enum {
+    TvhtMode tvht_mode = 4;
+    int32 tvht_mode_raw = 5;
+  }
+}
+
+message ChannelNumberToCarrierFrequency80211afResponse {
+  int32 status = 1;
+  double carrier_frequency = 2;
+}
+
+message ChannelNumberToCarrierFrequency80211ahRequest {
+  double channel_starting_frequency = 1;
+  int32 channel_number = 2;
+}
+
+message ChannelNumberToCarrierFrequency80211ahResponse {
+  int32 status = 1;
+  double carrier_frequency = 2;
+}
+
+message ChannelNumberToCarrierFrequency80211axRequest {
+  double channel_starting_frequency = 1;
+  int32 channel_number = 2;
+}
+
+message ChannelNumberToCarrierFrequency80211axResponse {
+  int32 status = 1;
+  double carrier_frequency = 2;
+}
+
+message CloseSessionRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message CloseSessionResponse {
+  int32 status = 1;
+}
+
+message CreateAndWriteWaveformsToFileRequest {
+  nidevice_grpc.Session session = 1;
+  string file_path = 2;
+  int32 file_operation = 3;
+}
+
+message CreateAndWriteWaveformsToFileResponse {
+  int32 status = 1;
+}
+
+message CreateMIMOWaveformsComplexF64Request {
+  nidevice_grpc.Session session = 1;
+  int32 reset = 2;
+  int32 number_of_tx_chains = 3;
+}
+
+message CreateMIMOWaveformsComplexF64Response {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  nidevice_grpc.NIComplexNumber waveforms = 4;
+  int32 actual_num_samples_in_each_wfm = 5;
+  int32 done = 6;
+}
+
+message CreateMIMOWaveformsComplexF64InterleavedIQRequest {
+  nidevice_grpc.Session session = 1;
+  int32 reset = 2;
+  int32 number_of_tx_chains = 3;
+}
+
+message CreateMIMOWaveformsComplexF64InterleavedIQResponse {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  double waveforms = 4;
+  int32 actual_num_samples_in_each_wfm = 5;
+  int32 done = 6;
+}
+
+message CreateTriggerFrameMSDURequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+}
+
+message CreateTriggerFrameMSDUResponse {
+  int32 status = 1;
+  int32 generation_done = 2;
+  repeated int32 trigger_frame_msdu_bits = 3;
+  int32 actual_data_array_size = 4;
+}
+
+message CreateWaveformComplexF64Request {
+  nidevice_grpc.Session session = 1;
+  int32 reset = 2;
+}
+
+message CreateWaveformComplexF64Response {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  nidevice_grpc.NIComplexNumber waveform = 4;
+  int32 actual_num_waveform_samples = 5;
+  int32 done = 6;
+}
+
+message CreateWaveformComplexF64InterleavedIQRequest {
+  nidevice_grpc.Session session = 1;
+  int32 reset = 2;
+}
+
+message CreateWaveformComplexF64InterleavedIQResponse {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  double waveform = 4;
+  int32 actual_num_waveform_samples = 5;
+  int32 done = 6;
+}
+
+message GetErrorStringRequest {
+  nidevice_grpc.Session session = 1;
+  int32 error_code = 2;
+}
+
+message GetErrorStringResponse {
+  int32 status = 1;
+  string error_message = 2;
+}
+
+message GetNumberOfUsersFromRUAllocationRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+}
+
+message GetNumberOfUsersFromRUAllocationResponse {
+  int32 status = 1;
+  int32 number_of_users = 2;
+}
+
+message GetScalarAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+}
+
+message GetScalarAttributeF64Response {
+  int32 status = 1;
+  double attribute_value = 2;
+}
+
+message GetScalarAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+}
+
+message GetScalarAttributeI32Response {
+  int32 status = 1;
+  NiRFmxWLANGenInt32AttributeValues attribute_value = 2;
+  int32 attribute_value_raw = 3;
+}
+
+message GetVectorAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+}
+
+message GetVectorAttributeF64Response {
+  int32 status = 1;
+  repeated double data = 2;
+  int32 actual_num_data_array_elements = 3;
+}
+
+message GetVectorAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+}
+
+message GetVectorAttributeI32Response {
+  int32 status = 1;
+  repeated int32 data_array = 2;
+  int32 actual_num_data_array_elements = 3;
+}
+
+message LoadConfigurationFromFileRequest {
+  nidevice_grpc.Session session = 1;
+  string file_path = 2;
+  int32 reset_session = 3;
+}
+
+message LoadConfigurationFromFileResponse {
+  int32 status = 1;
+}
+
+message OpenSessionRequest {
+  string session_name = 1;
+  oneof toolkit_compatibility_version_enum {
+    CompatibilityVersion toolkit_compatibility_version = 2;
+    int32 toolkit_compatibility_version_raw = 3;
+  }
+}
+
+message OpenSessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session session = 2;
+  int32 is_new_session = 3;
+}
+
+message RFSGClearDatabaseRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+}
+
+message RFSGClearDatabaseResponse {
+  int32 status = 1;
+}
+
+message RFSGConfigureFrequencyMultipleLORequest {
+  nidevice_grpc.Session session = 1;
+  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  oneof lo_source_enum {
+    LOSource lo_source = 3;
+    int32 lo_source_raw = 4;
+  }
+  repeated nidevice_grpc.Session external_lo_handles = 5;
+  repeated double carrier_frequency = 6;
+  int32 rfsg_lo_daisy_chain_enabled = 7;
+  int32 lo_export_to_external_devices_enabled = 8;
+}
+
+message RFSGConfigureFrequencyMultipleLOResponse {
+  int32 status = 1;
+}
+
+message RFSGConfigureFrequencySingleLORequest {
+  nidevice_grpc.Session session = 1;
+  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  oneof lo_source_enum {
+    LOSource lo_source = 3;
+    int32 lo_source_raw = 4;
+  }
+  nidevice_grpc.Session external_lo_handle = 5;
+  double carrier_frequency = 6;
+  int32 rfsg_lo_daisy_chain_enabled = 7;
+  int32 lo_export_to_external_devices_enabled = 8;
+}
+
+message RFSGConfigureFrequencySingleLOResponse {
+  int32 status = 1;
+}
+
+message RFSGConfigureMultipleDeviceSynchronizationRequest {
+  nidevice_grpc.Session session = 1;
+  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  string master_reference_clock_source = 3;
+  repeated int32 trigger_lines = 4;
+}
+
+message RFSGConfigureMultipleDeviceSynchronizationResponse {
+  int32 status = 1;
+}
+
+message RFSGConfigurePowerLevelRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string channel_string = 2;
+  string script = 3;
+  double power_level = 4;
+}
+
+message RFSGConfigurePowerLevelResponse {
+  int32 status = 1;
+}
+
+message RFSGConfigureScriptRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string channel_string = 2;
+  string script = 3;
+  double power_level = 4;
+}
+
+message RFSGConfigureScriptResponse {
+  int32 status = 1;
+}
+
+message RFSGCreateAndDownloadMIMOWaveformsRequest {
+  nidevice_grpc.Session session = 1;
+  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  string channel_string = 3;
+  string waveform_name = 4;
+}
+
+message RFSGCreateAndDownloadMIMOWaveformsResponse {
+  int32 status = 1;
+}
+
+message RFSGCreateAndDownloadWaveformRequest {
+  nidevice_grpc.Session session = 1;
+  nidevice_grpc.Session rfsg_session = 2;
+  string channel_string = 3;
+  string waveform_name = 4;
+}
+
+message RFSGCreateAndDownloadWaveformResponse {
+  int32 status = 1;
+}
+
+message RFSGForceTClkSynchronizationRequest {
+  nidevice_grpc.Session session = 1;
+  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  int32 force_sync = 3;
+}
+
+message RFSGForceTClkSynchronizationResponse {
+  int32 status = 1;
+}
+
+message RFSGInsertRFBlankingMarkerPositionsRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string script = 2;
+}
+
+message RFSGInsertRFBlankingMarkerPositionsResponse {
+  int32 status = 1;
+  string script_out = 2;
+  int32 actual_len_of_script_out = 3;
+}
+
+message RFSGMultipleDeviceInitiateRequest {
+  nidevice_grpc.Session session = 1;
+  repeated nidevice_grpc.Session rfsg_sessions = 2;
+}
+
+message RFSGMultipleDeviceInitiateResponse {
+  int32 status = 1;
+}
+
+message RFSGReadAndDownloadWaveformsFromFileRequest {
+  repeated nidevice_grpc.Session rfsg_sessions = 1;
+  string waveform_name = 2;
+  string file_path = 3;
+}
+
+message RFSGReadAndDownloadWaveformsFromFileResponse {
+  int32 status = 1;
+}
+
+message RFSGRetrieveBurstStartLocationsRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string waveform_name = 2;
+}
+
+message RFSGRetrieveBurstStartLocationsResponse {
+  int32 status = 1;
+  repeated int32 burst_start_locations = 2;
+  int32 actual_data_array_size = 3;
+}
+
+message RFSGRetrieveBurstStopLocationsRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string waveform_name = 2;
+}
+
+message RFSGRetrieveBurstStopLocationsResponse {
+  int32 status = 1;
+  repeated int32 burst_stop_locations = 2;
+  int32 actual_data_array_size = 3;
+}
+
+message RFSGRetrieveIQRateRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+}
+
+message RFSGRetrieveIQRateResponse {
+  int32 status = 1;
+  double iq_rate = 2;
+}
+
+message RFSGRetrieveIQRateAllWaveformsRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string channel_string = 2;
+  string script = 3;
+}
+
+message RFSGRetrieveIQRateAllWaveformsResponse {
+  int32 status = 1;
+  double iq_rate = 2;
+}
+
+message RFSGRetrieveMinimumPAPRAllWaveformsRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string channel_string = 2;
+  string script = 3;
+}
+
+message RFSGRetrieveMinimumPAPRAllWaveformsResponse {
+  int32 status = 1;
+  double papr = 2;
+}
+
+message RFSGRetrievePAPRRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+}
+
+message RFSGRetrievePAPRResponse {
+  int32 status = 1;
+  double papr = 2;
+}
+
+message RFSGRetrieveRFBlankingMarkerPositionsRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string waveform_name = 2;
+}
+
+message RFSGRetrieveRFBlankingMarkerPositionsResponse {
+  int32 status = 1;
+  repeated int32 rf_blanking_marker_positions = 2;
+  int32 actual_data_array_size = 3;
+}
+
+message RFSGRetrieveWaveformSizeRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string waveform_name = 2;
+}
+
+message RFSGRetrieveWaveformSizeResponse {
+  int32 status = 1;
+  int32 waveform_size = 2;
+}
+
+message RFSGStoreBurstStartLocationsRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string waveform_name = 2;
+  repeated int32 burst_start_locations = 3;
+}
+
+message RFSGStoreBurstStartLocationsResponse {
+  int32 status = 1;
+}
+
+message RFSGStoreBurstStopLocationsRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string waveform_name = 2;
+  repeated int32 burst_stop_locations = 3;
+}
+
+message RFSGStoreBurstStopLocationsResponse {
+  int32 status = 1;
+}
+
+message RFSGStoreIQRateRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+  double iq_rate = 4;
+}
+
+message RFSGStoreIQRateResponse {
+  int32 status = 1;
+}
+
+message RFSGStorePAPRRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+  double papr = 4;
+}
+
+message RFSGStorePAPRResponse {
+  int32 status = 1;
+}
+
+message RFSGStoreRFBlankingMarkerPositionsRequest {
+  nidevice_grpc.Session rfsg_session = 1;
+  string waveform_name = 2;
+  repeated int32 rf_blanking_marker_positions = 3;
+}
+
+message RFSGStoreRFBlankingMarkerPositionsResponse {
+  int32 status = 1;
+}
+
+message ReadBurstStartLocationsFromFileRequest {
+  string file_path = 1;
+  string waveform_name = 2;
+}
+
+message ReadBurstStartLocationsFromFileResponse {
+  int32 status = 1;
+  repeated int32 burst_start_locations = 2;
+  int32 actual_data_array_size = 3;
+}
+
+message ReadBurstStopLocationsFromFileRequest {
+  string file_path = 1;
+  string waveform_name = 2;
+}
+
+message ReadBurstStopLocationsFromFileResponse {
+  int32 status = 1;
+  repeated int32 burst_stop_locations = 2;
+  int32 actual_data_array_size = 3;
+}
+
+message ReadWaveformFromFileRequest {
+  string file_path = 1;
+  string waveform_name = 2;
+  int64 offset = 3;
+  int64 count = 4;
+}
+
+message ReadWaveformFromFileResponse {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  nidevice_grpc.NIComplexNumber waveform = 4;
+  int32 actual_num_waveform_samples = 5;
+  double iq_rate = 6;
+  double headroom = 7;
+  int32 eof = 8;
+}
+
+message ReadWaveformFromFileInterleavedIQRequest {
+  string file_path = 1;
+  string waveform_name = 2;
+  int64 offset = 3;
+  int64 count = 4;
+}
+
+message ReadWaveformFromFileInterleavedIQResponse {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  double waveform = 4;
+  int32 actual_num_waveform_samples = 5;
+  double iq_rate = 6;
+  double headroom = 7;
+  int32 eof = 8;
+}
+
+message ResetSessionRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message ResetSessionResponse {
+  int32 status = 1;
+}
+
+message SaveConfigurationToFileRequest {
+  nidevice_grpc.Session session = 1;
+  string file_path = 2;
+  int32 file_operation = 3;
+}
+
+message SaveConfigurationToFileResponse {
+  int32 status = 1;
+}
+
+message SetOFDMPacketExtensionThresholdsRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  repeated int32 ppet8 = 3;
+  repeated int32 number_of_space_time_streams = 4;
+  repeated int32 ru_size = 5;
+  int32 ppet16_array_size = 6;
+}
+
+message SetOFDMPacketExtensionThresholdsResponse {
+  int32 status = 1;
+  repeated int32 ppet16 = 2;
+}
+
+message SetScalarAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+  double attribute_value = 4;
+}
+
+message SetScalarAttributeF64Response {
+  int32 status = 1;
+}
+
+message SetScalarAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+  oneof attribute_value_enum {
+    NiRFmxWLANGenInt32AttributeValues attribute_value = 4;
+    int32 attribute_value_raw = 5;
+  }
+}
+
+message SetScalarAttributeI32Response {
+  int32 status = 1;
+}
+
+message SetVectorAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+  repeated double data = 4;
+}
+
+message SetVectorAttributeF64Response {
+  int32 status = 1;
+}
+
+message SetVectorAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+  repeated int32 data_array = 4;
+}
+
+message SetVectorAttributeI32Response {
+  int32 status = 1;
+}
+

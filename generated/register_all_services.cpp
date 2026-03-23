@@ -25,6 +25,9 @@
 #include "nirfmxbluetooth/nirfmxbluetooth_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
+#include "nirfmxbluetoothgen/nirfmxbluetoothgen_service_registrar.h"
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
 #include "nirfmxcdma2k/nirfmxcdma2k_service_registrar.h"
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
@@ -69,6 +72,9 @@
 #if defined(_MSC_VER)
 #include "nirfmxwlan_restricted/nirfmxwlan_restricted_service_registrar.h"
 #endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+#include "nirfmxwlangen/nirfmxwlangen_service_registrar.h"
+#endif // defined(_MSC_VER)
 #include "nirfsa/nirfsa_service_registrar.h"
 #include "nirfsg/nirfsg_service_registrar.h"
 #include "nirfsg_restricted/nirfsg_restricted_service_registrar.h"
@@ -101,6 +107,12 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
 #endif // defined(_MSC_VER)
 #if defined(_MSC_VER)
   auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository);
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  auto ni_btsg_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niBTSGSession>>(session_repository);
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  auto ni_wlan_generation_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niWLANGenerationSession>>(session_repository);
 #endif // defined(_MSC_VER)
   auto nx_session_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>(session_repository);
   auto nx_database_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>(session_repository);
@@ -155,6 +167,14 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
     nirfmxbluetooth_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
+      vi_session_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
+    nirfmxbluetoothgen_grpc::register_service(
+      server_builder, 
+      ni_btsg_session_repository,
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
@@ -273,6 +293,14 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
     nirfmxwlan_restricted_grpc::register_service(
       server_builder, 
       ni_r_fmx_instr_handle_repository,
+      feature_toggles));
+#endif // defined(_MSC_VER)
+#if defined(_MSC_VER)
+  service_vector->push_back(
+    nirfmxwlangen_grpc::register_service(
+      server_builder, 
+      ni_wlan_generation_session_repository,
+      vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
   service_vector->push_back(
