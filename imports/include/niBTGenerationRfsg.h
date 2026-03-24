@@ -16,9 +16,6 @@
 #include <niRFSG.h>
 #include "niBTGeneration.h"
 
-// Type alias: NIComplexDouble is the same as NIComplexNumber
-typedef NIComplexNumber NIComplexDouble;
-
 #ifdef __cplusplus
 extern "C"
 {
