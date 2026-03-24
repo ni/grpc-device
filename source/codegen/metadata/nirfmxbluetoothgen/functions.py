@@ -94,13 +94,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'waveform',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'waveformSize',
                     'value_twist': 'actualWaveformSize'
                 },
-                'type': 'NIComplexDouble[]'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -152,7 +153,7 @@ functions = {
                     'value_twist': 'actualWaveformSize'
                 },
                 'type': 'float64[]',
-                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(waveform)'
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber*>(waveform)'
             },
             {
                 'direction': 'in',
@@ -707,13 +708,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'nidevice_grpc.NIComplexNumber',
                 'name': 'waveform',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'NIComplexDouble[]'
+                'type': 'NIComplexNumber_struct'
             },
             {
                 'direction': 'in',
@@ -784,8 +786,8 @@ functions = {
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'float64[]',
-                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(waveform)'
+                'type': 'float64',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber>(waveform)'
             },
             {
                 'direction': 'in',

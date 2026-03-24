@@ -108,7 +108,7 @@ int32 NiRFmxBluetoothGenLibrary::CreateAndWriteWaveformsToFile(niBTSGSession ses
   return function_pointers_.CreateAndWriteWaveformsToFile(session, filePath, fileOperation);
 }
 
-int32 NiRFmxBluetoothGenLibrary::CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexDouble waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone)
+int32 NiRFmxBluetoothGenLibrary::CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone)
 {
   if (!function_pointers_.CreateWaveformComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niBTSG_CreateWaveformComplexF64.");
@@ -121,7 +121,7 @@ int32 NiRFmxBluetoothGenLibrary::CreateWaveformComplexF64InterleavedIQ(niBTSGSes
   if (!function_pointers_.CreateWaveformComplexF64InterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find niBTSG_CreateWaveformComplexF64.");
   }
-  return function_pointers_.CreateWaveformComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexDouble*>(waveform), waveformSize, actualWaveformSize, generationDone);
+  return function_pointers_.CreateWaveformComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexNumber*>(waveform), waveformSize, actualWaveformSize, generationDone);
 }
 
 int32 NiRFmxBluetoothGenLibrary::GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize, int32* actualStringSize)
@@ -268,7 +268,7 @@ int32 NiRFmxBluetoothGenLibrary::RFSGStoreIQRate(ViSession rfsgHandle, char chan
   return function_pointers_.RFSGStoreIQRate(rfsgHandle, channelString, waveformName, iqRate);
 }
 
-int32 NiRFmxBluetoothGenLibrary::ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexDouble waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 NiRFmxBluetoothGenLibrary::ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
   if (!function_pointers_.ReadWaveformFromFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niBTSG_ReadWaveformFromFile.");
@@ -276,12 +276,12 @@ int32 NiRFmxBluetoothGenLibrary::ReadWaveformFromFile(char filePath[], char wave
   return function_pointers_.ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, waveform, waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
-int32 NiRFmxBluetoothGenLibrary::ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 NiRFmxBluetoothGenLibrary::ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
   if (!function_pointers_.ReadWaveformFromFileInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find niBTSG_ReadWaveformFromFile.");
   }
-  return function_pointers_.ReadWaveformFromFileInterleavedIQ(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexDouble*>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
+  return function_pointers_.ReadWaveformFromFileInterleavedIQ(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
 int32 NiRFmxBluetoothGenLibrary::ResetAttribute(niBTSGSession session, char channelString[], int32 attributeID)

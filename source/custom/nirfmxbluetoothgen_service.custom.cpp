@@ -1,5 +1,4 @@
 #include <nirfmxbluetoothgen/nirfmxbluetoothgen_service.h>
-#include <nirfsg/nirfsg_service.h>
 
 namespace nirfmxbluetoothgen_grpc {
 
@@ -7,7 +6,7 @@ namespace nirfmxbluetoothgen_grpc {
 {
   ViStatus error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-  if (error_code != status) {
+  if (status < 0) {
     // Since another thread has changed the status, fall back to the static message lookup.
     description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
     library_->GetErrorString(session, status, &description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
@@ -19,10 +18,10 @@ namespace nirfmxbluetoothgen_grpc {
 {
   ViStatus error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-  if (error_code != status) {
+  if (status < 0) {
     // Since another thread has changed the status, fall back to the static message lookup.
     description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    library_->GetErrorString(reinterpret_cast<niBTSGSession>(RFSGHandle), status, &description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
+    library_->GetErrorString((unsigned long long *)RFSGHandle, status, &description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
   }
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }

@@ -27,14 +27,14 @@ int32 CreateAndWriteWaveformsToFile(niBTSGSession session, char filePath[], int3
   return niBTSG_CreateAndWriteWaveformsToFile(session, filePath, fileOperation);
 }
 
-int32 CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexDouble waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone)
+int32 CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone)
 {
   return niBTSG_CreateWaveformComplexF64(session, reset, t0, dt, waveform, waveformSize, actualWaveformSize, generationDone);
 }
 
 int32 CreateWaveformComplexF64InterleavedIQ(niBTSGSession session, int32 reset, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone)
 {
-  return niBTSG_CreateWaveformComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexDouble*>(waveform), waveformSize, actualWaveformSize, generationDone);
+  return niBTSG_CreateWaveformComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexNumber*>(waveform), waveformSize, actualWaveformSize, generationDone);
 }
 
 int32 GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize, int32* actualStringSize)
@@ -127,14 +127,14 @@ int32 RFSGStoreIQRate(ViSession rfsgHandle, char channelString[], char waveformN
   return niBTSG_RFSGStoreIQRate(rfsgHandle, channelString, waveformName, iqRate);
 }
 
-int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexDouble waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
   return niBTSG_ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, waveform, waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
-int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
-  return niBTSG_ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexDouble*>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
+  return niBTSG_ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
 int32 ResetAttribute(niBTSGSession session, char channelString[], int32 attributeID)

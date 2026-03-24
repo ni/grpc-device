@@ -7,7 +7,7 @@ config = {
     'java_package': 'com.ni.grpc.nirfmxbluetoothgen',
     'csharp_namespace': 'NationalInstruments.Grpc.NiRFmxBluetoothGen',
     'namespace_component': 'nirfmxbluetoothgen',
-    'close_function': 'Close',
+    'close_function': 'CloseSession',
     'custom_types': [],
     'additional_headers': { 
         'custom/nirfmx_errors.h': ['service.cpp'], 

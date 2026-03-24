@@ -29,10 +29,10 @@ class NiRFmxWLANGenLibrary : public nirfmxwlangen_grpc::NiRFmxWLANGenLibraryInte
   int32 ChannelNumberToCarrierFrequency80211ax(float64 channelStartingFrequency, int32 channelNumber, float64* carrierFrequency) override;
   int32 CloseSession(niWLANGenerationSession session) override;
   int32 CreateAndWriteWaveformsToFile(niWLANGenerationSession session, char filePath[], int32 fileOperation) override;
-  int32 CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexDouble* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done) override;
+  int32 CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done) override;
   int32 CreateMIMOWaveformsComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done) override;
   int32 CreateTriggerFrameMSDU(niWLANGenerationSession session, char channelString[], int32* generationDone, int32 triggerFrameMsduBits[], int32 dataArraySize, int32* actualDataArraySize) override;
-  int32 CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexDouble* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done) override;
+  int32 CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done) override;
   int32 CreateWaveformComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done) override;
   int32 GetErrorString(niWLANGenerationSession session, int32 errorCode, char errorMessage[], int32 errorMessageLen) override;
   int32 GetNumberOfUsersFromRUAllocation(niWLANGenerationSession session, char channelString[], int32* numberOfUsers) override;
@@ -69,7 +69,7 @@ class NiRFmxWLANGenLibrary : public nirfmxwlangen_grpc::NiRFmxWLANGenLibraryInte
   int32 RFSGStoreRFBlankingMarkerPositions(ViSession rfsgSession, char waveformName[], int32 rfBlankingMarkerPositions[], int32 dataArraySize) override;
   int32 ReadBurstStartLocationsFromFile(char filePath[], char waveformName[], int32 burstStartLocations[], int32 dataArraySize, int32* actualDataArraySize) override;
   int32 ReadBurstStopLocationsFromFile(char filePath[], char waveformName[], int32 burstStopLocations[], int32 dataArraySize, int32* actualDataArraySize) override;
-  int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexDouble* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof) override;
+  int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof) override;
   int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof) override;
   int32 ResetSession(niWLANGenerationSession session) override;
   int32 SaveConfigurationToFile(niWLANGenerationSession session, char filePath[], int32 fileOperation) override;

@@ -25,7 +25,7 @@ class NiRFmxBluetoothGenLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBluetoot
   int32 ChannelNumberToCarrierFrequency(int32 channelNumber, int32 standard, float64* carrierFrequency) override;
   int32 CloseSession(niBTSGSession session) override;
   int32 CreateAndWriteWaveformsToFile(niBTSGSession session, char filePath[], int32 fileOperation) override;
-  int32 CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexDouble waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone) override;
+  int32 CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone) override;
   int32 CreateWaveformComplexF64InterleavedIQ(niBTSGSession session, int32 reset, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone) override;
   int32 GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize, int32* actualStringSize) override;
   int32 GetErrorString(niBTSGSession session, int32 errorCode, char errorMessage[], int32 errorMessageLength) override;
@@ -45,8 +45,8 @@ class NiRFmxBluetoothGenLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBluetoot
   int32 RFSGRetrieveMinimumHeadroomAllWaveforms(ViSession rfsgHandle, char channelString[], char script[], float64* headroom) override;
   int32 RFSGStoreHeadroom(ViSession rfsgHandle, char channelString[], char waveformName[], float64 headroom) override;
   int32 RFSGStoreIQRate(ViSession rfsgHandle, char channelString[], char waveformName[], float64 iqRate) override;
-  int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexDouble waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof) override;
-  int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof) override;
+  int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof) override;
+  int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof) override;
   int32 ResetAttribute(niBTSGSession session, char channelString[], int32 attributeID) override;
   int32 ResetSession(niBTSGSession session) override;
   int32 SaveConfigurationToFile(niBTSGSession session, char filePath[], int32 operation) override;

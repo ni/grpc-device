@@ -583,7 +583,7 @@ message ReadWaveformFromFileResponse {
   int32 status = 1;
   double t0 = 2;
   double dt = 3;
-  repeated nidevice_grpc.NIComplexNumber waveform = 4;
+  nidevice_grpc.NIComplexNumber waveform = 4;
   int32 actual_num_waveform_samples = 5;
   double iq_rate = 6;
   double headroom = 7;
@@ -601,7 +601,7 @@ message ReadWaveformFromFileInterleavedIQResponse {
   int32 status = 1;
   double t0 = 2;
   double dt = 3;
-  repeated double waveform = 4;
+  double waveform = 4;
   int32 actual_num_waveform_samples = 5;
   double iq_rate = 6;
   double headroom = 7;

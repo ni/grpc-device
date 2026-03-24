@@ -105,6 +105,7 @@ namespace nirfmxbluetoothgen_grpc {
     try {
       auto session_grpc_session = request->session();
       niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
+      session_repository_->remove_session(session_grpc_session.name());
       auto status = library_->CloseSession(session);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
@@ -177,7 +178,7 @@ namespace nirfmxbluetoothgen_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
         }
-        std::vector<NIComplexDouble> waveform(actual_waveform_size, NIComplexDouble());
+        std::vector<NIComplexNumber_struct> waveform(actual_waveform_size, NIComplexNumber_struct());
         auto waveform_size = actual_waveform_size;
         status = library_->CreateWaveformComplexF64(session, reset, &t0, &dt, waveform.data(), waveform_size, &actual_waveform_size, &generation_done);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
@@ -833,6 +834,7 @@ namespace nirfmxbluetoothgen_grpc {
       int64 count = request->count();
       float64 t0 {};
       float64 dt {};
+      NIComplexNumber_struct waveform {};
       int32 actual_num_waveform_samples {};
       float64 iq_rate {};
       float64 headroom {};
@@ -842,9 +844,8 @@ namespace nirfmxbluetoothgen_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiBTSGSession(context, status, 0);
         }
-        std::vector<NIComplexDouble> waveform(actual_num_waveform_samples, NIComplexDouble());
         auto waveform_size = actual_num_waveform_samples;
-        status = library_->ReadWaveformFromFile(file_path, waveform_name, offset, count, &t0, &dt, waveform.data(), waveform_size, &actual_num_waveform_samples, &iq_rate, &headroom, &eof);
+        status = library_->ReadWaveformFromFile(file_path, waveform_name, offset, count, &t0, &dt, &waveform, waveform_size, &actual_num_waveform_samples, &iq_rate, &headroom, &eof);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -891,6 +892,7 @@ namespace nirfmxbluetoothgen_grpc {
       int64 count = request->count();
       float64 t0 {};
       float64 dt {};
+      float64 waveform {};
       int32 actual_num_waveform_samples {};
       float64 iq_rate {};
       float64 headroom {};
@@ -900,10 +902,8 @@ namespace nirfmxbluetoothgen_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiBTSGSession(context, status, 0);
         }
-        response->mutable_waveform()->Resize(actual_num_waveform_samples * 2, 0);
-        float64* waveform = response->mutable_waveform()->mutable_data();
         auto waveform_size = actual_num_waveform_samples;
-        status = library_->ReadWaveformFromFileInterleavedIQ(file_path, waveform_name, offset, count, &t0, &dt, waveform, waveform_size, &actual_num_waveform_samples, &iq_rate, &headroom, &eof);
+        status = library_->ReadWaveformFromFileInterleavedIQ(file_path, waveform_name, offset, count, &t0, &dt, &waveform, waveform_size, &actual_num_waveform_samples, &iq_rate, &headroom, &eof);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -914,6 +914,7 @@ namespace nirfmxbluetoothgen_grpc {
         response->set_status(status);
         response->set_t0(t0);
         response->set_dt(dt);
+        response->set_waveform(reinterpret_cast<_ni_complex_number>(waveform));
         response->mutable_waveform()->Resize(actual_num_waveform_samples * 2, 0);
         response->set_actual_num_waveform_samples(actual_num_waveform_samples * 2);
         response->set_iq_rate(iq_rate);

@@ -47,14 +47,14 @@ int32 CreateAndWriteWaveformsToFile(niWLANGenerationSession session, char filePa
   return niWLANG_CreateAndWriteWaveformsToFile(session, filePath, fileOperation);
 }
 
-int32 CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexDouble* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
+int32 CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
 {
   return niWLANG_CreateMIMOWaveformsComplexF64(session, reset, t0, dt, waveforms, numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
 }
 
 int32 CreateMIMOWaveformsComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
 {
-  return niWLANG_CreateMIMOWaveformsComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexDouble>(waveforms), numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
+  return niWLANG_CreateMIMOWaveformsComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexNumber>(waveforms), numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
 }
 
 int32 CreateTriggerFrameMSDU(niWLANGenerationSession session, char channelString[], int32* generationDone, int32 triggerFrameMsduBits[], int32 dataArraySize, int32* actualDataArraySize)
@@ -62,14 +62,14 @@ int32 CreateTriggerFrameMSDU(niWLANGenerationSession session, char channelString
   return niWLANG_CreateTriggerFrameMSDU(session, channelString, generationDone, triggerFrameMsduBits, dataArraySize, actualDataArraySize);
 }
 
-int32 CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexDouble* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
+int32 CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
 {
   return niWLANG_CreateWaveformComplexF64(session, reset, t0, dt, waveform, waveformSize, actualNumWaveformSamples, done);
 }
 
 int32 CreateWaveformComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
 {
-  return niWLANG_CreateWaveformComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexDouble>(waveform), waveformSize, actualNumWaveformSamples, done);
+  return niWLANG_CreateWaveformComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, done);
 }
 
 int32 GetErrorString(niWLANGenerationSession session, int32 errorCode, char errorMessage[], int32 errorMessageLen)
@@ -247,14 +247,14 @@ int32 ReadBurstStopLocationsFromFile(char filePath[], char waveformName[], int32
   return niWLANG_ReadBurstStopLocationsFromFile(filePath, waveformName, burstStopLocations, dataArraySize, actualDataArraySize);
 }
 
-int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexDouble* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
   return niWLANG_ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, waveform, waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
 int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
-  return niWLANG_ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexDouble>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
+  return niWLANG_ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
 int32 ResetSession(niWLANGenerationSession session)

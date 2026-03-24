@@ -209,13 +209,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'nidevice_grpc.NIComplexNumber',
                 'name': 'waveforms',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'individualWaveformSize',
                     'value_twist': 'actualNumSamplesInEachWfm'
                 },
-                'type': 'NIComplexDouble'
+                'type': 'NIComplexNumber_struct'
             },
             {
                 'direction': 'in',
@@ -272,7 +273,7 @@ functions = {
                     'value_twist': 'actualNumSamplesInEachWfm'
                 },
                 'type': 'float64',
-                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble>(waveforms)'
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber>(waveforms)'
             },
             {
                 'direction': 'in',
@@ -361,13 +362,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'nidevice_grpc.NIComplexNumber',
                 'name': 'waveform',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'NIComplexDouble'
+                'type': 'NIComplexNumber_struct'
             },
             {
                 'direction': 'in',
@@ -419,7 +421,7 @@ functions = {
                     'value_twist': 'actualNumWaveformSamples'
                 },
                 'type': 'float64',
-                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble>(waveform)'
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber>(waveform)'
             },
             {
                 'direction': 'in',
@@ -1548,13 +1550,14 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'nidevice_grpc.NIComplexNumber',
                 'name': 'waveform',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'NIComplexDouble'
+                'type': 'NIComplexNumber_struct'
             },
             {
                 'direction': 'in',
@@ -1626,7 +1629,7 @@ functions = {
                     'value_twist': 'actualNumWaveformSamples'
                 },
                 'type': 'float64',
-                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble>(waveform)'
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber>(waveform)'
             },
             {
                 'direction': 'in',

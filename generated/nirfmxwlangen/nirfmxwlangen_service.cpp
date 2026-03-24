@@ -275,7 +275,7 @@ namespace nirfmxwlangen_grpc {
       int32 number_of_tx_chains = request->number_of_tx_chains();
       float64 t0 {};
       float64 dt {};
-      NIComplexDouble waveforms {};
+      NIComplexNumber_struct waveforms {};
       int32 actual_num_samples_in_each_wfm {};
       int32 done {};
       while (true) {
@@ -347,7 +347,7 @@ namespace nirfmxwlangen_grpc {
         response->set_status(status);
         response->set_t0(t0);
         response->set_dt(dt);
-        response->set_waveforms(reinterpret_cast<_ni_complex_double>(waveforms));
+        response->set_waveforms(reinterpret_cast<_ni_complex_number>(waveforms));
         response->mutable_waveforms()->Resize(actual_num_samples_in_each_wfm * 2, 0);
         response->set_actual_num_samples_in_each_wfm(actual_num_samples_in_each_wfm * 2);
         response->set_done(done);
@@ -414,7 +414,7 @@ namespace nirfmxwlangen_grpc {
       int32 reset = request->reset();
       float64 t0 {};
       float64 dt {};
-      NIComplexDouble waveform {};
+      NIComplexNumber_struct waveform {};
       int32 actual_num_waveform_samples {};
       int32 done {};
       while (true) {
@@ -485,7 +485,7 @@ namespace nirfmxwlangen_grpc {
         response->set_status(status);
         response->set_t0(t0);
         response->set_dt(dt);
-        response->set_waveform(reinterpret_cast<_ni_complex_double>(waveform));
+        response->set_waveform(reinterpret_cast<_ni_complex_number>(waveform));
         response->mutable_waveform()->Resize(actual_num_waveform_samples * 2, 0);
         response->set_actual_num_waveform_samples(actual_num_waveform_samples * 2);
         response->set_done(done);
@@ -1694,7 +1694,7 @@ namespace nirfmxwlangen_grpc {
       int64 count = request->count();
       float64 t0 {};
       float64 dt {};
-      NIComplexDouble waveform {};
+      NIComplexNumber_struct waveform {};
       int32 actual_num_waveform_samples {};
       float64 iq_rate {};
       float64 headroom {};
@@ -1774,7 +1774,7 @@ namespace nirfmxwlangen_grpc {
         response->set_status(status);
         response->set_t0(t0);
         response->set_dt(dt);
-        response->set_waveform(reinterpret_cast<_ni_complex_double>(waveform));
+        response->set_waveform(reinterpret_cast<_ni_complex_number>(waveform));
         response->mutable_waveform()->Resize(actual_num_waveform_samples * 2, 0);
         response->set_actual_num_waveform_samples(actual_num_waveform_samples * 2);
         response->set_iq_rate(iq_rate);

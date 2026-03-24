@@ -161,7 +161,7 @@ int32 NiRFmxWLANGenLibrary::CreateAndWriteWaveformsToFile(niWLANGenerationSessio
   return function_pointers_.CreateAndWriteWaveformsToFile(session, filePath, fileOperation);
 }
 
-int32 NiRFmxWLANGenLibrary::CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexDouble* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
+int32 NiRFmxWLANGenLibrary::CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
 {
   if (!function_pointers_.CreateMIMOWaveformsComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_CreateMIMOWaveformsComplexF64.");
@@ -174,7 +174,7 @@ int32 NiRFmxWLANGenLibrary::CreateMIMOWaveformsComplexF64InterleavedIQ(niWLANGen
   if (!function_pointers_.CreateMIMOWaveformsComplexF64InterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_CreateMIMOWaveformsComplexF64.");
   }
-  return function_pointers_.CreateMIMOWaveformsComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexDouble>(waveforms), numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
+  return function_pointers_.CreateMIMOWaveformsComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexNumber>(waveforms), numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
 }
 
 int32 NiRFmxWLANGenLibrary::CreateTriggerFrameMSDU(niWLANGenerationSession session, char channelString[], int32* generationDone, int32 triggerFrameMsduBits[], int32 dataArraySize, int32* actualDataArraySize)
@@ -185,7 +185,7 @@ int32 NiRFmxWLANGenLibrary::CreateTriggerFrameMSDU(niWLANGenerationSession sessi
   return function_pointers_.CreateTriggerFrameMSDU(session, channelString, generationDone, triggerFrameMsduBits, dataArraySize, actualDataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexDouble* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
+int32 NiRFmxWLANGenLibrary::CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
 {
   if (!function_pointers_.CreateWaveformComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_CreateWaveformComplexF64.");
@@ -198,7 +198,7 @@ int32 NiRFmxWLANGenLibrary::CreateWaveformComplexF64InterleavedIQ(niWLANGenerati
   if (!function_pointers_.CreateWaveformComplexF64InterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_CreateWaveformComplexF64.");
   }
-  return function_pointers_.CreateWaveformComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexDouble>(waveform), waveformSize, actualNumWaveformSamples, done);
+  return function_pointers_.CreateWaveformComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, done);
 }
 
 int32 NiRFmxWLANGenLibrary::GetErrorString(niWLANGenerationSession session, int32 errorCode, char errorMessage[], int32 errorMessageLen)
@@ -481,7 +481,7 @@ int32 NiRFmxWLANGenLibrary::ReadBurstStopLocationsFromFile(char filePath[], char
   return function_pointers_.ReadBurstStopLocationsFromFile(filePath, waveformName, burstStopLocations, dataArraySize, actualDataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexDouble* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 NiRFmxWLANGenLibrary::ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
   if (!function_pointers_.ReadWaveformFromFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_ReadWaveformFromFile.");
@@ -494,7 +494,7 @@ int32 NiRFmxWLANGenLibrary::ReadWaveformFromFileInterleavedIQ(char filePath[], c
   if (!function_pointers_.ReadWaveformFromFileInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_ReadWaveformFromFile.");
   }
-  return function_pointers_.ReadWaveformFromFileInterleavedIQ(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexDouble>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
+  return function_pointers_.ReadWaveformFromFileInterleavedIQ(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
 int32 NiRFmxWLANGenLibrary::ResetSession(niWLANGenerationSession session)
