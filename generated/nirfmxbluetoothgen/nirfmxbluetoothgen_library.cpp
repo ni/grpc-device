@@ -172,12 +172,12 @@ int32 NiRFmxBluetoothGenLibrary::GetVectorAttributeF64(niBTSGSession session, ch
   return function_pointers_.GetVectorAttributeF64(session, channelString, attributeID, data, dataArraySize, actualNumDataArrayElements);
 }
 
-int32 NiRFmxBluetoothGenLibrary::GetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize, int32* actualNumDataArrayElements)
+int32 NiRFmxBluetoothGenLibrary::GetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize, int32* actualNumDataArrayElements)
 {
   if (!function_pointers_.GetVectorAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niBTSG_GetVectorAttributeI32.");
   }
-  return function_pointers_.GetVectorAttributeI32(session, channelString, attributeID, dataArray, dataArraySize, actualNumDataArrayElements);
+  return function_pointers_.GetVectorAttributeI32(session, channelString, attributeID, data, dataArraySize, actualNumDataArrayElements);
 }
 
 int32 NiRFmxBluetoothGenLibrary::LoadConfigurationFromFile(niBTSGSession session, char filePath[], int32 reset)
@@ -356,12 +356,12 @@ int32 NiRFmxBluetoothGenLibrary::SetVectorAttributeF64(niBTSGSession session, ch
   return function_pointers_.SetVectorAttributeF64(session, channelString, attributeID, data, dataArraySize);
 }
 
-int32 NiRFmxBluetoothGenLibrary::SetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize)
+int32 NiRFmxBluetoothGenLibrary::SetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize)
 {
   if (!function_pointers_.SetVectorAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niBTSG_SetVectorAttributeI32.");
   }
-  return function_pointers_.SetVectorAttributeI32(session, channelString, attributeID, dataArray, dataArraySize);
+  return function_pointers_.SetVectorAttributeI32(session, channelString, attributeID, data, dataArraySize);
 }
 
 }  // namespace nirfmxbluetoothgen_grpc

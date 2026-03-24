@@ -370,7 +370,7 @@ message CreateWaveformComplexF64InterleavedIQResponse {
 }
 
 message GetAttributeStringRequest {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
 }
@@ -393,7 +393,7 @@ message GetErrorStringResponse {
 }
 
 message GetScalarAttributeF64Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
 }
@@ -404,7 +404,7 @@ message GetScalarAttributeF64Response {
 }
 
 message GetScalarAttributeI32Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
 }
@@ -416,7 +416,7 @@ message GetScalarAttributeI32Response {
 }
 
 message GetScalarAttributeI64Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
 }
@@ -427,7 +427,7 @@ message GetScalarAttributeI64Response {
 }
 
 message GetVectorAttributeF64Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
 }
@@ -439,14 +439,14 @@ message GetVectorAttributeF64Response {
 }
 
 message GetVectorAttributeI32Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
 }
 
 message GetVectorAttributeI32Response {
   int32 status = 1;
-  repeated int32 data_array = 2;
+  repeated int32 data = 2;
   int32 actual_num_data_array_elements = 3;
 }
 
@@ -648,7 +648,7 @@ message SetAntennaRelativePhaseAndAmplitudeResponse {
 }
 
 message SetAttributeStringRequest {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
   string attribute_value = 4;
@@ -659,7 +659,7 @@ message SetAttributeStringResponse {
 }
 
 message SetScalarAttributeF64Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
   oneof attribute_value_enum {
@@ -673,7 +673,7 @@ message SetScalarAttributeF64Response {
 }
 
 message SetScalarAttributeI32Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
   oneof attribute_value_enum {
@@ -687,7 +687,7 @@ message SetScalarAttributeI32Response {
 }
 
 message SetScalarAttributeI64Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
   int64 attribute_value = 4;
@@ -698,7 +698,7 @@ message SetScalarAttributeI64Response {
 }
 
 message SetVectorAttributeF64Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
   repeated double data = 4;
@@ -709,10 +709,10 @@ message SetVectorAttributeF64Response {
 }
 
 message SetVectorAttributeI32Request {
-  nidevice_grpc.Session instrument = 1;
+  nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
-  repeated int32 data_array = 4;
+  repeated int32 data = 4;
 }
 
 message SetVectorAttributeI32Response {

@@ -494,7 +494,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niWLANGenerationSession'
             },
@@ -521,7 +521,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niWLANGenerationSession'
             },
@@ -548,7 +548,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niWLANGenerationSession'
             },
@@ -590,7 +590,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niWLANGenerationSession'
             },
@@ -649,7 +649,7 @@ functions = {
         'returns': 'int32'
     },
     'OpenSession': {
-        'custom_close': 'Close(id, NIWLANG_VAL_FALSE)',
+        'custom_close': 'CloseSession(id)',
         'init_method': True,
         'parameters': [
             {
@@ -1764,7 +1764,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niWLANGenerationSession'
             },
@@ -1791,7 +1791,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niWLANGenerationSession'
             },
@@ -1818,7 +1818,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niWLANGenerationSession'
             },
@@ -1854,7 +1854,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niWLANGenerationSession'
             },

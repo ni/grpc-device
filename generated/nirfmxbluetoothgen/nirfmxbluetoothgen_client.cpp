@@ -133,12 +133,12 @@ create_waveform_complex_f64_interleaved_iq(const StubPtr& stub, const nidevice_g
 }
 
 GetAttributeStringResponse
-get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
+get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetAttributeStringRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
 
@@ -172,12 +172,12 @@ get_error_string(const StubPtr& stub, const nidevice_grpc::Session& session, con
 }
 
 GetScalarAttributeF64Response
-get_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
+get_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetScalarAttributeF64Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
 
@@ -191,12 +191,12 @@ get_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 GetScalarAttributeI32Response
-get_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
+get_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetScalarAttributeI32Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
 
@@ -210,12 +210,12 @@ get_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 GetScalarAttributeI64Response
-get_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
+get_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetScalarAttributeI64Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
 
@@ -229,12 +229,12 @@ get_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 GetVectorAttributeF64Response
-get_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
+get_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetVectorAttributeF64Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
 
@@ -248,12 +248,12 @@ get_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 GetVectorAttributeI32Response
-get_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
+get_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id)
 {
   ::grpc::ClientContext context;
 
   auto request = GetVectorAttributeI32Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
 
@@ -601,12 +601,12 @@ set_antenna_relative_phase_and_amplitude(const StubPtr& stub, const nidevice_grp
 }
 
 SetAttributeStringResponse
-set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::string& attribute_value)
+set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::string& attribute_value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetAttributeStringRequest{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
   request.set_attribute_value(attribute_value);
@@ -621,12 +621,12 @@ set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrume
 }
 
 SetScalarAttributeF64Response
-set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const simple_variant<NiRFmxBluetoothGenFloat64AttributeValues, double>& attribute_value)
+set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const simple_variant<NiRFmxBluetoothGenFloat64AttributeValues, double>& attribute_value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetScalarAttributeF64Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
   const auto attribute_value_ptr = attribute_value.get_if<NiRFmxBluetoothGenFloat64AttributeValues>();
@@ -648,12 +648,12 @@ set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SetScalarAttributeI32Response
-set_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const simple_variant<NiRFmxBluetoothGenInt32AttributeValues, pb::int32>& attribute_value)
+set_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const simple_variant<NiRFmxBluetoothGenInt32AttributeValues, pb::int32>& attribute_value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetScalarAttributeI32Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
   const auto attribute_value_ptr = attribute_value.get_if<NiRFmxBluetoothGenInt32AttributeValues>();
@@ -675,12 +675,12 @@ set_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SetScalarAttributeI64Response
-set_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const pb::int64& attribute_value)
+set_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const pb::int64& attribute_value)
 {
   ::grpc::ClientContext context;
 
   auto request = SetScalarAttributeI64Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
   request.set_attribute_value(attribute_value);
@@ -695,12 +695,12 @@ set_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SetVectorAttributeF64Response
-set_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::vector<double>& data)
+set_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::vector<double>& data)
 {
   ::grpc::ClientContext context;
 
   auto request = SetVectorAttributeF64Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
   copy_array(data, request.mutable_data());
@@ -715,15 +715,15 @@ set_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& inst
 }
 
 SetVectorAttributeI32Response
-set_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::vector<pb::int32>& data_array)
+set_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::vector<pb::int32>& data)
 {
   ::grpc::ClientContext context;
 
   auto request = SetVectorAttributeI32Request{};
-  request.mutable_instrument()->CopyFrom(instrument);
+  request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
-  copy_array(data_array, request.mutable_data_array());
+  copy_array(data, request.mutable_data());
 
   auto response = SetVectorAttributeI32Response{};
 

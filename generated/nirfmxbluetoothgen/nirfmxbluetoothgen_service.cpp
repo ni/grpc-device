@@ -262,29 +262,29 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_string_size {};
       while (true) {
-        auto status = library_->GetAttributeString(instrument, channel_string, attribute_id, nullptr, 0, &actual_string_size);
+        auto status = library_->GetAttributeString(session, channel_string, attribute_id, nullptr, 0, &actual_string_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+          return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
         }
         std::string attribute_value;
         if (actual_string_size > 0) {
             attribute_value.resize(actual_string_size - 1);
         }
         auto buffer_size = actual_string_size;
-        status = library_->GetAttributeString(instrument, channel_string, attribute_id, (char*)attribute_value.data(), buffer_size, &actual_string_size);
+        status = library_->GetAttributeString(session, channel_string, attribute_id, (char*)attribute_value.data(), buffer_size, &actual_string_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+          return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
         }
         response->set_status(status);
         std::string attribute_value_utf8;
@@ -334,15 +334,15 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       float64 attribute_value {};
-      auto status = library_->GetScalarAttributeF64(instrument, channel_string, attribute_id, &attribute_value);
+      auto status = library_->GetScalarAttributeF64(session, channel_string, attribute_id, &attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
       }
       response->set_status(status);
       response->set_attribute_value(attribute_value);
@@ -361,15 +361,15 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 attribute_value {};
-      auto status = library_->GetScalarAttributeI32(instrument, channel_string, attribute_id, &attribute_value);
+      auto status = library_->GetScalarAttributeI32(session, channel_string, attribute_id, &attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
       }
       response->set_status(status);
       auto checked_convert_attribute_value = [](auto raw_value) {
@@ -394,15 +394,15 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int64 attribute_value {};
-      auto status = library_->GetScalarAttributeI64(instrument, channel_string, attribute_id, &attribute_value);
+      auto status = library_->GetScalarAttributeI64(session, channel_string, attribute_id, &attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
       }
       response->set_status(status);
       response->set_attribute_value(attribute_value);
@@ -421,27 +421,27 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_num_data_array_elements {};
       while (true) {
-        auto status = library_->GetVectorAttributeF64(instrument, channel_string, attribute_id, nullptr, 0, &actual_num_data_array_elements);
+        auto status = library_->GetVectorAttributeF64(session, channel_string, attribute_id, nullptr, 0, &actual_num_data_array_elements);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+          return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
         }
         response->mutable_data()->Resize(actual_num_data_array_elements, 0);
         float64* data = response->mutable_data()->mutable_data();
         auto data_array_size = actual_num_data_array_elements;
-        status = library_->GetVectorAttributeF64(instrument, channel_string, attribute_id, data, data_array_size, &actual_num_data_array_elements);
+        status = library_->GetVectorAttributeF64(session, channel_string, attribute_id, data, data_array_size, &actual_num_data_array_elements);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+          return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
         }
         response->set_status(status);
         response->mutable_data()->Resize(actual_num_data_array_elements, 0);
@@ -462,30 +462,30 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int32 actual_num_data_array_elements {};
       while (true) {
-        auto status = library_->GetVectorAttributeI32(instrument, channel_string, attribute_id, nullptr, 0, &actual_num_data_array_elements);
+        auto status = library_->GetVectorAttributeI32(session, channel_string, attribute_id, nullptr, 0, &actual_num_data_array_elements);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+          return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
         }
-        response->mutable_data_array()->Resize(actual_num_data_array_elements, 0);
-        int32* data_array = reinterpret_cast<int32*>(response->mutable_data_array()->mutable_data());
+        response->mutable_data()->Resize(actual_num_data_array_elements, 0);
+        int32* data = reinterpret_cast<int32*>(response->mutable_data()->mutable_data());
         auto data_array_size = actual_num_data_array_elements;
-        status = library_->GetVectorAttributeI32(instrument, channel_string, attribute_id, data_array, data_array_size, &actual_num_data_array_elements);
+        status = library_->GetVectorAttributeI32(session, channel_string, attribute_id, data, data_array_size, &actual_num_data_array_elements);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+          return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
         }
         response->set_status(status);
-        response->mutable_data_array()->Resize(actual_num_data_array_elements, 0);
+        response->mutable_data()->Resize(actual_num_data_array_elements, 0);
         response->set_actual_num_data_array_elements(actual_num_data_array_elements);
         return ::grpc::Status::OK;
       }
@@ -556,7 +556,7 @@ namespace nirfmxbluetoothgen_grpc {
       std::string grpc_device_session_name = request->session_name();
       // Capture the library shared_ptr by value. Do not capture `this` or any references.
       LibrarySharedPtr library = library_;
-      auto cleanup_lambda = [library] (niBTSGSession id) { library->Close(id, NIBTSG_VAL_FALSE); };
+      auto cleanup_lambda = [library] (niBTSGSession id) { library->CloseSession(id); };
       int status = session_repository_->add_session(grpc_device_session_name, init_lambda, cleanup_lambda);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiBTSGSession(context, status, 0);
@@ -1051,16 +1051,16 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attribute_value_mbcs = convert_from_grpc<std::string>(request->attribute_value());
       char* attribute_value = (char*)attribute_value_mbcs.c_str();
-      auto status = library_->SetAttributeString(instrument, channel_string, attribute_id, attribute_value);
+      auto status = library_->SetAttributeString(session, channel_string, attribute_id, attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1078,8 +1078,8 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
@@ -1099,9 +1099,9 @@ namespace nirfmxbluetoothgen_grpc {
         }
       }
 
-      auto status = library_->SetScalarAttributeF64(instrument, channel_string, attribute_id, attribute_value);
+      auto status = library_->SetScalarAttributeF64(session, channel_string, attribute_id, attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1119,8 +1119,8 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
@@ -1140,9 +1140,9 @@ namespace nirfmxbluetoothgen_grpc {
         }
       }
 
-      auto status = library_->SetScalarAttributeI32(instrument, channel_string, attribute_id, attribute_value);
+      auto status = library_->SetScalarAttributeI32(session, channel_string, attribute_id, attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1160,15 +1160,15 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       int64 attribute_value = request->attribute_value();
-      auto status = library_->SetScalarAttributeI64(instrument, channel_string, attribute_id, attribute_value);
+      auto status = library_->SetScalarAttributeI64(session, channel_string, attribute_id, attribute_value);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1186,16 +1186,16 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto data = const_cast<float64*>(request->data().data());
       int32 data_array_size = static_cast<int32>(request->data().size());
-      auto status = library_->SetVectorAttributeF64(instrument, channel_string, attribute_id, data, data_array_size);
+      auto status = library_->SetVectorAttributeF64(session, channel_string, attribute_id, data, data_array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1213,16 +1213,16 @@ namespace nirfmxbluetoothgen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto instrument_grpc_session = request->instrument();
-      niBTSGSession instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto session_grpc_session = request->session();
+      niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
-      auto data_array = const_cast<int32*>(reinterpret_cast<const int32*>(request->data_array().data()));
-      int32 data_array_size = static_cast<int32>(request->data_array().size());
-      auto status = library_->SetVectorAttributeI32(instrument, channel_string, attribute_id, data_array, data_array_size);
+      auto data = const_cast<int32*>(reinterpret_cast<const int32*>(request->data().data()));
+      int32 data_array_size = static_cast<int32>(request->data().size());
+      auto status = library_->SetVectorAttributeI32(session, channel_string, attribute_id, data, data_array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, instrument);
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;

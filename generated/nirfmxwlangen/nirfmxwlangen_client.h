@@ -37,10 +37,10 @@ CreateWaveformComplexF64Response create_waveform_complex_f64(const StubPtr& stub
 CreateWaveformComplexF64InterleavedIQResponse create_waveform_complex_f64_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& reset);
 GetErrorStringResponse get_error_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& error_code);
 GetNumberOfUsersFromRUAllocationResponse get_number_of_users_from_ru_allocation(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string);
-GetScalarAttributeF64Response get_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id);
-GetScalarAttributeI32Response get_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id);
-GetVectorAttributeF64Response get_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id);
-GetVectorAttributeI32Response get_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id);
+GetScalarAttributeF64Response get_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id);
+GetScalarAttributeI32Response get_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id);
+GetVectorAttributeF64Response get_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id);
+GetVectorAttributeI32Response get_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id);
 LoadConfigurationFromFileResponse load_configuration_from_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const pb::int32& reset_session);
 OpenSessionResponse open_session(const StubPtr& stub, const std::string& session_name, const simple_variant<CompatibilityVersion, pb::int32>& toolkit_compatibility_version);
 RFSGClearDatabaseResponse rfsg_clear_database(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& waveform_name);
@@ -75,10 +75,10 @@ ReadWaveformFromFileInterleavedIQResponse read_waveform_from_file_interleaved_iq
 ResetSessionResponse reset_session(const StubPtr& stub, const nidevice_grpc::Session& session);
 SaveConfigurationToFileResponse save_configuration_to_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const pb::int32& file_operation);
 SetOFDMPacketExtensionThresholdsResponse set_ofdm_packet_extension_thresholds(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const std::vector<pb::int32>& ppet8, const std::vector<pb::int32>& number_of_space_time_streams, const std::vector<pb::int32>& ru_size, const pb::int32& ppet16_array_size);
-SetScalarAttributeF64Response set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const double& attribute_value);
-SetScalarAttributeI32Response set_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const simple_variant<NiRFmxWLANGenInt32AttributeValues, pb::int32>& attribute_value);
-SetVectorAttributeF64Response set_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const std::vector<double>& data);
-SetVectorAttributeI32Response set_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const std::vector<pb::int32>& data_array);
+SetScalarAttributeF64Response set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const double& attribute_value);
+SetScalarAttributeI32Response set_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const simple_variant<NiRFmxWLANGenInt32AttributeValues, pb::int32>& attribute_value);
+SetVectorAttributeF64Response set_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const std::vector<double>& data);
+SetVectorAttributeI32Response set_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const std::vector<pb::int32>& data_array);
 
 } // namespace nirfmxwlangen_grpc::experimental::client
 

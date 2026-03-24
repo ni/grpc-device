@@ -67,9 +67,9 @@ int32 GetVectorAttributeF64(niBTSGSession session, char channelString[], int32 a
   return niBTSG_GetVectorAttributeF64(session, channelString, attributeID, data, dataArraySize, actualNumDataArrayElements);
 }
 
-int32 GetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize, int32* actualNumDataArrayElements)
+int32 GetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize, int32* actualNumDataArrayElements)
 {
-  return niBTSG_GetVectorAttributeI32(session, channelString, attributeID, dataArray, dataArraySize, actualNumDataArrayElements);
+  return niBTSG_GetVectorAttributeI32(session, channelString, attributeID, data, dataArraySize, actualNumDataArrayElements);
 }
 
 int32 LoadConfigurationFromFile(niBTSGSession session, char filePath[], int32 reset)
@@ -182,9 +182,9 @@ int32 SetVectorAttributeF64(niBTSGSession session, char channelString[], int32 a
   return niBTSG_SetVectorAttributeF64(session, channelString, attributeID, data, dataArraySize);
 }
 
-int32 SetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize)
+int32 SetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize)
 {
-  return niBTSG_SetVectorAttributeI32(session, channelString, attributeID, dataArray, dataArraySize);
+  return niBTSG_SetVectorAttributeI32(session, channelString, attributeID, data, dataArraySize);
 }
 
 }  // namespace nirfmxbluetoothgen_grpc

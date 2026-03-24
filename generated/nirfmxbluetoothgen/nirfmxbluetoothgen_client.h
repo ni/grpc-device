@@ -28,13 +28,13 @@ CloseSessionResponse close_session(const StubPtr& stub, const nidevice_grpc::Ses
 CreateAndWriteWaveformsToFileResponse create_and_write_waveforms_to_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const simple_variant<FileOperationMode, pb::int32>& file_operation);
 CreateWaveformComplexF64Response create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& reset);
 CreateWaveformComplexF64InterleavedIQResponse create_waveform_complex_f64_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& reset);
-GetAttributeStringResponse get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
+GetAttributeStringResponse get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
 GetErrorStringResponse get_error_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& error_code, const std::string& error_message, const pb::int32& error_message_length);
-GetScalarAttributeF64Response get_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
-GetScalarAttributeI32Response get_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
-GetScalarAttributeI64Response get_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
-GetVectorAttributeF64Response get_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
-GetVectorAttributeI32Response get_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
+GetScalarAttributeF64Response get_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
+GetScalarAttributeI32Response get_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
+GetScalarAttributeI64Response get_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
+GetVectorAttributeF64Response get_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
+GetVectorAttributeI32Response get_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id);
 LoadConfigurationFromFileResponse load_configuration_from_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const pb::int32& reset);
 OpenSessionResponse open_session(const StubPtr& stub, const std::string& session_name, const simple_variant<CompatibilityVersion, pb::int32>& toolkit_compatibility_version);
 RFSGClearDatabaseResponse rfsg_clear_database(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& waveform_name);
@@ -52,12 +52,12 @@ ResetAttributeResponse reset_attribute(const StubPtr& stub, const nidevice_grpc:
 ResetSessionResponse reset_session(const StubPtr& stub, const nidevice_grpc::Session& session);
 SaveConfigurationToFileResponse save_configuration_to_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const pb::int32& operation);
 SetAntennaRelativePhaseAndAmplitudeResponse set_antenna_relative_phase_and_amplitude(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const std::vector<double>& relative_amplitude_db, const std::vector<double>& relative_phase_deg);
-SetAttributeStringResponse set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::string& attribute_value);
-SetScalarAttributeF64Response set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const simple_variant<NiRFmxBluetoothGenFloat64AttributeValues, double>& attribute_value);
-SetScalarAttributeI32Response set_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const simple_variant<NiRFmxBluetoothGenInt32AttributeValues, pb::int32>& attribute_value);
-SetScalarAttributeI64Response set_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const pb::int64& attribute_value);
-SetVectorAttributeF64Response set_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::vector<double>& data);
-SetVectorAttributeI32Response set_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::vector<pb::int32>& data_array);
+SetAttributeStringResponse set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::string& attribute_value);
+SetScalarAttributeF64Response set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const simple_variant<NiRFmxBluetoothGenFloat64AttributeValues, double>& attribute_value);
+SetScalarAttributeI32Response set_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const simple_variant<NiRFmxBluetoothGenInt32AttributeValues, pb::int32>& attribute_value);
+SetScalarAttributeI64Response set_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const pb::int64& attribute_value);
+SetVectorAttributeF64Response set_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::vector<double>& data);
+SetVectorAttributeI32Response set_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const std::vector<pb::int32>& data);
 
 } // namespace nirfmxbluetoothgen_grpc::experimental::client
 

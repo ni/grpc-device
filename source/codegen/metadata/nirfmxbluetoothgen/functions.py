@@ -177,7 +177,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -244,7 +244,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -271,7 +271,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -298,7 +298,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -325,7 +325,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -367,7 +367,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -384,7 +384,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'dataArray',
+                'name': 'data',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'dataArraySize',
@@ -426,7 +426,7 @@ functions = {
         'returns': 'int32'
     },
     'OpenSession': {
-        'custom_close': 'Close(id, NIBTSG_VAL_FALSE)',
+        'custom_close': 'CloseSession(id)',
         'init_method': True,
         'parameters': [
             {
@@ -916,7 +916,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -943,7 +943,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -970,7 +970,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -997,7 +997,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -1024,7 +1024,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -1060,7 +1060,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'grpc_name': 'instrument',
+                'grpc_name': 'session',
                 'name': 'session',
                 'type': 'niBTSGSession'
             },
@@ -1077,7 +1077,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'dataArray',
+                'name': 'data',
                 'size': {
                     'mechanism': 'len',
                     'value': 'dataArraySize'

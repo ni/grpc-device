@@ -29,7 +29,7 @@ class NiRFmxBluetoothGenMockLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBlue
   MOCK_METHOD(int32, GetScalarAttributeI32, (niBTSGSession session, char channelString[], int32 attributeID, int32* attributeValue), (override));
   MOCK_METHOD(int32, GetScalarAttributeI64, (niBTSGSession session, char channelString[], int32 attributeID, int64* attributeValue), (override));
   MOCK_METHOD(int32, GetVectorAttributeF64, (niBTSGSession session, char channelString[], int32 attributeID, float64 data[], int32 dataArraySize, int32* actualNumDataArrayElements), (override));
-  MOCK_METHOD(int32, GetVectorAttributeI32, (niBTSGSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize, int32* actualNumDataArrayElements), (override));
+  MOCK_METHOD(int32, GetVectorAttributeI32, (niBTSGSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize, int32* actualNumDataArrayElements), (override));
   MOCK_METHOD(int32, LoadConfigurationFromFile, (niBTSGSession session, char filePath[], int32 reset), (override));
   MOCK_METHOD(int32, OpenSession, (char sessionName[], int32 toolkitCompatibilityVersion, niBTSGSession* session, int32* isNewSession), (override));
   MOCK_METHOD(int32, RFSGClearDatabase, (ViSession rfsgHandle, char channelString[], char waveformName[]), (override));
@@ -52,7 +52,7 @@ class NiRFmxBluetoothGenMockLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBlue
   MOCK_METHOD(int32, SetScalarAttributeI32, (niBTSGSession session, char channelString[], int32 attributeID, int32 attributeValue), (override));
   MOCK_METHOD(int32, SetScalarAttributeI64, (niBTSGSession session, char channelString[], int32 attributeID, int64 attributeValue), (override));
   MOCK_METHOD(int32, SetVectorAttributeF64, (niBTSGSession session, char channelString[], int32 attributeID, float64 data[], int32 dataArraySize), (override));
-  MOCK_METHOD(int32, SetVectorAttributeI32, (niBTSGSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize), (override));
+  MOCK_METHOD(int32, SetVectorAttributeI32, (niBTSGSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize), (override));
 };
 
 }  // namespace unit

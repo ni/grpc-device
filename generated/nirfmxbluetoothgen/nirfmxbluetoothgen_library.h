@@ -33,7 +33,7 @@ class NiRFmxBluetoothGenLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBluetoot
   int32 GetScalarAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32* attributeValue) override;
   int32 GetScalarAttributeI64(niBTSGSession session, char channelString[], int32 attributeID, int64* attributeValue) override;
   int32 GetVectorAttributeF64(niBTSGSession session, char channelString[], int32 attributeID, float64 data[], int32 dataArraySize, int32* actualNumDataArrayElements) override;
-  int32 GetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize, int32* actualNumDataArrayElements) override;
+  int32 GetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize, int32* actualNumDataArrayElements) override;
   int32 LoadConfigurationFromFile(niBTSGSession session, char filePath[], int32 reset) override;
   int32 OpenSession(char sessionName[], int32 toolkitCompatibilityVersion, niBTSGSession* session, int32* isNewSession) override;
   int32 RFSGClearDatabase(ViSession rfsgHandle, char channelString[], char waveformName[]) override;
@@ -56,7 +56,7 @@ class NiRFmxBluetoothGenLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBluetoot
   int32 SetScalarAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 attributeValue) override;
   int32 SetScalarAttributeI64(niBTSGSession session, char channelString[], int32 attributeID, int64 attributeValue) override;
   int32 SetVectorAttributeF64(niBTSGSession session, char channelString[], int32 attributeID, float64 data[], int32 dataArraySize) override;
-  int32 SetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize) override;
+  int32 SetVectorAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize) override;
 
  private:
   using CarrierFrequencyToChannelNumberPtr = decltype(&niBTSG_CarrierFrequencyToChannelNumber);
