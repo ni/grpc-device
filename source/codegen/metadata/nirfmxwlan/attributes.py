@@ -1815,6 +1815,11 @@ attributes = {
         'name': 'OFDMMODACC_RESULTS_NUMBER_OF_SIG_SYMBOLS',
         'type': 'int32'
     },
+    10502376: {
+        'access': 'read-write',
+        'name': 'OFDMMODACC_RESULTS_CHAIN_STREAM_CROSS_POWER_MEAN',
+        'type': 'float64'
+    },
     10506240: {
         'access': 'read-write',
         'name': 'SEM_MEASUREMENT_ENABLED',

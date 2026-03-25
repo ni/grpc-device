@@ -83,9 +83,17 @@ class NiRFmxVNAMockLibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetFrequency, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetFromFile, (niRFmxInstrHandle instrumentHandle, char selectorString[], char fileName[]), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS11, (niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s11[], int32 arraySize), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11[], int32 arraySize), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS11Split, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11I[], float64 s11Q[], int32 arraySize), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS12, (niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12[], int32 arraySize), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS12Split, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12I[], float64 s12Q[], int32 arraySize), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS21, (niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21[], int32 arraySize), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS21Split, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21I[], float64 s21Q[], int32 arraySize), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS22, (niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22[], int32 arraySize), (override));
+  MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetS22Split, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22I[], float64 s22Q[], int32 arraySize), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability, (niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSetDescription, (niRFmxInstrHandle instrumentHandle, char selectorString[], char description[]), (override));
   MOCK_METHOD(int32, CalkitManagerCalkitCalibrationElementSetMaximumFrequency, (niRFmxInstrHandle instrumentHandle, char selectorString[], float64 maximumFrequency), (override));

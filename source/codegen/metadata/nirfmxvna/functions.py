@@ -1756,6 +1756,84 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ': {
+        'cname': 'RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's11',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s11)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterSetS11Split': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's11I',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's11Q',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CalkitManagerCalkitCalibrationElementSParameterSetS12': {
         'parameters': [
             {
@@ -1777,6 +1855,84 @@ functions = {
                     'value': 'arraySize'
                 },
                 'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ': {
+        'cname': 'RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's12',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s12)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterSetS12Split': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's12I',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's12Q',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
             },
             {
                 'direction': 'in',
@@ -1816,6 +1972,84 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ': {
+        'cname': 'RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's21',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s21)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterSetS21Split': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's21I',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's21Q',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CalkitManagerCalkitCalibrationElementSParameterSetS22': {
         'parameters': [
             {
@@ -1837,6 +2071,84 @@ functions = {
                     'value': 'arraySize'
                 },
                 'type': 'NIComplexDouble[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ': {
+        'cname': 'RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22',
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's22',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexDouble*>(s22)'
+            },
+            {
+                'direction': 'in',
+                'name': 'arraySize',
+                'type': 'int32',
+                'value_converted_to_c_representation': 'arraySize/2'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'CalkitManagerCalkitCalibrationElementSParameterSetS22Split': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's22I',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 's22Q',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'arraySize'
+                },
+                'type': 'float64[]'
             },
             {
                 'direction': 'in',

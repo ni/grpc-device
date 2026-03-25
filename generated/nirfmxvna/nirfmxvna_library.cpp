@@ -93,9 +93,17 @@ NiRFmxVNALibrary::NiRFmxVNALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetFrequency = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFrequency"));
   function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetFromFile = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetFromFilePtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFromFile"));
   function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS11Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11Split = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS11SplitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11Split"));
   function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS12Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12Split = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS12SplitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12Split"));
   function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS21Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21Split = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS21SplitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21Split"));
   function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22 = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS22Ptr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22"));
+  function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22Split = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetS22SplitPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22Split"));
   function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability = reinterpret_cast<CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability"));
   function_pointers_.CalkitManagerCalkitCalibrationElementSetDescription = reinterpret_cast<CalkitManagerCalkitCalibrationElementSetDescriptionPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSetDescription"));
   function_pointers_.CalkitManagerCalkitCalibrationElementSetMaximumFrequency = reinterpret_cast<CalkitManagerCalkitCalibrationElementSetMaximumFrequencyPtr>(shared_library_->get_function_pointer("RFmxVNA_CalkitManagerCalkitCalibrationElementSetMaximumFrequency"));
@@ -781,12 +789,44 @@ int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS11(ni
   return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11(instrumentHandle, selectorString, s11, arraySize);
 }
 
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s11), arraySize/2);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS11Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11I[], float64 s11Q[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11Split) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11Split.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS11Split(instrumentHandle, selectorString, s11I, s11Q, arraySize);
+}
+
 int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize)
 {
   if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12.");
   }
   return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12(instrumentHandle, selectorString, s12, arraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s12), arraySize/2);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS12Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12I[], float64 s12Q[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12Split) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12Split.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS12Split(instrumentHandle, selectorString, s12I, s12Q, arraySize);
 }
 
 int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS21(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize)
@@ -797,12 +837,44 @@ int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS21(ni
   return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21(instrumentHandle, selectorString, s21, arraySize);
 }
 
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s21), arraySize/2);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS21Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21I[], float64 s21Q[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21Split) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21Split.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS21Split(instrumentHandle, selectorString, s21I, s21Q, arraySize);
+}
+
 int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize)
 {
   if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22.");
   }
   return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22(instrumentHandle, selectorString, s22, arraySize);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s22), arraySize/2);
+}
+
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetS22Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22I[], float64 s22Q[], int32 arraySize)
+{
+  if (!function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22Split) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22Split.");
+  }
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSParameterSetS22Split(instrumentHandle, selectorString, s22I, s22Q, arraySize);
 }
 
 int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability)

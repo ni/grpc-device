@@ -83,9 +83,17 @@ service NiRFmxVNA {
   rpc CalkitManagerCalkitCalibrationElementSParameterSetFrequency(CalkitManagerCalkitCalibrationElementSParameterSetFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetFrequencyResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterSetFromFile(CalkitManagerCalkitCalibrationElementSParameterSetFromFileRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetFromFileResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterSetS11(CalkitManagerCalkitCalibrationElementSParameterSetS11Request) returns (CalkitManagerCalkitCalibrationElementSParameterSetS11Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ(CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS11Split(CalkitManagerCalkitCalibrationElementSParameterSetS11SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetS11SplitResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterSetS12(CalkitManagerCalkitCalibrationElementSParameterSetS12Request) returns (CalkitManagerCalkitCalibrationElementSParameterSetS12Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ(CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS12Split(CalkitManagerCalkitCalibrationElementSParameterSetS12SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetS12SplitResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterSetS21(CalkitManagerCalkitCalibrationElementSParameterSetS21Request) returns (CalkitManagerCalkitCalibrationElementSParameterSetS21Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ(CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS21Split(CalkitManagerCalkitCalibrationElementSParameterSetS21SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetS21SplitResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterSetS22(CalkitManagerCalkitCalibrationElementSParameterSetS22Request) returns (CalkitManagerCalkitCalibrationElementSParameterSetS22Response);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ(CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQResponse);
+  rpc CalkitManagerCalkitCalibrationElementSParameterSetS22Split(CalkitManagerCalkitCalibrationElementSParameterSetS22SplitRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetS22SplitResponse);
   rpc CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityRequest) returns (CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityResponse);
   rpc CalkitManagerCalkitCalibrationElementSetDescription(CalkitManagerCalkitCalibrationElementSetDescriptionRequest) returns (CalkitManagerCalkitCalibrationElementSetDescriptionResponse);
   rpc CalkitManagerCalkitCalibrationElementSetMaximumFrequency(CalkitManagerCalkitCalibrationElementSetMaximumFrequencyRequest) returns (CalkitManagerCalkitCalibrationElementSetMaximumFrequencyResponse);
@@ -1378,6 +1386,27 @@ message CalkitManagerCalkitCalibrationElementSParameterSetS11Response {
   int32 status = 1;
 }
 
+message CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double s11 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS11SplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double s11_i = 3;
+  repeated double s11_q = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS11SplitResponse {
+  int32 status = 1;
+}
+
 message CalkitManagerCalkitCalibrationElementSParameterSetS12Request {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1385,6 +1414,27 @@ message CalkitManagerCalkitCalibrationElementSParameterSetS12Request {
 }
 
 message CalkitManagerCalkitCalibrationElementSParameterSetS12Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double s12 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS12SplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double s12_i = 3;
+  repeated double s12_q = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS12SplitResponse {
   int32 status = 1;
 }
 
@@ -1398,6 +1448,27 @@ message CalkitManagerCalkitCalibrationElementSParameterSetS21Response {
   int32 status = 1;
 }
 
+message CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double s21 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS21SplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double s21_i = 3;
+  repeated double s21_q = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS21SplitResponse {
+  int32 status = 1;
+}
+
 message CalkitManagerCalkitCalibrationElementSParameterSetS22Request {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
@@ -1405,6 +1476,27 @@ message CalkitManagerCalkitCalibrationElementSParameterSetS22Request {
 }
 
 message CalkitManagerCalkitCalibrationElementSParameterSetS22Response {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double s22 = 3;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQResponse {
+  int32 status = 1;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS22SplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double s22_i = 3;
+  repeated double s22_q = 4;
+}
+
+message CalkitManagerCalkitCalibrationElementSParameterSetS22SplitResponse {
   int32 status = 1;
 }
 
