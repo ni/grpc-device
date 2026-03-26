@@ -271,6 +271,7 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_CUSTOM_GATE_AVERAGE_POWER_MEAN           0x00a04062
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_POWER_CUSTOM_GATE_PEAK_POWER_MAXIMUM           0x00a04063
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_CROSS_POWER_MEAN                               0x00a0408e
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_CHAIN_STREAM_CROSS_POWER_MEAN                  0x00a040e8
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_USER_POWER_MEAN                                0x00a0408f
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_USER_POWER_MAXIMUM                             0x00a0409c
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_USER_POWER_MINIMUM                             0x00a0409d
@@ -5383,6 +5384,12 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsCustomGatePeakPowerMaximum(
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsCrossPowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsChainStreamCrossPowerMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
