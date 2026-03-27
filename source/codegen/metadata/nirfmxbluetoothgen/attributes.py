@@ -479,7 +479,7 @@ attributes = {
         'access': 'read-write',
         'enum': 'DataRate',
         'name': 'DATA_RATE',
-        'type': 'float64'
+        'type': 'int32'
     },
     103: {
         'access': 'read-write',

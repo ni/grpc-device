@@ -175,7 +175,7 @@ int32 __stdcall niWLANG_RFSGCreateAndDownloadWaveform(
 int32 __stdcall niWLANG_RFSGCreateAndDownloadMIMOWaveforms(
 	niWLANGenerationSession session, 
 	ViSession rfsgSessions[], 
-	char *hwChannelStrings[],
+	char hwChannelStrings[],
 	int32 numberOfTxChains, 
 	char waveformName[]);
 	

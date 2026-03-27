@@ -681,7 +681,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -692,6 +692,31 @@ functions = {
             {
                 'direction': 'in',
                 'name': 'waveformName',
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'RFSGConfigure': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'niWLANGenerationSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'wlanChannelString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'rfsgHandle',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelString',
                 'type': 'char[]'
             }
         ],
@@ -862,7 +887,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -883,11 +908,50 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'RFSGConfigureSampleClockDelay': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'niWLANGenerationSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'rfsgHandles',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'noOfChannels'
+                },
+                'type': 'ViSession[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'sampleClockDelay',
+                'size': {
+                    'mechanism': 'len',
+                    'tags': [
+                        'optional'
+                    ],
+                    'value': 'noOfChannels'
+                },
+                'type': 'float64[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'noOfChannels',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'RFSGConfigureScript': {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -904,6 +968,41 @@ functions = {
                 'direction': 'in',
                 'name': 'powerLevel',
                 'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'RFSGConfigureWaveform': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'niWLANGenerationSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'wlanChannelString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'rfsgHandle',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'resetHardware',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'waveformSize',
+                'type': 'int32'
             }
         ],
         'returns': 'int32'
@@ -951,7 +1050,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1000,7 +1099,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1088,7 +1187,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1123,7 +1222,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1158,7 +1257,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1183,7 +1282,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1208,7 +1307,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1233,7 +1332,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1258,7 +1357,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1293,7 +1392,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1313,7 +1412,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1342,7 +1441,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1371,7 +1470,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1396,7 +1495,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1421,7 +1520,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSession',
+                'name': 'rfsgHandle',
                 'type': 'ViSession'
             },
             {
@@ -1702,10 +1801,10 @@ functions = {
                 'type': 'char[]'
             },
             {
-                'direction': 'out',
+                'direction': 'in',
                 'name': 'ppet16',
                 'size': {
-                    'mechanism': 'fixed',
+                    'mechanism': 'len',
                     'value': 'ppet16ArraySize'
                 },
                 'type': 'int32[]'

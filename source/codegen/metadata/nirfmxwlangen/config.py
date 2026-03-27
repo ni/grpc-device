@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '26.0.0',
+    'api_version': '26.3.0',
     'c_header': 'niWLANGeneration.h',  
     'c_function_prefix': 'niWLANG_',
     'service_class_prefix': 'NiRFmxWLANGen',
@@ -48,11 +48,11 @@ config = {
         },
         'Windows': {
             '32bit': {
-                'name': 'niRFmxWLANG.dll',
+                'name': 'niWLANGeneration_net.dll',
                 'type': 'windll'
             },
             '64bit': {
-                'name': 'niWLANG_net.dll',
+                'name': 'niWLANGeneration_net.dll',
                 'type': 'cdll'
             }
         }
@@ -60,7 +60,7 @@ config = {
     'linux_rt_support': False,
     'metadata_version': '0.1',
     'module_name': 'nirfmxwlangen',
-    'session_class_description': 'An RFmx WLANGen handle',
+    'session_class_description': 'An RFmx WLAN Generation handle',
     'session_handle_parameter_name': 'session',
     'duplicate_resource_handles_allowed': True
 }

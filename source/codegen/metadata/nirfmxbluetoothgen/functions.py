@@ -196,20 +196,14 @@ functions = {
                 'direction': 'out',
                 'name': 'attributeValue',
                 'size': {
-                    'mechanism': 'ivi-dance-with-a-twist',
-                    'value': 'bufferSize',
-                    'value_twist': 'actualStringSize'
+                    'mechanism': 'ivi-dance',
+                    'value': 'bufferSize'
                 },
                 'type': 'char[]'
             },
             {
                 'direction': 'in',
                 'name': 'bufferSize',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'actualStringSize',
                 'type': 'int32'
             }
         ],
@@ -228,8 +222,12 @@ functions = {
                 'type': 'int32'
             },
             {
-                'direction': 'in',
+                'direction': 'out',
                 'name': 'errorMessage',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'errorMessageLength'
+                },
                 'type': 'char[]'
             },
             {

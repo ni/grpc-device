@@ -6,11 +6,9 @@ namespace nirfmxwlangen_grpc {
 {
   ViStatus error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-  if (status < 0) {
-    // Since another thread has changed the status, fall back to the static message lookup.
-    description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
-    library_->GetErrorString(session, status, &description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
-  }
+  // Since another thread has changed the status, fall back to the static message lookup.
+  description.assign(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
+  library_->GetErrorString(session, status, &description[0], nidevice_grpc::kMaxGrpcErrorDescriptionSize);
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
 }
 

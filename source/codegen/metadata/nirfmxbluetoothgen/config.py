@@ -62,7 +62,7 @@ config = {
     'linux_rt_support': False,
     'metadata_version': '0.1',
     'module_name': 'nirfmxbluetoothgen',
-    'session_class_description': 'An RFmx BluetoothGen handle',
+    'session_class_description': 'An RFmx Bluetooth Generation handle',
     'session_handle_parameter_name': 'session',
     'windows_only': True,
     'duplicate_resource_handles_allowed': True

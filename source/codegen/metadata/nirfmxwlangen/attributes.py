@@ -4,11 +4,6 @@ attributes = {
         'name': 'CARRIER_FREQUENCY',
         'type': 'float64'
     },
-    1: {
-        'access': 'read-write',
-        'name': 'POWER_LEVEL',
-        'type': 'float64'
-    },
     2: {
         'access': 'read-write',
         'name': 'OVERSAMPLING_FACTOR',
@@ -154,11 +149,6 @@ attributes = {
         'name': 'DSSS_WINDOW_LENGTH',
         'type': 'float64'
     },
-    30: {
-        'access': 'read-write',
-        'name': 'PEAK_TO_AVERAGE_POWER_RATIO',
-        'type': 'float64'
-    },
     31: {
         'access': 'read-write',
         'enum': 'Standard',
@@ -180,11 +170,6 @@ attributes = {
     35: {
         'access': 'read-write',
         'name': 'IQ_RATE',
-        'type': 'float64'
-    },
-    36: {
-        'access': 'read-write',
-        'name': 'WAVEFORM_SCALING_FACTOR',
         'type': 'float64'
     },
     37: {
@@ -811,7 +796,7 @@ attributes = {
     211: {
         'access': 'read-write',
         'name': 'OVERSAMPLING_RATIO',
-        'type': 'float64'
+        'type': 'int32'
     },
     212: {
         'access': 'read-write',
