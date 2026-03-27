@@ -21,8 +21,14 @@
   attribute_value_prefix = disambiguated_attribute_value_prefix if sub_group == "Reset" else attribute_value_prefix
 %>\
 % if attributes:
+<%
+  # Check if any attribute has value 0
+  has_zero_value = any(int(attr_id) == 0 for attr_id in attributes.keys())
+%>\
 enum ${common_helpers.get_attribute_enum_name(group_name, sub_group, config)} {
+% if not has_zero_value:
   ${unspecified_attribute_value_prefix}_UNSPECIFIED = 0;
+% endif
 %   for attribute in attributes:
 <%
    attribute_name = attributes[attribute]["name"]

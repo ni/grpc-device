@@ -1,0 +1,713 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-RFMXBLUETOOTHGEN API metadata version 26.3.0
+//---------------------------------------------------------------------
+// Proto file for the NI-RFMXBLUETOOTHGEN Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxbluetoothgen";
+option java_outer_classname = "NiRFmxBluetoothGen";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxBluetoothGen";
+
+package nirfmxbluetoothgen_grpc;
+
+import "nidevice.proto";
+import "session.proto";
+
+service NiRFmxBluetoothGen {
+  rpc CarrierFrequencyToChannelNumber(CarrierFrequencyToChannelNumberRequest) returns (CarrierFrequencyToChannelNumberResponse);
+  rpc ChannelNumberToCarrierFrequency(ChannelNumberToCarrierFrequencyRequest) returns (ChannelNumberToCarrierFrequencyResponse);
+  rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse);
+  rpc CreateAndWriteWaveformsToFile(CreateAndWriteWaveformsToFileRequest) returns (CreateAndWriteWaveformsToFileResponse);
+  rpc CreateWaveformComplexF64(CreateWaveformComplexF64Request) returns (CreateWaveformComplexF64Response);
+  rpc CreateWaveformComplexF64InterleavedIQ(CreateWaveformComplexF64InterleavedIQRequest) returns (CreateWaveformComplexF64InterleavedIQResponse);
+  rpc GetAttributeString(GetAttributeStringRequest) returns (GetAttributeStringResponse);
+  rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
+  rpc GetScalarAttributeF64(GetScalarAttributeF64Request) returns (GetScalarAttributeF64Response);
+  rpc GetScalarAttributeI32(GetScalarAttributeI32Request) returns (GetScalarAttributeI32Response);
+  rpc GetScalarAttributeI64(GetScalarAttributeI64Request) returns (GetScalarAttributeI64Response);
+  rpc GetVectorAttributeF64(GetVectorAttributeF64Request) returns (GetVectorAttributeF64Response);
+  rpc GetVectorAttributeI32(GetVectorAttributeI32Request) returns (GetVectorAttributeI32Response);
+  rpc LoadConfigurationFromFile(LoadConfigurationFromFileRequest) returns (LoadConfigurationFromFileResponse);
+  rpc OpenSession(OpenSessionRequest) returns (OpenSessionResponse);
+  rpc RFSGClearDatabase(RFSGClearDatabaseRequest) returns (RFSGClearDatabaseResponse);
+  rpc RFSGConfigureScript(RFSGConfigureScriptRequest) returns (RFSGConfigureScriptResponse);
+  rpc RFSGCreateAndDownloadWaveform(RFSGCreateAndDownloadWaveformRequest) returns (RFSGCreateAndDownloadWaveformResponse);
+  rpc RFSGRetrieveHeadroom(RFSGRetrieveHeadroomRequest) returns (RFSGRetrieveHeadroomResponse);
+  rpc RFSGRetrieveIQRate(RFSGRetrieveIQRateRequest) returns (RFSGRetrieveIQRateResponse);
+  rpc RFSGRetrieveIQRateAllWaveforms(RFSGRetrieveIQRateAllWaveformsRequest) returns (RFSGRetrieveIQRateAllWaveformsResponse);
+  rpc RFSGRetrieveMinimumHeadroomAllWaveforms(RFSGRetrieveMinimumHeadroomAllWaveformsRequest) returns (RFSGRetrieveMinimumHeadroomAllWaveformsResponse);
+  rpc RFSGStoreHeadroom(RFSGStoreHeadroomRequest) returns (RFSGStoreHeadroomResponse);
+  rpc RFSGStoreIQRate(RFSGStoreIQRateRequest) returns (RFSGStoreIQRateResponse);
+  rpc ReadWaveformFromFile(ReadWaveformFromFileRequest) returns (ReadWaveformFromFileResponse);
+  rpc ReadWaveformFromFileInterleavedIQ(ReadWaveformFromFileInterleavedIQRequest) returns (ReadWaveformFromFileInterleavedIQResponse);
+  rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
+  rpc ResetSession(ResetSessionRequest) returns (ResetSessionResponse);
+  rpc SaveConfigurationToFile(SaveConfigurationToFileRequest) returns (SaveConfigurationToFileResponse);
+  rpc SetAntennaRelativePhaseAndAmplitude(SetAntennaRelativePhaseAndAmplitudeRequest) returns (SetAntennaRelativePhaseAndAmplitudeResponse);
+  rpc SetAttributeString(SetAttributeStringRequest) returns (SetAttributeStringResponse);
+  rpc SetScalarAttributeF64(SetScalarAttributeF64Request) returns (SetScalarAttributeF64Response);
+  rpc SetScalarAttributeI32(SetScalarAttributeI32Request) returns (SetScalarAttributeI32Response);
+  rpc SetScalarAttributeI64(SetScalarAttributeI64Request) returns (SetScalarAttributeI64Response);
+  rpc SetVectorAttributeF64(SetVectorAttributeF64Request) returns (SetVectorAttributeF64Response);
+  rpc SetVectorAttributeI32(SetVectorAttributeI32Request) returns (SetVectorAttributeI32Response);
+}
+
+enum NiRFmxBluetoothGenAttribute {
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_UNSPECIFIED = 0;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_CARRIER_MODE = 1;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_AUTO_HEADROOM_ENABLED = 3;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_HEADROOM = 4;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_IQ_RATE = 5;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_ACTUAL_HEADROOM = 6;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PACKET_TYPE = 7;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_BD_ADDRESS_LAP = 8;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_BD_ADDRESS_UAP = 9;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_BD_ADDRESS_NAP = 10;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PACKET_HEADER_LT_ADDRESS = 11;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PACKET_HEADER_FLOW = 12;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PACKET_HEADER_ARQN = 13;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PACKET_HEADER_SEQN = 14;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_HEADER_LLID = 15;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_HEADER_FLOW = 16;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_LENGTH = 17;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_DATA_TYPE = 18;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_USER_DEFINED_BITS = 20;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_FHS_PAYLOAD_LT_ADDRESS = 21;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_FHS_PAYLOAD_DEVICE_CLASS = 22;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_ALL_IQ_IMPAIRMENTS_ENABLED = 23;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_FHS_PAYLOAD_SCAN_REPETITION = 24;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_FHS_PAYLOAD_PAGE_SCAN_MODE = 25;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_FHS_PAYLOAD_DEVICE_CLOCK = 26;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_FHS_PAYLOAD_BD_ADDRESS_LAP = 27;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_FHS_PAYLOAD_BD_ADDRESS_UAP = 28;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_FHS_PAYLOAD_BD_ADDRESS_NAP = 29;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRTY_TX_ENABLED = 30;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_WHITENING_ENABLED = 31;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_WHITENING_CLOCK = 32;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_IQ_GAIN_IMBALANCE = 33;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_QUADRATURE_SKEW = 34;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_I_DC_OFFSET = 35;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_Q_DC_OFFSET = 36;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_CARRIER_FREQUENCY_OFFSET = 37;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_AWGN_ENABLED = 38;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_CARRIER_TO_NOISE_RATIO = 39;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_TOOLKIT_COMPATIBILITY_VERSION = 40;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_PN_ORDER = 41;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_PN_SEED = 42;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_LENGTH_MODE = 43;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_ACTUAL_PAYLOAD_LENGTH = 44;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_IQ_WAVEFORM_SIZE = 45;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DV_VOICE_PAYLOAD_PN_ORDER = 46;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DV_VOICE_PAYLOAD_PN_SEED = 47;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DV_VOICE_PAYLOAD_USER_DEFINED_BITS = 48;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DV_VOICE_PAYLOAD_DATA_TYPE = 49;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_LE_TP_PAYLOAD_TYPE = 50;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_NUMBER_OF_UNIQUE_PACKETS = 51;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_NUMBER_OF_IDLE_SLOTS = 52;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_LE_TP_CORRUPT_ALTERNATE_CRC = 54;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRTY_TX_MODE = 55;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRTY_TX_PARAMETERS_ENABLED_SET = 56;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRTY_TX_CARRIER_FREQUENCY_OFFSET_SET = 57;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRTY_TX_MODULATION_INDEX_SET = 58;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRTY_TX_SYMBOL_TIMING_ERROR_SET = 59;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_LE_ACCESS_ADDRESS = 61;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRTY_TX_RESIDUAL_FM_DEVIATION = 62;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRTY_TX_RESIDUAL_FM_FREQUENCY = 63;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_CARRIER_FREQUENCY = 64;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_HEADER_ENABLED = 66;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRTY_TX_MODULATION_INDEX_TYPE = 67;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_MODULATION_INDEX = 68;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_MAXIMUM_HARDWARE_IQ_RATE = 69;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_OVERSAMPLING_FACTOR = 70;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_POWER_RAMP_SETTLING_TIME = 71;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_POWER_RAMP_TIME = 72;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PACKET_BIT_SEQUENCE_TRACE_ENABLED = 73;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRECTION_FINDING_MODE = 75;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRECTION_FINDING_CONSTANT_TONE_EXTENSION_LENGTH = 77;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRECTION_FINDING_CONSTANT_TONE_EXTENSION_SLOT_DURATION = 78;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_RUN_TIME_SCALING = 79;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_WAVEFORM_FILE_VERSION = 81;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRECTION_FINDING_NUMBER_OF_ANTENNAS = 82;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRECTION_FINDING_ANTENNA_SWITCHING_PATTERN = 85;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRECTION_FINDING_ANTENNA_SWITCHING_ENABLED = 86;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRECTION_FINDING_ANTENNA_SWITCHING_DURATION = 87;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DIRECTION_FINDING_ANTENNA_SWITCHING_DURATION_USED = 88;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_BURST_START_LOCATIONS = 90;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_BURST_STOP_LOCATIONS = 91;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_CS_PACKET_FORMAT = 92;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_CS_SYNC_SEQUENCE = 93;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_CS_PHASE_MEASUREMENT_PERIOD = 94;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_SOUNDING_SEQUENCE_LENGTH = 95;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_SOUNDING_SEQUENCE_MARKER_SIGNALS = 96;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_SOUNDING_SEQUENCE_MARKER_POSITIONS = 97;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_CS_TONE_EXTENSION_SLOT_ENABLED = 98;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_SAMPLE_CLOCK_OFFSET = 99;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_TIME_DELAY = 100;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_BANDWIDTH_BIT_PERIOD_PRODUCT = 101;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_DATA_RATE = 102;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_HDT_PACKET_FORMAT = 103;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_HDT_PHY_INTERVAL = 104;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_ZADOFF_CHU_INDEX = 105;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PHYSICAL_CHANNEL_ADDRESS = 106;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_VHDT_MODE_ENABLED = 107;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_NUMBER_OF_BLOCK_REPETITION_SEQUENCES = 108;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_NUMBER_OF_PAYLOADS = 109;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_FORMAT1_PAYLOAD_ZONE_CONFIGURATION_MODE = 110;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_TXLEN_SEQUENCE_NUMBER = 111;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_NUMBER_OF_BLOCKS = 112;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_BLOCK_SIZE = 113;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_LAST_BLOCK_SIZE = 114;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_TXBLOCK_MAP = 115;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_ZONE_LENGTH = 117;
+  NIRFMXBLUETOOTHGEN_ATTRIBUTE_PAYLOAD_CRC_SEED = 118;
+}
+
+enum CompatibilityVersion {
+  COMPATIBILITY_VERSION_UNSPECIFIED = 0;
+  COMPATIBILITY_VERSION_010000 = 10000;
+  COMPATIBILITY_VERSION_020000 = 20000;
+}
+
+enum FileOperationMode {
+  FILE_OPERATION_MODE_OPEN = 0;
+  FILE_OPERATION_MODE_OPEN_OR_CREATE = 1;
+  FILE_OPERATION_MODE_CREATE_OR_REPLACE = 2;
+  FILE_OPERATION_MODE_CREATE = 3;
+}
+
+enum NiRFmxBluetoothGenInt32AttributeValues {
+  option allow_alias = true;
+  NIRFMXBLUETOOTHGEN_INT32_UNSPECIFIED = 0;
+  NIRFMXBLUETOOTHGEN_INT32_ALL_IQ_IMPAIRMENTS_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_ALL_IQ_IMPAIRMENTS_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_ANTENNA_SWITCHING_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_ANTENNA_SWITCHING_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_AUTO_HEADROOM_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_AUTO_HEADROOM_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_AWGN_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_AWGN_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_CS_PACKET_FORMAT_SYNC = 0;
+  NIRFMXBLUETOOTHGEN_INT32_CS_PACKET_FORMAT_CS_TONE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_CS_PACKET_FORMAT_CS_TONE_AFTER_SYNC = 2;
+  NIRFMXBLUETOOTHGEN_INT32_CS_PACKET_FORMAT_CS_TONE_BEFORE_SYNC = 3;
+  NIRFMXBLUETOOTHGEN_INT32_CS_SYNC_SEQUENCE_NONE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_CS_SYNC_SEQUENCE_SOUNDING_SEQUENCE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_CS_SYNC_SEQUENCE_PAYLOAD_PATTERN = 2;
+  NIRFMXBLUETOOTHGEN_INT32_CS_TONE_EXTENSION_SLOT_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_CS_TONE_EXTENSION_SLOT_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_CARRIER_MODE_BURST = 0;
+  NIRFMXBLUETOOTHGEN_INT32_CARRIER_MODE_CONTINUOUS = 1;
+  NIRFMXBLUETOOTHGEN_INT32_COMPATIBILITY_VERSION_010000 = 10000;
+  NIRFMXBLUETOOTHGEN_INT32_COMPATIBILITY_VERSION_020000 = 20000;
+  NIRFMXBLUETOOTHGEN_INT32_DV_VOICE_PAYLOAD_DATA_TYPE_PN_SEQUENCE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_DV_VOICE_PAYLOAD_DATA_TYPE_USER_DEFINED_BITS = 1;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_2M = 2000000;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_3M = 3000000;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_4M = 4000000;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_6M = 6000000;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_7_5M = 7500000;
+  NIRFMXBLUETOOTHGEN_INT32_DIRECTION_FINDING_MODE_DISABLED = 0;
+  NIRFMXBLUETOOTHGEN_INT32_DIRECTION_FINDING_MODE_ANGLE_OF_ARRIVAL = 1;
+  NIRFMXBLUETOOTHGEN_INT32_DIRECTION_FINDING_MODE_ANGLE_OF_DEPARTURE = 2;
+  NIRFMXBLUETOOTHGEN_INT32_DIRTY_TX_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_DIRTY_TX_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_DIRTY_TX_MODE_STANDARD = 0;
+  NIRFMXBLUETOOTHGEN_INT32_DIRTY_TX_MODE_USER_DEFINED = 1;
+  NIRFMXBLUETOOTHGEN_INT32_DIRTY_TX_MODE_FREQUENCY_DRIFT = 2;
+  NIRFMXBLUETOOTHGEN_INT32_DIRTY_TX_MODULATION_INDEX_TYPE_STANDARD = 0;
+  NIRFMXBLUETOOTHGEN_INT32_DIRTY_TX_MODULATION_INDEX_TYPE_STABLE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_DIRTY_TX_PARAMETERS_ENABLED_SET_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_DIRTY_TX_PARAMETERS_ENABLED_SET_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_FORMAT1_PAYLOAD_ZONE_CONFIGURATION_MODE_AUTO = 0;
+  NIRFMXBLUETOOTHGEN_INT32_FORMAT1_PAYLOAD_ZONE_CONFIGURATION_MODE_USER_DEFINED = 1;
+  NIRFMXBLUETOOTHGEN_INT32_HDT_PACKET_FORMAT_SHORT_FORMAT = 0;
+  NIRFMXBLUETOOTHGEN_INT32_HDT_PACKET_FORMAT_FORMAT0 = 1;
+  NIRFMXBLUETOOTHGEN_INT32_HDT_PACKET_FORMAT_FORMAT1 = 2;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_CORRUPT_ALTERNATE_CRC_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_CORRUPT_ALTERNATE_CRC_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_PAYLOAD_TYPE_PRBS9 = 0;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_PAYLOAD_TYPE_11110000 = 1;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_PAYLOAD_TYPE_10101010 = 2;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_PAYLOAD_TYPE_PRBS15 = 3;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_PAYLOAD_TYPE_11111111 = 4;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_PAYLOAD_TYPE_00000000 = 5;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_PAYLOAD_TYPE_00001111 = 6;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_PAYLOAD_TYPE_01010101 = 7;
+  NIRFMXBLUETOOTHGEN_INT32_LETP_PAYLOAD_TYPE_USER_DEFINED_BITS = 8;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_BIT_SEQUENCE_TRACE_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_BIT_SEQUENCE_TRACE_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_HEADER_ARQN_NAK = 0;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_HEADER_ARQN_ACK = 1;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_NULL = 0;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_POLL = 1;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_FHS = 2;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_DM1 = 3;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_DH1 = 4;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_2DH1 = 5;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_HV1 = 6;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_HV2 = 7;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_2EV3 = 8;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_HV3 = 9;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_EV3 = 10;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_3EV3 = 11;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_DV = 12;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_3DH1 = 13;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_AUX1 = 14;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_DM3 = 15;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_2DH3 = 16;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_DH3 = 17;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_3DH3 = 18;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_EV4 = 19;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_2EV5 = 20;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_EV5 = 21;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_3EV5 = 22;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_DM5 = 23;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_2DH5 = 24;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_DH5 = 25;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_3DH5 = 26;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_LE_TP = 27;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_LE_TP_EXT = 28;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_LE_ENHANCED = 29;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_LE_LR_125K = 30;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_LE_LR_500K = 31;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_LE_CS_1M = 32;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_LE_CS_2M = 33;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_LE_HDT = 34;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_ID = 254;
+  NIRFMXBLUETOOTHGEN_INT32_PACKET_TYPE_IDLE = 255;
+  NIRFMXBLUETOOTHGEN_INT32_PAYLOAD_DATA_TYPE_PN_SEQUENCE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_PAYLOAD_DATA_TYPE_USER_DEFINED_BITS = 1;
+  NIRFMXBLUETOOTHGEN_INT32_PAYLOAD_HEADER_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_PAYLOAD_HEADER_ENABLED_TRUE = 1;
+  NIRFMXBLUETOOTHGEN_INT32_PAYLOAD_LENGTH_MODE_MAXIMUM_LENGTH = 0;
+  NIRFMXBLUETOOTHGEN_INT32_PAYLOAD_LENGTH_MODE_USER_DEFINED = 1;
+  NIRFMXBLUETOOTHGEN_INT32_SOUNDING_SEQUENCE_MARKER_SIGNALS_1100 = 0;
+  NIRFMXBLUETOOTHGEN_INT32_SOUNDING_SEQUENCE_MARKER_SIGNALS_0011 = 1;
+  NIRFMXBLUETOOTHGEN_INT32_TXLEN_SEQUENCE_NUMBER_00 = 0;
+  NIRFMXBLUETOOTHGEN_INT32_TXLEN_SEQUENCE_NUMBER_01 = 1;
+  NIRFMXBLUETOOTHGEN_INT32_TXLEN_SEQUENCE_NUMBER_10 = 2;
+  NIRFMXBLUETOOTHGEN_INT32_TXLEN_SEQUENCE_NUMBER_11 = 3;
+  NIRFMXBLUETOOTHGEN_INT32_WAVEFORM_FILE_VERSION_1_0 = 0;
+  NIRFMXBLUETOOTHGEN_INT32_WAVEFORM_FILE_VERSION_2_0 = 1;
+  NIRFMXBLUETOOTHGEN_INT32_WHITENING_ENABLED_FALSE = 0;
+  NIRFMXBLUETOOTHGEN_INT32_WHITENING_ENABLED_TRUE = 1;
+}
+
+message CarrierFrequencyToChannelNumberRequest {
+  double carrier_frequency = 1;
+  int32 standard = 2;
+}
+
+message CarrierFrequencyToChannelNumberResponse {
+  int32 status = 1;
+  int32 channel_number = 2;
+}
+
+message ChannelNumberToCarrierFrequencyRequest {
+  int32 channel_number = 1;
+  int32 standard = 2;
+}
+
+message ChannelNumberToCarrierFrequencyResponse {
+  int32 status = 1;
+  double carrier_frequency = 2;
+}
+
+message CloseSessionRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message CloseSessionResponse {
+  int32 status = 1;
+}
+
+message CreateAndWriteWaveformsToFileRequest {
+  nidevice_grpc.Session session = 1;
+  string file_path = 2;
+  oneof file_operation_enum {
+    FileOperationMode file_operation = 3;
+    int32 file_operation_raw = 4;
+  }
+}
+
+message CreateAndWriteWaveformsToFileResponse {
+  int32 status = 1;
+}
+
+message CreateWaveformComplexF64Request {
+  nidevice_grpc.Session session = 1;
+  bool reset = 2;
+}
+
+message CreateWaveformComplexF64Response {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  repeated nidevice_grpc.NIComplexNumber waveform = 4;
+  int32 actual_waveform_size = 5;
+  bool generation_done = 6;
+}
+
+message CreateWaveformComplexF64InterleavedIQRequest {
+  nidevice_grpc.Session session = 1;
+  bool reset = 2;
+}
+
+message CreateWaveformComplexF64InterleavedIQResponse {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  repeated double waveform = 4;
+  int32 actual_waveform_size = 5;
+  int32 generation_done = 6;
+}
+
+message GetAttributeStringRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+}
+
+message GetAttributeStringResponse {
+  int32 status = 1;
+  string attribute_value = 2;
+  int32 actual_string_size = 3;
+}
+
+message GetErrorStringRequest {
+  nidevice_grpc.Session session = 1;
+  int32 error_code = 2;
+}
+
+message GetErrorStringResponse {
+  int32 status = 1;
+  string error_message = 2;
+}
+
+message GetScalarAttributeF64Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+}
+
+message GetScalarAttributeF64Response {
+  int32 status = 1;
+  double attribute_value = 2;
+}
+
+message GetScalarAttributeI32Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+}
+
+message GetScalarAttributeI32Response {
+  int32 status = 1;
+  NiRFmxBluetoothGenInt32AttributeValues attribute_value = 2;
+  int32 attribute_value_raw = 3;
+}
+
+message GetScalarAttributeI64Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+}
+
+message GetScalarAttributeI64Response {
+  int32 status = 1;
+  int64 attribute_value = 2;
+}
+
+message GetVectorAttributeF64Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+}
+
+message GetVectorAttributeF64Response {
+  int32 status = 1;
+  repeated double data = 2;
+  int32 actual_num_data_array_elements = 3;
+}
+
+message GetVectorAttributeI32Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+}
+
+message GetVectorAttributeI32Response {
+  int32 status = 1;
+  repeated int32 data = 2;
+  int32 actual_num_data_array_elements = 3;
+}
+
+message LoadConfigurationFromFileRequest {
+  nidevice_grpc.Session session = 1;
+  string file_path = 2;
+  bool reset = 3;
+}
+
+message LoadConfigurationFromFileResponse {
+  int32 status = 1;
+}
+
+message OpenSessionRequest {
+  string session_name = 1;
+  oneof toolkit_compatibility_version_enum {
+    CompatibilityVersion toolkit_compatibility_version = 2;
+    int32 toolkit_compatibility_version_raw = 3;
+  }
+}
+
+message OpenSessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session session = 2;
+  bool is_new_session = 3;
+}
+
+message RFSGClearDatabaseRequest {
+  nidevice_grpc.Session rfsg_handle = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+}
+
+message RFSGClearDatabaseResponse {
+  int32 status = 1;
+}
+
+message RFSGConfigureScriptRequest {
+  nidevice_grpc.Session rfsg_handle = 1;
+  string channel_string = 2;
+  string script = 3;
+  double power_level = 4;
+}
+
+message RFSGConfigureScriptResponse {
+  int32 status = 1;
+}
+
+message RFSGCreateAndDownloadWaveformRequest {
+  nidevice_grpc.Session session = 1;
+  nidevice_grpc.Session rfsg_handle = 2;
+  string channel_string = 3;
+  string waveform_name = 4;
+}
+
+message RFSGCreateAndDownloadWaveformResponse {
+  int32 status = 1;
+}
+
+message RFSGRetrieveHeadroomRequest {
+  nidevice_grpc.Session rfsg_handle = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+}
+
+message RFSGRetrieveHeadroomResponse {
+  int32 status = 1;
+  double headroom = 2;
+}
+
+message RFSGRetrieveIQRateRequest {
+  nidevice_grpc.Session rfsg_handle = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+}
+
+message RFSGRetrieveIQRateResponse {
+  int32 status = 1;
+  double iq_rate = 2;
+}
+
+message RFSGRetrieveIQRateAllWaveformsRequest {
+  nidevice_grpc.Session rfsg_handle = 1;
+  string channel_string = 2;
+  string script = 3;
+}
+
+message RFSGRetrieveIQRateAllWaveformsResponse {
+  int32 status = 1;
+  double iq_rate = 2;
+}
+
+message RFSGRetrieveMinimumHeadroomAllWaveformsRequest {
+  nidevice_grpc.Session rfsg_handle = 1;
+  string channel_string = 2;
+  string script = 3;
+}
+
+message RFSGRetrieveMinimumHeadroomAllWaveformsResponse {
+  int32 status = 1;
+  double headroom = 2;
+}
+
+message RFSGStoreHeadroomRequest {
+  nidevice_grpc.Session rfsg_handle = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+  double headroom = 4;
+}
+
+message RFSGStoreHeadroomResponse {
+  int32 status = 1;
+}
+
+message RFSGStoreIQRateRequest {
+  nidevice_grpc.Session rfsg_handle = 1;
+  string channel_string = 2;
+  string waveform_name = 3;
+  double iq_rate = 4;
+}
+
+message RFSGStoreIQRateResponse {
+  int32 status = 1;
+}
+
+message ReadWaveformFromFileRequest {
+  string file_path = 1;
+  string waveform_name = 2;
+  int64 offset = 3;
+  int64 count = 4;
+}
+
+message ReadWaveformFromFileResponse {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  repeated nidevice_grpc.NIComplexNumber waveform = 4;
+  int32 actual_num_waveform_samples = 5;
+  double iq_rate = 6;
+  double headroom = 7;
+  bool eof = 8;
+}
+
+message ReadWaveformFromFileInterleavedIQRequest {
+  string file_path = 1;
+  string waveform_name = 2;
+  int64 offset = 3;
+  int64 count = 4;
+}
+
+message ReadWaveformFromFileInterleavedIQResponse {
+  int32 status = 1;
+  double t0 = 2;
+  double dt = 3;
+  repeated double waveform = 4;
+  int32 actual_num_waveform_samples = 5;
+  double iq_rate = 6;
+  double headroom = 7;
+  bool eof = 8;
+}
+
+message ResetAttributeRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+}
+
+message ResetAttributeResponse {
+  int32 status = 1;
+}
+
+message ResetSessionRequest {
+  nidevice_grpc.Session session = 1;
+}
+
+message ResetSessionResponse {
+  int32 status = 1;
+}
+
+message SaveConfigurationToFileRequest {
+  nidevice_grpc.Session session = 1;
+  string file_path = 2;
+  int32 operation = 3;
+}
+
+message SaveConfigurationToFileResponse {
+  int32 status = 1;
+}
+
+message SetAntennaRelativePhaseAndAmplitudeRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  repeated double relative_amplitude_db = 3;
+  repeated double relative_phase_deg = 4;
+}
+
+message SetAntennaRelativePhaseAndAmplitudeResponse {
+  int32 status = 1;
+}
+
+message SetAttributeStringRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+  string attribute_value = 4;
+}
+
+message SetAttributeStringResponse {
+  int32 status = 1;
+}
+
+message SetScalarAttributeF64Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+  double attribute_value = 4;
+}
+
+message SetScalarAttributeF64Response {
+  int32 status = 1;
+}
+
+message SetScalarAttributeI32Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+  oneof attribute_value_enum {
+    NiRFmxBluetoothGenInt32AttributeValues attribute_value = 4;
+    int32 attribute_value_raw = 5;
+  }
+}
+
+message SetScalarAttributeI32Response {
+  int32 status = 1;
+}
+
+message SetScalarAttributeI64Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+  int64 attribute_value = 4;
+}
+
+message SetScalarAttributeI64Response {
+  int32 status = 1;
+}
+
+message SetVectorAttributeF64Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+  repeated double data = 4;
+}
+
+message SetVectorAttributeF64Response {
+  int32 status = 1;
+}
+
+message SetVectorAttributeI32Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxBluetoothGenAttribute attribute_id = 3;
+  repeated int32 data = 4;
+}
+
+message SetVectorAttributeI32Response {
+  int32 status = 1;
+}
+

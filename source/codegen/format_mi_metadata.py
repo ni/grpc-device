@@ -1,4 +1,5 @@
 """Script for formatting mi-driver metadata in same style as hapigen output."""
+
 import argparse
 import io
 import os
