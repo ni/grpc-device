@@ -44,6 +44,7 @@ NiRFmxWLANGenLibrary::NiRFmxWLANGenLibrary(std::shared_ptr<nidevice_grpc::Shared
   function_pointers_.GetNumberOfUsersFromRUAllocation = reinterpret_cast<GetNumberOfUsersFromRUAllocationPtr>(shared_library_->get_function_pointer("niWLANG_GetNumberOfUsersFromRUAllocation"));
   function_pointers_.GetScalarAttributeF64 = reinterpret_cast<GetScalarAttributeF64Ptr>(shared_library_->get_function_pointer("niWLANG_GetScalarAttributeF64"));
   function_pointers_.GetScalarAttributeI32 = reinterpret_cast<GetScalarAttributeI32Ptr>(shared_library_->get_function_pointer("niWLANG_GetScalarAttributeI32"));
+  function_pointers_.GetScalarAttributeI64 = reinterpret_cast<GetScalarAttributeI64Ptr>(shared_library_->get_function_pointer("niWLANG_GetScalarAttributeI64"));
   function_pointers_.GetVectorAttributeF64 = reinterpret_cast<GetVectorAttributeF64Ptr>(shared_library_->get_function_pointer("niWLANG_GetVectorAttributeF64"));
   function_pointers_.GetVectorAttributeI32 = reinterpret_cast<GetVectorAttributeI32Ptr>(shared_library_->get_function_pointer("niWLANG_GetVectorAttributeI32"));
   function_pointers_.LoadConfigurationFromFile = reinterpret_cast<LoadConfigurationFromFilePtr>(shared_library_->get_function_pointer("niWLANG_LoadConfigurationFromFile"));
@@ -85,6 +86,7 @@ NiRFmxWLANGenLibrary::NiRFmxWLANGenLibrary(std::shared_ptr<nidevice_grpc::Shared
   function_pointers_.SetOFDMPacketExtensionThresholds = reinterpret_cast<SetOFDMPacketExtensionThresholdsPtr>(shared_library_->get_function_pointer("niWLANG_SetOFDMPacketExtensionThresholds"));
   function_pointers_.SetScalarAttributeF64 = reinterpret_cast<SetScalarAttributeF64Ptr>(shared_library_->get_function_pointer("niWLANG_SetScalarAttributeF64"));
   function_pointers_.SetScalarAttributeI32 = reinterpret_cast<SetScalarAttributeI32Ptr>(shared_library_->get_function_pointer("niWLANG_SetScalarAttributeI32"));
+  function_pointers_.SetScalarAttributeI64 = reinterpret_cast<SetScalarAttributeI64Ptr>(shared_library_->get_function_pointer("niWLANG_SetScalarAttributeI64"));
   function_pointers_.SetVectorAttributeF64 = reinterpret_cast<SetVectorAttributeF64Ptr>(shared_library_->get_function_pointer("niWLANG_SetVectorAttributeF64"));
   function_pointers_.SetVectorAttributeI32 = reinterpret_cast<SetVectorAttributeI32Ptr>(shared_library_->get_function_pointer("niWLANG_SetVectorAttributeI32"));
 }
@@ -164,7 +166,7 @@ int32 NiRFmxWLANGenLibrary::CreateAndWriteWaveformsToFile(niWLANGenerationSessio
   return function_pointers_.CreateAndWriteWaveformsToFile(session, filePath, fileOperation);
 }
 
-int32 NiRFmxWLANGenLibrary::CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
+int32 NiRFmxWLANGenLibrary::CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64 t0[], float64 dt[], NIComplexNumber_struct waveforms[], int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
 {
   if (!function_pointers_.CreateMIMOWaveformsComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_CreateMIMOWaveformsComplexF64.");
@@ -172,12 +174,12 @@ int32 NiRFmxWLANGenLibrary::CreateMIMOWaveformsComplexF64(niWLANGenerationSessio
   return function_pointers_.CreateMIMOWaveformsComplexF64(session, reset, t0, dt, waveforms, numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
 }
 
-int32 NiRFmxWLANGenLibrary::CreateMIMOWaveformsComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
+int32 NiRFmxWLANGenLibrary::CreateMIMOWaveformsComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64 t0[], float64 dt[], float64 waveforms[], int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
 {
   if (!function_pointers_.CreateMIMOWaveformsComplexF64InterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_CreateMIMOWaveformsComplexF64.");
   }
-  return function_pointers_.CreateMIMOWaveformsComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexNumber>(waveforms), numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
+  return function_pointers_.CreateMIMOWaveformsComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexNumber*>(waveforms), numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
 }
 
 int32 NiRFmxWLANGenLibrary::CreateTriggerFrameMSDU(niWLANGenerationSession session, char channelString[], int32* generationDone, int32 triggerFrameMsduBits[], int32 dataArraySize, int32* actualDataArraySize)
@@ -188,7 +190,7 @@ int32 NiRFmxWLANGenLibrary::CreateTriggerFrameMSDU(niWLANGenerationSession sessi
   return function_pointers_.CreateTriggerFrameMSDU(session, channelString, generationDone, triggerFrameMsduBits, dataArraySize, actualDataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
+int32 NiRFmxWLANGenLibrary::CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
 {
   if (!function_pointers_.CreateWaveformComplexF64) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_CreateWaveformComplexF64.");
@@ -196,20 +198,20 @@ int32 NiRFmxWLANGenLibrary::CreateWaveformComplexF64(niWLANGenerationSession ses
   return function_pointers_.CreateWaveformComplexF64(session, reset, t0, dt, waveform, waveformSize, actualNumWaveformSamples, done);
 }
 
-int32 NiRFmxWLANGenLibrary::CreateWaveformComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
+int32 NiRFmxWLANGenLibrary::CreateWaveformComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
 {
   if (!function_pointers_.CreateWaveformComplexF64InterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_CreateWaveformComplexF64.");
   }
-  return function_pointers_.CreateWaveformComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, done);
+  return function_pointers_.CreateWaveformComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexNumber*>(waveform), waveformSize, actualNumWaveformSamples, done);
 }
 
-int32 NiRFmxWLANGenLibrary::GetErrorString(niWLANGenerationSession session, int32 errorCode, char errorMessage[], int32 errorMessageLen)
+int32 NiRFmxWLANGenLibrary::GetErrorString(niWLANGenerationSession session, int32 errorCode, char errorMessage[], int32 errorMessageLength)
 {
   if (!function_pointers_.GetErrorString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_GetErrorString.");
   }
-  return function_pointers_.GetErrorString(session, errorCode, errorMessage, errorMessageLen);
+  return function_pointers_.GetErrorString(session, errorCode, errorMessage, errorMessageLength);
 }
 
 int32 NiRFmxWLANGenLibrary::GetNumberOfUsersFromRUAllocation(niWLANGenerationSession session, char channelString[], int32* numberOfUsers)
@@ -236,6 +238,14 @@ int32 NiRFmxWLANGenLibrary::GetScalarAttributeI32(niWLANGenerationSession sessio
   return function_pointers_.GetScalarAttributeI32(session, channelString, attributeID, attributeValue);
 }
 
+int32 NiRFmxWLANGenLibrary::GetScalarAttributeI64(niWLANGenerationSession session, char channelString[], int32 attributeID, int64* attributeValue)
+{
+  if (!function_pointers_.GetScalarAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_GetScalarAttributeI64.");
+  }
+  return function_pointers_.GetScalarAttributeI64(session, channelString, attributeID, attributeValue);
+}
+
 int32 NiRFmxWLANGenLibrary::GetVectorAttributeF64(niWLANGenerationSession session, char channelString[], int32 attributeID, float64 data[], int32 dataArraySize, int32* actualNumDataArrayElements)
 {
   if (!function_pointers_.GetVectorAttributeF64) {
@@ -244,12 +254,12 @@ int32 NiRFmxWLANGenLibrary::GetVectorAttributeF64(niWLANGenerationSession sessio
   return function_pointers_.GetVectorAttributeF64(session, channelString, attributeID, data, dataArraySize, actualNumDataArrayElements);
 }
 
-int32 NiRFmxWLANGenLibrary::GetVectorAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize, int32* actualNumDataArrayElements)
+int32 NiRFmxWLANGenLibrary::GetVectorAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize, int32* actualNumDataArrayElements)
 {
   if (!function_pointers_.GetVectorAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_GetVectorAttributeI32.");
   }
-  return function_pointers_.GetVectorAttributeI32(session, channelString, attributeID, dataArray, dataArraySize, actualNumDataArrayElements);
+  return function_pointers_.GetVectorAttributeI32(session, channelString, attributeID, data, dataArraySize, actualNumDataArrayElements);
 }
 
 int32 NiRFmxWLANGenLibrary::LoadConfigurationFromFile(niWLANGenerationSession session, char filePath[], int32 resetSession)
@@ -284,28 +294,28 @@ int32 NiRFmxWLANGenLibrary::RFSGConfigure(niWLANGenerationSession session, char 
   return function_pointers_.RFSGConfigure(session, wlanChannelString, rfsgHandle, channelString);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGConfigureFrequencyMultipleLO(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
+int32 NiRFmxWLANGenLibrary::RFSGConfigureFrequencyMultipleLO(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
 {
   if (!function_pointers_.RFSGConfigureFrequencyMultipleLO) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigureFrequencyMultipleLO.");
   }
-  return function_pointers_.RFSGConfigureFrequencyMultipleLO(session, rfsgSessions, numberOfRFSGSessions, loSource, externalLOHandles, numberOfExternalLOHandles, carrierFrequency, dataArraySize, rfsgLODaisyChainEnabled, loExportToExternalDevicesEnabled);
+  return function_pointers_.RFSGConfigureFrequencyMultipleLO(session, rfsgHandles, numberOfRFSGSessions, loSource, externalLOHandles, numberOfExternalLOHandles, carrierFrequency, dataArraySize, rfsgLODaisyChainEnabled, loExportToExternalDevicesEnabled);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGConfigureFrequencySingleLO(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLoHandle, float64 carrierFrequency, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
+int32 NiRFmxWLANGenLibrary::RFSGConfigureFrequencySingleLO(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLoHandle, float64 carrierFrequency, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
 {
   if (!function_pointers_.RFSGConfigureFrequencySingleLO) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigureFrequencySingleLO.");
   }
-  return function_pointers_.RFSGConfigureFrequencySingleLO(session, rfsgSessions, numberOfRFSGSessions, loSource, externalLoHandle, carrierFrequency, rfsgLODaisyChainEnabled, loExportToExternalDevicesEnabled);
+  return function_pointers_.RFSGConfigureFrequencySingleLO(session, rfsgHandles, numberOfRFSGSessions, loSource, externalLoHandle, carrierFrequency, rfsgLODaisyChainEnabled, loExportToExternalDevicesEnabled);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGConfigureMultipleDeviceSynchronization(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, char masterReferenceClockSource[], int32 triggerLines[], int32 noOfTriggerLines)
+int32 NiRFmxWLANGenLibrary::RFSGConfigureMultipleDeviceSynchronization(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, char masterReferenceClockSource[], int32 triggerLines[], int32 noOfTriggerLines)
 {
   if (!function_pointers_.RFSGConfigureMultipleDeviceSynchronization) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigureMultipleDeviceSynchronization.");
   }
-  return function_pointers_.RFSGConfigureMultipleDeviceSynchronization(session, rfsgSessions, numberOfRFSGSessions, masterReferenceClockSource, triggerLines, noOfTriggerLines);
+  return function_pointers_.RFSGConfigureMultipleDeviceSynchronization(session, rfsgHandles, numberOfRFSGSessions, masterReferenceClockSource, triggerLines, noOfTriggerLines);
 }
 
 int32 NiRFmxWLANGenLibrary::RFSGConfigurePowerLevel(ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel)
@@ -340,12 +350,12 @@ int32 NiRFmxWLANGenLibrary::RFSGConfigureWaveform(niWLANGenerationSession sessio
   return function_pointers_.RFSGConfigureWaveform(session, wlanChannelString, rfsgHandle, channelString, resetHardware, waveformSize);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSession rfsgSessions[], char channelString[], int32 numberOfTxChains, char waveformName[])
+int32 NiRFmxWLANGenLibrary::RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSession rfsgHandles[], char channelString[], int32 numberOfTxChains, char waveformName[])
 {
   if (!function_pointers_.RFSGCreateAndDownloadMIMOWaveforms) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGCreateAndDownloadMIMOWaveforms.");
   }
-  return function_pointers_.RFSGCreateAndDownloadMIMOWaveforms(session, rfsgSessions, channelString, numberOfTxChains, waveformName);
+  return function_pointers_.RFSGCreateAndDownloadMIMOWaveforms(session, rfsgHandles, channelString, numberOfTxChains, waveformName);
 }
 
 int32 NiRFmxWLANGenLibrary::RFSGCreateAndDownloadWaveform(niWLANGenerationSession session, ViSession rfsgHandle, char channelString[], char waveformName[])
@@ -356,12 +366,12 @@ int32 NiRFmxWLANGenLibrary::RFSGCreateAndDownloadWaveform(niWLANGenerationSessio
   return function_pointers_.RFSGCreateAndDownloadWaveform(session, rfsgHandle, channelString, waveformName);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGForceTClkSynchronization(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 forceSync)
+int32 NiRFmxWLANGenLibrary::RFSGForceTClkSynchronization(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 forceSync)
 {
   if (!function_pointers_.RFSGForceTClkSynchronization) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGForceTClkSynchronization.");
   }
-  return function_pointers_.RFSGForceTClkSynchronization(session, rfsgSessions, numberOfRFSGSessions, forceSync);
+  return function_pointers_.RFSGForceTClkSynchronization(session, rfsgHandles, numberOfRFSGSessions, forceSync);
 }
 
 int32 NiRFmxWLANGenLibrary::RFSGInsertRFBlankingMarkerPositions(ViSession rfsgHandle, char script[], char scriptOut[], int32 lenOfScriptOut, int32* actualLenOfScriptOut)
@@ -372,20 +382,20 @@ int32 NiRFmxWLANGenLibrary::RFSGInsertRFBlankingMarkerPositions(ViSession rfsgHa
   return function_pointers_.RFSGInsertRFBlankingMarkerPositions(rfsgHandle, script, scriptOut, lenOfScriptOut, actualLenOfScriptOut);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGMultipleDeviceInitiate(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions)
+int32 NiRFmxWLANGenLibrary::RFSGMultipleDeviceInitiate(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions)
 {
   if (!function_pointers_.RFSGMultipleDeviceInitiate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGMultipleDeviceInitiate.");
   }
-  return function_pointers_.RFSGMultipleDeviceInitiate(session, rfsgSessions, numberOfRFSGSessions);
+  return function_pointers_.RFSGMultipleDeviceInitiate(session, rfsgHandles, numberOfRFSGSessions);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGReadAndDownloadWaveformsFromFile(ViSession rfsgSessions[], int32 numberOfChannels, char waveformName[], char filePath[])
+int32 NiRFmxWLANGenLibrary::RFSGReadAndDownloadWaveformsFromFile(ViSession rfsgHandles[], int32 numberOfChannels, char waveformName[], char filePath[])
 {
   if (!function_pointers_.RFSGReadAndDownloadWaveformsFromFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGReadAndDownloadWaveformsFromFile.");
   }
-  return function_pointers_.RFSGReadAndDownloadWaveformsFromFile(rfsgSessions, numberOfChannels, waveformName, filePath);
+  return function_pointers_.RFSGReadAndDownloadWaveformsFromFile(rfsgHandles, numberOfChannels, waveformName, filePath);
 }
 
 int32 NiRFmxWLANGenLibrary::RFSGRetrieveBurstStartLocations(ViSession rfsgHandle, char waveformName[], int32 burstStartLocations[], int32 dataArraySize, int32* actualDataArraySize)
@@ -508,7 +518,7 @@ int32 NiRFmxWLANGenLibrary::ReadBurstStopLocationsFromFile(char filePath[], char
   return function_pointers_.ReadBurstStopLocationsFromFile(filePath, waveformName, burstStopLocations, dataArraySize, actualDataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 NiRFmxWLANGenLibrary::ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
   if (!function_pointers_.ReadWaveformFromFile) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_ReadWaveformFromFile.");
@@ -516,12 +526,12 @@ int32 NiRFmxWLANGenLibrary::ReadWaveformFromFile(char filePath[], char waveformN
   return function_pointers_.ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, waveform, waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
-int32 NiRFmxWLANGenLibrary::ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 NiRFmxWLANGenLibrary::ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
   if (!function_pointers_.ReadWaveformFromFileInterleavedIQ) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_ReadWaveformFromFile.");
   }
-  return function_pointers_.ReadWaveformFromFileInterleavedIQ(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
+  return function_pointers_.ReadWaveformFromFileInterleavedIQ(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexNumber*>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
 int32 NiRFmxWLANGenLibrary::ResetSession(niWLANGenerationSession session)
@@ -564,6 +574,14 @@ int32 NiRFmxWLANGenLibrary::SetScalarAttributeI32(niWLANGenerationSession sessio
   return function_pointers_.SetScalarAttributeI32(session, channelString, attributeID, attributeValue);
 }
 
+int32 NiRFmxWLANGenLibrary::SetScalarAttributeI64(niWLANGenerationSession session, char channelString[], int32 attributeID, int64 attributeValue)
+{
+  if (!function_pointers_.SetScalarAttributeI64) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_SetScalarAttributeI64.");
+  }
+  return function_pointers_.SetScalarAttributeI64(session, channelString, attributeID, attributeValue);
+}
+
 int32 NiRFmxWLANGenLibrary::SetVectorAttributeF64(niWLANGenerationSession session, char channelString[], int32 attributeID, float64 data[], int32 dataArraySize)
 {
   if (!function_pointers_.SetVectorAttributeF64) {
@@ -572,12 +590,12 @@ int32 NiRFmxWLANGenLibrary::SetVectorAttributeF64(niWLANGenerationSession sessio
   return function_pointers_.SetVectorAttributeF64(session, channelString, attributeID, data, dataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::SetVectorAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize)
+int32 NiRFmxWLANGenLibrary::SetVectorAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize)
 {
   if (!function_pointers_.SetVectorAttributeI32) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_SetVectorAttributeI32.");
   }
-  return function_pointers_.SetVectorAttributeI32(session, channelString, attributeID, dataArray, dataArraySize);
+  return function_pointers_.SetVectorAttributeI32(session, channelString, attributeID, data, dataArraySize);
 }
 
 }  // namespace nirfmxwlangen_grpc

@@ -61,6 +61,7 @@ public:
   ::grpc::Status GetNumberOfUsersFromRUAllocation(::grpc::ServerContext* context, const GetNumberOfUsersFromRUAllocationRequest* request, GetNumberOfUsersFromRUAllocationResponse* response) override;
   ::grpc::Status GetScalarAttributeF64(::grpc::ServerContext* context, const GetScalarAttributeF64Request* request, GetScalarAttributeF64Response* response) override;
   ::grpc::Status GetScalarAttributeI32(::grpc::ServerContext* context, const GetScalarAttributeI32Request* request, GetScalarAttributeI32Response* response) override;
+  ::grpc::Status GetScalarAttributeI64(::grpc::ServerContext* context, const GetScalarAttributeI64Request* request, GetScalarAttributeI64Response* response) override;
   ::grpc::Status GetVectorAttributeF64(::grpc::ServerContext* context, const GetVectorAttributeF64Request* request, GetVectorAttributeF64Response* response) override;
   ::grpc::Status GetVectorAttributeI32(::grpc::ServerContext* context, const GetVectorAttributeI32Request* request, GetVectorAttributeI32Response* response) override;
   ::grpc::Status LoadConfigurationFromFile(::grpc::ServerContext* context, const LoadConfigurationFromFileRequest* request, LoadConfigurationFromFileResponse* response) override;
@@ -102,6 +103,7 @@ public:
   ::grpc::Status SetOFDMPacketExtensionThresholds(::grpc::ServerContext* context, const SetOFDMPacketExtensionThresholdsRequest* request, SetOFDMPacketExtensionThresholdsResponse* response) override;
   ::grpc::Status SetScalarAttributeF64(::grpc::ServerContext* context, const SetScalarAttributeF64Request* request, SetScalarAttributeF64Response* response) override;
   ::grpc::Status SetScalarAttributeI32(::grpc::ServerContext* context, const SetScalarAttributeI32Request* request, SetScalarAttributeI32Response* response) override;
+  ::grpc::Status SetScalarAttributeI64(::grpc::ServerContext* context, const SetScalarAttributeI64Request* request, SetScalarAttributeI64Response* response) override;
   ::grpc::Status SetVectorAttributeF64(::grpc::ServerContext* context, const SetVectorAttributeF64Request* request, SetVectorAttributeF64Response* response) override;
   ::grpc::Status SetVectorAttributeI32(::grpc::ServerContext* context, const SetVectorAttributeI32Request* request, SetVectorAttributeI32Response* response) override;
 private:

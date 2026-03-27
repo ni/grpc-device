@@ -47,14 +47,14 @@ int32 CreateAndWriteWaveformsToFile(niWLANGenerationSession session, char filePa
   return niWLANG_CreateAndWriteWaveformsToFile(session, filePath, fileOperation);
 }
 
-int32 CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
+int32 CreateMIMOWaveformsComplexF64(niWLANGenerationSession session, int32 reset, float64 t0[], float64 dt[], NIComplexNumber_struct waveforms[], int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
 {
   return niWLANG_CreateMIMOWaveformsComplexF64(session, reset, t0, dt, waveforms, numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
 }
 
-int32 CreateMIMOWaveformsComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64* waveforms, int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
+int32 CreateMIMOWaveformsComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64 t0[], float64 dt[], float64 waveforms[], int32 numberOfTxChains, int32 individualWaveformSize, int32* actualNumSamplesInEachWfm, int32* done)
 {
-  return niWLANG_CreateMIMOWaveformsComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexNumber>(waveforms), numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
+  return niWLANG_CreateMIMOWaveformsComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexNumber*>(waveforms), numberOfTxChains, individualWaveformSize, actualNumSamplesInEachWfm, done);
 }
 
 int32 CreateTriggerFrameMSDU(niWLANGenerationSession session, char channelString[], int32* generationDone, int32 triggerFrameMsduBits[], int32 dataArraySize, int32* actualDataArraySize)
@@ -62,19 +62,19 @@ int32 CreateTriggerFrameMSDU(niWLANGenerationSession session, char channelString
   return niWLANG_CreateTriggerFrameMSDU(session, channelString, generationDone, triggerFrameMsduBits, dataArraySize, actualDataArraySize);
 }
 
-int32 CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
+int32 CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
 {
   return niWLANG_CreateWaveformComplexF64(session, reset, t0, dt, waveform, waveformSize, actualNumWaveformSamples, done);
 }
 
-int32 CreateWaveformComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
+int32 CreateWaveformComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, int32* done)
 {
-  return niWLANG_CreateWaveformComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, done);
+  return niWLANG_CreateWaveformComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexNumber*>(waveform), waveformSize, actualNumWaveformSamples, done);
 }
 
-int32 GetErrorString(niWLANGenerationSession session, int32 errorCode, char errorMessage[], int32 errorMessageLen)
+int32 GetErrorString(niWLANGenerationSession session, int32 errorCode, char errorMessage[], int32 errorMessageLength)
 {
-  return niWLANG_GetErrorString(session, errorCode, errorMessage, errorMessageLen);
+  return niWLANG_GetErrorString(session, errorCode, errorMessage, errorMessageLength);
 }
 
 int32 GetNumberOfUsersFromRUAllocation(niWLANGenerationSession session, char channelString[], int32* numberOfUsers)
@@ -92,14 +92,19 @@ int32 GetScalarAttributeI32(niWLANGenerationSession session, char channelString[
   return niWLANG_GetScalarAttributeI32(session, channelString, attributeID, attributeValue);
 }
 
+int32 GetScalarAttributeI64(niWLANGenerationSession session, char channelString[], int32 attributeID, int64* attributeValue)
+{
+  return niWLANG_GetScalarAttributeI64(session, channelString, attributeID, attributeValue);
+}
+
 int32 GetVectorAttributeF64(niWLANGenerationSession session, char channelString[], int32 attributeID, float64 data[], int32 dataArraySize, int32* actualNumDataArrayElements)
 {
   return niWLANG_GetVectorAttributeF64(session, channelString, attributeID, data, dataArraySize, actualNumDataArrayElements);
 }
 
-int32 GetVectorAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize, int32* actualNumDataArrayElements)
+int32 GetVectorAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize, int32* actualNumDataArrayElements)
 {
-  return niWLANG_GetVectorAttributeI32(session, channelString, attributeID, dataArray, dataArraySize, actualNumDataArrayElements);
+  return niWLANG_GetVectorAttributeI32(session, channelString, attributeID, data, dataArraySize, actualNumDataArrayElements);
 }
 
 int32 LoadConfigurationFromFile(niWLANGenerationSession session, char filePath[], int32 resetSession)
@@ -122,19 +127,19 @@ int32 RFSGConfigure(niWLANGenerationSession session, char wlanChannelString[], V
   return niWLANG_RFSGConfigure(session, wlanChannelString, rfsgHandle, channelString);
 }
 
-int32 RFSGConfigureFrequencyMultipleLO(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
+int32 RFSGConfigureFrequencyMultipleLO(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
 {
-  return niWLANG_RFSGConfigureFrequencyMultipleLO(session, rfsgSessions, numberOfRFSGSessions, loSource, externalLOHandles, numberOfExternalLOHandles, carrierFrequency, dataArraySize, rfsgLODaisyChainEnabled, loExportToExternalDevicesEnabled);
+  return niWLANG_RFSGConfigureFrequencyMultipleLO(session, rfsgHandles, numberOfRFSGSessions, loSource, externalLOHandles, numberOfExternalLOHandles, carrierFrequency, dataArraySize, rfsgLODaisyChainEnabled, loExportToExternalDevicesEnabled);
 }
 
-int32 RFSGConfigureFrequencySingleLO(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLoHandle, float64 carrierFrequency, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
+int32 RFSGConfigureFrequencySingleLO(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLoHandle, float64 carrierFrequency, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
 {
-  return niWLANG_RFSGConfigureFrequencySingleLO(session, rfsgSessions, numberOfRFSGSessions, loSource, externalLoHandle, carrierFrequency, rfsgLODaisyChainEnabled, loExportToExternalDevicesEnabled);
+  return niWLANG_RFSGConfigureFrequencySingleLO(session, rfsgHandles, numberOfRFSGSessions, loSource, externalLoHandle, carrierFrequency, rfsgLODaisyChainEnabled, loExportToExternalDevicesEnabled);
 }
 
-int32 RFSGConfigureMultipleDeviceSynchronization(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, char masterReferenceClockSource[], int32 triggerLines[], int32 noOfTriggerLines)
+int32 RFSGConfigureMultipleDeviceSynchronization(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, char masterReferenceClockSource[], int32 triggerLines[], int32 noOfTriggerLines)
 {
-  return niWLANG_RFSGConfigureMultipleDeviceSynchronization(session, rfsgSessions, numberOfRFSGSessions, masterReferenceClockSource, triggerLines, noOfTriggerLines);
+  return niWLANG_RFSGConfigureMultipleDeviceSynchronization(session, rfsgHandles, numberOfRFSGSessions, masterReferenceClockSource, triggerLines, noOfTriggerLines);
 }
 
 int32 RFSGConfigurePowerLevel(ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel)
@@ -157,9 +162,9 @@ int32 RFSGConfigureWaveform(niWLANGenerationSession session, char wlanChannelStr
   return niWLANG_RFSGConfigureWaveform(session, wlanChannelString, rfsgHandle, channelString, resetHardware, waveformSize);
 }
 
-int32 RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSession rfsgSessions[], char channelString[], int32 numberOfTxChains, char waveformName[])
+int32 RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSession rfsgHandles[], char channelString[], int32 numberOfTxChains, char waveformName[])
 {
-  return niWLANG_RFSGCreateAndDownloadMIMOWaveforms(session, rfsgSessions, channelString, numberOfTxChains, waveformName);
+  return niWLANG_RFSGCreateAndDownloadMIMOWaveforms(session, rfsgHandles, channelString, numberOfTxChains, waveformName);
 }
 
 int32 RFSGCreateAndDownloadWaveform(niWLANGenerationSession session, ViSession rfsgHandle, char channelString[], char waveformName[])
@@ -167,9 +172,9 @@ int32 RFSGCreateAndDownloadWaveform(niWLANGenerationSession session, ViSession r
   return niWLANG_RFSGCreateAndDownloadWaveform(session, rfsgHandle, channelString, waveformName);
 }
 
-int32 RFSGForceTClkSynchronization(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 forceSync)
+int32 RFSGForceTClkSynchronization(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 forceSync)
 {
-  return niWLANG_RFSGForceTClkSynchronization(session, rfsgSessions, numberOfRFSGSessions, forceSync);
+  return niWLANG_RFSGForceTClkSynchronization(session, rfsgHandles, numberOfRFSGSessions, forceSync);
 }
 
 int32 RFSGInsertRFBlankingMarkerPositions(ViSession rfsgHandle, char script[], char scriptOut[], int32 lenOfScriptOut, int32* actualLenOfScriptOut)
@@ -177,14 +182,14 @@ int32 RFSGInsertRFBlankingMarkerPositions(ViSession rfsgHandle, char script[], c
   return niWLANG_RFSGInsertRFBlankingMarkerPositions(rfsgHandle, script, scriptOut, lenOfScriptOut, actualLenOfScriptOut);
 }
 
-int32 RFSGMultipleDeviceInitiate(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions)
+int32 RFSGMultipleDeviceInitiate(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions)
 {
-  return niWLANG_RFSGMultipleDeviceInitiate(session, rfsgSessions, numberOfRFSGSessions);
+  return niWLANG_RFSGMultipleDeviceInitiate(session, rfsgHandles, numberOfRFSGSessions);
 }
 
-int32 RFSGReadAndDownloadWaveformsFromFile(ViSession rfsgSessions[], int32 numberOfChannels, char waveformName[], char filePath[])
+int32 RFSGReadAndDownloadWaveformsFromFile(ViSession rfsgHandles[], int32 numberOfChannels, char waveformName[], char filePath[])
 {
-  return niWLANG_RFSGReadAndDownloadWaveformsFromFile(rfsgSessions, numberOfChannels, waveformName, filePath);
+  return niWLANG_RFSGReadAndDownloadWaveformsFromFile(rfsgHandles, numberOfChannels, waveformName, filePath);
 }
 
 int32 RFSGRetrieveBurstStartLocations(ViSession rfsgHandle, char waveformName[], int32 burstStartLocations[], int32 dataArraySize, int32* actualDataArraySize)
@@ -262,14 +267,14 @@ int32 ReadBurstStopLocationsFromFile(char filePath[], char waveformName[], int32
   return niWLANG_ReadBurstStopLocationsFromFile(filePath, waveformName, burstStopLocations, dataArraySize, actualDataArraySize);
 }
 
-int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 ReadWaveformFromFile(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
   return niWLANG_ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, waveform, waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
-int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64* waveform, int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
+int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof)
 {
-  return niWLANG_ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexNumber>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
+  return niWLANG_ReadWaveformFromFile(filePath, waveformName, offset, count, t0, dt, reinterpret_cast<NIComplexNumber*>(waveform), waveformSize, actualNumWaveformSamples, iqRate, headroom, eof);
 }
 
 int32 ResetSession(niWLANGenerationSession session)
@@ -297,14 +302,19 @@ int32 SetScalarAttributeI32(niWLANGenerationSession session, char channelString[
   return niWLANG_SetScalarAttributeI32(session, channelString, attributeID, attributeValue);
 }
 
+int32 SetScalarAttributeI64(niWLANGenerationSession session, char channelString[], int32 attributeID, int64 attributeValue)
+{
+  return niWLANG_SetScalarAttributeI64(session, channelString, attributeID, attributeValue);
+}
+
 int32 SetVectorAttributeF64(niWLANGenerationSession session, char channelString[], int32 attributeID, float64 data[], int32 dataArraySize)
 {
   return niWLANG_SetVectorAttributeF64(session, channelString, attributeID, data, dataArraySize);
 }
 
-int32 SetVectorAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 dataArray[], int32 dataArraySize)
+int32 SetVectorAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 data[], int32 dataArraySize)
 {
-  return niWLANG_SetVectorAttributeI32(session, channelString, attributeID, dataArray, dataArraySize);
+  return niWLANG_SetVectorAttributeI32(session, channelString, attributeID, data, dataArraySize);
 }
 
 }  // namespace nirfmxwlangen_grpc

@@ -97,7 +97,7 @@ create_and_write_waveforms_to_file(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 CreateWaveformComplexF64Response
-create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& reset)
+create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const bool& reset)
 {
   ::grpc::ClientContext context;
 
@@ -115,7 +115,7 @@ create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& s
 }
 
 CreateWaveformComplexF64InterleavedIQResponse
-create_waveform_complex_f64_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& reset)
+create_waveform_complex_f64_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const bool& reset)
 {
   ::grpc::ClientContext context;
 
@@ -265,7 +265,7 @@ get_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& sess
 }
 
 LoadConfigurationFromFileResponse
-load_configuration_from_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const pb::int32& reset)
+load_configuration_from_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const bool& reset)
 {
   ::grpc::ClientContext context;
 

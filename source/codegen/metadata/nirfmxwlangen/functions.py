@@ -179,6 +179,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FileOperationMode',
                 'name': 'fileOperation',
                 'type': 'int32'
             }
@@ -186,6 +187,7 @@ functions = {
         'returns': 'int32'
     },
     'CreateMIMOWaveformsComplexF64': {
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -194,29 +196,38 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'reset',
                 'type': 'int32'
             },
             {
                 'direction': 'out',
                 'name': 't0',
-                'type': 'float64'
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'numberOfTxChains'
+                },
+                'type': 'float64[]'
             },
             {
                 'direction': 'out',
                 'name': 'dt',
-                'type': 'float64'
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'numberOfTxChains'
+                },
+                'type': 'float64[]'
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.NIComplexNumber',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'waveforms',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'individualWaveformSize',
                     'value_twist': 'actualNumSamplesInEachWfm'
                 },
-                'type': 'NIComplexNumber_struct'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -235,6 +246,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'done',
                 'type': 'int32'
             }
@@ -243,6 +255,7 @@ functions = {
     },
     'CreateMIMOWaveformsComplexF64InterleavedIQ': {
         'cname': 'niWLANG_CreateMIMOWaveformsComplexF64',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'direction': 'in',
@@ -251,18 +264,27 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'reset',
                 'type': 'int32'
             },
             {
                 'direction': 'out',
                 'name': 't0',
-                'type': 'float64'
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'numberOfTxChains'
+                },
+                'type': 'float64[]'
             },
             {
                 'direction': 'out',
                 'name': 'dt',
-                'type': 'float64'
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'numberOfTxChains'
+                },
+                'type': 'float64[]'
             },
             {
                 'direction': 'out',
@@ -272,8 +294,8 @@ functions = {
                     'value': 'individualWaveformSize',
                     'value_twist': 'actualNumSamplesInEachWfm'
                 },
-                'type': 'float64',
-                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber>(waveforms)'
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber*>(waveforms)'
             },
             {
                 'direction': 'in',
@@ -312,6 +334,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'generationDone',
                 'type': 'int32'
             },
@@ -347,6 +370,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'reset',
                 'type': 'int32'
             },
@@ -362,14 +386,14 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.NIComplexNumber',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'waveform',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'NIComplexNumber_struct'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -383,6 +407,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'done',
                 'type': 'int32'
             }
@@ -399,6 +424,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'reset',
                 'type': 'int32'
             },
@@ -420,8 +446,8 @@ functions = {
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'float64',
-                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber>(waveform)'
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber*>(waveform)'
             },
             {
                 'direction': 'in',
@@ -435,6 +461,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'done',
                 'type': 'int32'
             }
@@ -458,13 +485,13 @@ functions = {
                 'name': 'errorMessage',
                 'size': {
                     'mechanism': 'ivi-dance',
-                    'value': 'errorMessageLen'
+                    'value': 'errorMessageLength'
                 },
                 'type': 'char[]'
             },
             {
                 'direction': 'in',
-                'name': 'errorMessageLen',
+                'name': 'errorMessageLength',
                 'type': 'int32'
             }
         ],
@@ -544,6 +571,33 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetScalarAttributeI64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'session',
+                'name': 'session',
+                'type': 'niWLANGenerationSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxWLANGenAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'attributeValue',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetVectorAttributeF64': {
         'parameters': [
             {
@@ -607,7 +661,7 @@ functions = {
             },
             {
                 'direction': 'out',
-                'name': 'dataArray',
+                'name': 'data',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'dataArraySize',
@@ -671,6 +725,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'isNewSession',
                 'type': 'int32'
             }
@@ -731,7 +786,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'rfsgSessions',
+                'name': 'rfsgHandles',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfRFSGSessions'
@@ -779,11 +834,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'rfsgLODaisyChainEnabled',
                 'type': 'int32'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'loExportToExternalDevicesEnabled',
                 'type': 'int32'
             }
@@ -799,7 +856,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'rfsgSessions',
+                'name': 'rfsgHandles',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfRFSGSessions'
@@ -829,11 +886,13 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'rfsgLODaisyChainEnabled',
                 'type': 'int32'
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'loExportToExternalDevicesEnabled',
                 'type': 'int32'
             }
@@ -849,7 +908,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'rfsgSessions',
+                'name': 'rfsgHandles',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfRFSGSessions'
@@ -996,6 +1055,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'resetHardware',
                 'type': 'int32'
             },
@@ -1016,7 +1076,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'rfsgSessions',
+                'name': 'rfsgHandles',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfTxChains'
@@ -1075,7 +1135,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'rfsgSessions',
+                'name': 'rfsgHandles',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfRFSGSessions'
@@ -1089,6 +1149,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'forceSync',
                 'type': 'int32'
             }
@@ -1139,7 +1200,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'rfsgSessions',
+                'name': 'rfsgHandles',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfRFSGSessions'
@@ -1158,7 +1219,7 @@ functions = {
         'parameters': [
             {
                 'direction': 'in',
-                'name': 'rfsgSessions',
+                'name': 'rfsgHandles',
                 'size': {
                     'mechanism': 'len',
                     'value': 'numberOfChannels'
@@ -1649,14 +1710,14 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.NIComplexNumber',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'waveform',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'NIComplexNumber_struct'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -1680,6 +1741,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'eof',
                 'type': 'int32'
             }
@@ -1727,8 +1789,8 @@ functions = {
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'float64',
-                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber>(waveform)'
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber*>(waveform)'
             },
             {
                 'direction': 'in',
@@ -1752,6 +1814,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'eof',
                 'type': 'int32'
             }
@@ -1782,6 +1845,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'FileOperationMode',
                 'name': 'fileOperation',
                 'type': 'int32'
             }
@@ -1913,6 +1977,33 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'SetScalarAttributeI64': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'session',
+                'name': 'session',
+                'type': 'niWLANGenerationSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'NiRFmxWLANGenAttribute',
+                'name': 'attributeID',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'attributeValue',
+                'type': 'int64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'SetVectorAttributeF64': {
         'parameters': [
             {
@@ -1970,7 +2061,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'dataArray',
+                'name': 'data',
                 'size': {
                     'mechanism': 'len',
                     'value': 'dataArraySize'

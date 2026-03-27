@@ -339,7 +339,7 @@ message CreateAndWriteWaveformsToFileResponse {
 
 message CreateWaveformComplexF64Request {
   nidevice_grpc.Session session = 1;
-  int32 reset = 2;
+  bool reset = 2;
 }
 
 message CreateWaveformComplexF64Response {
@@ -348,12 +348,12 @@ message CreateWaveformComplexF64Response {
   double dt = 3;
   repeated nidevice_grpc.NIComplexNumber waveform = 4;
   int32 actual_waveform_size = 5;
-  int32 generation_done = 6;
+  bool generation_done = 6;
 }
 
 message CreateWaveformComplexF64InterleavedIQRequest {
   nidevice_grpc.Session session = 1;
-  int32 reset = 2;
+  bool reset = 2;
 }
 
 message CreateWaveformComplexF64InterleavedIQResponse {
@@ -374,6 +374,7 @@ message GetAttributeStringRequest {
 message GetAttributeStringResponse {
   int32 status = 1;
   string attribute_value = 2;
+  int32 actual_string_size = 3;
 }
 
 message GetErrorStringRequest {
@@ -447,7 +448,7 @@ message GetVectorAttributeI32Response {
 message LoadConfigurationFromFileRequest {
   nidevice_grpc.Session session = 1;
   string file_path = 2;
-  int32 reset = 3;
+  bool reset = 3;
 }
 
 message LoadConfigurationFromFileResponse {
@@ -465,7 +466,7 @@ message OpenSessionRequest {
 message OpenSessionResponse {
   int32 status = 1;
   nidevice_grpc.Session session = 2;
-  int32 is_new_session = 3;
+  bool is_new_session = 3;
 }
 
 message RFSGClearDatabaseRequest {
@@ -577,11 +578,11 @@ message ReadWaveformFromFileResponse {
   int32 status = 1;
   double t0 = 2;
   double dt = 3;
-  nidevice_grpc.NIComplexNumber waveform = 4;
+  repeated nidevice_grpc.NIComplexNumber waveform = 4;
   int32 actual_num_waveform_samples = 5;
   double iq_rate = 6;
   double headroom = 7;
-  int32 eof = 8;
+  bool eof = 8;
 }
 
 message ReadWaveformFromFileInterleavedIQRequest {
@@ -595,11 +596,11 @@ message ReadWaveformFromFileInterleavedIQResponse {
   int32 status = 1;
   double t0 = 2;
   double dt = 3;
-  double waveform = 4;
+  repeated double waveform = 4;
   int32 actual_num_waveform_samples = 5;
   double iq_rate = 6;
   double headroom = 7;
-  int32 eof = 8;
+  bool eof = 8;
 }
 
 message ResetAttributeRequest {

@@ -79,6 +79,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'reset',
                 'type': 'int32'
             },
@@ -115,6 +116,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'generationDone',
                 'type': 'int32'
             }
@@ -131,6 +133,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'reset',
                 'type': 'int32'
             },
@@ -196,14 +199,20 @@ functions = {
                 'direction': 'out',
                 'name': 'attributeValue',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualStringSize'
                 },
                 'type': 'char[]'
             },
             {
                 'direction': 'in',
                 'name': 'bufferSize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'actualStringSize',
                 'type': 'int32'
             }
         ],
@@ -417,6 +426,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'grpc_type': 'bool',
                 'name': 'reset',
                 'type': 'int32'
             }
@@ -446,6 +456,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'isNewSession',
                 'type': 'int32'
             }
@@ -706,14 +717,14 @@ functions = {
             },
             {
                 'direction': 'out',
-                'grpc_type': 'nidevice_grpc.NIComplexNumber',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
                 'name': 'waveform',
                 'size': {
                     'mechanism': 'ivi-dance-with-a-twist',
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'NIComplexNumber_struct'
+                'type': 'NIComplexNumber_struct[]'
             },
             {
                 'direction': 'in',
@@ -737,6 +748,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'eof',
                 'type': 'int32'
             }
@@ -784,8 +796,8 @@ functions = {
                     'value': 'waveformSize',
                     'value_twist': 'actualNumWaveformSamples'
                 },
-                'type': 'float64',
-                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber>(waveform)'
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber*>(waveform)'
             },
             {
                 'direction': 'in',
@@ -809,6 +821,7 @@ functions = {
             },
             {
                 'direction': 'out',
+                'grpc_type': 'bool',
                 'name': 'eof',
                 'type': 'int32'
             }

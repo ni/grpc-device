@@ -34,6 +34,7 @@ service NiRFmxWLANGen {
   rpc GetNumberOfUsersFromRUAllocation(GetNumberOfUsersFromRUAllocationRequest) returns (GetNumberOfUsersFromRUAllocationResponse);
   rpc GetScalarAttributeF64(GetScalarAttributeF64Request) returns (GetScalarAttributeF64Response);
   rpc GetScalarAttributeI32(GetScalarAttributeI32Request) returns (GetScalarAttributeI32Response);
+  rpc GetScalarAttributeI64(GetScalarAttributeI64Request) returns (GetScalarAttributeI64Response);
   rpc GetVectorAttributeF64(GetVectorAttributeF64Request) returns (GetVectorAttributeF64Response);
   rpc GetVectorAttributeI32(GetVectorAttributeI32Request) returns (GetVectorAttributeI32Response);
   rpc LoadConfigurationFromFile(LoadConfigurationFromFileRequest) returns (LoadConfigurationFromFileResponse);
@@ -75,6 +76,7 @@ service NiRFmxWLANGen {
   rpc SetOFDMPacketExtensionThresholds(SetOFDMPacketExtensionThresholdsRequest) returns (SetOFDMPacketExtensionThresholdsResponse);
   rpc SetScalarAttributeF64(SetScalarAttributeF64Request) returns (SetScalarAttributeF64Response);
   rpc SetScalarAttributeI32(SetScalarAttributeI32Request) returns (SetScalarAttributeI32Response);
+  rpc SetScalarAttributeI64(SetScalarAttributeI64Request) returns (SetScalarAttributeI64Response);
   rpc SetVectorAttributeF64(SetVectorAttributeF64Request) returns (SetVectorAttributeF64Response);
   rpc SetVectorAttributeI32(SetVectorAttributeI32Request) returns (SetVectorAttributeI32Response);
 }
@@ -255,6 +257,13 @@ enum CompatibilityVersion {
   COMPATIBILITY_VERSION_040000 = 40000;
   COMPATIBILITY_VERSION_050000 = 50000;
   COMPATIBILITY_VERSION_060000 = 60000;
+}
+
+enum FileOperationMode {
+  FILE_OPERATION_MODE_OPEN = 0;
+  FILE_OPERATION_MODE_OPEN_OR_CREATE = 1;
+  FILE_OPERATION_MODE_CREATE_OR_REPLACE = 2;
+  FILE_OPERATION_MODE_CREATE = 3;
 }
 
 enum LOSource {
@@ -568,7 +577,10 @@ message CloseSessionResponse {
 message CreateAndWriteWaveformsToFileRequest {
   nidevice_grpc.Session session = 1;
   string file_path = 2;
-  int32 file_operation = 3;
+  oneof file_operation_enum {
+    FileOperationMode file_operation = 3;
+    int32 file_operation_raw = 4;
+  }
 }
 
 message CreateAndWriteWaveformsToFileResponse {
@@ -577,30 +589,28 @@ message CreateAndWriteWaveformsToFileResponse {
 
 message CreateMIMOWaveformsComplexF64Request {
   nidevice_grpc.Session session = 1;
-  int32 reset = 2;
-  int32 number_of_tx_chains = 3;
+  bool reset = 2;
 }
 
 message CreateMIMOWaveformsComplexF64Response {
   int32 status = 1;
-  double t0 = 2;
-  double dt = 3;
-  nidevice_grpc.NIComplexNumber waveforms = 4;
+  repeated double t0 = 2;
+  repeated double dt = 3;
+  repeated nidevice_grpc.NIComplexNumber waveforms = 4;
   int32 actual_num_samples_in_each_wfm = 5;
-  int32 done = 6;
+  bool done = 6;
 }
 
 message CreateMIMOWaveformsComplexF64InterleavedIQRequest {
   nidevice_grpc.Session session = 1;
-  int32 reset = 2;
-  int32 number_of_tx_chains = 3;
+  bool reset = 2;
 }
 
 message CreateMIMOWaveformsComplexF64InterleavedIQResponse {
   int32 status = 1;
-  double t0 = 2;
-  double dt = 3;
-  double waveforms = 4;
+  repeated double t0 = 2;
+  repeated double dt = 3;
+  repeated double waveforms = 4;
   int32 actual_num_samples_in_each_wfm = 5;
   int32 done = 6;
 }
@@ -612,37 +622,37 @@ message CreateTriggerFrameMSDURequest {
 
 message CreateTriggerFrameMSDUResponse {
   int32 status = 1;
-  int32 generation_done = 2;
+  bool generation_done = 2;
   repeated int32 trigger_frame_msdu_bits = 3;
   int32 actual_data_array_size = 4;
 }
 
 message CreateWaveformComplexF64Request {
   nidevice_grpc.Session session = 1;
-  int32 reset = 2;
+  bool reset = 2;
 }
 
 message CreateWaveformComplexF64Response {
   int32 status = 1;
   double t0 = 2;
   double dt = 3;
-  nidevice_grpc.NIComplexNumber waveform = 4;
+  repeated nidevice_grpc.NIComplexNumber waveform = 4;
   int32 actual_num_waveform_samples = 5;
-  int32 done = 6;
+  bool done = 6;
 }
 
 message CreateWaveformComplexF64InterleavedIQRequest {
   nidevice_grpc.Session session = 1;
-  int32 reset = 2;
+  bool reset = 2;
 }
 
 message CreateWaveformComplexF64InterleavedIQResponse {
   int32 status = 1;
   double t0 = 2;
   double dt = 3;
-  double waveform = 4;
+  repeated double waveform = 4;
   int32 actual_num_waveform_samples = 5;
-  int32 done = 6;
+  bool done = 6;
 }
 
 message GetErrorStringRequest {
@@ -688,6 +698,17 @@ message GetScalarAttributeI32Response {
   int32 attribute_value_raw = 3;
 }
 
+message GetScalarAttributeI64Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+}
+
+message GetScalarAttributeI64Response {
+  int32 status = 1;
+  int64 attribute_value = 2;
+}
+
 message GetVectorAttributeF64Request {
   nidevice_grpc.Session session = 1;
   string channel_string = 2;
@@ -708,7 +729,7 @@ message GetVectorAttributeI32Request {
 
 message GetVectorAttributeI32Response {
   int32 status = 1;
-  repeated int32 data_array = 2;
+  repeated int32 data = 2;
   int32 actual_num_data_array_elements = 3;
 }
 
@@ -733,7 +754,7 @@ message OpenSessionRequest {
 message OpenSessionResponse {
   int32 status = 1;
   nidevice_grpc.Session session = 2;
-  int32 is_new_session = 3;
+  bool is_new_session = 3;
 }
 
 message RFSGClearDatabaseRequest {
@@ -759,15 +780,15 @@ message RFSGConfigureResponse {
 
 message RFSGConfigureFrequencyMultipleLORequest {
   nidevice_grpc.Session session = 1;
-  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  repeated nidevice_grpc.Session rfsg_handles = 2;
   oneof lo_source_enum {
     LOSource lo_source = 3;
     int32 lo_source_raw = 4;
   }
   repeated nidevice_grpc.Session external_lo_handles = 5;
   repeated double carrier_frequency = 6;
-  int32 rfsg_lo_daisy_chain_enabled = 7;
-  int32 lo_export_to_external_devices_enabled = 8;
+  bool rfsg_lo_daisy_chain_enabled = 7;
+  bool lo_export_to_external_devices_enabled = 8;
 }
 
 message RFSGConfigureFrequencyMultipleLOResponse {
@@ -776,15 +797,15 @@ message RFSGConfigureFrequencyMultipleLOResponse {
 
 message RFSGConfigureFrequencySingleLORequest {
   nidevice_grpc.Session session = 1;
-  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  repeated nidevice_grpc.Session rfsg_handles = 2;
   oneof lo_source_enum {
     LOSource lo_source = 3;
     int32 lo_source_raw = 4;
   }
   nidevice_grpc.Session external_lo_handle = 5;
   double carrier_frequency = 6;
-  int32 rfsg_lo_daisy_chain_enabled = 7;
-  int32 lo_export_to_external_devices_enabled = 8;
+  bool rfsg_lo_daisy_chain_enabled = 7;
+  bool lo_export_to_external_devices_enabled = 8;
 }
 
 message RFSGConfigureFrequencySingleLOResponse {
@@ -793,7 +814,7 @@ message RFSGConfigureFrequencySingleLOResponse {
 
 message RFSGConfigureMultipleDeviceSynchronizationRequest {
   nidevice_grpc.Session session = 1;
-  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  repeated nidevice_grpc.Session rfsg_handles = 2;
   string master_reference_clock_source = 3;
   repeated int32 trigger_lines = 4;
 }
@@ -839,7 +860,7 @@ message RFSGConfigureWaveformRequest {
   string wlan_channel_string = 2;
   nidevice_grpc.Session rfsg_handle = 3;
   string channel_string = 4;
-  int32 reset_hardware = 5;
+  bool reset_hardware = 5;
 }
 
 message RFSGConfigureWaveformResponse {
@@ -849,7 +870,7 @@ message RFSGConfigureWaveformResponse {
 
 message RFSGCreateAndDownloadMIMOWaveformsRequest {
   nidevice_grpc.Session session = 1;
-  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  repeated nidevice_grpc.Session rfsg_handles = 2;
   string channel_string = 3;
   string waveform_name = 4;
 }
@@ -871,8 +892,8 @@ message RFSGCreateAndDownloadWaveformResponse {
 
 message RFSGForceTClkSynchronizationRequest {
   nidevice_grpc.Session session = 1;
-  repeated nidevice_grpc.Session rfsg_sessions = 2;
-  int32 force_sync = 3;
+  repeated nidevice_grpc.Session rfsg_handles = 2;
+  bool force_sync = 3;
 }
 
 message RFSGForceTClkSynchronizationResponse {
@@ -892,7 +913,7 @@ message RFSGInsertRFBlankingMarkerPositionsResponse {
 
 message RFSGMultipleDeviceInitiateRequest {
   nidevice_grpc.Session session = 1;
-  repeated nidevice_grpc.Session rfsg_sessions = 2;
+  repeated nidevice_grpc.Session rfsg_handles = 2;
 }
 
 message RFSGMultipleDeviceInitiateResponse {
@@ -900,7 +921,7 @@ message RFSGMultipleDeviceInitiateResponse {
 }
 
 message RFSGReadAndDownloadWaveformsFromFileRequest {
-  repeated nidevice_grpc.Session rfsg_sessions = 1;
+  repeated nidevice_grpc.Session rfsg_handles = 1;
   string waveform_name = 2;
   string file_path = 3;
 }
@@ -1081,11 +1102,11 @@ message ReadWaveformFromFileResponse {
   int32 status = 1;
   double t0 = 2;
   double dt = 3;
-  nidevice_grpc.NIComplexNumber waveform = 4;
+  repeated nidevice_grpc.NIComplexNumber waveform = 4;
   int32 actual_num_waveform_samples = 5;
   double iq_rate = 6;
   double headroom = 7;
-  int32 eof = 8;
+  bool eof = 8;
 }
 
 message ReadWaveformFromFileInterleavedIQRequest {
@@ -1099,11 +1120,11 @@ message ReadWaveformFromFileInterleavedIQResponse {
   int32 status = 1;
   double t0 = 2;
   double dt = 3;
-  double waveform = 4;
+  repeated double waveform = 4;
   int32 actual_num_waveform_samples = 5;
   double iq_rate = 6;
   double headroom = 7;
-  int32 eof = 8;
+  bool eof = 8;
 }
 
 message ResetSessionRequest {
@@ -1117,7 +1138,10 @@ message ResetSessionResponse {
 message SaveConfigurationToFileRequest {
   nidevice_grpc.Session session = 1;
   string file_path = 2;
-  int32 file_operation = 3;
+  oneof file_operation_enum {
+    FileOperationMode file_operation = 3;
+    int32 file_operation_raw = 4;
+  }
 }
 
 message SaveConfigurationToFileResponse {
@@ -1162,6 +1186,17 @@ message SetScalarAttributeI32Response {
   int32 status = 1;
 }
 
+message SetScalarAttributeI64Request {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  NiRFmxWLANGenAttribute attribute_id = 3;
+  int64 attribute_value = 4;
+}
+
+message SetScalarAttributeI64Response {
+  int32 status = 1;
+}
+
 message SetVectorAttributeF64Request {
   nidevice_grpc.Session session = 1;
   string channel_string = 2;
@@ -1177,7 +1212,7 @@ message SetVectorAttributeI32Request {
   nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxWLANGenAttribute attribute_id = 3;
-  repeated int32 data_array = 4;
+  repeated int32 data = 4;
 }
 
 message SetVectorAttributeI32Response {

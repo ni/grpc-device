@@ -248,111 +248,28 @@ namespace nirfmxwlangen_grpc {
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
       auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
       char* file_path = (char*)file_path_mbcs.c_str();
-      int32 file_operation = request->file_operation();
+      int32 file_operation;
+      switch (request->file_operation_enum_case()) {
+        case nirfmxwlangen_grpc::CreateAndWriteWaveformsToFileRequest::FileOperationEnumCase::kFileOperation: {
+          file_operation = static_cast<int32>(request->file_operation());
+          break;
+        }
+        case nirfmxwlangen_grpc::CreateAndWriteWaveformsToFileRequest::FileOperationEnumCase::kFileOperationRaw: {
+          file_operation = static_cast<int32>(request->file_operation_raw());
+          break;
+        }
+        case nirfmxwlangen_grpc::CreateAndWriteWaveformsToFileRequest::FileOperationEnumCase::FILE_OPERATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for file_operation was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->CreateAndWriteWaveformsToFile(session, file_path, file_operation);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxWLANGenService::CreateMIMOWaveformsComplexF64(::grpc::ServerContext* context, const CreateMIMOWaveformsComplexF64Request* request, CreateMIMOWaveformsComplexF64Response* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      int32 reset = request->reset();
-      int32 number_of_tx_chains = request->number_of_tx_chains();
-      float64 t0 {};
-      float64 dt {};
-      NIComplexNumber_struct waveforms {};
-      int32 actual_num_samples_in_each_wfm {};
-      int32 done {};
-      while (true) {
-        auto status = library_->CreateMIMOWaveformsComplexF64(session, reset, &t0, &dt, nullptr, number_of_tx_chains, 0, &actual_num_samples_in_each_wfm, &done);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
-        }
-        auto individual_waveform_size = actual_num_samples_in_each_wfm;
-        status = library_->CreateMIMOWaveformsComplexF64(session, reset, &t0, &dt, &waveforms, number_of_tx_chains, individual_waveform_size, &actual_num_samples_in_each_wfm, &done);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
-        }
-        response->set_status(status);
-        response->set_t0(t0);
-        response->set_dt(dt);
-        convert_to_grpc(waveforms, response->mutable_waveforms());
-        {
-          auto shrunk_size = actual_num_samples_in_each_wfm;
-          auto current_size = response->mutable_waveforms()->size();
-          if (shrunk_size != current_size) {
-            response->mutable_waveforms()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-          }
-        }
-        response->set_actual_num_samples_in_each_wfm(actual_num_samples_in_each_wfm);
-        response->set_done(done);
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxWLANGenService::CreateMIMOWaveformsComplexF64InterleavedIQ(::grpc::ServerContext* context, const CreateMIMOWaveformsComplexF64InterleavedIQRequest* request, CreateMIMOWaveformsComplexF64InterleavedIQResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      int32 reset = request->reset();
-      int32 number_of_tx_chains = request->number_of_tx_chains();
-      float64 t0 {};
-      float64 dt {};
-      float64 waveforms {};
-      int32 actual_num_samples_in_each_wfm {};
-      int32 done {};
-      while (true) {
-        auto status = library_->CreateMIMOWaveformsComplexF64InterleavedIQ(session, reset, &t0, &dt, nullptr, number_of_tx_chains, 0, &actual_num_samples_in_each_wfm, &done);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
-        }
-        auto individual_waveform_size = actual_num_samples_in_each_wfm;
-        status = library_->CreateMIMOWaveformsComplexF64InterleavedIQ(session, reset, &t0, &dt, &waveforms, number_of_tx_chains, individual_waveform_size, &actual_num_samples_in_each_wfm, &done);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
-        }
-        response->set_status(status);
-        response->set_t0(t0);
-        response->set_dt(dt);
-        response->set_waveforms(reinterpret_cast<_ni_complex_number>(waveforms));
-        response->mutable_waveforms()->Resize(actual_num_samples_in_each_wfm * 2, 0);
-        response->set_actual_num_samples_in_each_wfm(actual_num_samples_in_each_wfm * 2);
-        response->set_done(done);
-        return ::grpc::Status::OK;
-      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
@@ -414,7 +331,6 @@ namespace nirfmxwlangen_grpc {
       int32 reset = request->reset();
       float64 t0 {};
       float64 dt {};
-      NIComplexNumber_struct waveform {};
       int32 actual_num_waveform_samples {};
       int32 done {};
       while (true) {
@@ -422,8 +338,9 @@ namespace nirfmxwlangen_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
         }
+        std::vector<NIComplexNumber_struct> waveform(actual_num_waveform_samples, NIComplexNumber_struct());
         auto waveform_size = actual_num_waveform_samples;
-        status = library_->CreateWaveformComplexF64(session, reset, &t0, &dt, &waveform, waveform_size, &actual_num_waveform_samples, &done);
+        status = library_->CreateWaveformComplexF64(session, reset, &t0, &dt, waveform.data(), waveform_size, &actual_num_waveform_samples, &done);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -465,7 +382,6 @@ namespace nirfmxwlangen_grpc {
       int32 reset = request->reset();
       float64 t0 {};
       float64 dt {};
-      float64 waveform {};
       int32 actual_num_waveform_samples {};
       int32 done {};
       while (true) {
@@ -473,8 +389,10 @@ namespace nirfmxwlangen_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
         }
+        response->mutable_waveform()->Resize(actual_num_waveform_samples * 2, 0);
+        float64* waveform = response->mutable_waveform()->mutable_data();
         auto waveform_size = actual_num_waveform_samples;
-        status = library_->CreateWaveformComplexF64InterleavedIQ(session, reset, &t0, &dt, &waveform, waveform_size, &actual_num_waveform_samples, &done);
+        status = library_->CreateWaveformComplexF64InterleavedIQ(session, reset, &t0, &dt, waveform, waveform_size, &actual_num_waveform_samples, &done);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -485,7 +403,6 @@ namespace nirfmxwlangen_grpc {
         response->set_status(status);
         response->set_t0(t0);
         response->set_dt(dt);
-        response->set_waveform(reinterpret_cast<_ni_complex_number>(waveform));
         response->mutable_waveform()->Resize(actual_num_waveform_samples * 2, 0);
         response->set_actual_num_waveform_samples(actual_num_waveform_samples * 2);
         response->set_done(done);
@@ -514,14 +431,14 @@ namespace nirfmxwlangen_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
         }
-        int32 error_message_len = status;
+        int32 error_message_length = status;
 
         std::string error_message;
-        if (error_message_len > 0) {
-            error_message.resize(error_message_len - 1);
+        if (error_message_length > 0) {
+            error_message.resize(error_message_length - 1);
         }
-        status = library_->GetErrorString(session, error_code, (char*)error_message.data(), error_message_len);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_message_len)) {
+        status = library_->GetErrorString(session, error_code, (char*)error_message.data(), error_message_length);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_message_length)) {
           // buffer is now too small, try again
           continue;
         }
@@ -629,6 +546,33 @@ namespace nirfmxwlangen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANGenService::GetScalarAttributeI64(::grpc::ServerContext* context, const GetScalarAttributeI64Request* request, GetScalarAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
+      auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
+      char* channel_string = (char*)channel_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attribute_value {};
+      auto status = library_->GetScalarAttributeI64(session, channel_string, attribute_id, &attribute_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
+      }
+      response->set_status(status);
+      response->set_attribute_value(attribute_value);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANGenService::GetVectorAttributeF64(::grpc::ServerContext* context, const GetVectorAttributeF64Request* request, GetVectorAttributeF64Response* response)
   {
     if (context->IsCancelled()) {
@@ -687,10 +631,10 @@ namespace nirfmxwlangen_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
         }
-        response->mutable_data_array()->Resize(actual_num_data_array_elements, 0);
-        int32* data_array = reinterpret_cast<int32*>(response->mutable_data_array()->mutable_data());
+        response->mutable_data()->Resize(actual_num_data_array_elements, 0);
+        int32* data = reinterpret_cast<int32*>(response->mutable_data()->mutable_data());
         auto data_array_size = actual_num_data_array_elements;
-        status = library_->GetVectorAttributeI32(session, channel_string, attribute_id, data_array, data_array_size, &actual_num_data_array_elements);
+        status = library_->GetVectorAttributeI32(session, channel_string, attribute_id, data, data_array_size, &actual_num_data_array_elements);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -699,7 +643,7 @@ namespace nirfmxwlangen_grpc {
           return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
         }
         response->set_status(status);
-        response->mutable_data_array()->Resize(actual_num_data_array_elements, 0);
+        response->mutable_data()->Resize(actual_num_data_array_elements, 0);
         response->set_actual_num_data_array_elements(actual_num_data_array_elements);
         return ::grpc::Status::OK;
       }
@@ -849,14 +793,14 @@ namespace nirfmxwlangen_grpc {
     try {
       auto session_grpc_session = request->session();
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      auto rfsg_sessions_request = request->rfsg_sessions();
-      std::vector<ViSession> rfsg_sessions;
+      auto rfsg_handles_request = request->rfsg_handles();
+      std::vector<ViSession> rfsg_handles;
       std::transform(
-        rfsg_sessions_request.begin(),
-        rfsg_sessions_request.end(),
-        std::back_inserter(rfsg_sessions),
+        rfsg_handles_request.begin(),
+        rfsg_handles_request.end(),
+        std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_sessions().size());
+      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
       int32 lo_source;
       switch (request->lo_source_enum_case()) {
         case nirfmxwlangen_grpc::RFSGConfigureFrequencyMultipleLORequest::LoSourceEnumCase::kLoSource: {
@@ -885,7 +829,7 @@ namespace nirfmxwlangen_grpc {
       int32 data_array_size = static_cast<int32>(request->carrier_frequency().size());
       int32 rfsg_lo_daisy_chain_enabled = request->rfsg_lo_daisy_chain_enabled();
       int32 lo_export_to_external_devices_enabled = request->lo_export_to_external_devices_enabled();
-      auto status = library_->RFSGConfigureFrequencyMultipleLO(session, rfsg_sessions.data(), number_of_rfsg_sessions, lo_source, external_lo_handles.data(), number_of_external_lo_handles, carrier_frequency, data_array_size, rfsg_lo_daisy_chain_enabled, lo_export_to_external_devices_enabled);
+      auto status = library_->RFSGConfigureFrequencyMultipleLO(session, rfsg_handles.data(), number_of_rfsg_sessions, lo_source, external_lo_handles.data(), number_of_external_lo_handles, carrier_frequency, data_array_size, rfsg_lo_daisy_chain_enabled, lo_export_to_external_devices_enabled);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
@@ -907,14 +851,14 @@ namespace nirfmxwlangen_grpc {
     try {
       auto session_grpc_session = request->session();
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      auto rfsg_sessions_request = request->rfsg_sessions();
-      std::vector<ViSession> rfsg_sessions;
+      auto rfsg_handles_request = request->rfsg_handles();
+      std::vector<ViSession> rfsg_handles;
       std::transform(
-        rfsg_sessions_request.begin(),
-        rfsg_sessions_request.end(),
-        std::back_inserter(rfsg_sessions),
+        rfsg_handles_request.begin(),
+        rfsg_handles_request.end(),
+        std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_sessions().size());
+      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
       int32 lo_source;
       switch (request->lo_source_enum_case()) {
         case nirfmxwlangen_grpc::RFSGConfigureFrequencySingleLORequest::LoSourceEnumCase::kLoSource: {
@@ -936,7 +880,7 @@ namespace nirfmxwlangen_grpc {
       float64 carrier_frequency = request->carrier_frequency();
       int32 rfsg_lo_daisy_chain_enabled = request->rfsg_lo_daisy_chain_enabled();
       int32 lo_export_to_external_devices_enabled = request->lo_export_to_external_devices_enabled();
-      auto status = library_->RFSGConfigureFrequencySingleLO(session, rfsg_sessions.data(), number_of_rfsg_sessions, lo_source, external_lo_handle, carrier_frequency, rfsg_lo_daisy_chain_enabled, lo_export_to_external_devices_enabled);
+      auto status = library_->RFSGConfigureFrequencySingleLO(session, rfsg_handles.data(), number_of_rfsg_sessions, lo_source, external_lo_handle, carrier_frequency, rfsg_lo_daisy_chain_enabled, lo_export_to_external_devices_enabled);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
@@ -958,19 +902,19 @@ namespace nirfmxwlangen_grpc {
     try {
       auto session_grpc_session = request->session();
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      auto rfsg_sessions_request = request->rfsg_sessions();
-      std::vector<ViSession> rfsg_sessions;
+      auto rfsg_handles_request = request->rfsg_handles();
+      std::vector<ViSession> rfsg_handles;
       std::transform(
-        rfsg_sessions_request.begin(),
-        rfsg_sessions_request.end(),
-        std::back_inserter(rfsg_sessions),
+        rfsg_handles_request.begin(),
+        rfsg_handles_request.end(),
+        std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_sessions().size());
+      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
       auto master_reference_clock_source_mbcs = convert_from_grpc<std::string>(request->master_reference_clock_source());
       char* master_reference_clock_source = (char*)master_reference_clock_source_mbcs.c_str();
       auto trigger_lines = const_cast<int32*>(reinterpret_cast<const int32*>(request->trigger_lines().data()));
       int32 no_of_trigger_lines = static_cast<int32>(request->trigger_lines().size());
-      auto status = library_->RFSGConfigureMultipleDeviceSynchronization(session, rfsg_sessions.data(), number_of_rfsg_sessions, master_reference_clock_source, trigger_lines, no_of_trigger_lines);
+      auto status = library_->RFSGConfigureMultipleDeviceSynchronization(session, rfsg_handles.data(), number_of_rfsg_sessions, master_reference_clock_source, trigger_lines, no_of_trigger_lines);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
@@ -1124,19 +1068,19 @@ namespace nirfmxwlangen_grpc {
     try {
       auto session_grpc_session = request->session();
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      auto rfsg_sessions_request = request->rfsg_sessions();
-      std::vector<ViSession> rfsg_sessions;
+      auto rfsg_handles_request = request->rfsg_handles();
+      std::vector<ViSession> rfsg_handles;
       std::transform(
-        rfsg_sessions_request.begin(),
-        rfsg_sessions_request.end(),
-        std::back_inserter(rfsg_sessions),
+        rfsg_handles_request.begin(),
+        rfsg_handles_request.end(),
+        std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
-      int32 number_of_tx_chains = static_cast<int32>(request->rfsg_sessions().size());
+      int32 number_of_tx_chains = static_cast<int32>(request->rfsg_handles().size());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
-      auto status = library_->RFSGCreateAndDownloadMIMOWaveforms(session, rfsg_sessions.data(), channel_string, number_of_tx_chains, waveform_name);
+      auto status = library_->RFSGCreateAndDownloadMIMOWaveforms(session, rfsg_handles.data(), channel_string, number_of_tx_chains, waveform_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
@@ -1186,16 +1130,16 @@ namespace nirfmxwlangen_grpc {
     try {
       auto session_grpc_session = request->session();
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      auto rfsg_sessions_request = request->rfsg_sessions();
-      std::vector<ViSession> rfsg_sessions;
+      auto rfsg_handles_request = request->rfsg_handles();
+      std::vector<ViSession> rfsg_handles;
       std::transform(
-        rfsg_sessions_request.begin(),
-        rfsg_sessions_request.end(),
-        std::back_inserter(rfsg_sessions),
+        rfsg_handles_request.begin(),
+        rfsg_handles_request.end(),
+        std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_sessions().size());
+      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
       int32 force_sync = request->force_sync();
-      auto status = library_->RFSGForceTClkSynchronization(session, rfsg_sessions.data(), number_of_rfsg_sessions, force_sync);
+      auto status = library_->RFSGForceTClkSynchronization(session, rfsg_handles.data(), number_of_rfsg_sessions, force_sync);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
@@ -1262,15 +1206,15 @@ namespace nirfmxwlangen_grpc {
     try {
       auto session_grpc_session = request->session();
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      auto rfsg_sessions_request = request->rfsg_sessions();
-      std::vector<ViSession> rfsg_sessions;
+      auto rfsg_handles_request = request->rfsg_handles();
+      std::vector<ViSession> rfsg_handles;
       std::transform(
-        rfsg_sessions_request.begin(),
-        rfsg_sessions_request.end(),
-        std::back_inserter(rfsg_sessions),
+        rfsg_handles_request.begin(),
+        rfsg_handles_request.end(),
+        std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_sessions().size());
-      auto status = library_->RFSGMultipleDeviceInitiate(session, rfsg_sessions.data(), number_of_rfsg_sessions);
+      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
+      auto status = library_->RFSGMultipleDeviceInitiate(session, rfsg_handles.data(), number_of_rfsg_sessions);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
@@ -1290,19 +1234,19 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_sessions_request = request->rfsg_sessions();
-      std::vector<ViSession> rfsg_sessions;
+      auto rfsg_handles_request = request->rfsg_handles();
+      std::vector<ViSession> rfsg_handles;
       std::transform(
-        rfsg_sessions_request.begin(),
-        rfsg_sessions_request.end(),
-        std::back_inserter(rfsg_sessions),
+        rfsg_handles_request.begin(),
+        rfsg_handles_request.end(),
+        std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_channels = static_cast<int32>(request->rfsg_sessions().size());
+      int32 number_of_channels = static_cast<int32>(request->rfsg_handles().size());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
       char* file_path = (char*)file_path_mbcs.c_str();
-      auto status = library_->RFSGReadAndDownloadWaveformsFromFile(rfsg_sessions.data(), number_of_channels, waveform_name, file_path);
+      auto status = library_->RFSGReadAndDownloadWaveformsFromFile(rfsg_handles.data(), number_of_channels, waveform_name, file_path);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, 0);
       }
@@ -1800,7 +1744,6 @@ namespace nirfmxwlangen_grpc {
       int64 count = request->count();
       float64 t0 {};
       float64 dt {};
-      NIComplexNumber_struct waveform {};
       int32 actual_num_waveform_samples {};
       float64 iq_rate {};
       float64 headroom {};
@@ -1810,8 +1753,9 @@ namespace nirfmxwlangen_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, 0);
         }
+        std::vector<NIComplexNumber_struct> waveform(actual_num_waveform_samples, NIComplexNumber_struct());
         auto waveform_size = actual_num_waveform_samples;
-        status = library_->ReadWaveformFromFile(file_path, waveform_name, offset, count, &t0, &dt, &waveform, waveform_size, &actual_num_waveform_samples, &iq_rate, &headroom, &eof);
+        status = library_->ReadWaveformFromFile(file_path, waveform_name, offset, count, &t0, &dt, waveform.data(), waveform_size, &actual_num_waveform_samples, &iq_rate, &headroom, &eof);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1858,7 +1802,6 @@ namespace nirfmxwlangen_grpc {
       int64 count = request->count();
       float64 t0 {};
       float64 dt {};
-      float64 waveform {};
       int32 actual_num_waveform_samples {};
       float64 iq_rate {};
       float64 headroom {};
@@ -1868,8 +1811,10 @@ namespace nirfmxwlangen_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, 0);
         }
+        response->mutable_waveform()->Resize(actual_num_waveform_samples * 2, 0);
+        float64* waveform = response->mutable_waveform()->mutable_data();
         auto waveform_size = actual_num_waveform_samples;
-        status = library_->ReadWaveformFromFileInterleavedIQ(file_path, waveform_name, offset, count, &t0, &dt, &waveform, waveform_size, &actual_num_waveform_samples, &iq_rate, &headroom, &eof);
+        status = library_->ReadWaveformFromFileInterleavedIQ(file_path, waveform_name, offset, count, &t0, &dt, waveform, waveform_size, &actual_num_waveform_samples, &iq_rate, &headroom, &eof);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
@@ -1880,7 +1825,6 @@ namespace nirfmxwlangen_grpc {
         response->set_status(status);
         response->set_t0(t0);
         response->set_dt(dt);
-        response->set_waveform(reinterpret_cast<_ni_complex_number>(waveform));
         response->mutable_waveform()->Resize(actual_num_waveform_samples * 2, 0);
         response->set_actual_num_waveform_samples(actual_num_waveform_samples * 2);
         response->set_iq_rate(iq_rate);
@@ -1928,7 +1872,22 @@ namespace nirfmxwlangen_grpc {
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
       auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
       char* file_path = (char*)file_path_mbcs.c_str();
-      int32 file_operation = request->file_operation();
+      int32 file_operation;
+      switch (request->file_operation_enum_case()) {
+        case nirfmxwlangen_grpc::SaveConfigurationToFileRequest::FileOperationEnumCase::kFileOperation: {
+          file_operation = static_cast<int32>(request->file_operation());
+          break;
+        }
+        case nirfmxwlangen_grpc::SaveConfigurationToFileRequest::FileOperationEnumCase::kFileOperationRaw: {
+          file_operation = static_cast<int32>(request->file_operation_raw());
+          break;
+        }
+        case nirfmxwlangen_grpc::SaveConfigurationToFileRequest::FileOperationEnumCase::FILE_OPERATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for file_operation was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->SaveConfigurationToFile(session, file_path, file_operation);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
@@ -2042,6 +2001,32 @@ namespace nirfmxwlangen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANGenService::SetScalarAttributeI64(::grpc::ServerContext* context, const SetScalarAttributeI64Request* request, SetScalarAttributeI64Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
+      auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
+      char* channel_string = (char*)channel_string_mbcs.c_str();
+      int32 attribute_id = request->attribute_id();
+      int64 attribute_value = request->attribute_value();
+      auto status = library_->SetScalarAttributeI64(session, channel_string, attribute_id, attribute_value);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANGenService::SetVectorAttributeF64(::grpc::ServerContext* context, const SetVectorAttributeF64Request* request, SetVectorAttributeF64Response* response)
   {
     if (context->IsCancelled()) {
@@ -2080,9 +2065,9 @@ namespace nirfmxwlangen_grpc {
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
-      auto data_array = const_cast<int32*>(reinterpret_cast<const int32*>(request->data_array().data()));
-      int32 data_array_size = static_cast<int32>(request->data_array().size());
-      auto status = library_->SetVectorAttributeI32(session, channel_string, attribute_id, data_array, data_array_size);
+      auto data = const_cast<int32*>(reinterpret_cast<const int32*>(request->data().data()));
+      int32 data_array_size = static_cast<int32>(request->data().size());
+      auto status = library_->SetVectorAttributeI32(session, channel_string, attribute_id, data, data_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }

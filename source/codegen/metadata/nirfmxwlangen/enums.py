@@ -191,6 +191,26 @@ enums = {
             }
         ]
     },
+    'FileOperationMode': {
+        'values': [
+            {
+                'name': 'OPEN',
+                'value': 0
+            },
+            {
+                'name': 'OPEN_OR_CREATE',
+                'value': 1
+            },
+            {
+                'name': 'CREATE_OR_REPLACE',
+                'value': 2
+            },
+            {
+                'name': 'CREATE',
+                'value': 3
+            }
+        ]
+    },
     'GuardIntervalType': {
         'values': [
             {

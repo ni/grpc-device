@@ -157,14 +157,21 @@ close_session(const StubPtr& stub, const nidevice_grpc::Session& session)
 }
 
 CreateAndWriteWaveformsToFileResponse
-create_and_write_waveforms_to_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const pb::int32& file_operation)
+create_and_write_waveforms_to_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const simple_variant<FileOperationMode, pb::int32>& file_operation)
 {
   ::grpc::ClientContext context;
 
   auto request = CreateAndWriteWaveformsToFileRequest{};
   request.mutable_session()->CopyFrom(session);
   request.set_file_path(file_path);
-  request.set_file_operation(file_operation);
+  const auto file_operation_ptr = file_operation.get_if<FileOperationMode>();
+  const auto file_operation_raw_ptr = file_operation.get_if<pb::int32>();
+  if (file_operation_ptr) {
+    request.set_file_operation(*file_operation_ptr);
+  }
+  else if (file_operation_raw_ptr) {
+    request.set_file_operation_raw(*file_operation_raw_ptr);
+  }
 
   auto response = CreateAndWriteWaveformsToFileResponse{};
 
@@ -176,14 +183,13 @@ create_and_write_waveforms_to_file(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 CreateMIMOWaveformsComplexF64Response
-create_mimo_waveforms_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& reset, const pb::int32& number_of_tx_chains)
+create_mimo_waveforms_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const bool& reset)
 {
   ::grpc::ClientContext context;
 
   auto request = CreateMIMOWaveformsComplexF64Request{};
   request.mutable_session()->CopyFrom(session);
   request.set_reset(reset);
-  request.set_number_of_tx_chains(number_of_tx_chains);
 
   auto response = CreateMIMOWaveformsComplexF64Response{};
 
@@ -195,14 +201,13 @@ create_mimo_waveforms_complex_f64(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 CreateMIMOWaveformsComplexF64InterleavedIQResponse
-create_mimo_waveforms_complex_f64_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& reset, const pb::int32& number_of_tx_chains)
+create_mimo_waveforms_complex_f64_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const bool& reset)
 {
   ::grpc::ClientContext context;
 
   auto request = CreateMIMOWaveformsComplexF64InterleavedIQRequest{};
   request.mutable_session()->CopyFrom(session);
   request.set_reset(reset);
-  request.set_number_of_tx_chains(number_of_tx_chains);
 
   auto response = CreateMIMOWaveformsComplexF64InterleavedIQResponse{};
 
@@ -232,7 +237,7 @@ create_trigger_frame_msdu(const StubPtr& stub, const nidevice_grpc::Session& ses
 }
 
 CreateWaveformComplexF64Response
-create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& reset)
+create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const bool& reset)
 {
   ::grpc::ClientContext context;
 
@@ -250,7 +255,7 @@ create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& s
 }
 
 CreateWaveformComplexF64InterleavedIQResponse
-create_waveform_complex_f64_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& reset)
+create_waveform_complex_f64_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const bool& reset)
 {
   ::grpc::ClientContext context;
 
@@ -336,6 +341,25 @@ get_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& sess
 
   raise_if_error(
       stub->GetScalarAttributeI32(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetScalarAttributeI64Response
+get_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetScalarAttributeI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_string(channel_string);
+  request.set_attribute_id(attribute_id);
+
+  auto response = GetScalarAttributeI64Response{};
+
+  raise_if_error(
+      stub->GetScalarAttributeI64(&context, request, &response),
       context);
 
   return response;
@@ -463,13 +487,13 @@ rfsg_configure(const StubPtr& stub, const nidevice_grpc::Session& session, const
 }
 
 RFSGConfigureFrequencyMultipleLOResponse
-rfsg_configure_frequency_multiple_lo(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_sessions, const simple_variant<LOSource, pb::int32>& lo_source, const std::vector<nidevice_grpc::Session>& external_lo_handles, const std::vector<double>& carrier_frequency, const pb::int32& rfsg_lo_daisy_chain_enabled, const pb::int32& lo_export_to_external_devices_enabled)
+rfsg_configure_frequency_multiple_lo(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_handles, const simple_variant<LOSource, pb::int32>& lo_source, const std::vector<nidevice_grpc::Session>& external_lo_handles, const std::vector<double>& carrier_frequency, const bool& rfsg_lo_daisy_chain_enabled, const bool& lo_export_to_external_devices_enabled)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGConfigureFrequencyMultipleLORequest{};
   request.mutable_session()->CopyFrom(session);
-  copy_array(rfsg_sessions, request.mutable_rfsg_sessions());
+  copy_array(rfsg_handles, request.mutable_rfsg_handles());
   const auto lo_source_ptr = lo_source.get_if<LOSource>();
   const auto lo_source_raw_ptr = lo_source.get_if<pb::int32>();
   if (lo_source_ptr) {
@@ -493,13 +517,13 @@ rfsg_configure_frequency_multiple_lo(const StubPtr& stub, const nidevice_grpc::S
 }
 
 RFSGConfigureFrequencySingleLOResponse
-rfsg_configure_frequency_single_lo(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_sessions, const simple_variant<LOSource, pb::int32>& lo_source, const nidevice_grpc::Session& external_lo_handle, const double& carrier_frequency, const pb::int32& rfsg_lo_daisy_chain_enabled, const pb::int32& lo_export_to_external_devices_enabled)
+rfsg_configure_frequency_single_lo(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_handles, const simple_variant<LOSource, pb::int32>& lo_source, const nidevice_grpc::Session& external_lo_handle, const double& carrier_frequency, const bool& rfsg_lo_daisy_chain_enabled, const bool& lo_export_to_external_devices_enabled)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGConfigureFrequencySingleLORequest{};
   request.mutable_session()->CopyFrom(session);
-  copy_array(rfsg_sessions, request.mutable_rfsg_sessions());
+  copy_array(rfsg_handles, request.mutable_rfsg_handles());
   const auto lo_source_ptr = lo_source.get_if<LOSource>();
   const auto lo_source_raw_ptr = lo_source.get_if<pb::int32>();
   if (lo_source_ptr) {
@@ -523,13 +547,13 @@ rfsg_configure_frequency_single_lo(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 RFSGConfigureMultipleDeviceSynchronizationResponse
-rfsg_configure_multiple_device_synchronization(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_sessions, const std::string& master_reference_clock_source, const std::vector<pb::int32>& trigger_lines)
+rfsg_configure_multiple_device_synchronization(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_handles, const std::string& master_reference_clock_source, const std::vector<pb::int32>& trigger_lines)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGConfigureMultipleDeviceSynchronizationRequest{};
   request.mutable_session()->CopyFrom(session);
-  copy_array(rfsg_sessions, request.mutable_rfsg_sessions());
+  copy_array(rfsg_handles, request.mutable_rfsg_handles());
   request.set_master_reference_clock_source(master_reference_clock_source);
   copy_array(trigger_lines, request.mutable_trigger_lines());
 
@@ -602,7 +626,7 @@ rfsg_configure_script(const StubPtr& stub, const nidevice_grpc::Session& rfsg_ha
 }
 
 RFSGConfigureWaveformResponse
-rfsg_configure_waveform(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& wlan_channel_string, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const pb::int32& reset_hardware)
+rfsg_configure_waveform(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& wlan_channel_string, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const bool& reset_hardware)
 {
   ::grpc::ClientContext context;
 
@@ -623,13 +647,13 @@ rfsg_configure_waveform(const StubPtr& stub, const nidevice_grpc::Session& sessi
 }
 
 RFSGCreateAndDownloadMIMOWaveformsResponse
-rfsg_create_and_download_mimo_waveforms(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_sessions, const std::string& channel_string, const std::string& waveform_name)
+rfsg_create_and_download_mimo_waveforms(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_handles, const std::string& channel_string, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGCreateAndDownloadMIMOWaveformsRequest{};
   request.mutable_session()->CopyFrom(session);
-  copy_array(rfsg_sessions, request.mutable_rfsg_sessions());
+  copy_array(rfsg_handles, request.mutable_rfsg_handles());
   request.set_channel_string(channel_string);
   request.set_waveform_name(waveform_name);
 
@@ -663,13 +687,13 @@ rfsg_create_and_download_waveform(const StubPtr& stub, const nidevice_grpc::Sess
 }
 
 RFSGForceTClkSynchronizationResponse
-rfsg_force_t_clk_synchronization(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_sessions, const pb::int32& force_sync)
+rfsg_force_t_clk_synchronization(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_handles, const bool& force_sync)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGForceTClkSynchronizationRequest{};
   request.mutable_session()->CopyFrom(session);
-  copy_array(rfsg_sessions, request.mutable_rfsg_sessions());
+  copy_array(rfsg_handles, request.mutable_rfsg_handles());
   request.set_force_sync(force_sync);
 
   auto response = RFSGForceTClkSynchronizationResponse{};
@@ -700,13 +724,13 @@ rfsg_insert_rf_blanking_marker_positions(const StubPtr& stub, const nidevice_grp
 }
 
 RFSGMultipleDeviceInitiateResponse
-rfsg_multiple_device_initiate(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_sessions)
+rfsg_multiple_device_initiate(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_handles)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGMultipleDeviceInitiateRequest{};
   request.mutable_session()->CopyFrom(session);
-  copy_array(rfsg_sessions, request.mutable_rfsg_sessions());
+  copy_array(rfsg_handles, request.mutable_rfsg_handles());
 
   auto response = RFSGMultipleDeviceInitiateResponse{};
 
@@ -718,12 +742,12 @@ rfsg_multiple_device_initiate(const StubPtr& stub, const nidevice_grpc::Session&
 }
 
 RFSGReadAndDownloadWaveformsFromFileResponse
-rfsg_read_and_download_waveforms_from_file(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& rfsg_sessions, const std::string& waveform_name, const std::string& file_path)
+rfsg_read_and_download_waveforms_from_file(const StubPtr& stub, const std::vector<nidevice_grpc::Session>& rfsg_handles, const std::string& waveform_name, const std::string& file_path)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGReadAndDownloadWaveformsFromFileRequest{};
-  copy_array(rfsg_sessions, request.mutable_rfsg_sessions());
+  copy_array(rfsg_handles, request.mutable_rfsg_handles());
   request.set_waveform_name(waveform_name);
   request.set_file_path(file_path);
 
@@ -1075,14 +1099,21 @@ reset_session(const StubPtr& stub, const nidevice_grpc::Session& session)
 }
 
 SaveConfigurationToFileResponse
-save_configuration_to_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const pb::int32& file_operation)
+save_configuration_to_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const simple_variant<FileOperationMode, pb::int32>& file_operation)
 {
   ::grpc::ClientContext context;
 
   auto request = SaveConfigurationToFileRequest{};
   request.mutable_session()->CopyFrom(session);
   request.set_file_path(file_path);
-  request.set_file_operation(file_operation);
+  const auto file_operation_ptr = file_operation.get_if<FileOperationMode>();
+  const auto file_operation_raw_ptr = file_operation.get_if<pb::int32>();
+  if (file_operation_ptr) {
+    request.set_file_operation(*file_operation_ptr);
+  }
+  else if (file_operation_raw_ptr) {
+    request.set_file_operation_raw(*file_operation_raw_ptr);
+  }
 
   auto response = SaveConfigurationToFileResponse{};
 
@@ -1162,6 +1193,26 @@ set_scalar_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& sess
   return response;
 }
 
+SetScalarAttributeI64Response
+set_scalar_attribute_i64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const pb::int64& attribute_value)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetScalarAttributeI64Request{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_string(channel_string);
+  request.set_attribute_id(attribute_id);
+  request.set_attribute_value(attribute_value);
+
+  auto response = SetScalarAttributeI64Response{};
+
+  raise_if_error(
+      stub->SetScalarAttributeI64(&context, request, &response),
+      context);
+
+  return response;
+}
+
 SetVectorAttributeF64Response
 set_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const std::vector<double>& data)
 {
@@ -1183,7 +1234,7 @@ set_vector_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& sess
 }
 
 SetVectorAttributeI32Response
-set_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const std::vector<pb::int32>& data_array)
+set_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxWLANGenAttribute& attribute_id, const std::vector<pb::int32>& data)
 {
   ::grpc::ClientContext context;
 
@@ -1191,7 +1242,7 @@ set_vector_attribute_i32(const StubPtr& stub, const nidevice_grpc::Session& sess
   request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
-  copy_array(data_array, request.mutable_data_array());
+  copy_array(data, request.mutable_data());
 
   auto response = SetVectorAttributeI32Response{};
 
