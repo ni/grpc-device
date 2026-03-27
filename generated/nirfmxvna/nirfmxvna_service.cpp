@@ -96,6 +96,72 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::AutoPortExtensionMeasure(::grpc::ServerContext* context, const AutoPortExtensionMeasureRequest* request, AutoPortExtensionMeasureResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 standard;
+      switch (request->standard_enum_case()) {
+        case nirfmxvna_grpc::AutoPortExtensionMeasureRequest::StandardEnumCase::kStandard: {
+          standard = static_cast<int32>(request->standard());
+          break;
+        }
+        case nirfmxvna_grpc::AutoPortExtensionMeasureRequest::StandardEnumCase::kStandardRaw: {
+          standard = static_cast<int32>(request->standard_raw());
+          break;
+        }
+        case nirfmxvna_grpc::AutoPortExtensionMeasureRequest::StandardEnumCase::STANDARD_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for standard was not specified or out of range");
+          break;
+        }
+      }
+
+      auto port_mbcs = convert_from_grpc<std::string>(request->port());
+      char* port = (char*)port_mbcs.c_str();
+      auto status = library_->AutoPortExtensionMeasure(instrument, selector_string, standard, port);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::AutoPortExtensionReset(::grpc::ServerContext* context, const AutoPortExtensionResetRequest* request, AutoPortExtensionResetResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto status = library_->AutoPortExtensionReset(instrument, selector_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::BuildCalibrationElementString(::grpc::ServerContext* context, const BuildCalibrationElementStringRequest* request, BuildCalibrationElementStringResponse* response)
   {
     if (context->IsCancelled()) {
@@ -902,11 +968,11 @@ namespace nirfmxvna_grpc {
         }
         int32 array_size = status;
 
-        std::string connector_i_ds;
+        std::string connector_ids;
         if (array_size > 0) {
-            connector_i_ds.resize(array_size - 1);
+            connector_ids.resize(array_size - 1);
         }
-        status = library_->CalkitManagerCalkitCalibrationElementGetPortConnectors(instrument, selector_string, array_size, (char*)connector_i_ds.data());
+        status = library_->CalkitManagerCalkitCalibrationElementGetPortConnectors(instrument, selector_string, array_size, (char*)connector_ids.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -915,10 +981,10 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        std::string connector_i_ds_utf8;
-        convert_to_grpc(connector_i_ds, &connector_i_ds_utf8);
-        response->set_connector_i_ds(connector_i_ds_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_i_ds()));
+        std::string connector_ids_utf8;
+        convert_to_grpc(connector_ids, &connector_ids_utf8);
+        response->set_connector_ids(connector_ids_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_ids()));
         return ::grpc::Status::OK;
       }
     }
@@ -2208,6 +2274,75 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s11 = const_cast<float64*>(request->s11().data());
+      int32 array_size = static_cast<int32>(request->s11().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ(instrument, selector_string, s11, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS11Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS11SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetS11SplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s11_i = const_cast<float64*>(request->s11_i().data());
+      auto s11_q = const_cast<float64*>(request->s11_q().data());
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->s11_i_size(),
+        request->s11_q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [s11_i, s11_q] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        s11_i = request->s11_i_size() ? std::move(s11_i) : nullptr;
+        s11_q = request->s11_q_size() ? std::move(s11_q) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS11Split(instrument, selector_string, s11_i, s11_q, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS12(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS12Request* request, CalkitManagerCalkitCalibrationElementSParameterSetS12Response* response)
   {
     if (context->IsCancelled()) {
@@ -2221,6 +2356,75 @@ namespace nirfmxvna_grpc {
       auto s12 = convert_from_grpc<NIComplexDouble>(request->s12());
       int32 array_size = static_cast<int32>(request->s12().size());
       auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS12(instrument, selector_string, s12.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s12 = const_cast<float64*>(request->s12().data());
+      int32 array_size = static_cast<int32>(request->s12().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ(instrument, selector_string, s12, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS12Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS12SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetS12SplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s12_i = const_cast<float64*>(request->s12_i().data());
+      auto s12_q = const_cast<float64*>(request->s12_q().data());
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->s12_i_size(),
+        request->s12_q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [s12_i, s12_q] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        s12_i = request->s12_i_size() ? std::move(s12_i) : nullptr;
+        s12_q = request->s12_q_size() ? std::move(s12_q) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS12Split(instrument, selector_string, s12_i, s12_q, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -2260,6 +2464,75 @@ namespace nirfmxvna_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s21 = const_cast<float64*>(request->s21().data());
+      int32 array_size = static_cast<int32>(request->s21().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ(instrument, selector_string, s21, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS21Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS21SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetS21SplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s21_i = const_cast<float64*>(request->s21_i().data());
+      auto s21_q = const_cast<float64*>(request->s21_q().data());
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->s21_i_size(),
+        request->s21_q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [s21_i, s21_q] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        s21_i = request->s21_i_size() ? std::move(s21_i) : nullptr;
+        s21_q = request->s21_q_size() ? std::move(s21_q) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS21Split(instrument, selector_string, s21_i, s21_q, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS22(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS22Request* request, CalkitManagerCalkitCalibrationElementSParameterSetS22Response* response)
   {
     if (context->IsCancelled()) {
@@ -2273,6 +2546,75 @@ namespace nirfmxvna_grpc {
       auto s22 = convert_from_grpc<NIComplexDouble>(request->s22());
       int32 array_size = static_cast<int32>(request->s22().size());
       auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS22(instrument, selector_string, s22.data(), array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s22 = const_cast<float64*>(request->s22().data());
+      int32 array_size = static_cast<int32>(request->s22().size());
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ(instrument, selector_string, s22, array_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxVNAService::CalkitManagerCalkitCalibrationElementSParameterSetS22Split(::grpc::ServerContext* context, const CalkitManagerCalkitCalibrationElementSParameterSetS22SplitRequest* request, CalkitManagerCalkitCalibrationElementSParameterSetS22SplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto s22_i = const_cast<float64*>(request->s22_i().data());
+      auto s22_q = const_cast<float64*>(request->s22_q().data());
+      auto array_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->s22_i_size(),
+        request->s22_q_size()
+      };
+      const auto array_size_size_calculation = calculate_linked_array_size(array_size_determine_from_sizes, true);
+
+      if (array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [s22_i, s22_q] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        s22_i = request->s22_i_size() ? std::move(s22_i) : nullptr;
+        s22_q = request->s22_q_size() ? std::move(s22_q) : nullptr;
+      }
+      auto array_size = array_size_size_calculation.size;
+
+      auto status = library_->CalkitManagerCalkitCalibrationElementSParameterSetS22Split(instrument, selector_string, s22_i, s22_q, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -2412,10 +2754,10 @@ namespace nirfmxvna_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      auto connector_i_ds_mbcs = convert_from_grpc<std::string>(request->connector_i_ds());
-      char* connector_i_ds = (char*)connector_i_ds_mbcs.c_str();
+      auto connector_ids_mbcs = convert_from_grpc<std::string>(request->connector_ids());
+      char* connector_ids = (char*)connector_ids_mbcs.c_str();
       int32 array_size = request->array_size();
-      auto status = library_->CalkitManagerCalkitCalibrationElementSetPortConnectors(instrument, selector_string, connector_i_ds, array_size);
+      auto status = library_->CalkitManagerCalkitCalibrationElementSetPortConnectors(instrument, selector_string, connector_ids, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -2883,11 +3225,11 @@ namespace nirfmxvna_grpc {
         }
         int32 array_size = status;
 
-        std::string calibration_element_i_ds;
+        std::string calibration_element_ids;
         if (array_size > 0) {
-            calibration_element_i_ds.resize(array_size - 1);
+            calibration_element_ids.resize(array_size - 1);
         }
-        status = library_->CalkitManagerCalkitGetCalibrationElementIDs(instrument, selector_string, array_size, (char*)calibration_element_i_ds.data());
+        status = library_->CalkitManagerCalkitGetCalibrationElementIDs(instrument, selector_string, array_size, (char*)calibration_element_ids.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -2896,10 +3238,10 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        std::string calibration_element_i_ds_utf8;
-        convert_to_grpc(calibration_element_i_ds, &calibration_element_i_ds_utf8);
-        response->set_calibration_element_i_ds(calibration_element_i_ds_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calibration_element_i_ds()));
+        std::string calibration_element_ids_utf8;
+        convert_to_grpc(calibration_element_ids, &calibration_element_ids_utf8);
+        response->set_calibration_element_ids(calibration_element_ids_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calibration_element_ids()));
         return ::grpc::Status::OK;
       }
     }
@@ -2928,11 +3270,11 @@ namespace nirfmxvna_grpc {
         }
         int32 array_size = status;
 
-        std::string connector_i_ds;
+        std::string connector_ids;
         if (array_size > 0) {
-            connector_i_ds.resize(array_size - 1);
+            connector_ids.resize(array_size - 1);
         }
-        status = library_->CalkitManagerCalkitGetConnectorIDs(instrument, selector_string, array_size, (char*)connector_i_ds.data());
+        status = library_->CalkitManagerCalkitGetConnectorIDs(instrument, selector_string, array_size, (char*)connector_ids.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -2941,10 +3283,10 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        std::string connector_i_ds_utf8;
-        convert_to_grpc(connector_i_ds, &connector_i_ds_utf8);
-        response->set_connector_i_ds(connector_i_ds_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_i_ds()));
+        std::string connector_ids_utf8;
+        convert_to_grpc(connector_ids, &connector_ids_utf8);
+        response->set_connector_ids(connector_ids_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_connector_ids()));
         return ::grpc::Status::OK;
       }
     }
@@ -3339,11 +3681,11 @@ namespace nirfmxvna_grpc {
         }
         int32 array_size = status;
 
-        std::string calkit_i_ds;
+        std::string calkit_ids;
         if (array_size > 0) {
-            calkit_i_ds.resize(array_size - 1);
+            calkit_ids.resize(array_size - 1);
         }
-        status = library_->CalkitManagerGetCalkitIDs(instrument, selector_string, array_size, (char*)calkit_i_ds.data());
+        status = library_->CalkitManagerGetCalkitIDs(instrument, selector_string, array_size, (char*)calkit_ids.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(array_size)) {
           // buffer is now too small, try again
           continue;
@@ -3352,10 +3694,10 @@ namespace nirfmxvna_grpc {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
         response->set_status(status);
-        std::string calkit_i_ds_utf8;
-        convert_to_grpc(calkit_i_ds, &calkit_i_ds_utf8);
-        response->set_calkit_i_ds(calkit_i_ds_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calkit_i_ds()));
+        std::string calkit_ids_utf8;
+        convert_to_grpc(calkit_ids, &calkit_ids_utf8);
+        response->set_calkit_ids(calkit_ids_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_calkit_ids()));
         return ::grpc::Status::OK;
       }
     }

@@ -2,14 +2,14 @@
 
 Expects import path as source/codegen/metadata and generated folder path.
 
-Background: 
+Background:
 All MI driver metadata is being imported from hapigen. We're also creating .proto files
 based on the metadata in that component. So when an MI driver is updated, the export will have
 a metadata folder with [attributes.py, config.py, enums.py, functions.py, <driver-name>.proto].
 Someone will import those five files to grpc-device's source/codegen/metadata folder.
 
-Purpose: 
-Since, at the moment, we have both grpc-device and hapigen generating the driver .proto files 
+Purpose:
+Since, at the moment, we have both grpc-device and hapigen generating the driver .proto files
 we want a way to validate that they're creating equivalent ones. This script will check imported
 .proto files (copied out of hapigen-based driver exports) against their corresponding .proto file
 that gets generated in grpc-device to make sure they match.
@@ -44,12 +44,12 @@ def _check_mismatched_protos(imported: str, generated: str):
         compare_result = filecmp.cmp(file_path, generated_file_path)
         if compare_result:
             print(
-                f"✔️ {f'{imported}/{driver_and_file_path}'} matched {f'{generated}/{driver_and_file_path}.'}"
+                f"[PASS] {f'{imported}/{driver_and_file_path}'} matched {f'{generated}/{driver_and_file_path}.'}"
             )
         else:
             any_mismatches = True
             print(
-                f"❌ {f'{imported}/{driver_and_file_path}'} did not match {f'{generated}/{driver_and_file_path}'}."
+                f"[FAIL] {f'{imported}/{driver_and_file_path}'} did not match {f'{generated}/{driver_and_file_path}'}"
             )
     if any_mismatches:
         print("\nFail: Some imported proto files didn't match the generated ones.")

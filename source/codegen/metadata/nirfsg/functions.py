@@ -1042,8 +1042,9 @@ functions = {
                 'direction': 'out',
                 'name': 'waveformNames',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualBufferSize'
                 },
                 'type': 'ViChar[]'
             },
@@ -1071,8 +1072,9 @@ functions = {
                 'direction': 'out',
                 'name': 'scriptNames',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualBufferSize'
                 },
                 'type': 'ViChar[]'
             },
@@ -1105,8 +1107,9 @@ functions = {
                 'direction': 'out',
                 'name': 'Script',
                 'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'bufferSize',
+                    'value_twist': 'actualBufferSize'
                 },
                 'type': 'ViChar[]'
             },

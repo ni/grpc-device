@@ -53,6 +53,51 @@ auto_detectv_cal_orientation(const StubPtr& stub, const nidevice_grpc::Session& 
   return response;
 }
 
+AutoPortExtensionMeasureResponse
+auto_port_extension_measure(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<CorrectionPortExtensionAutoStandard, pb::int32>& standard, const std::string& port)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AutoPortExtensionMeasureRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  const auto standard_ptr = standard.get_if<CorrectionPortExtensionAutoStandard>();
+  const auto standard_raw_ptr = standard.get_if<pb::int32>();
+  if (standard_ptr) {
+    request.set_standard(*standard_ptr);
+  }
+  else if (standard_raw_ptr) {
+    request.set_standard_raw(*standard_raw_ptr);
+  }
+  request.set_port(port);
+
+  auto response = AutoPortExtensionMeasureResponse{};
+
+  raise_if_error(
+      stub->AutoPortExtensionMeasure(&context, request, &response),
+      context);
+
+  return response;
+}
+
+AutoPortExtensionResetResponse
+auto_port_extension_reset(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = AutoPortExtensionResetRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+
+  auto response = AutoPortExtensionResetResponse{};
+
+  raise_if_error(
+      stub->AutoPortExtensionReset(&context, request, &response),
+      context);
+
+  return response;
+}
+
 BuildCalibrationElementStringResponse
 build_calibration_element_string(const StubPtr& stub, const std::string& selector_string, const std::string& calibration_element_id)
 {
@@ -1201,6 +1246,45 @@ calkit_manager_calkit_calibration_element_s_parameter_set_s11(const StubPtr& stu
   return response;
 }
 
+CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_s11_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& s11)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s11, request.mutable_s11());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS11SplitResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_s11_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& s11_i, const std::vector<double>& s11_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS11SplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s11_i, request.mutable_s11_i());
+  copy_array(s11_q, request.mutable_s11_q());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS11SplitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS11Split(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CalkitManagerCalkitCalibrationElementSParameterSetS12Response
 calkit_manager_calkit_calibration_element_s_parameter_set_s12(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<nidevice_grpc::NIComplexNumber>& s12)
 {
@@ -1215,6 +1299,45 @@ calkit_manager_calkit_calibration_element_s_parameter_set_s12(const StubPtr& stu
 
   raise_if_error(
       stub->CalkitManagerCalkitCalibrationElementSParameterSetS12(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_s12_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& s12)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s12, request.mutable_s12());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS12SplitResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_s12_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& s12_i, const std::vector<double>& s12_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS12SplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s12_i, request.mutable_s12_i());
+  copy_array(s12_q, request.mutable_s12_q());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS12SplitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS12Split(&context, request, &response),
       context);
 
   return response;
@@ -1239,6 +1362,45 @@ calkit_manager_calkit_calibration_element_s_parameter_set_s21(const StubPtr& stu
   return response;
 }
 
+CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_s21_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& s21)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s21, request.mutable_s21());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS21SplitResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_s21_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& s21_i, const std::vector<double>& s21_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS21SplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s21_i, request.mutable_s21_i());
+  copy_array(s21_q, request.mutable_s21_q());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS21SplitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS21Split(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CalkitManagerCalkitCalibrationElementSParameterSetS22Response
 calkit_manager_calkit_calibration_element_s_parameter_set_s22(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<nidevice_grpc::NIComplexNumber>& s22)
 {
@@ -1253,6 +1415,45 @@ calkit_manager_calkit_calibration_element_s_parameter_set_s22(const StubPtr& stu
 
   raise_if_error(
       stub->CalkitManagerCalkitCalibrationElementSParameterSetS22(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_s22_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& s22)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s22, request.mutable_s22());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
+CalkitManagerCalkitCalibrationElementSParameterSetS22SplitResponse
+calkit_manager_calkit_calibration_element_s_parameter_set_s22_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::vector<double>& s22_i, const std::vector<double>& s22_q)
+{
+  ::grpc::ClientContext context;
+
+  auto request = CalkitManagerCalkitCalibrationElementSParameterSetS22SplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  copy_array(s22_i, request.mutable_s22_i());
+  copy_array(s22_q, request.mutable_s22_q());
+
+  auto response = CalkitManagerCalkitCalibrationElementSParameterSetS22SplitResponse{};
+
+  raise_if_error(
+      stub->CalkitManagerCalkitCalibrationElementSParameterSetS22Split(&context, request, &response),
       context);
 
   return response;
@@ -1342,14 +1543,14 @@ calkit_manager_calkit_calibration_element_set_minimum_frequency(const StubPtr& s
 }
 
 CalkitManagerCalkitCalibrationElementSetPortConnectorsResponse
-calkit_manager_calkit_calibration_element_set_port_connectors(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& connector_i_ds, const pb::int32& array_size)
+calkit_manager_calkit_calibration_element_set_port_connectors(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& connector_ids, const pb::int32& array_size)
 {
   ::grpc::ClientContext context;
 
   auto request = CalkitManagerCalkitCalibrationElementSetPortConnectorsRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_connector_i_ds(connector_i_ds);
+  request.set_connector_ids(connector_ids);
   request.set_array_size(array_size);
 
   auto response = CalkitManagerCalkitCalibrationElementSetPortConnectorsResponse{};

@@ -128,6 +128,7 @@
 #define RFMXLTE_ATTR_NSSS_POWER                                                             0x00304089
 #define RFMXLTE_ATTR_NPDSCH_POWER                                                           0x0030408a
 #define RFMXLTE_ATTR_NPDSCH_ENABLED                                                         0x0030408b
+#define RFMXLTE_ATTR_NPDSCH_MODULATION_TYPE                                                 0x0030408c
 #define RFMXLTE_ATTR_EMTC_ANALYSIS_ENABLED                                                  0x00304070
 #define RFMXLTE_ATTR_NUMBER_OF_STEPS                                                        0x00300ff8
 #define RFMXLTE_ATTR_LIST_STEP_TIMER_UNIT                                                   0x00300ff6
@@ -192,6 +193,7 @@
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_RMS_NSSS_EVM                                       0x0030408f
 #define RFMXLTE_ATTR_MODACC_RESULTS_NPDSCH_MEAN_RMS_EVM                                     0x00304090
 #define RFMXLTE_ATTR_MODACC_RESULTS_NPDSCH_MEAN_RMS_QPSK_EVM                                0x00304091
+#define RFMXLTE_ATTR_MODACC_RESULTS_NPDSCH_MEAN_RMS_16QAM_EVM                               0x00304092
 #define RFMXLTE_ATTR_MODACC_RESULTS_MEAN_RMS_NRS_EVM                                        0x00304093
 #define RFMXLTE_ATTR_MODACC_RESULTS_DOWNLINK_NRS_TRANSMIT_POWER                             0x00304094
 #define RFMXLTE_ATTR_MODACC_RESULTS_IN_BAND_EMISSION_MARGIN                                 0x0030402b
@@ -240,6 +242,7 @@
 #define RFMXLTE_ATTR_ACP_NUMBER_OF_EUTRA_OFFSETS                                            0x0030103b
 #define RFMXLTE_ATTR_ACP_EUTRA_OFFSET_DEFINITION                                            0x00301043
 #define RFMXLTE_ATTR_ACP_NUMBER_OF_GSM_OFFSETS                                              0x00301042
+#define RFMXLTE_ATTR_ACP_NUMBER_OF_STANDALONE_NB_IOT_OFFSETS                                0x00301050
 #define RFMXLTE_ATTR_ACP_OFFSET_FREQUENCY                                                   0x0030100a
 #define RFMXLTE_ATTR_ACP_OFFSET_INTEGRATION_BANDWIDTH                                       0x0030100e
 #define RFMXLTE_ATTR_ACP_RBW_FILTER_AUTO_BANDWIDTH                                          0x0030101b
@@ -653,8 +656,12 @@
 #define RFMXLTE_VAL_NB_IOT_DOWNLINK_CHANNEL_CONFIGURATION_MODE_TEST_MODEL                          2
 
 // Values for RFMXLTE_ATTR_NPDSCH_ENABLED
-#define RFMXLTE_VAL_NB_IOT_DOWNLINK_USER_DEFINED_NPDSCH_ENABLED_FALSE                              0
-#define RFMXLTE_VAL_NB_IOT_DOWNLINK_USER_DEFINED_NPDSCH_ENABLED_TRUE                               1
+#define RFMXLTE_VAL_NPDSCH_ENABLED_FALSE                                                           0
+#define RFMXLTE_VAL_NPDSCH_ENABLED_TRUE                                                            1
+
+// Values for RFMXLTE_ATTR_NPDSCH_MODULATION_TYPE
+#define RFMXLTE_VAL_NPDSCH_MODULATION_TYPE_QPSK                                                    0
+#define RFMXLTE_VAL_NPDSCH_MODULATION_TYPE_QAM16                                                   1
 
 // Values for RFMXLTE_ATTR_EMTC_ANALYSIS_ENABLED
 #define RFMXLTE_VAL_EMTC_ANALYSIS_ENABLED_FALSE                                                    0
@@ -3277,6 +3284,25 @@ int32 __stdcall RFmxLTE_ModAccFetchNRSConstellationSplit(
    int32* actualArraySize
 );
 
+int32 __stdcall RFmxLTE_ModAccFetchNPDSCH16QAMConstellation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   NIComplexSingle QAM16Constellation[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxLTE_ModAccFetchNPDSCH16QAMConstellationSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float32 QAM16ConstellationI[],
+   float32 QAM16ConstellationQ[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
 int32 __stdcall RFmxLTE_ModAccFetchCompositeEVM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5065,6 +5091,18 @@ int32 __stdcall RFmxLTE_SetNPDSCHEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxLTE_GetNPDSCHModulationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetNPDSCHModulationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxLTE_GetEMTCAnalysisEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -5731,6 +5769,12 @@ int32 __stdcall RFmxLTE_ModAccGetResultsNPDSCHMeanRMSQPSKEVM(
    float64 *attrVal
 );
 
+int32 __stdcall RFmxLTE_ModAccGetResultsNPDSCHMeanRMS16QAMEVM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxLTE_ModAccGetResultsMeanRMSNRSEVM(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -6050,6 +6094,18 @@ int32 __stdcall RFmxLTE_ACPGetNumberOfGSMOffsets(
 );
 
 int32 __stdcall RFmxLTE_ACPSetNumberOfGSMOffsets(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_ACPGetNumberOfStandaloneNBIoTOffsets(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_ACPSetNumberOfStandaloneNBIoTOffsets(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

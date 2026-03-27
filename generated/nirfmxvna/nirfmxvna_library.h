@@ -23,6 +23,8 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   ::grpc::Status check_function_exists(std::string functionName);
   int32 AbortMeasurements(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 AutoDetectvCalOrientation(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
+  int32 AutoPortExtensionMeasure(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 standard, char port[]) override;
+  int32 AutoPortExtensionReset(niRFmxInstrHandle instrumentHandle, char selectorString[]) override;
   int32 BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildCalkitString(char selectorString[], char calkitID[], int32 selectorStringOutLength, char selectorStringOut[]) override;
   int32 BuildCalstepString(char selectorString[], int32 calstepNumber, int32 selectorStringOutLength, char selectorStringOut[]) override;
@@ -85,9 +87,17 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   int32 CalkitManagerCalkitCalibrationElementSParameterSetFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 frequency[], int32 arraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterSetFromFile(niRFmxInstrHandle instrumentHandle, char selectorString[], char fileName[]) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterSetS11(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s11[], int32 arraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11[], int32 arraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterSetS11Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11I[], float64 s11Q[], int32 arraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterSetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12[], int32 arraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterSetS12Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12I[], float64 s12Q[], int32 arraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterSetS21(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21[], int32 arraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterSetS21Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21I[], float64 s21Q[], int32 arraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterSetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22[], int32 arraySize) override;
+  int32 CalkitManagerCalkitCalibrationElementSParameterSetS22Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22I[], float64 s22Q[], int32 arraySize) override;
   int32 CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability) override;
   int32 CalkitManagerCalkitCalibrationElementSetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], char description[]) override;
   int32 CalkitManagerCalkitCalibrationElementSetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 maximumFrequency) override;
@@ -236,6 +246,8 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
  private:
   using AbortMeasurementsPtr = decltype(&RFmxVNA_AbortMeasurements);
   using AutoDetectvCalOrientationPtr = decltype(&RFmxVNA_AutoDetectvCalOrientation);
+  using AutoPortExtensionMeasurePtr = decltype(&RFmxVNA_AutoPortExtensionMeasure);
+  using AutoPortExtensionResetPtr = decltype(&RFmxVNA_AutoPortExtensionReset);
   using BuildCalibrationElementStringPtr = decltype(&RFmxVNA_BuildCalibrationElementString);
   using BuildCalkitStringPtr = decltype(&RFmxVNA_BuildCalkitString);
   using BuildCalstepStringPtr = decltype(&RFmxVNA_BuildCalstepString);
@@ -298,9 +310,17 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   using CalkitManagerCalkitCalibrationElementSParameterSetFrequencyPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFrequency);
   using CalkitManagerCalkitCalibrationElementSParameterSetFromFilePtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetFromFile);
   using CalkitManagerCalkitCalibrationElementSParameterSetS11Ptr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11);
+  using CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11);
+  using CalkitManagerCalkitCalibrationElementSParameterSetS11SplitPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11Split);
   using CalkitManagerCalkitCalibrationElementSParameterSetS12Ptr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12);
+  using CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12);
+  using CalkitManagerCalkitCalibrationElementSParameterSetS12SplitPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12Split);
   using CalkitManagerCalkitCalibrationElementSParameterSetS21Ptr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21);
+  using CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21);
+  using CalkitManagerCalkitCalibrationElementSParameterSetS21SplitPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21Split);
   using CalkitManagerCalkitCalibrationElementSParameterSetS22Ptr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22);
+  using CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22);
+  using CalkitManagerCalkitCalibrationElementSParameterSetS22SplitPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22Split);
   using CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability);
   using CalkitManagerCalkitCalibrationElementSetDescriptionPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSetDescription);
   using CalkitManagerCalkitCalibrationElementSetMaximumFrequencyPtr = decltype(&RFmxVNA_CalkitManagerCalkitCalibrationElementSetMaximumFrequency);
@@ -449,6 +469,8 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
   typedef struct FunctionPointers {
     AbortMeasurementsPtr AbortMeasurements;
     AutoDetectvCalOrientationPtr AutoDetectvCalOrientation;
+    AutoPortExtensionMeasurePtr AutoPortExtensionMeasure;
+    AutoPortExtensionResetPtr AutoPortExtensionReset;
     BuildCalibrationElementStringPtr BuildCalibrationElementString;
     BuildCalkitStringPtr BuildCalkitString;
     BuildCalstepStringPtr BuildCalstepString;
@@ -511,9 +533,17 @@ class NiRFmxVNALibrary : public nirfmxvna_grpc::NiRFmxVNALibraryInterface {
     CalkitManagerCalkitCalibrationElementSParameterSetFrequencyPtr CalkitManagerCalkitCalibrationElementSParameterSetFrequency;
     CalkitManagerCalkitCalibrationElementSParameterSetFromFilePtr CalkitManagerCalkitCalibrationElementSParameterSetFromFile;
     CalkitManagerCalkitCalibrationElementSParameterSetS11Ptr CalkitManagerCalkitCalibrationElementSParameterSetS11;
+    CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQPtr CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ;
+    CalkitManagerCalkitCalibrationElementSParameterSetS11SplitPtr CalkitManagerCalkitCalibrationElementSParameterSetS11Split;
     CalkitManagerCalkitCalibrationElementSParameterSetS12Ptr CalkitManagerCalkitCalibrationElementSParameterSetS12;
+    CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQPtr CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ;
+    CalkitManagerCalkitCalibrationElementSParameterSetS12SplitPtr CalkitManagerCalkitCalibrationElementSParameterSetS12Split;
     CalkitManagerCalkitCalibrationElementSParameterSetS21Ptr CalkitManagerCalkitCalibrationElementSParameterSetS21;
+    CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQPtr CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ;
+    CalkitManagerCalkitCalibrationElementSParameterSetS21SplitPtr CalkitManagerCalkitCalibrationElementSParameterSetS21Split;
     CalkitManagerCalkitCalibrationElementSParameterSetS22Ptr CalkitManagerCalkitCalibrationElementSParameterSetS22;
+    CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQPtr CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ;
+    CalkitManagerCalkitCalibrationElementSParameterSetS22SplitPtr CalkitManagerCalkitCalibrationElementSParameterSetS22Split;
     CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailabilityPtr CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability;
     CalkitManagerCalkitCalibrationElementSetDescriptionPtr CalkitManagerCalkitCalibrationElementSetDescription;
     CalkitManagerCalkitCalibrationElementSetMaximumFrequencyPtr CalkitManagerCalkitCalibrationElementSetMaximumFrequency;

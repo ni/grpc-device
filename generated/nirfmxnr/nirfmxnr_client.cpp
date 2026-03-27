@@ -2845,6 +2845,63 @@ mod_acc_fetch_pdsch256q_am_constellation_trace_split(const StubPtr& stub, const 
   return response;
 }
 
+ModAccFetchPDSCH4096QAMConstellationTraceResponse
+mod_acc_fetch_pdsch4096q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH4096QAMConstellationTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH4096QAMConstellationTraceResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH4096QAMConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPDSCH4096QAMConstellationTraceInterleavedIQResponse
+mod_acc_fetch_pdsch4096q_am_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH4096QAMConstellationTraceInterleavedIQRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH4096QAMConstellationTraceInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH4096QAMConstellationTraceInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
+ModAccFetchPDSCH4096QAMConstellationTraceSplitResponse
+mod_acc_fetch_pdsch4096q_am_constellation_trace_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ModAccFetchPDSCH4096QAMConstellationTraceSplitRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = ModAccFetchPDSCH4096QAMConstellationTraceSplitResponse{};
+
+  raise_if_error(
+      stub->ModAccFetchPDSCH4096QAMConstellationTraceSplit(&context, request, &response),
+      context);
+
+  return response;
+}
+
 ModAccFetchPDSCH64QAMConstellationTraceResponse
 mod_acc_fetch_pdsch64q_am_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXWLAN API metadata version 26.0.0
+// This file is generated from NI-RFMXWLAN API metadata version 26.3.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXWLAN Metadata
 //---------------------------------------------------------------------
@@ -621,6 +621,7 @@ enum NiRFmxWLANAttribute {
   NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_UNEQUAL_MODULATION_ENABLED = 10502373;
   NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_UNEQUAL_MODULATION_PATTERN_INDEX = 10502374;
   NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_NUMBER_OF_SIG_SYMBOLS = 10502375;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_CHAIN_STREAM_CROSS_POWER_MEAN = 10502376;
   NIRFMXWLAN_ATTRIBUTE_SEM_MEASUREMENT_ENABLED = 10506240;
   NIRFMXWLAN_ATTRIBUTE_SEM_MASK_TYPE = 10506242;
   NIRFMXWLAN_ATTRIBUTE_SEM_CARRIER_INTEGRATION_BANDWIDTH = 10506245;

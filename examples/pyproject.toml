@@ -16,6 +16,7 @@ mypy-protobuf = "3.6.0"
 types-protobuf = ">=5.28.3.20241203"
 types-grpcio = ">=1.0"
 black = ">=23.3.0"
+setuptools = "^80.9.0"
 
 [[tool.mypy.overrides]]
 # nifpga has a field named "property" which shadows the built-in "@property" decorator.

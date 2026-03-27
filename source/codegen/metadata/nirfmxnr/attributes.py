@@ -1917,6 +1917,11 @@ attributes = {
         'name': 'MODACC_RESULTS_COMPONENT_CARRIER_TIME_ALIGNMENT_ERROR_MEAN',
         'type': 'float64'
     },
+    9453746: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_PDSCH_4096QAM_RMS_EVM_MEAN',
+        'type': 'float64'
+    },
     9461760: {
         'access': 'read-write',
         'name': 'OBW_MEASUREMENT_ENABLED',

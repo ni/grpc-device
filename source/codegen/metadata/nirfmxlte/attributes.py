@@ -701,6 +701,11 @@ attributes = {
         'name': 'ACP_NOISE_CALIBRATION_MODE',
         'type': 'int32'
     },
+    3149904: {
+        'access': 'read-write',
+        'name': 'ACP_NUMBER_OF_STANDALONE_NB_IOT_OFFSETS',
+        'type': 'int32'
+    },
     3158016: {
         'access': 'read-write',
         'name': 'CHP_MEASUREMENT_ENABLED',
@@ -1484,6 +1489,12 @@ attributes = {
         'name': 'NPDSCH_ENABLED',
         'type': 'int32'
     },
+    3162252: {
+        'access': 'read-write',
+        'enum': 'NpdschModulationType',
+        'name': 'NPDSCH_MODULATION_TYPE',
+        'type': 'int32'
+    },
     3162254: {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_MEAN_RMS_NPSS_EVM',
@@ -1502,6 +1513,11 @@ attributes = {
     3162257: {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_NPDSCH_MEAN_RMS_QPSK_EVM',
+        'type': 'float64'
+    },
+    3162258: {
+        'access': 'read-write',
+        'name': 'MODACC_RESULTS_NPDSCH_MEAN_RMS_16QAM_EVM',
         'type': 'float64'
     },
     3162259: {

@@ -29,7 +29,7 @@ jobs:
           github_token: "${{ secrets.GH_REPO_TOKEN }}"
           ado_organization: "ni"
           ado_project: "DevCentral"
-          ado_area_path: "DevCentral\\Product RnD\\Platform HW and SW\\Core SW and Drivers\\Platform HW and Drivers\\Drivers\\Customer Facing"
+          ado_area_path: "DevCentral\\Product RnD\\Platform HW and SW\\Core SW and Drivers\\Platform HW and Drivers\\Drivers\\Platform Drivers Ownership NIC"
           ado_wit: "${{ steps.choose_work_item_type.outputs.work_item_type }}"
           ado_new_state: "New"
           ado_active_state: "Active"

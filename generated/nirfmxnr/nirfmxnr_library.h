@@ -159,6 +159,9 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   int32 ModAccFetchPDSCH256QAMConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle qam256Constellation[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam256Constellation[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchPDSCH256QAMConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam256ConstellationI[], float32 qam256ConstellationQ[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchPDSCH4096QAMConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle qam4096Constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchPDSCH4096QAMConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam4096Constellation[], int32 arraySize, int32* actualArraySize) override;
+  int32 ModAccFetchPDSCH4096QAMConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam4096ConstellationI[], float32 qam4096ConstellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchPDSCH64QAMConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle qam64Constellation[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam64Constellation[], int32 arraySize, int32* actualArraySize) override;
   int32 ModAccFetchPDSCH64QAMConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 qam64ConstellationI[], float32 qam64ConstellationQ[], int32 arraySize, int32* actualArraySize) override;
@@ -425,6 +428,9 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
   using ModAccFetchPDSCH256QAMConstellationTracePtr = decltype(&RFmxNR_ModAccFetchPDSCH256QAMConstellationTrace);
   using ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQPtr = decltype(&RFmxNR_ModAccFetchPDSCH256QAMConstellationTrace);
   using ModAccFetchPDSCH256QAMConstellationTraceSplitPtr = decltype(&RFmxNR_ModAccFetchPDSCH256QAMConstellationTraceSplit);
+  using ModAccFetchPDSCH4096QAMConstellationTracePtr = decltype(&RFmxNR_ModAccFetchPDSCH4096QAMConstellationTrace);
+  using ModAccFetchPDSCH4096QAMConstellationTraceInterleavedIQPtr = decltype(&RFmxNR_ModAccFetchPDSCH4096QAMConstellationTrace);
+  using ModAccFetchPDSCH4096QAMConstellationTraceSplitPtr = decltype(&RFmxNR_ModAccFetchPDSCH4096QAMConstellationTraceSplit);
   using ModAccFetchPDSCH64QAMConstellationTracePtr = decltype(&RFmxNR_ModAccFetchPDSCH64QAMConstellationTrace);
   using ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQPtr = decltype(&RFmxNR_ModAccFetchPDSCH64QAMConstellationTrace);
   using ModAccFetchPDSCH64QAMConstellationTraceSplitPtr = decltype(&RFmxNR_ModAccFetchPDSCH64QAMConstellationTraceSplit);
@@ -691,6 +697,9 @@ class NiRFmxNRLibrary : public nirfmxnr_grpc::NiRFmxNRLibraryInterface {
     ModAccFetchPDSCH256QAMConstellationTracePtr ModAccFetchPDSCH256QAMConstellationTrace;
     ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQPtr ModAccFetchPDSCH256QAMConstellationTraceInterleavedIQ;
     ModAccFetchPDSCH256QAMConstellationTraceSplitPtr ModAccFetchPDSCH256QAMConstellationTraceSplit;
+    ModAccFetchPDSCH4096QAMConstellationTracePtr ModAccFetchPDSCH4096QAMConstellationTrace;
+    ModAccFetchPDSCH4096QAMConstellationTraceInterleavedIQPtr ModAccFetchPDSCH4096QAMConstellationTraceInterleavedIQ;
+    ModAccFetchPDSCH4096QAMConstellationTraceSplitPtr ModAccFetchPDSCH4096QAMConstellationTraceSplit;
     ModAccFetchPDSCH64QAMConstellationTracePtr ModAccFetchPDSCH64QAMConstellationTrace;
     ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQPtr ModAccFetchPDSCH64QAMConstellationTraceInterleavedIQ;
     ModAccFetchPDSCH64QAMConstellationTraceSplitPtr ModAccFetchPDSCH64QAMConstellationTraceSplit;

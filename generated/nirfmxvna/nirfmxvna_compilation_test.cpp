@@ -17,6 +17,16 @@ int32 AutoDetectvCalOrientation(niRFmxInstrHandle instrumentHandle, char selecto
   return RFmxVNA_AutoDetectvCalOrientation(instrumentHandle, selectorString);
 }
 
+int32 AutoPortExtensionMeasure(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 standard, char port[])
+{
+  return RFmxVNA_AutoPortExtensionMeasure(instrumentHandle, selectorString, standard, port);
+}
+
+int32 AutoPortExtensionReset(niRFmxInstrHandle instrumentHandle, char selectorString[])
+{
+  return RFmxVNA_AutoPortExtensionReset(instrumentHandle, selectorString);
+}
+
 int32 BuildCalibrationElementString(char selectorString[], char calibrationElementID[], int32 selectorStringOutLength, char selectorStringOut[])
 {
   return RFmxVNA_BuildCalibrationElementString(selectorString, calibrationElementID, selectorStringOutLength, selectorStringOut);
@@ -327,9 +337,29 @@ int32 CalkitManagerCalkitCalibrationElementSParameterSetS11(niRFmxInstrHandle in
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11(instrumentHandle, selectorString, s11, arraySize);
 }
 
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS11InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s11), arraySize/2);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS11Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s11I[], float64 s11Q[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS11Split(instrumentHandle, selectorString, s11I, s11Q, arraySize);
+}
+
 int32 CalkitManagerCalkitCalibrationElementSParameterSetS12(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s12[], int32 arraySize)
 {
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12(instrumentHandle, selectorString, s12, arraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS12InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s12), arraySize/2);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS12Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s12I[], float64 s12Q[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS12Split(instrumentHandle, selectorString, s12I, s12Q, arraySize);
 }
 
 int32 CalkitManagerCalkitCalibrationElementSParameterSetS21(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s21[], int32 arraySize)
@@ -337,9 +367,29 @@ int32 CalkitManagerCalkitCalibrationElementSParameterSetS21(niRFmxInstrHandle in
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21(instrumentHandle, selectorString, s21, arraySize);
 }
 
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS21InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s21), arraySize/2);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS21Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s21I[], float64 s21Q[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS21Split(instrumentHandle, selectorString, s21I, s21Q, arraySize);
+}
+
 int32 CalkitManagerCalkitCalibrationElementSParameterSetS22(niRFmxInstrHandle instrumentHandle, char selectorString[], NIComplexDouble s22[], int32 arraySize)
 {
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22(instrumentHandle, selectorString, s22, arraySize);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS22InterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22(instrumentHandle, selectorString, reinterpret_cast<NIComplexDouble*>(s22), arraySize/2);
+}
+
+int32 CalkitManagerCalkitCalibrationElementSParameterSetS22Split(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 s22I[], float64 s22Q[], int32 arraySize)
+{
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSParameterSetS22Split(instrumentHandle, selectorString, s22I, s22Q, arraySize);
 }
 
 int32 CalkitManagerCalkitCalibrationElementSParameterSetSParamAvailability(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterAvailability)

@@ -203,6 +203,17 @@ attributes = {
         'name': 'NUMBER_OF_BLOCK_REPETITION_SEQUENCES',
         'type': 'int32'
     },
+    11534402: {
+        'access': 'read-write',
+        'enum': 'AutoPreambleDetectionEnabled',
+        'name': 'AUTO_PREAMBLE_DETECTION_ENABLED',
+        'type': 'int32'
+    },
+    11534403: {
+        'access': 'read-write',
+        'name': 'DETECTED_PACKET_FORMAT',
+        'type': 'int32'
+    },
     11538428: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',

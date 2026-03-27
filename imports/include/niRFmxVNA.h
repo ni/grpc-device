@@ -92,6 +92,11 @@
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED                     0x00d0005c
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS2_FREQUENCY                   0x00d0005d
 #define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS2                             0x00d0005e
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_AUTO_LOSS_ENABLED                 0x00d0007a
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_AUTO_REGULARIZATION_ENABLED       0x00d0007b
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_AUTO_FREQUENCY_MODE               0x00d0007c
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_AUTO_START_FREQUENCY              0x00d0007d
+#define RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_AUTO_STOP_FREQUENCY               0x00d0007e
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_PORTS                                0x00d00010
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_CONNECTOR_TYPE                       0x00d00011
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_CALKIT_TYPE                          0x00d00012
@@ -288,6 +293,18 @@
 // Values for RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED
 #define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED_FALSE                                                 0
 #define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_LOSS2_ENABLED_TRUE                                                  1
+
+// Values for RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_AUTO_LOSS_ENABLED
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_AUTO_LOSS_ENABLED_FALSE                                             0
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_AUTO_LOSS_ENABLED_TRUE                                              1
+
+// Values for RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_AUTO_REGULARIZATION_ENABLED
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_AUTO_REGULARIZATION_ENABLED_FALSE                                   0
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_AUTO_REGULARIZATION_ENABLED_TRUE                                    1
+
+// Values for RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_AUTO_FREQUENCY_MODE
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_AUTO_FREQUENCY_MODE_SWEEP                                           0
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_AUTO_FREQUENCY_MODE_USER                                            1
 
 // Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_CALKIT_TYPE
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_CALKIT_TYPE_ELECTRONIC                                                 0
@@ -524,6 +541,10 @@
 // Values for MechanicalAttenuationAuto
 #define RFMXVNA_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                                             0
 #define RFMXVNA_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                                              1
+
+// Values for RFMXVNA_ATTR_CORRECTION_PORT_EXTENSION_AUTO_STANDARD
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_AUTO_STANDARD_OPEN                                                  0
+#define RFMXVNA_VAL_CORRECTION_PORT_EXTENSION_AUTO_STANDARD_SHORT                                                 1
 
 /* ---------------- RFmxVNA APIs ------------------ */
 
@@ -1161,6 +1182,18 @@ int32 __stdcall RFmxVNA_CopyDataToMeasurementMemory(
 );
 
 int32 __stdcall RFmxVNA_ClearMeasurementMemoryNames(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
+);
+
+int32 __stdcall RFmxVNA_AutoPortExtensionMeasure(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 standard,
+   char port[]
+);
+
+int32 __stdcall RFmxVNA_AutoPortExtensionReset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[]
 );
@@ -2842,6 +2875,66 @@ int32 __stdcall RFmxVNA_GetCorrectionPortExtensionLoss2(
 );
 
 int32 __stdcall RFmxVNA_SetCorrectionPortExtensionLoss2(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionAutoLossEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionAutoLossEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionAutoRegularizationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionAutoRegularizationEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionAutoFrequencyMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionAutoFrequencyMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionAutoStartFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionAutoStartFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionPortExtensionAutoStopFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionPortExtensionAutoStopFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
