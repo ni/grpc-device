@@ -8,6 +8,7 @@
 
 #include "feature_toggles.h"
 #include "logging.h"
+#include "ni_tls_config_loader.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
 #include "moniker_stream_processor.h"
@@ -35,6 +36,7 @@ struct ServerConfiguration {
   std::string server_cert;
   std::string server_key;
   std::string root_cert;
+  std::string security_mode;
   int max_message_size;
   int sideband_port;
   nidevice_grpc::FeatureToggles feature_toggles;
@@ -57,6 +59,7 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
     config.server_cert = server_config_parser.parse_server_cert();
     config.server_key = server_config_parser.parse_server_key();
     config.root_cert = server_config_parser.parse_root_cert();
+    config.security_mode = server_config_parser.parse_security_mode();
     config.max_message_size = server_config_parser.parse_max_message_size();
     config.feature_toggles = server_config_parser.parse_feature_toggles();
   }
@@ -97,6 +100,25 @@ static void RunServer(const ServerConfiguration& config)
   grpc::ServerBuilder builder;
   int listeningPort = 0;
   nidevice_grpc::ServerSecurityConfiguration server_security_config(config.server_cert, config.server_key, config.root_cert);
+  if (config.security_mode == "ni-tls-config") {
+    nidevice_grpc::NiTlsConfigLoader loader;
+    if (!loader.is_available()) {
+      nidevice_grpc::logging::log(
+          nidevice_grpc::logging::Level_Error,
+          "ni-tls-config mode requested but nitlsconfig library could not be loaded"
+          " - is ni-tls-config installed?");
+      exit(EXIT_FAILURE);
+    }
+    try {
+      server_security_config = loader.get_server_credentials("ni-grpc-device");
+    }
+    catch (const std::exception& ex) {
+      nidevice_grpc::logging::log(
+          nidevice_grpc::logging::Level_Error,
+          "Failed to load TLS credentials from ni-tls-config: %s", ex.what());
+      exit(EXIT_FAILURE);
+    }
+  }
   builder.AddListeningPort(config.server_address, server_security_config.get_credentials(), &listeningPort);
 
   auto services = nidevice_grpc::register_all_services(builder, config.feature_toggles);

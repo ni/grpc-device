@@ -658,6 +658,36 @@ TEST_P(ServerConfigurationParserInvalidCodeReadinessTests, InvalidCodeReadinessC
       nidevice_grpc::ServerConfigurationParser::InvalidCodeReadinessException);
 }
 
+TEST(ServerConfigurationParserTests, JsonConfigWithSecurityModeString_ParseSecurityMode_ReturnsModeString)
+{
+  const auto config_json = nlohmann::json::parse(R"({ "port": 31763, "security": "ni-tls-config" })");
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  const auto security_mode = server_config_parser.parse_security_mode();
+
+  EXPECT_EQ("ni-tls-config", security_mode);
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithSecurityObject_ParseSecurityMode_ReturnsEmpty)
+{
+  const auto config_json = nlohmann::json::parse(R"({ "port": 31763, "security": { "server_cert": "cert.pem" } })");
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  const auto security_mode = server_config_parser.parse_security_mode();
+
+  EXPECT_TRUE(security_mode.empty());
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithNoSecurityKey_ParseSecurityMode_ReturnsEmpty)
+{
+  const auto config_json = nlohmann::json::parse(R"({ "port": 31763 })");
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  const auto security_mode = server_config_parser.parse_security_mode();
+
+  EXPECT_TRUE(security_mode.empty());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni
