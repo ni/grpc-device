@@ -42,14 +42,12 @@ class NiRFmxWLANGenMockLibrary : public nirfmxwlangen_grpc::NiRFmxWLANGenLibrary
   MOCK_METHOD(int32, LoadConfigurationFromFile, (niWLANGenerationSession session, char filePath[], int32 resetSession), (override));
   MOCK_METHOD(int32, OpenSession, (char sessionName[], int32 toolkitCompatibilityVersion, niWLANGenerationSession* session, int32* isNewSession), (override));
   MOCK_METHOD(int32, RFSGClearDatabase, (ViSession rfsgHandle, char channelString[], char waveformName[]), (override));
-  MOCK_METHOD(int32, RFSGConfigure, (niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[]), (override));
   MOCK_METHOD(int32, RFSGConfigureFrequencyMultipleLO, (niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled), (override));
   MOCK_METHOD(int32, RFSGConfigureFrequencySingleLO, (niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLoHandle, float64 carrierFrequency, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled), (override));
   MOCK_METHOD(int32, RFSGConfigureMultipleDeviceSynchronization, (niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, char masterReferenceClockSource[], int32 triggerLines[], int32 noOfTriggerLines), (override));
   MOCK_METHOD(int32, RFSGConfigurePowerLevel, (ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel), (override));
   MOCK_METHOD(int32, RFSGConfigureSampleClockDelay, (niWLANGenerationSession session, ViSession rfsgHandles[], float64 sampleClockDelay[], int32 noOfChannels), (override));
   MOCK_METHOD(int32, RFSGConfigureScript, (ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel), (override));
-  MOCK_METHOD(int32, RFSGConfigureWaveform, (niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[], int32 resetHardware, int32* waveformSize), (override));
   MOCK_METHOD(int32, RFSGCreateAndDownloadMIMOWaveforms, (niWLANGenerationSession session, ViSession rfsgHandles[], char channelString[], int32 numberOfTxChains, char waveformName[]), (override));
   MOCK_METHOD(int32, RFSGCreateAndDownloadWaveform, (niWLANGenerationSession session, ViSession rfsgHandle, char channelString[], char waveformName[]), (override));
   MOCK_METHOD(int32, RFSGForceTClkSynchronization, (niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 forceSync), (override));

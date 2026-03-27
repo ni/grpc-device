@@ -42,14 +42,12 @@ service NiRFmxWLANGen {
   rpc LoadConfigurationFromFile(LoadConfigurationFromFileRequest) returns (LoadConfigurationFromFileResponse);
   rpc OpenSession(OpenSessionRequest) returns (OpenSessionResponse);
   rpc RFSGClearDatabase(RFSGClearDatabaseRequest) returns (RFSGClearDatabaseResponse);
-  rpc RFSGConfigure(RFSGConfigureRequest) returns (RFSGConfigureResponse);
   rpc RFSGConfigureFrequencyMultipleLO(RFSGConfigureFrequencyMultipleLORequest) returns (RFSGConfigureFrequencyMultipleLOResponse);
   rpc RFSGConfigureFrequencySingleLO(RFSGConfigureFrequencySingleLORequest) returns (RFSGConfigureFrequencySingleLOResponse);
   rpc RFSGConfigureMultipleDeviceSynchronization(RFSGConfigureMultipleDeviceSynchronizationRequest) returns (RFSGConfigureMultipleDeviceSynchronizationResponse);
   rpc RFSGConfigurePowerLevel(RFSGConfigurePowerLevelRequest) returns (RFSGConfigurePowerLevelResponse);
   rpc RFSGConfigureSampleClockDelay(RFSGConfigureSampleClockDelayRequest) returns (RFSGConfigureSampleClockDelayResponse);
   rpc RFSGConfigureScript(RFSGConfigureScriptRequest) returns (RFSGConfigureScriptResponse);
-  rpc RFSGConfigureWaveform(RFSGConfigureWaveformRequest) returns (RFSGConfigureWaveformResponse);
   rpc RFSGCreateAndDownloadMIMOWaveforms(RFSGCreateAndDownloadMIMOWaveformsRequest) returns (RFSGCreateAndDownloadMIMOWaveformsResponse);
   rpc RFSGCreateAndDownloadWaveform(RFSGCreateAndDownloadWaveformRequest) returns (RFSGCreateAndDownloadWaveformResponse);
   rpc RFSGForceTClkSynchronization(RFSGForceTClkSynchronizationRequest) returns (RFSGForceTClkSynchronizationResponse);
@@ -795,17 +793,6 @@ message RFSGClearDatabaseResponse {
   int32 status = 1;
 }
 
-message RFSGConfigureRequest {
-  nidevice_grpc.Session session = 1;
-  string wlan_channel_string = 2;
-  nidevice_grpc.Session rfsg_handle = 3;
-  string channel_string = 4;
-}
-
-message RFSGConfigureResponse {
-  int32 status = 1;
-}
-
 message RFSGConfigureFrequencyMultipleLORequest {
   nidevice_grpc.Session session = 1;
   repeated nidevice_grpc.Session rfsg_handles = 2;
@@ -881,19 +868,6 @@ message RFSGConfigureScriptRequest {
 
 message RFSGConfigureScriptResponse {
   int32 status = 1;
-}
-
-message RFSGConfigureWaveformRequest {
-  nidevice_grpc.Session session = 1;
-  string wlan_channel_string = 2;
-  nidevice_grpc.Session rfsg_handle = 3;
-  string channel_string = 4;
-  bool reset_hardware = 5;
-}
-
-message RFSGConfigureWaveformResponse {
-  int32 status = 1;
-  int32 waveform_size = 2;
 }
 
 message RFSGCreateAndDownloadMIMOWaveformsRequest {

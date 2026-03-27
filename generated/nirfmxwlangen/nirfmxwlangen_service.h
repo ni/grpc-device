@@ -69,14 +69,12 @@ public:
   ::grpc::Status LoadConfigurationFromFile(::grpc::ServerContext* context, const LoadConfigurationFromFileRequest* request, LoadConfigurationFromFileResponse* response) override;
   ::grpc::Status OpenSession(::grpc::ServerContext* context, const OpenSessionRequest* request, OpenSessionResponse* response) override;
   ::grpc::Status RFSGClearDatabase(::grpc::ServerContext* context, const RFSGClearDatabaseRequest* request, RFSGClearDatabaseResponse* response) override;
-  ::grpc::Status RFSGConfigure(::grpc::ServerContext* context, const RFSGConfigureRequest* request, RFSGConfigureResponse* response) override;
   ::grpc::Status RFSGConfigureFrequencyMultipleLO(::grpc::ServerContext* context, const RFSGConfigureFrequencyMultipleLORequest* request, RFSGConfigureFrequencyMultipleLOResponse* response) override;
   ::grpc::Status RFSGConfigureFrequencySingleLO(::grpc::ServerContext* context, const RFSGConfigureFrequencySingleLORequest* request, RFSGConfigureFrequencySingleLOResponse* response) override;
   ::grpc::Status RFSGConfigureMultipleDeviceSynchronization(::grpc::ServerContext* context, const RFSGConfigureMultipleDeviceSynchronizationRequest* request, RFSGConfigureMultipleDeviceSynchronizationResponse* response) override;
   ::grpc::Status RFSGConfigurePowerLevel(::grpc::ServerContext* context, const RFSGConfigurePowerLevelRequest* request, RFSGConfigurePowerLevelResponse* response) override;
   ::grpc::Status RFSGConfigureSampleClockDelay(::grpc::ServerContext* context, const RFSGConfigureSampleClockDelayRequest* request, RFSGConfigureSampleClockDelayResponse* response) override;
   ::grpc::Status RFSGConfigureScript(::grpc::ServerContext* context, const RFSGConfigureScriptRequest* request, RFSGConfigureScriptResponse* response) override;
-  ::grpc::Status RFSGConfigureWaveform(::grpc::ServerContext* context, const RFSGConfigureWaveformRequest* request, RFSGConfigureWaveformResponse* response) override;
   ::grpc::Status RFSGCreateAndDownloadMIMOWaveforms(::grpc::ServerContext* context, const RFSGCreateAndDownloadMIMOWaveformsRequest* request, RFSGCreateAndDownloadMIMOWaveformsResponse* response) override;
   ::grpc::Status RFSGCreateAndDownloadWaveform(::grpc::ServerContext* context, const RFSGCreateAndDownloadWaveformRequest* request, RFSGCreateAndDownloadWaveformResponse* response) override;
   ::grpc::Status RFSGForceTClkSynchronization(::grpc::ServerContext* context, const RFSGForceTClkSynchronizationRequest* request, RFSGForceTClkSynchronizationResponse* response) override;

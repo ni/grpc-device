@@ -41,14 +41,12 @@ class NiRFmxWLANGenLibraryInterface {
   virtual int32 LoadConfigurationFromFile(niWLANGenerationSession session, char filePath[], int32 resetSession) = 0;
   virtual int32 OpenSession(char sessionName[], int32 toolkitCompatibilityVersion, niWLANGenerationSession* session, int32* isNewSession) = 0;
   virtual int32 RFSGClearDatabase(ViSession rfsgHandle, char channelString[], char waveformName[]) = 0;
-  virtual int32 RFSGConfigure(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[]) = 0;
   virtual int32 RFSGConfigureFrequencyMultipleLO(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled) = 0;
   virtual int32 RFSGConfigureFrequencySingleLO(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLoHandle, float64 carrierFrequency, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled) = 0;
   virtual int32 RFSGConfigureMultipleDeviceSynchronization(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, char masterReferenceClockSource[], int32 triggerLines[], int32 noOfTriggerLines) = 0;
   virtual int32 RFSGConfigurePowerLevel(ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel) = 0;
   virtual int32 RFSGConfigureSampleClockDelay(niWLANGenerationSession session, ViSession rfsgHandles[], float64 sampleClockDelay[], int32 noOfChannels) = 0;
   virtual int32 RFSGConfigureScript(ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel) = 0;
-  virtual int32 RFSGConfigureWaveform(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[], int32 resetHardware, int32* waveformSize) = 0;
   virtual int32 RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSession rfsgHandles[], char channelString[], int32 numberOfTxChains, char waveformName[]) = 0;
   virtual int32 RFSGCreateAndDownloadWaveform(niWLANGenerationSession session, ViSession rfsgHandle, char channelString[], char waveformName[]) = 0;
   virtual int32 RFSGForceTClkSynchronization(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 forceSync) = 0;

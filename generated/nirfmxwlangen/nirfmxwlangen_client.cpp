@@ -506,26 +506,6 @@ rfsg_clear_database(const StubPtr& stub, const nidevice_grpc::Session& rfsg_hand
   return response;
 }
 
-RFSGConfigureResponse
-rfsg_configure(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& wlan_channel_string, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string)
-{
-  ::grpc::ClientContext context;
-
-  auto request = RFSGConfigureRequest{};
-  request.mutable_session()->CopyFrom(session);
-  request.set_wlan_channel_string(wlan_channel_string);
-  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
-  request.set_channel_string(channel_string);
-
-  auto response = RFSGConfigureResponse{};
-
-  raise_if_error(
-      stub->RFSGConfigure(&context, request, &response),
-      context);
-
-  return response;
-}
-
 RFSGConfigureFrequencyMultipleLOResponse
 rfsg_configure_frequency_multiple_lo(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_handles, const simple_variant<LOSource, pb::int32>& lo_source, const std::vector<nidevice_grpc::Session>& external_lo_handles, const std::vector<double>& carrier_frequency, const bool& rfsg_lo_daisy_chain_enabled, const bool& lo_export_to_external_devices_enabled)
 {
@@ -660,27 +640,6 @@ rfsg_configure_script(const StubPtr& stub, const nidevice_grpc::Session& rfsg_ha
 
   raise_if_error(
       stub->RFSGConfigureScript(&context, request, &response),
-      context);
-
-  return response;
-}
-
-RFSGConfigureWaveformResponse
-rfsg_configure_waveform(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& wlan_channel_string, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const bool& reset_hardware)
-{
-  ::grpc::ClientContext context;
-
-  auto request = RFSGConfigureWaveformRequest{};
-  request.mutable_session()->CopyFrom(session);
-  request.set_wlan_channel_string(wlan_channel_string);
-  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
-  request.set_channel_string(channel_string);
-  request.set_reset_hardware(reset_hardware);
-
-  auto response = RFSGConfigureWaveformResponse{};
-
-  raise_if_error(
-      stub->RFSGConfigureWaveform(&context, request, &response),
       context);
 
   return response;

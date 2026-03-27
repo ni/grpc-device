@@ -132,11 +132,6 @@ int32 RFSGClearDatabase(ViSession rfsgHandle, char channelString[], char wavefor
   return niWLANG_RFSGClearDatabase(rfsgHandle, channelString, waveformName);
 }
 
-int32 RFSGConfigure(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[])
-{
-  return niWLANG_RFSGConfigure(session, wlanChannelString, rfsgHandle, channelString);
-}
-
 int32 RFSGConfigureFrequencyMultipleLO(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
 {
   return niWLANG_RFSGConfigureFrequencyMultipleLO(session, rfsgHandles, numberOfRFSGSessions, loSource, externalLOHandles, numberOfExternalLOHandles, carrierFrequency, dataArraySize, rfsgLODaisyChainEnabled, loExportToExternalDevicesEnabled);
@@ -165,11 +160,6 @@ int32 RFSGConfigureSampleClockDelay(niWLANGenerationSession session, ViSession r
 int32 RFSGConfigureScript(ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel)
 {
   return niWLANG_RFSGConfigureScript(rfsgHandle, channelString, script, powerLevel);
-}
-
-int32 RFSGConfigureWaveform(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[], int32 resetHardware, int32* waveformSize)
-{
-  return niWLANG_RFSGConfigureWaveform(session, wlanChannelString, rfsgHandle, channelString, resetHardware, waveformSize);
 }
 
 int32 RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSession rfsgHandles[], char channelString[], int32 numberOfTxChains, char waveformName[])

@@ -825,31 +825,6 @@ functions = {
         ],
         'returns': 'int32'
     },
-    'RFSGConfigure': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'niWLANGenerationSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'wlanChannelString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'rfsgHandle',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelString',
-                'type': 'char[]'
-            }
-        ],
-        'returns': 'int32'
-    },
     'RFSGConfigureFrequencyMultipleLO': {
         'parameters': [
             {
@@ -1094,42 +1069,6 @@ functions = {
                 'direction': 'in',
                 'name': 'powerLevel',
                 'type': 'float64'
-            }
-        ],
-        'returns': 'int32'
-    },
-    'RFSGConfigureWaveform': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'session',
-                'type': 'niWLANGenerationSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'wlanChannelString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'rfsgHandle',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelString',
-                'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'grpc_type': 'bool',
-                'name': 'resetHardware',
-                'type': 'int32'
-            },
-            {
-                'direction': 'out',
-                'name': 'waveformSize',
-                'type': 'int32'
             }
         ],
         'returns': 'int32'

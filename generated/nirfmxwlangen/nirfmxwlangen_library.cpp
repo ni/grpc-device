@@ -52,14 +52,12 @@ NiRFmxWLANGenLibrary::NiRFmxWLANGenLibrary(std::shared_ptr<nidevice_grpc::Shared
   function_pointers_.LoadConfigurationFromFile = reinterpret_cast<LoadConfigurationFromFilePtr>(shared_library_->get_function_pointer("niWLANG_LoadConfigurationFromFile"));
   function_pointers_.OpenSession = reinterpret_cast<OpenSessionPtr>(shared_library_->get_function_pointer("niWLANG_OpenSession"));
   function_pointers_.RFSGClearDatabase = reinterpret_cast<RFSGClearDatabasePtr>(shared_library_->get_function_pointer("niWLANG_RFSGClearDatabase"));
-  function_pointers_.RFSGConfigure = reinterpret_cast<RFSGConfigurePtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigure"));
   function_pointers_.RFSGConfigureFrequencyMultipleLO = reinterpret_cast<RFSGConfigureFrequencyMultipleLOPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureFrequencyMultipleLO"));
   function_pointers_.RFSGConfigureFrequencySingleLO = reinterpret_cast<RFSGConfigureFrequencySingleLOPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureFrequencySingleLO"));
   function_pointers_.RFSGConfigureMultipleDeviceSynchronization = reinterpret_cast<RFSGConfigureMultipleDeviceSynchronizationPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureMultipleDeviceSynchronization"));
   function_pointers_.RFSGConfigurePowerLevel = reinterpret_cast<RFSGConfigurePowerLevelPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigurePowerLevel"));
   function_pointers_.RFSGConfigureSampleClockDelay = reinterpret_cast<RFSGConfigureSampleClockDelayPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureSampleClockDelay"));
   function_pointers_.RFSGConfigureScript = reinterpret_cast<RFSGConfigureScriptPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureScript"));
-  function_pointers_.RFSGConfigureWaveform = reinterpret_cast<RFSGConfigureWaveformPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureWaveform"));
   function_pointers_.RFSGCreateAndDownloadMIMOWaveforms = reinterpret_cast<RFSGCreateAndDownloadMIMOWaveformsPtr>(shared_library_->get_function_pointer("niWLANG_RFSGCreateAndDownloadMIMOWaveforms"));
   function_pointers_.RFSGCreateAndDownloadWaveform = reinterpret_cast<RFSGCreateAndDownloadWaveformPtr>(shared_library_->get_function_pointer("niWLANG_RFSGCreateAndDownloadWaveform"));
   function_pointers_.RFSGForceTClkSynchronization = reinterpret_cast<RFSGForceTClkSynchronizationPtr>(shared_library_->get_function_pointer("niWLANG_RFSGForceTClkSynchronization"));
@@ -306,14 +304,6 @@ int32 NiRFmxWLANGenLibrary::RFSGClearDatabase(ViSession rfsgHandle, char channel
   return function_pointers_.RFSGClearDatabase(rfsgHandle, channelString, waveformName);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGConfigure(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[])
-{
-  if (!function_pointers_.RFSGConfigure) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigure.");
-  }
-  return function_pointers_.RFSGConfigure(session, wlanChannelString, rfsgHandle, channelString);
-}
-
 int32 NiRFmxWLANGenLibrary::RFSGConfigureFrequencyMultipleLO(niWLANGenerationSession session, ViSession rfsgHandles[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
 {
   if (!function_pointers_.RFSGConfigureFrequencyMultipleLO) {
@@ -360,14 +350,6 @@ int32 NiRFmxWLANGenLibrary::RFSGConfigureScript(ViSession rfsgHandle, char chann
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigureScript.");
   }
   return function_pointers_.RFSGConfigureScript(rfsgHandle, channelString, script, powerLevel);
-}
-
-int32 NiRFmxWLANGenLibrary::RFSGConfigureWaveform(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[], int32 resetHardware, int32* waveformSize)
-{
-  if (!function_pointers_.RFSGConfigureWaveform) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigureWaveform.");
-  }
-  return function_pointers_.RFSGConfigureWaveform(session, wlanChannelString, rfsgHandle, channelString, resetHardware, waveformSize);
 }
 
 int32 NiRFmxWLANGenLibrary::RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSession rfsgHandles[], char channelString[], int32 numberOfTxChains, char waveformName[])

@@ -757,34 +757,6 @@ namespace nirfmxwlangen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxWLANGenService::RFSGConfigure(::grpc::ServerContext* context, const RFSGConfigureRequest* request, RFSGConfigureResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      auto wlan_channel_string_mbcs = convert_from_grpc<std::string>(request->wlan_channel_string());
-      char* wlan_channel_string = (char*)wlan_channel_string_mbcs.c_str();
-      auto rfsg_handle_grpc_session = request->rfsg_handle();
-      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
-      auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
-      char* channel_string = (char*)channel_string_mbcs.c_str();
-      auto status = library_->RFSGConfigure(session, wlan_channel_string, rfsg_handle, channel_string);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANGenService::RFSGConfigureFrequencyMultipleLO(::grpc::ServerContext* context, const RFSGConfigureFrequencyMultipleLORequest* request, RFSGConfigureFrequencyMultipleLOResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1015,37 +987,6 @@ namespace nirfmxwlangen_grpc {
         return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFmxWLANGenService::RFSGConfigureWaveform(::grpc::ServerContext* context, const RFSGConfigureWaveformRequest* request, RFSGConfigureWaveformResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto session_grpc_session = request->session();
-      niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      auto wlan_channel_string_mbcs = convert_from_grpc<std::string>(request->wlan_channel_string());
-      char* wlan_channel_string = (char*)wlan_channel_string_mbcs.c_str();
-      auto rfsg_handle_grpc_session = request->rfsg_handle();
-      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
-      auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
-      char* channel_string = (char*)channel_string_mbcs.c_str();
-      int32 reset_hardware = request->reset_hardware();
-      int32 waveform_size {};
-      auto status = library_->RFSGConfigureWaveform(session, wlan_channel_string, rfsg_handle, channel_string, reset_hardware, &waveform_size);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
-      }
-      response->set_status(status);
-      response->set_waveform_size(waveform_size);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
