@@ -810,7 +810,7 @@ add_executable(UnitTestsRunner
     "source/tests/unit/syscfg_resource_accessor_tests.cpp"
     "source/tests/unit/xnet_converters_tests.cpp"
     "source/tests/unit/xnet_socket_converters_tests.cpp"
-    "${CMAKE_BINARY_DIR}/ni_tls_config_loader_tests.cpp"
+    "source/tests/unit/ni_tls_config_loader_tests.cpp"
     "source/server/calibration_operations_restricted_service.cpp"
     "source/server/debug_session_properties_restricted_service.cpp"
     "source/server/device_enumerator.cpp"
