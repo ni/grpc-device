@@ -204,6 +204,11 @@ enum NiRFmxBluetoothGenInt32AttributeValues {
   NIRFMXBLUETOOTHGEN_INT32_COMPATIBILITY_VERSION_020000 = 20000;
   NIRFMXBLUETOOTHGEN_INT32_DV_VOICE_PAYLOAD_DATA_TYPE_PN_SEQUENCE = 0;
   NIRFMXBLUETOOTHGEN_INT32_DV_VOICE_PAYLOAD_DATA_TYPE_USER_DEFINED_BITS = 1;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_2M = 2000000;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_3M = 3000000;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_4M = 4000000;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_6M = 6000000;
+  NIRFMXBLUETOOTHGEN_INT32_DATA_RATE_7_5M = 7500000;
   NIRFMXBLUETOOTHGEN_INT32_DIRECTION_FINDING_MODE_DISABLED = 0;
   NIRFMXBLUETOOTHGEN_INT32_DIRECTION_FINDING_MODE_ANGLE_OF_ARRIVAL = 1;
   NIRFMXBLUETOOTHGEN_INT32_DIRECTION_FINDING_MODE_ANGLE_OF_DEPARTURE = 2;
@@ -291,15 +296,6 @@ enum NiRFmxBluetoothGenInt32AttributeValues {
   NIRFMXBLUETOOTHGEN_INT32_WHITENING_ENABLED_TRUE = 1;
 }
 
-enum NiRFmxBluetoothGenFloat64AttributeValues {
-  NIRFMXBLUETOOTHGEN_FLOAT64_UNSPECIFIED = 0;
-  NIRFMXBLUETOOTHGEN_FLOAT64_DATA_RATE_2M = 2000000;
-  NIRFMXBLUETOOTHGEN_FLOAT64_DATA_RATE_3M = 3000000;
-  NIRFMXBLUETOOTHGEN_FLOAT64_DATA_RATE_4M = 4000000;
-  NIRFMXBLUETOOTHGEN_FLOAT64_DATA_RATE_6M = 6000000;
-  NIRFMXBLUETOOTHGEN_FLOAT64_DATA_RATE_7_5M = 7500000;
-}
-
 message CarrierFrequencyToChannelNumberRequest {
   double carrier_frequency = 1;
   int32 standard = 2;
@@ -378,18 +374,16 @@ message GetAttributeStringRequest {
 message GetAttributeStringResponse {
   int32 status = 1;
   string attribute_value = 2;
-  int32 actual_string_size = 3;
 }
 
 message GetErrorStringRequest {
   nidevice_grpc.Session session = 1;
   int32 error_code = 2;
-  string error_message = 3;
-  int32 error_message_length = 4;
 }
 
 message GetErrorStringResponse {
   int32 status = 1;
+  string error_message = 2;
 }
 
 message GetScalarAttributeF64Request {
@@ -662,10 +656,7 @@ message SetScalarAttributeF64Request {
   nidevice_grpc.Session session = 1;
   string channel_string = 2;
   NiRFmxBluetoothGenAttribute attribute_id = 3;
-  oneof attribute_value_enum {
-    NiRFmxBluetoothGenFloat64AttributeValues attribute_value = 4;
-    double attribute_value_raw = 5;
-  }
+  double attribute_value = 4;
 }
 
 message SetScalarAttributeF64Response {

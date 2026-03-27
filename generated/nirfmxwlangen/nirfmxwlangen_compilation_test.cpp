@@ -112,9 +112,14 @@ int32 OpenSession(char sessionName[], int32 toolkitCompatibilityVersion, niWLANG
   return niWLANG_OpenSession(sessionName, toolkitCompatibilityVersion, session, isNewSession);
 }
 
-int32 RFSGClearDatabase(ViSession rfsgSession, char channelString[], char waveformName[])
+int32 RFSGClearDatabase(ViSession rfsgHandle, char channelString[], char waveformName[])
 {
-  return niWLANG_RFSGClearDatabase(rfsgSession, channelString, waveformName);
+  return niWLANG_RFSGClearDatabase(rfsgHandle, channelString, waveformName);
+}
+
+int32 RFSGConfigure(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[])
+{
+  return niWLANG_RFSGConfigure(session, wlanChannelString, rfsgHandle, channelString);
 }
 
 int32 RFSGConfigureFrequencyMultipleLO(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
@@ -132,14 +137,24 @@ int32 RFSGConfigureMultipleDeviceSynchronization(niWLANGenerationSession session
   return niWLANG_RFSGConfigureMultipleDeviceSynchronization(session, rfsgSessions, numberOfRFSGSessions, masterReferenceClockSource, triggerLines, noOfTriggerLines);
 }
 
-int32 RFSGConfigurePowerLevel(ViSession rfsgSession, char channelString[], char script[], float64 powerLevel)
+int32 RFSGConfigurePowerLevel(ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel)
 {
-  return niWLANG_RFSGConfigurePowerLevel(rfsgSession, channelString, script, powerLevel);
+  return niWLANG_RFSGConfigurePowerLevel(rfsgHandle, channelString, script, powerLevel);
 }
 
-int32 RFSGConfigureScript(ViSession rfsgSession, char channelString[], char script[], float64 powerLevel)
+int32 RFSGConfigureSampleClockDelay(niWLANGenerationSession session, ViSession rfsgHandles[], float64 sampleClockDelay[], int32 noOfChannels)
 {
-  return niWLANG_RFSGConfigureScript(rfsgSession, channelString, script, powerLevel);
+  return niWLANG_RFSGConfigureSampleClockDelay(session, rfsgHandles, sampleClockDelay, noOfChannels);
+}
+
+int32 RFSGConfigureScript(ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel)
+{
+  return niWLANG_RFSGConfigureScript(rfsgHandle, channelString, script, powerLevel);
+}
+
+int32 RFSGConfigureWaveform(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[], int32 resetHardware, int32* waveformSize)
+{
+  return niWLANG_RFSGConfigureWaveform(session, wlanChannelString, rfsgHandle, channelString, resetHardware, waveformSize);
 }
 
 int32 RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSession rfsgSessions[], char channelString[], int32 numberOfTxChains, char waveformName[])
@@ -147,9 +162,9 @@ int32 RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSess
   return niWLANG_RFSGCreateAndDownloadMIMOWaveforms(session, rfsgSessions, channelString, numberOfTxChains, waveformName);
 }
 
-int32 RFSGCreateAndDownloadWaveform(niWLANGenerationSession session, ViSession rfsgSession, char channelString[], char waveformName[])
+int32 RFSGCreateAndDownloadWaveform(niWLANGenerationSession session, ViSession rfsgHandle, char channelString[], char waveformName[])
 {
-  return niWLANG_RFSGCreateAndDownloadWaveform(session, rfsgSession, channelString, waveformName);
+  return niWLANG_RFSGCreateAndDownloadWaveform(session, rfsgHandle, channelString, waveformName);
 }
 
 int32 RFSGForceTClkSynchronization(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 forceSync)
@@ -157,9 +172,9 @@ int32 RFSGForceTClkSynchronization(niWLANGenerationSession session, ViSession rf
   return niWLANG_RFSGForceTClkSynchronization(session, rfsgSessions, numberOfRFSGSessions, forceSync);
 }
 
-int32 RFSGInsertRFBlankingMarkerPositions(ViSession rfsgSession, char script[], char scriptOut[], int32 lenOfScriptOut, int32* actualLenOfScriptOut)
+int32 RFSGInsertRFBlankingMarkerPositions(ViSession rfsgHandle, char script[], char scriptOut[], int32 lenOfScriptOut, int32* actualLenOfScriptOut)
 {
-  return niWLANG_RFSGInsertRFBlankingMarkerPositions(rfsgSession, script, scriptOut, lenOfScriptOut, actualLenOfScriptOut);
+  return niWLANG_RFSGInsertRFBlankingMarkerPositions(rfsgHandle, script, scriptOut, lenOfScriptOut, actualLenOfScriptOut);
 }
 
 int32 RFSGMultipleDeviceInitiate(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions)
@@ -172,69 +187,69 @@ int32 RFSGReadAndDownloadWaveformsFromFile(ViSession rfsgSessions[], int32 numbe
   return niWLANG_RFSGReadAndDownloadWaveformsFromFile(rfsgSessions, numberOfChannels, waveformName, filePath);
 }
 
-int32 RFSGRetrieveBurstStartLocations(ViSession rfsgSession, char waveformName[], int32 burstStartLocations[], int32 dataArraySize, int32* actualDataArraySize)
+int32 RFSGRetrieveBurstStartLocations(ViSession rfsgHandle, char waveformName[], int32 burstStartLocations[], int32 dataArraySize, int32* actualDataArraySize)
 {
-  return niWLANG_RFSGRetrieveBurstStartLocations(rfsgSession, waveformName, burstStartLocations, dataArraySize, actualDataArraySize);
+  return niWLANG_RFSGRetrieveBurstStartLocations(rfsgHandle, waveformName, burstStartLocations, dataArraySize, actualDataArraySize);
 }
 
-int32 RFSGRetrieveBurstStopLocations(ViSession rfsgSession, char waveformName[], int32 burstStopLocations[], int32 dataArraySize, int32* actualDataArraySize)
+int32 RFSGRetrieveBurstStopLocations(ViSession rfsgHandle, char waveformName[], int32 burstStopLocations[], int32 dataArraySize, int32* actualDataArraySize)
 {
-  return niWLANG_RFSGRetrieveBurstStopLocations(rfsgSession, waveformName, burstStopLocations, dataArraySize, actualDataArraySize);
+  return niWLANG_RFSGRetrieveBurstStopLocations(rfsgHandle, waveformName, burstStopLocations, dataArraySize, actualDataArraySize);
 }
 
-int32 RFSGRetrieveIQRate(ViSession rfsgSession, char channelString[], char waveformName[], float64* iqRate)
+int32 RFSGRetrieveIQRate(ViSession rfsgHandle, char channelString[], char waveformName[], float64* iqRate)
 {
-  return niWLANG_RFSGRetrieveIQRate(rfsgSession, channelString, waveformName, iqRate);
+  return niWLANG_RFSGRetrieveIQRate(rfsgHandle, channelString, waveformName, iqRate);
 }
 
-int32 RFSGRetrieveIQRateAllWaveforms(ViSession rfsgSession, char channelString[], char script[], float64* iqRate)
+int32 RFSGRetrieveIQRateAllWaveforms(ViSession rfsgHandle, char channelString[], char script[], float64* iqRate)
 {
-  return niWLANG_RFSGRetrieveIQRateAllWaveforms(rfsgSession, channelString, script, iqRate);
+  return niWLANG_RFSGRetrieveIQRateAllWaveforms(rfsgHandle, channelString, script, iqRate);
 }
 
-int32 RFSGRetrieveMinimumPAPRAllWaveforms(ViSession rfsgSession, char channelString[], char script[], float64* papr)
+int32 RFSGRetrieveMinimumPAPRAllWaveforms(ViSession rfsgHandle, char channelString[], char script[], float64* papr)
 {
-  return niWLANG_RFSGRetrieveMinimumPAPRAllWaveforms(rfsgSession, channelString, script, papr);
+  return niWLANG_RFSGRetrieveMinimumPAPRAllWaveforms(rfsgHandle, channelString, script, papr);
 }
 
-int32 RFSGRetrievePAPR(ViSession rfsgSession, char channelString[], char waveformName[], float64* papr)
+int32 RFSGRetrievePAPR(ViSession rfsgHandle, char channelString[], char waveformName[], float64* papr)
 {
-  return niWLANG_RFSGRetrievePAPR(rfsgSession, channelString, waveformName, papr);
+  return niWLANG_RFSGRetrievePAPR(rfsgHandle, channelString, waveformName, papr);
 }
 
-int32 RFSGRetrieveRFBlankingMarkerPositions(ViSession rfsgSession, char waveformName[], int32 rfBlankingMarkerPositions[], int32 dataArraySize, int32* actualDataArraySize)
+int32 RFSGRetrieveRFBlankingMarkerPositions(ViSession rfsgHandle, char waveformName[], int32 rfBlankingMarkerPositions[], int32 dataArraySize, int32* actualDataArraySize)
 {
-  return niWLANG_RFSGRetrieveRFBlankingMarkerPositions(rfsgSession, waveformName, rfBlankingMarkerPositions, dataArraySize, actualDataArraySize);
+  return niWLANG_RFSGRetrieveRFBlankingMarkerPositions(rfsgHandle, waveformName, rfBlankingMarkerPositions, dataArraySize, actualDataArraySize);
 }
 
-int32 RFSGRetrieveWaveformSize(ViSession rfsgSession, char waveformName[], int32* waveformSize)
+int32 RFSGRetrieveWaveformSize(ViSession rfsgHandle, char waveformName[], int32* waveformSize)
 {
-  return niWLANG_RFSGRetrieveWaveformSize(rfsgSession, waveformName, waveformSize);
+  return niWLANG_RFSGRetrieveWaveformSize(rfsgHandle, waveformName, waveformSize);
 }
 
-int32 RFSGStoreBurstStartLocations(ViSession rfsgSession, char waveformName[], int32 burstStartLocations[], int32 dataArraySize)
+int32 RFSGStoreBurstStartLocations(ViSession rfsgHandle, char waveformName[], int32 burstStartLocations[], int32 dataArraySize)
 {
-  return niWLANG_RFSGStoreBurstStartLocations(rfsgSession, waveformName, burstStartLocations, dataArraySize);
+  return niWLANG_RFSGStoreBurstStartLocations(rfsgHandle, waveformName, burstStartLocations, dataArraySize);
 }
 
-int32 RFSGStoreBurstStopLocations(ViSession rfsgSession, char waveformName[], int32 burstStopLocations[], int32 dataArraySize)
+int32 RFSGStoreBurstStopLocations(ViSession rfsgHandle, char waveformName[], int32 burstStopLocations[], int32 dataArraySize)
 {
-  return niWLANG_RFSGStoreBurstStopLocations(rfsgSession, waveformName, burstStopLocations, dataArraySize);
+  return niWLANG_RFSGStoreBurstStopLocations(rfsgHandle, waveformName, burstStopLocations, dataArraySize);
 }
 
-int32 RFSGStoreIQRate(ViSession rfsgSession, char channelString[], char waveformName[], float64 iqRate)
+int32 RFSGStoreIQRate(ViSession rfsgHandle, char channelString[], char waveformName[], float64 iqRate)
 {
-  return niWLANG_RFSGStoreIQRate(rfsgSession, channelString, waveformName, iqRate);
+  return niWLANG_RFSGStoreIQRate(rfsgHandle, channelString, waveformName, iqRate);
 }
 
-int32 RFSGStorePAPR(ViSession rfsgSession, char channelString[], char waveformName[], float64 papr)
+int32 RFSGStorePAPR(ViSession rfsgHandle, char channelString[], char waveformName[], float64 papr)
 {
-  return niWLANG_RFSGStorePAPR(rfsgSession, channelString, waveformName, papr);
+  return niWLANG_RFSGStorePAPR(rfsgHandle, channelString, waveformName, papr);
 }
 
-int32 RFSGStoreRFBlankingMarkerPositions(ViSession rfsgSession, char waveformName[], int32 rfBlankingMarkerPositions[], int32 dataArraySize)
+int32 RFSGStoreRFBlankingMarkerPositions(ViSession rfsgHandle, char waveformName[], int32 rfBlankingMarkerPositions[], int32 dataArraySize)
 {
-  return niWLANG_RFSGStoreRFBlankingMarkerPositions(rfsgSession, waveformName, rfBlankingMarkerPositions, dataArraySize);
+  return niWLANG_RFSGStoreRFBlankingMarkerPositions(rfsgHandle, waveformName, rfBlankingMarkerPositions, dataArraySize);
 }
 
 int32 ReadBurstStartLocationsFromFile(char filePath[], char waveformName[], int32 burstStartLocations[], int32 dataArraySize, int32* actualDataArraySize)
@@ -267,7 +282,7 @@ int32 SaveConfigurationToFile(niWLANGenerationSession session, char filePath[], 
   return niWLANG_SaveConfigurationToFile(session, filePath, fileOperation);
 }
 
-int32 SetOFDMPacketExtensionThresholds(niWLANGenerationSession session, char channelString[], int32 ppet16[ppet16ArraySize], int32 ppet8[], int32 numberOfSpaceTimeStreams[], int32 ruSize[], int32 ppet16ArraySize, int32 ppet8ArraySize, int32 numberOfSpaceTimeStreamsArraySize, int32 ruArraySize)
+int32 SetOFDMPacketExtensionThresholds(niWLANGenerationSession session, char channelString[], int32 ppet16[], int32 ppet8[], int32 numberOfSpaceTimeStreams[], int32 ruSize[], int32 ppet16ArraySize, int32 ppet8ArraySize, int32 numberOfSpaceTimeStreamsArraySize, int32 ruArraySize)
 {
   return niWLANG_SetOFDMPacketExtensionThresholds(session, channelString, ppet16, ppet8, numberOfSpaceTimeStreams, ruSize, ppet16ArraySize, ppet8ArraySize, numberOfSpaceTimeStreamsArraySize, ruArraySize);
 }

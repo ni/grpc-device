@@ -124,12 +124,12 @@ int32 NiRFmxBluetoothGenLibrary::CreateWaveformComplexF64InterleavedIQ(niBTSGSes
   return function_pointers_.CreateWaveformComplexF64InterleavedIQ(session, reset, t0, dt, reinterpret_cast<NIComplexNumber*>(waveform), waveformSize, actualWaveformSize, generationDone);
 }
 
-int32 NiRFmxBluetoothGenLibrary::GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize, int32* actualStringSize)
+int32 NiRFmxBluetoothGenLibrary::GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize)
 {
   if (!function_pointers_.GetAttributeString) {
     throw nidevice_grpc::LibraryLoadException("Could not find niBTSG_GetAttributeString.");
   }
-  return function_pointers_.GetAttributeString(session, channelString, attributeID, attributeValue, bufferSize, actualStringSize);
+  return function_pointers_.GetAttributeString(session, channelString, attributeID, attributeValue, bufferSize);
 }
 
 int32 NiRFmxBluetoothGenLibrary::GetErrorString(niBTSGSession session, int32 errorCode, char errorMessage[], int32 errorMessageLength)

@@ -22,7 +22,7 @@ class NiRFmxBluetoothGenLibraryInterface {
   virtual int32 CreateAndWriteWaveformsToFile(niBTSGSession session, char filePath[], int32 fileOperation) = 0;
   virtual int32 CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone) = 0;
   virtual int32 CreateWaveformComplexF64InterleavedIQ(niBTSGSession session, int32 reset, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone) = 0;
-  virtual int32 GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize, int32* actualStringSize) = 0;
+  virtual int32 GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize) = 0;
   virtual int32 GetErrorString(niBTSGSession session, int32 errorCode, char errorMessage[], int32 errorMessageLength) = 0;
   virtual int32 GetScalarAttributeF64(niBTSGSession session, char channelString[], int32 attributeID, float64* attributeValue) = 0;
   virtual int32 GetScalarAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32* attributeValue) = 0;

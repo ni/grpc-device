@@ -9,7 +9,7 @@
 #include <memory>
 
 #if defined(_MSC_VER)
-static const char* kLibraryName = "niWLANG_net.dll";
+static const char* kLibraryName = "niWLANGeneration_net.dll";
 #else
 static const char* kLibraryName = "libnirfmxwlangen.so.1";
 #endif
@@ -49,11 +49,14 @@ NiRFmxWLANGenLibrary::NiRFmxWLANGenLibrary(std::shared_ptr<nidevice_grpc::Shared
   function_pointers_.LoadConfigurationFromFile = reinterpret_cast<LoadConfigurationFromFilePtr>(shared_library_->get_function_pointer("niWLANG_LoadConfigurationFromFile"));
   function_pointers_.OpenSession = reinterpret_cast<OpenSessionPtr>(shared_library_->get_function_pointer("niWLANG_OpenSession"));
   function_pointers_.RFSGClearDatabase = reinterpret_cast<RFSGClearDatabasePtr>(shared_library_->get_function_pointer("niWLANG_RFSGClearDatabase"));
+  function_pointers_.RFSGConfigure = reinterpret_cast<RFSGConfigurePtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigure"));
   function_pointers_.RFSGConfigureFrequencyMultipleLO = reinterpret_cast<RFSGConfigureFrequencyMultipleLOPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureFrequencyMultipleLO"));
   function_pointers_.RFSGConfigureFrequencySingleLO = reinterpret_cast<RFSGConfigureFrequencySingleLOPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureFrequencySingleLO"));
   function_pointers_.RFSGConfigureMultipleDeviceSynchronization = reinterpret_cast<RFSGConfigureMultipleDeviceSynchronizationPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureMultipleDeviceSynchronization"));
   function_pointers_.RFSGConfigurePowerLevel = reinterpret_cast<RFSGConfigurePowerLevelPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigurePowerLevel"));
+  function_pointers_.RFSGConfigureSampleClockDelay = reinterpret_cast<RFSGConfigureSampleClockDelayPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureSampleClockDelay"));
   function_pointers_.RFSGConfigureScript = reinterpret_cast<RFSGConfigureScriptPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureScript"));
+  function_pointers_.RFSGConfigureWaveform = reinterpret_cast<RFSGConfigureWaveformPtr>(shared_library_->get_function_pointer("niWLANG_RFSGConfigureWaveform"));
   function_pointers_.RFSGCreateAndDownloadMIMOWaveforms = reinterpret_cast<RFSGCreateAndDownloadMIMOWaveformsPtr>(shared_library_->get_function_pointer("niWLANG_RFSGCreateAndDownloadMIMOWaveforms"));
   function_pointers_.RFSGCreateAndDownloadWaveform = reinterpret_cast<RFSGCreateAndDownloadWaveformPtr>(shared_library_->get_function_pointer("niWLANG_RFSGCreateAndDownloadWaveform"));
   function_pointers_.RFSGForceTClkSynchronization = reinterpret_cast<RFSGForceTClkSynchronizationPtr>(shared_library_->get_function_pointer("niWLANG_RFSGForceTClkSynchronization"));
@@ -265,12 +268,20 @@ int32 NiRFmxWLANGenLibrary::OpenSession(char sessionName[], int32 toolkitCompati
   return function_pointers_.OpenSession(sessionName, toolkitCompatibilityVersion, session, isNewSession);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGClearDatabase(ViSession rfsgSession, char channelString[], char waveformName[])
+int32 NiRFmxWLANGenLibrary::RFSGClearDatabase(ViSession rfsgHandle, char channelString[], char waveformName[])
 {
   if (!function_pointers_.RFSGClearDatabase) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGClearDatabase.");
   }
-  return function_pointers_.RFSGClearDatabase(rfsgSession, channelString, waveformName);
+  return function_pointers_.RFSGClearDatabase(rfsgHandle, channelString, waveformName);
+}
+
+int32 NiRFmxWLANGenLibrary::RFSGConfigure(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[])
+{
+  if (!function_pointers_.RFSGConfigure) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigure.");
+  }
+  return function_pointers_.RFSGConfigure(session, wlanChannelString, rfsgHandle, channelString);
 }
 
 int32 NiRFmxWLANGenLibrary::RFSGConfigureFrequencyMultipleLO(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 loSource, ViSession externalLOHandles[], int32 numberOfExternalLOHandles, float64 carrierFrequency[], int32 dataArraySize, int32 rfsgLODaisyChainEnabled, int32 loExportToExternalDevicesEnabled)
@@ -297,20 +308,36 @@ int32 NiRFmxWLANGenLibrary::RFSGConfigureMultipleDeviceSynchronization(niWLANGen
   return function_pointers_.RFSGConfigureMultipleDeviceSynchronization(session, rfsgSessions, numberOfRFSGSessions, masterReferenceClockSource, triggerLines, noOfTriggerLines);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGConfigurePowerLevel(ViSession rfsgSession, char channelString[], char script[], float64 powerLevel)
+int32 NiRFmxWLANGenLibrary::RFSGConfigurePowerLevel(ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel)
 {
   if (!function_pointers_.RFSGConfigurePowerLevel) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigurePowerLevel.");
   }
-  return function_pointers_.RFSGConfigurePowerLevel(rfsgSession, channelString, script, powerLevel);
+  return function_pointers_.RFSGConfigurePowerLevel(rfsgHandle, channelString, script, powerLevel);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGConfigureScript(ViSession rfsgSession, char channelString[], char script[], float64 powerLevel)
+int32 NiRFmxWLANGenLibrary::RFSGConfigureSampleClockDelay(niWLANGenerationSession session, ViSession rfsgHandles[], float64 sampleClockDelay[], int32 noOfChannels)
+{
+  if (!function_pointers_.RFSGConfigureSampleClockDelay) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigureSampleClockDelay.");
+  }
+  return function_pointers_.RFSGConfigureSampleClockDelay(session, rfsgHandles, sampleClockDelay, noOfChannels);
+}
+
+int32 NiRFmxWLANGenLibrary::RFSGConfigureScript(ViSession rfsgHandle, char channelString[], char script[], float64 powerLevel)
 {
   if (!function_pointers_.RFSGConfigureScript) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigureScript.");
   }
-  return function_pointers_.RFSGConfigureScript(rfsgSession, channelString, script, powerLevel);
+  return function_pointers_.RFSGConfigureScript(rfsgHandle, channelString, script, powerLevel);
+}
+
+int32 NiRFmxWLANGenLibrary::RFSGConfigureWaveform(niWLANGenerationSession session, char wlanChannelString[], ViSession rfsgHandle, char channelString[], int32 resetHardware, int32* waveformSize)
+{
+  if (!function_pointers_.RFSGConfigureWaveform) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGConfigureWaveform.");
+  }
+  return function_pointers_.RFSGConfigureWaveform(session, wlanChannelString, rfsgHandle, channelString, resetHardware, waveformSize);
 }
 
 int32 NiRFmxWLANGenLibrary::RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationSession session, ViSession rfsgSessions[], char channelString[], int32 numberOfTxChains, char waveformName[])
@@ -321,12 +348,12 @@ int32 NiRFmxWLANGenLibrary::RFSGCreateAndDownloadMIMOWaveforms(niWLANGenerationS
   return function_pointers_.RFSGCreateAndDownloadMIMOWaveforms(session, rfsgSessions, channelString, numberOfTxChains, waveformName);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGCreateAndDownloadWaveform(niWLANGenerationSession session, ViSession rfsgSession, char channelString[], char waveformName[])
+int32 NiRFmxWLANGenLibrary::RFSGCreateAndDownloadWaveform(niWLANGenerationSession session, ViSession rfsgHandle, char channelString[], char waveformName[])
 {
   if (!function_pointers_.RFSGCreateAndDownloadWaveform) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGCreateAndDownloadWaveform.");
   }
-  return function_pointers_.RFSGCreateAndDownloadWaveform(session, rfsgSession, channelString, waveformName);
+  return function_pointers_.RFSGCreateAndDownloadWaveform(session, rfsgHandle, channelString, waveformName);
 }
 
 int32 NiRFmxWLANGenLibrary::RFSGForceTClkSynchronization(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions, int32 forceSync)
@@ -337,12 +364,12 @@ int32 NiRFmxWLANGenLibrary::RFSGForceTClkSynchronization(niWLANGenerationSession
   return function_pointers_.RFSGForceTClkSynchronization(session, rfsgSessions, numberOfRFSGSessions, forceSync);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGInsertRFBlankingMarkerPositions(ViSession rfsgSession, char script[], char scriptOut[], int32 lenOfScriptOut, int32* actualLenOfScriptOut)
+int32 NiRFmxWLANGenLibrary::RFSGInsertRFBlankingMarkerPositions(ViSession rfsgHandle, char script[], char scriptOut[], int32 lenOfScriptOut, int32* actualLenOfScriptOut)
 {
   if (!function_pointers_.RFSGInsertRFBlankingMarkerPositions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGInsertRFBlankingMarkerPositions.");
   }
-  return function_pointers_.RFSGInsertRFBlankingMarkerPositions(rfsgSession, script, scriptOut, lenOfScriptOut, actualLenOfScriptOut);
+  return function_pointers_.RFSGInsertRFBlankingMarkerPositions(rfsgHandle, script, scriptOut, lenOfScriptOut, actualLenOfScriptOut);
 }
 
 int32 NiRFmxWLANGenLibrary::RFSGMultipleDeviceInitiate(niWLANGenerationSession session, ViSession rfsgSessions[], int32 numberOfRFSGSessions)
@@ -361,108 +388,108 @@ int32 NiRFmxWLANGenLibrary::RFSGReadAndDownloadWaveformsFromFile(ViSession rfsgS
   return function_pointers_.RFSGReadAndDownloadWaveformsFromFile(rfsgSessions, numberOfChannels, waveformName, filePath);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGRetrieveBurstStartLocations(ViSession rfsgSession, char waveformName[], int32 burstStartLocations[], int32 dataArraySize, int32* actualDataArraySize)
+int32 NiRFmxWLANGenLibrary::RFSGRetrieveBurstStartLocations(ViSession rfsgHandle, char waveformName[], int32 burstStartLocations[], int32 dataArraySize, int32* actualDataArraySize)
 {
   if (!function_pointers_.RFSGRetrieveBurstStartLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGRetrieveBurstStartLocations.");
   }
-  return function_pointers_.RFSGRetrieveBurstStartLocations(rfsgSession, waveformName, burstStartLocations, dataArraySize, actualDataArraySize);
+  return function_pointers_.RFSGRetrieveBurstStartLocations(rfsgHandle, waveformName, burstStartLocations, dataArraySize, actualDataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGRetrieveBurstStopLocations(ViSession rfsgSession, char waveformName[], int32 burstStopLocations[], int32 dataArraySize, int32* actualDataArraySize)
+int32 NiRFmxWLANGenLibrary::RFSGRetrieveBurstStopLocations(ViSession rfsgHandle, char waveformName[], int32 burstStopLocations[], int32 dataArraySize, int32* actualDataArraySize)
 {
   if (!function_pointers_.RFSGRetrieveBurstStopLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGRetrieveBurstStopLocations.");
   }
-  return function_pointers_.RFSGRetrieveBurstStopLocations(rfsgSession, waveformName, burstStopLocations, dataArraySize, actualDataArraySize);
+  return function_pointers_.RFSGRetrieveBurstStopLocations(rfsgHandle, waveformName, burstStopLocations, dataArraySize, actualDataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGRetrieveIQRate(ViSession rfsgSession, char channelString[], char waveformName[], float64* iqRate)
+int32 NiRFmxWLANGenLibrary::RFSGRetrieveIQRate(ViSession rfsgHandle, char channelString[], char waveformName[], float64* iqRate)
 {
   if (!function_pointers_.RFSGRetrieveIQRate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGRetrieveIQRate.");
   }
-  return function_pointers_.RFSGRetrieveIQRate(rfsgSession, channelString, waveformName, iqRate);
+  return function_pointers_.RFSGRetrieveIQRate(rfsgHandle, channelString, waveformName, iqRate);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGRetrieveIQRateAllWaveforms(ViSession rfsgSession, char channelString[], char script[], float64* iqRate)
+int32 NiRFmxWLANGenLibrary::RFSGRetrieveIQRateAllWaveforms(ViSession rfsgHandle, char channelString[], char script[], float64* iqRate)
 {
   if (!function_pointers_.RFSGRetrieveIQRateAllWaveforms) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGRetrieveIQRateAllWaveforms.");
   }
-  return function_pointers_.RFSGRetrieveIQRateAllWaveforms(rfsgSession, channelString, script, iqRate);
+  return function_pointers_.RFSGRetrieveIQRateAllWaveforms(rfsgHandle, channelString, script, iqRate);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGRetrieveMinimumPAPRAllWaveforms(ViSession rfsgSession, char channelString[], char script[], float64* papr)
+int32 NiRFmxWLANGenLibrary::RFSGRetrieveMinimumPAPRAllWaveforms(ViSession rfsgHandle, char channelString[], char script[], float64* papr)
 {
   if (!function_pointers_.RFSGRetrieveMinimumPAPRAllWaveforms) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGRetrieveMinimumPAPRAllWaveforms.");
   }
-  return function_pointers_.RFSGRetrieveMinimumPAPRAllWaveforms(rfsgSession, channelString, script, papr);
+  return function_pointers_.RFSGRetrieveMinimumPAPRAllWaveforms(rfsgHandle, channelString, script, papr);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGRetrievePAPR(ViSession rfsgSession, char channelString[], char waveformName[], float64* papr)
+int32 NiRFmxWLANGenLibrary::RFSGRetrievePAPR(ViSession rfsgHandle, char channelString[], char waveformName[], float64* papr)
 {
   if (!function_pointers_.RFSGRetrievePAPR) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGRetrievePAPR.");
   }
-  return function_pointers_.RFSGRetrievePAPR(rfsgSession, channelString, waveformName, papr);
+  return function_pointers_.RFSGRetrievePAPR(rfsgHandle, channelString, waveformName, papr);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGRetrieveRFBlankingMarkerPositions(ViSession rfsgSession, char waveformName[], int32 rfBlankingMarkerPositions[], int32 dataArraySize, int32* actualDataArraySize)
+int32 NiRFmxWLANGenLibrary::RFSGRetrieveRFBlankingMarkerPositions(ViSession rfsgHandle, char waveformName[], int32 rfBlankingMarkerPositions[], int32 dataArraySize, int32* actualDataArraySize)
 {
   if (!function_pointers_.RFSGRetrieveRFBlankingMarkerPositions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGRetrieveRFBlankingMarkerPositions.");
   }
-  return function_pointers_.RFSGRetrieveRFBlankingMarkerPositions(rfsgSession, waveformName, rfBlankingMarkerPositions, dataArraySize, actualDataArraySize);
+  return function_pointers_.RFSGRetrieveRFBlankingMarkerPositions(rfsgHandle, waveformName, rfBlankingMarkerPositions, dataArraySize, actualDataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGRetrieveWaveformSize(ViSession rfsgSession, char waveformName[], int32* waveformSize)
+int32 NiRFmxWLANGenLibrary::RFSGRetrieveWaveformSize(ViSession rfsgHandle, char waveformName[], int32* waveformSize)
 {
   if (!function_pointers_.RFSGRetrieveWaveformSize) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGRetrieveWaveformSize.");
   }
-  return function_pointers_.RFSGRetrieveWaveformSize(rfsgSession, waveformName, waveformSize);
+  return function_pointers_.RFSGRetrieveWaveformSize(rfsgHandle, waveformName, waveformSize);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGStoreBurstStartLocations(ViSession rfsgSession, char waveformName[], int32 burstStartLocations[], int32 dataArraySize)
+int32 NiRFmxWLANGenLibrary::RFSGStoreBurstStartLocations(ViSession rfsgHandle, char waveformName[], int32 burstStartLocations[], int32 dataArraySize)
 {
   if (!function_pointers_.RFSGStoreBurstStartLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGStoreBurstStartLocations.");
   }
-  return function_pointers_.RFSGStoreBurstStartLocations(rfsgSession, waveformName, burstStartLocations, dataArraySize);
+  return function_pointers_.RFSGStoreBurstStartLocations(rfsgHandle, waveformName, burstStartLocations, dataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGStoreBurstStopLocations(ViSession rfsgSession, char waveformName[], int32 burstStopLocations[], int32 dataArraySize)
+int32 NiRFmxWLANGenLibrary::RFSGStoreBurstStopLocations(ViSession rfsgHandle, char waveformName[], int32 burstStopLocations[], int32 dataArraySize)
 {
   if (!function_pointers_.RFSGStoreBurstStopLocations) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGStoreBurstStopLocations.");
   }
-  return function_pointers_.RFSGStoreBurstStopLocations(rfsgSession, waveformName, burstStopLocations, dataArraySize);
+  return function_pointers_.RFSGStoreBurstStopLocations(rfsgHandle, waveformName, burstStopLocations, dataArraySize);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGStoreIQRate(ViSession rfsgSession, char channelString[], char waveformName[], float64 iqRate)
+int32 NiRFmxWLANGenLibrary::RFSGStoreIQRate(ViSession rfsgHandle, char channelString[], char waveformName[], float64 iqRate)
 {
   if (!function_pointers_.RFSGStoreIQRate) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGStoreIQRate.");
   }
-  return function_pointers_.RFSGStoreIQRate(rfsgSession, channelString, waveformName, iqRate);
+  return function_pointers_.RFSGStoreIQRate(rfsgHandle, channelString, waveformName, iqRate);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGStorePAPR(ViSession rfsgSession, char channelString[], char waveformName[], float64 papr)
+int32 NiRFmxWLANGenLibrary::RFSGStorePAPR(ViSession rfsgHandle, char channelString[], char waveformName[], float64 papr)
 {
   if (!function_pointers_.RFSGStorePAPR) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGStorePAPR.");
   }
-  return function_pointers_.RFSGStorePAPR(rfsgSession, channelString, waveformName, papr);
+  return function_pointers_.RFSGStorePAPR(rfsgHandle, channelString, waveformName, papr);
 }
 
-int32 NiRFmxWLANGenLibrary::RFSGStoreRFBlankingMarkerPositions(ViSession rfsgSession, char waveformName[], int32 rfBlankingMarkerPositions[], int32 dataArraySize)
+int32 NiRFmxWLANGenLibrary::RFSGStoreRFBlankingMarkerPositions(ViSession rfsgHandle, char waveformName[], int32 rfBlankingMarkerPositions[], int32 dataArraySize)
 {
   if (!function_pointers_.RFSGStoreRFBlankingMarkerPositions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_RFSGStoreRFBlankingMarkerPositions.");
   }
-  return function_pointers_.RFSGStoreRFBlankingMarkerPositions(rfsgSession, waveformName, rfBlankingMarkerPositions, dataArraySize);
+  return function_pointers_.RFSGStoreRFBlankingMarkerPositions(rfsgHandle, waveformName, rfBlankingMarkerPositions, dataArraySize);
 }
 
 int32 NiRFmxWLANGenLibrary::ReadBurstStartLocationsFromFile(char filePath[], char waveformName[], int32 burstStartLocations[], int32 dataArraySize, int32* actualDataArraySize)
@@ -513,7 +540,7 @@ int32 NiRFmxWLANGenLibrary::SaveConfigurationToFile(niWLANGenerationSession sess
   return function_pointers_.SaveConfigurationToFile(session, filePath, fileOperation);
 }
 
-int32 NiRFmxWLANGenLibrary::SetOFDMPacketExtensionThresholds(niWLANGenerationSession session, char channelString[], int32 ppet16[ppet16ArraySize], int32 ppet8[], int32 numberOfSpaceTimeStreams[], int32 ruSize[], int32 ppet16ArraySize, int32 ppet8ArraySize, int32 numberOfSpaceTimeStreamsArraySize, int32 ruArraySize)
+int32 NiRFmxWLANGenLibrary::SetOFDMPacketExtensionThresholds(niWLANGenerationSession session, char channelString[], int32 ppet16[], int32 ppet8[], int32 numberOfSpaceTimeStreams[], int32 ruSize[], int32 ppet16ArraySize, int32 ppet8ArraySize, int32 numberOfSpaceTimeStreamsArraySize, int32 ruArraySize)
 {
   if (!function_pointers_.SetOFDMPacketExtensionThresholds) {
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_SetOFDMPacketExtensionThresholds.");

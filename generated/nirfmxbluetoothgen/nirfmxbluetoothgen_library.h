@@ -27,7 +27,7 @@ class NiRFmxBluetoothGenLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBluetoot
   int32 CreateAndWriteWaveformsToFile(niBTSGSession session, char filePath[], int32 fileOperation) override;
   int32 CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone) override;
   int32 CreateWaveformComplexF64InterleavedIQ(niBTSGSession session, int32 reset, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone) override;
-  int32 GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize, int32* actualStringSize) override;
+  int32 GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize) override;
   int32 GetErrorString(niBTSGSession session, int32 errorCode, char errorMessage[], int32 errorMessageLength) override;
   int32 GetScalarAttributeF64(niBTSGSession session, char channelString[], int32 attributeID, float64* attributeValue) override;
   int32 GetScalarAttributeI32(niBTSGSession session, char channelString[], int32 attributeID, int32* attributeValue) override;

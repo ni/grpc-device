@@ -424,12 +424,12 @@ open_session(const StubPtr& stub, const std::string& session_name, const simple_
 }
 
 RFSGClearDatabaseResponse
-rfsg_clear_database(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& waveform_name)
+rfsg_clear_database(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGClearDatabaseRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_waveform_name(waveform_name);
 
@@ -437,6 +437,26 @@ rfsg_clear_database(const StubPtr& stub, const nidevice_grpc::Session& rfsg_sess
 
   raise_if_error(
       stub->RFSGClearDatabase(&context, request, &response),
+      context);
+
+  return response;
+}
+
+RFSGConfigureResponse
+rfsg_configure(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& wlan_channel_string, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string)
+{
+  ::grpc::ClientContext context;
+
+  auto request = RFSGConfigureRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_wlan_channel_string(wlan_channel_string);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
+  request.set_channel_string(channel_string);
+
+  auto response = RFSGConfigureResponse{};
+
+  raise_if_error(
+      stub->RFSGConfigure(&context, request, &response),
       context);
 
   return response;
@@ -523,12 +543,12 @@ rfsg_configure_multiple_device_synchronization(const StubPtr& stub, const nidevi
 }
 
 RFSGConfigurePowerLevelResponse
-rfsg_configure_power_level(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& script, const double& power_level)
+rfsg_configure_power_level(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& script, const double& power_level)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGConfigurePowerLevelRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_script(script);
   request.set_power_level(power_level);
@@ -542,13 +562,32 @@ rfsg_configure_power_level(const StubPtr& stub, const nidevice_grpc::Session& rf
   return response;
 }
 
+RFSGConfigureSampleClockDelayResponse
+rfsg_configure_sample_clock_delay(const StubPtr& stub, const nidevice_grpc::Session& session, const std::vector<nidevice_grpc::Session>& rfsg_handles, const std::vector<double>& sample_clock_delay)
+{
+  ::grpc::ClientContext context;
+
+  auto request = RFSGConfigureSampleClockDelayRequest{};
+  request.mutable_session()->CopyFrom(session);
+  copy_array(rfsg_handles, request.mutable_rfsg_handles());
+  copy_array(sample_clock_delay, request.mutable_sample_clock_delay());
+
+  auto response = RFSGConfigureSampleClockDelayResponse{};
+
+  raise_if_error(
+      stub->RFSGConfigureSampleClockDelay(&context, request, &response),
+      context);
+
+  return response;
+}
+
 RFSGConfigureScriptResponse
-rfsg_configure_script(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& script, const double& power_level)
+rfsg_configure_script(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& script, const double& power_level)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGConfigureScriptRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_script(script);
   request.set_power_level(power_level);
@@ -557,6 +596,27 @@ rfsg_configure_script(const StubPtr& stub, const nidevice_grpc::Session& rfsg_se
 
   raise_if_error(
       stub->RFSGConfigureScript(&context, request, &response),
+      context);
+
+  return response;
+}
+
+RFSGConfigureWaveformResponse
+rfsg_configure_waveform(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& wlan_channel_string, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const pb::int32& reset_hardware)
+{
+  ::grpc::ClientContext context;
+
+  auto request = RFSGConfigureWaveformRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_wlan_channel_string(wlan_channel_string);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
+  request.set_channel_string(channel_string);
+  request.set_reset_hardware(reset_hardware);
+
+  auto response = RFSGConfigureWaveformResponse{};
+
+  raise_if_error(
+      stub->RFSGConfigureWaveform(&context, request, &response),
       context);
 
   return response;
@@ -583,13 +643,13 @@ rfsg_create_and_download_mimo_waveforms(const StubPtr& stub, const nidevice_grpc
 }
 
 RFSGCreateAndDownloadWaveformResponse
-rfsg_create_and_download_waveform(const StubPtr& stub, const nidevice_grpc::Session& session, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& waveform_name)
+rfsg_create_and_download_waveform(const StubPtr& stub, const nidevice_grpc::Session& session, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGCreateAndDownloadWaveformRequest{};
   request.mutable_session()->CopyFrom(session);
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_waveform_name(waveform_name);
 
@@ -622,12 +682,12 @@ rfsg_force_t_clk_synchronization(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 RFSGInsertRFBlankingMarkerPositionsResponse
-rfsg_insert_rf_blanking_marker_positions(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& script)
+rfsg_insert_rf_blanking_marker_positions(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& script)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGInsertRFBlankingMarkerPositionsRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_script(script);
 
   auto response = RFSGInsertRFBlankingMarkerPositionsResponse{};
@@ -677,12 +737,12 @@ rfsg_read_and_download_waveforms_from_file(const StubPtr& stub, const std::vecto
 }
 
 RFSGRetrieveBurstStartLocationsResponse
-rfsg_retrieve_burst_start_locations(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& waveform_name)
+rfsg_retrieve_burst_start_locations(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGRetrieveBurstStartLocationsRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_waveform_name(waveform_name);
 
   auto response = RFSGRetrieveBurstStartLocationsResponse{};
@@ -695,12 +755,12 @@ rfsg_retrieve_burst_start_locations(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 RFSGRetrieveBurstStopLocationsResponse
-rfsg_retrieve_burst_stop_locations(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& waveform_name)
+rfsg_retrieve_burst_stop_locations(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGRetrieveBurstStopLocationsRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_waveform_name(waveform_name);
 
   auto response = RFSGRetrieveBurstStopLocationsResponse{};
@@ -713,12 +773,12 @@ rfsg_retrieve_burst_stop_locations(const StubPtr& stub, const nidevice_grpc::Ses
 }
 
 RFSGRetrieveIQRateResponse
-rfsg_retrieve_iq_rate(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& waveform_name)
+rfsg_retrieve_iq_rate(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGRetrieveIQRateRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_waveform_name(waveform_name);
 
@@ -732,12 +792,12 @@ rfsg_retrieve_iq_rate(const StubPtr& stub, const nidevice_grpc::Session& rfsg_se
 }
 
 RFSGRetrieveIQRateAllWaveformsResponse
-rfsg_retrieve_iq_rate_all_waveforms(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& script)
+rfsg_retrieve_iq_rate_all_waveforms(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& script)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGRetrieveIQRateAllWaveformsRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_script(script);
 
@@ -751,12 +811,12 @@ rfsg_retrieve_iq_rate_all_waveforms(const StubPtr& stub, const nidevice_grpc::Se
 }
 
 RFSGRetrieveMinimumPAPRAllWaveformsResponse
-rfsg_retrieve_minimum_papr_all_waveforms(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& script)
+rfsg_retrieve_minimum_papr_all_waveforms(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& script)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGRetrieveMinimumPAPRAllWaveformsRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_script(script);
 
@@ -770,12 +830,12 @@ rfsg_retrieve_minimum_papr_all_waveforms(const StubPtr& stub, const nidevice_grp
 }
 
 RFSGRetrievePAPRResponse
-rfsg_retrieve_papr(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& waveform_name)
+rfsg_retrieve_papr(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGRetrievePAPRRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_waveform_name(waveform_name);
 
@@ -789,12 +849,12 @@ rfsg_retrieve_papr(const StubPtr& stub, const nidevice_grpc::Session& rfsg_sessi
 }
 
 RFSGRetrieveRFBlankingMarkerPositionsResponse
-rfsg_retrieve_rf_blanking_marker_positions(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& waveform_name)
+rfsg_retrieve_rf_blanking_marker_positions(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGRetrieveRFBlankingMarkerPositionsRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_waveform_name(waveform_name);
 
   auto response = RFSGRetrieveRFBlankingMarkerPositionsResponse{};
@@ -807,12 +867,12 @@ rfsg_retrieve_rf_blanking_marker_positions(const StubPtr& stub, const nidevice_g
 }
 
 RFSGRetrieveWaveformSizeResponse
-rfsg_retrieve_waveform_size(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& waveform_name)
+rfsg_retrieve_waveform_size(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& waveform_name)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGRetrieveWaveformSizeRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_waveform_name(waveform_name);
 
   auto response = RFSGRetrieveWaveformSizeResponse{};
@@ -825,12 +885,12 @@ rfsg_retrieve_waveform_size(const StubPtr& stub, const nidevice_grpc::Session& r
 }
 
 RFSGStoreBurstStartLocationsResponse
-rfsg_store_burst_start_locations(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& waveform_name, const std::vector<pb::int32>& burst_start_locations)
+rfsg_store_burst_start_locations(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& waveform_name, const std::vector<pb::int32>& burst_start_locations)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGStoreBurstStartLocationsRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_waveform_name(waveform_name);
   copy_array(burst_start_locations, request.mutable_burst_start_locations());
 
@@ -844,12 +904,12 @@ rfsg_store_burst_start_locations(const StubPtr& stub, const nidevice_grpc::Sessi
 }
 
 RFSGStoreBurstStopLocationsResponse
-rfsg_store_burst_stop_locations(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& waveform_name, const std::vector<pb::int32>& burst_stop_locations)
+rfsg_store_burst_stop_locations(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& waveform_name, const std::vector<pb::int32>& burst_stop_locations)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGStoreBurstStopLocationsRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_waveform_name(waveform_name);
   copy_array(burst_stop_locations, request.mutable_burst_stop_locations());
 
@@ -863,12 +923,12 @@ rfsg_store_burst_stop_locations(const StubPtr& stub, const nidevice_grpc::Sessio
 }
 
 RFSGStoreIQRateResponse
-rfsg_store_iq_rate(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& waveform_name, const double& iq_rate)
+rfsg_store_iq_rate(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& waveform_name, const double& iq_rate)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGStoreIQRateRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_waveform_name(waveform_name);
   request.set_iq_rate(iq_rate);
@@ -883,12 +943,12 @@ rfsg_store_iq_rate(const StubPtr& stub, const nidevice_grpc::Session& rfsg_sessi
 }
 
 RFSGStorePAPRResponse
-rfsg_store_papr(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& channel_string, const std::string& waveform_name, const double& papr)
+rfsg_store_papr(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& channel_string, const std::string& waveform_name, const double& papr)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGStorePAPRRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_channel_string(channel_string);
   request.set_waveform_name(waveform_name);
   request.set_papr(papr);
@@ -903,12 +963,12 @@ rfsg_store_papr(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session,
 }
 
 RFSGStoreRFBlankingMarkerPositionsResponse
-rfsg_store_rf_blanking_marker_positions(const StubPtr& stub, const nidevice_grpc::Session& rfsg_session, const std::string& waveform_name, const std::vector<pb::int32>& rf_blanking_marker_positions)
+rfsg_store_rf_blanking_marker_positions(const StubPtr& stub, const nidevice_grpc::Session& rfsg_handle, const std::string& waveform_name, const std::vector<pb::int32>& rf_blanking_marker_positions)
 {
   ::grpc::ClientContext context;
 
   auto request = RFSGStoreRFBlankingMarkerPositionsRequest{};
-  request.mutable_rfsg_session()->CopyFrom(rfsg_session);
+  request.mutable_rfsg_handle()->CopyFrom(rfsg_handle);
   request.set_waveform_name(waveform_name);
   copy_array(rf_blanking_marker_positions, request.mutable_rf_blanking_marker_positions());
 
@@ -1034,17 +1094,17 @@ save_configuration_to_file(const StubPtr& stub, const nidevice_grpc::Session& se
 }
 
 SetOFDMPacketExtensionThresholdsResponse
-set_ofdm_packet_extension_thresholds(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const std::vector<pb::int32>& ppet8, const std::vector<pb::int32>& number_of_space_time_streams, const std::vector<pb::int32>& ru_size, const pb::int32& ppet16_array_size)
+set_ofdm_packet_extension_thresholds(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const std::vector<pb::int32>& ppet16, const std::vector<pb::int32>& ppet8, const std::vector<pb::int32>& number_of_space_time_streams, const std::vector<pb::int32>& ru_size)
 {
   ::grpc::ClientContext context;
 
   auto request = SetOFDMPacketExtensionThresholdsRequest{};
   request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
+  copy_array(ppet16, request.mutable_ppet16());
   copy_array(ppet8, request.mutable_ppet8());
   copy_array(number_of_space_time_streams, request.mutable_number_of_space_time_streams());
   copy_array(ru_size, request.mutable_ru_size());
-  request.set_ppet16_array_size(ppet16_array_size);
 
   auto response = SetOFDMPacketExtensionThresholdsResponse{};
 

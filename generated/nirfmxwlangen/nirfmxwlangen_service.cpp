@@ -793,15 +793,43 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
-      auto status = library_->RFSGClearDatabase(rfsg_session, channel_string, waveform_name);
+      auto status = library_->RFSGClearDatabase(rfsg_handle, channel_string, waveform_name);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANGenService::RFSGConfigure(::grpc::ServerContext* context, const RFSGConfigureRequest* request, RFSGConfigureResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
+      auto wlan_channel_string_mbcs = convert_from_grpc<std::string>(request->wlan_channel_string());
+      char* wlan_channel_string = (char*)wlan_channel_string_mbcs.c_str();
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
+      auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
+      char* channel_string = (char*)channel_string_mbcs.c_str();
+      auto status = library_->RFSGConfigure(session, wlan_channel_string, rfsg_handle, channel_string);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -962,16 +990,63 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto script_mbcs = convert_from_grpc<std::string>(request->script());
       char* script = (char*)script_mbcs.c_str();
       float64 power_level = request->power_level();
-      auto status = library_->RFSGConfigurePowerLevel(rfsg_session, channel_string, script, power_level);
+      auto status = library_->RFSGConfigurePowerLevel(rfsg_handle, channel_string, script, power_level);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANGenService::RFSGConfigureSampleClockDelay(::grpc::ServerContext* context, const RFSGConfigureSampleClockDelayRequest* request, RFSGConfigureSampleClockDelayResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
+      auto rfsg_handles_request = request->rfsg_handles();
+      std::vector<ViSession> rfsg_handles;
+      std::transform(
+        rfsg_handles_request.begin(),
+        rfsg_handles_request.end(),
+        std::back_inserter(rfsg_handles),
+        [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
+      auto sample_clock_delay = const_cast<float64*>(request->sample_clock_delay().data());
+      auto no_of_channels_determine_from_sizes = std::array<int, 2>
+      {
+        request->rfsg_handles_size(),
+        request->sample_clock_delay_size()
+      };
+      const auto no_of_channels_size_calculation = calculate_linked_array_size(no_of_channels_determine_from_sizes, true);
+
+      if (no_of_channels_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rfsg_handles, sample_clock_delay] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (no_of_channels_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        rfsg_handles = request->rfsg_handles_size() ? std::move(rfsg_handles) : nullptr;
+        sample_clock_delay = request->sample_clock_delay_size() ? std::move(sample_clock_delay) : nullptr;
+      }
+      auto no_of_channels = no_of_channels_size_calculation.size;
+
+      auto status = library_->RFSGConfigureSampleClockDelay(session, rfsg_handles.data(), sample_clock_delay, no_of_channels);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -989,18 +1064,49 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto script_mbcs = convert_from_grpc<std::string>(request->script());
       char* script = (char*)script_mbcs.c_str();
       float64 power_level = request->power_level();
-      auto status = library_->RFSGConfigureScript(rfsg_session, channel_string, script, power_level);
+      auto status = library_->RFSGConfigureScript(rfsg_handle, channel_string, script, power_level);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANGenService::RFSGConfigureWaveform(::grpc::ServerContext* context, const RFSGConfigureWaveformRequest* request, RFSGConfigureWaveformResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto session_grpc_session = request->session();
+      niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
+      auto wlan_channel_string_mbcs = convert_from_grpc<std::string>(request->wlan_channel_string());
+      char* wlan_channel_string = (char*)wlan_channel_string_mbcs.c_str();
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
+      auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
+      char* channel_string = (char*)channel_string_mbcs.c_str();
+      int32 reset_hardware = request->reset_hardware();
+      int32 waveform_size {};
+      auto status = library_->RFSGConfigureWaveform(session, wlan_channel_string, rfsg_handle, channel_string, reset_hardware, &waveform_size);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
+      }
+      response->set_status(status);
+      response->set_waveform_size(waveform_size);
       return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
@@ -1052,13 +1158,13 @@ namespace nirfmxwlangen_grpc {
     try {
       auto session_grpc_session = request->session();
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
-      auto status = library_->RFSGCreateAndDownloadWaveform(session, rfsg_session, channel_string, waveform_name);
+      auto status = library_->RFSGCreateAndDownloadWaveform(session, rfsg_handle, channel_string, waveform_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
       }
@@ -1109,28 +1215,28 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto script_mbcs = convert_from_grpc<std::string>(request->script());
       char* script = (char*)script_mbcs.c_str();
       int32 actual_len_of_script_out {};
       while (true) {
-        auto status = library_->RFSGInsertRFBlankingMarkerPositions(rfsg_session, script, nullptr, 0, &actual_len_of_script_out);
+        auto status = library_->RFSGInsertRFBlankingMarkerPositions(rfsg_handle, script, nullptr, 0, &actual_len_of_script_out);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+          return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
         }
         std::string script_out;
         if (actual_len_of_script_out > 0) {
             script_out.resize(actual_len_of_script_out - 1);
         }
         auto len_of_script_out = actual_len_of_script_out;
-        status = library_->RFSGInsertRFBlankingMarkerPositions(rfsg_session, script, (char*)script_out.data(), len_of_script_out, &actual_len_of_script_out);
+        status = library_->RFSGInsertRFBlankingMarkerPositions(rfsg_handle, script, (char*)script_out.data(), len_of_script_out, &actual_len_of_script_out);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+          return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
         }
         response->set_status(status);
         std::string script_out_utf8;
@@ -1216,26 +1322,26 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       int32 actual_data_array_size {};
       while (true) {
-        auto status = library_->RFSGRetrieveBurstStartLocations(rfsg_session, waveform_name, nullptr, 0, &actual_data_array_size);
+        auto status = library_->RFSGRetrieveBurstStartLocations(rfsg_handle, waveform_name, nullptr, 0, &actual_data_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+          return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
         }
         response->mutable_burst_start_locations()->Resize(actual_data_array_size, 0);
         int32* burst_start_locations = reinterpret_cast<int32*>(response->mutable_burst_start_locations()->mutable_data());
         auto data_array_size = actual_data_array_size;
-        status = library_->RFSGRetrieveBurstStartLocations(rfsg_session, waveform_name, burst_start_locations, data_array_size, &actual_data_array_size);
+        status = library_->RFSGRetrieveBurstStartLocations(rfsg_handle, waveform_name, burst_start_locations, data_array_size, &actual_data_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+          return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
         }
         response->set_status(status);
         response->mutable_burst_start_locations()->Resize(actual_data_array_size, 0);
@@ -1256,26 +1362,26 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       int32 actual_data_array_size {};
       while (true) {
-        auto status = library_->RFSGRetrieveBurstStopLocations(rfsg_session, waveform_name, nullptr, 0, &actual_data_array_size);
+        auto status = library_->RFSGRetrieveBurstStopLocations(rfsg_handle, waveform_name, nullptr, 0, &actual_data_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+          return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
         }
         response->mutable_burst_stop_locations()->Resize(actual_data_array_size, 0);
         int32* burst_stop_locations = reinterpret_cast<int32*>(response->mutable_burst_stop_locations()->mutable_data());
         auto data_array_size = actual_data_array_size;
-        status = library_->RFSGRetrieveBurstStopLocations(rfsg_session, waveform_name, burst_stop_locations, data_array_size, &actual_data_array_size);
+        status = library_->RFSGRetrieveBurstStopLocations(rfsg_handle, waveform_name, burst_stop_locations, data_array_size, &actual_data_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+          return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
         }
         response->set_status(status);
         response->mutable_burst_stop_locations()->Resize(actual_data_array_size, 0);
@@ -1296,16 +1402,16 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       float64 iq_rate {};
-      auto status = library_->RFSGRetrieveIQRate(rfsg_session, channel_string, waveform_name, &iq_rate);
+      auto status = library_->RFSGRetrieveIQRate(rfsg_handle, channel_string, waveform_name, &iq_rate);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       response->set_iq_rate(iq_rate);
@@ -1324,16 +1430,16 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto script_mbcs = convert_from_grpc<std::string>(request->script());
       char* script = (char*)script_mbcs.c_str();
       float64 iq_rate {};
-      auto status = library_->RFSGRetrieveIQRateAllWaveforms(rfsg_session, channel_string, script, &iq_rate);
+      auto status = library_->RFSGRetrieveIQRateAllWaveforms(rfsg_handle, channel_string, script, &iq_rate);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       response->set_iq_rate(iq_rate);
@@ -1352,16 +1458,16 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto script_mbcs = convert_from_grpc<std::string>(request->script());
       char* script = (char*)script_mbcs.c_str();
       float64 papr {};
-      auto status = library_->RFSGRetrieveMinimumPAPRAllWaveforms(rfsg_session, channel_string, script, &papr);
+      auto status = library_->RFSGRetrieveMinimumPAPRAllWaveforms(rfsg_handle, channel_string, script, &papr);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       response->set_papr(papr);
@@ -1380,16 +1486,16 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       float64 papr {};
-      auto status = library_->RFSGRetrievePAPR(rfsg_session, channel_string, waveform_name, &papr);
+      auto status = library_->RFSGRetrievePAPR(rfsg_handle, channel_string, waveform_name, &papr);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       response->set_papr(papr);
@@ -1408,26 +1514,26 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       int32 actual_data_array_size {};
       while (true) {
-        auto status = library_->RFSGRetrieveRFBlankingMarkerPositions(rfsg_session, waveform_name, nullptr, 0, &actual_data_array_size);
+        auto status = library_->RFSGRetrieveRFBlankingMarkerPositions(rfsg_handle, waveform_name, nullptr, 0, &actual_data_array_size);
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+          return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
         }
         response->mutable_rf_blanking_marker_positions()->Resize(actual_data_array_size, 0);
         int32* rf_blanking_marker_positions = reinterpret_cast<int32*>(response->mutable_rf_blanking_marker_positions()->mutable_data());
         auto data_array_size = actual_data_array_size;
-        status = library_->RFSGRetrieveRFBlankingMarkerPositions(rfsg_session, waveform_name, rf_blanking_marker_positions, data_array_size, &actual_data_array_size);
+        status = library_->RFSGRetrieveRFBlankingMarkerPositions(rfsg_handle, waveform_name, rf_blanking_marker_positions, data_array_size, &actual_data_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;
         }
         if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+          return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
         }
         response->set_status(status);
         response->mutable_rf_blanking_marker_positions()->Resize(actual_data_array_size, 0);
@@ -1448,14 +1554,14 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       int32 waveform_size {};
-      auto status = library_->RFSGRetrieveWaveformSize(rfsg_session, waveform_name, &waveform_size);
+      auto status = library_->RFSGRetrieveWaveformSize(rfsg_handle, waveform_name, &waveform_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       response->set_waveform_size(waveform_size);
@@ -1474,15 +1580,15 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       auto burst_start_locations = const_cast<int32*>(reinterpret_cast<const int32*>(request->burst_start_locations().data()));
       int32 data_array_size = static_cast<int32>(request->burst_start_locations().size());
-      auto status = library_->RFSGStoreBurstStartLocations(rfsg_session, waveform_name, burst_start_locations, data_array_size);
+      auto status = library_->RFSGStoreBurstStartLocations(rfsg_handle, waveform_name, burst_start_locations, data_array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1500,15 +1606,15 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       auto burst_stop_locations = const_cast<int32*>(reinterpret_cast<const int32*>(request->burst_stop_locations().data()));
       int32 data_array_size = static_cast<int32>(request->burst_stop_locations().size());
-      auto status = library_->RFSGStoreBurstStopLocations(rfsg_session, waveform_name, burst_stop_locations, data_array_size);
+      auto status = library_->RFSGStoreBurstStopLocations(rfsg_handle, waveform_name, burst_stop_locations, data_array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1526,16 +1632,16 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       float64 iq_rate = request->iq_rate();
-      auto status = library_->RFSGStoreIQRate(rfsg_session, channel_string, waveform_name, iq_rate);
+      auto status = library_->RFSGStoreIQRate(rfsg_handle, channel_string, waveform_name, iq_rate);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1553,16 +1659,16 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       float64 papr = request->papr();
-      auto status = library_->RFSGStorePAPR(rfsg_session, channel_string, waveform_name, papr);
+      auto status = library_->RFSGStorePAPR(rfsg_handle, channel_string, waveform_name, papr);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1580,15 +1686,15 @@ namespace nirfmxwlangen_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      auto rfsg_session_grpc_session = request->rfsg_session();
-      ViSession rfsg_session = vi_session_resource_repository_->access_session(rfsg_session_grpc_session.name());
+      auto rfsg_handle_grpc_session = request->rfsg_handle();
+      ViSession rfsg_handle = vi_session_resource_repository_->access_session(rfsg_handle_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       auto rf_blanking_marker_positions = const_cast<int32*>(reinterpret_cast<const int32*>(request->rf_blanking_marker_positions().data()));
       int32 data_array_size = static_cast<int32>(request->rf_blanking_marker_positions().size());
-      auto status = library_->RFSGStoreRFBlankingMarkerPositions(rfsg_session, waveform_name, rf_blanking_marker_positions, data_array_size);
+      auto status = library_->RFSGStoreRFBlankingMarkerPositions(rfsg_handle, waveform_name, rf_blanking_marker_positions, data_array_size);
       if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, rfsg_session);
+        return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
       }
       response->set_status(status);
       return ::grpc::Status::OK;
@@ -1847,15 +1953,14 @@ namespace nirfmxwlangen_grpc {
       niWLANGenerationSession session = session_repository_->access_session(session_grpc_session.name());
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
+      auto ppet16 = const_cast<int32*>(reinterpret_cast<const int32*>(request->ppet16().data()));
       auto ppet8 = const_cast<int32*>(reinterpret_cast<const int32*>(request->ppet8().data()));
       auto number_of_space_time_streams = const_cast<int32*>(reinterpret_cast<const int32*>(request->number_of_space_time_streams().data()));
       auto ru_size = const_cast<int32*>(reinterpret_cast<const int32*>(request->ru_size().data()));
-      int32 ppet16_array_size = request->ppet16_array_size();
+      int32 ppet16_array_size = static_cast<int32>(request->ppet16().size());
       int32 ppet8_array_size = static_cast<int32>(request->ppet8().size());
       int32 number_of_space_time_streams_array_size = static_cast<int32>(request->number_of_space_time_streams().size());
       int32 ru_array_size = static_cast<int32>(request->ru_size().size());
-      response->mutable_ppet16()->Resize(ppet16ArraySize, 0);
-      int32* ppet16 = reinterpret_cast<int32*>(response->mutable_ppet16()->mutable_data());
       auto status = library_->SetOFDMPacketExtensionThresholds(session, channel_string, ppet16, ppet8, number_of_space_time_streams, ru_size, ppet16_array_size, ppet8_array_size, number_of_space_time_streams_array_size, ru_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);

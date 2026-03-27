@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXWLANGEN API metadata version 26.0.0
+// This file is generated from NI-RFMXWLANGEN API metadata version 26.3.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXWLANGEN Metadata
 //---------------------------------------------------------------------
@@ -39,11 +39,14 @@ service NiRFmxWLANGen {
   rpc LoadConfigurationFromFile(LoadConfigurationFromFileRequest) returns (LoadConfigurationFromFileResponse);
   rpc OpenSession(OpenSessionRequest) returns (OpenSessionResponse);
   rpc RFSGClearDatabase(RFSGClearDatabaseRequest) returns (RFSGClearDatabaseResponse);
+  rpc RFSGConfigure(RFSGConfigureRequest) returns (RFSGConfigureResponse);
   rpc RFSGConfigureFrequencyMultipleLO(RFSGConfigureFrequencyMultipleLORequest) returns (RFSGConfigureFrequencyMultipleLOResponse);
   rpc RFSGConfigureFrequencySingleLO(RFSGConfigureFrequencySingleLORequest) returns (RFSGConfigureFrequencySingleLOResponse);
   rpc RFSGConfigureMultipleDeviceSynchronization(RFSGConfigureMultipleDeviceSynchronizationRequest) returns (RFSGConfigureMultipleDeviceSynchronizationResponse);
   rpc RFSGConfigurePowerLevel(RFSGConfigurePowerLevelRequest) returns (RFSGConfigurePowerLevelResponse);
+  rpc RFSGConfigureSampleClockDelay(RFSGConfigureSampleClockDelayRequest) returns (RFSGConfigureSampleClockDelayResponse);
   rpc RFSGConfigureScript(RFSGConfigureScriptRequest) returns (RFSGConfigureScriptResponse);
+  rpc RFSGConfigureWaveform(RFSGConfigureWaveformRequest) returns (RFSGConfigureWaveformResponse);
   rpc RFSGCreateAndDownloadMIMOWaveforms(RFSGCreateAndDownloadMIMOWaveformsRequest) returns (RFSGCreateAndDownloadMIMOWaveformsResponse);
   rpc RFSGCreateAndDownloadWaveform(RFSGCreateAndDownloadWaveformRequest) returns (RFSGCreateAndDownloadWaveformResponse);
   rpc RFSGForceTClkSynchronization(RFSGForceTClkSynchronizationRequest) returns (RFSGForceTClkSynchronizationResponse);
@@ -78,7 +81,6 @@ service NiRFmxWLANGen {
 
 enum NiRFmxWLANGenAttribute {
   NIRFMXWLANGEN_ATTRIBUTE_CARRIER_FREQUENCY = 0;
-  NIRFMXWLANGEN_ATTRIBUTE_POWER_LEVEL = 1;
   NIRFMXWLANGEN_ATTRIBUTE_OVERSAMPLING_FACTOR = 2;
   NIRFMXWLANGEN_ATTRIBUTE_IDLE_INTERVAL = 3;
   NIRFMXWLANGEN_ATTRIBUTE_DSSS_PREAMBLE_TYPE = 4;
@@ -106,12 +108,10 @@ enum NiRFmxWLANGenAttribute {
   NIRFMXWLANGEN_ATTRIBUTE_PULSE_SHAPING_FILTER_TYPE = 26;
   NIRFMXWLANGEN_ATTRIBUTE_PULSE_SHAPING_FILTER_PARAMETER = 27;
   NIRFMXWLANGEN_ATTRIBUTE_DSSS_WINDOW_LENGTH = 29;
-  NIRFMXWLANGEN_ATTRIBUTE_PEAK_TO_AVERAGE_POWER_RATIO = 30;
   NIRFMXWLANGEN_ATTRIBUTE_STANDARD = 31;
   NIRFMXWLANGEN_ATTRIBUTE_OFDM_DATA_RATE = 32;
   NIRFMXWLANGEN_ATTRIBUTE_DSSS_DATA_RATE = 33;
   NIRFMXWLANGEN_ATTRIBUTE_IQ_RATE = 35;
-  NIRFMXWLANGEN_ATTRIBUTE_WAVEFORM_SCALING_FACTOR = 36;
   NIRFMXWLANGEN_ATTRIBUTE_IQ_WAVEFORM_SIZE = 37;
   NIRFMXWLANGEN_ATTRIBUTE_HEADROOM = 40;
   NIRFMXWLANGEN_ATTRIBUTE_MCS_INDEX = 41;
@@ -737,12 +737,23 @@ message OpenSessionResponse {
 }
 
 message RFSGClearDatabaseRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string channel_string = 2;
   string waveform_name = 3;
 }
 
 message RFSGClearDatabaseResponse {
+  int32 status = 1;
+}
+
+message RFSGConfigureRequest {
+  nidevice_grpc.Session session = 1;
+  string wlan_channel_string = 2;
+  nidevice_grpc.Session rfsg_handle = 3;
+  string channel_string = 4;
+}
+
+message RFSGConfigureResponse {
   int32 status = 1;
 }
 
@@ -792,7 +803,7 @@ message RFSGConfigureMultipleDeviceSynchronizationResponse {
 }
 
 message RFSGConfigurePowerLevelRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string channel_string = 2;
   string script = 3;
   double power_level = 4;
@@ -802,8 +813,18 @@ message RFSGConfigurePowerLevelResponse {
   int32 status = 1;
 }
 
+message RFSGConfigureSampleClockDelayRequest {
+  nidevice_grpc.Session session = 1;
+  repeated nidevice_grpc.Session rfsg_handles = 2;
+  repeated double sample_clock_delay = 3;
+}
+
+message RFSGConfigureSampleClockDelayResponse {
+  int32 status = 1;
+}
+
 message RFSGConfigureScriptRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string channel_string = 2;
   string script = 3;
   double power_level = 4;
@@ -811,6 +832,19 @@ message RFSGConfigureScriptRequest {
 
 message RFSGConfigureScriptResponse {
   int32 status = 1;
+}
+
+message RFSGConfigureWaveformRequest {
+  nidevice_grpc.Session session = 1;
+  string wlan_channel_string = 2;
+  nidevice_grpc.Session rfsg_handle = 3;
+  string channel_string = 4;
+  int32 reset_hardware = 5;
+}
+
+message RFSGConfigureWaveformResponse {
+  int32 status = 1;
+  int32 waveform_size = 2;
 }
 
 message RFSGCreateAndDownloadMIMOWaveformsRequest {
@@ -826,7 +860,7 @@ message RFSGCreateAndDownloadMIMOWaveformsResponse {
 
 message RFSGCreateAndDownloadWaveformRequest {
   nidevice_grpc.Session session = 1;
-  nidevice_grpc.Session rfsg_session = 2;
+  nidevice_grpc.Session rfsg_handle = 2;
   string channel_string = 3;
   string waveform_name = 4;
 }
@@ -846,7 +880,7 @@ message RFSGForceTClkSynchronizationResponse {
 }
 
 message RFSGInsertRFBlankingMarkerPositionsRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string script = 2;
 }
 
@@ -876,7 +910,7 @@ message RFSGReadAndDownloadWaveformsFromFileResponse {
 }
 
 message RFSGRetrieveBurstStartLocationsRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string waveform_name = 2;
 }
 
@@ -887,7 +921,7 @@ message RFSGRetrieveBurstStartLocationsResponse {
 }
 
 message RFSGRetrieveBurstStopLocationsRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string waveform_name = 2;
 }
 
@@ -898,7 +932,7 @@ message RFSGRetrieveBurstStopLocationsResponse {
 }
 
 message RFSGRetrieveIQRateRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string channel_string = 2;
   string waveform_name = 3;
 }
@@ -909,7 +943,7 @@ message RFSGRetrieveIQRateResponse {
 }
 
 message RFSGRetrieveIQRateAllWaveformsRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string channel_string = 2;
   string script = 3;
 }
@@ -920,7 +954,7 @@ message RFSGRetrieveIQRateAllWaveformsResponse {
 }
 
 message RFSGRetrieveMinimumPAPRAllWaveformsRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string channel_string = 2;
   string script = 3;
 }
@@ -931,7 +965,7 @@ message RFSGRetrieveMinimumPAPRAllWaveformsResponse {
 }
 
 message RFSGRetrievePAPRRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string channel_string = 2;
   string waveform_name = 3;
 }
@@ -942,7 +976,7 @@ message RFSGRetrievePAPRResponse {
 }
 
 message RFSGRetrieveRFBlankingMarkerPositionsRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string waveform_name = 2;
 }
 
@@ -953,7 +987,7 @@ message RFSGRetrieveRFBlankingMarkerPositionsResponse {
 }
 
 message RFSGRetrieveWaveformSizeRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string waveform_name = 2;
 }
 
@@ -963,7 +997,7 @@ message RFSGRetrieveWaveformSizeResponse {
 }
 
 message RFSGStoreBurstStartLocationsRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string waveform_name = 2;
   repeated int32 burst_start_locations = 3;
 }
@@ -973,7 +1007,7 @@ message RFSGStoreBurstStartLocationsResponse {
 }
 
 message RFSGStoreBurstStopLocationsRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string waveform_name = 2;
   repeated int32 burst_stop_locations = 3;
 }
@@ -983,7 +1017,7 @@ message RFSGStoreBurstStopLocationsResponse {
 }
 
 message RFSGStoreIQRateRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string channel_string = 2;
   string waveform_name = 3;
   double iq_rate = 4;
@@ -994,7 +1028,7 @@ message RFSGStoreIQRateResponse {
 }
 
 message RFSGStorePAPRRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string channel_string = 2;
   string waveform_name = 3;
   double papr = 4;
@@ -1005,7 +1039,7 @@ message RFSGStorePAPRResponse {
 }
 
 message RFSGStoreRFBlankingMarkerPositionsRequest {
-  nidevice_grpc.Session rfsg_session = 1;
+  nidevice_grpc.Session rfsg_handle = 1;
   string waveform_name = 2;
   repeated int32 rf_blanking_marker_positions = 3;
 }
@@ -1093,15 +1127,14 @@ message SaveConfigurationToFileResponse {
 message SetOFDMPacketExtensionThresholdsRequest {
   nidevice_grpc.Session session = 1;
   string channel_string = 2;
-  repeated int32 ppet8 = 3;
-  repeated int32 number_of_space_time_streams = 4;
-  repeated int32 ru_size = 5;
-  int32 ppet16_array_size = 6;
+  repeated int32 ppet16 = 3;
+  repeated int32 ppet8 = 4;
+  repeated int32 number_of_space_time_streams = 5;
+  repeated int32 ru_size = 6;
 }
 
 message SetOFDMPacketExtensionThresholdsResponse {
   int32 status = 1;
-  repeated int32 ppet16 = 2;
 }
 
 message SetScalarAttributeF64Request {

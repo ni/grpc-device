@@ -152,15 +152,13 @@ get_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& session,
 }
 
 GetErrorStringResponse
-get_error_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& error_code, const std::string& error_message, const pb::int32& error_message_length)
+get_error_string(const StubPtr& stub, const nidevice_grpc::Session& session, const pb::int32& error_code)
 {
   ::grpc::ClientContext context;
 
   auto request = GetErrorStringRequest{};
   request.mutable_session()->CopyFrom(session);
   request.set_error_code(error_code);
-  request.set_error_message(error_message);
-  request.set_error_message_length(error_message_length);
 
   auto response = GetErrorStringResponse{};
 
@@ -621,7 +619,7 @@ set_attribute_string(const StubPtr& stub, const nidevice_grpc::Session& session,
 }
 
 SetScalarAttributeF64Response
-set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const simple_variant<NiRFmxBluetoothGenFloat64AttributeValues, double>& attribute_value)
+set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const NiRFmxBluetoothGenAttribute& attribute_id, const double& attribute_value)
 {
   ::grpc::ClientContext context;
 
@@ -629,14 +627,7 @@ set_scalar_attribute_f64(const StubPtr& stub, const nidevice_grpc::Session& sess
   request.mutable_session()->CopyFrom(session);
   request.set_channel_string(channel_string);
   request.set_attribute_id(attribute_id);
-  const auto attribute_value_ptr = attribute_value.get_if<NiRFmxBluetoothGenFloat64AttributeValues>();
-  const auto attribute_value_raw_ptr = attribute_value.get_if<double>();
-  if (attribute_value_ptr) {
-    request.set_attribute_value(*attribute_value_ptr);
-  }
-  else if (attribute_value_raw_ptr) {
-    request.set_attribute_value_raw(*attribute_value_raw_ptr);
-  }
+  request.set_attribute_value(attribute_value);
 
   auto response = SetScalarAttributeF64Response{};
 

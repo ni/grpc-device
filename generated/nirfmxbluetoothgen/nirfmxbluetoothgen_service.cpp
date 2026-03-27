@@ -267,19 +267,20 @@ namespace nirfmxbluetoothgen_grpc {
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
-      int32 actual_string_size {};
+
       while (true) {
-        auto status = library_->GetAttributeString(session, channel_string, attribute_id, nullptr, 0, &actual_string_size);
+        auto status = library_->GetAttributeString(session, channel_string, attribute_id, nullptr, 0);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
         }
+        int32 buffer_size = status;
+
         std::string attribute_value;
-        if (actual_string_size > 0) {
-            attribute_value.resize(actual_string_size - 1);
+        if (buffer_size > 0) {
+            attribute_value.resize(buffer_size - 1);
         }
-        auto buffer_size = actual_string_size;
-        status = library_->GetAttributeString(session, channel_string, attribute_id, (char*)attribute_value.data(), buffer_size, &actual_string_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+        status = library_->GetAttributeString(session, channel_string, attribute_id, (char*)attribute_value.data(), buffer_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -291,7 +292,6 @@ namespace nirfmxbluetoothgen_grpc {
         convert_to_grpc(attribute_value, &attribute_value_utf8);
         response->set_attribute_value(attribute_value_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_attribute_value()));
-        response->set_actual_string_size(actual_string_size);
         return ::grpc::Status::OK;
       }
     }
@@ -311,15 +311,33 @@ namespace nirfmxbluetoothgen_grpc {
       auto session_grpc_session = request->session();
       niBTSGSession session = session_repository_->access_session(session_grpc_session.name());
       int32 error_code = request->error_code();
-      auto error_message_mbcs = convert_from_grpc<std::string>(request->error_message());
-      char* error_message = (char*)error_message_mbcs.c_str();
-      int32 error_message_length = request->error_message_length();
-      auto status = library_->GetErrorString(session, error_code, error_message, error_message_length);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
+
+      while (true) {
+        auto status = library_->GetErrorString(session, error_code, nullptr, 0);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
+        }
+        int32 error_message_length = status;
+
+        std::string error_message;
+        if (error_message_length > 0) {
+            error_message.resize(error_message_length - 1);
+        }
+        status = library_->GetErrorString(session, error_code, (char*)error_message.data(), error_message_length);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(error_message_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
+        }
+        response->set_status(status);
+        std::string error_message_utf8;
+        convert_to_grpc(error_message, &error_message_utf8);
+        response->set_error_message(error_message_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_error_message()));
+        return ::grpc::Status::OK;
       }
-      response->set_status(status);
-      return ::grpc::Status::OK;
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
@@ -1083,22 +1101,7 @@ namespace nirfmxbluetoothgen_grpc {
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
-      float64 attribute_value;
-      switch (request->attribute_value_enum_case()) {
-        case nirfmxbluetoothgen_grpc::SetScalarAttributeF64Request::AttributeValueEnumCase::kAttributeValue: {
-          attribute_value = static_cast<float64>(request->attribute_value());
-          break;
-        }
-        case nirfmxbluetoothgen_grpc::SetScalarAttributeF64Request::AttributeValueEnumCase::kAttributeValueRaw: {
-          attribute_value = static_cast<float64>(request->attribute_value_raw());
-          break;
-        }
-        case nirfmxbluetoothgen_grpc::SetScalarAttributeF64Request::AttributeValueEnumCase::ATTRIBUTE_VALUE_ENUM_NOT_SET: {
-          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for attribute_value was not specified or out of range");
-          break;
-        }
-      }
-
+      float64 attribute_value = request->attribute_value();
       auto status = library_->SetScalarAttributeF64(session, channel_string, attribute_id, attribute_value);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiBTSGSession(context, status, session);

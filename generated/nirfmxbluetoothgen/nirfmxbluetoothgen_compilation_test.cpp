@@ -37,9 +37,9 @@ int32 CreateWaveformComplexF64InterleavedIQ(niBTSGSession session, int32 reset, 
   return niBTSG_CreateWaveformComplexF64(session, reset, t0, dt, reinterpret_cast<NIComplexNumber*>(waveform), waveformSize, actualWaveformSize, generationDone);
 }
 
-int32 GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize, int32* actualStringSize)
+int32 GetAttributeString(niBTSGSession session, char channelString[], int32 attributeID, char attributeValue[], int32 bufferSize)
 {
-  return niBTSG_GetAttributeString(session, channelString, attributeID, attributeValue, bufferSize, actualStringSize);
+  return niBTSG_GetAttributeString(session, channelString, attributeID, attributeValue, bufferSize);
 }
 
 int32 GetErrorString(niBTSGSession session, int32 errorCode, char errorMessage[], int32 errorMessageLength)
