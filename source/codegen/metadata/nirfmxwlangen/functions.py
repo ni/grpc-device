@@ -497,6 +497,79 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'GetMappingMatrix': {
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'niWLANGenerationSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
+                'name': 'mappingMatrix',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': 'matrix_size'
+                },
+                'type': 'NIComplexNumber_struct[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numMappingMatrixRows',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numMappingMatrixColumns',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'GetMappingMatrixInterleavedIQ': {
+        'cname': 'niWLANG_GetMappingMatrix',
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'niWLANGenerationSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'out',
+                'name': 'mappingMatrix',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': 'matrix_size'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber*>(mappingMatrix)'
+            },
+            {
+                'direction': 'in',
+                'name': 'numMappingMatrixRows',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numMappingMatrixColumns',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'GetNumberOfUsersFromRUAllocation': {
         'parameters': [
             {
@@ -979,9 +1052,6 @@ functions = {
                 'name': 'rfsgHandles',
                 'size': {
                     'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
                     'value': 'noOfChannels'
                 },
                 'type': 'ViSession[]'
@@ -991,9 +1061,6 @@ functions = {
                 'name': 'sampleClockDelay',
                 'size': {
                     'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
                     'value': 'noOfChannels'
                 },
                 'type': 'float64[]'
@@ -1847,6 +1914,79 @@ functions = {
                 'direction': 'in',
                 'enum': 'FileOperationMode',
                 'name': 'fileOperation',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetMappingMatrix': {
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'niWLANGenerationSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'grpc_type': 'repeated nidevice_grpc.NIComplexNumber',
+                'name': 'mappingMatrix',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': 'matrix_size'
+                },
+                'type': 'NIComplexNumber_struct[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'numMappingMatrixRows',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numMappingMatrixColumns',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
+    'SetMappingMatrixInterleavedIQ': {
+        'cname': 'niWLANG_SetMappingMatrix',
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'session',
+                'type': 'niWLANGenerationSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'mappingMatrix',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': 'matrix_size'
+                },
+                'type': 'float64[]',
+                'value_converted_to_c_representation': 'reinterpret_cast<NIComplexNumber*>(mappingMatrix)'
+            },
+            {
+                'direction': 'in',
+                'name': 'numMappingMatrixRows',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'numMappingMatrixColumns',
                 'type': 'int32'
             }
         ],

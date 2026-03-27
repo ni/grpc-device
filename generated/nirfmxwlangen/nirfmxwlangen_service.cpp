@@ -976,15 +976,10 @@ namespace nirfmxwlangen_grpc {
         request->rfsg_handles_size(),
         request->sample_clock_delay_size()
       };
-      const auto no_of_channels_size_calculation = calculate_linked_array_size(no_of_channels_determine_from_sizes, true);
+      const auto no_of_channels_size_calculation = calculate_linked_array_size(no_of_channels_determine_from_sizes, false);
 
       if (no_of_channels_size_calculation.match_state == MatchState::MISMATCH) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [rfsg_handles, sample_clock_delay] do not match");
-      }
-      // NULL out optional params with zero sizes.
-      if (no_of_channels_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
-        rfsg_handles = request->rfsg_handles_size() ? std::move(rfsg_handles) : nullptr;
-        sample_clock_delay = request->sample_clock_delay_size() ? std::move(sample_clock_delay) : nullptr;
       }
       auto no_of_channels = no_of_channels_size_calculation.size;
 

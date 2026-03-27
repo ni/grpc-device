@@ -77,6 +77,16 @@ int32 GetErrorString(niWLANGenerationSession session, int32 errorCode, char erro
   return niWLANG_GetErrorString(session, errorCode, errorMessage, errorMessageLength);
 }
 
+int32 GetMappingMatrix(niWLANGenerationSession session, char channelString[], NIComplexNumber_struct mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns)
+{
+  return niWLANG_GetMappingMatrix(session, channelString, mappingMatrix, numMappingMatrixRows, numMappingMatrixColumns);
+}
+
+int32 GetMappingMatrixInterleavedIQ(niWLANGenerationSession session, char channelString[], float64 mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns)
+{
+  return niWLANG_GetMappingMatrix(session, channelString, reinterpret_cast<NIComplexNumber*>(mappingMatrix), numMappingMatrixRows, numMappingMatrixColumns);
+}
+
 int32 GetNumberOfUsersFromRUAllocation(niWLANGenerationSession session, char channelString[], int32* numberOfUsers)
 {
   return niWLANG_GetNumberOfUsersFromRUAllocation(session, channelString, numberOfUsers);
@@ -285,6 +295,16 @@ int32 ResetSession(niWLANGenerationSession session)
 int32 SaveConfigurationToFile(niWLANGenerationSession session, char filePath[], int32 fileOperation)
 {
   return niWLANG_SaveConfigurationToFile(session, filePath, fileOperation);
+}
+
+int32 SetMappingMatrix(niWLANGenerationSession session, char channelString[], NIComplexNumber_struct mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns)
+{
+  return niWLANG_SetMappingMatrix(session, channelString, mappingMatrix, numMappingMatrixRows, numMappingMatrixColumns);
+}
+
+int32 SetMappingMatrixInterleavedIQ(niWLANGenerationSession session, char channelString[], float64 mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns)
+{
+  return niWLANG_SetMappingMatrix(session, channelString, reinterpret_cast<NIComplexNumber*>(mappingMatrix), numMappingMatrixRows, numMappingMatrixColumns);
 }
 
 int32 SetOFDMPacketExtensionThresholds(niWLANGenerationSession session, char channelString[], int32 ppet16[], int32 ppet8[], int32 numberOfSpaceTimeStreams[], int32 ruSize[], int32 ppet16ArraySize, int32 ppet8ArraySize, int32 numberOfSpaceTimeStreamsArraySize, int32 ruArraySize)

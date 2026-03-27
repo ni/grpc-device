@@ -58,6 +58,8 @@ public:
   ::grpc::Status CreateWaveformComplexF64(::grpc::ServerContext* context, const CreateWaveformComplexF64Request* request, CreateWaveformComplexF64Response* response) override;
   ::grpc::Status CreateWaveformComplexF64InterleavedIQ(::grpc::ServerContext* context, const CreateWaveformComplexF64InterleavedIQRequest* request, CreateWaveformComplexF64InterleavedIQResponse* response) override;
   ::grpc::Status GetErrorString(::grpc::ServerContext* context, const GetErrorStringRequest* request, GetErrorStringResponse* response) override;
+  ::grpc::Status GetMappingMatrix(::grpc::ServerContext* context, const GetMappingMatrixRequest* request, GetMappingMatrixResponse* response) override;
+  ::grpc::Status GetMappingMatrixInterleavedIQ(::grpc::ServerContext* context, const GetMappingMatrixInterleavedIQRequest* request, GetMappingMatrixInterleavedIQResponse* response) override;
   ::grpc::Status GetNumberOfUsersFromRUAllocation(::grpc::ServerContext* context, const GetNumberOfUsersFromRUAllocationRequest* request, GetNumberOfUsersFromRUAllocationResponse* response) override;
   ::grpc::Status GetScalarAttributeF64(::grpc::ServerContext* context, const GetScalarAttributeF64Request* request, GetScalarAttributeF64Response* response) override;
   ::grpc::Status GetScalarAttributeI32(::grpc::ServerContext* context, const GetScalarAttributeI32Request* request, GetScalarAttributeI32Response* response) override;
@@ -100,6 +102,8 @@ public:
   ::grpc::Status ReadWaveformFromFileInterleavedIQ(::grpc::ServerContext* context, const ReadWaveformFromFileInterleavedIQRequest* request, ReadWaveformFromFileInterleavedIQResponse* response) override;
   ::grpc::Status ResetSession(::grpc::ServerContext* context, const ResetSessionRequest* request, ResetSessionResponse* response) override;
   ::grpc::Status SaveConfigurationToFile(::grpc::ServerContext* context, const SaveConfigurationToFileRequest* request, SaveConfigurationToFileResponse* response) override;
+  ::grpc::Status SetMappingMatrix(::grpc::ServerContext* context, const SetMappingMatrixRequest* request, SetMappingMatrixResponse* response) override;
+  ::grpc::Status SetMappingMatrixInterleavedIQ(::grpc::ServerContext* context, const SetMappingMatrixInterleavedIQRequest* request, SetMappingMatrixInterleavedIQResponse* response) override;
   ::grpc::Status SetOFDMPacketExtensionThresholds(::grpc::ServerContext* context, const SetOFDMPacketExtensionThresholdsRequest* request, SetOFDMPacketExtensionThresholdsResponse* response) override;
   ::grpc::Status SetScalarAttributeF64(::grpc::ServerContext* context, const SetScalarAttributeF64Request* request, SetScalarAttributeF64Response* response) override;
   ::grpc::Status SetScalarAttributeI32(::grpc::ServerContext* context, const SetScalarAttributeI32Request* request, SetScalarAttributeI32Response* response) override;

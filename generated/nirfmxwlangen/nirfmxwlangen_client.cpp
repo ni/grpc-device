@@ -290,6 +290,46 @@ get_error_string(const StubPtr& stub, const nidevice_grpc::Session& session, con
   return response;
 }
 
+GetMappingMatrixResponse
+get_mapping_matrix(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const pb::int32& num_mapping_matrix_rows, const pb::int32& num_mapping_matrix_columns)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetMappingMatrixRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_string(channel_string);
+  request.set_num_mapping_matrix_rows(num_mapping_matrix_rows);
+  request.set_num_mapping_matrix_columns(num_mapping_matrix_columns);
+
+  auto response = GetMappingMatrixResponse{};
+
+  raise_if_error(
+      stub->GetMappingMatrix(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetMappingMatrixInterleavedIQResponse
+get_mapping_matrix_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const pb::int32& num_mapping_matrix_rows, const pb::int32& num_mapping_matrix_columns)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetMappingMatrixInterleavedIQRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_string(channel_string);
+  request.set_num_mapping_matrix_rows(num_mapping_matrix_rows);
+  request.set_num_mapping_matrix_columns(num_mapping_matrix_columns);
+
+  auto response = GetMappingMatrixInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->GetMappingMatrixInterleavedIQ(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetNumberOfUsersFromRUAllocationResponse
 get_number_of_users_from_ru_allocation(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string)
 {
@@ -1119,6 +1159,48 @@ save_configuration_to_file(const StubPtr& stub, const nidevice_grpc::Session& se
 
   raise_if_error(
       stub->SaveConfigurationToFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetMappingMatrixResponse
+set_mapping_matrix(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const std::vector<nidevice_grpc::NIComplexNumber>& mapping_matrix, const pb::int32& num_mapping_matrix_rows, const pb::int32& num_mapping_matrix_columns)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetMappingMatrixRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_string(channel_string);
+  copy_array(mapping_matrix, request.mutable_mapping_matrix());
+  request.set_num_mapping_matrix_rows(num_mapping_matrix_rows);
+  request.set_num_mapping_matrix_columns(num_mapping_matrix_columns);
+
+  auto response = SetMappingMatrixResponse{};
+
+  raise_if_error(
+      stub->SetMappingMatrix(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SetMappingMatrixInterleavedIQResponse
+set_mapping_matrix_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& channel_string, const std::vector<double>& mapping_matrix, const pb::int32& num_mapping_matrix_rows, const pb::int32& num_mapping_matrix_columns)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SetMappingMatrixInterleavedIQRequest{};
+  request.mutable_session()->CopyFrom(session);
+  request.set_channel_string(channel_string);
+  copy_array(mapping_matrix, request.mutable_mapping_matrix());
+  request.set_num_mapping_matrix_rows(num_mapping_matrix_rows);
+  request.set_num_mapping_matrix_columns(num_mapping_matrix_columns);
+
+  auto response = SetMappingMatrixInterleavedIQResponse{};
+
+  raise_if_error(
+      stub->SetMappingMatrixInterleavedIQ(&context, request, &response),
       context);
 
   return response;

@@ -31,6 +31,8 @@ service NiRFmxWLANGen {
   rpc CreateWaveformComplexF64(CreateWaveformComplexF64Request) returns (CreateWaveformComplexF64Response);
   rpc CreateWaveformComplexF64InterleavedIQ(CreateWaveformComplexF64InterleavedIQRequest) returns (CreateWaveformComplexF64InterleavedIQResponse);
   rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
+  rpc GetMappingMatrix(GetMappingMatrixRequest) returns (GetMappingMatrixResponse);
+  rpc GetMappingMatrixInterleavedIQ(GetMappingMatrixInterleavedIQRequest) returns (GetMappingMatrixInterleavedIQResponse);
   rpc GetNumberOfUsersFromRUAllocation(GetNumberOfUsersFromRUAllocationRequest) returns (GetNumberOfUsersFromRUAllocationResponse);
   rpc GetScalarAttributeF64(GetScalarAttributeF64Request) returns (GetScalarAttributeF64Response);
   rpc GetScalarAttributeI32(GetScalarAttributeI32Request) returns (GetScalarAttributeI32Response);
@@ -73,6 +75,8 @@ service NiRFmxWLANGen {
   rpc ReadWaveformFromFileInterleavedIQ(ReadWaveformFromFileInterleavedIQRequest) returns (ReadWaveformFromFileInterleavedIQResponse);
   rpc ResetSession(ResetSessionRequest) returns (ResetSessionResponse);
   rpc SaveConfigurationToFile(SaveConfigurationToFileRequest) returns (SaveConfigurationToFileResponse);
+  rpc SetMappingMatrix(SetMappingMatrixRequest) returns (SetMappingMatrixResponse);
+  rpc SetMappingMatrixInterleavedIQ(SetMappingMatrixInterleavedIQRequest) returns (SetMappingMatrixInterleavedIQResponse);
   rpc SetOFDMPacketExtensionThresholds(SetOFDMPacketExtensionThresholdsRequest) returns (SetOFDMPacketExtensionThresholdsResponse);
   rpc SetScalarAttributeF64(SetScalarAttributeF64Request) returns (SetScalarAttributeF64Response);
   rpc SetScalarAttributeI32(SetScalarAttributeI32Request) returns (SetScalarAttributeI32Response);
@@ -665,6 +669,30 @@ message GetErrorStringResponse {
   string error_message = 2;
 }
 
+message GetMappingMatrixRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  int32 num_mapping_matrix_rows = 3;
+  int32 num_mapping_matrix_columns = 4;
+}
+
+message GetMappingMatrixResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber mapping_matrix = 2;
+}
+
+message GetMappingMatrixInterleavedIQRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  int32 num_mapping_matrix_rows = 3;
+  int32 num_mapping_matrix_columns = 4;
+}
+
+message GetMappingMatrixInterleavedIQResponse {
+  int32 status = 1;
+  repeated double mapping_matrix = 2;
+}
+
 message GetNumberOfUsersFromRUAllocationRequest {
   nidevice_grpc.Session session = 1;
   string channel_string = 2;
@@ -1145,6 +1173,30 @@ message SaveConfigurationToFileRequest {
 }
 
 message SaveConfigurationToFileResponse {
+  int32 status = 1;
+}
+
+message SetMappingMatrixRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  repeated nidevice_grpc.NIComplexNumber mapping_matrix = 3;
+  int32 num_mapping_matrix_rows = 4;
+  int32 num_mapping_matrix_columns = 5;
+}
+
+message SetMappingMatrixResponse {
+  int32 status = 1;
+}
+
+message SetMappingMatrixInterleavedIQRequest {
+  nidevice_grpc.Session session = 1;
+  string channel_string = 2;
+  repeated double mapping_matrix = 3;
+  int32 num_mapping_matrix_rows = 4;
+  int32 num_mapping_matrix_columns = 5;
+}
+
+message SetMappingMatrixInterleavedIQResponse {
   int32 status = 1;
 }
 

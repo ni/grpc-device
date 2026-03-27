@@ -796,7 +796,7 @@ attributes = {
     211: {
         'access': 'read-write',
         'name': 'OVERSAMPLING_RATIO',
-        'type': 'int32'
+        'type': 'float64'
     },
     212: {
         'access': 'read-write',

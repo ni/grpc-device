@@ -14,7 +14,7 @@ namespace nirfmxbluetoothgen_grpc {
 
 ::grpc::Status NiRFmxBluetoothGenService::ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession RFSGHandle)
 {
-    auto library = std::make_shared<nirfsg_grpc::NiRFSGLibrary>();
+  auto library = std::make_shared<nirfsg_grpc::NiRFSGLibrary>();
 
   ViStatus error_code{};
   std::string description(nidevice_grpc::kMaxGrpcErrorDescriptionSize, '\0');
@@ -24,5 +24,6 @@ namespace nirfmxbluetoothgen_grpc {
     library->ErrorMessage(RFSGHandle, status, &description[0]);
   }
   return nidevice_grpc::ApiErrorAndDescriptionToStatus(context, status, description);
+}
 
 }  // namespace nirfmxbluetoothgen_grpc

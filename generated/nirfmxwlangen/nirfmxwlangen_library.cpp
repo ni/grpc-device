@@ -41,6 +41,8 @@ NiRFmxWLANGenLibrary::NiRFmxWLANGenLibrary(std::shared_ptr<nidevice_grpc::Shared
   function_pointers_.CreateWaveformComplexF64 = reinterpret_cast<CreateWaveformComplexF64Ptr>(shared_library_->get_function_pointer("niWLANG_CreateWaveformComplexF64"));
   function_pointers_.CreateWaveformComplexF64InterleavedIQ = reinterpret_cast<CreateWaveformComplexF64InterleavedIQPtr>(shared_library_->get_function_pointer("niWLANG_CreateWaveformComplexF64"));
   function_pointers_.GetErrorString = reinterpret_cast<GetErrorStringPtr>(shared_library_->get_function_pointer("niWLANG_GetErrorString"));
+  function_pointers_.GetMappingMatrix = reinterpret_cast<GetMappingMatrixPtr>(shared_library_->get_function_pointer("niWLANG_GetMappingMatrix"));
+  function_pointers_.GetMappingMatrixInterleavedIQ = reinterpret_cast<GetMappingMatrixInterleavedIQPtr>(shared_library_->get_function_pointer("niWLANG_GetMappingMatrix"));
   function_pointers_.GetNumberOfUsersFromRUAllocation = reinterpret_cast<GetNumberOfUsersFromRUAllocationPtr>(shared_library_->get_function_pointer("niWLANG_GetNumberOfUsersFromRUAllocation"));
   function_pointers_.GetScalarAttributeF64 = reinterpret_cast<GetScalarAttributeF64Ptr>(shared_library_->get_function_pointer("niWLANG_GetScalarAttributeF64"));
   function_pointers_.GetScalarAttributeI32 = reinterpret_cast<GetScalarAttributeI32Ptr>(shared_library_->get_function_pointer("niWLANG_GetScalarAttributeI32"));
@@ -83,6 +85,8 @@ NiRFmxWLANGenLibrary::NiRFmxWLANGenLibrary(std::shared_ptr<nidevice_grpc::Shared
   function_pointers_.ReadWaveformFromFileInterleavedIQ = reinterpret_cast<ReadWaveformFromFileInterleavedIQPtr>(shared_library_->get_function_pointer("niWLANG_ReadWaveformFromFile"));
   function_pointers_.ResetSession = reinterpret_cast<ResetSessionPtr>(shared_library_->get_function_pointer("niWLANG_ResetSession"));
   function_pointers_.SaveConfigurationToFile = reinterpret_cast<SaveConfigurationToFilePtr>(shared_library_->get_function_pointer("niWLANG_SaveConfigurationToFile"));
+  function_pointers_.SetMappingMatrix = reinterpret_cast<SetMappingMatrixPtr>(shared_library_->get_function_pointer("niWLANG_SetMappingMatrix"));
+  function_pointers_.SetMappingMatrixInterleavedIQ = reinterpret_cast<SetMappingMatrixInterleavedIQPtr>(shared_library_->get_function_pointer("niWLANG_SetMappingMatrix"));
   function_pointers_.SetOFDMPacketExtensionThresholds = reinterpret_cast<SetOFDMPacketExtensionThresholdsPtr>(shared_library_->get_function_pointer("niWLANG_SetOFDMPacketExtensionThresholds"));
   function_pointers_.SetScalarAttributeF64 = reinterpret_cast<SetScalarAttributeF64Ptr>(shared_library_->get_function_pointer("niWLANG_SetScalarAttributeF64"));
   function_pointers_.SetScalarAttributeI32 = reinterpret_cast<SetScalarAttributeI32Ptr>(shared_library_->get_function_pointer("niWLANG_SetScalarAttributeI32"));
@@ -212,6 +216,22 @@ int32 NiRFmxWLANGenLibrary::GetErrorString(niWLANGenerationSession session, int3
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_GetErrorString.");
   }
   return function_pointers_.GetErrorString(session, errorCode, errorMessage, errorMessageLength);
+}
+
+int32 NiRFmxWLANGenLibrary::GetMappingMatrix(niWLANGenerationSession session, char channelString[], NIComplexNumber_struct mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns)
+{
+  if (!function_pointers_.GetMappingMatrix) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_GetMappingMatrix.");
+  }
+  return function_pointers_.GetMappingMatrix(session, channelString, mappingMatrix, numMappingMatrixRows, numMappingMatrixColumns);
+}
+
+int32 NiRFmxWLANGenLibrary::GetMappingMatrixInterleavedIQ(niWLANGenerationSession session, char channelString[], float64 mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns)
+{
+  if (!function_pointers_.GetMappingMatrixInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_GetMappingMatrix.");
+  }
+  return function_pointers_.GetMappingMatrixInterleavedIQ(session, channelString, reinterpret_cast<NIComplexNumber*>(mappingMatrix), numMappingMatrixRows, numMappingMatrixColumns);
 }
 
 int32 NiRFmxWLANGenLibrary::GetNumberOfUsersFromRUAllocation(niWLANGenerationSession session, char channelString[], int32* numberOfUsers)
@@ -548,6 +568,22 @@ int32 NiRFmxWLANGenLibrary::SaveConfigurationToFile(niWLANGenerationSession sess
     throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_SaveConfigurationToFile.");
   }
   return function_pointers_.SaveConfigurationToFile(session, filePath, fileOperation);
+}
+
+int32 NiRFmxWLANGenLibrary::SetMappingMatrix(niWLANGenerationSession session, char channelString[], NIComplexNumber_struct mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns)
+{
+  if (!function_pointers_.SetMappingMatrix) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_SetMappingMatrix.");
+  }
+  return function_pointers_.SetMappingMatrix(session, channelString, mappingMatrix, numMappingMatrixRows, numMappingMatrixColumns);
+}
+
+int32 NiRFmxWLANGenLibrary::SetMappingMatrixInterleavedIQ(niWLANGenerationSession session, char channelString[], float64 mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns)
+{
+  if (!function_pointers_.SetMappingMatrixInterleavedIQ) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niWLANG_SetMappingMatrix.");
+  }
+  return function_pointers_.SetMappingMatrixInterleavedIQ(session, channelString, reinterpret_cast<NIComplexNumber*>(mappingMatrix), numMappingMatrixRows, numMappingMatrixColumns);
 }
 
 int32 NiRFmxWLANGenLibrary::SetOFDMPacketExtensionThresholds(niWLANGenerationSession session, char channelString[], int32 ppet16[], int32 ppet8[], int32 numberOfSpaceTimeStreams[], int32 ruSize[], int32 ppet16ArraySize, int32 ppet8ArraySize, int32 numberOfSpaceTimeStreamsArraySize, int32 ruArraySize)

@@ -30,6 +30,8 @@ class NiRFmxWLANGenLibraryInterface {
   virtual int32 CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualNumWaveformSamples, int32* done) = 0;
   virtual int32 CreateWaveformComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, int32* done) = 0;
   virtual int32 GetErrorString(niWLANGenerationSession session, int32 errorCode, char errorMessage[], int32 errorMessageLength) = 0;
+  virtual int32 GetMappingMatrix(niWLANGenerationSession session, char channelString[], NIComplexNumber_struct mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns) = 0;
+  virtual int32 GetMappingMatrixInterleavedIQ(niWLANGenerationSession session, char channelString[], float64 mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns) = 0;
   virtual int32 GetNumberOfUsersFromRUAllocation(niWLANGenerationSession session, char channelString[], int32* numberOfUsers) = 0;
   virtual int32 GetScalarAttributeF64(niWLANGenerationSession session, char channelString[], int32 attributeID, float64* attributeValue) = 0;
   virtual int32 GetScalarAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32* attributeValue) = 0;
@@ -72,6 +74,8 @@ class NiRFmxWLANGenLibraryInterface {
   virtual int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof) = 0;
   virtual int32 ResetSession(niWLANGenerationSession session) = 0;
   virtual int32 SaveConfigurationToFile(niWLANGenerationSession session, char filePath[], int32 fileOperation) = 0;
+  virtual int32 SetMappingMatrix(niWLANGenerationSession session, char channelString[], NIComplexNumber_struct mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns) = 0;
+  virtual int32 SetMappingMatrixInterleavedIQ(niWLANGenerationSession session, char channelString[], float64 mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns) = 0;
   virtual int32 SetOFDMPacketExtensionThresholds(niWLANGenerationSession session, char channelString[], int32 ppet16[], int32 ppet8[], int32 numberOfSpaceTimeStreams[], int32 ruSize[], int32 ppet16ArraySize, int32 ppet8ArraySize, int32 numberOfSpaceTimeStreamsArraySize, int32 ruArraySize) = 0;
   virtual int32 SetScalarAttributeF64(niWLANGenerationSession session, char channelString[], int32 attributeID, float64 attributeValue) = 0;
   virtual int32 SetScalarAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 attributeValue) = 0;

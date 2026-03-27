@@ -35,6 +35,8 @@ class NiRFmxWLANGenLibrary : public nirfmxwlangen_grpc::NiRFmxWLANGenLibraryInte
   int32 CreateWaveformComplexF64(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualNumWaveformSamples, int32* done) override;
   int32 CreateWaveformComplexF64InterleavedIQ(niWLANGenerationSession session, int32 reset, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, int32* done) override;
   int32 GetErrorString(niWLANGenerationSession session, int32 errorCode, char errorMessage[], int32 errorMessageLength) override;
+  int32 GetMappingMatrix(niWLANGenerationSession session, char channelString[], NIComplexNumber_struct mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns) override;
+  int32 GetMappingMatrixInterleavedIQ(niWLANGenerationSession session, char channelString[], float64 mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns) override;
   int32 GetNumberOfUsersFromRUAllocation(niWLANGenerationSession session, char channelString[], int32* numberOfUsers) override;
   int32 GetScalarAttributeF64(niWLANGenerationSession session, char channelString[], int32 attributeID, float64* attributeValue) override;
   int32 GetScalarAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32* attributeValue) override;
@@ -77,6 +79,8 @@ class NiRFmxWLANGenLibrary : public nirfmxwlangen_grpc::NiRFmxWLANGenLibraryInte
   int32 ReadWaveformFromFileInterleavedIQ(char filePath[], char waveformName[], int64 offset, int64 count, float64* t0, float64* dt, float64 waveform[], int32 waveformSize, int32* actualNumWaveformSamples, float64* iqRate, float64* headroom, int32* eof) override;
   int32 ResetSession(niWLANGenerationSession session) override;
   int32 SaveConfigurationToFile(niWLANGenerationSession session, char filePath[], int32 fileOperation) override;
+  int32 SetMappingMatrix(niWLANGenerationSession session, char channelString[], NIComplexNumber_struct mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns) override;
+  int32 SetMappingMatrixInterleavedIQ(niWLANGenerationSession session, char channelString[], float64 mappingMatrix[], int32 numMappingMatrixRows, int32 numMappingMatrixColumns) override;
   int32 SetOFDMPacketExtensionThresholds(niWLANGenerationSession session, char channelString[], int32 ppet16[], int32 ppet8[], int32 numberOfSpaceTimeStreams[], int32 ruSize[], int32 ppet16ArraySize, int32 ppet8ArraySize, int32 numberOfSpaceTimeStreamsArraySize, int32 ruArraySize) override;
   int32 SetScalarAttributeF64(niWLANGenerationSession session, char channelString[], int32 attributeID, float64 attributeValue) override;
   int32 SetScalarAttributeI32(niWLANGenerationSession session, char channelString[], int32 attributeID, int32 attributeValue) override;
@@ -99,6 +103,8 @@ class NiRFmxWLANGenLibrary : public nirfmxwlangen_grpc::NiRFmxWLANGenLibraryInte
   using CreateWaveformComplexF64Ptr = decltype(&niWLANG_CreateWaveformComplexF64);
   using CreateWaveformComplexF64InterleavedIQPtr = decltype(&niWLANG_CreateWaveformComplexF64);
   using GetErrorStringPtr = decltype(&niWLANG_GetErrorString);
+  using GetMappingMatrixPtr = decltype(&niWLANG_GetMappingMatrix);
+  using GetMappingMatrixInterleavedIQPtr = decltype(&niWLANG_GetMappingMatrix);
   using GetNumberOfUsersFromRUAllocationPtr = decltype(&niWLANG_GetNumberOfUsersFromRUAllocation);
   using GetScalarAttributeF64Ptr = decltype(&niWLANG_GetScalarAttributeF64);
   using GetScalarAttributeI32Ptr = decltype(&niWLANG_GetScalarAttributeI32);
@@ -141,6 +147,8 @@ class NiRFmxWLANGenLibrary : public nirfmxwlangen_grpc::NiRFmxWLANGenLibraryInte
   using ReadWaveformFromFileInterleavedIQPtr = decltype(&niWLANG_ReadWaveformFromFile);
   using ResetSessionPtr = decltype(&niWLANG_ResetSession);
   using SaveConfigurationToFilePtr = decltype(&niWLANG_SaveConfigurationToFile);
+  using SetMappingMatrixPtr = decltype(&niWLANG_SetMappingMatrix);
+  using SetMappingMatrixInterleavedIQPtr = decltype(&niWLANG_SetMappingMatrix);
   using SetOFDMPacketExtensionThresholdsPtr = decltype(&niWLANG_SetOFDMPacketExtensionThresholds);
   using SetScalarAttributeF64Ptr = decltype(&niWLANG_SetScalarAttributeF64);
   using SetScalarAttributeI32Ptr = decltype(&niWLANG_SetScalarAttributeI32);
@@ -163,6 +171,8 @@ class NiRFmxWLANGenLibrary : public nirfmxwlangen_grpc::NiRFmxWLANGenLibraryInte
     CreateWaveformComplexF64Ptr CreateWaveformComplexF64;
     CreateWaveformComplexF64InterleavedIQPtr CreateWaveformComplexF64InterleavedIQ;
     GetErrorStringPtr GetErrorString;
+    GetMappingMatrixPtr GetMappingMatrix;
+    GetMappingMatrixInterleavedIQPtr GetMappingMatrixInterleavedIQ;
     GetNumberOfUsersFromRUAllocationPtr GetNumberOfUsersFromRUAllocation;
     GetScalarAttributeF64Ptr GetScalarAttributeF64;
     GetScalarAttributeI32Ptr GetScalarAttributeI32;
@@ -205,6 +215,8 @@ class NiRFmxWLANGenLibrary : public nirfmxwlangen_grpc::NiRFmxWLANGenLibraryInte
     ReadWaveformFromFileInterleavedIQPtr ReadWaveformFromFileInterleavedIQ;
     ResetSessionPtr ResetSession;
     SaveConfigurationToFilePtr SaveConfigurationToFile;
+    SetMappingMatrixPtr SetMappingMatrix;
+    SetMappingMatrixInterleavedIQPtr SetMappingMatrixInterleavedIQ;
     SetOFDMPacketExtensionThresholdsPtr SetOFDMPacketExtensionThresholds;
     SetScalarAttributeF64Ptr SetScalarAttributeF64;
     SetScalarAttributeI32Ptr SetScalarAttributeI32;
