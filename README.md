@@ -152,7 +152,10 @@ Alternatively, when the `ni-tls-config` package is installed, the server can del
 ```json
 {
    "port": 31763,
-   "security": "ni-tls-config"
+   "security": "ni-tls-config",
+   "feature_toggles": {
+      "ni-tls-config": true
+   }
 }
 ```
 
