@@ -8,7 +8,7 @@
 
 #include "feature_toggles.h"
 #include "logging.h"
-#include "ni_tls_config_loader.h"
+#include "tls_config_loader.h"
 #include "server_configuration_parser.h"
 #include "server_security_configuration.h"
 #include "moniker_stream_processor.h"
@@ -100,7 +100,7 @@ static void RunServer(const ServerConfiguration& config)
   grpc::ServerBuilder builder;
   nidevice_grpc::ServerSecurityConfiguration server_security_config;
   if (config.security_mode == "ni-tls-config") {
-    nidevice_grpc::NiTlsConfigLoader loader;
+    nidevice_grpc::TlsConfigLoader loader;
     if (!loader.is_available()) {
       nidevice_grpc::logging::log(
           nidevice_grpc::logging::Level_Error,

@@ -1,5 +1,5 @@
-#ifndef NIDEVICE_GRPC_NI_TLS_CONFIG_LOADER_H
-#define NIDEVICE_GRPC_NI_TLS_CONFIG_LOADER_H
+#ifndef NIDEVICE_GRPC_TLS_CONFIG_LOADER_H
+#define NIDEVICE_GRPC_TLS_CONFIG_LOADER_H
 
 #include <string>
 
@@ -11,13 +11,13 @@ namespace nidevice_grpc {
 
 // Dynamically loads the nitlsconfig library (if installed) and reads per-service
 // TLS configuration from it.  The library is never a link-time dependency.
-class NiTlsConfigLoader {
+class TlsConfigLoader {
  public:
-  NiTlsConfigLoader();
-  ~NiTlsConfigLoader() = default;
+  TlsConfigLoader();
+  ~TlsConfigLoader() = default;
 
-  NiTlsConfigLoader(const NiTlsConfigLoader&) = delete;
-  NiTlsConfigLoader& operator=(const NiTlsConfigLoader&) = delete;
+  TlsConfigLoader(const TlsConfigLoader&) = delete;
+  TlsConfigLoader& operator=(const TlsConfigLoader&) = delete;
 
   // Returns true only when the library was found and all function pointers resolved.
   bool is_available() const;
@@ -43,8 +43,8 @@ class NiTlsConfigLoader {
     LocationScheme_Unknown = 255,
   };
 
-  typedef int32_t (*ReadCertificateModeFunc)(const char*, uint32_t*, nierr_Status*);
-  typedef int32_t (*ReadLocationFunc)(const char*, uint32_t*, char*, size_t, size_t*, nierr_Status*);
+  using ReadCertificateModeFunc = int32_t (*)(const char*, uint32_t*, nierr_Status*);
+  using ReadLocationFunc = int32_t (*)(const char*, uint32_t*, char*, size_t, size_t*, nierr_Status*);
 
   std::string read_location_path(
       const std::string& service_name,
@@ -64,4 +64,4 @@ class NiTlsConfigLoader {
 
 }  // namespace nidevice_grpc
 
-#endif  // NIDEVICE_GRPC_NI_TLS_CONFIG_LOADER_H
+#endif  // NIDEVICE_GRPC_TLS_CONFIG_LOADER_H

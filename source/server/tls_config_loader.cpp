@@ -1,4 +1,4 @@
-#include "ni_tls_config_loader.h"
+#include "tls_config_loader.h"
 
 #include <fstream>
 #include <sstream>
@@ -37,7 +37,7 @@ static const char* kNiTlsConfigLibraryName = "libnitlsconfig.so";
 
 static const char* kFileSchemePrefix = "file://";
 
-NiTlsConfigLoader::NiTlsConfigLoader()
+TlsConfigLoader::TlsConfigLoader()
     : library_(kNiTlsConfigLibraryName),
       is_available_(false),
       read_certificate_mode_(nullptr),
@@ -61,12 +61,12 @@ NiTlsConfigLoader::NiTlsConfigLoader()
       read_certificate_key_location_ != nullptr;
 }
 
-bool NiTlsConfigLoader::is_available() const
+bool TlsConfigLoader::is_available() const
 {
   return is_available_;
 }
 
-ServerSecurityConfiguration NiTlsConfigLoader::get_server_credentials(
+ServerSecurityConfiguration TlsConfigLoader::get_server_credentials(
     const std::string& service_name) const
 {
   if (!is_available_) {
@@ -100,7 +100,7 @@ ServerSecurityConfiguration NiTlsConfigLoader::get_server_credentials(
   return ServerSecurityConfiguration(cert_chain, cert_key, "");
 }
 
-std::string NiTlsConfigLoader::read_location_path(
+std::string TlsConfigLoader::read_location_path(
     const std::string& service_name,
     ReadLocationFunc func,
     const char* description) const
@@ -144,7 +144,7 @@ std::string NiTlsConfigLoader::read_location_path(
   return path;
 }
 
-std::string NiTlsConfigLoader::strip_file_scheme(const std::string& path)
+std::string TlsConfigLoader::strip_file_scheme(const std::string& path)
 {
   if (path.compare(0, std::strlen(kFileSchemePrefix), kFileSchemePrefix) == 0) {
     return path.substr(std::strlen(kFileSchemePrefix));
@@ -152,7 +152,7 @@ std::string NiTlsConfigLoader::strip_file_scheme(const std::string& path)
   return path;
 }
 
-std::string NiTlsConfigLoader::read_file_contents(const std::string& filepath)
+std::string TlsConfigLoader::read_file_contents(const std::string& filepath)
 {
   std::ifstream file(filepath);
   if (!file) {
