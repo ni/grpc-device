@@ -41,8 +41,10 @@ TlsConfigLoader::TlsConfigLoader()
     : library_(kNiTlsConfigLibraryName),
       is_available_(false),
       read_certificate_mode_(nullptr),
+      read_client_mode_(nullptr),
       read_certificate_chain_location_(nullptr),
-      read_certificate_key_location_(nullptr)
+      read_certificate_key_location_(nullptr),
+      read_trusted_certificates_location_(nullptr)
 {
   library_.load();
   if (!library_.is_loaded()) {
@@ -51,14 +53,20 @@ TlsConfigLoader::TlsConfigLoader()
 
   read_certificate_mode_ = reinterpret_cast<ReadCertificateModeFunc>(
       library_.get_function_pointer("nitlsconfig_server_readCertificateMode"));
+  read_client_mode_ = reinterpret_cast<ReadClientModeFunc>(
+      library_.get_function_pointer("nitlsconfig_server_readClientMode"));
   read_certificate_chain_location_ = reinterpret_cast<ReadLocationFunc>(
       library_.get_function_pointer("nitlsconfig_server_readCertificateChainLocation"));
   read_certificate_key_location_ = reinterpret_cast<ReadLocationFunc>(
       library_.get_function_pointer("nitlsconfig_server_readCertificateKeyLocation"));
+  read_trusted_certificates_location_ = reinterpret_cast<ReadLocationFunc>(
+      library_.get_function_pointer("nitlsconfig_server_readTrustedCertificatesLocation"));
 
   is_available_ = read_certificate_mode_ != nullptr &&
+      read_client_mode_ != nullptr &&
       read_certificate_chain_location_ != nullptr &&
-      read_certificate_key_location_ != nullptr;
+      read_certificate_key_location_ != nullptr &&
+      read_trusted_certificates_location_ != nullptr;
 }
 
 bool TlsConfigLoader::is_available() const
@@ -75,7 +83,9 @@ ServerSecurityConfiguration TlsConfigLoader::get_server_credentials(
 
   uint32_t mode = CertificateMode_Unknown;
   NiErrStatusGuard s;
-  read_certificate_mode_(service_name.c_str(), &mode, &s);
+  // The int32_t return value mirrors nierr_Status.code; checking is_fatal() on
+  // the status struct is sufficient and also captures the JSON detail string.
+  (void)read_certificate_mode_(service_name.c_str(), &mode, &s);
   if (s.is_fatal()) {
     throw std::runtime_error(
         "ni-tls-config: failed to read certificate mode for service: " +
@@ -97,7 +107,24 @@ ServerSecurityConfiguration TlsConfigLoader::get_server_credentials(
   auto cert_chain = read_file_contents(cert_chain_path);
   auto cert_key = read_file_contents(cert_key_path);
 
-  return ServerSecurityConfiguration(cert_chain, cert_key, "");
+  uint32_t client_mode = ClientMode_Unknown;
+  NiErrStatusGuard sc;
+  (void)read_client_mode_(service_name.c_str(), &client_mode, &sc);
+  if (sc.is_fatal()) {
+    throw std::runtime_error(
+        "ni-tls-config: failed to read client mode for service: " +
+        service_name + (sc.detail().empty() ? "" : (" (" + sc.detail() + ")")));
+  }
+
+  std::string root_cert;
+  if (client_mode != ClientMode_Disabled) {
+    auto trusted_certs_path = read_location_path(
+        service_name, read_trusted_certificates_location_, "trusted certificates");
+    trusted_certs_path = strip_file_scheme(trusted_certs_path);
+    root_cert = read_file_contents(trusted_certs_path);
+  }
+
+  return ServerSecurityConfiguration(cert_chain, cert_key, root_cert);
 }
 
 std::string TlsConfigLoader::read_location_path(
@@ -111,7 +138,9 @@ std::string TlsConfigLoader::read_location_path(
   size_t actual_size = 0;
 
   NiErrStatusGuard s;
-  func(service_name.c_str(), &scheme, path.data(), kBufferSize, &actual_size, &s);
+  // The int32_t return value mirrors nierr_Status.code; checking is_fatal() on
+  // the status struct is sufficient and also captures the JSON detail string.
+  (void)func(service_name.c_str(), &scheme, path.data(), kBufferSize, &actual_size, &s);
   if (s.is_fatal()) {
     throw std::runtime_error(
         std::string("ni-tls-config: failed to read ") + description +
@@ -123,7 +152,7 @@ std::string TlsConfigLoader::read_location_path(
   if (actual_size > kBufferSize) {
     path.resize(actual_size, '\0');
     NiErrStatusGuard s2;
-    func(service_name.c_str(), &scheme, path.data(), actual_size, &actual_size, &s2);
+    (void)func(service_name.c_str(), &scheme, path.data(), actual_size, &actual_size, &s2);
     if (s2.is_fatal()) {
       throw std::runtime_error(
           std::string("ni-tls-config: failed to read ") + description +

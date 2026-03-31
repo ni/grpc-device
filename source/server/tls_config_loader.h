@@ -43,7 +43,16 @@ class TlsConfigLoader {
     LocationScheme_Unknown = 255,
   };
 
+  // C enum values that mirror the nitlsconfig ABI (do not rename/reorder).
+  enum ClientMode {
+    ClientMode_Disabled = 0,
+    ClientMode_Unmanaged = 1,
+    ClientMode_ManagedSelfSigned = 2,
+    ClientMode_Unknown = 255,
+  };
+
   using ReadCertificateModeFunc = int32_t (*)(const char*, uint32_t*, nierr_Status*);
+  using ReadClientModeFunc = int32_t (*)(const char*, uint32_t*, nierr_Status*);
   using ReadLocationFunc = int32_t (*)(const char*, uint32_t*, char*, size_t, size_t*, nierr_Status*);
 
   std::string read_location_path(
@@ -58,8 +67,10 @@ class TlsConfigLoader {
   bool is_available_;
 
   ReadCertificateModeFunc read_certificate_mode_;
+  ReadClientModeFunc read_client_mode_;
   ReadLocationFunc read_certificate_chain_location_;
   ReadLocationFunc read_certificate_key_location_;
+  ReadLocationFunc read_trusted_certificates_location_;
 };
 
 }  // namespace nidevice_grpc
