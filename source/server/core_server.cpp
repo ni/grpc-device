@@ -124,6 +124,13 @@ static void RunServer(const ServerConfiguration& config)
     }
   }
   else {
+    if (!config.security_mode.empty()) {
+      nidevice_grpc::logging::log(
+          nidevice_grpc::logging::Level_Error,
+          "Unsupported security mode: \"%s\". The only supported security mode string is \"ni-tls-config\".",
+          config.security_mode.c_str());
+      exit(EXIT_FAILURE);
+    }
     server_security_config = nidevice_grpc::ServerSecurityConfiguration(config.server_cert, config.server_key, config.root_cert);
   }
   int listeningPort = 0;
