@@ -99,7 +99,7 @@ static void RunServer(const ServerConfiguration& config)
 
   grpc::ServerBuilder builder;
   int listeningPort = 0;
-  nidevice_grpc::ServerSecurityConfiguration server_security_config(config.server_cert, config.server_key, config.root_cert);
+  nidevice_grpc::ServerSecurityConfiguration server_security_config;
   if (config.security_mode == "ni-tls-config") {
     nidevice_grpc::NiTlsConfigLoader loader;
     if (!loader.is_available()) {
@@ -118,6 +118,9 @@ static void RunServer(const ServerConfiguration& config)
           "Failed to load TLS credentials from ni-tls-config: %s", ex.what());
       exit(EXIT_FAILURE);
     }
+  }
+  else {
+    server_security_config = nidevice_grpc::ServerSecurityConfiguration(config.server_cert, config.server_key, config.root_cert);
   }
   builder.AddListeningPort(config.server_address, server_security_config.get_credentials(), &listeningPort);
 
