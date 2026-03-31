@@ -688,6 +688,16 @@ TEST(ServerConfigurationParserTests, JsonConfigWithNoSecurityKey_ParseSecurityMo
   EXPECT_TRUE(security_mode.empty());
 }
 
+TEST(ServerConfigurationParserTests, JsonConfigWithSecurityModeString_ParseServerCert_ReturnsEmpty)
+{
+  const auto config_json = nlohmann::json::parse(R"({ "port": 31763, "security": "ni-tls-config" })");
+  const auto server_config_parser = nidevice_grpc::ServerConfigurationParser(config_json);
+
+  EXPECT_TRUE(server_config_parser.parse_server_cert().empty());
+  EXPECT_TRUE(server_config_parser.parse_server_key().empty());
+  EXPECT_TRUE(server_config_parser.parse_root_cert().empty());
+}
+
 }  // namespace unit
 }  // namespace tests
 }  // namespace ni

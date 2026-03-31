@@ -56,10 +56,12 @@ static ServerConfiguration GetConfiguration(const std::string& config_file_path)
     config.sideband_address = server_config_parser.parse_sideband_address();
     config.sideband_port = server_config_parser.parse_sideband_port();
     config.stream_processor = server_config_parser.parse_moniker_stream_processor();
-    config.server_cert = server_config_parser.parse_server_cert();
-    config.server_key = server_config_parser.parse_server_key();
-    config.root_cert = server_config_parser.parse_root_cert();
     config.security_mode = server_config_parser.parse_security_mode();
+    if (config.security_mode != "ni-tls-config") {
+      config.server_cert = server_config_parser.parse_server_cert();
+      config.server_key = server_config_parser.parse_server_key();
+      config.root_cert = server_config_parser.parse_root_cert();
+    }
     config.max_message_size = server_config_parser.parse_max_message_size();
     config.feature_toggles = server_config_parser.parse_feature_toggles();
   }
