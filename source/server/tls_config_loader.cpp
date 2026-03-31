@@ -92,8 +92,17 @@ ServerSecurityConfiguration TlsConfigLoader::get_server_credentials(
         service_name + (s.detail().empty() ? "" : (" (" + s.detail() + ")")));
   }
 
-  if (mode == CertificateMode_Disabled) {
-    return ServerSecurityConfiguration();
+  switch (static_cast<CertificateMode>(mode)) {
+    case CertificateMode_Disabled:
+      return ServerSecurityConfiguration();
+    case CertificateMode_Unmanaged:
+    case CertificateMode_ManagedSelfSigned:
+      break;
+    case CertificateMode_Unknown:
+    default:
+      throw std::runtime_error(
+          "ni-tls-config: unsupported certificate mode " +
+          std::to_string(mode) + " for service: " + service_name);
   }
 
   auto cert_chain_path = read_location_path(
