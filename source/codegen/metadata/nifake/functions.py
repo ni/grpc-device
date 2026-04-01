@@ -1851,7 +1851,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'IviDanceWithATwistCalculatedSizeOut': {
-        'codegen_method': 'public',
+        'codegen_method': 'CustomCode',
         'parameters': [
             {
                 'cppName': 'vi',
