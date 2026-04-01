@@ -534,7 +534,7 @@ configure_custom_fir_filter_coefficients(const StubPtr& stub, const nidevice_grp
 }
 
 ConfigureDigitalEdgeScriptTriggerResponse
-configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_id, const std::string& source, const pb::int32& edge)
+configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_id, const std::string& source, const simple_variant<ScriptTriggerDigitalEdgeEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
@@ -542,7 +542,14 @@ configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::
   request.mutable_vi()->CopyFrom(vi);
   request.set_trigger_id(trigger_id);
   request.set_source(source);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<ScriptTriggerDigitalEdgeEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeScriptTriggerResponse{};
 
@@ -554,14 +561,21 @@ configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::
 }
 
 ConfigureDigitalEdgeStartTriggerResponse
-configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& source, const pb::int32& edge)
+configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& source, const simple_variant<StartTriggerDigitalEdgeEdge, pb::int32>& edge)
 {
   ::grpc::ClientContext context;
 
   auto request = ConfigureDigitalEdgeStartTriggerRequest{};
   request.mutable_vi()->CopyFrom(vi);
   request.set_source(source);
-  request.set_edge(edge);
+  const auto edge_ptr = edge.get_if<StartTriggerDigitalEdgeEdge>();
+  const auto edge_raw_ptr = edge.get_if<pb::int32>();
+  if (edge_ptr) {
+    request.set_edge(*edge_ptr);
+  }
+  else if (edge_raw_ptr) {
+    request.set_edge_raw(*edge_raw_ptr);
+  }
 
   auto response = ConfigureDigitalEdgeStartTriggerResponse{};
 
@@ -1667,40 +1681,6 @@ get_hardware_state(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->GetHardwareState(&context, request, &response),
-      context);
-
-  return response;
-}
-
-GetNextCoercionRecordResponse
-get_next_coercion_record(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetNextCoercionRecordRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = GetNextCoercionRecordResponse{};
-
-  raise_if_error(
-      stub->GetNextCoercionRecord(&context, request, &response),
-      context);
-
-  return response;
-}
-
-GetNextInterchangeWarningResponse
-get_next_interchange_warning(const StubPtr& stub, const nidevice_grpc::Session& vi)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetNextInterchangeWarningRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-
-  auto response = GetNextInterchangeWarningResponse{};
-
-  raise_if_error(
-      stub->GetNextInterchangeWarning(&context, request, &response),
       context);
 
   return response;

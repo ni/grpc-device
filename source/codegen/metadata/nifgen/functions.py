@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0f157
+# This file is generated from NI-FGEN API metadata version 26.0.0f146
 functions = {
     'AbortGeneration': {
         'codegen_method': 'public',
@@ -681,6 +681,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'ScriptTriggerDigitalEdgeEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -708,6 +709,7 @@ functions = {
             {
                 'cppName': 'edge',
                 'direction': 'in',
+                'enum': 'StartTriggerDigitalEdgeEdge',
                 'grpc_type': 'sint32',
                 'name': 'edge',
                 'type': 'ViInt32'
@@ -2564,72 +2566,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetNextCoercionRecord': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'bufferSize',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'include_in_proto': False,
-                'is_size_param': True,
-                'name': 'bufferSize',
-                'type': 'ViInt32'
-            },
-            {
-                'cppName': 'coercionRecord',
-                'direction': 'out',
-                'grpc_type': 'string',
-                'name': 'coercionRecord',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'GetNextInterchangeWarning': {
-        'codegen_method': 'public',
-        'parameters': [
-            {
-                'cppName': 'vi',
-                'direction': 'in',
-                'grpc_type': 'nidevice_grpc.Session',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'cppName': 'bufferSize',
-                'direction': 'in',
-                'grpc_type': 'sint32',
-                'include_in_proto': False,
-                'is_size_param': True,
-                'name': 'bufferSize',
-                'type': 'ViInt32'
-            },
-            {
-                'cppName': 'interchangeWarning',
-                'direction': 'out',
-                'grpc_type': 'string',
-                'name': 'interchangeWarning',
-                'size': {
-                    'mechanism': 'ivi-dance',
-                    'value': 'bufferSize'
-                },
-                'type': 'ViChar[]'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'GetSelfCalLastDateAndTime': {
         'codegen_method': 'public',
         'parameters': [
@@ -2892,7 +2828,7 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'optionString',
-                'type': 'ViString'
+                'type': 'ViConstString'
             },
             {
                 'cppName': 'vi',
@@ -2944,7 +2880,7 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'channelName',
-                'type': 'ViString'
+                'type': 'ViConstString'
             },
             {
                 'cppName': 'resetDevice',
@@ -2958,7 +2894,7 @@ functions = {
                 'direction': 'in',
                 'grpc_type': 'string',
                 'name': 'optionString',
-                'type': 'ViString'
+                'type': 'ViConstString'
             },
             {
                 'cppName': 'vi',
@@ -3709,6 +3645,40 @@ functions = {
                 'grpc_type': 'sint32',
                 'name': 'offset',
                 'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SetRuntimeEnvironment': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'cppName': 'environment',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'environment',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'environmentVersion',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'environmentVersion',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'reserved1',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'reserved1',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'reserved2',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'reserved2',
+                'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'
