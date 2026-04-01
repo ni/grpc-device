@@ -203,6 +203,28 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::ClearError(::grpc::ServerContext* context, const ClearErrorRequest* request, ClearErrorResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto status = library_->ClearError(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::Close(::grpc::ServerContext* context, const CloseRequest* request, CloseResponse* response)
   {
     if (context->IsCancelled()) {
@@ -623,6 +645,54 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::FetchWithCustomSize(::grpc::ServerContext* context, const FetchWithCustomSizeRequest* request, FetchWithCustomSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt32 number_of_waveforms = request->number_of_waveforms();
+      ViInt32 number_of_samples = request->number_of_samples();
+      response->mutable_waveform_data()->Resize((number_of_samples * number_of_waveforms), 0);
+      ViReal64* waveform_data = response->mutable_waveform_data()->mutable_data();
+      auto status = library_->FetchWithCustomSize(vi, number_of_waveforms, number_of_samples, waveform_data);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::FunctionWithOverriddenGrpcName2x(::grpc::ServerContext* context, const FunctionWithOverriddenGrpcName2xRequest* request, FunctionWithOverriddenGrpcName2xResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto status = library_->FunctionWithOverriddenGrpcName2x(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetABoolean(::grpc::ServerContext* context, const GetABooleanRequest* request, GetABooleanResponse* response)
   {
     if (context->IsCancelled()) {
@@ -698,7 +768,7 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFakeService::GetAnIviDanceString(::grpc::ServerContext* context, const GetAnIviDanceStringRequest* request, GetAnIviDanceStringResponse* response)
+  ::grpc::Status NiFakeService::GetAnIviDanceCharArray(::grpc::ServerContext* context, const GetAnIviDanceCharArrayRequest* request, GetAnIviDanceCharArrayResponse* response)
   {
     if (context->IsCancelled()) {
       return ::grpc::Status::CANCELLED;
@@ -708,17 +778,17 @@ namespace nifake_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
 
       while (true) {
-        auto status = library_->GetAnIviDanceString(vi, 0, nullptr);
+        auto status = library_->GetAnIviDanceCharArray(vi, 0, nullptr);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         ViInt32 buffer_size = status;
 
-        std::string a_string;
+        std::string char_array;
         if (buffer_size > 0) {
-            a_string.resize(buffer_size - 1);
+            char_array.resize(buffer_size - 1);
         }
-        status = library_->GetAnIviDanceString(vi, buffer_size, (ViChar*)a_string.data());
+        status = library_->GetAnIviDanceCharArray(vi, buffer_size, (ViChar*)char_array.data());
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
@@ -727,10 +797,10 @@ namespace nifake_grpc {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
         response->set_status(status);
-        std::string a_string_utf8;
-        convert_to_grpc(a_string, &a_string_utf8);
-        response->set_a_string(a_string_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_a_string()));
+        std::string char_array_utf8;
+        convert_to_grpc(char_array, &char_array_utf8);
+        response->set_char_array(char_array_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_char_array()));
         return ::grpc::Status::OK;
       }
     }
@@ -1460,6 +1530,46 @@ namespace nifake_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::GetParameterWithOverriddenGrpcName(::grpc::ServerContext* context, const GetParameterWithOverriddenGrpcNameRequest* request, GetParameterWithOverriddenGrpcNameResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt16 enum_parameter_raw;
+      switch (request->enum_parameter_raw_enum_case()) {
+        case nifake_grpc::GetParameterWithOverriddenGrpcNameRequest::EnumParameterRawEnumCase::kEnumParameterRaw: {
+          enum_parameter_raw = static_cast<ViInt16>(request->enum_parameter_raw());
+          break;
+        }
+        case nifake_grpc::GetParameterWithOverriddenGrpcNameRequest::EnumParameterRawEnumCase::kEnumParameterRawRaw: {
+          enum_parameter_raw = static_cast<ViInt16>(request->enum_parameter_raw_raw());
+          break;
+        }
+        case nifake_grpc::GetParameterWithOverriddenGrpcNameRequest::EnumParameterRawEnumCase::ENUM_PARAMETER_RAW_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for enum_parameter_raw was not specified or out of range");
+          break;
+        }
+      }
+
+      ViInt16 overridden_parameter {};
+      auto status = library_->GetParameterWithOverriddenGrpcName(vi, &overridden_parameter, enum_parameter_raw);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      response->set_overridden_parameter(overridden_parameter);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiFakeService::GetViInt32Array(::grpc::ServerContext* context, const GetViInt32ArrayRequest* request, GetViInt32ArrayResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1702,6 +1812,90 @@ namespace nifake_grpc {
       response->set_status(status);
       response->mutable_vi()->set_name(grpc_device_session_name);
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::IviDanceWithATwistCalculatedSizeOut(::grpc::ServerContext* context, const IviDanceWithATwistCalculatedSizeOutRequest* request, IviDanceWithATwistCalculatedSizeOutResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt32 actual_num_waveforms {};
+      ViInt32 actual_samples_per_waveform {};
+      while (true) {
+        auto status = library_->IviDanceWithATwistCalculatedSizeOut(vi, 0, nullptr, &actual_num_waveforms, &actual_samples_per_waveform);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->mutable_data()->Resize(actual_num_waveforms, 0);
+        ViUInt32* data = reinterpret_cast<ViUInt32*>(response->mutable_data()->mutable_data());
+        auto data_buffer_size = actual_num_waveforms;
+        status = library_->IviDanceWithATwistCalculatedSizeOut(vi, data_buffer_size, data, &actual_num_waveforms, &actual_samples_per_waveform);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->set_status(status);
+        response->mutable_data()->Resize(actual_num_waveforms, 0);
+        response->set_actual_num_waveforms(actual_num_waveforms);
+        response->set_actual_samples_per_waveform(actual_samples_per_waveform);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::IviDanceWithTwistWithMultipleArraysAndOneBufferSize(::grpc::ServerContext* context, const IviDanceWithTwistWithMultipleArraysAndOneBufferSizeRequest* request, IviDanceWithTwistWithMultipleArraysAndOneBufferSizeResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      ViInt32 actual_num_elements {};
+      while (true) {
+        auto status = library_->IviDanceWithTwistWithMultipleArraysAndOneBufferSize(vi, 0, nullptr, nullptr, nullptr, &actual_num_elements);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->mutable_array1()->Resize(actual_num_elements, 0);
+        ViInt32* array1 = reinterpret_cast<ViInt32*>(response->mutable_array1()->mutable_data());
+        response->mutable_array2()->Resize(actual_num_elements, 0);
+        ViInt32* array2 = reinterpret_cast<ViInt32*>(response->mutable_array2()->mutable_data());
+        response->mutable_array3()->Resize(actual_num_elements, 0);
+        ViInt32* array3 = reinterpret_cast<ViInt32*>(response->mutable_array3()->mutable_data());
+        auto num_elements = actual_num_elements;
+        status = library_->IviDanceWithTwistWithMultipleArraysAndOneBufferSize(vi, num_elements, array1, array2, array3, &actual_num_elements);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->set_status(status);
+        response->mutable_array1()->Resize(actual_num_elements, 0);
+        response->mutable_array2()->Resize(actual_num_elements, 0);
+        response->mutable_array3()->Resize(actual_num_elements, 0);
+        response->set_actual_num_elements(actual_num_elements);
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
@@ -2649,6 +2843,30 @@ namespace nifake_grpc {
       }
 
       auto status = library_->StringValuedEnumInputFunctionWithDefaults(vi, a_mobile_os_name);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiFakeService::StringValuedEnumNoEnumGenerated(::grpc::ServerContext* context, const StringValuedEnumNoEnumGeneratedRequest* request, StringValuedEnumNoEnumGeneratedResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto a_string_enum_mbcs = convert_from_grpc<std::string>(request->a_string_enum());
+      auto a_string_enum = a_string_enum_mbcs.c_str();
+      auto status = library_->StringValuedEnumNoEnumGenerated(vi, a_string_enum);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }

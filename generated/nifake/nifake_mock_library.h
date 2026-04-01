@@ -23,6 +23,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, AcceptViUInt32Array, (ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]), (override));
   MOCK_METHOD(ViStatus, BoolArrayInputFunction, (ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]), (override));
   MOCK_METHOD(ViStatus, BoolArrayOutputFunction, (ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]), (override));
+  MOCK_METHOD(ViStatus, ClearError, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, Close, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, CloseExtCal, (ViSession vi, ViInt32 action), (override));
   MOCK_METHOD(ViStatus, CommandWithReservedParam, (ViSession vi, ViBoolean* reserved), (override));
@@ -38,10 +39,12 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ExportAttributeConfigurationBufferEx, (ViSession vi, ViInt32 size, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, FetchWaveform, (ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples), (override));
+  MOCK_METHOD(ViStatus, FetchWithCustomSize, (ViSession vi, ViInt32 numberOfWaveforms, ViInt32 numberOfSamples, ViReal64 waveformData[]), (override));
+  MOCK_METHOD(ViStatus, FunctionWithOverriddenGrpcName2x, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, GetABoolean, (ViSession vi, ViBoolean* aBoolean), (override));
   MOCK_METHOD(ViStatus, GetANumber, (ViSession vi, ViInt16* aNumber), (override));
   MOCK_METHOD(ViStatus, GetAStringOfFixedMaximumSize, (ViSession vi, ViChar aString[256]), (override));
-  MOCK_METHOD(ViStatus, GetAnIviDanceString, (ViSession vi, ViInt32 bufferSize, ViChar aString[]), (override));
+  MOCK_METHOD(ViStatus, GetAnIviDanceCharArray, (ViSession vi, ViInt32 bufferSize, ViChar charArray[]), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistArray, (ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistArrayOfCustomType, (ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize), (override));
   MOCK_METHOD(ViStatus, GetAnIviDanceWithATwistArrayWithInputArray, (ViInt32 dataIn[], ViInt32 arraySizeIn, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize), (override));
@@ -64,6 +67,7 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, GetCustomTypeArray, (ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]), (override));
   MOCK_METHOD(ViStatus, GetEnumValue, (ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle), (override));
   MOCK_METHOD(ViStatus, GetError, (ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]), (override));
+  MOCK_METHOD(ViStatus, GetParameterWithOverriddenGrpcName, (ViSession vi, ViInt16* originalParameter, ViInt16 enumParameter), (override));
   MOCK_METHOD(ViStatus, GetViInt32Array, (ViSession vi, ViInt32 arrayLen, ViInt32 int32Array[]), (override));
   MOCK_METHOD(ViStatus, GetViUInt32Array, (ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]), (override));
   MOCK_METHOD(ViStatus, GetViUInt8, (ViSession vi, ViUInt8* aUint8Number), (override));
@@ -73,6 +77,8 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, InitWithOptions, (ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitWithVarArgs, (ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2), (override));
   MOCK_METHOD(ViStatus, Initiate, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, IviDanceWithATwistCalculatedSizeOut, (ViSession vi, ViInt32 dataBufferSize, ViUInt32 data[], ViInt32* actualNumWaveforms, ViInt32* actualSamplesPerWaveform), (override));
+  MOCK_METHOD(ViStatus, IviDanceWithTwistWithMultipleArraysAndOneBufferSize, (ViSession vi, ViInt32 numElements, ViInt32 array1[], ViInt32 array2[], ViInt32 array3[], ViInt32* actualNumElements), (override));
   MOCK_METHOD(ViStatus, MethodUsingEnumWithGrpcNameValues, (ViInt32 usingEnum), (override));
   MOCK_METHOD(ViStatus, MethodUsingWholeAndFractionalNumbers, (ViInt32* wholeNumber, ViReal64* fractionalNumber), (override));
   MOCK_METHOD(ViStatus, MethodUsingWholeMappedNumbers, (ViReal64* wholeNumber), (override));
@@ -102,7 +108,9 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue), (override));
   MOCK_METHOD(ViStatus, SetCustomType, (ViSession vi, CustomStruct cs), (override));
   MOCK_METHOD(ViStatus, SetCustomTypeArray, (ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]), (override));
+  MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
   MOCK_METHOD(ViStatus, StringValuedEnumInputFunctionWithDefaults, (ViSession vi, ViConstString aMobileOSName), (override));
+  MOCK_METHOD(ViStatus, StringValuedEnumNoEnumGenerated, (ViSession vi, ViConstString aStringEnum), (override));
   MOCK_METHOD(ViStatus, TwoInputFunction, (ViSession vi, ViReal64 aNumber, ViString aString), (override));
   MOCK_METHOD(ViStatus, Use64BitNumber, (ViSession vi, ViInt64 input, ViInt64* output), (override));
   MOCK_METHOD(ViStatus, UseATwoDimensionParameter, (ViSession vi, ViInt32 array[], ViInt32 arrayLengths[], ViInt32 arraySize), (override));
@@ -110,7 +118,6 @@ class NiFakeMockLibrary : public nifake_grpc::NiFakeLibraryInterface {
   MOCK_METHOD(ViStatus, ViUInt8ArrayInputFunction, (ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]), (override));
   MOCK_METHOD(ViStatus, ViUInt8ArrayOutputFunction, (ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]), (override));
   MOCK_METHOD(ViStatus, WriteWaveform, (ViSession vi, ViInt32 numberOfSamples, ViReal64 waveform[]), (override));
-  MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
 };
 
 }  // namespace unit
