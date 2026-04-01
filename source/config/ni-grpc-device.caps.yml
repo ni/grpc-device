@@ -1,0 +1,12 @@
+# This file declares the TLS capabilities of the ni-grpc-device server
+# for use by the ni-tls-config package.
+
+supports_certificate_mode_disabled: true
+supports_client_mode_disabled: true
+update_certificate_chain_without_restart: false
+update_trusted_certificates_without_restart: false
+
+supports_certificate_chain_file_scheme: true
+supports_certificate_key_file_scheme: true
+supports_trusted_certificates_file_scheme: true
+supports_trusted_certificates_directory_scheme: false

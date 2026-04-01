@@ -546,6 +546,7 @@ add_executable(ni_grpc_device_server
    "source/server/device_enumerator.cpp"
    "source/server/feature_toggles.cpp"
    "source/server/logging.cpp"
+   "source/server/tls_config_loader.cpp"
    "source/server/semaphore.cpp"
    "source/server/server_configuration_parser.cpp"
    "source/server/server_security_configuration.cpp"
@@ -663,6 +664,24 @@ add_custom_command(
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different
             ${CMAKE_SOURCE_DIR}/source/config/localhost_config.json
             $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
+
+#----------------------------------------------------------------------
+# Copy ni-grpc-device.conf.yml to binary output directory
+#----------------------------------------------------------------------
+add_custom_command(
+   TARGET ni_grpc_device_server POST_BUILD
+   COMMAND  ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.conf.yml
+            $<TARGET_FILE_DIR:ni_grpc_device_server>/ni-grpc-device.conf.yml)
+
+#----------------------------------------------------------------------
+# Copy ni-grpc-device.caps.yml to binary output directory
+#----------------------------------------------------------------------
+add_custom_command(
+   TARGET ni_grpc_device_server POST_BUILD
+   COMMAND  ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.caps.yml
+            $<TARGET_FILE_DIR:ni_grpc_device_server>/ni-grpc-device.caps.yml)
 
 #----------------------------------------------------------------------
 # Generate server_capabilities.json to binary output directory
@@ -791,10 +810,12 @@ add_executable(UnitTestsRunner
     "source/tests/unit/syscfg_resource_accessor_tests.cpp"
     "source/tests/unit/xnet_converters_tests.cpp"
     "source/tests/unit/xnet_socket_converters_tests.cpp"
+    "source/tests/unit/tls_config_loader_tests.cpp"
     "source/server/calibration_operations_restricted_service.cpp"
     "source/server/debug_session_properties_restricted_service.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/feature_toggles.cpp"
+    "source/server/tls_config_loader.cpp"
     "source/server/semaphore.cpp"
     "source/server/server_configuration_parser.cpp"
     "source/server/server_security_configuration.cpp"

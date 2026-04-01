@@ -133,6 +133,15 @@ std::string ServerConfigurationParser::parse_root_cert() const
   return file_name.empty() ? "" : read_keycert(certs_directory_ + kPathDelimiter + file_name);
 }
 
+std::string ServerConfigurationParser::parse_security_mode() const
+{
+  auto it = config_file_.find(kSecurityJsonKey);
+  if (it != config_file_.end() && it->is_string()) {
+    return it->get<std::string>();
+  }
+  return "";
+}
+
 int ServerConfigurationParser::parse_max_message_size() const
 {
   auto max_size_section_it = config_file_.find(kMaxMessageSizeKey);
