@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 26.3.0f109
+# This file is generated from NI-FAKE API metadata version 26.5.0d9999
 config = {
     'additional_headers': {
     },
-    'api_version': '26.3.0f109',
+    'api_version': '26.5.0d9999',
     'c_function_prefix': 'niFake_',
     'c_header': 'niFake.h',
     'close_function': 'Close',
