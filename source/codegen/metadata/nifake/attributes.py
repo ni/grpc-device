@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 26.5.0d9999
+# This file is generated from NI-FAKE API metadata version 26.5.0d5
 attributes = {
     1000000: {
         'codegen_method': 'public',
