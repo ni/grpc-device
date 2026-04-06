@@ -146,3 +146,24 @@ Each supported driver API has a corresponding `.proto` file that defines the int
 ## SSL/TLS Support
 
 The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. For more detailed information on SSL/TLS support refer to the [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
+
+### NI TLS Config Integration
+
+Alternatively, when the `ni-tls-config` package is installed, the server can delegate TLS configuration to it by setting the top-level `"security"` field to `"ni-tls-config"` in `server_config.json`:
+
+```json
+{
+   "port": 31763,
+   "security": "ni-tls-config",
+   "feature_toggles": {
+      "ni-tls-config": true
+   }
+}
+```
+
+With this setting the server reads TLS configuration at startup from the per-service YAML file managed by `ni-tls-config` (`ni-grpc-device.conf.yml`). A template for this file is distributed alongside the server binary. Place it in the location expected by `ni-tls-config`:
+
+- **Windows**: `C:\ProgramData\National Instruments\nitlsconfig\server.d\ni-grpc-device.conf.yml`
+- **Linux**: `/etc/nitlsconfig/server.d/ni-grpc-device.conf.yml`
+
+If `"security": "ni-tls-config"` is set but the `ni-tls-config` library is not installed, the server logs an error and exits rather than starting insecurely.

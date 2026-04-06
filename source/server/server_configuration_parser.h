@@ -44,6 +44,7 @@ class ServerConfigurationParser {
   std::string parse_server_cert() const;
   std::string parse_server_key() const;
   std::string parse_root_cert() const;
+  std::string parse_security_mode() const;
   int parse_max_message_size() const;
   int parse_sideband_port() const;
   MonikerStreamProcessor parse_moniker_stream_processor() const;
