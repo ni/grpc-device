@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0f157
+# This file is generated from NI-FAKE API metadata version 26.5.0d5
 functions = {
     'Abort': {
         'codegen_method': 'public',
@@ -173,6 +173,19 @@ functions = {
                     'value': 'numberOfElements'
                 },
                 'type': 'ViBoolean[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'ClearError': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
             }
         ],
         'returns': 'ViStatus'
@@ -578,6 +591,58 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'FetchWithCustomSize': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'numberOfWaveforms',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'name': 'numberOfWaveforms',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'numberOfSamples',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'name': 'numberOfSamples',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'waveformData',
+                'direction': 'out',
+                'grpc_type': 'repeated double',
+                'name': 'waveformData',
+                'size': {
+                    'mechanism': 'custom-code',
+                    'value': '(number_of_samples * number_of_waveforms)'
+                },
+                'type': 'ViReal64[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'FunctionWithOverriddenGrpcName2x': {
+        'cname': 'niFake_FunctionWithOverriddenGrpcName2x',
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetABoolean': {
         'codegen_method': 'public',
         'parameters': [
@@ -642,7 +707,7 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'GetAnIviDanceString': {
+    'GetAnIviDanceCharArray': {
         'codegen_method': 'public',
         'parameters': [
             {
@@ -662,10 +727,10 @@ functions = {
                 'type': 'ViInt32'
             },
             {
-                'cppName': 'aString',
+                'cppName': 'charArray',
                 'direction': 'out',
                 'grpc_type': 'string',
-                'name': 'aString',
+                'name': 'charArray',
                 'size': {
                     'mechanism': 'ivi-dance',
                     'value': 'bufferSize'
@@ -1447,6 +1512,36 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'GetParameterWithOverriddenGrpcName': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'originalParameter',
+                'direction': 'out',
+                'grpc_name': 'overridden_parameter',
+                'grpc_type': 'sint32',
+                'name': 'originalParameter',
+                'type': 'ViInt16'
+            },
+            {
+                'cppName': 'enumParameter',
+                'direction': 'in',
+                'enum': 'Turtle',
+                'grpc_name': 'enum_parameter_raw',
+                'grpc_type': 'sint32',
+                'name': 'enumParameter',
+                'type': 'ViInt16'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'GetViInt32Array': {
         'codegen_method': 'public',
         'parameters': [
@@ -1751,6 +1846,119 @@ functions = {
                 'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'IviDanceWithATwistCalculatedSizeOut': {
+        'codegen_method': 'CustomCode',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'dataBufferSize',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'name': 'dataBufferSize',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'data',
+                'direction': 'out',
+                'grpc_type': 'repeated uint32',
+                'name': 'data',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'dataBufferSize',
+                    'value_twist': 'actualNumWaveforms'
+                },
+                'type': 'ViUInt32[]'
+            },
+            {
+                'cppName': 'actualNumWaveforms',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'actualNumWaveforms',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'actualSamplesPerWaveform',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'actualSamplesPerWaveform',
+                'type': 'ViInt32'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'IviDanceWithTwistWithMultipleArraysAndOneBufferSize': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'numElements',
+                'direction': 'in',
+                'grpc_type': 'sint32',
+                'include_in_proto': False,
+                'is_size_param': True,
+                'name': 'numElements',
+                'type': 'ViInt32'
+            },
+            {
+                'cppName': 'array1',
+                'direction': 'out',
+                'grpc_type': 'repeated sint32',
+                'name': 'array1',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'numElements',
+                    'value_twist': 'actualNumElements'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'cppName': 'array2',
+                'direction': 'out',
+                'grpc_type': 'repeated sint32',
+                'name': 'array2',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'numElements',
+                    'value_twist': 'actualNumElements'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'cppName': 'array3',
+                'direction': 'out',
+                'grpc_type': 'repeated sint32',
+                'name': 'array3',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'numElements',
+                    'value_twist': 'actualNumElements'
+                },
+                'type': 'ViInt32[]'
+            },
+            {
+                'cppName': 'actualNumElements',
+                'direction': 'out',
+                'grpc_type': 'sint32',
+                'name': 'actualNumElements',
+                'type': 'ViInt32'
             }
         ],
         'returns': 'ViStatus'
@@ -2808,6 +3016,40 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'SetRuntimeEnvironment': {
+        'codegen_method': 'private',
+        'parameters': [
+            {
+                'cppName': 'environment',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'environment',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'environmentVersion',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'environmentVersion',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'reserved1',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'reserved1',
+                'type': 'ViConstString'
+            },
+            {
+                'cppName': 'reserved2',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'reserved2',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'StringValuedEnumInputFunctionWithDefaults': {
         'codegen_method': 'public',
         'parameters': [
@@ -2824,6 +3066,26 @@ functions = {
                 'grpc_type': 'string',
                 'mapped-enum': 'MobileOSNames',
                 'name': 'aMobileOSName',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'StringValuedEnumNoEnumGenerated': {
+        'codegen_method': 'public',
+        'parameters': [
+            {
+                'cppName': 'vi',
+                'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'cppName': 'aStringEnum',
+                'direction': 'in',
+                'grpc_type': 'string',
+                'name': 'aStringEnum',
                 'type': 'ViConstString'
             }
         ],

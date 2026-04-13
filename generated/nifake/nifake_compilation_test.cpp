@@ -37,6 +37,11 @@ ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoole
   return niFake_BoolArrayOutputFunction(vi, numberOfElements, anArray);
 }
 
+ViStatus ClearError(ViSession vi)
+{
+  return niFake_ClearError(vi);
+}
+
 ViStatus Close(ViSession vi)
 {
   return niFake_close(vi);
@@ -112,6 +117,16 @@ ViStatus FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformD
   return niFake_FetchWaveform(vi, numberOfSamples, waveformData, actualNumberOfSamples);
 }
 
+ViStatus FetchWithCustomSize(ViSession vi, ViInt32 numberOfWaveforms, ViInt32 numberOfSamples, ViReal64 waveformData[])
+{
+  return niFake_FetchWithCustomSize(vi, numberOfWaveforms, numberOfSamples, waveformData);
+}
+
+ViStatus FunctionWithOverriddenGrpcName2x(ViSession vi)
+{
+  return niFake_FunctionWithOverriddenGrpcName2x(vi);
+}
+
 ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean)
 {
   return niFake_GetABoolean(vi, aBoolean);
@@ -127,9 +142,9 @@ ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256])
   return niFake_GetAStringOfFixedMaximumSize(vi, aString);
 }
 
-ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[])
+ViStatus GetAnIviDanceCharArray(ViSession vi, ViInt32 bufferSize, ViChar charArray[])
 {
-  return niFake_GetAnIviDanceString(vi, bufferSize, aString);
+  return niFake_GetAnIviDanceCharArray(vi, bufferSize, charArray);
 }
 
 ViStatus GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize)
@@ -242,6 +257,11 @@ ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar 
   return niFake_GetError(vi, errorCode, bufferSize, description);
 }
 
+ViStatus GetParameterWithOverriddenGrpcName(ViSession vi, ViInt16* originalParameter, ViInt16 enumParameter)
+{
+  return niFake_GetParameterWithOverriddenGrpcName(vi, originalParameter, enumParameter);
+}
+
 ViStatus GetViInt32Array(ViSession vi, ViInt32 arrayLen, ViInt32 int32Array[])
 {
   return niFake_GetViInt32Array(vi, arrayLen, int32Array);
@@ -280,6 +300,16 @@ ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean res
 ViStatus InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2)
 {
   return niFake_InitWithVarArgs(resourceName, vi, stringArg, turtle, stringArg0, turtle0, stringArg1, turtle1, stringArg2, turtle2);
+}
+
+ViStatus IviDanceWithATwistCalculatedSizeOut(ViSession vi, ViInt32 dataBufferSize, ViUInt32 data[], ViInt32* actualNumWaveforms, ViInt32* actualSamplesPerWaveform)
+{
+  return niFake_IviDanceWithATwistCalculatedSizeOut(vi, dataBufferSize, data, actualNumWaveforms, actualSamplesPerWaveform);
+}
+
+ViStatus IviDanceWithTwistWithMultipleArraysAndOneBufferSize(ViSession vi, ViInt32 numElements, ViInt32 array1[], ViInt32 array2[], ViInt32 array3[], ViInt32* actualNumElements)
+{
+  return niFake_IviDanceWithTwistWithMultipleArraysAndOneBufferSize(vi, numElements, array1, array2, array3, actualNumElements);
 }
 
 ViStatus MethodUsingEnumWithGrpcNameValues(ViInt32 usingEnum)
@@ -425,6 +455,11 @@ ViStatus SetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct
 ViStatus StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName)
 {
   return niFake_StringValuedEnumInputFunctionWithDefaults(vi, aMobileOSName);
+}
+
+ViStatus StringValuedEnumNoEnumGenerated(ViSession vi, ViConstString aStringEnum)
+{
+  return niFake_StringValuedEnumNoEnumGenerated(vi, aStringEnum);
 }
 
 ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString)

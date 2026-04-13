@@ -109,9 +109,9 @@ jobs:
       run: git diff --exit-code
 
     - name: Run Tests
+      working-directory: build
       run: >
         ctest
-        --test-dir build
         -j ${{ steps.cpu-cores.outputs.count }}
         -C ${{ matrix.config.build_type }}
         -E System

@@ -1,25 +1,14 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0f157
+# This file is generated from NI-FAKE API metadata version 26.5.0d5
 config = {
     'additional_headers': {
     },
-    'api_version': '23.0.0f157',
+    'api_version': '26.5.0d5',
     'c_function_prefix': 'niFake_',
     'c_header': 'niFake.h',
     'close_function': 'Close',
     'csharp_namespace': 'NationalInstruments.Grpc.Fake',
     'custom_types': [
-        {
-            'fields': [
-                {
-                    'grpc_type': 'string',
-                    'name': 'stringArg',
-                    'type': 'ViConstString'
-                }
-            ],
-            'grpc_name': 'CustomNamedType',
-            'name': 'namedType_custom'
-        },
         {
             'fields': [
                 {
@@ -71,6 +60,54 @@ config = {
         {
             'fields': [
                 {
+                    'grpc_type': 'sint32',
+                    'name': 'real',
+                    'type': 'ViInt16'
+                },
+                {
+                    'grpc_type': 'sint32',
+                    'name': 'imaginary',
+                    'type': 'ViInt16'
+                }
+            ],
+            'grpc_name': 'NIComplexI16_struct',
+            'name': 'NiComplexI16'
+        },
+        {
+            'fields': [
+                {
+                    'grpc_type': 'double',
+                    'name': 'real',
+                    'type': 'ViReal64'
+                },
+                {
+                    'grpc_type': 'double',
+                    'name': 'imaginary',
+                    'type': 'ViReal64'
+                }
+            ],
+            'grpc_name': 'NIComplexNumber_struct',
+            'name': 'NiComplexNumber'
+        },
+        {
+            'fields': [
+                {
+                    'grpc_type': 'float',
+                    'name': 'real',
+                    'type': 'ViReal32'
+                },
+                {
+                    'grpc_type': 'float',
+                    'name': 'imaginary',
+                    'type': 'ViReal32'
+                }
+            ],
+            'grpc_name': 'NIComplexNumberF32_struct',
+            'name': 'NiComplexNumberF32'
+        },
+        {
+            'fields': [
+                {
                     'grpc_type': 'string',
                     'name': 'stringArg',
                     'type': 'ViConstString'
@@ -85,6 +122,17 @@ config = {
             ],
             'grpc_name': 'StringAndTurtle',
             'name': 'StringAndTurtle'
+        },
+        {
+            'fields': [
+                {
+                    'grpc_type': 'string',
+                    'name': 'stringArg',
+                    'type': 'ViConstString'
+                }
+            ],
+            'grpc_name': 'CustomNamedType',
+            'name': 'namedType_custom'
         }
     ],
     'driver_name': 'NI-FAKE',

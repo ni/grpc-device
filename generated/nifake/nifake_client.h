@@ -28,6 +28,7 @@ AcceptViSessionArrayResponse accept_vi_session_array(const StubPtr& stub, const 
 AcceptViUInt32ArrayResponse accept_vi_uint32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::uint32>& u_int32_array);
 BoolArrayInputFunctionResponse bool_array_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements, const std::vector<bool>& an_array);
 BoolArrayOutputFunctionResponse bool_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
+ClearErrorResponse clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CloseResponse close(const StubPtr& stub, const nidevice_grpc::Session& vi);
 CloseExtCalResponse close_ext_cal(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& action);
 CommandWithReservedParamResponse command_with_reserved_param(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -43,10 +44,12 @@ ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Ses
 ExportAttributeConfigurationBufferResponse export_attribute_configuration_buffer(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportAttributeConfigurationBufferExResponse export_attribute_configuration_buffer_ex(const StubPtr& stub, const nidevice_grpc::Session& vi);
 FetchWaveformResponse fetch_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_samples);
+FetchWithCustomSizeResponse fetch_with_custom_size(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_waveforms, const pb::int32& number_of_samples);
+FunctionWithOverriddenGrpcName2xResponse function_with_overridden_grpc_name2x(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetABooleanResponse get_a_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetANumberResponse get_a_number(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAStringOfFixedMaximumSizeResponse get_a_string_of_fixed_maximum_size(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetAnIviDanceStringResponse get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetAnIviDanceCharArrayResponse get_an_ivi_dance_char_array(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceWithATwistArrayResponse get_an_ivi_dance_with_a_twist_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& a_string);
 GetAnIviDanceWithATwistArrayOfCustomTypeResponse get_an_ivi_dance_with_a_twist_array_of_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAnIviDanceWithATwistArrayWithInputArrayResponse get_an_ivi_dance_with_a_twist_array_with_input_array(const StubPtr& stub, const std::vector<pb::int32>& data_in);
@@ -69,6 +72,7 @@ GetCustomTypeResponse get_custom_type(const StubPtr& stub, const nidevice_grpc::
 GetCustomTypeArrayResponse get_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_elements);
 GetEnumValueResponse get_enum_value(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetParameterWithOverriddenGrpcNameResponse get_parameter_with_overridden_grpc_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Turtle, pb::int32>& enum_parameter_raw);
 GetViInt32ArrayResponse get_vi_int32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_len);
 GetViUInt32ArrayResponse get_vi_uint32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_len);
 GetViUInt8Response get_vi_uint8(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -77,6 +81,8 @@ ImportAttributeConfigurationBufferExResponse import_attribute_configuration_buff
 InitExtCalResponse init_ext_cal(const StubPtr& stub, const std::string& resource_name, const std::string& calibration_password);
 InitWithOptionsResponse init_with_options(const StubPtr& stub, const std::string& resource_name, const bool& id_query, const bool& reset_device, const std::string& option_string, const nidevice_grpc::SessionInitializationBehavior& initialization_behavior = nidevice_grpc::SESSION_INITIALIZATION_BEHAVIOR_UNSPECIFIED);
 InitWithVarArgsResponse init_with_var_args(const StubPtr& stub, const std::string& resource_name, const std::vector<StringAndTurtle>& name_and_turtle);
+IviDanceWithATwistCalculatedSizeOutResponse ivi_dance_with_a_twist_calculated_size_out(const StubPtr& stub, const nidevice_grpc::Session& vi);
+IviDanceWithTwistWithMultipleArraysAndOneBufferSizeResponse ivi_dance_with_twist_with_multiple_arrays_and_one_buffer_size(const StubPtr& stub, const nidevice_grpc::Session& vi);
 MethodUsingEnumWithGrpcNameValuesResponse method_using_enum_with_grpc_name_values(const StubPtr& stub, const simple_variant<EnumWithGrpcNameValues, pb::int32>& using_enum);
 MethodUsingWholeAndFractionalNumbersResponse method_using_whole_and_fractional_numbers(const StubPtr& stub);
 MethodUsingWholeMappedNumbersResponse method_using_whole_mapped_numbers(const StubPtr& stub);
@@ -106,6 +112,7 @@ SetAttributeViStringResponse set_attribute_vi_string(const StubPtr& stub, const 
 SetCustomTypeResponse set_custom_type(const StubPtr& stub, const nidevice_grpc::Session& vi, const FakeCustomStruct& cs);
 SetCustomTypeArrayResponse set_custom_type_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<FakeCustomStruct>& cs);
 StringValuedEnumInputFunctionWithDefaultsResponse string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<MobileOSNames, std::string>& a_mobile_os_name);
+StringValuedEnumNoEnumGeneratedResponse string_valued_enum_no_enum_generated(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& a_string_enum);
 TwoInputFunctionResponse two_input_function(const StubPtr& stub, const nidevice_grpc::Session& vi, const double& a_number, const std::string& a_string);
 Use64BitNumberResponse use64_bit_number(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int64& input);
 UseATwoDimensionParameterResponse use_a_two_dimension_parameter(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::vector<pb::int32>& array, const std::vector<pb::int32>& array_lengths);
