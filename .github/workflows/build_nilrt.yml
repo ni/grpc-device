@@ -110,6 +110,8 @@ jobs:
         ni_grpc_device_server
         server_config.json
         server_capabilities.json
+        ni-grpc-device.conf.yml
+        ni-grpc-device.caps.yml
         -C $GITHUB_WORKSPACE
         LICENSE
         ThirdPartyNotices.txt
