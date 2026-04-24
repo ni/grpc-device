@@ -100,6 +100,10 @@ class _ArtifactLocations:
     def metadata_dir(self) -> Path:
         return self.repo_root / "source" / "codegen" / "metadata"
 
+    @property
+    def config_dir(self) -> Path:
+        return self.repo_root / "source" / "config"
+
 
 def _get_release_proto_files(
     artifact_locations: _ArtifactLocations, readiness: _ArtifactReadiness
@@ -149,6 +153,10 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
 
     for dir in _get_release_example_directories(artifact_locations, readiness):
         copytree(dir, examples_path / dir.name)
+
+    config_path = output_path / "config"
+    config_path.mkdir(parents=True)
+    copy2(artifact_locations.config_dir / "ni-grpc-device.defaults.yml", config_path)
 
     copy2(artifact_locations.repo_root / "LICENSE", output_path)
     copy2(artifact_locations.repo_root / "ThirdPartyNotices.txt", output_path)

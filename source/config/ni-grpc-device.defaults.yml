@@ -1,0 +1,9 @@
+file_version: 1
+# TLS is disabled by default. Change certificate_mode to Unmanaged to enable
+# client authentication and provide paths to your certificate chain and private
+# key.
+certificate_mode: Disabled
+certificate_chain: File://$(UserServicesDir)/$(Service)/cert.pem
+certificate_key: File://$(UserServicesDir)/$(Service)/key.pem
+server_mode: Disabled
+trusted_certificates: SystemDefault
