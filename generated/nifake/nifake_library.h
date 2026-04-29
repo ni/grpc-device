@@ -27,6 +27,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus AcceptViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]) override;
   ViStatus BoolArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) override;
   ViStatus BoolArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViBoolean anArray[]) override;
+  ViStatus ClearError(ViSession vi) override;
   ViStatus Close(ViSession vi) override;
   ViStatus CloseExtCal(ViSession vi, ViInt32 action) override;
   ViStatus CommandWithReservedParam(ViSession vi, ViBoolean* reserved) override;
@@ -42,10 +43,12 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus ExportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) override;
   ViStatus ExportAttributeConfigurationBufferEx(ViSession vi, ViInt32 size, ViInt8 configuration[]) override;
   ViStatus FetchWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveformData[], ViInt32* actualNumberOfSamples) override;
+  ViStatus FetchWithCustomSize(ViSession vi, ViInt32 numberOfWaveforms, ViInt32 numberOfSamples, ViReal64 waveformData[]) override;
+  ViStatus FunctionWithOverriddenGrpcName2x(ViSession vi) override;
   ViStatus GetABoolean(ViSession vi, ViBoolean* aBoolean) override;
   ViStatus GetANumber(ViSession vi, ViInt16* aNumber) override;
   ViStatus GetAStringOfFixedMaximumSize(ViSession vi, ViChar aString[256]) override;
-  ViStatus GetAnIviDanceString(ViSession vi, ViInt32 bufferSize, ViChar aString[]) override;
+  ViStatus GetAnIviDanceCharArray(ViSession vi, ViInt32 bufferSize, ViChar charArray[]) override;
   ViStatus GetAnIviDanceWithATwistArray(ViSession vi, ViConstString aString, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize) override;
   ViStatus GetAnIviDanceWithATwistArrayOfCustomType(ViSession vi, ViInt32 bufferSize, CustomStruct arrayOut[], ViInt32* actualSize) override;
   ViStatus GetAnIviDanceWithATwistArrayWithInputArray(ViInt32 dataIn[], ViInt32 arraySizeIn, ViInt32 bufferSize, ViInt32 arrayOut[], ViInt32* actualSize) override;
@@ -68,6 +71,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus GetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]) override;
   ViStatus GetEnumValue(ViSession vi, ViInt32* aQuantity, ViInt16* aTurtle) override;
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 bufferSize, ViChar description[]) override;
+  ViStatus GetParameterWithOverriddenGrpcName(ViSession vi, ViInt16* originalParameter, ViInt16 enumParameter) override;
   ViStatus GetViInt32Array(ViSession vi, ViInt32 arrayLen, ViInt32 int32Array[]) override;
   ViStatus GetViUInt32Array(ViSession vi, ViInt32 arrayLen, ViUInt32 uInt32Array[]) override;
   ViStatus GetViUInt8(ViSession vi, ViUInt8* aUint8Number) override;
@@ -77,6 +81,8 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus InitWithOptions(ViString resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) override;
   ViStatus InitWithVarArgs(ViRsrc resourceName, ViSession* vi, ViConstString stringArg, ViInt16 turtle, ViConstString stringArg0, ViInt16 turtle0, ViConstString stringArg1, ViInt16 turtle1, ViConstString stringArg2, ViInt16 turtle2) override;
   ViStatus Initiate(ViSession vi) override;
+  ViStatus IviDanceWithATwistCalculatedSizeOut(ViSession vi, ViInt32 dataBufferSize, ViUInt32 data[], ViInt32* actualNumWaveforms, ViInt32* actualSamplesPerWaveform) override;
+  ViStatus IviDanceWithTwistWithMultipleArraysAndOneBufferSize(ViSession vi, ViInt32 numElements, ViInt32 array1[], ViInt32 array2[], ViInt32 array3[], ViInt32* actualNumElements) override;
   ViStatus MethodUsingEnumWithGrpcNameValues(ViInt32 usingEnum) override;
   ViStatus MethodUsingWholeAndFractionalNumbers(ViInt32* wholeNumber, ViReal64* fractionalNumber) override;
   ViStatus MethodUsingWholeMappedNumbers(ViReal64* wholeNumber) override;
@@ -106,7 +112,9 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue) override;
   ViStatus SetCustomType(ViSession vi, CustomStruct cs) override;
   ViStatus SetCustomTypeArray(ViSession vi, ViInt32 numberOfElements, CustomStruct cs[]) override;
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) override;
   ViStatus StringValuedEnumInputFunctionWithDefaults(ViSession vi, ViConstString aMobileOSName) override;
+  ViStatus StringValuedEnumNoEnumGenerated(ViSession vi, ViConstString aStringEnum) override;
   ViStatus TwoInputFunction(ViSession vi, ViReal64 aNumber, ViString aString) override;
   ViStatus Use64BitNumber(ViSession vi, ViInt64 input, ViInt64* output) override;
   ViStatus UseATwoDimensionParameter(ViSession vi, ViInt32 array[], ViInt32 arrayLengths[], ViInt32 arraySize) override;
@@ -114,7 +122,6 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   ViStatus ViUInt8ArrayInputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]) override;
   ViStatus ViUInt8ArrayOutputFunction(ViSession vi, ViInt32 numberOfElements, ViUInt8 anArray[]) override;
   ViStatus WriteWaveform(ViSession vi, ViInt32 numberOfSamples, ViReal64 waveform[]) override;
-  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) override;
   bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
@@ -124,6 +131,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using AcceptViUInt32ArrayPtr = decltype(&niFake_AcceptViUInt32Array);
   using BoolArrayInputFunctionPtr = decltype(&niFake_BoolArrayInputFunction);
   using BoolArrayOutputFunctionPtr = decltype(&niFake_BoolArrayOutputFunction);
+  using ClearErrorPtr = decltype(&niFake_ClearError);
   using ClosePtr = decltype(&niFake_close);
   using CloseExtCalPtr = decltype(&niFake_CloseExtCal);
   using CommandWithReservedParamPtr = decltype(&niFake_CommandWithReservedParam);
@@ -139,10 +147,12 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using ExportAttributeConfigurationBufferPtr = decltype(&niFake_ExportAttributeConfigurationBuffer);
   using ExportAttributeConfigurationBufferExPtr = decltype(&niFake_ExportAttributeConfigurationBufferEx);
   using FetchWaveformPtr = decltype(&niFake_FetchWaveform);
+  using FetchWithCustomSizePtr = decltype(&niFake_FetchWithCustomSize);
+  using FunctionWithOverriddenGrpcName2xPtr = decltype(&niFake_FunctionWithOverriddenGrpcName2x);
   using GetABooleanPtr = decltype(&niFake_GetABoolean);
   using GetANumberPtr = decltype(&niFake_GetANumber);
   using GetAStringOfFixedMaximumSizePtr = decltype(&niFake_GetAStringOfFixedMaximumSize);
-  using GetAnIviDanceStringPtr = decltype(&niFake_GetAnIviDanceString);
+  using GetAnIviDanceCharArrayPtr = decltype(&niFake_GetAnIviDanceCharArray);
   using GetAnIviDanceWithATwistArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistArray);
   using GetAnIviDanceWithATwistArrayOfCustomTypePtr = decltype(&niFake_GetAnIviDanceWithATwistArrayOfCustomType);
   using GetAnIviDanceWithATwistArrayWithInputArrayPtr = decltype(&niFake_GetAnIviDanceWithATwistArrayWithInputArray);
@@ -165,6 +175,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using GetCustomTypeArrayPtr = decltype(&niFake_GetCustomTypeArray);
   using GetEnumValuePtr = decltype(&niFake_GetEnumValue);
   using GetErrorPtr = decltype(&niFake_GetError);
+  using GetParameterWithOverriddenGrpcNamePtr = decltype(&niFake_GetParameterWithOverriddenGrpcName);
   using GetViInt32ArrayPtr = decltype(&niFake_GetViInt32Array);
   using GetViUInt32ArrayPtr = decltype(&niFake_GetViUInt32Array);
   using GetViUInt8Ptr = decltype(&niFake_GetViUInt8);
@@ -174,6 +185,8 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using InitWithOptionsPtr = decltype(&niFake_InitWithOptions);
   using InitWithVarArgsPtr = decltype(&niFake_InitWithVarArgs);
   using InitiatePtr = ViStatus (*)(ViSession vi);
+  using IviDanceWithATwistCalculatedSizeOutPtr = decltype(&niFake_IviDanceWithATwistCalculatedSizeOut);
+  using IviDanceWithTwistWithMultipleArraysAndOneBufferSizePtr = decltype(&niFake_IviDanceWithTwistWithMultipleArraysAndOneBufferSize);
   using MethodUsingEnumWithGrpcNameValuesPtr = decltype(&niFake_MethodUsingEnumWithGrpcNameValues);
   using MethodUsingWholeAndFractionalNumbersPtr = decltype(&niFake_MethodUsingWholeAndFractionalNumbers);
   using MethodUsingWholeMappedNumbersPtr = decltype(&niFake_MethodUsingWholeMappedNumbers);
@@ -203,7 +216,9 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using SetAttributeViStringPtr = decltype(&niFake_SetAttributeViString);
   using SetCustomTypePtr = decltype(&niFake_SetCustomType);
   using SetCustomTypeArrayPtr = decltype(&niFake_SetCustomTypeArray);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
   using StringValuedEnumInputFunctionWithDefaultsPtr = decltype(&niFake_StringValuedEnumInputFunctionWithDefaults);
+  using StringValuedEnumNoEnumGeneratedPtr = decltype(&niFake_StringValuedEnumNoEnumGenerated);
   using TwoInputFunctionPtr = decltype(&niFake_TwoInputFunction);
   using Use64BitNumberPtr = decltype(&niFake_Use64BitNumber);
   using UseATwoDimensionParameterPtr = decltype(&niFake_UseATwoDimensionParameter);
@@ -211,7 +226,6 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
   using ViUInt8ArrayInputFunctionPtr = decltype(&niFake_ViUInt8ArrayInputFunction);
   using ViUInt8ArrayOutputFunctionPtr = decltype(&niFake_ViUInt8ArrayOutputFunction);
   using WriteWaveformPtr = decltype(&niFake_WriteWaveform);
-  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -220,6 +234,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     AcceptViUInt32ArrayPtr AcceptViUInt32Array;
     BoolArrayInputFunctionPtr BoolArrayInputFunction;
     BoolArrayOutputFunctionPtr BoolArrayOutputFunction;
+    ClearErrorPtr ClearError;
     ClosePtr Close;
     CloseExtCalPtr CloseExtCal;
     CommandWithReservedParamPtr CommandWithReservedParam;
@@ -235,10 +250,12 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     ExportAttributeConfigurationBufferPtr ExportAttributeConfigurationBuffer;
     ExportAttributeConfigurationBufferExPtr ExportAttributeConfigurationBufferEx;
     FetchWaveformPtr FetchWaveform;
+    FetchWithCustomSizePtr FetchWithCustomSize;
+    FunctionWithOverriddenGrpcName2xPtr FunctionWithOverriddenGrpcName2x;
     GetABooleanPtr GetABoolean;
     GetANumberPtr GetANumber;
     GetAStringOfFixedMaximumSizePtr GetAStringOfFixedMaximumSize;
-    GetAnIviDanceStringPtr GetAnIviDanceString;
+    GetAnIviDanceCharArrayPtr GetAnIviDanceCharArray;
     GetAnIviDanceWithATwistArrayPtr GetAnIviDanceWithATwistArray;
     GetAnIviDanceWithATwistArrayOfCustomTypePtr GetAnIviDanceWithATwistArrayOfCustomType;
     GetAnIviDanceWithATwistArrayWithInputArrayPtr GetAnIviDanceWithATwistArrayWithInputArray;
@@ -261,6 +278,7 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     GetCustomTypeArrayPtr GetCustomTypeArray;
     GetEnumValuePtr GetEnumValue;
     GetErrorPtr GetError;
+    GetParameterWithOverriddenGrpcNamePtr GetParameterWithOverriddenGrpcName;
     GetViInt32ArrayPtr GetViInt32Array;
     GetViUInt32ArrayPtr GetViUInt32Array;
     GetViUInt8Ptr GetViUInt8;
@@ -270,6 +288,8 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     InitWithOptionsPtr InitWithOptions;
     InitWithVarArgsPtr InitWithVarArgs;
     InitiatePtr Initiate;
+    IviDanceWithATwistCalculatedSizeOutPtr IviDanceWithATwistCalculatedSizeOut;
+    IviDanceWithTwistWithMultipleArraysAndOneBufferSizePtr IviDanceWithTwistWithMultipleArraysAndOneBufferSize;
     MethodUsingEnumWithGrpcNameValuesPtr MethodUsingEnumWithGrpcNameValues;
     MethodUsingWholeAndFractionalNumbersPtr MethodUsingWholeAndFractionalNumbers;
     MethodUsingWholeMappedNumbersPtr MethodUsingWholeMappedNumbers;
@@ -299,7 +319,9 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     SetAttributeViStringPtr SetAttributeViString;
     SetCustomTypePtr SetCustomType;
     SetCustomTypeArrayPtr SetCustomTypeArray;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
     StringValuedEnumInputFunctionWithDefaultsPtr StringValuedEnumInputFunctionWithDefaults;
+    StringValuedEnumNoEnumGeneratedPtr StringValuedEnumNoEnumGenerated;
     TwoInputFunctionPtr TwoInputFunction;
     Use64BitNumberPtr Use64BitNumber;
     UseATwoDimensionParameterPtr UseATwoDimensionParameter;
@@ -307,7 +329,6 @@ class NiFakeLibrary : public nifake_grpc::NiFakeLibraryInterface {
     ViUInt8ArrayInputFunctionPtr ViUInt8ArrayInputFunction;
     ViUInt8ArrayOutputFunctionPtr ViUInt8ArrayOutputFunction;
     WriteWaveformPtr WriteWaveform;
-    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;

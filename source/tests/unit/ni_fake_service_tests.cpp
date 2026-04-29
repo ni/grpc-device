@@ -1669,7 +1669,7 @@ TEST(NiFakeServiceTests, NiFakeService_ExportAttributeConfigurationBuffer_CallsE
   EXPECT_THAT(response.configuration(), ElementsAreArray(config_buffer, expected_size));
 }
 
-TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceString_CallsGetAnIviDanceString)
+TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceCharArray_CallsGetAnIviDanceCharArray)
 {
   auto session_repository = std::make_shared<nidevice_grpc::SessionRepository>();
   auto library = std::make_shared<NiFakeMockLibrary>();
@@ -1679,24 +1679,24 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceString_CallsGetAnIviDanceStr
   ViChar char_array[] = {'H', 'E', 'L', 'L', 'O', '\0'};
   ViInt32 expected_size = sizeof(char_array);
   // ivi-dance call
-  EXPECT_CALL(*library, GetAnIviDanceString(kTestViSession, 0, nullptr))
+  EXPECT_CALL(*library, GetAnIviDanceCharArray(kTestViSession, 0, nullptr))
       .WillOnce(Return(expected_size));
   // follow up call with size returned from ivi-dance setup.
-  EXPECT_CALL(*library, GetAnIviDanceString(kTestViSession, expected_size, _))
+  EXPECT_CALL(*library, GetAnIviDanceCharArray(kTestViSession, expected_size, _))
       .WillOnce(DoAll(
           SetArrayArgument<2>(char_array, char_array + expected_size),
           Return(kDriverSuccess)));
 
   ::grpc::ServerContext context;
-  nifake_grpc::GetAnIviDanceStringRequest request;
+  nifake_grpc::GetAnIviDanceCharArrayRequest request;
   request.mutable_vi()->set_name(session_name);
-  nifake_grpc::GetAnIviDanceStringResponse response;
-  ::grpc::Status status = service.GetAnIviDanceString(&context, &request, &response);
+  nifake_grpc::GetAnIviDanceCharArrayResponse response;
+  ::grpc::Status status = service.GetAnIviDanceCharArray(&context, &request, &response);
 
   EXPECT_TRUE(status.ok());
   EXPECT_EQ(kDriverSuccess, response.status());
-  EXPECT_STREQ(response.a_string().c_str(), char_array);
-  EXPECT_EQ(response.a_string().length(), expected_size - 1);
+  EXPECT_STREQ(response.char_array().c_str(), char_array);
+  EXPECT_EQ(response.char_array().length(), expected_size - 1);
 }
 
 TEST(NiFakeServiceTests, NiFakeService_GetArrayUsingIviDance_CallsGetArrayUsingIviDance)

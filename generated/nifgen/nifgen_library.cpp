@@ -111,8 +111,6 @@ NiFgenLibrary::NiFgenLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.GetExtCalRecommendedInterval = reinterpret_cast<GetExtCalRecommendedIntervalPtr>(shared_library_->get_function_pointer("niFgen_GetExtCalRecommendedInterval"));
   function_pointers_.GetFIRFilterCoefficients = reinterpret_cast<GetFIRFilterCoefficientsPtr>(shared_library_->get_function_pointer("niFgen_GetFIRFilterCoefficients"));
   function_pointers_.GetHardwareState = reinterpret_cast<GetHardwareStatePtr>(shared_library_->get_function_pointer("niFgen_GetHardwareState"));
-  function_pointers_.GetNextCoercionRecord = reinterpret_cast<GetNextCoercionRecordPtr>(shared_library_->get_function_pointer("niFgen_GetNextCoercionRecord"));
-  function_pointers_.GetNextInterchangeWarning = reinterpret_cast<GetNextInterchangeWarningPtr>(shared_library_->get_function_pointer("niFgen_GetNextInterchangeWarning"));
   function_pointers_.GetSelfCalLastDateAndTime = reinterpret_cast<GetSelfCalLastDateAndTimePtr>(shared_library_->get_function_pointer("niFgen_GetSelfCalLastDateAndTime"));
   function_pointers_.GetSelfCalLastTemp = reinterpret_cast<GetSelfCalLastTempPtr>(shared_library_->get_function_pointer("niFgen_GetSelfCalLastTemp"));
   function_pointers_.GetSelfCalSupported = reinterpret_cast<GetSelfCalSupportedPtr>(shared_library_->get_function_pointer("niFgen_GetSelfCalSupported"));
@@ -148,6 +146,7 @@ NiFgenLibrary::NiFgenLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.SetAttributeViSession = reinterpret_cast<SetAttributeViSessionPtr>(shared_library_->get_function_pointer("niFgen_SetAttributeViSession"));
   function_pointers_.SetAttributeViString = reinterpret_cast<SetAttributeViStringPtr>(shared_library_->get_function_pointer("niFgen_SetAttributeViString"));
   function_pointers_.SetNamedWaveformNextWritePosition = reinterpret_cast<SetNamedWaveformNextWritePositionPtr>(shared_library_->get_function_pointer("niFgen_SetNamedWaveformNextWritePosition"));
+  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_->get_function_pointer("niFgen_SetRuntimeEnvironment"));
   function_pointers_.SetWaveformNextWritePosition = reinterpret_cast<SetWaveformNextWritePositionPtr>(shared_library_->get_function_pointer("niFgen_SetWaveformNextWritePosition"));
   function_pointers_.UnlockSession = reinterpret_cast<UnlockSessionPtr>(shared_library_->get_function_pointer("niFgen_UnlockSession"));
   function_pointers_.WaitUntilDone = reinterpret_cast<WaitUntilDonePtr>(shared_library_->get_function_pointer("niFgen_WaitUntilDone"));
@@ -161,7 +160,6 @@ NiFgenLibrary::NiFgenLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.WriteScript = reinterpret_cast<WriteScriptPtr>(shared_library_->get_function_pointer("niFgen_WriteScript"));
   function_pointers_.WriteWaveform = reinterpret_cast<WriteWaveformPtr>(shared_library_->get_function_pointer("niFgen_WriteWaveform"));
   function_pointers_.WriteWaveformComplexF64 = reinterpret_cast<WriteWaveformComplexF64Ptr>(shared_library_->get_function_pointer("niFgen_WriteWaveformComplexF64"));
-  function_pointers_.SetRuntimeEnvironment = reinterpret_cast<SetRuntimeEnvironmentPtr>(shared_library_->get_function_pointer("niFgen_SetRuntimeEnvironment"));
 
   if (function_pointers_.SetRuntimeEnvironment) {
     this->SetRuntimeEnvironment(nidevice_grpc::kNiDeviceGrpcOriginalFileName, nidevice_grpc::kNiDeviceGrpcFileVersion, "", "");
@@ -844,22 +842,6 @@ ViStatus NiFgenLibrary::GetHardwareState(ViSession vi, ViInt32* state)
   return function_pointers_.GetHardwareState(vi, state);
 }
 
-ViStatus NiFgenLibrary::GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[])
-{
-  if (!function_pointers_.GetNextCoercionRecord) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetNextCoercionRecord.");
-  }
-  return function_pointers_.GetNextCoercionRecord(vi, bufferSize, coercionRecord);
-}
-
-ViStatus NiFgenLibrary::GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[])
-{
-  if (!function_pointers_.GetNextInterchangeWarning) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_GetNextInterchangeWarning.");
-  }
-  return function_pointers_.GetNextInterchangeWarning(vi, bufferSize, interchangeWarning);
-}
-
 ViStatus NiFgenLibrary::GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
 {
   if (!function_pointers_.GetSelfCalLastDateAndTime) {
@@ -916,7 +898,7 @@ ViStatus NiFgenLibrary::Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean r
   return function_pointers_.Init(resourceName, idQuery, resetDevice, vi);
 }
 
-ViStatus NiFgenLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi)
+ViStatus NiFgenLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
 {
   if (!function_pointers_.InitWithOptions) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_InitWithOptions.");
@@ -924,7 +906,7 @@ ViStatus NiFgenLibrary::InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, 
   return function_pointers_.InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
 }
 
-ViStatus NiFgenLibrary::InitializeWithChannels(ViRsrc resourceName, ViString channelName, ViBoolean resetDevice, ViString optionString, ViSession* vi)
+ViStatus NiFgenLibrary::InitializeWithChannels(ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
 {
   if (!function_pointers_.InitializeWithChannels) {
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_InitializeWithChannels.");
@@ -1140,6 +1122,14 @@ ViStatus NiFgenLibrary::SetNamedWaveformNextWritePosition(ViSession vi, ViConstS
   return function_pointers_.SetNamedWaveformNextWritePosition(vi, channelName, waveformName, relativeTo, offset);
 }
 
+ViStatus NiFgenLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
+{
+  if (!function_pointers_.SetRuntimeEnvironment) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetRuntimeEnvironment.");
+  }
+  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
+}
+
 ViStatus NiFgenLibrary::SetWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset)
 {
   if (!function_pointers_.SetWaveformNextWritePosition) {
@@ -1242,14 +1232,6 @@ ViStatus NiFgenLibrary::WriteWaveformComplexF64(ViSession vi, ViConstString chan
     throw nidevice_grpc::LibraryLoadException("Could not find niFgen_WriteWaveformComplexF64.");
   }
   return function_pointers_.WriteWaveformComplexF64(vi, channelName, numberOfSamples, data, waveformHandle);
-}
-
-ViStatus NiFgenLibrary::SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2)
-{
-  if (!function_pointers_.SetRuntimeEnvironment) {
-    throw nidevice_grpc::LibraryLoadException("Could not find niFgen_SetRuntimeEnvironment.");
-  }
-  return function_pointers_.SetRuntimeEnvironment(environment, environmentVersion, reserved1, reserved2);
 }
 
 bool NiFgenLibrary::is_runtime_environment_set() const { return this->runtime_environment_set_; }

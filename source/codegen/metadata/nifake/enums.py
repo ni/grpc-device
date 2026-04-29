@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FAKE API metadata version 23.0.0f157
+# This file is generated from NI-FAKE API metadata version 26.5.0d5
 enums = {
     'Bitfield': {
         'codegen_method': 'public',

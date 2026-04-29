@@ -125,8 +125,6 @@ public:
   ::grpc::Status GetExtCalRecommendedInterval(::grpc::ServerContext* context, const GetExtCalRecommendedIntervalRequest* request, GetExtCalRecommendedIntervalResponse* response) override;
   ::grpc::Status GetFIRFilterCoefficients(::grpc::ServerContext* context, const GetFIRFilterCoefficientsRequest* request, GetFIRFilterCoefficientsResponse* response) override;
   ::grpc::Status GetHardwareState(::grpc::ServerContext* context, const GetHardwareStateRequest* request, GetHardwareStateResponse* response) override;
-  ::grpc::Status GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response) override;
-  ::grpc::Status GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response) override;
   ::grpc::Status GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalLastTemp(::grpc::ServerContext* context, const GetSelfCalLastTempRequest* request, GetSelfCalLastTempResponse* response) override;
   ::grpc::Status GetSelfCalSupported(::grpc::ServerContext* context, const GetSelfCalSupportedRequest* request, GetSelfCalSupportedResponse* response) override;

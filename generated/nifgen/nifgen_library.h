@@ -104,8 +104,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months) override;
   ViStatus GetFIRFilterCoefficients(ViSession vi, ViConstString channelName, ViInt32 arraySize, ViReal64 coefficientsArray[], ViInt32* numberOfCoefficientsRead) override;
   ViStatus GetHardwareState(ViSession vi, ViInt32* state) override;
-  ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]) override;
-  ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]) override;
   ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute) override;
   ViStatus GetSelfCalLastTemp(ViSession vi, ViReal64* temperature) override;
   ViStatus GetSelfCalSupported(ViSession vi, ViBoolean* selfCalSupported) override;
@@ -113,8 +111,8 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus ImportAttributeConfigurationBuffer(ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]) override;
   ViStatus ImportAttributeConfigurationFile(ViSession vi, ViConstString filePath) override;
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi) override;
-  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi) override;
-  ViStatus InitializeWithChannels(ViRsrc resourceName, ViString channelName, ViBoolean resetDevice, ViString optionString, ViSession* vi) override;
+  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) override;
+  ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi) override;
   ViStatus InitiateGeneration(ViSession vi) override;
   ViStatus InvalidateAllAttributes(ViSession vi) override;
   ViStatus IsDone(ViSession vi, ViBoolean* done) override;
@@ -141,6 +139,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus SetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue) override;
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue) override;
   ViStatus SetNamedWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 relativeTo, ViInt32 offset) override;
+  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) override;
   ViStatus SetWaveformNextWritePosition(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset) override;
   ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) override;
   ViStatus WaitUntilDone(ViSession vi, ViInt32 maxTime) override;
@@ -154,7 +153,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   ViStatus WriteScript(ViSession vi, ViConstString channelName, ViConstString script) override;
   ViStatus WriteWaveform(ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]) override;
   ViStatus WriteWaveformComplexF64(ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle) override;
-  ViStatus SetRuntimeEnvironment(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2) override;
   bool is_runtime_environment_set() const; // needed to test that we properly call SetRuntimeEnvironment
 
  private:
@@ -241,8 +239,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using GetExtCalRecommendedIntervalPtr = decltype(&niFgen_GetExtCalRecommendedInterval);
   using GetFIRFilterCoefficientsPtr = decltype(&niFgen_GetFIRFilterCoefficients);
   using GetHardwareStatePtr = decltype(&niFgen_GetHardwareState);
-  using GetNextCoercionRecordPtr = decltype(&niFgen_GetNextCoercionRecord);
-  using GetNextInterchangeWarningPtr = decltype(&niFgen_GetNextInterchangeWarning);
   using GetSelfCalLastDateAndTimePtr = decltype(&niFgen_GetSelfCalLastDateAndTime);
   using GetSelfCalLastTempPtr = decltype(&niFgen_GetSelfCalLastTemp);
   using GetSelfCalSupportedPtr = decltype(&niFgen_GetSelfCalSupported);
@@ -278,6 +274,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using SetAttributeViSessionPtr = decltype(&niFgen_SetAttributeViSession);
   using SetAttributeViStringPtr = decltype(&niFgen_SetAttributeViString);
   using SetNamedWaveformNextWritePositionPtr = decltype(&niFgen_SetNamedWaveformNextWritePosition);
+  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
   using SetWaveformNextWritePositionPtr = decltype(&niFgen_SetWaveformNextWritePosition);
   using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using WaitUntilDonePtr = decltype(&niFgen_WaitUntilDone);
@@ -291,7 +288,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   using WriteScriptPtr = decltype(&niFgen_WriteScript);
   using WriteWaveformPtr = decltype(&niFgen_WriteWaveform);
   using WriteWaveformComplexF64Ptr = decltype(&niFgen_WriteWaveformComplexF64);
-  using SetRuntimeEnvironmentPtr = ViStatus (*)(ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2);
 
   typedef struct FunctionPointers {
     AbortGenerationPtr AbortGeneration;
@@ -377,8 +373,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     GetExtCalRecommendedIntervalPtr GetExtCalRecommendedInterval;
     GetFIRFilterCoefficientsPtr GetFIRFilterCoefficients;
     GetHardwareStatePtr GetHardwareState;
-    GetNextCoercionRecordPtr GetNextCoercionRecord;
-    GetNextInterchangeWarningPtr GetNextInterchangeWarning;
     GetSelfCalLastDateAndTimePtr GetSelfCalLastDateAndTime;
     GetSelfCalLastTempPtr GetSelfCalLastTemp;
     GetSelfCalSupportedPtr GetSelfCalSupported;
@@ -414,6 +408,7 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     SetAttributeViSessionPtr SetAttributeViSession;
     SetAttributeViStringPtr SetAttributeViString;
     SetNamedWaveformNextWritePositionPtr SetNamedWaveformNextWritePosition;
+    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
     SetWaveformNextWritePositionPtr SetWaveformNextWritePosition;
     UnlockSessionPtr UnlockSession;
     WaitUntilDonePtr WaitUntilDone;
@@ -427,7 +422,6 @@ class NiFgenLibrary : public nifgen_grpc::NiFgenLibraryInterface {
     WriteScriptPtr WriteScript;
     WriteWaveformPtr WriteWaveform;
     WriteWaveformComplexF64Ptr WriteWaveformComplexF64;
-    SetRuntimeEnvironmentPtr SetRuntimeEnvironment;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;

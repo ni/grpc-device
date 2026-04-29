@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-FGEN API metadata version 23.0.0f157
+// This file is generated from NI-FGEN API metadata version 26.0.0f146
 //---------------------------------------------------------------------
 // Proto file for the NI-FGEN Metadata
 //---------------------------------------------------------------------
@@ -100,8 +100,6 @@ service NiFgen {
   rpc GetExtCalRecommendedInterval(GetExtCalRecommendedIntervalRequest) returns (GetExtCalRecommendedIntervalResponse);
   rpc GetFIRFilterCoefficients(GetFIRFilterCoefficientsRequest) returns (GetFIRFilterCoefficientsResponse);
   rpc GetHardwareState(GetHardwareStateRequest) returns (GetHardwareStateResponse);
-  rpc GetNextCoercionRecord(GetNextCoercionRecordRequest) returns (GetNextCoercionRecordResponse);
-  rpc GetNextInterchangeWarning(GetNextInterchangeWarningRequest) returns (GetNextInterchangeWarningResponse);
   rpc GetSelfCalLastDateAndTime(GetSelfCalLastDateAndTimeRequest) returns (GetSelfCalLastDateAndTimeResponse);
   rpc GetSelfCalLastTemp(GetSelfCalLastTempRequest) returns (GetSelfCalLastTempResponse);
   rpc GetSelfCalSupported(GetSelfCalSupportedRequest) returns (GetSelfCalSupportedResponse);
@@ -678,6 +676,12 @@ enum RouteSignalTo {
   ROUTE_SIGNAL_TO_NIFGEN_VAL_PXI_STAR = 131;
 }
 
+enum ScriptTriggerDigitalEdgeEdge {
+  SCRIPT_TRIGGER_DIGITAL_EDGE_EDGE_UNSPECIFIED = 0;
+  SCRIPT_TRIGGER_DIGITAL_EDGE_EDGE_NIFGEN_VAL_RISING_EDGE = 101;
+  SCRIPT_TRIGGER_DIGITAL_EDGE_EDGE_NIFGEN_VAL_FALLING_EDGE = 102;
+}
+
 enum SequenceHandle {
   SEQUENCE_HANDLE_UNSPECIFIED = 0;
   SEQUENCE_HANDLE_NIFGEN_VAL_ALL_SEQUENCES = -1;
@@ -698,6 +702,12 @@ enum Signal {
   SIGNAL_NIFGEN_VAL_STARTED_EVENT = 106;
   SIGNAL_NIFGEN_VAL_DONE_EVENT = 107;
   SIGNAL_NIFGEN_VAL_DATA_MARKER_EVENT = 108;
+}
+
+enum StartTriggerDigitalEdgeEdge {
+  START_TRIGGER_DIGITAL_EDGE_EDGE_UNSPECIFIED = 0;
+  START_TRIGGER_DIGITAL_EDGE_EDGE_NIFGEN_VAL_RISING_EDGE = 101;
+  START_TRIGGER_DIGITAL_EDGE_EDGE_NIFGEN_VAL_FALLING_EDGE = 102;
 }
 
 enum Trigger {
@@ -1005,7 +1015,10 @@ message ConfigureDigitalEdgeScriptTriggerRequest {
   nidevice_grpc.Session vi = 1;
   string trigger_id = 2;
   string source = 3;
-  sint32 edge = 4;
+  oneof edge_enum {
+    ScriptTriggerDigitalEdgeEdge edge = 4;
+    sint32 edge_raw = 5;
+  }
 }
 
 message ConfigureDigitalEdgeScriptTriggerResponse {
@@ -1015,7 +1028,10 @@ message ConfigureDigitalEdgeScriptTriggerResponse {
 message ConfigureDigitalEdgeStartTriggerRequest {
   nidevice_grpc.Session vi = 1;
   string source = 2;
-  sint32 edge = 3;
+  oneof edge_enum {
+    StartTriggerDigitalEdgeEdge edge = 3;
+    sint32 edge_raw = 4;
+  }
 }
 
 message ConfigureDigitalEdgeStartTriggerResponse {
@@ -1619,24 +1635,6 @@ message GetHardwareStateResponse {
   int32 status = 1;
   HardwareState state = 2;
   sint32 state_raw = 3;
-}
-
-message GetNextCoercionRecordRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetNextCoercionRecordResponse {
-  int32 status = 1;
-  string coercion_record = 2;
-}
-
-message GetNextInterchangeWarningRequest {
-  nidevice_grpc.Session vi = 1;
-}
-
-message GetNextInterchangeWarningResponse {
-  int32 status = 1;
-  string interchange_warning = 2;
 }
 
 message GetSelfCalLastDateAndTimeRequest {

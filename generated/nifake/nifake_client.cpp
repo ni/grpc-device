@@ -125,6 +125,23 @@ bool_array_output_function(const StubPtr& stub, const nidevice_grpc::Session& vi
   return response;
 }
 
+ClearErrorResponse
+clear_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ClearErrorRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = ClearErrorResponse{};
+
+  raise_if_error(
+      stub->ClearError(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CloseResponse
 close(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -410,6 +427,42 @@ fetch_waveform(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::
   return response;
 }
 
+FetchWithCustomSizeResponse
+fetch_with_custom_size(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& number_of_waveforms, const pb::int32& number_of_samples)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FetchWithCustomSizeRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_number_of_waveforms(number_of_waveforms);
+  request.set_number_of_samples(number_of_samples);
+
+  auto response = FetchWithCustomSizeResponse{};
+
+  raise_if_error(
+      stub->FetchWithCustomSize(&context, request, &response),
+      context);
+
+  return response;
+}
+
+FunctionWithOverriddenGrpcName2xResponse
+function_with_overridden_grpc_name2x(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = FunctionWithOverriddenGrpcName2xRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = FunctionWithOverriddenGrpcName2xResponse{};
+
+  raise_if_error(
+      stub->FunctionWithOverriddenGrpcName2x(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetABooleanResponse
 get_a_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -461,18 +514,18 @@ get_a_string_of_fixed_maximum_size(const StubPtr& stub, const nidevice_grpc::Ses
   return response;
 }
 
-GetAnIviDanceStringResponse
-get_an_ivi_dance_string(const StubPtr& stub, const nidevice_grpc::Session& vi)
+GetAnIviDanceCharArrayResponse
+get_an_ivi_dance_char_array(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
   ::grpc::ClientContext context;
 
-  auto request = GetAnIviDanceStringRequest{};
+  auto request = GetAnIviDanceCharArrayRequest{};
   request.mutable_vi()->CopyFrom(vi);
 
-  auto response = GetAnIviDanceStringResponse{};
+  auto response = GetAnIviDanceCharArrayResponse{};
 
   raise_if_error(
-      stub->GetAnIviDanceString(&context, request, &response),
+      stub->GetAnIviDanceCharArray(&context, request, &response),
       context);
 
   return response;
@@ -865,6 +918,31 @@ get_error(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+GetParameterWithOverriddenGrpcNameResponse
+get_parameter_with_overridden_grpc_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Turtle, pb::int32>& enum_parameter_raw)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetParameterWithOverriddenGrpcNameRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  const auto enum_parameter_raw_ptr = enum_parameter_raw.get_if<Turtle>();
+  const auto enum_parameter_raw_raw_ptr = enum_parameter_raw.get_if<pb::int32>();
+  if (enum_parameter_raw_ptr) {
+    request.set_enum_parameter_raw(*enum_parameter_raw_ptr);
+  }
+  else if (enum_parameter_raw_raw_ptr) {
+    request.set_enum_parameter_raw_raw(*enum_parameter_raw_raw_ptr);
+  }
+
+  auto response = GetParameterWithOverriddenGrpcNameResponse{};
+
+  raise_if_error(
+      stub->GetParameterWithOverriddenGrpcName(&context, request, &response),
+      context);
+
+  return response;
+}
+
 GetViInt32ArrayResponse
 get_vi_int32_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& array_len)
 {
@@ -1006,6 +1084,40 @@ init_with_var_args(const StubPtr& stub, const std::string& resource_name, const 
 
   raise_if_error(
       stub->InitWithVarArgs(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IviDanceWithATwistCalculatedSizeOutResponse
+ivi_dance_with_a_twist_calculated_size_out(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IviDanceWithATwistCalculatedSizeOutRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = IviDanceWithATwistCalculatedSizeOutResponse{};
+
+  raise_if_error(
+      stub->IviDanceWithATwistCalculatedSizeOut(&context, request, &response),
+      context);
+
+  return response;
+}
+
+IviDanceWithTwistWithMultipleArraysAndOneBufferSizeResponse
+ivi_dance_with_twist_with_multiple_arrays_and_one_buffer_size(const StubPtr& stub, const nidevice_grpc::Session& vi)
+{
+  ::grpc::ClientContext context;
+
+  auto request = IviDanceWithTwistWithMultipleArraysAndOneBufferSizeRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+
+  auto response = IviDanceWithTwistWithMultipleArraysAndOneBufferSizeResponse{};
+
+  raise_if_error(
+      stub->IviDanceWithTwistWithMultipleArraysAndOneBufferSize(&context, request, &response),
       context);
 
   return response;
@@ -1579,6 +1691,24 @@ string_valued_enum_input_function_with_defaults(const StubPtr& stub, const nidev
 
   raise_if_error(
       stub->StringValuedEnumInputFunctionWithDefaults(&context, request, &response),
+      context);
+
+  return response;
+}
+
+StringValuedEnumNoEnumGeneratedResponse
+string_valued_enum_no_enum_generated(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& a_string_enum)
+{
+  ::grpc::ClientContext context;
+
+  auto request = StringValuedEnumNoEnumGeneratedRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_a_string_enum(a_string_enum);
+
+  auto response = StringValuedEnumNoEnumGeneratedResponse{};
+
+  raise_if_error(
+      stub->StringValuedEnumNoEnumGenerated(&context, request, &response),
       context);
 
   return response;

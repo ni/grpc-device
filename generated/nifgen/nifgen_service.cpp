@@ -782,7 +782,22 @@ namespace nifgen_grpc {
       auto trigger_id = trigger_id_mbcs.c_str();
       auto source_mbcs = convert_from_grpc<std::string>(request->source());
       auto source = source_mbcs.c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nifgen_grpc::ConfigureDigitalEdgeScriptTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
+          break;
+        }
+        case nifgen_grpc::ConfigureDigitalEdgeScriptTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
+          break;
+        }
+        case nifgen_grpc::ConfigureDigitalEdgeScriptTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ConfigureDigitalEdgeScriptTrigger(vi, trigger_id, source, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -807,7 +822,22 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto source_mbcs = convert_from_grpc<std::string>(request->source());
       auto source = source_mbcs.c_str();
-      ViInt32 edge = request->edge();
+      ViInt32 edge;
+      switch (request->edge_enum_case()) {
+        case nifgen_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdge: {
+          edge = static_cast<ViInt32>(request->edge());
+          break;
+        }
+        case nifgen_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::kEdgeRaw: {
+          edge = static_cast<ViInt32>(request->edge_raw());
+          break;
+        }
+        case nifgen_grpc::ConfigureDigitalEdgeStartTriggerRequest::EdgeEnumCase::EDGE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for edge was not specified or out of range");
+          break;
+        }
+      }
+
       auto status = library_->ConfigureDigitalEdgeStartTrigger(vi, source, edge);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2475,92 +2505,6 @@ namespace nifgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::GetNextCoercionRecord(::grpc::ServerContext* context, const GetNextCoercionRecordRequest* request, GetNextCoercionRecordResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-
-      while (true) {
-        auto status = library_->GetNextCoercionRecord(vi, 0, nullptr);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        ViInt32 buffer_size = status;
-
-        std::string coercion_record;
-        if (buffer_size > 0) {
-            coercion_record.resize(buffer_size - 1);
-        }
-        status = library_->GetNextCoercionRecord(vi, buffer_size, (ViChar*)coercion_record.data());
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        response->set_status(status);
-        std::string coercion_record_utf8;
-        convert_to_grpc(coercion_record, &coercion_record_utf8);
-        response->set_coercion_record(coercion_record_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_coercion_record()));
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiFgenService::GetNextInterchangeWarning(::grpc::ServerContext* context, const GetNextInterchangeWarningRequest* request, GetNextInterchangeWarningResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-
-      while (true) {
-        auto status = library_->GetNextInterchangeWarning(vi, 0, nullptr);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        ViInt32 buffer_size = status;
-
-        std::string interchange_warning;
-        if (buffer_size > 0) {
-            interchange_warning.resize(buffer_size - 1);
-        }
-        status = library_->GetNextInterchangeWarning(vi, buffer_size, (ViChar*)interchange_warning.data());
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        response->set_status(status);
-        std::string interchange_warning_utf8;
-        convert_to_grpc(interchange_warning, &interchange_warning_utf8);
-        response->set_interchange_warning(interchange_warning_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_interchange_warning()));
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
   ::grpc::Status NiFgenService::GetSelfCalLastDateAndTime(::grpc::ServerContext* context, const GetSelfCalLastDateAndTimeRequest* request, GetSelfCalLastDateAndTimeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -2764,7 +2708,7 @@ namespace nifgen_grpc {
       ViBoolean id_query = request->id_query();
       ViBoolean reset_device = request->reset_device();
       auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
-      ViString option_string = (ViString)option_string_mbcs.c_str();
+      auto option_string = option_string_mbcs.c_str();
       auto initialization_behavior = request->initialization_behavior();
 
       bool new_session_initialized {};
@@ -2802,10 +2746,10 @@ namespace nifgen_grpc {
       auto resource_name_mbcs = convert_from_grpc<std::string>(request->resource_name());
       ViRsrc resource_name = (ViRsrc)resource_name_mbcs.c_str();
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
-      ViString channel_name = (ViString)channel_name_mbcs.c_str();
+      auto channel_name = channel_name_mbcs.c_str();
       ViBoolean reset_device = request->reset_device();
       auto option_string_mbcs = convert_from_grpc<std::string>(request->option_string());
-      ViString option_string = (ViString)option_string_mbcs.c_str();
+      auto option_string = option_string_mbcs.c_str();
       auto initialization_behavior = request->initialization_behavior();
 
       bool new_session_initialized {};

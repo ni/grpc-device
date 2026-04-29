@@ -422,16 +422,6 @@ ViStatus GetHardwareState(ViSession vi, ViInt32* state)
   return niFgen_GetHardwareState(vi, state);
 }
 
-ViStatus GetNextCoercionRecord(ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[])
-{
-  return niFgen_GetNextCoercionRecord(vi, bufferSize, coercionRecord);
-}
-
-ViStatus GetNextInterchangeWarning(ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[])
-{
-  return niFgen_GetNextInterchangeWarning(vi, bufferSize, interchangeWarning);
-}
-
 ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute)
 {
   return niFgen_GetSelfCalLastDateAndTime(vi, year, month, day, hour, minute);
@@ -467,12 +457,12 @@ ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViS
   return niFgen_init(resourceName, idQuery, resetDevice, vi);
 }
 
-ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi)
+ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
 {
   return niFgen_InitWithOptions(resourceName, idQuery, resetDevice, optionString, vi);
 }
 
-ViStatus InitializeWithChannels(ViRsrc resourceName, ViString channelName, ViBoolean resetDevice, ViString optionString, ViSession* vi)
+ViStatus InitializeWithChannels(ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi)
 {
   return niFgen_InitializeWithChannels(resourceName, channelName, resetDevice, optionString, vi);
 }

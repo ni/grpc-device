@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-# This file is generated from NI-FGEN API metadata version 23.0.0f157
+# This file is generated from NI-FGEN API metadata version 26.0.0f146
 enums = {
     'AddressType': {
         'codegen_method': 'public',

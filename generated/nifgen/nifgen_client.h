@@ -47,8 +47,8 @@ ConfigureArbWaveformResponse configure_arb_waveform(const StubPtr& stub, const n
 ConfigureChannelsResponse configure_channels(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channels);
 ConfigureClockModeResponse configure_clock_mode(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ClockMode, pb::int32>& clock_mode);
 ConfigureCustomFIRFilterCoefficientsResponse configure_custom_fir_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::vector<double>& coefficients_array);
-ConfigureDigitalEdgeScriptTriggerResponse configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_id, const std::string& source, const pb::int32& edge);
-ConfigureDigitalEdgeStartTriggerResponse configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& source, const pb::int32& edge);
+ConfigureDigitalEdgeScriptTriggerResponse configure_digital_edge_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_id, const std::string& source, const simple_variant<ScriptTriggerDigitalEdgeEdge, pb::int32>& edge);
+ConfigureDigitalEdgeStartTriggerResponse configure_digital_edge_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& source, const simple_variant<StartTriggerDigitalEdgeEdge, pb::int32>& edge);
 ConfigureDigitalLevelScriptTriggerResponse configure_digital_level_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& trigger_id, const std::string& source, const simple_variant<TriggerWhen, pb::int32>& trigger_when);
 ConfigureFreqListResponse configure_freq_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const pb::int32& frequency_list_handle, const double& amplitude, const double& dc_offset, const double& start_phase);
 ConfigureFrequencyResponse configure_frequency(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const double& frequency);
@@ -105,8 +105,6 @@ GetExtCalLastTempResponse get_ext_cal_last_temp(const StubPtr& stub, const nidev
 GetExtCalRecommendedIntervalResponse get_ext_cal_recommended_interval(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetFIRFilterCoefficientsResponse get_fir_filter_coefficients(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name);
 GetHardwareStateResponse get_hardware_state(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetNextCoercionRecordResponse get_next_coercion_record(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetNextInterchangeWarningResponse get_next_interchange_warning(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalLastDateAndTimeResponse get_self_cal_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalLastTempResponse get_self_cal_last_temp(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetSelfCalSupportedResponse get_self_cal_supported(const StubPtr& stub, const nidevice_grpc::Session& vi);

@@ -100,8 +100,6 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, GetExtCalRecommendedInterval, (ViSession vi, ViInt32* months), (override));
   MOCK_METHOD(ViStatus, GetFIRFilterCoefficients, (ViSession vi, ViConstString channelName, ViInt32 arraySize, ViReal64 coefficientsArray[], ViInt32* numberOfCoefficientsRead), (override));
   MOCK_METHOD(ViStatus, GetHardwareState, (ViSession vi, ViInt32* state), (override));
-  MOCK_METHOD(ViStatus, GetNextCoercionRecord, (ViSession vi, ViInt32 bufferSize, ViChar coercionRecord[]), (override));
-  MOCK_METHOD(ViStatus, GetNextInterchangeWarning, (ViSession vi, ViInt32 bufferSize, ViChar interchangeWarning[]), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastDateAndTime, (ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute), (override));
   MOCK_METHOD(ViStatus, GetSelfCalLastTemp, (ViSession vi, ViReal64* temperature), (override));
   MOCK_METHOD(ViStatus, GetSelfCalSupported, (ViSession vi, ViBoolean* selfCalSupported), (override));
@@ -109,8 +107,8 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationBuffer, (ViSession vi, ViInt32 sizeInBytes, ViInt8 configuration[]), (override));
   MOCK_METHOD(ViStatus, ImportAttributeConfigurationFile, (ViSession vi, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, Init, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViSession* vi), (override));
-  MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViString optionString, ViSession* vi), (override));
-  MOCK_METHOD(ViStatus, InitializeWithChannels, (ViRsrc resourceName, ViString channelName, ViBoolean resetDevice, ViString optionString, ViSession* vi), (override));
+  MOCK_METHOD(ViStatus, InitWithOptions, (ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
+  MOCK_METHOD(ViStatus, InitializeWithChannels, (ViRsrc resourceName, ViConstString channelName, ViBoolean resetDevice, ViConstString optionString, ViSession* vi), (override));
   MOCK_METHOD(ViStatus, InitiateGeneration, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, IsDone, (ViSession vi, ViBoolean* done), (override));
@@ -137,6 +135,7 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, SetAttributeViSession, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession attributeValue), (override));
   MOCK_METHOD(ViStatus, SetAttributeViString, (ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString attributeValue), (override));
   MOCK_METHOD(ViStatus, SetNamedWaveformNextWritePosition, (ViSession vi, ViConstString channelName, ViConstString waveformName, ViInt32 relativeTo, ViInt32 offset), (override));
+  MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
   MOCK_METHOD(ViStatus, SetWaveformNextWritePosition, (ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 relativeTo, ViInt32 offset), (override));
   MOCK_METHOD(ViStatus, UnlockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, WaitUntilDone, (ViSession vi, ViInt32 maxTime), (override));
@@ -150,7 +149,6 @@ class NiFgenMockLibrary : public nifgen_grpc::NiFgenLibraryInterface {
   MOCK_METHOD(ViStatus, WriteScript, (ViSession vi, ViConstString channelName, ViConstString script), (override));
   MOCK_METHOD(ViStatus, WriteWaveform, (ViSession vi, ViConstString channelName, ViInt32 waveformHandle, ViInt32 size, ViReal64 data[]), (override));
   MOCK_METHOD(ViStatus, WriteWaveformComplexF64, (ViSession vi, ViConstString channelName, ViInt32 numberOfSamples, NIComplexNumber_struct data[], ViInt32 waveformHandle), (override));
-  MOCK_METHOD(ViStatus, SetRuntimeEnvironment, (ViConstString environment, ViConstString environmentVersion, ViConstString reserved1, ViConstString reserved2), (override));
 };
 
 }  // namespace unit
