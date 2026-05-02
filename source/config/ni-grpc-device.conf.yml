@@ -1,7 +1,32 @@
 file_version: 1
-# TLS is disabled by default. Change certificate_mode to Unmanaged to enable TLS
-# and provide paths to your certificate chain and private key.
+# Server-side TLS configuration for ni-grpc-device.
+#
+# certificate_mode: Disabled (default) | ManagedSelfSigned | Unmanaged
+#   Disabled: Server does not use TLS.
+#   ManagedSelfSigned: Server uses self-signed certificates managed by ni-tls-config.
+#   Unmanaged: Server uses manually-provided certificate_chain and certificate_key paths.
+#
+# certificate_chain: Path to server certificate chain file (PEM format).
+#   URI schemes supported: file://, directory://
+#   Substitution variables: $(SystemServicesDir), $(Service)
+#
+# certificate_key: Path to server private key file (PEM format).
+#   URI schemes supported: file://
+#   Substitution variables: $(SystemServicesDir), $(Service)
+#
+# client_mode: Disabled (default) | ManagedSelfSigned | Optional | Required
+#   Disabled: Server does not request client certificates.
+#   ManagedSelfSigned: Server requests and validates client certificates (self-signed).
+#   Optional: Server requests but does not require valid client certificates.
+#   Required: Server requires valid client certificates.
+#
+# trusted_certificates: Path to directory or file containing client certificates to trust.
+#   URI schemes supported: file://, directory://
+#   directory://: Server loads all .pem files in the directory.
+#   Substitution variables: $(SystemServicesDir), $(Service)
+#
 certificate_mode: Disabled
-certificate_chain: file://$(SystemServicesDir)\$(Service)\cert.pem
-certificate_key: file://$(SystemServicesDir)\$(Service)\key.pem
+certificate_chain: file://$(SystemServicesDir)/$(Service)/cert.pem
+certificate_key: file://$(SystemServicesDir)/$(Service)/key.pem
 client_mode: Disabled
+trusted_certificates: directory://$(SystemServicesDir)/$(Service)/trusted.d

@@ -157,6 +157,10 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
     config_path = output_path / "config"
     config_path.mkdir(parents=True)
     copy2(artifact_locations.config_dir / "ni-grpc-device.defaults.yml", config_path)
+    copy2(
+        artifact_locations.config_dir / "ni-grpc-device.client.caps.yml",
+        config_path / "ni-grpc-device.caps.yml",
+    )
 
     copy2(artifact_locations.repo_root / "LICENSE", output_path)
     copy2(artifact_locations.repo_root / "ThirdPartyNotices.txt", output_path)
