@@ -154,9 +154,12 @@ def stage_client_files(output_path: Path, ignore_release_readiness: bool):
     for dir in _get_release_example_directories(artifact_locations, readiness):
         copytree(dir, examples_path / dir.name)
 
-    config_path = output_path / "config"
+    config_path = output_path / "client.d"
     config_path.mkdir(parents=True)
-    copy2(artifact_locations.config_dir / "ni-grpc-device.defaults.yml", config_path)
+    copy2(
+        artifact_locations.config_dir / "ni-grpc-device.client.defaults.yml",
+        config_path / "ni-grpc-device.defaults.yml",
+    )
     copy2(
         artifact_locations.config_dir / "ni-grpc-device.client.caps.yml",
         config_path / "ni-grpc-device.caps.yml",
