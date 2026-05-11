@@ -149,11 +149,10 @@ The server supports both server-side TLS and mutual TLS. Security configuration 
 
 ### NI TLS Config Integration
 
-Alternatively, when the `ni-tls-config` package is installed, the server can delegate TLS configuration to it by setting the top-level `"security"` field to `"ni-tls-config"` in `server_config.json`:
+Alternatively, when the `ni-tls-config` package is installed, the server can delegate TLS configuration by setting the top-level `"security"` field to `"ni-tls-config"` in `server_config.json`. The following snippet shows only the `ni-tls-config`-specific fields; keep other required fields (for example, `port`) in your configuration.
 
 ```json
 {
-   "port": 31763,
    "security": "ni-tls-config",
    "feature_toggles": {
       "ni-tls-config": true
@@ -161,9 +160,13 @@ Alternatively, when the `ni-tls-config` package is installed, the server can del
 }
 ```
 
+When `ni-tls-config` is enabled, certificate and trust settings are read from the `ni-tls-config` YAML file instead of `server_config.json` certificate fields.
+
 With this setting the server reads TLS configuration at startup from the per-service YAML file managed by `ni-tls-config` (`ni-grpc-device.conf.yml`). A template for this file is distributed alongside the server binary. Place it in the location expected by `ni-tls-config`:
 
 - **Windows**: `C:\ProgramData\National Instruments\nitlsconfig\server.d\ni-grpc-device.conf.yml`
 - **Linux**: `/etc/nitlsconfig/server.d/ni-grpc-device.conf.yml`
 
-If `"security": "ni-tls-config"` is set but the `ni-tls-config` library is not installed, the server logs an error and exits rather than starting insecurely.
+If `"security": "ni-tls-config"` is configured but the `ni-tls-config` library is not installed, the server logs an error and exits instead of starting insecurely.
+
+Once `ni-tls-config` is enabled, use NI Hardware Configuration Utility on each client machine to configure the desired security settings.
