@@ -36,13 +36,6 @@ class TlsConfigLoader {
     CertificateMode_Unknown = 255,
   };
 
-  enum LocationScheme {
-    LocationScheme_File = 0,
-    LocationScheme_Directory = 1,
-    LocationScheme_SystemDefault = 2,
-    LocationScheme_Unknown = 255,
-  };
-
   // C enum values that mirror the nitlsconfig ABI (do not rename/reorder).
   enum ClientMode {
     ClientMode_Disabled = 0,
@@ -53,24 +46,21 @@ class TlsConfigLoader {
 
   using ReadCertificateModeFunc = int32_t (*)(const char*, uint32_t*, nierr_Status*);
   using ReadClientModeFunc = int32_t (*)(const char*, uint32_t*, nierr_Status*);
-  using ReadLocationFunc = int32_t (*)(const char*, uint32_t*, char*, size_t, size_t*, nierr_Status*);
+  using ReadContentsFunc = int32_t (*)(const char*, char*, size_t, size_t*, nierr_Status*);
 
-  std::string read_location_path(
+  std::string read_contents(
       const std::string& service_name,
-      ReadLocationFunc func,
+      ReadContentsFunc func,
       const char* description) const;
-
-  static std::string strip_file_scheme(const std::string& path);
-  static std::string read_file_contents(const std::string& filepath);
 
   SharedLibrary library_;
   bool is_available_;
 
   ReadCertificateModeFunc read_certificate_mode_;
   ReadClientModeFunc read_client_mode_;
-  ReadLocationFunc read_certificate_chain_location_;
-  ReadLocationFunc read_certificate_key_location_;
-  ReadLocationFunc read_trusted_certificates_location_;
+  ReadContentsFunc read_certificate_chain_contents_;
+  ReadContentsFunc read_certificate_key_contents_;
+  ReadContentsFunc read_trusted_certificates_contents_;
 };
 
 }  // namespace nidevice_grpc

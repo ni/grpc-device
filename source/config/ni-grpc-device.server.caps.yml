@@ -1,0 +1,23 @@
+# Capabilities declaration for ni-grpc-device server TLS support.
+# This file informs ni-tls-config what TLS features the ni-grpc-device server supports.
+# Read-only; do not edit manually.
+#
+# supports_certificate_mode_disabled: Whether server supports certificate_mode: Disabled
+# supports_client_mode_disabled: Whether server supports client_mode: Disabled
+# update_certificate_chain_without_restart: Whether cert changes apply without server restart
+# update_trusted_certificates_without_restart: Whether trusted cert changes apply without restart
+#
+# supports_certificate_chain_file_scheme: Whether file:// URI scheme is supported for certs
+# supports_certificate_key_file_scheme: Whether file:// URI scheme is supported for keys
+# supports_trusted_certificates_file_scheme: Whether file:// URI scheme is supported for trusted certs
+# supports_trusted_certificates_directory_scheme: Whether directory:// URI scheme is supported for trusted certs
+#
+supports_certificate_mode_disabled: true
+supports_client_mode_disabled: true
+update_certificate_chain_without_restart: false
+update_trusted_certificates_without_restart: false
+
+supports_certificate_chain_file_scheme: true
+supports_certificate_key_file_scheme: true
+supports_trusted_certificates_file_scheme: true
+supports_trusted_certificates_directory_scheme: true

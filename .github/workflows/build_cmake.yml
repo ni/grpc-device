@@ -125,6 +125,7 @@ jobs:
         ni_grpc_device_server
         server_config.json
         server_capabilities.json
+        server_nitlsconfig.json
         ni-grpc-device.conf.yml
         ni-grpc-device.caps.yml
         -C ${GITHUB_WORKSPACE}
@@ -192,6 +193,7 @@ jobs:
           build/RelWithDebInfo/ni_grpc_device_server.exe
           build/RelWithDebInfo/server_config.json
           build/RelWithDebInfo/server_capabilities.json
+          build/RelWithDebInfo/server_nitlsconfig.json
           build/RelWithDebInfo/ni-grpc-device.conf.yml
           build/RelWithDebInfo/ni-grpc-device.caps.yml
         retention-days: 5

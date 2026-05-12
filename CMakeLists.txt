@@ -671,7 +671,7 @@ add_custom_command(
 add_custom_command(
    TARGET ni_grpc_device_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different
-            ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.conf.yml
+        ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.server.conf.yml
             $<TARGET_FILE_DIR:ni_grpc_device_server>/ni-grpc-device.conf.yml)
 
 #----------------------------------------------------------------------
@@ -680,7 +680,7 @@ add_custom_command(
 add_custom_command(
    TARGET ni_grpc_device_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different
-            ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.caps.yml
+        ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.server.caps.yml
             $<TARGET_FILE_DIR:ni_grpc_device_server>/ni-grpc-device.caps.yml)
 
 #----------------------------------------------------------------------
