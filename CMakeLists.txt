@@ -319,11 +319,12 @@ function(GenerateGrpcSources)
   set(output_files "${GENERATE_ARGS_OUTPUT}")
   set(proto_file "${GENERATE_ARGS_PROTO}")
   if(USE_SUBMODULE_LIBS)
-    set(protobuf_includes_arg 
-      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
-      -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/ # for session.proto
-      -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/)
+    set(protobuf_includes_arg
+      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/)
   endif()
+  list(APPEND protobuf_includes_arg
+    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/ # for session.proto
+    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/)
   get_filename_component(proto_name "${proto_file}" NAME)
   get_filename_component(proto_path "${proto_file}" PATH)
   # Asssumption: all outputs are in the same directory: use the zero-th.
