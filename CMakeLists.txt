@@ -137,9 +137,18 @@ include_directories(
   "./generated"
   "./imports/include"
   "./source"
-  "./third_party/grpc-sideband/src"
-  "./third_party/grpc-sideband/moniker_src"
 )
+
+if(USE_SUBMODULE_LIBS)
+  include_directories(
+    "./third_party/grpc-sideband/src"
+    "./third_party/grpc-sideband/moniker_src"
+  )
+else()
+  find_path(GRPC_SIDEBAND_INCLUDE_DIR ni-grpc-sideband REQUIRED)
+  include_directories("${GRPC_SIDEBAND_INCLUDE_DIR}/ni-grpc-sideband")
+endif()
+
 if(WIN32)
   link_directories("./imports/lib/win64")
 endif()
