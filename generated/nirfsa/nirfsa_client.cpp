@@ -1624,6 +1624,25 @@ is_self_cal_valid(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+LoadConfigurationsFromFileResponse
+load_configurations_from_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = LoadConfigurationsFromFileRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_file_path(file_path);
+
+  auto response = LoadConfigurationsFromFileResponse{};
+
+  raise_if_error(
+      stub->LoadConfigurationsFromFile(&context, request, &response),
+      context);
+
+  return response;
+}
+
 PerformThermalCorrectionResponse
 perform_thermal_correction(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -1808,6 +1827,25 @@ revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->RevisionQuery(&context, request, &response),
+      context);
+
+  return response;
+}
+
+SaveConfigurationsToFileResponse
+save_configurations_to_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& file_path)
+{
+  ::grpc::ClientContext context;
+
+  auto request = SaveConfigurationsToFileRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+  request.set_file_path(file_path);
+
+  auto response = SaveConfigurationsToFileResponse{};
+
+  raise_if_error(
+      stub->SaveConfigurationsToFile(&context, request, &response),
       context);
 
   return response;

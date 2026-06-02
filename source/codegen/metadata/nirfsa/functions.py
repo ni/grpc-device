@@ -2056,6 +2056,26 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'LoadConfigurationsFromFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'LockSession': {
         'codegen_method': 'private',
         'parameters': [
@@ -2295,6 +2315,26 @@ functions = {
                     'value': 256
                 },
                 'type': 'ViChar[]'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'SaveConfigurationsToFile': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            },
+            {
+                'direction': 'in',
+                'name': 'filePath',
+                'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'

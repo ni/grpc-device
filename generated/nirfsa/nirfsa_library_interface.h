@@ -96,6 +96,7 @@ class NiRFSALibraryInterface {
   virtual ViStatus Initiate(ViSession vi) = 0;
   virtual ViStatus InvalidateAllAttributes(ViSession vi) = 0;
   virtual ViStatus IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps) = 0;
+  virtual ViStatus LoadConfigurationsFromFile(ViSession vi, ViConstString channelName, ViConstString filePath) = 0;
   virtual ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) = 0;
   virtual ViStatus PerformThermalCorrection(ViSession vi) = 0;
   virtual ViStatus ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct data[], ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo) = 0;
@@ -107,6 +108,7 @@ class NiRFSALibraryInterface {
   virtual ViStatus ResetWithDefaults(ViSession vi) = 0;
   virtual ViStatus ResetWithOptions(ViSession vi, ViUInt64 stepsToOmit) = 0;
   virtual ViStatus RevisionQuery(ViSession vi, ViChar driverRev[256], ViChar instrRev[256]) = 0;
+  virtual ViStatus SaveConfigurationsToFile(ViSession vi, ViConstString channelName, ViConstString filePath) = 0;
   virtual ViStatus SelfCal(ViSession vi) = 0;
   virtual ViStatus SelfCalibrate(ViSession vi, ViInt64 stepsToOmit) = 0;
   virtual ViStatus SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minReferenceLevel, ViReal64 maxReferenceLevel) = 0;

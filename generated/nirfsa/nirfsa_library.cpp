@@ -107,6 +107,7 @@ NiRFSALibrary::NiRFSALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.Initiate = reinterpret_cast<InitiatePtr>(shared_library_->get_function_pointer("niRFSA_Initiate"));
   function_pointers_.InvalidateAllAttributes = reinterpret_cast<InvalidateAllAttributesPtr>(shared_library_->get_function_pointer("niRFSA_InvalidateAllAttributes"));
   function_pointers_.IsSelfCalValid = reinterpret_cast<IsSelfCalValidPtr>(shared_library_->get_function_pointer("niRFSA_IsSelfCalValid"));
+  function_pointers_.LoadConfigurationsFromFile = reinterpret_cast<LoadConfigurationsFromFilePtr>(shared_library_->get_function_pointer("niRFSA_LoadConfigurationsFromFile"));
   function_pointers_.LockSession = reinterpret_cast<LockSessionPtr>(shared_library_->get_function_pointer("niRFSA_LockSession"));
   function_pointers_.PerformThermalCorrection = reinterpret_cast<PerformThermalCorrectionPtr>(shared_library_->get_function_pointer("niRFSA_PerformThermalCorrection"));
   function_pointers_.ReadIQSingleRecordComplexF64 = reinterpret_cast<ReadIQSingleRecordComplexF64Ptr>(shared_library_->get_function_pointer("niRFSA_ReadIQSingleRecordComplexF64"));
@@ -118,6 +119,7 @@ NiRFSALibrary::NiRFSALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.ResetWithDefaults = reinterpret_cast<ResetWithDefaultsPtr>(shared_library_->get_function_pointer("niRFSA_ResetWithDefaults"));
   function_pointers_.ResetWithOptions = reinterpret_cast<ResetWithOptionsPtr>(shared_library_->get_function_pointer("niRFSA_ResetWithOptions"));
   function_pointers_.RevisionQuery = reinterpret_cast<RevisionQueryPtr>(shared_library_->get_function_pointer("niRFSA_revision_query"));
+  function_pointers_.SaveConfigurationsToFile = reinterpret_cast<SaveConfigurationsToFilePtr>(shared_library_->get_function_pointer("niRFSA_SaveConfigurationsToFile"));
   function_pointers_.SelfCal = reinterpret_cast<SelfCalPtr>(shared_library_->get_function_pointer("niRFSA_SelfCal"));
   function_pointers_.SelfCalibrate = reinterpret_cast<SelfCalibratePtr>(shared_library_->get_function_pointer("niRFSA_SelfCalibrate"));
   function_pointers_.SelfCalibrateRange = reinterpret_cast<SelfCalibrateRangePtr>(shared_library_->get_function_pointer("niRFSA_SelfCalibrateRange"));
@@ -785,6 +787,14 @@ ViStatus NiRFSALibrary::IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, Vi
   return function_pointers_.IsSelfCalValid(vi, selfCalValid, validSteps);
 }
 
+ViStatus NiRFSALibrary::LoadConfigurationsFromFile(ViSession vi, ViConstString channelName, ViConstString filePath)
+{
+  if (!function_pointers_.LoadConfigurationsFromFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_LoadConfigurationsFromFile.");
+  }
+  return function_pointers_.LoadConfigurationsFromFile(vi, channelName, filePath);
+}
+
 ViStatus NiRFSALibrary::LockSession(ViSession vi, ViBoolean* callerHasLock)
 {
   if (!function_pointers_.LockSession) {
@@ -871,6 +881,14 @@ ViStatus NiRFSALibrary::RevisionQuery(ViSession vi, ViChar driverRev[256], ViCha
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_revision_query.");
   }
   return function_pointers_.RevisionQuery(vi, driverRev, instrRev);
+}
+
+ViStatus NiRFSALibrary::SaveConfigurationsToFile(ViSession vi, ViConstString channelName, ViConstString filePath)
+{
+  if (!function_pointers_.SaveConfigurationsToFile) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_SaveConfigurationsToFile.");
+  }
+  return function_pointers_.SaveConfigurationsToFile(vi, channelName, filePath);
 }
 
 ViStatus NiRFSALibrary::SelfCal(ViSession vi)

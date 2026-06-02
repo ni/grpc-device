@@ -147,6 +147,7 @@ extern "C" {
 #define NIRFSA_ATTR_DIGITIZER_SAMPLE_CLOCK_TIMEBASE_RATE   /* ViReal64    */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 22L)
 #define NIRFSA_ATTR_PXI_CHASSIS_CLK10_SOURCE               /* ViString    */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 23L)
 #define NIRFSA_ATTR_EXPORTED_REF_CLOCK_OUTPUT_TERMINAL     /* ViString    */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 72L)
+#define NIRFSA_ATTR_EXPORTED_REF_CLOCK_RATE                /* ViReal64    */   (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 326L)
 #define NIRFSA_ATTR_DIGITIZER_SAMPLE_CLOCK_RATE                      /* ViReal64 */ (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 228L)
 #define NIRFSA_ATTR_EXPORTED_DIGITIZER_SAMPLE_CLOCK_OUTPUT_TERMINAL  /* ViString */ (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 229L)
 
@@ -380,6 +381,11 @@ extern "C" {
 #define NIRFSA_ATTR_DEEMBEDDING_SELECTED_TABLE                /*ViString     */     (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 308L)
 #define NIRFSA_ATTR_DEEMBEDDING_COMPENSATION_GAIN             /*ViReal64     */     (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 325L)
 
+#define NIRFSA_ATTR_SELECTED_PATH                             /* ViString */        (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 331L)
+#define NIRFSA_ATTR_AVAILABLE_PATHS                           /* ViString */        (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 332L)
+
+#define NIRFSA_ATTR_LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS            /*ViInt32*/          (IVI_SPECIFIC_PUBLIC_ATTR_BASE + 337L)
+
 /****************************************************************************
  *------ Device-Specific Attribute Value Defines (5644R/5645R/5646R) -------*
  ****************************************************************************/
@@ -571,6 +577,15 @@ extern "C" {
 #define NIRFSA_VAL_USER_SOURCE5_STR                    "UserSource5"
 #define NIRFSA_VAL_USER_SOURCE6_STR                    "UserSource6"
 #define NIRFSA_VAL_USER_SOURCE7_STR                    "UserSource7"
+#define NIRFSA_VAL_PULSE_IN_STR                        "PulseIn"
+#define NIRFSA_VAL_DIO0_STR                            "DIO/PFI0"
+#define NIRFSA_VAL_DIO1_STR                            "DIO/PFI1"
+#define NIRFSA_VAL_DIO2_STR                            "DIO/PFI2"
+#define NIRFSA_VAL_DIO3_STR                            "DIO/PFI3"
+#define NIRFSA_VAL_DIO4_STR                            "DIO/PFI4"
+#define NIRFSA_VAL_DIO5_STR                            "DIO/PFI5"
+#define NIRFSA_VAL_DIO6_STR                            "DIO/PFI6"
+#define NIRFSA_VAL_DIO7_STR                            "DIO/PFI7"
 
 /*- Values for NIRFSA_ATTR_CONFIGURATION_LIST_STEP_TRIGGER_SOURCE -*/
 /* #define NIRFSA_VAL_TIMER_EVENT_STR                     "TimerEvent" (Defined Above) */
@@ -764,6 +779,7 @@ extern "C" {
 #define NIRFSA_VAL_DEEMBEDDING_TYPE_NONE                          3900
 #define NIRFSA_VAL_DEEMBEDDING_TYPE_SCALAR                        3901
 #define NIRFSA_VAL_DEEMBEDDING_TYPE_VECTOR                        3902
+#define NIRFSA_VAL_DEEMBEDDING_TYPE_AMPLITUDE_FLATNESS            3903
 
 /*- Values for niRFSA_ConfigureDeembeddingTableInterpolationLinear -*/
 #define NIRFSA_VAL_LINEAR_INTERPOLATION_FORMAT_REAL_AND_IMAGINARY      4000
@@ -782,6 +798,10 @@ extern "C" {
 /*- Values for NIRFSA_ATTR_USER_SOURCE_PULSE_WIDTH_UNITS -*/
 #define NIRFSA_VAL_PULSE_WIDTH_UNITS_SECONDS       6200
 #define NIRFSA_VAL_PULSE_WIDTH_UNITS_CLOCK_PERIODS 6201
+
+/*- Values for NIRFSA_ATTR_LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS -*/
+#define NIRFSA_VAL_LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS_SKIP_NONE                0x0ULL
+#define NIRFSA_VAL_LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS_SKIP_DEEMBEDDING_TABLES  0x2ULL
 
 /*- SMT Structures -----------------------------------------------*/
 #if kRFSA_32BitPlatform
@@ -1047,6 +1067,20 @@ ViStatus _VI_FUNC niRFSA_ResetWithDefaults(
 ViStatus _VI_FUNC niRFSA_InvalidateAllAttributes(
    ViSession vi);
 
+/* Save Load Functions --------------------------------------*/
+ViStatus _VI_FUNC niRFSA_SaveConfigurationsToFile
+(
+   ViSession vi,
+   ViConstString channelName,
+   ViConstString filePath
+);
+
+ViStatus _VI_FUNC niRFSA_LoadConfigurationsFromFile
+(
+   ViSession vi,
+   ViConstString channelName,
+   ViConstString filePath
+);
 
 /*- Error Functions --------------------------------------------------------*/
 ViStatus _VI_FUNC niRFSA_GetError(
@@ -1241,28 +1275,12 @@ typedef struct niRFSA_coefficientInfo_struct
 } niRFSA_coefficientInfo;
 #pragma pack(pop)
 
-#if kRFSA_32BitPlatform
-   #pragma pack(push, 2)
-#elif kRFSA_64BitPlatform
-   // Nothing needed for 64 bit platforms
-#else
-   #error Unknown Platform
-#endif
-
 #if !defined(_NIComplexI16)
 #define _NIComplexI16
 typedef struct NIComplexI16_struct {
    ViInt16 real;
    ViInt16 imaginary;
 } NIComplexI16;
-#endif
-
-#if kRFSA_32BitPlatform
-   #pragma pack(pop)
-#elif kRFSA_64BitPlatform
-   // Nothing needed for 64 bit platforms
-#else
-   #error Unknown Platform
 #endif
 
 
