@@ -676,6 +676,15 @@ add_custom_command(
             $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
 
 #----------------------------------------------------------------------
+# Copy server_nitlsconfig.json to binary output directory
+#----------------------------------------------------------------------
+add_custom_command(
+   TARGET ni_grpc_device_server POST_BUILD
+   COMMAND  ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_SOURCE_DIR}/source/config/server_nitlsconfig.json
+            $<TARGET_FILE_DIR:ni_grpc_device_server>/server_nitlsconfig.json)
+
+#----------------------------------------------------------------------
 # Copy ni-grpc-device.conf.yml to binary output directory
 #----------------------------------------------------------------------
 add_custom_command(
