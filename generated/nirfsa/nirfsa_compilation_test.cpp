@@ -407,6 +407,11 @@ ViStatus IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, ViInt64* validSte
   return niRFSA_IsSelfCalValid(vi, selfCalValid, validSteps);
 }
 
+ViStatus LoadConfigurationsFromFile(ViSession vi, ViConstString channelName, ViConstString filePath)
+{
+  return niRFSA_LoadConfigurationsFromFile(vi, channelName, filePath);
+}
+
 ViStatus PerformThermalCorrection(ViSession vi)
 {
   return niRFSA_PerformThermalCorrection(vi);
@@ -455,6 +460,11 @@ ViStatus ResetWithOptions(ViSession vi, ViUInt64 stepsToOmit)
 ViStatus RevisionQuery(ViSession vi, ViChar driverRev[256], ViChar instrRev[256])
 {
   return niRFSA_revision_query(vi, driverRev, instrRev);
+}
+
+ViStatus SaveConfigurationsToFile(ViSession vi, ViConstString channelName, ViConstString filePath)
+{
+  return niRFSA_SaveConfigurationsToFile(vi, channelName, filePath);
 }
 
 ViStatus SelfCal(ViSession vi)

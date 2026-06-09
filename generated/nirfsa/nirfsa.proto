@@ -97,6 +97,7 @@ service NiRFSA {
   rpc Initiate(InitiateRequest) returns (InitiateResponse);
   rpc InvalidateAllAttributes(InvalidateAllAttributesRequest) returns (InvalidateAllAttributesResponse);
   rpc IsSelfCalValid(IsSelfCalValidRequest) returns (IsSelfCalValidResponse);
+  rpc LoadConfigurationsFromFile(LoadConfigurationsFromFileRequest) returns (LoadConfigurationsFromFileResponse);
   rpc PerformThermalCorrection(PerformThermalCorrectionRequest) returns (PerformThermalCorrectionResponse);
   rpc ReadIQSingleRecordComplexF64(ReadIQSingleRecordComplexF64Request) returns (ReadIQSingleRecordComplexF64Response);
   rpc ReadPowerSpectrumF32(ReadPowerSpectrumF32Request) returns (ReadPowerSpectrumF32Response);
@@ -107,6 +108,7 @@ service NiRFSA {
   rpc ResetWithDefaults(ResetWithDefaultsRequest) returns (ResetWithDefaultsResponse);
   rpc ResetWithOptions(ResetWithOptionsRequest) returns (ResetWithOptionsResponse);
   rpc RevisionQuery(RevisionQueryRequest) returns (RevisionQueryResponse);
+  rpc SaveConfigurationsToFile(SaveConfigurationsToFileRequest) returns (SaveConfigurationsToFileResponse);
   rpc SelfCal(SelfCalRequest) returns (SelfCalResponse);
   rpc SelfCalibrate(SelfCalibrateRequest) returns (SelfCalibrateResponse);
   rpc SelfCalibrateRange(SelfCalibrateRangeRequest) returns (SelfCalibrateRangeResponse);
@@ -375,6 +377,14 @@ enum NiRFSAAttribute {
   NIRFSA_ATTRIBUTE_USER_SOURCE_PULSE_WIDTH = 1150322;
   NIRFSA_ATTRIBUTE_FIXED_GROUP_DELAY_ACROSS_PORTS = 1150324;
   NIRFSA_ATTRIBUTE_DEEMBEDDING_COMPENSATION_GAIN = 1150325;
+  NIRFSA_ATTRIBUTE_EXPORTED_REF_CLOCK_RATE = 1150326;
+  NIRFSA_ATTRIBUTE_SELECTED_PATH = 1150331;
+  NIRFSA_ATTRIBUTE_AVAILABLE_PATHS = 1150332;
+  NIRFSA_ATTRIBUTE_CREATED_SESSION_CHANNEL = 1150333;
+  NIRFSA_ATTRIBUTE_MIN_FUNDAMENTAL_SILO_FREQUENCY = 1150334;
+  NIRFSA_ATTRIBUTE_MAX_FUNDAMENTAL_SILO_FREQUENCY = 1150335;
+  NIRFSA_ATTRIBUTE_LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS = 1150337;
+  NIRFSA_ATTRIBUTE_ASSOC_AUX_SWITCH_GAIN_UID = 1150356;
 }
 
 enum AcquisitionType {
@@ -1651,6 +1661,16 @@ message IsSelfCalValidResponse {
   int64 valid_steps_raw = 4;
 }
 
+message LoadConfigurationsFromFileRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string file_path = 3;
+}
+
+message LoadConfigurationsFromFileResponse {
+  int32 status = 1;
+}
+
 message PerformThermalCorrectionRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1752,6 +1772,16 @@ message RevisionQueryResponse {
   int32 status = 1;
   string driver_rev = 2;
   string instr_rev = 3;
+}
+
+message SaveConfigurationsToFileRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+  string file_path = 3;
+}
+
+message SaveConfigurationsToFileResponse {
+  int32 status = 1;
 }
 
 message SelfCalRequest {

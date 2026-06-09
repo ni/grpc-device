@@ -97,6 +97,7 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, Initiate, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, InvalidateAllAttributes, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, IsSelfCalValid, (ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps), (override));
+  MOCK_METHOD(ViStatus, LoadConfigurationsFromFile, (ViSession vi, ViConstString channelName, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, LockSession, (ViSession vi, ViBoolean* callerHasLock), (override));
   MOCK_METHOD(ViStatus, PerformThermalCorrection, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ReadIQSingleRecordComplexF64, (ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct data[], ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo), (override));
@@ -108,6 +109,7 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, ResetWithDefaults, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, ResetWithOptions, (ViSession vi, ViUInt64 stepsToOmit), (override));
   MOCK_METHOD(ViStatus, RevisionQuery, (ViSession vi, ViChar driverRev[256], ViChar instrRev[256]), (override));
+  MOCK_METHOD(ViStatus, SaveConfigurationsToFile, (ViSession vi, ViConstString channelName, ViConstString filePath), (override));
   MOCK_METHOD(ViStatus, SelfCal, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, SelfCalibrate, (ViSession vi, ViInt64 stepsToOmit), (override));
   MOCK_METHOD(ViStatus, SelfCalibrateRange, (ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minReferenceLevel, ViReal64 maxReferenceLevel), (override));

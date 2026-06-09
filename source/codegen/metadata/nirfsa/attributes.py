@@ -2115,5 +2115,45 @@ attributes = {
         'access': 'read-write',
         'name': 'DEEMBEDDING_COMPENSATION_GAIN',
         'type': 'ViReal64'
+    },
+    1150326: {
+        'access': 'read-write',
+        'name': 'EXPORTED_REF_CLOCK_RATE',
+        'type': 'ViReal64'
+    },
+    1150331: {
+        'access': 'read-write',
+        'name': 'SELECTED_PATH',
+        'type': 'ViString'
+    },
+    1150332: {
+        'access': 'read only',
+        'name': 'AVAILABLE_PATHS',
+        'type': 'ViString'
+    },
+    1150333: {
+        'access': 'read-write',
+        'name': 'CREATED_SESSION_CHANNEL',
+        'type': 'ViInt32'
+    },
+    1150334: {
+        'access': 'read only',
+        'name': 'MIN_FUNDAMENTAL_SILO_FREQUENCY',
+        'type': 'ViReal64'
+    },
+    1150335: {
+        'access': 'read only',
+        'name': 'MAX_FUNDAMENTAL_SILO_FREQUENCY',
+        'type': 'ViReal64'
+    },
+    1150337: {
+        'access': 'read-write',
+        'name': 'LOAD_CONFIGURATIONS_FROM_FILE_RESET_OPTIONS',
+        'type': 'ViInt32'
+    },
+    1150356: {
+        'access': 'read only',
+        'name': 'ASSOC_AUX_SWITCH_GAIN_UID',
+        'type': 'ViInt32'
     }
 }
