@@ -451,6 +451,22 @@ enums = {
             }
         ]
     },
+    'CorrectionSwitchPortsMultipathCalibration': {
+        'values': [
+            {
+                'name': 'AUTO',
+                'value': 0
+            },
+            {
+                'name': 'DISABLED',
+                'value': 1
+            },
+            {
+                'name': 'ENABLED',
+                'value': 2
+            }
+        ]
+    },
     'DigitalEdgeTriggerEdge': {
         'values': [
             {
@@ -706,6 +722,10 @@ enums = {
             {
                 'name': 'IQ',
                 'value': 4
+            },
+            {
+                'name': 'INTEGRATEDPOWER',
+                'value': 8
             }
         ]
     },

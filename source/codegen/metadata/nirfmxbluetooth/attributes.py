@@ -214,6 +214,17 @@ attributes = {
         'name': 'DETECTED_PACKET_FORMAT',
         'type': 'int32'
     },
+    11534404: {
+        'access': 'read-write',
+        'name': 'POWERRAMP_RESULTS_40DB_RISE_TIME_MEAN',
+        'type': 'float64'
+    },
+    11534405: {
+        'access': 'read-write',
+        'enum': 'FrequencyBand',
+        'name': 'FREQUENCY_BAND',
+        'type': 'int32'
+    },
     11538428: {
         'access': 'read-write',
         'name': 'REFERENCE_LEVEL_HEADROOM',
