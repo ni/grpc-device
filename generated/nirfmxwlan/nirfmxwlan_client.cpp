@@ -473,14 +473,21 @@ cfg_channel_bandwidth(const StubPtr& stub, const nidevice_grpc::Session& instrum
 }
 
 CfgDigitalEdgeTriggerResponse
-cfg_digital_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& digital_edge_source, const simple_variant<DigitalEdgeTriggerEdge, pb::int32>& digital_edge, const double& trigger_delay, const pb::int32& enable_trigger)
+cfg_digital_edge_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<DigitalEdgeTriggerSource, std::string>& digital_edge_source, const simple_variant<DigitalEdgeTriggerEdge, pb::int32>& digital_edge, const double& trigger_delay, const pb::int32& enable_trigger)
 {
   ::grpc::ClientContext context;
 
   auto request = CfgDigitalEdgeTriggerRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_digital_edge_source(digital_edge_source);
+  const auto digital_edge_source_ptr = digital_edge_source.get_if<DigitalEdgeTriggerSource>();
+  const auto digital_edge_source_raw_ptr = digital_edge_source.get_if<std::string>();
+  if (digital_edge_source_ptr) {
+    request.set_digital_edge_source_mapped(*digital_edge_source_ptr);
+  }
+  else if (digital_edge_source_raw_ptr) {
+    request.set_digital_edge_source_raw(*digital_edge_source_raw_ptr);
+  }
   const auto digital_edge_ptr = digital_edge.get_if<DigitalEdgeTriggerEdge>();
   const auto digital_edge_raw_ptr = digital_edge.get_if<pb::int32>();
   if (digital_edge_ptr) {

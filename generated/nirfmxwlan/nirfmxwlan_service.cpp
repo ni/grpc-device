@@ -919,8 +919,28 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      auto digital_edge_source_mbcs = convert_from_grpc<std::string>(request->digital_edge_source());
-      char* digital_edge_source = (char*)digital_edge_source_mbcs.c_str();
+      char* digital_edge_source;
+      std::string digital_edge_source_buffer;
+      switch (request->digital_edge_source_enum_case()) {
+        case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceMapped: {
+          auto digital_edge_source_imap_it = digitaledgetriggersource_input_map_.find(request->digital_edge_source_mapped());
+          if (digital_edge_source_imap_it == digitaledgetriggersource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge_source_mapped was not specified or out of range.");
+          }
+          digital_edge_source = const_cast<char*>((digital_edge_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceRaw: {
+          digital_edge_source_buffer = convert_from_grpc<std::string>(request->digital_edge_source_raw());
+          digital_edge_source = const_cast<char*>(digital_edge_source_buffer.c_str());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::DIGITAL_EDGE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge_source was not specified or out of range");
+          break;
+        }
+      }
+
       int32 digital_edge;
       switch (request->digital_edge_enum_case()) {
         case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdge: {

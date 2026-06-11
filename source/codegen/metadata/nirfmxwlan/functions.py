@@ -979,6 +979,7 @@ functions = {
             },
             {
                 'direction': 'in',
+                'enum': 'DigitalEdgeTriggerSource',
                 'name': 'digitalEdgeSource',
                 'type': 'char[]'
             },

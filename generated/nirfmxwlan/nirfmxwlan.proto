@@ -673,6 +673,32 @@ enum DigitalEdgeTriggerEdge {
   DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
 }
 
+enum DigitalEdgeTriggerSource {
+  DIGITAL_EDGE_TRIGGER_SOURCE_UNSPECIFIED = 0;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PFI0 = 1;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PFI1 = 2;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0 = 3;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG1 = 4;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG2 = 5;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG3 = 6;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG4 = 7;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG5 = 8;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG6 = 9;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG7 = 10;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
+  DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
+  DIGITAL_EDGE_TRIGGER_SOURCE_PULSE_IN = 14;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI0 = 15;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI1 = 16;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI2 = 17;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI3 = 18;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI4 = 19;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI5 = 20;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI6 = 21;
+  DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI7 = 22;
+}
+
 enum DsssModAccAcquisitionLengthMode {
   DSSSMODACC_ACQUISITION_LENGTH_MODE_MANUAL = 0;
   DSSSMODACC_ACQUISITION_LENGTH_MODE_AUTO = 1;
@@ -1521,13 +1547,16 @@ message CfgChannelBandwidthResponse {
 message CfgDigitalEdgeTriggerRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  string digital_edge_source = 3;
-  oneof digital_edge_enum {
-    DigitalEdgeTriggerEdge digital_edge = 4;
-    int32 digital_edge_raw = 5;
+  oneof digital_edge_source_enum {
+    DigitalEdgeTriggerSource digital_edge_source_mapped = 3;
+    string digital_edge_source_raw = 4;
   }
-  double trigger_delay = 6;
-  int32 enable_trigger = 7;
+  oneof digital_edge_enum {
+    DigitalEdgeTriggerEdge digital_edge = 5;
+    int32 digital_edge_raw = 6;
+  }
+  double trigger_delay = 7;
+  int32 enable_trigger = 8;
 }
 
 message CfgDigitalEdgeTriggerResponse {
