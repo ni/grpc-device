@@ -587,6 +587,72 @@ namespace nirfmxinstr_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::CfgSParameterExternalAttenuationTableSplit(::grpc::ServerContext* context, const CfgSParameterExternalAttenuationTableSplitRequest* request, CfgSParameterExternalAttenuationTableSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
+      auto frequency = const_cast<float64*>(request->frequency().data());
+      auto frequency_array_size_determine_from_sizes = std::array<int, 3>
+      {
+        request->frequency_size(),
+        request->s_parameters_i_size(),
+        request->s_parameters_q_size()
+      };
+      const auto frequency_array_size_size_calculation = calculate_linked_array_size(frequency_array_size_determine_from_sizes, true);
+
+      if (frequency_array_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, s_parameters_i, s_parameters_q] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (frequency_array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        frequency = request->frequency_size() ? std::move(frequency) : nullptr;
+        s_parameters_i = request->s_parameters_i_size() ? std::move(s_parameters_i) : nullptr;
+        s_parameters_q = request->s_parameters_q_size() ? std::move(s_parameters_q) : nullptr;
+      }
+      auto frequency_array_size = frequency_array_size_size_calculation.size;
+
+      auto s_parameters_i = const_cast<float64*>(request->s_parameters_i().data());
+      auto s_parameters_q = const_cast<float64*>(request->s_parameters_q().data());
+      int32 s_parameter_table_size = request->s_parameter_table_size();
+      int32 number_of_ports = request->number_of_ports();
+      int32 s_parameter_orientation;
+      switch (request->s_parameter_orientation_enum_case()) {
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTableSplitRequest::SParameterOrientationEnumCase::kSParameterOrientation: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTableSplitRequest::SParameterOrientationEnumCase::kSParameterOrientationRaw: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTableSplitRequest::SParameterOrientationEnumCase::S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgSParameterExternalAttenuationTableSplit(instrument, selector_string, table_name, frequency, frequency_array_size, s_parameters_i, s_parameters_q, s_parameter_table_size, number_of_ports, s_parameter_orientation);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxInstrService::CfgSParameterExternalAttenuationType(::grpc::ServerContext* context, const CfgSParameterExternalAttenuationTypeRequest* request, CfgSParameterExternalAttenuationTypeResponse* response)
   {
     if (context->IsCancelled()) {
@@ -983,6 +1049,57 @@ namespace nirfmxinstr_grpc {
         response->set_dx(dx);
         response->mutable_data()->Resize(actual_array_size * 2, 0);
         response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::FetchRawIQDataSplit(::grpc::ServerContext* context, const FetchRawIQDataSplitRequest* request, FetchRawIQDataSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 records_to_fetch = request->records_to_fetch();
+      int64 samples_to_read = request->samples_to_read();
+      auto reserved = nullptr;
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchRawIQDataSplit(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, nullptr, nullptr, 0, &actual_array_size, reserved);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_data_i()->Resize(actual_array_size, 0);
+        float32* data_i = response->mutable_data_i()->mutable_data();
+        response->mutable_data_q()->Resize(actual_array_size, 0);
+        float32* data_q = response->mutable_data_q()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchRawIQDataSplit(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, data_i, data_q, array_size, &actual_array_size, reserved);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_data_i()->Resize(actual_array_size, 0);
+        response->mutable_data_q()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
