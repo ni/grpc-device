@@ -537,5 +537,10 @@ attributes = {
         'access': 'read-write',
         'name': 'LO_SPLITTER_LOSS',
         'type': 'float64[]'
+    },
+    188: {
+        'access': 'read-write',
+        'name': 'FIXED_GROUP_DELAY_ACROSS_PORTS',
+        'type': 'char[]'
     }
 }

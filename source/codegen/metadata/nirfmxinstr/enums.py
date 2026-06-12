@@ -687,6 +687,14 @@ enums = {
     'SParameterType': {
         'values': [
             {
+                'name': 'AMPLITUDE_AND_PHASE_FLATNESS',
+                'value': 4
+            },
+            {
+                'name': 'AMPLITUDE_FLATNESS',
+                'value': 3
+            },
+            {
                 'name': 'SCALAR',
                 'value': 1
             },
