@@ -3522,6 +3522,25 @@ ofdm_mod_acc_fetch_ru_offset_and_size(const StubPtr& stub, const nidevice_grpc::
   return response;
 }
 
+OFDMModAccFetchReferenceDataConstellationTraceResponse
+ofdm_mod_acc_fetch_reference_data_constellation_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchReferenceDataConstellationTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchReferenceDataConstellationTraceResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchReferenceDataConstellationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQResponse
 ofdm_mod_acc_fetch_reference_data_constellation_trace_interleaved_iq(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

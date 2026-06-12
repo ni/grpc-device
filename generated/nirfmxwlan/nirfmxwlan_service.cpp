@@ -6359,6 +6359,53 @@ namespace nirfmxwlan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchReferenceDataConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchReferenceDataConstellationTraceRequest* request, OFDMModAccFetchReferenceDataConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchReferenceDataConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexSingle> reference_data_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchReferenceDataConstellationTrace(instrument, selector_string, timeout, reference_data_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(reference_data_constellation, response->mutable_reference_data_constellation());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_reference_data_constellation()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_reference_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQRequest* request, OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQResponse* response)
   {
     if (context->IsCancelled()) {

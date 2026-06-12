@@ -189,6 +189,7 @@ service NiRFmxWLAN {
   rpc OFDMModAccFetchPreamblePeakPowers80211n(OFDMModAccFetchPreamblePeakPowers80211nRequest) returns (OFDMModAccFetchPreamblePeakPowers80211nResponse);
   rpc OFDMModAccFetchPreamblePeakPowersCommon(OFDMModAccFetchPreamblePeakPowersCommonRequest) returns (OFDMModAccFetchPreamblePeakPowersCommonResponse);
   rpc OFDMModAccFetchRUOffsetAndSize(OFDMModAccFetchRUOffsetAndSizeRequest) returns (OFDMModAccFetchRUOffsetAndSizeResponse);
+  rpc OFDMModAccFetchReferenceDataConstellationTrace(OFDMModAccFetchReferenceDataConstellationTraceRequest) returns (OFDMModAccFetchReferenceDataConstellationTraceResponse);
   rpc OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ(OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQRequest) returns (OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQResponse);
   rpc OFDMModAccFetchReferenceDataConstellationTraceSplit(OFDMModAccFetchReferenceDataConstellationTraceSplitRequest) returns (OFDMModAccFetchReferenceDataConstellationTraceSplitResponse);
   rpc OFDMModAccFetchSIGBCRCStatus(OFDMModAccFetchSIGBCRCStatusRequest) returns (OFDMModAccFetchSIGBCRCStatusResponse);
@@ -3399,6 +3400,18 @@ message OFDMModAccFetchRUOffsetAndSizeResponse {
   int32 status = 1;
   int32 ru_offset = 2;
   int32 ru_size = 3;
+}
+
+message OFDMModAccFetchReferenceDataConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchReferenceDataConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 reference_data_constellation = 2;
+  int32 actual_array_size = 3;
 }
 
 message OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQRequest {

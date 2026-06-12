@@ -193,6 +193,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   int32 OFDMModAccFetchPreamblePeakPowers80211n(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* htsigPeakPowerMaximum, float64* htstfPeakPowerMaximum, float64* htdltfPeakPowerMaximum, float64* hteltfPeakPowerMaximum) override;
   int32 OFDMModAccFetchPreamblePeakPowersCommon(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* lstfPeakPowerMaximum, float64* lltfPeakPowerMaximum, float64* lsigPeakPowerMaximum) override;
   int32 OFDMModAccFetchRUOffsetAndSize(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* ruOffset, int32* ruSize) override;
+  int32 OFDMModAccFetchReferenceDataConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle referenceDataConstellation[], int32 arraySize, int32* actualArraySize) override;
   int32 OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 referenceDataConstellation[], int32 arraySize, int32* actualArraySize) override;
   int32 OFDMModAccFetchReferenceDataConstellationTraceSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 referenceDataConstellationI[], float32 referenceDataConstellationQ[], int32 arraySize, int32* actualArraySize) override;
   int32 OFDMModAccFetchSIGBCRCStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* sigbcrcStatus) override;
@@ -453,6 +454,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   using OFDMModAccFetchPreamblePeakPowers80211nPtr = decltype(&RFmxWLAN_OFDMModAccFetchPreamblePeakPowers802_11n);
   using OFDMModAccFetchPreamblePeakPowersCommonPtr = decltype(&RFmxWLAN_OFDMModAccFetchPreamblePeakPowersCommon);
   using OFDMModAccFetchRUOffsetAndSizePtr = decltype(&RFmxWLAN_OFDMModAccFetchRUOffsetAndSize);
+  using OFDMModAccFetchReferenceDataConstellationTracePtr = decltype(&RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTrace);
   using OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQPtr = decltype(&RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTrace);
   using OFDMModAccFetchReferenceDataConstellationTraceSplitPtr = decltype(&RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTraceSplit);
   using OFDMModAccFetchSIGBCRCStatusPtr = decltype(&RFmxWLAN_OFDMModAccFetchSIGBCRCStatus);
@@ -713,6 +715,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
     OFDMModAccFetchPreamblePeakPowers80211nPtr OFDMModAccFetchPreamblePeakPowers80211n;
     OFDMModAccFetchPreamblePeakPowersCommonPtr OFDMModAccFetchPreamblePeakPowersCommon;
     OFDMModAccFetchRUOffsetAndSizePtr OFDMModAccFetchRUOffsetAndSize;
+    OFDMModAccFetchReferenceDataConstellationTracePtr OFDMModAccFetchReferenceDataConstellationTrace;
     OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQPtr OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ;
     OFDMModAccFetchReferenceDataConstellationTraceSplitPtr OFDMModAccFetchReferenceDataConstellationTraceSplit;
     OFDMModAccFetchSIGBCRCStatusPtr OFDMModAccFetchSIGBCRCStatus;
