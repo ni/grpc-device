@@ -600,28 +600,26 @@ namespace nirfmxinstr_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       char* table_name = (char*)table_name_mbcs.c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
-      auto frequency_array_size_determine_from_sizes = std::array<int, 3>
+      int32 frequency_array_size = static_cast<int32>(request->frequency().size());
+      auto s_parameters_i = const_cast<float64*>(request->s_parameters_i().data());
+      auto s_parameters_q = const_cast<float64*>(request->s_parameters_q().data());
+      auto s_parameter_table_size_determine_from_sizes = std::array<int, 2>
       {
-        request->frequency_size(),
         request->s_parameters_i_size(),
         request->s_parameters_q_size()
       };
-      const auto frequency_array_size_size_calculation = calculate_linked_array_size(frequency_array_size_determine_from_sizes, true);
+      const auto s_parameter_table_size_size_calculation = calculate_linked_array_size(s_parameter_table_size_determine_from_sizes, true);
 
-      if (frequency_array_size_size_calculation.match_state == MatchState::MISMATCH) {
-        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [frequency, s_parameters_i, s_parameters_q] do not match");
+      if (s_parameter_table_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [s_parameters_i, s_parameters_q] do not match");
       }
       // NULL out optional params with zero sizes.
-      if (frequency_array_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
-        frequency = request->frequency_size() ? std::move(frequency) : nullptr;
+      if (s_parameter_table_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
         s_parameters_i = request->s_parameters_i_size() ? std::move(s_parameters_i) : nullptr;
         s_parameters_q = request->s_parameters_q_size() ? std::move(s_parameters_q) : nullptr;
       }
-      auto frequency_array_size = frequency_array_size_size_calculation.size;
+      auto s_parameter_table_size = s_parameter_table_size_size_calculation.size;
 
-      auto s_parameters_i = const_cast<float64*>(request->s_parameters_i().data());
-      auto s_parameters_q = const_cast<float64*>(request->s_parameters_q().data());
-      int32 s_parameter_table_size = request->s_parameter_table_size();
       int32 number_of_ports = request->number_of_ports();
       int32 s_parameter_orientation;
       switch (request->s_parameter_orientation_enum_case()) {

@@ -641,11 +641,10 @@ message CfgSParameterExternalAttenuationTableSplitRequest {
   repeated double frequency = 4;
   repeated double s_parameters_i = 5;
   repeated double s_parameters_q = 6;
-  int32 s_parameter_table_size = 7;
-  int32 number_of_ports = 8;
+  int32 number_of_ports = 7;
   oneof s_parameter_orientation_enum {
-    SParameterOrientation s_parameter_orientation = 9;
-    int32 s_parameter_orientation_raw = 10;
+    SParameterOrientation s_parameter_orientation = 8;
+    int32 s_parameter_orientation_raw = 9;
   }
 }
 

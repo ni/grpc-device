@@ -496,9 +496,6 @@ functions = {
                 'name': 'frequency',
                 'size': {
                     'mechanism': 'len',
-                    'tags': [
-                        'optional'
-                    ],
                     'value': 'frequencyArraySize'
                 },
                 'type': 'float64[]'
@@ -516,7 +513,7 @@ functions = {
                     'tags': [
                         'optional'
                     ],
-                    'value': 'frequencyArraySize'
+                    'value': 'sParameterTableSize'
                 },
                 'type': 'float64[]'
             },
@@ -528,7 +525,7 @@ functions = {
                     'tags': [
                         'optional'
                     ],
-                    'value': 'frequencyArraySize'
+                    'value': 'sParameterTableSize'
                 },
                 'type': 'float64[]'
             },

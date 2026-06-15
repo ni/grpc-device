@@ -336,7 +336,7 @@ cfg_s_parameter_external_attenuation_table_interleaved_iq(const StubPtr& stub, c
 }
 
 CfgSParameterExternalAttenuationTableSplitResponse
-cfg_s_parameter_external_attenuation_table_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& frequency, const std::vector<double>& s_parameters_i, const std::vector<double>& s_parameters_q, const pb::int32& s_parameter_table_size, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
+cfg_s_parameter_external_attenuation_table_split(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& table_name, const std::vector<double>& frequency, const std::vector<double>& s_parameters_i, const std::vector<double>& s_parameters_q, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& s_parameter_orientation)
 {
   ::grpc::ClientContext context;
 
@@ -347,7 +347,6 @@ cfg_s_parameter_external_attenuation_table_split(const StubPtr& stub, const nide
   copy_array(frequency, request.mutable_frequency());
   copy_array(s_parameters_i, request.mutable_s_parameters_i());
   copy_array(s_parameters_q, request.mutable_s_parameters_q());
-  request.set_s_parameter_table_size(s_parameter_table_size);
   request.set_number_of_ports(number_of_ports);
   const auto s_parameter_orientation_ptr = s_parameter_orientation.get_if<SParameterOrientation>();
   const auto s_parameter_orientation_raw_ptr = s_parameter_orientation.get_if<pb::int32>();
