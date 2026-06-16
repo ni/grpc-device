@@ -2261,11 +2261,6 @@ functions = {
                 'grpc_name': 'connector_ids',
                 'name': 'connectorIDs',
                 'type': 'char[]'
-            },
-            {
-                'direction': 'in',
-                'name': 'arraySize',
-                'type': 'int32'
             }
         ],
         'returns': 'int32'

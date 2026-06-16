@@ -412,9 +412,9 @@ int32 CalkitManagerCalkitCalibrationElementSetMinimumFrequency(niRFmxInstrHandle
   return RFmxVNA_CalkitManagerCalkitCalibrationElementSetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
 }
 
-int32 CalkitManagerCalkitCalibrationElementSetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorIDs[], int32 arraySize)
+int32 CalkitManagerCalkitCalibrationElementSetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorIDs[])
 {
-  return RFmxVNA_CalkitManagerCalkitCalibrationElementSetPortConnectors(instrumentHandle, selectorString, connectorIDs, arraySize);
+  return RFmxVNA_CalkitManagerCalkitCalibrationElementSetPortConnectors(instrumentHandle, selectorString, connectorIDs);
 }
 
 int32 CalkitManagerCalkitCalibrationElementSetSParameterDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterDefinition)

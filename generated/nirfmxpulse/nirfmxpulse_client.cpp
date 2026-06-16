@@ -626,14 +626,14 @@ disable_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, c
 }
 
 FetchAcquiredAmplitudeTraceResponse
-fetch_acquired_amplitude_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& array_size)
+fetch_acquired_amplitude_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& timeout)
 {
   ::grpc::ClientContext context;
 
   auto request = FetchAcquiredAmplitudeTraceRequest{};
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
-  request.set_array_size(array_size);
+  request.set_timeout(timeout);
 
   auto response = FetchAcquiredAmplitudeTraceResponse{};
 

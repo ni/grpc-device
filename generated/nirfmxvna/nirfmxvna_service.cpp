@@ -2756,8 +2756,7 @@ namespace nirfmxvna_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto connector_ids_mbcs = convert_from_grpc<std::string>(request->connector_ids());
       char* connector_ids = (char*)connector_ids_mbcs.c_str();
-      int32 array_size = request->array_size();
-      auto status = library_->CalkitManagerCalkitCalibrationElementSetPortConnectors(instrument, selector_string, connector_ids, array_size);
+      auto status = library_->CalkitManagerCalkitCalibrationElementSetPortConnectors(instrument, selector_string, connector_ids);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }

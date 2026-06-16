@@ -1543,7 +1543,7 @@ calkit_manager_calkit_calibration_element_set_minimum_frequency(const StubPtr& s
 }
 
 CalkitManagerCalkitCalibrationElementSetPortConnectorsResponse
-calkit_manager_calkit_calibration_element_set_port_connectors(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& connector_ids, const pb::int32& array_size)
+calkit_manager_calkit_calibration_element_set_port_connectors(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const std::string& connector_ids)
 {
   ::grpc::ClientContext context;
 
@@ -1551,7 +1551,6 @@ calkit_manager_calkit_calibration_element_set_port_connectors(const StubPtr& stu
   request.mutable_instrument()->CopyFrom(instrument);
   request.set_selector_string(selector_string);
   request.set_connector_ids(connector_ids);
-  request.set_array_size(array_size);
 
   auto response = CalkitManagerCalkitCalibrationElementSetPortConnectorsResponse{};
 

@@ -876,7 +876,7 @@ message DisableTriggerResponse {
 message FetchAcquiredAmplitudeTraceRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 array_size = 3;
+  int32 timeout = 3;
 }
 
 message FetchAcquiredAmplitudeTraceResponse {
