@@ -257,6 +257,28 @@ TEST(ConvertersTests, ArrayAndRawValue_ConvertBitfieldAsEnumArrayInput_ReturnsOr
   EXPECT_EQ(0x2 | 0x4 | 0x8, converted);
 }
 
+TEST(ConvertersTests, SizeWithinRange_ConvertSize_ReturnsCastedValue)
+{
+  constexpr size_t INPUT = 12;
+
+  auto result = convert_size<int32_t>(INPUT, "test_parameter");
+
+  EXPECT_EQ(12, result);
+}
+
+TEST(ConvertersTests, SizeExceedsRange_ConvertSize_ThrowsInvalidArgument)
+{
+  const auto input = static_cast<size_t>(std::numeric_limits<int32_t>::max()) + 1;
+
+  try {
+    (void)convert_size<int32_t>(input, "test_parameter");
+    FAIL() << "Expected NonDriverException";
+  } catch (nidevice_grpc::NonDriverException& ex) {
+    EXPECT_EQ(::grpc::StatusCode::INVALID_ARGUMENT, ex.GetStatus().error_code());
+    EXPECT_THAT(ex.GetStatus().error_message(), HasSubstr("test_parameter"));
+  }
+}
+
 class MockServerContext {
  public:
   MOCK_METHOD2(AddTrailingMetadata, void(const std::string& key, const std::string& value));

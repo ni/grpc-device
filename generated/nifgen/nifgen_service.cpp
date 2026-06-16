@@ -754,7 +754,8 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 number_of_coefficients = static_cast<ViInt32>(request->coefficients_array().size());
+      auto number_of_coefficients_raw = request->coefficients_array().size();
+      ViInt32 number_of_coefficients = nidevice_grpc::converters::convert_size<ViInt32>(number_of_coefficients_raw, "number_of_coefficients");
       auto coefficients_array = const_cast<ViReal64*>(request->coefficients_array().data());
       auto status = library_->ConfigureCustomFIRFilterCoefficients(vi, channel_name, number_of_coefficients, coefficients_array);
       if (!status_ok(status)) {
@@ -1412,7 +1413,8 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->waveform_data_array().size());
+      auto number_of_samples_raw = request->waveform_data_array().size();
+      ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
       auto waveform_data_array = convert_from_grpc<NIComplexNumber_struct>(request->waveform_data_array());
       ViInt32 waveform_handle {};
       auto status = library_->CreateWaveformComplexF64(vi, channel_name, number_of_samples, waveform_data_array.data(), &waveform_handle);
@@ -1440,7 +1442,8 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 waveform_size = static_cast<ViInt32>(request->waveform_data_array().size());
+      auto waveform_size_raw = request->waveform_data_array().size();
+      ViInt32 waveform_size = nidevice_grpc::converters::convert_size<ViInt32>(waveform_size_raw, "waveform_size");
       auto waveform_data_array = const_cast<ViReal64*>(request->waveform_data_array().data());
       ViInt32 waveform_handle {};
       auto status = library_->CreateWaveformF64(vi, channel_name, waveform_size, waveform_data_array, &waveform_handle);
@@ -1586,7 +1589,8 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 waveform_size = static_cast<ViInt32>(request->waveform_data_array().size());
+      auto waveform_size_raw = request->waveform_data_array().size();
+      ViInt32 waveform_size = nidevice_grpc::converters::convert_size<ViInt32>(waveform_size_raw, "waveform_size");
       auto waveform_data_array_request = request->waveform_data_array();
       std::vector<ViInt16> waveform_data_array;
       std::transform(
@@ -1620,7 +1624,8 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 waveform_size = static_cast<ViInt32>(request->waveform_data_array().size());
+      auto waveform_size_raw = request->waveform_data_array().size();
+      ViInt32 waveform_size = nidevice_grpc::converters::convert_size<ViInt32>(waveform_size_raw, "waveform_size");
       auto waveform_data_array = const_cast<ViReal64*>(request->waveform_data_array().data());
       auto status = library_->DefineUserStandardWaveform(vi, channel_name, waveform_size, waveform_data_array);
       if (!status_ok(status)) {
@@ -2619,7 +2624,8 @@ namespace nifgen_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 size_in_bytes = static_cast<ViInt32>(request->configuration().size());
+      auto size_in_bytes_raw = request->configuration().size();
+      ViInt32 size_in_bytes = nidevice_grpc::converters::convert_size<ViInt32>(size_in_bytes_raw, "size_in_bytes");
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       if (!status_ok(status)) {
@@ -3607,7 +3613,8 @@ namespace nifgen_grpc {
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
       ViInt32 waveform_handle = request->waveform_handle();
-      ViInt32 size = static_cast<ViInt32>(request->data().size());
+      auto size_raw = request->data().size();
+      ViInt32 size = nidevice_grpc::converters::convert_size<ViInt32>(size_raw, "size");
       auto data_request = request->data();
       std::vector<ViInt16> data;
       std::transform(
@@ -3640,7 +3647,8 @@ namespace nifgen_grpc {
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
       ViInt32 waveform_handle = request->waveform_handle();
-      ViInt32 size = static_cast<ViInt32>(request->data().size());
+      auto size_raw = request->data().size();
+      ViInt32 size = nidevice_grpc::converters::convert_size<ViInt32>(size_raw, "size");
       auto data = convert_from_grpc<NIComplexI16_struct>(request->data());
       auto status = library_->WriteComplexBinary16Waveform(vi, channel_name, waveform_handle, size, data.data());
       if (!status_ok(status)) {
@@ -3668,7 +3676,8 @@ namespace nifgen_grpc {
       auto channel_name = channel_name_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       auto waveform_name = waveform_name_mbcs.c_str();
-      ViInt32 size = static_cast<ViInt32>(request->data().size());
+      auto size_raw = request->data().size();
+      ViInt32 size = nidevice_grpc::converters::convert_size<ViInt32>(size_raw, "size");
       auto data = convert_from_grpc<NIComplexNumber_struct>(request->data());
       auto status = library_->WriteNamedWaveformComplexF64(vi, channel_name, waveform_name, size, data.data());
       if (!status_ok(status)) {
@@ -3696,7 +3705,8 @@ namespace nifgen_grpc {
       auto channel_name = channel_name_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       auto waveform_name = waveform_name_mbcs.c_str();
-      ViInt32 size = static_cast<ViInt32>(request->data().size());
+      auto size_raw = request->data().size();
+      ViInt32 size = nidevice_grpc::converters::convert_size<ViInt32>(size_raw, "size");
       auto data = convert_from_grpc<NIComplexI16_struct>(request->data());
       auto status = library_->WriteNamedWaveformComplexI16(vi, channel_name, waveform_name, size, data.data());
       if (!status_ok(status)) {
@@ -3724,7 +3734,8 @@ namespace nifgen_grpc {
       auto channel_name = channel_name_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       auto waveform_name = waveform_name_mbcs.c_str();
-      ViInt32 size = static_cast<ViInt32>(request->data().size());
+      auto size_raw = request->data().size();
+      ViInt32 size = nidevice_grpc::converters::convert_size<ViInt32>(size_raw, "size");
       auto data = const_cast<ViReal64*>(request->data().data());
       auto status = library_->WriteNamedWaveformF64(vi, channel_name, waveform_name, size, data);
       if (!status_ok(status)) {
@@ -3752,7 +3763,8 @@ namespace nifgen_grpc {
       auto channel_name = channel_name_mbcs.c_str();
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       auto waveform_name = waveform_name_mbcs.c_str();
-      ViInt32 size = static_cast<ViInt32>(request->data().size());
+      auto size_raw = request->data().size();
+      ViInt32 size = nidevice_grpc::converters::convert_size<ViInt32>(size_raw, "size");
       auto data_request = request->data();
       std::vector<ViInt16> data;
       std::transform(
@@ -3784,7 +3796,8 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto endpoint_name_mbcs = convert_from_grpc<std::string>(request->endpoint_name());
       auto endpoint_name = endpoint_name_mbcs.c_str();
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->endpoint_data().size());
+      auto number_of_samples_raw = request->endpoint_data().size();
+      ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
       auto endpoint_data_request = request->endpoint_data();
       std::vector<ViInt16> endpoint_data;
       std::transform(
@@ -3843,7 +3856,8 @@ namespace nifgen_grpc {
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
       ViInt32 waveform_handle = request->waveform_handle();
-      ViInt32 size = static_cast<ViInt32>(request->data().size());
+      auto size_raw = request->data().size();
+      ViInt32 size = nidevice_grpc::converters::convert_size<ViInt32>(size_raw, "size");
       auto data = const_cast<ViReal64*>(request->data().data());
       auto status = library_->WriteWaveform(vi, channel_name, waveform_handle, size, data);
       if (!status_ok(status)) {
@@ -3869,7 +3883,8 @@ namespace nifgen_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->data().size());
+      auto number_of_samples_raw = request->data().size();
+      ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
       auto data = convert_from_grpc<NIComplexNumber_struct>(request->data());
       ViInt32 waveform_handle = request->waveform_handle();
       auto status = library_->WriteWaveformComplexF64(vi, channel_name, number_of_samples, data.data(), waveform_handle);

@@ -133,7 +133,28 @@ Below are the contents of a default configuration file accepting localhost conne
 
 ### Bind Address Support
 
-The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
+The server supports specifying the address to bind to in the JSON configuration file via the `"address"` field. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address.
+
+| Address | Effect |
+|---------|--------|
+| `"[::1]"` or `"127.0.0.1"` | Bind to loopback only (local connections) |
+| `"[::]"` or `"0.0.0.0"` | Bind to all interfaces (remote connections) |
+
+**Default behavior by version:**
+
+- **Versions < 2.17:** If no `"address"` field is specified, the server defaults to binding on all interfaces (`"[::]"`), allowing remote connections.
+- **Versions >= 2.17:** If no `"address"` field is specified, the server defaults to binding on localhost only (`"[::1]"`). To allow remote connections, explicitly set `"address": "[::]"` in the configuration file.
+
+Starting with version 2.17, the server logs a warning at startup if the bound address is a loopback address without TLS enabled, and also warns if binding to all interfaces without TLS. This helps ensure that remote-accessible deployments are configured securely.
+
+Example configuration for remote access:
+```json
+{
+   "port": 31763,
+   "address": "[::]",
+   "security": "..."
+}
+```
 
 ### Licensing behaviour
 

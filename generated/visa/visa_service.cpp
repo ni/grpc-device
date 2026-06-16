@@ -415,7 +415,8 @@ namespace visa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViByte* buffer = (ViByte*)request->buffer().c_str();
-      ViUInt32 count = static_cast<ViUInt32>(request->buffer().size());
+      auto count_raw = request->buffer().size();
+      ViUInt32 count = nidevice_grpc::converters::convert_size<ViUInt32>(count_raw, "count");
       ViUInt32 return_count {};
       auto status = library_->GpibCommand(vi, buffer, count, &return_count);
       if (!status_ok(status)) {
@@ -1087,7 +1088,8 @@ namespace visa_grpc {
       }
 
       ViBusAddress64 offset = request->offset();
-      ViBusSize count = static_cast<ViBusSize>(request->buffer().size());
+      auto count_raw = request->buffer().size();
+      ViBusSize count = nidevice_grpc::converters::convert_size<ViBusSize>(count_raw, "count");
       auto buffer_request = request->buffer();
       std::vector<ViUInt16> buffer;
       std::transform(
@@ -1134,7 +1136,8 @@ namespace visa_grpc {
       }
 
       ViBusAddress64 offset = request->offset();
-      ViBusSize count = static_cast<ViBusSize>(request->buffer().size());
+      auto count_raw = request->buffer().size();
+      ViBusSize count = nidevice_grpc::converters::convert_size<ViBusSize>(count_raw, "count");
       auto buffer = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->buffer().data()));
       auto status = library_->MoveOut32(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
@@ -1175,7 +1178,8 @@ namespace visa_grpc {
       }
 
       ViBusAddress64 offset = request->offset();
-      ViBusSize count = static_cast<ViBusSize>(request->buffer().size());
+      auto count_raw = request->buffer().size();
+      ViBusSize count = nidevice_grpc::converters::convert_size<ViBusSize>(count_raw, "count");
       auto buffer = const_cast<ViUInt64*>(request->buffer().data());
       auto status = library_->MoveOut64(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
@@ -1216,7 +1220,8 @@ namespace visa_grpc {
       }
 
       ViBusAddress64 offset = request->offset();
-      ViBusSize count = static_cast<ViBusSize>(request->buffer().size());
+      auto count_raw = request->buffer().size();
+      ViBusSize count = nidevice_grpc::converters::convert_size<ViBusSize>(count_raw, "count");
       ViUInt8* buffer = (ViUInt8*)request->buffer().c_str();
       auto status = library_->MoveOut8(vi, address_space, offset, count, buffer);
       if (!status_ok(status)) {
@@ -1871,7 +1876,8 @@ namespace visa_grpc {
       ViInt16 b_request = static_cast<ViInt16>(request->b_request());
       ViUInt16 w_value = request->w_value();
       ViUInt16 w_index = request->w_index();
-      ViUInt16 w_length = static_cast<ViUInt16>(request->buffer().size());
+      auto w_length_raw = request->buffer().size();
+      ViUInt16 w_length = nidevice_grpc::converters::convert_size<ViUInt16>(w_length_raw, "w_length");
       ViByte* buffer = (ViByte*)request->buffer().c_str();
       auto status = library_->UsbControlOut(vi, bm_request_type, b_request, w_value, w_index, w_length, buffer);
       if (!status_ok(status)) {
@@ -1937,7 +1943,8 @@ namespace visa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViByte* buffer = (ViByte*)request->buffer().c_str();
-      ViUInt32 count = static_cast<ViUInt32>(request->buffer().size());
+      auto count_raw = request->buffer().size();
+      ViUInt32 count = nidevice_grpc::converters::convert_size<ViUInt32>(count_raw, "count");
       ViUInt32 return_count {};
       auto status = library_->Write(vi, buffer, count, &return_count);
       if (!status_ok(status)) {

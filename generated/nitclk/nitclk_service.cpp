@@ -52,7 +52,8 @@ namespace nitclk_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViUInt32 session_count = static_cast<ViUInt32>(request->sessions().size());
+      auto session_count_raw = request->sessions().size();
+      ViUInt32 session_count = nidevice_grpc::converters::convert_size<ViUInt32>(session_count_raw, "session_count");
       auto sessions_request = request->sessions();
       std::vector<ViSession> sessions;
       std::transform(
@@ -80,7 +81,8 @@ namespace nitclk_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViUInt32 session_count = static_cast<ViUInt32>(request->sessions().size());
+      auto session_count_raw = request->sessions().size();
+      ViUInt32 session_count = nidevice_grpc::converters::convert_size<ViUInt32>(session_count_raw, "session_count");
       auto sessions_request = request->sessions();
       std::vector<ViSession> sessions;
       std::transform(
@@ -251,7 +253,8 @@ namespace nitclk_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViUInt32 session_count = static_cast<ViUInt32>(request->sessions().size());
+      auto session_count_raw = request->sessions().size();
+      ViUInt32 session_count = nidevice_grpc::converters::convert_size<ViUInt32>(session_count_raw, "session_count");
       auto sessions_request = request->sessions();
       std::vector<ViSession> sessions;
       std::transform(
@@ -279,7 +282,8 @@ namespace nitclk_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViUInt32 session_count = static_cast<ViUInt32>(request->sessions().size());
+      auto session_count_raw = request->sessions().size();
+      ViUInt32 session_count = nidevice_grpc::converters::convert_size<ViUInt32>(session_count_raw, "session_count");
       auto sessions_request = request->sessions();
       std::vector<ViSession> sessions;
       std::transform(
@@ -389,7 +393,8 @@ namespace nitclk_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViUInt32 session_count = static_cast<ViUInt32>(request->sessions().size());
+      auto session_count_raw = request->sessions().size();
+      ViUInt32 session_count = nidevice_grpc::converters::convert_size<ViUInt32>(session_count_raw, "session_count");
       auto sessions_request = request->sessions();
       std::vector<ViSession> sessions;
       std::transform(
@@ -418,7 +423,8 @@ namespace nitclk_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViUInt32 session_count = static_cast<ViUInt32>(request->sessions().size());
+      auto session_count_raw = request->sessions().size();
+      ViUInt32 session_count = nidevice_grpc::converters::convert_size<ViUInt32>(session_count_raw, "session_count");
       auto sessions_request = request->sessions();
       std::vector<ViSession> sessions;
       std::transform(
@@ -447,7 +453,8 @@ namespace nitclk_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViUInt32 session_count = static_cast<ViUInt32>(request->sessions().size());
+      auto session_count_raw = request->sessions().size();
+      ViUInt32 session_count = nidevice_grpc::converters::convert_size<ViUInt32>(session_count_raw, "session_count");
       auto sessions_request = request->sessions();
       std::vector<ViSession> sessions;
       std::transform(
@@ -476,7 +483,8 @@ namespace nitclk_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViUInt32 session_count = static_cast<ViUInt32>(request->sessions().size());
+      auto session_count_raw = request->sessions().size();
+      ViUInt32 session_count = nidevice_grpc::converters::convert_size<ViUInt32>(session_count_raw, "session_count");
       auto sessions_request = request->sessions();
       std::vector<ViSession> sessions;
       std::transform(

@@ -424,7 +424,8 @@ namespace nifake_non_ivi_grpc {
         cross_driver_session_array_request.end(),
         std::back_inserter(cross_driver_session_array),
         [&](auto session) { return fake_cross_driver_handle_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_cross_driver_sessions = static_cast<int32>(request->cross_driver_session_array().size());
+      auto number_of_cross_driver_sessions_raw = request->cross_driver_session_array().size();
+      int32 number_of_cross_driver_sessions = nidevice_grpc::converters::convert_size<int32>(number_of_cross_driver_sessions_raw, "number_of_cross_driver_sessions");
 
       auto init_lambda = [&] () {
         FakeHandle handle;
@@ -1279,7 +1280,8 @@ namespace nifake_non_ivi_grpc {
     }
     try {
       auto bools = convert_from_grpc<int32>(request->bools());
-      int32 size = static_cast<int32>(request->bools().size());
+      auto size_raw = request->bools().size();
+      int32 size = nidevice_grpc::converters::convert_size<int32>(size_raw, "size");
       auto status = library_->WriteBooleanArray(bools.data(), size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForFakeHandle(context, status, 0);

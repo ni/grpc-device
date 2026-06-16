@@ -910,7 +910,8 @@ namespace niscope_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
       auto channel_list = channel_list_mbcs.c_str();
-      ViInt32 number_of_coefficients = static_cast<ViInt32>(request->coefficients().size());
+      auto number_of_coefficients_raw = request->coefficients().size();
+      ViInt32 number_of_coefficients = nidevice_grpc::converters::convert_size<ViInt32>(number_of_coefficients_raw, "number_of_coefficients");
       auto coefficients = const_cast<ViReal64*>(request->coefficients().data());
       auto status = library_->ConfigureEqualizationFilterCoefficients(vi, channel_list, number_of_coefficients, coefficients);
       if (!status_ok(status)) {
@@ -2290,7 +2291,8 @@ namespace niscope_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 size_in_bytes = static_cast<ViInt32>(request->configuration().size());
+      auto size_in_bytes_raw = request->configuration().size();
+      ViInt32 size_in_bytes = nidevice_grpc::converters::convert_size<ViInt32>(size_in_bytes_raw, "size_in_bytes");
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       if (!status_ok(status)) {

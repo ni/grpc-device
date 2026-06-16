@@ -24,7 +24,12 @@ static const char* kInvalidExePathMessage = "The server was unable to resolve th
 static const char* kInvalidMaxMessageSizeMessage = "The max message size must be an integer.";
 static const char* kInvalidFeatureToggleMessage = "Feature Toggles must be specified as boolean fields in the form \"feature_toggles\": { \"feature1\": true, \"feature2\": false }. \n\n";
 static const char* kInvalidCodeReadinessMessage = "code_readiness must be a string in [Release, RestrictedRelease, NextRelease, RestrictedNextRelease, Incomplete, Prototype].\n\n";
-static const char* kDefaultAddress = "[::]";
+// CWE-306: Default to the IPv6 loopback address so the server is only reachable
+// from the local machine when no address is specified in the configuration file.
+// This prevents unintentional exposure on all network interfaces when insecure
+// (non-TLS) credentials are used. Deployments that need to accept remote
+// connections should set an explicit address (e.g. "[::]") in their config file.
+static const char* kDefaultAddress = "[::1]";
 constexpr int UNLIMITED_MAX_MESSAGE_SIZE = -1;
 constexpr int DEFAULT_SIDEBAND_PORT = 50055;
 
