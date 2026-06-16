@@ -374,6 +374,15 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_VAL_PXIE_DSTARC_STR                                      "PXIe_DStarC"
 #define RFMXINSTR_VAL_PXIE_DSTARB_STR                                      "PXIe_DStarB"
 #define RFMXINSTR_VAL_TIMER_EVENT_STR                                      "TimerEvent"
+#define RFMXINSTR_VAL_PULSE_IN_STR                                         "PulseIn"
+#define RFMXINSTR_VAL_DIO_PFI0_STR                                         "DIO/PFI0"
+#define RFMXINSTR_VAL_DIO_PFI1_STR                                         "DIO/PFI1"
+#define RFMXINSTR_VAL_DIO_PFI2_STR                                         "DIO/PFI2"
+#define RFMXINSTR_VAL_DIO_PFI3_STR                                         "DIO/PFI3"
+#define RFMXINSTR_VAL_DIO_PFI4_STR                                         "DIO/PFI4"
+#define RFMXINSTR_VAL_DIO_PFI5_STR                                         "DIO/PFI5"
+#define RFMXINSTR_VAL_DIO_PFI6_STR                                         "DIO/PFI6"
+#define RFMXINSTR_VAL_DIO_PFI7_STR                                         "DIO/PFI7"
 
 /* -- Values for LO Leakage Avoidance Enabled -- */
 #define RFMXINSTR_VAL_LO_LEAKAGE_AVOIDANCE_ENABLED_FALSE                   0
@@ -556,6 +565,19 @@ extern "C"
       float64 frequency[],
       int32 frequencyArraySize,
       NIComplexDouble sParameters[],
+      int32 sParameterTableSize,
+      int32 numberOfPorts,
+      int32 sParameterOrientation
+   );
+
+   int32 __stdcall RFmxInstr_CfgSParameterExternalAttenuationTableSplit(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char tableName[],
+      float64 frequency[],
+      int32 frequencyArraySize,
+      float64 sParametersI[],
+      float64 sParametersQ[],
       int32 sParameterTableSize,
       int32 numberOfPorts,
       int32 sParameterOrientation
