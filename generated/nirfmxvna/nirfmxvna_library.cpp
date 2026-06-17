@@ -909,12 +909,12 @@ int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetMinimumFrequency
   return function_pointers_.CalkitManagerCalkitCalibrationElementSetMinimumFrequency(instrumentHandle, selectorString, minimumFrequency);
 }
 
-int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorIDs[])
+int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorIDs[], int32 arraySize)
 {
   if (!function_pointers_.CalkitManagerCalkitCalibrationElementSetPortConnectors) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxVNA_CalkitManagerCalkitCalibrationElementSetPortConnectors.");
   }
-  return function_pointers_.CalkitManagerCalkitCalibrationElementSetPortConnectors(instrumentHandle, selectorString, connectorIDs);
+  return function_pointers_.CalkitManagerCalkitCalibrationElementSetPortConnectors(instrumentHandle, selectorString, connectorIDs, arraySize);
 }
 
 int32 NiRFmxVNALibrary::CalkitManagerCalkitCalibrationElementSetSParameterDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterDefinition)

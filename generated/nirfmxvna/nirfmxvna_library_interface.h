@@ -96,7 +96,7 @@ class NiRFmxVNALibraryInterface {
   virtual int32 CalkitManagerCalkitCalibrationElementSetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], char description[]) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSetMaximumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 maximumFrequency) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSetMinimumFrequency(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 minimumFrequency) = 0;
-  virtual int32 CalkitManagerCalkitCalibrationElementSetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorIDs[]) = 0;
+  virtual int32 CalkitManagerCalkitCalibrationElementSetPortConnectors(niRFmxInstrHandle instrumentHandle, char selectorString[], char connectorIDs[], int32 arraySize) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSetSParameterDefinition(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterDefinition) = 0;
   virtual int32 CalkitManagerCalkitCalibrationElementSetTypes(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 calibrationElementTypes[], int32 arraySize) = 0;
   virtual int32 CalkitManagerCalkitConnectorGetDescription(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, char description[]) = 0;
