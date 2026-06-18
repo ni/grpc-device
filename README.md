@@ -133,7 +133,28 @@ Below are the contents of a default configuration file accepting localhost conne
 
 ### Bind Address Support
 
-The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
+The server supports specifying the address to bind to in the JSON configuration file via the `"address"` field. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address.
+
+| Address | Effect |
+|---------|--------|
+| `"[::1]"` or `"127.0.0.1"` | Bind to loopback only (local connections) |
+| `"[::]"` or `"0.0.0.0"` | Bind to all interfaces (remote connections) |
+
+**Default behavior by version:**
+
+- **Versions < 2.17:** If no `"address"` field is specified, the server defaults to binding on all interfaces (`"[::]"`), allowing remote connections.
+- **Versions >= 2.17:** If no `"address"` field is specified, the server defaults to binding on localhost only (`"[::1]"`). To allow remote connections, explicitly set `"address": "[::]"` in the configuration file.
+
+Starting with version 2.17, the server logs a warning at startup if the bound address is a loopback address without TLS enabled, and also warns if binding to all interfaces without TLS. This helps ensure that remote-accessible deployments are configured securely.
+
+Example configuration for remote access:
+```json
+{
+   "port": 31763,
+   "address": "[::]",
+   "security": "..."
+}
+```
 
 ### Licensing behaviour
 
@@ -146,27 +167,3 @@ Each supported driver API has a corresponding `.proto` file that defines the int
 ## SSL/TLS Support
 
 The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. For more detailed information on SSL/TLS support refer to the [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
-
-### NI TLS Config Integration
-
-Alternatively, when the `ni-tls-config` package is installed, the server can delegate TLS configuration by setting the top-level `"security"` field to `"ni-tls-config"` in `server_config.json`. The following snippet shows only the `ni-tls-config`-specific fields; keep other required fields (for example, `port`) in your configuration.
-
-```json
-{
-   "security": "ni-tls-config",
-   "feature_toggles": {
-      "ni-tls-config": true
-   }
-}
-```
-
-When `ni-tls-config` is enabled, certificate and trust settings are read from the `ni-tls-config` YAML file instead of `server_config.json` certificate fields.
-
-With this setting the server reads TLS configuration at startup from the per-service YAML file managed by `ni-tls-config` (`ni-grpc-device.conf.yml`). A template for this file is distributed alongside the server binary. Place it in the location expected by `ni-tls-config`:
-
-- **Windows**: `C:\ProgramData\National Instruments\nitlsconfig\server.d\ni-grpc-device.conf.yml`
-- **Linux**: `/etc/nitlsconfig/server.d/ni-grpc-device.conf.yml`
-
-If `"security": "ni-tls-config"` is configured but the `ni-tls-config` library is not installed, the server logs an error and exits instead of starting insecurely.
-
-Once `ni-tls-config` is enabled, use NI Hardware Configuration Utility on each client machine to configure the desired security settings.

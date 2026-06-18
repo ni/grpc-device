@@ -823,7 +823,8 @@ namespace nixnetsocket_grpc {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       char* data = (char*)request->data().c_str();
-      int32_t size = static_cast<int32_t>(request->data().size());
+      auto size_raw = request->data().size();
+      int32_t size = nidevice_grpc::converters::convert_size<int32_t>(size_raw, "size");
       int32_t flags_raw = request->flags_raw();
       auto status = library_->Send(socket, data, size, flags_raw);
       if (!status_ok(status)) {
@@ -848,7 +849,8 @@ namespace nixnetsocket_grpc {
       auto socket_grpc_session = request->socket();
       nxSOCKET socket = session_repository_->access_session(socket_grpc_session.name());
       char* data = (char*)request->data().c_str();
-      int32_t size = static_cast<int32_t>(request->data().size());
+      auto size_raw = request->data().size();
+      int32_t size = nidevice_grpc::converters::convert_size<int32_t>(size_raw, "size");
       int32_t flags_raw = request->flags_raw();
       auto to = convert_from_grpc<nxsockaddr>(request->to());
       auto tolen = to.size();

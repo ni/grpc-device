@@ -890,7 +890,8 @@ namespace nirfmxdemod_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
-      int32 array_size = static_cast<int32>(request->iq().size());
+      auto array_size_raw = request->iq().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
@@ -922,7 +923,8 @@ namespace nirfmxdemod_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = const_cast<float32*>(request->iq().data());
-      int32 array_size = static_cast<int32>(request->iq().size());
+      auto array_size_raw = request->iq().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1WaveformInterleavedIQ(instrument, selector_string, result_name, x0, dx, iq, array_size, reset, reserved);
@@ -1729,7 +1731,8 @@ namespace nirfmxdemod_grpc {
       auto equalizer_initial_coefficients = convert_from_grpc<NIComplexSingle>(request->equalizer_initial_coefficients());
       int32 equalizer_training_count = request->equalizer_training_count();
       float64 equalizer_convergence_factor = request->equalizer_convergence_factor();
-      int32 array_size = static_cast<int32>(request->equalizer_initial_coefficients().size());
+      auto array_size_raw = request->equalizer_initial_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgEqualizer(instrument, selector_string, equalizer_mode, equalizer_filter_length, x0, dx, equalizer_initial_coefficients.data(), equalizer_training_count, equalizer_convergence_factor, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1757,7 +1760,8 @@ namespace nirfmxdemod_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto equalizer_initial_coefficients = convert_from_grpc<NIComplexSingle>(request->equalizer_initial_coefficients());
-      int32 array_size = static_cast<int32>(request->equalizer_initial_coefficients().size());
+      auto array_size_raw = request->equalizer_initial_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgEqualizerInitialCoefficients(instrument, selector_string, x0, dx, equalizer_initial_coefficients.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1785,7 +1789,8 @@ namespace nirfmxdemod_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto equalizer_initial_coefficients = const_cast<float32*>(request->equalizer_initial_coefficients().data());
-      int32 array_size = static_cast<int32>(request->equalizer_initial_coefficients().size());
+      auto array_size_raw = request->equalizer_initial_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgEqualizerInitialCoefficientsInterleavedIQ(instrument, selector_string, x0, dx, equalizer_initial_coefficients, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1877,7 +1882,8 @@ namespace nirfmxdemod_grpc {
       auto equalizer_initial_coefficients = const_cast<float32*>(request->equalizer_initial_coefficients().data());
       int32 equalizer_training_count = request->equalizer_training_count();
       float64 equalizer_convergence_factor = request->equalizer_convergence_factor();
-      int32 array_size = static_cast<int32>(request->equalizer_initial_coefficients().size());
+      auto array_size_raw = request->equalizer_initial_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgEqualizerInterleavedIQ(instrument, selector_string, equalizer_mode, equalizer_filter_length, x0, dx, equalizer_initial_coefficients, equalizer_training_count, equalizer_convergence_factor, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2066,7 +2072,8 @@ namespace nirfmxdemod_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto measurement_filter_custom_coefficients = const_cast<float32*>(request->measurement_filter_custom_coefficients().data());
-      int32 array_size = static_cast<int32>(request->measurement_filter_custom_coefficients().size());
+      auto array_size_raw = request->measurement_filter_custom_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgMeasurementFilter(instrument, selector_string, measurement_filter_type, x0, dx, measurement_filter_custom_coefficients, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2094,7 +2101,8 @@ namespace nirfmxdemod_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto measurement_filter_custom_coefficients = const_cast<float32*>(request->measurement_filter_custom_coefficients().data());
-      int32 array_size = static_cast<int32>(request->measurement_filter_custom_coefficients().size());
+      auto array_size_raw = request->measurement_filter_custom_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgMeasurementFilterCustomCoefficients(instrument, selector_string, x0, dx, measurement_filter_custom_coefficients, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2276,7 +2284,8 @@ namespace nirfmxdemod_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto pulse_shaping_filter_custom_coefficients = const_cast<float32*>(request->pulse_shaping_filter_custom_coefficients().data());
-      int32 array_size = static_cast<int32>(request->pulse_shaping_filter_custom_coefficients().size());
+      auto array_size_raw = request->pulse_shaping_filter_custom_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgPulseShapingFilter(instrument, selector_string, pulse_shaping_filter_type, pulse_shaping_filter_parameter, x0, dx, pulse_shaping_filter_custom_coefficients, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2304,7 +2313,8 @@ namespace nirfmxdemod_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto pulse_shaping_filter_custom_coefficients = const_cast<float32*>(request->pulse_shaping_filter_custom_coefficients().data());
-      int32 array_size = static_cast<int32>(request->pulse_shaping_filter_custom_coefficients().size());
+      auto array_size_raw = request->pulse_shaping_filter_custom_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgPulseShapingFilterCustomCoefficients(instrument, selector_string, x0, dx, pulse_shaping_filter_custom_coefficients, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2451,7 +2461,8 @@ namespace nirfmxdemod_grpc {
       }
 
       auto symbol_map = convert_from_grpc<NIComplexSingle>(request->symbol_map());
-      int32 array_size = static_cast<int32>(request->symbol_map().size());
+      auto array_size_raw = request->symbol_map().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgSymbolMap(instrument, selector_string, symbol_map_type, symbol_map.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2493,7 +2504,8 @@ namespace nirfmxdemod_grpc {
       }
 
       auto symbol_map = const_cast<float32*>(request->symbol_map().data());
-      int32 array_size = static_cast<int32>(request->symbol_map().size());
+      auto array_size_raw = request->symbol_map().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgSymbolMapInterleavedIQ(instrument, selector_string, symbol_map_type, symbol_map, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2637,7 +2649,8 @@ namespace nirfmxdemod_grpc {
         });
 
       int32 measurement_offset = request->measurement_offset();
-      int32 array_size = static_cast<int32>(request->sync_bits().size());
+      auto array_size_raw = request->sync_bits().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodCfgSynchronization(instrument, selector_string, synchronization_enabled, sync_bits.data(), measurement_offset, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -4302,7 +4315,8 @@ namespace nirfmxdemod_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodSetSymbolMap(instrument, selector_string, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -4328,7 +4342,8 @@ namespace nirfmxdemod_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DDemodSetSymbolMapInterleavedIQ(instrument, selector_string, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -5603,7 +5618,8 @@ namespace nirfmxdemod_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -5656,7 +5672,8 @@ namespace nirfmxdemod_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -5767,7 +5784,8 @@ namespace nirfmxdemod_grpc {
         [](auto x) { return x; });
       auto attr_val = attr_val_vector.data();
 
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -5820,7 +5838,8 @@ namespace nirfmxdemod_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -5899,7 +5918,8 @@ namespace nirfmxdemod_grpc {
               return static_cast<int8>(x);
         });
 
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -5952,7 +5972,8 @@ namespace nirfmxdemod_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -6005,7 +6026,8 @@ namespace nirfmxdemod_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -6140,7 +6162,8 @@ namespace nirfmxdemod_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -6167,7 +6190,8 @@ namespace nirfmxdemod_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -6220,7 +6244,8 @@ namespace nirfmxdemod_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);

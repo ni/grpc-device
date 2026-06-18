@@ -925,7 +925,8 @@ namespace nirfsg_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->user_defined_waveform().size());
+      auto number_of_samples_raw = request->user_defined_waveform().size();
+      ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
       ViInt8* user_defined_waveform = (ViInt8*)request->user_defined_waveform().c_str();
       auto status = library_->ConfigureDigitalModulationUserDefinedWaveform(vi, number_of_samples, user_defined_waveform);
       if (!status_ok(status)) {
@@ -1300,7 +1301,8 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto list_name_mbcs = convert_from_grpc<std::string>(request->list_name());
       auto list_name = list_name_mbcs.c_str();
-      ViInt32 number_of_attributes = static_cast<ViInt32>(request->configuration_list_attributes().size());
+      auto number_of_attributes_raw = request->configuration_list_attributes().size();
+      ViInt32 number_of_attributes = nidevice_grpc::converters::convert_size<ViInt32>(number_of_attributes_raw, "number_of_attributes");
       auto configuration_list_attributes = const_cast<ViAttr*>(reinterpret_cast<const ViAttr*>(request->configuration_list_attributes().data()));
       ViBoolean set_as_active_list = request->set_as_active_list();
       auto status = library_->CreateConfigurationList(vi, list_name, number_of_attributes, configuration_list_attributes, set_as_active_list);
@@ -1353,9 +1355,11 @@ namespace nirfsg_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       auto table_name = table_name_mbcs.c_str();
       auto frequencies = const_cast<ViReal64*>(request->frequencies().data());
-      ViInt32 frequencies_size = static_cast<ViInt32>(request->frequencies().size());
+      auto frequencies_size_raw = request->frequencies().size();
+      ViInt32 frequencies_size = nidevice_grpc::converters::convert_size<ViInt32>(frequencies_size_raw, "frequencies_size");
       auto sparameter_table = convert_from_grpc<NIComplexNumber_struct>(request->sparameter_table());
-      ViInt32 sparameter_table_size = static_cast<ViInt32>(request->sparameter_table().size());
+      auto sparameter_table_size_raw = request->sparameter_table().size();
+      ViInt32 sparameter_table_size = nidevice_grpc::converters::convert_size<ViInt32>(sparameter_table_size_raw, "sparameter_table_size");
       ViInt32 number_of_ports = request->number_of_ports();
       ViInt32 sparameter_orientation;
       switch (request->sparameter_orientation_enum_case()) {
@@ -3507,7 +3511,8 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto identifier_mbcs = convert_from_grpc<std::string>(request->identifier());
       auto identifier = identifier_mbcs.c_str();
-      ViInt32 buffer_size = static_cast<ViInt32>(request->data().size());
+      auto buffer_size_raw = request->data().size();
+      ViInt32 buffer_size = nidevice_grpc::converters::convert_size<ViInt32>(buffer_size_raw, "buffer_size");
       ViInt8* data = (ViInt8*)request->data().c_str();
       auto status = library_->SetUserData(vi, identifier, buffer_size, data);
       if (!status_ok(status)) {
@@ -3533,7 +3538,8 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 number_of_locations = static_cast<ViInt32>(request->locations().size());
+      auto number_of_locations_raw = request->locations().size();
+      ViInt32 number_of_locations = nidevice_grpc::converters::convert_size<ViInt32>(number_of_locations_raw, "number_of_locations");
       auto locations = const_cast<ViReal64*>(request->locations().data());
       auto status = library_->SetWaveformBurstStartLocations(vi, channel_name, number_of_locations, locations);
       if (!status_ok(status)) {
@@ -3559,7 +3565,8 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 number_of_locations = static_cast<ViInt32>(request->locations().size());
+      auto number_of_locations_raw = request->locations().size();
+      ViInt32 number_of_locations = nidevice_grpc::converters::convert_size<ViInt32>(number_of_locations_raw, "number_of_locations");
       auto locations = const_cast<ViReal64*>(request->locations().data());
       auto status = library_->SetWaveformBurstStopLocations(vi, channel_name, number_of_locations, locations);
       if (!status_ok(status)) {
@@ -3585,7 +3592,8 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 number_of_locations = static_cast<ViInt32>(request->locations().size());
+      auto number_of_locations_raw = request->locations().size();
+      ViInt32 number_of_locations = nidevice_grpc::converters::convert_size<ViInt32>(number_of_locations_raw, "number_of_locations");
       auto locations = const_cast<ViReal64*>(request->locations().data());
       auto status = library_->SetWaveformMarkerEventLocations(vi, channel_name, number_of_locations, locations);
       if (!status_ok(status)) {
@@ -3673,7 +3681,8 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       auto waveform_name = waveform_name_mbcs.c_str();
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
+      auto number_of_samples_raw = request->wfm_data().size();
+      ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
       auto wfm_data = convert_from_grpc<NIComplexNumberF32_struct>(request->wfm_data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformComplexF32(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
@@ -3700,7 +3709,8 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       auto waveform_name = waveform_name_mbcs.c_str();
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
+      auto number_of_samples_raw = request->wfm_data().size();
+      ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
       auto wfm_data = convert_from_grpc<NIComplexNumber_struct>(request->wfm_data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformComplexF64(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
@@ -3727,7 +3737,8 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       auto waveform_name = waveform_name_mbcs.c_str();
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->wfm_data().size());
+      auto number_of_samples_raw = request->wfm_data().size();
+      ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
       auto wfm_data = convert_from_grpc<NIComplexI16_struct>(request->wfm_data());
       auto status = library_->WriteArbWaveformComplexI16(vi, waveform_name, number_of_samples, wfm_data.data());
       if (!status_ok(status)) {

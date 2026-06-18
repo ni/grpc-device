@@ -97,6 +97,26 @@ TEST(ServerConfigurationParserTests, JsonConfigWithEmptyAddress_ParseAddress_Thr
   }
 }
 
+TEST(ServerConfigurationParserTests, JsonConfigWithNoAddress_ParseAddress_DefaultsToLoopback)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"({ "port": 50051 })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  auto address = server_config_parser.parse_address();
+
+  EXPECT_EQ(address, "[::1]:50051");
+}
+
+TEST(ServerConfigurationParserTests, JsonConfigWithExplicitAllInterfacesAddress_ParseAddress_ReturnsAllInterfaces)
+{
+  nlohmann::json config_json = nlohmann::json::parse(R"({ "address": "[::]", "port": 50051 })");
+  nidevice_grpc::ServerConfigurationParser server_config_parser(config_json);
+
+  auto address = server_config_parser.parse_address();
+
+  EXPECT_EQ(address, "[::]:50051");
+}
+
 TEST(ServerConfigurationParserTests, JsonConfigWithNegativePortNumber_ParseAddress_ThrowsInvalidPortException)
 {
   nlohmann::json config_json = nlohmann::json::parse(R"({ "port": -1 })");

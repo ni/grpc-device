@@ -871,7 +871,8 @@ namespace nirfmxinstr_restricted_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto json_string_mbcs = convert_from_grpc<std::string>(request->json_string());
       char* json_string = (char*)json_string_mbcs.c_str();
-      int32 array_size = static_cast<int32>(request->json_string().size());
+      auto array_size_raw = request->json_string().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->LoadConfigurationsFromJSON(instrument, json_string, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1187,7 +1188,8 @@ namespace nirfmxinstr_restricted_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       char* table_name = (char*)table_name_mbcs.c_str();
       auto s_parameter_frequencies = const_cast<float64*>(request->s_parameter_frequencies().data());
-      int32 s_parameter_frequencies_array_size = static_cast<int32>(request->s_parameter_frequencies().size());
+      auto s_parameter_frequencies_array_size_raw = request->s_parameter_frequencies().size();
+      int32 s_parameter_frequencies_array_size = nidevice_grpc::converters::convert_size<int32>(s_parameter_frequencies_array_size_raw, "s_parameter_frequencies_array_size");
       auto status = library_->CfgSParameterExternalAttenuationTableFrequencies(instrument, selector_string, table_name, s_parameter_frequencies, s_parameter_frequencies_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1215,7 +1217,8 @@ namespace nirfmxinstr_restricted_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       char* table_name = (char*)table_name_mbcs.c_str();
       auto s_parameters = convert_from_grpc<NIComplexDouble>(request->s_parameters());
-      int32 s_parameter_table_size = static_cast<int32>(request->s_parameters().size());
+      auto s_parameter_table_size_raw = request->s_parameters().size();
+      int32 s_parameter_table_size = nidevice_grpc::converters::convert_size<int32>(s_parameter_table_size_raw, "s_parameter_table_size");
       int32 s_parameter_orientation = request->s_parameter_orientation();
       auto status = library_->CfgSParameterExternalAttenuationTableSParameter(instrument, selector_string, table_name, s_parameters.data(), s_parameter_table_size, s_parameter_orientation);
       if (!status_ok(status)) {
@@ -1302,7 +1305,8 @@ namespace nirfmxinstr_restricted_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       char* table_name = (char*)table_name_mbcs.c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
-      int32 array_size = static_cast<int32>(request->frequency().size());
+      auto array_size_raw = request->frequency().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->CfgExternalAttenuationTableFrequencies(instrument, selector_string, table_name, frequency, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1330,7 +1334,8 @@ namespace nirfmxinstr_restricted_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       char* table_name = (char*)table_name_mbcs.c_str();
       auto external_attenuation = const_cast<float64*>(request->external_attenuation().data());
-      int32 array_size = static_cast<int32>(request->external_attenuation().size());
+      auto array_size_raw = request->external_attenuation().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->CfgExternalAttenuationTableLosses(instrument, selector_string, table_name, external_attenuation, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);

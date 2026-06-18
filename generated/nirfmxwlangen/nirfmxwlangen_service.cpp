@@ -772,7 +772,8 @@ namespace nirfmxwlangen_grpc {
         rfsg_handles_request.end(),
         std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
+      auto number_of_rfsg_sessions_raw = request->rfsg_handles().size();
+      int32 number_of_rfsg_sessions = nidevice_grpc::converters::convert_size<int32>(number_of_rfsg_sessions_raw, "number_of_rfsg_sessions");
       int32 lo_source;
       switch (request->lo_source_enum_case()) {
         case nirfmxwlangen_grpc::RFSGConfigureFrequencyMultipleLORequest::LoSourceEnumCase::kLoSource: {
@@ -796,9 +797,11 @@ namespace nirfmxwlangen_grpc {
         external_lo_handles_request.end(),
         std::back_inserter(external_lo_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_external_lo_handles = static_cast<int32>(request->external_lo_handles().size());
+      auto number_of_external_lo_handles_raw = request->external_lo_handles().size();
+      int32 number_of_external_lo_handles = nidevice_grpc::converters::convert_size<int32>(number_of_external_lo_handles_raw, "number_of_external_lo_handles");
       auto carrier_frequency = const_cast<float64*>(request->carrier_frequency().data());
-      int32 data_array_size = static_cast<int32>(request->carrier_frequency().size());
+      auto data_array_size_raw = request->carrier_frequency().size();
+      int32 data_array_size = nidevice_grpc::converters::convert_size<int32>(data_array_size_raw, "data_array_size");
       int32 rfsg_lo_daisy_chain_enabled = request->rfsg_lo_daisy_chain_enabled();
       int32 lo_export_to_external_devices_enabled = request->lo_export_to_external_devices_enabled();
       auto status = library_->RFSGConfigureFrequencyMultipleLO(session, rfsg_handles.data(), number_of_rfsg_sessions, lo_source, external_lo_handles.data(), number_of_external_lo_handles, carrier_frequency, data_array_size, rfsg_lo_daisy_chain_enabled, lo_export_to_external_devices_enabled);
@@ -830,7 +833,8 @@ namespace nirfmxwlangen_grpc {
         rfsg_handles_request.end(),
         std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
+      auto number_of_rfsg_sessions_raw = request->rfsg_handles().size();
+      int32 number_of_rfsg_sessions = nidevice_grpc::converters::convert_size<int32>(number_of_rfsg_sessions_raw, "number_of_rfsg_sessions");
       int32 lo_source;
       switch (request->lo_source_enum_case()) {
         case nirfmxwlangen_grpc::RFSGConfigureFrequencySingleLORequest::LoSourceEnumCase::kLoSource: {
@@ -881,11 +885,13 @@ namespace nirfmxwlangen_grpc {
         rfsg_handles_request.end(),
         std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
+      auto number_of_rfsg_sessions_raw = request->rfsg_handles().size();
+      int32 number_of_rfsg_sessions = nidevice_grpc::converters::convert_size<int32>(number_of_rfsg_sessions_raw, "number_of_rfsg_sessions");
       auto master_reference_clock_source_mbcs = convert_from_grpc<std::string>(request->master_reference_clock_source());
       char* master_reference_clock_source = (char*)master_reference_clock_source_mbcs.c_str();
       auto trigger_lines = const_cast<int32*>(reinterpret_cast<const int32*>(request->trigger_lines().data()));
-      int32 no_of_trigger_lines = static_cast<int32>(request->trigger_lines().size());
+      auto no_of_trigger_lines_raw = request->trigger_lines().size();
+      int32 no_of_trigger_lines = nidevice_grpc::converters::convert_size<int32>(no_of_trigger_lines_raw, "no_of_trigger_lines");
       auto status = library_->RFSGConfigureMultipleDeviceSynchronization(session, rfsg_handles.data(), number_of_rfsg_sessions, master_reference_clock_source, trigger_lines, no_of_trigger_lines);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
@@ -1013,7 +1019,8 @@ namespace nirfmxwlangen_grpc {
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
       auto channel_string_mbcs = convert_from_grpc<std::string>(request->channel_string());
       char* channel_string = (char*)channel_string_mbcs.c_str();
-      int32 number_of_tx_chains = static_cast<int32>(request->rfsg_handles().size());
+      auto number_of_tx_chains_raw = request->rfsg_handles().size();
+      int32 number_of_tx_chains = nidevice_grpc::converters::convert_size<int32>(number_of_tx_chains_raw, "number_of_tx_chains");
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       auto status = library_->RFSGCreateAndDownloadMIMOWaveforms(session, rfsg_handles.data(), channel_string, number_of_tx_chains, waveform_name);
@@ -1073,7 +1080,8 @@ namespace nirfmxwlangen_grpc {
         rfsg_handles_request.end(),
         std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
+      auto number_of_rfsg_sessions_raw = request->rfsg_handles().size();
+      int32 number_of_rfsg_sessions = nidevice_grpc::converters::convert_size<int32>(number_of_rfsg_sessions_raw, "number_of_rfsg_sessions");
       int32 force_sync = request->force_sync();
       auto status = library_->RFSGForceTClkSynchronization(session, rfsg_handles.data(), number_of_rfsg_sessions, force_sync);
       if (!status_ok(status)) {
@@ -1149,7 +1157,8 @@ namespace nirfmxwlangen_grpc {
         rfsg_handles_request.end(),
         std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_rfsg_sessions = static_cast<int32>(request->rfsg_handles().size());
+      auto number_of_rfsg_sessions_raw = request->rfsg_handles().size();
+      int32 number_of_rfsg_sessions = nidevice_grpc::converters::convert_size<int32>(number_of_rfsg_sessions_raw, "number_of_rfsg_sessions");
       auto status = library_->RFSGMultipleDeviceInitiate(session, rfsg_handles.data(), number_of_rfsg_sessions);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
@@ -1177,7 +1186,8 @@ namespace nirfmxwlangen_grpc {
         rfsg_handles_request.end(),
         std::back_inserter(rfsg_handles),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_channels = static_cast<int32>(request->rfsg_handles().size());
+      auto number_of_channels_raw = request->rfsg_handles().size();
+      int32 number_of_channels = nidevice_grpc::converters::convert_size<int32>(number_of_channels_raw, "number_of_channels");
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       auto file_path_mbcs = convert_from_grpc<std::string>(request->file_path());
@@ -1465,7 +1475,8 @@ namespace nirfmxwlangen_grpc {
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       auto burst_start_locations = const_cast<int32*>(reinterpret_cast<const int32*>(request->burst_start_locations().data()));
-      int32 data_array_size = static_cast<int32>(request->burst_start_locations().size());
+      auto data_array_size_raw = request->burst_start_locations().size();
+      int32 data_array_size = nidevice_grpc::converters::convert_size<int32>(data_array_size_raw, "data_array_size");
       auto status = library_->RFSGStoreBurstStartLocations(rfsg_handle, waveform_name, burst_start_locations, data_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
@@ -1491,7 +1502,8 @@ namespace nirfmxwlangen_grpc {
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       auto burst_stop_locations = const_cast<int32*>(reinterpret_cast<const int32*>(request->burst_stop_locations().data()));
-      int32 data_array_size = static_cast<int32>(request->burst_stop_locations().size());
+      auto data_array_size_raw = request->burst_stop_locations().size();
+      int32 data_array_size = nidevice_grpc::converters::convert_size<int32>(data_array_size_raw, "data_array_size");
       auto status = library_->RFSGStoreBurstStopLocations(rfsg_handle, waveform_name, burst_stop_locations, data_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
@@ -1571,7 +1583,8 @@ namespace nirfmxwlangen_grpc {
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       char* waveform_name = (char*)waveform_name_mbcs.c_str();
       auto rf_blanking_marker_positions = const_cast<int32*>(reinterpret_cast<const int32*>(request->rf_blanking_marker_positions().data()));
-      int32 data_array_size = static_cast<int32>(request->rf_blanking_marker_positions().size());
+      auto data_array_size_raw = request->rf_blanking_marker_positions().size();
+      int32 data_array_size = nidevice_grpc::converters::convert_size<int32>(data_array_size_raw, "data_array_size");
       auto status = library_->RFSGStoreRFBlankingMarkerPositions(rfsg_handle, waveform_name, rf_blanking_marker_positions, data_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, rfsg_handle);
@@ -1852,10 +1865,14 @@ namespace nirfmxwlangen_grpc {
       auto ppet8 = const_cast<int32*>(reinterpret_cast<const int32*>(request->ppet8().data()));
       auto number_of_space_time_streams = const_cast<int32*>(reinterpret_cast<const int32*>(request->number_of_space_time_streams().data()));
       auto ru_size = const_cast<int32*>(reinterpret_cast<const int32*>(request->ru_size().data()));
-      int32 ppet16_array_size = static_cast<int32>(request->ppet16().size());
-      int32 ppet8_array_size = static_cast<int32>(request->ppet8().size());
-      int32 number_of_space_time_streams_array_size = static_cast<int32>(request->number_of_space_time_streams().size());
-      int32 ru_array_size = static_cast<int32>(request->ru_size().size());
+      auto ppet16_array_size_raw = request->ppet16().size();
+      int32 ppet16_array_size = nidevice_grpc::converters::convert_size<int32>(ppet16_array_size_raw, "ppet16_array_size");
+      auto ppet8_array_size_raw = request->ppet8().size();
+      int32 ppet8_array_size = nidevice_grpc::converters::convert_size<int32>(ppet8_array_size_raw, "ppet8_array_size");
+      auto number_of_space_time_streams_array_size_raw = request->number_of_space_time_streams().size();
+      int32 number_of_space_time_streams_array_size = nidevice_grpc::converters::convert_size<int32>(number_of_space_time_streams_array_size_raw, "number_of_space_time_streams_array_size");
+      auto ru_array_size_raw = request->ru_size().size();
+      int32 ru_array_size = nidevice_grpc::converters::convert_size<int32>(ru_array_size_raw, "ru_array_size");
       auto status = library_->SetOFDMPacketExtensionThresholds(session, channel_string, ppet16, ppet8, number_of_space_time_streams, ru_size, ppet16_array_size, ppet8_array_size, number_of_space_time_streams_array_size, ru_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
@@ -1975,7 +1992,8 @@ namespace nirfmxwlangen_grpc {
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto data = const_cast<float64*>(request->data().data());
-      int32 data_array_size = static_cast<int32>(request->data().size());
+      auto data_array_size_raw = request->data().size();
+      int32 data_array_size = nidevice_grpc::converters::convert_size<int32>(data_array_size_raw, "data_array_size");
       auto status = library_->SetVectorAttributeF64(session, channel_string, attribute_id, data, data_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);
@@ -2002,7 +2020,8 @@ namespace nirfmxwlangen_grpc {
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto data = const_cast<int32*>(reinterpret_cast<const int32*>(request->data().data()));
-      int32 data_array_size = static_cast<int32>(request->data().size());
+      auto data_array_size_raw = request->data().size();
+      int32 data_array_size = nidevice_grpc::converters::convert_size<int32>(data_array_size_raw, "data_array_size");
       auto status = library_->SetVectorAttributeI32(session, channel_string, attribute_id, data, data_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiWLANGenerationSession(context, status, session);

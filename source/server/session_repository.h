@@ -85,6 +85,12 @@ class SessionRepository {
   bool close_sessions(bool cleanup);
   void cleanup_session(const std::shared_ptr<SessionInfo>& session_info);
   bool release_reservation(const ReservationInfo* reservation_info);
+  // CWE-330 note: Session IDs are intentionally sequential. grpc-device is not
+  // a multi-tenant service and cross-client session access is by design.
+  // These IDs are not security tokens and must not be relied upon for access
+  // control or isolation. If tenant isolation is required in the future,
+  // session ownership and access-control checks should be introduced rather
+  // than merely randomizing identifiers.
   std::string next_id() { return "ni:generated:" + std::to_string(++_next_id); }
 
   std::shared_mutex repository_lock_;

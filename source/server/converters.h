@@ -14,7 +14,9 @@
 #include <cmath>
 #include <limits>
 #include <numeric>
+#include <sstream>
 #include <string>
+#include <typeinfo>
 #include <vector>
 
 namespace nidevice_grpc {
@@ -114,6 +116,17 @@ template <typename CType, typename GrpcType>
 CType convert_from_grpc(const GrpcType& value)
 {
   return static_cast<CType>(value);
+}
+
+template <typename T>
+inline T convert_size(size_t value, const char* parameter_name)
+{
+  if (value > std::numeric_limits<T>::max()) {
+    std::stringstream message_stream;
+    message_stream << "Size exceeds " << typeid(T).name() << " range for parameter " << parameter_name;
+    throw nidevice_grpc::NonDriverException(::grpc::StatusCode::INVALID_ARGUMENT, message_stream.str());
+  }
+  return static_cast<T>(value);
 }
 
 inline bool is_ascii(const char* str)

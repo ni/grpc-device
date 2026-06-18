@@ -5,6 +5,7 @@
 
 #include <mutex>
 #include <thread>
+#include <algorithm>
 
 #include "feature_toggles.h"
 #include "logging.h"
@@ -169,6 +170,22 @@ static void RunServer(const ServerConfiguration& config)
   }
 
   nidevice_grpc::logging::log(nidevice_grpc::logging::Level_Info, "Server listening on port %d", listeningPort);
+
+  if (server_security_config.is_insecure_credentials()) {
+    auto address_lower = config.server_address;
+    std::transform(address_lower.begin(), address_lower.end(), address_lower.begin(), ::tolower);
+    bool is_loopback = address_lower.find("localhost") != std::string::npos ||
+                       address_lower.find("127.0.0.1") != std::string::npos ||
+                       address_lower.find("[::1]") != std::string::npos;
+    if (!is_loopback) {
+      nidevice_grpc::logging::log(
+          nidevice_grpc::logging::Level_Warning,
+          "WARNING: Server is using insecure credentials on a non-loopback address (%s). "
+          "All RPCs are accessible without authentication. Consider configuring TLS or "
+          "binding to a loopback address.",
+          config.server_address.c_str());
+    }
+  }
 
   const char* security_description = server_security_config.is_insecure_credentials()
       ? "insecure credentials"

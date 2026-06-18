@@ -907,7 +907,8 @@ namespace nirfsa_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto list_name_mbcs = convert_from_grpc<std::string>(request->list_name());
       auto list_name = list_name_mbcs.c_str();
-      ViInt32 number_of_list_attributes = static_cast<ViInt32>(request->list_attribute_ids().size());
+      auto number_of_list_attributes_raw = request->list_attribute_ids().size();
+      ViInt32 number_of_list_attributes = nidevice_grpc::converters::convert_size<ViInt32>(number_of_list_attributes_raw, "number_of_list_attributes");
       auto list_attribute_ids = const_cast<ViAttr*>(reinterpret_cast<const ViAttr*>(request->list_attribute_ids().data()));
       ViBoolean set_as_active_list = request->set_as_active_list();
       auto status = library_->CreateConfigurationList(vi, list_name, number_of_list_attributes, list_attribute_ids, set_as_active_list);
@@ -960,9 +961,11 @@ namespace nirfsa_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       auto table_name = table_name_mbcs.c_str();
       auto frequencies = const_cast<ViReal64*>(request->frequencies().data());
-      ViInt32 frequencies_size = static_cast<ViInt32>(request->frequencies().size());
+      auto frequencies_size_raw = request->frequencies().size();
+      ViInt32 frequencies_size = nidevice_grpc::converters::convert_size<ViInt32>(frequencies_size_raw, "frequencies_size");
       auto sparameter_table = convert_from_grpc<NIComplexNumber_struct>(request->sparameter_table());
-      ViInt32 sparameter_table_size = static_cast<ViInt32>(request->sparameter_table().size());
+      auto sparameter_table_size_raw = request->sparameter_table().size();
+      ViInt32 sparameter_table_size = nidevice_grpc::converters::convert_size<ViInt32>(sparameter_table_size_raw, "sparameter_table_size");
       ViInt32 number_of_ports = request->number_of_ports();
       ViInt32 sparameter_orientation;
       switch (request->sparameter_orientation_enum_case()) {

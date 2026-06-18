@@ -250,6 +250,88 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamReadWrite_Array)
   write_stream->WritesDone();
   moniker_context.TryCancel();
 }
+
+TEST_F(NiFakeDAQmxStreamingTests, InvalidSidebandStrategy_BeginSidebandStream_ReturnsInvalidArgument)
+{
+  grpc::ClientContext moniker_context;
+  ni::data_monikers::BeginMonikerSidebandStreamRequest request;
+  ni::data_monikers::BeginMonikerSidebandStreamResponse response;
+
+  request.set_strategy(static_cast<ni::data_monikers::SidebandStrategy>(999));
+
+  auto status = moniker_stub().get()->BeginSidebandStream(&moniker_context, request, &response);
+
+  EXPECT_EQ(status.error_code(), grpc::StatusCode::INVALID_ARGUMENT);
+  EXPECT_THAT(status.error_message(), HasSubstr("Invalid sideband strategy: 999"));
+}
+
+TEST_F(NiFakeDAQmxStreamingTests, UnknownMonikerSource_StreamRead_ReturnsInvalidArgument)
+{
+  grpc::ClientContext moniker_context;
+  ni::data_monikers::MonikerList read_requests;
+  auto read_moniker = read_requests.add_read_monikers();
+  read_moniker->set_data_source("unknown_endpoint");
+  read_moniker->set_data_instance(1);
+
+  auto stream = moniker_stub().get()->StreamRead(&moniker_context, read_requests);
+
+  ni::data_monikers::MonikerReadResponse read_result;
+  EXPECT_FALSE(stream->Read(&read_result)) << "Server should have closed the stream with an error";
+
+  auto status = stream->Finish();
+  EXPECT_EQ(status.error_code(), grpc::StatusCode::INVALID_ARGUMENT);
+  EXPECT_THAT(status.error_message(), HasSubstr("Unknown moniker data_source: unknown_endpoint"));
+}
+
+TEST_F(NiFakeDAQmxStreamingTests, MismatchedValueCount_StreamReadWrite_ReturnsInvalidArgument)
+{
+  auto session = std::make_unique<nidevice_grpc::Session>();
+
+  auto begin_write_digital_u32_response = nidaqmx_grpc::experimental::client::begin_write_digital_u32(stub(), *session, 10, TRUE, 0, DAQmx_Val_GroupByChannel);
+  auto write_moniker_u32 = new ni::data_monikers::Moniker(begin_write_digital_u32_response.moniker());
+
+  grpc::ClientContext moniker_context;
+  ni::data_monikers::MonikerWriteRequest setup_request;
+  setup_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(write_moniker_u32);
+
+  auto write_stream = moniker_stub().get()->StreamReadWrite(&moniker_context);
+  write_stream->Write(setup_request);
+
+  // One write moniker is configured, but no values are provided in the payload.
+  ni::data_monikers::MonikerWriteRequest mismatched_data_request;
+  write_stream->Write(mismatched_data_request);
+
+  ni::data_monikers::MonikerReadResponse read_result;
+  EXPECT_FALSE(write_stream->Read(&read_result)) << "Server should have closed the stream with an error";
+
+  auto status = write_stream->Finish();
+  EXPECT_EQ(status.error_code(), grpc::StatusCode::INVALID_ARGUMENT);
+  EXPECT_THAT(status.error_message(), HasSubstr("Value count does not match writer count"));
+}
+
+TEST_F(NiFakeDAQmxStreamingTests, MismatchedValueCount_StreamWrite_ReturnsInvalidArgument)
+{
+  auto session = std::make_unique<nidevice_grpc::Session>();
+
+  auto begin_write_digital_u32_response = nidaqmx_grpc::experimental::client::begin_write_digital_u32(stub(), *session, 10, TRUE, 0, DAQmx_Val_GroupByChannel);
+  auto write_moniker_u32 = new ni::data_monikers::Moniker(begin_write_digital_u32_response.moniker());
+
+  grpc::ClientContext moniker_context;
+  ni::data_monikers::MonikerWriteRequest setup_request;
+  setup_request.mutable_monikers()->mutable_write_monikers()->AddAllocated(write_moniker_u32);
+
+  auto write_stream = moniker_stub().get()->StreamWrite(&moniker_context);
+  write_stream->Write(setup_request);
+
+  // One write moniker is configured, but no values are provided in the payload.
+  ni::data_monikers::MonikerWriteRequest mismatched_data_request;
+  write_stream->Write(mismatched_data_request);
+
+  write_stream->WritesDone();
+  auto status = write_stream->Finish();
+  EXPECT_EQ(status.error_code(), grpc::StatusCode::INVALID_ARGUMENT);
+  EXPECT_THAT(status.error_message(), HasSubstr("Value count does not match writer count"));
+}
 }  // namespace integration
 }  // namespace tests
 }  // namespace ni

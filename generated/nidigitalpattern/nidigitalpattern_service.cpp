@@ -144,7 +144,8 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
       auto channel_list = channel_list_mbcs.c_str();
-      ViInt32 num_offsets = static_cast<ViInt32>(request->offsets().size());
+      auto num_offsets_raw = request->offsets().size();
+      ViInt32 num_offsets = nidevice_grpc::converters::convert_size<ViInt32>(num_offsets_raw, "num_offsets");
       auto offsets = const_cast<ViReal64*>(request->offsets().data());
       auto status = library_->ApplyTDROffsets(vi, channel_list, num_offsets, offsets);
       if (!status_ok(status)) {
@@ -3973,7 +3974,8 @@ namespace nidigitalpattern_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto waveform_name_mbcs = convert_from_grpc<std::string>(request->waveform_name());
       auto waveform_name = waveform_name_mbcs.c_str();
-      ViInt32 waveform_size = static_cast<ViInt32>(request->waveform_data().size());
+      auto waveform_size_raw = request->waveform_data().size();
+      ViInt32 waveform_size = nidevice_grpc::converters::convert_size<ViInt32>(waveform_size_raw, "waveform_size");
       auto waveform_data = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->waveform_data().data()));
       auto status = library_->WriteSourceWaveformBroadcastU32(vi, waveform_name, waveform_size, waveform_data);
       if (!status_ok(status)) {
