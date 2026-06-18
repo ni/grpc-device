@@ -604,7 +604,8 @@ namespace nirfmxinstr_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       char* table_name = (char*)table_name_mbcs.c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
-      int32 frequency_array_size = static_cast<int32>(request->frequency().size());
+      auto frequency_array_size_raw = request->frequency().size();
+      int32 frequency_array_size = nidevice_grpc::converters::convert_size<int32>(frequency_array_size_raw, "frequency_array_size");
       auto s_parameters_i = const_cast<float64*>(request->s_parameters_i().data());
       auto s_parameters_q = const_cast<float64*>(request->s_parameters_q().data());
       auto s_parameter_table_size_determine_from_sizes = std::array<int, 2>
