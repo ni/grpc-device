@@ -17,14 +17,17 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-Digital Pattern Driver | 2023 Q1       | Not Supported | Not Supported |
 | NI-DMM                    | 2025 Q4       | 2025 Q4       | 2025 Q4       |
 | NI-FGEN                   | 2023 Q1       | 2023 Q1       | 2023 Q1       |
-| NI-RFmx Bluetooth         | 2026 Q2       | Not Supported | Not Supported |
+| NI-RFmx Bluetooth         | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx BluetoothGen      | 2026 Q2       | Not Supported | Not Supported |
 | NI-RFmx CDMA2k            | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx Demod             | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx GSM               | 2025 Q1       | Not Supported | Not Supported |
-| NI-RFmx LTE               | 2026 Q2       | Not Supported | Not Supported |
+| NI-RFmx LTE               | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx Pulse             | 2025 Q3       | Not Supported | Not Supported |
-| NI-RFmx NR                | 2026 Q2       | Not Supported | Not Supported |
+| NI-RFmx NR                | 2026 Q3       | Not Supported | Not Supported |
+| NI-RFmx LTE               | 2026 Q3       | Not Supported | Not Supported |
+| NI-RFmx Pulse             | 2025 Q1       | Not Supported | Not Supported |
+| NI-RFmx NR                | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx SpecAn            | 2025 Q4       | Not Supported | Not Supported |
 | NI-RFmx TD-SCDMA          | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx VNA               | 2026 Q3       | Not Supported | Not Supported |
@@ -167,3 +170,27 @@ Each supported driver API has a corresponding `.proto` file that defines the int
 ## SSL/TLS Support
 
 The server supports both server-side TLS and mutual TLS. Security configuration is accomplished by setting the `server_cert`, `server_key` and `root_cert` values in the server's configuration file. The server expects the certificate files specified in the configuration file to exist in a `certs` folder that is located in the same directory as the configuration file being used by the server. For more detailed information on SSL/TLS support refer to the [Server Security Support wiki page](https://github.com/ni/grpc-device/wiki/Server-Security-Support).
+
+### NI TLS Config Integration
+
+Alternatively, when the `ni-tls-config` package is installed, the server can delegate TLS configuration by setting the top-level `"security"` field to `"ni-tls-config"` in `server_config.json`. The following snippet shows only the `ni-tls-config`-specific fields; keep other required fields (for example, `port`) in your configuration.
+
+```json
+{
+   "security": "ni-tls-config",
+   "feature_toggles": {
+      "ni-tls-config": true
+   }
+}
+```
+
+When `ni-tls-config` is enabled, certificate and trust settings are read from the `ni-tls-config` YAML file instead of `server_config.json` certificate fields.
+
+With this setting the server reads TLS configuration at startup from the per-service YAML file managed by `ni-tls-config` (`ni-grpc-device.conf.yml`). A template for this file is distributed alongside the server binary. Place it in the location expected by `ni-tls-config`:
+
+- **Windows**: `C:\ProgramData\National Instruments\nitlsconfig\server.d\ni-grpc-device.conf.yml`
+- **Linux**: `/etc/nitlsconfig/server.d/ni-grpc-device.conf.yml`
+
+If `"security": "ni-tls-config"` is configured but the `ni-tls-config` library is not installed, the server logs an error and exits instead of starting insecurely.
+
+Once `ni-tls-config` is enabled, use NI Hardware Configuration Utility on each client machine to configure the desired security settings.

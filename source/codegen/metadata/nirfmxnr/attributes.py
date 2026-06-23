@@ -662,6 +662,12 @@ attributes = {
         'name': 'SATELLITE_ACCESS_NODE_CLASS',
         'type': 'int32'
     },
+    9437348: {
+        'access': 'read-write',
+        'enum': 'SatelliteAccessNodeType',
+        'name': 'SATELLITE_ACCESS_NODE_TYPE',
+        'type': 'int32'
+    },
     9437440: {
         'access': 'read-write',
         'enum': 'DownlinkTestModel',

@@ -37,6 +37,7 @@
 #define RFMXNR_ATTR_LINK_DIRECTION                                                         0x0090000e
 #define RFMXNR_ATTR_GNODEB_CATEGORY                                                        0x0090005f
 #define RFMXNR_ATTR_GNODEB_TYPE                                                            0x009000a0
+#define RFMXNR_ATTR_SATELLITE_ACCESS_NODE_TYPE                                             0x009000a4
 #define RFMXNR_ATTR_SATELLITE_ACCESS_NODE_CLASS                                            0x009000a3
 #define RFMXNR_ATTR_TRANSMIT_ANTENNA_TO_ANALYZE                                            0x0090009b
 #define RFMXNR_ATTR_NUMBER_OF_RECEIVE_CHAINS                                               0x0090d003
@@ -553,6 +554,11 @@
 #define RFMXNR_VAL_GNODEB_TYPE_1H                                                                 1
 #define RFMXNR_VAL_GNODEB_TYPE_1O                                                                 2
 #define RFMXNR_VAL_GNODEB_TYPE_2O                                                                 3
+
+// Values for RFMXNR_ATTR_SATELLITE_ACCESS_NODE_TYPE
+#define RFMXNR_VAL_SATELLITE_ACCESS_NODE_TYPE_1H                                                  0
+#define RFMXNR_VAL_SATELLITE_ACCESS_NODE_TYPE_1O                                                  1
+#define RFMXNR_VAL_SATELLITE_ACCESS_NODE_TYPE_2O                                                  2
 
 // Values for RFMXNR_ATTR_SATELLITE_ACCESS_NODE_CLASS
 #define RFMXNR_VAL_SATELLITE_ACCESS_NODE_CLASS_GEO                                                0
@@ -1126,6 +1132,15 @@
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS10N                                                     14
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS11N                                                     15
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS12N                                                     16
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS203N                                                    17
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS204N                                                    18
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS207N                                                    19
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS208N                                                    20
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS02N                                                     21
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS03N                                                     22
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS06N                                                     23
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS07N                                                     24
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS08N                                                     25
 
 // Values for RFMXNR_ATTR_SEM_DOWNLINK_MASK_TYPE
 #define RFMXNR_VAL_SEM_DOWNLINK_MASK_TYPE_STANDARD                                                0
@@ -3600,6 +3615,18 @@ int32 __stdcall RFmxNR_GetgNodeBType(
 );
 
 int32 __stdcall RFmxNR_SetgNodeBType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxNR_GetSatelliteAccessNodeType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxNR_SetSatelliteAccessNodeType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

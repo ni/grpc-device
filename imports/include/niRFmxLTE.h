@@ -333,6 +333,7 @@
 #define RFMXLTE_ATTR_SEM_SUBBLOCK_INTEGRATION_BANDWIDTH                                     0x00308051
 #define RFMXLTE_ATTR_SEM_SUBBLOCK_AGGREGATED_CHANNEL_BANDWIDTH                              0x00308052
 #define RFMXLTE_ATTR_SEM_COMPONENT_CARRIER_INTEGRATION_BANDWIDTH                            0x00308005
+#define RFMXLTE_ATTR_SEM_COMPONENT_CARRIER_OUTPUT_POWER_TYPE                                0x00308059
 #define RFMXLTE_ATTR_SEM_COMPONENT_CARRIER_MAXIMUM_OUTPUT_POWER                             0x00308056
 #define RFMXLTE_ATTR_SEM_NUMBER_OF_OFFSETS                                                  0x0030800b
 #define RFMXLTE_ATTR_SEM_OFFSET_START_FREQUENCY                                             0x00308014
@@ -940,6 +941,10 @@
 #define RFMXLTE_VAL_SEM_SIDELINK_MASK_TYPE_GENERAL_NS01                                            0
 #define RFMXLTE_VAL_SEM_SIDELINK_MASK_TYPE_NS33_OR_NS34                                            1
 #define RFMXLTE_VAL_SEM_SIDELINK_MASK_TYPE_CUSTOM                                                  5
+
+// Values for RFMXLTE_ATTR_SEM_COMPONENT_CARRIER_OUTPUT_POWER_TYPE
+#define RFMXLTE_VAL_SEM_COMPONENT_CARRIER_OUTPUT_POWER_TYPE_MAXIMUM_OUTPUT_POWER                   0
+#define RFMXLTE_VAL_SEM_COMPONENT_CARRIER_OUTPUT_POWER_TYPE_RATED_OUTPUT_POWER                     1
 
 // Values for RFMXLTE_ATTR_SEM_OFFSET_SIDEBAND
 #define RFMXLTE_VAL_SEM_OFFSET_SIDEBAND_NEGATIVE                                                   0
@@ -7021,6 +7026,18 @@ int32 __stdcall RFmxLTE_SEMGetComponentCarrierIntegrationBandwidth(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SEMGetComponentCarrierOutputPowerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SEMSetComponentCarrierOutputPowerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxLTE_SEMGetComponentCarrierMaximumOutputPower(

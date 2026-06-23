@@ -260,6 +260,12 @@ attributes = {
         'name': 'AUTO_IF_BANDWIDTH_SCALING_ENABLED',
         'type': 'int32'
     },
+    13631559: {
+        'access': 'read-write',
+        'enum': 'CorrectionSwitchPortsMultipathCalibration',
+        'name': 'CORRECTION_SWITCH_PORTS_MULTIPATH_CALIBRATION',
+        'type': 'int32'
+    },
     13631560: {
         'access': 'read-write',
         'enum': 'SegmentPowerLevelEnabled',

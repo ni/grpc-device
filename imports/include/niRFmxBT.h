@@ -57,6 +57,7 @@
 #define RFMXBT_ATTR_HIGH_DATA_THROUGHPUT_PACKET_FORMAT                                             0x00b00038
 #define RFMXBT_ATTR_VHDT_MODE_ENABLED                                                              0x00b00040
 #define RFMXBT_ATTR_NUMBER_OF_BLOCK_REPETITION_SEQUENCES                                           0x00b00041
+#define RFMXBT_ATTR_FREQUENCY_BAND                                                                 0x00b00045
 #define RFMXBT_ATTR_CHANNEL_NUMBER                                                                 0x00b00017
 #define RFMXBT_ATTR_DETECTED_PACKET_TYPE                                                           0x00b00019
 #define RFMXBT_ATTR_DETECTED_DATA_RATE                                                             0x00b0002a
@@ -188,6 +189,7 @@
 #define RFMXBT_ATTR_POWERRAMP_NUMBER_OF_ANALYSIS_THREADS                                           0x00b0e007
 #define RFMXBT_ATTR_POWERRAMP_RESULTS_RISE_TIME_MEAN                                               0x00b0e009
 #define RFMXBT_ATTR_POWERRAMP_RESULTS_FALL_TIME_MEAN                                               0x00b0e00a
+#define RFMXBT_ATTR_POWERRAMP_RESULTS_40DB_RISE_TIME_MEAN                                          0x00b00044
 #define RFMXBT_ATTR_POWERRAMP_RESULTS_40DB_FALL_TIME_MEAN                                          0x00b0e00b
 #define RFMXBT_ATTR_LIMITED_CONFIGURATION_CHANGE                                                   0x00b0d000
 #define RFMXBT_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                                             0x00b0d001
@@ -303,6 +305,13 @@
 // Values for RFMXBT_ATTR_VHDT_MODE_ENABLED
 #define RFMXBT_VAL_VHDT_MODE_ENABLED_FALSE                                                        0
 #define RFMXBT_VAL_VHDT_MODE_ENABLED_TRUE                                                         1
+
+// Values for RFMXBT_ATTR_FREQUENCY_BAND
+#define RFMXBT_VAL_FREQUENCY_BAND_2_4_GHZ                                                         0
+#define RFMXBT_VAL_FREQUENCY_BAND_5_GHZ_1                                                         1
+#define RFMXBT_VAL_FREQUENCY_BAND_5_GHZ_3                                                         2
+#define RFMXBT_VAL_FREQUENCY_BAND_5_GHZ_4                                                         3
+#define RFMXBT_VAL_FREQUENCY_BAND_5_GHZ_3_4                                                       4
 
 // Values for RFMXBT_ATTR_MODACC_BURST_SYNCHRONIZATION_TYPE
 #define RFMXBT_VAL_MODACC_BURST_SYNCHRONIZATION_TYPE_NONE                                         0
@@ -1993,6 +2002,18 @@ int32 __stdcall RFmxBT_SetNumberOfBlockRepetitionSequences(
    int32 attrVal
 );
 
+int32 __stdcall RFmxBT_GetFrequencyBand(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_SetFrequencyBand(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxBT_GetChannelNumber(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3098,6 +3119,12 @@ int32 __stdcall RFmxBT_PowerRampGetResultsRiseTimeMean(
 );
 
 int32 __stdcall RFmxBT_PowerRampGetResultsFallTimeMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_PowerRampGetResults40dBRiseTimeMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

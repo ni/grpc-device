@@ -218,6 +218,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_ATTR_DIGITAL_GAIN                                        0x00000054
 #define RFMXINSTR_ATTR_LO_SPLITTER_LOSS_FREQUENCY                          0x000000b8
 #define RFMXINSTR_ATTR_LO_SPLITTER_LOSS                                    0x000000b9
+#define RFMXINSTR_ATTR_FIXED_GROUP_DELAY_ACROSS_PORTS                      0x000000bc
 
 
 /* -- Values for binary attributes -- */
@@ -435,6 +436,8 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 /* Values for S-Parameter Type */
 #define RFMXINSTR_VAL_SPARAMETER_TYPE_SCALAR                               1
 #define RFMXINSTR_VAL_SPARAMETER_TYPE_VECTOR                               2
+#define RFMXINSTR_VAL_SPARAMETER_TYPE_AMPLITUDE_FLATNESS                   3
+#define RFMXINSTR_VAL_SPARAMETER_TYPE_AMPLITUDE_AND_PHASE_FLATNESS         4
 
 /* Values for Self Calibration Validity Check */
 #define RFMXINSTR_VAL_SELF_CALIBRATION_VALIDITY_CHECK_OFF                  0
@@ -2123,6 +2126,19 @@ int32 __stdcall RFmxInstr_FetchRawIQData(
       char selectorString[],
       float64 attrVal[],
       int32 arraySize
+   );
+
+   int32 __stdcall RFmxInstr_GetFixedGroupDelayAcrossPorts(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      int32 arraySize,
+      char attrVal[]
+   );
+
+   int32 __stdcall RFmxInstr_SetFixedGroupDelayAcrossPorts(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char attrVal[]
    );
 
 #ifdef __cplusplus
