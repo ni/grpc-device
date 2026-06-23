@@ -1929,6 +1929,12 @@ attributes = {
         'name': 'SEM_SIDELINK_MASK_TYPE',
         'type': 'int32'
     },
+    3178585: {
+        'access': 'read-write',
+        'enum': 'SemComponentCarrierOutputPowerType',
+        'name': 'SEM_COMPONENT_CARRIER_OUTPUT_POWER_TYPE',
+        'type': 'int32'
+    },
     3182592: {
         'access': 'read-write',
         'name': 'PVT_MEASUREMENT_ENABLED',
