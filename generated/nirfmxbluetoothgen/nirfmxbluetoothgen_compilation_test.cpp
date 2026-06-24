@@ -17,6 +17,11 @@ int32 ChannelNumberToCarrierFrequency(int32 channelNumber, int32 standard, float
   return niBTSG_ChannelNumberToCarrierFrequency(channelNumber, standard, carrierFrequency);
 }
 
+int32 ChannelNumberToCarrierFrequencyV2(int32 channelNumber, int32 standard, int32 frequencyBand, float64* carrierFrequency)
+{
+  return niBTSG_ChannelNumberToCarrierFrequencyV2(channelNumber, standard, frequencyBand, carrierFrequency);
+}
+
 int32 CloseSession(niBTSGSession session)
 {
   return niBTSG_CloseSession(session);

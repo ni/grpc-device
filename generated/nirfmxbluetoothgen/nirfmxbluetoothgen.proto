@@ -19,6 +19,7 @@ import "session.proto";
 service NiRFmxBluetoothGen {
   rpc CarrierFrequencyToChannelNumber(CarrierFrequencyToChannelNumberRequest) returns (CarrierFrequencyToChannelNumberResponse);
   rpc ChannelNumberToCarrierFrequency(ChannelNumberToCarrierFrequencyRequest) returns (ChannelNumberToCarrierFrequencyResponse);
+  rpc ChannelNumberToCarrierFrequencyV2(ChannelNumberToCarrierFrequencyV2Request) returns (ChannelNumberToCarrierFrequencyV2Response);
   rpc CloseSession(CloseSessionRequest) returns (CloseSessionResponse);
   rpc CreateAndWriteWaveformsToFile(CreateAndWriteWaveformsToFileRequest) returns (CreateAndWriteWaveformsToFileResponse);
   rpc CreateWaveformComplexF64(CreateWaveformComplexF64Request) returns (CreateWaveformComplexF64Response);
@@ -312,6 +313,17 @@ message ChannelNumberToCarrierFrequencyRequest {
 }
 
 message ChannelNumberToCarrierFrequencyResponse {
+  int32 status = 1;
+  double carrier_frequency = 2;
+}
+
+message ChannelNumberToCarrierFrequencyV2Request {
+  int32 channel_number = 1;
+  int32 standard = 2;
+  int32 frequency_band = 3;
+}
+
+message ChannelNumberToCarrierFrequencyV2Response {
   int32 status = 1;
   double carrier_frequency = 2;
 }

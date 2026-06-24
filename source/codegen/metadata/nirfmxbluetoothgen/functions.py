@@ -39,6 +39,31 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'ChannelNumberToCarrierFrequencyV2': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'channelNumber',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'standard',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'frequencyBand',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'carrierFrequency',
+                'type': 'float64'
+            }
+        ],
+        'returns': 'int32'
+    },
     'CloseSession': {
         'parameters': [
             {

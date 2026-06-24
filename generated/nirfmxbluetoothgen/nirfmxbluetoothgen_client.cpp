@@ -53,6 +53,25 @@ channel_number_to_carrier_frequency(const StubPtr& stub, const pb::int32& channe
   return response;
 }
 
+ChannelNumberToCarrierFrequencyV2Response
+channel_number_to_carrier_frequency_v2(const StubPtr& stub, const pb::int32& channel_number, const pb::int32& standard, const pb::int32& frequency_band)
+{
+  ::grpc::ClientContext context;
+
+  auto request = ChannelNumberToCarrierFrequencyV2Request{};
+  request.set_channel_number(channel_number);
+  request.set_standard(standard);
+  request.set_frequency_band(frequency_band);
+
+  auto response = ChannelNumberToCarrierFrequencyV2Response{};
+
+  raise_if_error(
+      stub->ChannelNumberToCarrierFrequencyV2(&context, request, &response),
+      context);
+
+  return response;
+}
+
 CloseSessionResponse
 close_session(const StubPtr& stub, const nidevice_grpc::Session& session)
 {

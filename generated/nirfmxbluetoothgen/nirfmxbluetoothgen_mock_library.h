@@ -19,6 +19,7 @@ class NiRFmxBluetoothGenMockLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBlue
  public:
   MOCK_METHOD(int32, CarrierFrequencyToChannelNumber, (float64 carrierFrequency, int32 standard, int32* channelNumber), (override));
   MOCK_METHOD(int32, ChannelNumberToCarrierFrequency, (int32 channelNumber, int32 standard, float64* carrierFrequency), (override));
+  MOCK_METHOD(int32, ChannelNumberToCarrierFrequencyV2, (int32 channelNumber, int32 standard, int32 frequencyBand, float64* carrierFrequency), (override));
   MOCK_METHOD(int32, CloseSession, (niBTSGSession session), (override));
   MOCK_METHOD(int32, CreateAndWriteWaveformsToFile, (niBTSGSession session, char filePath[], int32 fileOperation), (override));
   MOCK_METHOD(int32, CreateWaveformComplexF64, (niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone), (override));

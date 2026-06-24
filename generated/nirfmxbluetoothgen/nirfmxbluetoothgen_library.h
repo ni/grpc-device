@@ -23,6 +23,7 @@ class NiRFmxBluetoothGenLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBluetoot
   ::grpc::Status check_function_exists(std::string functionName);
   int32 CarrierFrequencyToChannelNumber(float64 carrierFrequency, int32 standard, int32* channelNumber) override;
   int32 ChannelNumberToCarrierFrequency(int32 channelNumber, int32 standard, float64* carrierFrequency) override;
+  int32 ChannelNumberToCarrierFrequencyV2(int32 channelNumber, int32 standard, int32 frequencyBand, float64* carrierFrequency) override;
   int32 CloseSession(niBTSGSession session) override;
   int32 CreateAndWriteWaveformsToFile(niBTSGSession session, char filePath[], int32 fileOperation) override;
   int32 CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone) override;
@@ -61,6 +62,7 @@ class NiRFmxBluetoothGenLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBluetoot
  private:
   using CarrierFrequencyToChannelNumberPtr = decltype(&niBTSG_CarrierFrequencyToChannelNumber);
   using ChannelNumberToCarrierFrequencyPtr = decltype(&niBTSG_ChannelNumberToCarrierFrequency);
+  using ChannelNumberToCarrierFrequencyV2Ptr = decltype(&niBTSG_ChannelNumberToCarrierFrequencyV2);
   using CloseSessionPtr = decltype(&niBTSG_CloseSession);
   using CreateAndWriteWaveformsToFilePtr = decltype(&niBTSG_CreateAndWriteWaveformsToFile);
   using CreateWaveformComplexF64Ptr = decltype(&niBTSG_CreateWaveformComplexF64);
@@ -99,6 +101,7 @@ class NiRFmxBluetoothGenLibrary : public nirfmxbluetoothgen_grpc::NiRFmxBluetoot
   typedef struct FunctionPointers {
     CarrierFrequencyToChannelNumberPtr CarrierFrequencyToChannelNumber;
     ChannelNumberToCarrierFrequencyPtr ChannelNumberToCarrierFrequency;
+    ChannelNumberToCarrierFrequencyV2Ptr ChannelNumberToCarrierFrequencyV2;
     CloseSessionPtr CloseSession;
     CreateAndWriteWaveformsToFilePtr CreateAndWriteWaveformsToFile;
     CreateWaveformComplexF64Ptr CreateWaveformComplexF64;
