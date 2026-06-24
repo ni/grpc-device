@@ -50,7 +50,7 @@ CommitResponse commit(const StubPtr& stub, const nidevice_grpc::Session& instrum
 CreateSignalConfigurationResponse create_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name);
 DeleteSignalConfigurationResponse delete_signal_configuration(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& signal_name);
 DisableTriggerResponse disable_trigger(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string);
-FetchAcquiredAmplitudeTraceResponse fetch_acquired_amplitude_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& array_size);
+FetchAcquiredAmplitudeTraceResponse fetch_acquired_amplitude_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const pb::int32& timeout);
 FetchAmplitudeTraceResponse fetch_amplitude_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 FetchBurstIntrapulseStabilityTraceResponse fetch_burst_intrapulse_stability_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 FetchBurstSelectedPositionStabilityTraceResponse fetch_burst_selected_position_stability_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);

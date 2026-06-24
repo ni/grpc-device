@@ -870,7 +870,7 @@ functions = {
             },
             {
                 'direction': 'in',
-                'name': 'arraySize',
+                'name': 'timeout',
                 'type': 'int32'
             },
             {

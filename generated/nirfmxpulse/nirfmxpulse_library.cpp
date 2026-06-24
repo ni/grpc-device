@@ -358,12 +358,12 @@ int32 NiRFmxPulseLibrary::DisableTrigger(niRFmxInstrHandle instrumentHandle, cha
   return function_pointers_.DisableTrigger(instrumentHandle, selectorString);
 }
 
-int32 NiRFmxPulseLibrary::FetchAcquiredAmplitudeTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 arraySize, float64* sampleDuration, float32 amplitude[], int32 amplitudeArraySize, int32* amplitudeActualArraySize, int32 startIndex[], float64 startTimeStamp[], int32 startArraySize, int32* startActualArraySize)
+int32 NiRFmxPulseLibrary::FetchAcquiredAmplitudeTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 timeout, float64* sampleDuration, float32 amplitude[], int32 amplitudeArraySize, int32* amplitudeActualArraySize, int32 startIndex[], float64 startTimeStamp[], int32 startArraySize, int32* startActualArraySize)
 {
   if (!function_pointers_.FetchAcquiredAmplitudeTrace) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxPulse_FetchAcquiredAmplitudeTrace.");
   }
-  return function_pointers_.FetchAcquiredAmplitudeTrace(instrumentHandle, selectorString, arraySize, sampleDuration, amplitude, amplitudeArraySize, amplitudeActualArraySize, startIndex, startTimeStamp, startArraySize, startActualArraySize);
+  return function_pointers_.FetchAcquiredAmplitudeTrace(instrumentHandle, selectorString, timeout, sampleDuration, amplitude, amplitudeArraySize, amplitudeActualArraySize, startIndex, startTimeStamp, startArraySize, startActualArraySize);
 }
 
 int32 NiRFmxPulseLibrary::FetchAmplitudeTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 amplitude[], int32 arraySize, int32* actualArraySize)

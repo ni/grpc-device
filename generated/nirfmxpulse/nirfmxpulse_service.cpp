@@ -972,12 +972,12 @@ namespace nirfmxpulse_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      int32 array_size = request->array_size();
+      int32 timeout = request->timeout();
       float64 sample_duration {};
       int32 amplitude_actual_array_size {};
       int32 start_actual_array_size {};
       while (true) {
-        auto status = library_->FetchAcquiredAmplitudeTrace(instrument, selector_string, array_size, &sample_duration, nullptr, 0, &amplitude_actual_array_size, nullptr, nullptr, 0, &start_actual_array_size);
+        auto status = library_->FetchAcquiredAmplitudeTrace(instrument, selector_string, timeout, &sample_duration, nullptr, 0, &amplitude_actual_array_size, nullptr, nullptr, 0, &start_actual_array_size);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
         }
@@ -989,7 +989,7 @@ namespace nirfmxpulse_grpc {
         float64* start_time_stamp = response->mutable_start_time_stamp()->mutable_data();
         auto amplitude_array_size = amplitude_actual_array_size;
         auto start_array_size = start_actual_array_size;
-        status = library_->FetchAcquiredAmplitudeTrace(instrument, selector_string, array_size, &sample_duration, amplitude, amplitude_array_size, &amplitude_actual_array_size, start_index, start_time_stamp, start_array_size, &start_actual_array_size);
+        status = library_->FetchAcquiredAmplitudeTrace(instrument, selector_string, timeout, &sample_duration, amplitude, amplitude_array_size, &amplitude_actual_array_size, start_index, start_time_stamp, start_array_size, &start_actual_array_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
           // buffer is now too small, try again
           continue;

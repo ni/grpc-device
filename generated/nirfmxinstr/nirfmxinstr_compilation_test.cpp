@@ -74,7 +74,12 @@ int32 CfgSParameterExternalAttenuationTable(niRFmxInstrHandle instrumentHandle, 
 
 int32 CfgSParameterExternalAttenuationTableInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 frequencyArraySize, float64 sParameters[], int32 sParameterTableSize, int32 numberOfPorts, int32 sParameterOrientation)
 {
-  return RFmxInstr_CfgSParameterExternalAttenuationTable(instrumentHandle, selectorString, tableName, frequency, frequencyArraySize, reinterpret_cast<NIComplexDouble*>(sParameters), sParameterTableSize/2, numberOfPorts, sParameterOrientation);
+  return RFmxInstr_CfgSParameterExternalAttenuationTable(instrumentHandle, selectorString, tableName, frequency, frequencyArraySize, reinterpret_cast<NIComplexDouble*>(sParameters), sParameterTableSize, numberOfPorts, sParameterOrientation);
+}
+
+int32 CfgSParameterExternalAttenuationTableSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], char tableName[], float64 frequency[], int32 frequencyArraySize, float64 sParametersI[], float64 sParametersQ[], int32 sParameterTableSize, int32 numberOfPorts, int32 sParameterOrientation)
+{
+  return RFmxInstr_CfgSParameterExternalAttenuationTableSplit(instrumentHandle, selectorString, tableName, frequency, frequencyArraySize, sParametersI, sParametersQ, sParameterTableSize, numberOfPorts, sParameterOrientation);
 }
 
 int32 CfgSParameterExternalAttenuationType(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 sParameterType)
@@ -135,6 +140,11 @@ int32 FetchRawIQData(niRFmxInstrHandle instrumentHandle, char selectorString[], 
 int32 FetchRawIQDataInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, float32 data[], int32 arraySize, int32* actualArraySize, void* reserved)
 {
   return RFmxInstr_FetchRawIQData(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, reinterpret_cast<NIComplexSingle*>(data), arraySize, actualArraySize, reserved);
+}
+
+int32 FetchRawIQDataSplit(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 recordsToFetch, int64 samplesToRead, float64* x0, float64* dx, float32 dataI[], float32 dataQ[], int32 arraySize, int32* actualArraySize, void* reserved)
+{
+  return RFmxInstr_FetchRawIQDataSplit(instrumentHandle, selectorString, timeout, recordsToFetch, samplesToRead, x0, dx, dataI, dataQ, arraySize, actualArraySize, reserved);
 }
 
 int32 GetAttributeF32(niRFmxInstrHandle instrumentHandle, char channelName[], int32 attributeID, float32* attrVal)
