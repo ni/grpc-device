@@ -19,6 +19,21 @@
 
 #include "niRFmxInstr.h"
 
+#define RFMXDEMOD_ATTR_SELECTED_PORTS                                                     0x00202ffd
+#define RFMXDEMOD_ATTR_CENTER_FREQUENCY                                                   0x00202001
+#define RFMXDEMOD_ATTR_REFERENCE_LEVEL                                                    0x00202003
+#define RFMXDEMOD_ATTR_EXTERNAL_ATTENUATION                                               0x00202002
+#define RFMXDEMOD_ATTR_REFERENCE_LEVEL_HEADROOM                                           0x00202ffc
+#define RFMXDEMOD_ATTR_TRIGGER_TYPE                                                       0x00202004
+#define RFMXDEMOD_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                                        0x00202005
+#define RFMXDEMOD_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                                          0x00202006
+#define RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                                       0x00202007
+#define RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                                        0x00202008
+#define RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                                   0x00202fff
+#define RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                                        0x00202009
+#define RFMXDEMOD_ATTR_TRIGGER_DELAY                                                      0x0020200a
+#define RFMXDEMOD_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                                    0x0020200b
+#define RFMXDEMOD_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                                0x0020200c
 #define RFMXDEMOD_ATTR_ADEMOD_MEASUREMENT_ENABLED                                         0x00200039
 #define RFMXDEMOD_ATTR_ADEMOD_AUDIO_MEASUREMENT_ENABLED                                   0x00200040
 #define RFMXDEMOD_ATTR_ADEMOD_MODULATION_TYPE                                             0x0020000e
@@ -86,6 +101,8 @@
 #define RFMXDEMOD_ATTR_DDEMOD_EVM_NORMALIZATION_REFERENCE                                 0x00201039
 #define RFMXDEMOD_ATTR_DDEMOD_FSK_DEVIATION                                               0x00201008
 #define RFMXDEMOD_ATTR_DDEMOD_FSK_REFERENCE_COMPENSATION_ENABLED                          0x00201038
+#define RFMXDEMOD_ATTR_DDEMOD_APSK_R2_TO_R1_RATIO                                         0x00201049
+#define RFMXDEMOD_ATTR_DDEMOD_APSK_R3_TO_R1_RATIO                                         0x0020104a
 #define RFMXDEMOD_ATTR_DDEMOD_SYMBOL_MAP_TYPE                                             0x00201040
 #define RFMXDEMOD_ATTR_DDEMOD_PULSE_SHAPING_FILTER_TYPE                                   0x0020100f
 #define RFMXDEMOD_ATTR_DDEMOD_PULSE_SHAPING_FILTER_PARAMETER                              0x00201010
@@ -99,6 +116,13 @@
 #define RFMXDEMOD_ATTR_DDEMOD_SYNCHRONIZATION_MEASUREMENT_OFFSET                          0x00201034
 #define RFMXDEMOD_ATTR_DDEMOD_AVERAGING_ENABLED                                           0x00201002
 #define RFMXDEMOD_ATTR_DDEMOD_AVERAGING_COUNT                                             0x00201003
+#define RFMXDEMOD_ATTR_DDEMOD_SIGNAL_STRUCTURE                                            0x00201041
+#define RFMXDEMOD_ATTR_DDEMOD_BURST_START_EXCLUSION_SYMBOLS                               0x00201042
+#define RFMXDEMOD_ATTR_DDEMOD_BURST_END_EXCLUSION_SYMBOLS                                 0x00201043
+#define RFMXDEMOD_ATTR_DDEMOD_IQ_OFFSET_REMOVAL_ENABLED                                   0x00201044
+#define RFMXDEMOD_ATTR_DDEMOD_CFO_ESTIMATION_MODE                                         0x00201045
+#define RFMXDEMOD_ATTR_DDEMOD_SEARCH_LENGTH_AUTO                                          0x00201047
+#define RFMXDEMOD_ATTR_DDEMOD_SEARCH_LENGTH                                               0x00201048
 #define RFMXDEMOD_ATTR_DDEMOD_ALL_TRACES_ENABLED                                          0x00201015
 #define RFMXDEMOD_ATTR_DDEMOD_RESULTS_CARRIER_MEAN_FREQUENCY_OFFSET                       0x00201021
 #define RFMXDEMOD_ATTR_DDEMOD_RESULTS_CARRIER_MEAN_FREQUENCY_DRIFT                        0x00201022
@@ -125,45 +149,15 @@
 #define RFMXDEMOD_ATTR_DDEMOD_RESULTS_MEAN_RHO_FACTOR                                     0x0020103e
 #define RFMXDEMOD_ATTR_DDEMOD_RESULTS_MEAN_AMPLITUDE_DROOP                                0x0020103f
 #define RFMXDEMOD_ATTR_DDEMOD_RESULTS_SYNC_FOUND                                          0x00201035
-#define RFMXDEMOD_ATTR_RESULT_FETCH_TIMEOUT                                               0x00203000
-#define RFMXDEMOD_ATTR_LIMITED_CONFIGURATION_CHANGE                                       0x0020200e
-#define RFMXDEMOD_ATTR_CENTER_FREQUENCY                                                   0x00202001
-#define RFMXDEMOD_ATTR_REFERENCE_LEVEL                                                    0x00202003
-#define RFMXDEMOD_ATTR_EXTERNAL_ATTENUATION                                               0x00202002
-#define RFMXDEMOD_ATTR_TRIGGER_TYPE                                                       0x00202004
-#define RFMXDEMOD_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                                        0x00202005
-#define RFMXDEMOD_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                                          0x00202006
-#define RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                                       0x00202007
-#define RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                                        0x00202008
-#define RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                                   0x00202fff
-#define RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                                        0x00202009
-#define RFMXDEMOD_ATTR_TRIGGER_DELAY                                                      0x0020200a
-#define RFMXDEMOD_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                                    0x0020200b
-#define RFMXDEMOD_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                                0x0020200c
 #define RFMXDEMOD_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                                 0x0020200d
-#define RFMXDEMOD_ATTR_DDEMOD_SIGNAL_STRUCTURE                                            0x00201041
-#define RFMXDEMOD_ATTR_DDEMOD_BURST_START_EXCLUSION_SYMBOLS                               0x00201042
-#define RFMXDEMOD_ATTR_DDEMOD_BURST_END_EXCLUSION_SYMBOLS                                 0x00201043
-#define RFMXDEMOD_ATTR_DDEMOD_IQ_OFFSET_REMOVAL_ENABLED                                   0x00201044
-#define RFMXDEMOD_ATTR_DDEMOD_CFO_ESTIMATION_MODE                                         0x00201045
-#define RFMXDEMOD_ATTR_DDEMOD_SEARCH_LENGTH_AUTO                                          0x00201047
-#define RFMXDEMOD_ATTR_DDEMOD_SEARCH_LENGTH                                               0x00201048
-#define RFMXDEMOD_ATTR_SELECTED_PORTS                                                     0x00202ffd
-#define RFMXDEMOD_ATTR_REFERENCE_LEVEL_HEADROOM                                           0x00202ffc
+#define RFMXDEMOD_ATTR_LIMITED_CONFIGURATION_CHANGE                                       0x0020200e
+#define RFMXDEMOD_ATTR_RESULT_FETCH_TIMEOUT                                               0x00203000
 
 // Values for RFMXDEMOD_ATTR_TRIGGER_TYPE
 #define RFMXDEMOD_VAL_TRIGGER_TYPE_NONE                                                              0
 #define RFMXDEMOD_VAL_TRIGGER_TYPE_DIGITAL_EDGE                                                      1
 #define RFMXDEMOD_VAL_TRIGGER_TYPE_IQ_POWER_EDGE                                                     2
 #define RFMXDEMOD_VAL_TRIGGER_TYPE_SOFTWARE                                                          3
-
-// Values for RFMXDEMOD_ATTR_DIGITAL_EDGE_TRIGGER_EDGE
-#define RFMXDEMOD_VAL_DIGITAL_EDGE_RISING_EDGE                                                       0
-#define RFMXDEMOD_VAL_DIGITAL_EDGE_FALLING_EDGE                                                      1
-
-// Values for RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE
-#define RFMXDEMOD_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE                                      0
-#define RFMXDEMOD_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE                                      1
 
 // Values for RFMXDEMOD_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE
 #define RFMXDEMOD_VAL_PFI0_STR                                                                       "PFI0"
@@ -189,6 +183,14 @@
 #define RFMXDEMOD_VAL_DIO_PFI6_STR                                                                   "DIO/PFI6"
 #define RFMXDEMOD_VAL_DIO_PFI7_STR                                                                   "DIO/PFI7"
 
+// Values for RFMXDEMOD_ATTR_DIGITAL_EDGE_TRIGGER_EDGE
+#define RFMXDEMOD_VAL_DIGITAL_EDGE_RISING_EDGE                                                       0
+#define RFMXDEMOD_VAL_DIGITAL_EDGE_FALLING_EDGE                                                      1
+
+// Values for RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE
+#define RFMXDEMOD_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE                                      0
+#define RFMXDEMOD_VAL_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE                                      1
+
 // Values for RFMXDEMOD_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE
 #define RFMXDEMOD_VAL_IQ_POWER_EDGE_RISING_SLOPE                                                     0
 #define RFMXDEMOD_VAL_IQ_POWER_EDGE_FALLING_SLOPE                                                    1
@@ -197,9 +199,34 @@
 #define RFMXDEMOD_VAL_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL                                         0
 #define RFMXDEMOD_VAL_TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO                                           1
 
+// Values for RFMXDEMOD_ATTR_ADEMOD_AUDIO_MEASUREMENT_ENABLED
+#define RFMXDEMOD_VAL_ADEMOD_AUDIO_MEASUREMENT_ENABLED_FALSE                                         0
+#define RFMXDEMOD_VAL_ADEMOD_AUDIO_MEASUREMENT_ENABLED_TRUE                                          1
+
+// Values for RFMXDEMOD_ATTR_ADEMOD_MODULATION_TYPE
+#define RFMXDEMOD_VAL_ADEMOD_MODULATION_TYPE_AM                                                      0
+#define RFMXDEMOD_VAL_ADEMOD_MODULATION_TYPE_FM                                                      1
+#define RFMXDEMOD_VAL_ADEMOD_MODULATION_TYPE_PM                                                      2
+
 // Values for RFMXDEMOD_ATTR_ADEMOD_AM_CARRIER_SUPPRESSED
 #define RFMXDEMOD_VAL_ADEMOD_AM_CARRIER_SUPPRESSED_FALSE                                             0
 #define RFMXDEMOD_VAL_ADEMOD_AM_CARRIER_SUPPRESSED_TRUE                                              1
+
+// Values for RFMXDEMOD_ATTR_ADEMOD_RBW_FILTER_TYPE
+#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_NONE                                                    0
+#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_GAUSSIAN                                                1
+#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_FLAT                                                    2
+#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_SYNCH_TUNED_4                                           3
+#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_SYNCH_TUNED_5                                           4
+#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_RRC                                                     5
+
+// Values for RFMXDEMOD_ATTR_ADEMOD_CARRIER_CORRECTION_FREQUENCY_ENABLED
+#define RFMXDEMOD_VAL_ADEMOD_CARRIER_FREQUENCY_CORRECTION_ENABLED_FALSE                              0
+#define RFMXDEMOD_VAL_ADEMOD_CARRIER_FREQUENCY_CORRECTION_ENABLED_TRUE                               1
+
+// Values for RFMXDEMOD_ATTR_ADEMOD_CARRIER_CORRECTION_PHASE_ENABLED
+#define RFMXDEMOD_VAL_ADEMOD_CARRIER_PHASE_CORRECTION_ENABLED_FALSE                                  0
+#define RFMXDEMOD_VAL_ADEMOD_CARRIER_PHASE_CORRECTION_ENABLED_TRUE                                   1
 
 // Values for RFMXDEMOD_ATTR_ADEMOD_AUDIO_FILTER_TYPE
 #define RFMXDEMOD_VAL_ADEMOD_AUDIO_FILTER_TYPE_NONE                                                  0
@@ -219,47 +246,13 @@
 #define RFMXDEMOD_VAL_ADEMOD_AVERAGING_TYPE_MAXIMUM                                                  1
 #define RFMXDEMOD_VAL_ADEMOD_AVERAGING_TYPE_MINIMUM                                                  2
 
-// Values for RFMXDEMOD_ATTR_ADEMOD_CARRIER_CORRECTION_FREQUENCY_ENABLED
-#define RFMXDEMOD_VAL_ADEMOD_CARRIER_FREQUENCY_CORRECTION_ENABLED_FALSE                              0
-#define RFMXDEMOD_VAL_ADEMOD_CARRIER_FREQUENCY_CORRECTION_ENABLED_TRUE                               1
-
-// Values for RFMXDEMOD_ATTR_ADEMOD_CARRIER_CORRECTION_PHASE_ENABLED
-#define RFMXDEMOD_VAL_ADEMOD_CARRIER_PHASE_CORRECTION_ENABLED_FALSE                                  0
-#define RFMXDEMOD_VAL_ADEMOD_CARRIER_PHASE_CORRECTION_ENABLED_TRUE                                   1
-
-// Values for RFMXDEMOD_ATTR_ADEMOD_AUDIO_MEASUREMENT_ENABLED
-#define RFMXDEMOD_VAL_ADEMOD_AUDIO_MEASUREMENT_ENABLED_FALSE                                         0
-#define RFMXDEMOD_VAL_ADEMOD_AUDIO_MEASUREMENT_ENABLED_TRUE                                          1
-
-// Values for RFMXDEMOD_ATTR_ADEMOD_MODULATION_TYPE
-#define RFMXDEMOD_VAL_ADEMOD_MODULATION_TYPE_AM                                                      0
-#define RFMXDEMOD_VAL_ADEMOD_MODULATION_TYPE_FM                                                      1
-#define RFMXDEMOD_VAL_ADEMOD_MODULATION_TYPE_PM                                                      2
-
-// Values for RFMXDEMOD_ATTR_ADEMOD_RBW_FILTER_TYPE
-#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_NONE                                                    0
-#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_GAUSSIAN                                                1
-#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_FLAT                                                    2
-#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_SYNCH_TUNED_4                                           3
-#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_SYNCH_TUNED_5                                           4
-#define RFMXDEMOD_VAL_ADEMOD_RBW_FILTER_TYPE_RRC                                                     5
-
-// Values for RFMXDEMOD_ATTR_DDEMOD_AVERAGING_ENABLED
-#define RFMXDEMOD_VAL_DDEMOD_AVERAGING_ENABLED_FALSE                                                 0
-#define RFMXDEMOD_VAL_DDEMOD_AVERAGING_ENABLED_TRUE                                                  1
-
-// Values for RFMXDEMOD_ATTR_DDEMOD_EQUALIZER_MODE
-#define RFMXDEMOD_VAL_DDEMOD_EQUALIZER_MODE_OFF                                                      0
-#define RFMXDEMOD_VAL_DDEMOD_EQUALIZER_MODE_TRAIN                                                    1
-#define RFMXDEMOD_VAL_DDEMOD_EQUALIZER_MODE_HOLD                                                     2
-
-// Values for RFMXDEMOD_ATTR_DDEMOD_EVM_NORMALIZATION_REFERENCE
-#define RFMXDEMOD_VAL_DDEMOD_EVM_NORMALIZATION_REFERENCE_PEAK                                        0
-#define RFMXDEMOD_VAL_DDEMOD_EVM_NORMALIZATION_REFERENCE_RMS                                         1
-
-// Values for RFMXDEMOD_ATTR_DDEMOD_FSK_REFERENCE_COMPENSATION_ENABLED
-#define RFMXDEMOD_VAL_DDEMOD_FSK_REFERENCE_COMPENSATION_ENABLED_FALSE                                0
-#define RFMXDEMOD_VAL_DDEMOD_FSK_REFERENCE_COMPENSATION_ENABLED_TRUE                                 1
+// Values for RFMXDEMOD_ATTR_DDEMOD_MODULATION_TYPE
+#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_ASK                                                     0
+#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_FSK                                                     1
+#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_PSK                                                     2
+#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_QAM                                                     3
+#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_MSK                                                     4
+#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_APSK                                                    5
 
 // Values for RFMXDEMOD_ATTR_DDEMOD_M
 #define RFMXDEMOD_VAL_DDEMOD_M_2                                                                     2
@@ -275,20 +268,9 @@
 #define RFMXDEMOD_VAL_DDEMOD_M_2048                                                                  2048
 #define RFMXDEMOD_VAL_DDEMOD_M_4096                                                                  4096
 
-// Values for RFMXDEMOD_ATTR_DDEMOD_MEASUREMENT_FILTER_TYPE
-#define RFMXDEMOD_VAL_DDEMOD_MEASUREMENT_FILTER_TYPE_AUTO                                            0
-#define RFMXDEMOD_VAL_DDEMOD_MEASUREMENT_FILTER_TYPE_CUSTOM                                          1
-
-// Values for RFMXDEMOD_ATTR_DDEMOD_MODULATION_TYPE
-#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_ASK                                                     0
-#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_FSK                                                     1
-#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_PSK                                                     2
-#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_QAM                                                     3
-#define RFMXDEMOD_VAL_DDEMOD_MODULATION_TYPE_MSK                                                     4
-
-// Values for RFMXDEMOD_ATTR_DDEMOD_DIFFERENTIAL_ENABLED
-#define RFMXDEMOD_VAL_DDEMOD_DIFFERENTIAL_ENABLED_FALSE                                              0
-#define RFMXDEMOD_VAL_DDEMOD_DIFFERENTIAL_ENABLED_TRUE                                               1
+// Values for RFMXDEMOD_ATTR_DDEMOD_SPECTRUM_INVERTED
+#define RFMXDEMOD_VAL_DDEMOD_SPECTRUM_INVERTED_FALSE                                                 0
+#define RFMXDEMOD_VAL_DDEMOD_SPECTRUM_INVERTED_TRUE                                                  1
 
 // Values for RFMXDEMOD_ATTR_DDEMOD_PSK_FORMAT
 #define RFMXDEMOD_VAL_DDEMOD_PSK_FORMAT_NORMAL                                                       0
@@ -296,6 +278,23 @@
 #define RFMXDEMOD_VAL_DDEMOD_PSK_FORMAT_PI_BY_4_QPSK                                                 2
 #define RFMXDEMOD_VAL_DDEMOD_PSK_FORMAT_PI_BY_8_8PSK                                                 3
 #define RFMXDEMOD_VAL_DDEMOD_PSK_FORMAT_3PI_BY_8_8PSK                                                4
+#define RFMXDEMOD_VAL_DDEMOD_PSK_FORMAT_SHAPED_OFFSET_QPSK                                           5
+
+// Values for RFMXDEMOD_ATTR_DDEMOD_DIFFERENTIAL_ENABLED
+#define RFMXDEMOD_VAL_DDEMOD_DIFFERENTIAL_ENABLED_FALSE                                              0
+#define RFMXDEMOD_VAL_DDEMOD_DIFFERENTIAL_ENABLED_TRUE                                               1
+
+// Values for RFMXDEMOD_ATTR_DDEMOD_EVM_NORMALIZATION_REFERENCE
+#define RFMXDEMOD_VAL_DDEMOD_EVM_NORMALIZATION_REFERENCE_PEAK                                        0
+#define RFMXDEMOD_VAL_DDEMOD_EVM_NORMALIZATION_REFERENCE_RMS                                         1
+
+// Values for RFMXDEMOD_ATTR_DDEMOD_FSK_REFERENCE_COMPENSATION_ENABLED
+#define RFMXDEMOD_VAL_DDEMOD_FSK_REFERENCE_COMPENSATION_ENABLED_FALSE                                0
+#define RFMXDEMOD_VAL_DDEMOD_FSK_REFERENCE_COMPENSATION_ENABLED_TRUE                                 1
+
+// Values for RFMXDEMOD_ATTR_DDEMOD_SYMBOL_MAP_TYPE
+#define RFMXDEMOD_VAL_DDEMOD_SYMBOL_MAP_TYPE_AUTO                                                    0
+#define RFMXDEMOD_VAL_DDEMOD_SYMBOL_MAP_TYPE_CUSTOM                                                  1
 
 // Values for RFMXDEMOD_ATTR_DDEMOD_PULSE_SHAPING_FILTER_TYPE
 #define RFMXDEMOD_VAL_DDEMOD_PULSE_SHAPING_FILTER_TYPE_RECTANGULAR                                   0
@@ -305,48 +304,24 @@
 #define RFMXDEMOD_VAL_DDEMOD_PULSE_SHAPING_FILTER_TYPE_CUSTOM                                        4
 #define RFMXDEMOD_VAL_DDEMOD_PULSE_SHAPING_FILTER_TYPE_HALF_SINE                                     5
 #define RFMXDEMOD_VAL_DDEMOD_PULSE_SHAPING_FILTER_TYPE_LINEARIZED_GMSK_EDGE                          6
+#define RFMXDEMOD_VAL_DDEMOD_PULSE_SHAPING_FILTER_TYPE_SOQPSK_TG                                     7
 
-// Values for RFMXDEMOD_ATTR_DDEMOD_SPECTRUM_INVERTED
-#define RFMXDEMOD_VAL_DDEMOD_SPECTRUM_INVERTED_FALSE                                                 0
-#define RFMXDEMOD_VAL_DDEMOD_SPECTRUM_INVERTED_TRUE                                                  1
+// Values for RFMXDEMOD_ATTR_DDEMOD_MEASUREMENT_FILTER_TYPE
+#define RFMXDEMOD_VAL_DDEMOD_MEASUREMENT_FILTER_TYPE_AUTO                                            0
+#define RFMXDEMOD_VAL_DDEMOD_MEASUREMENT_FILTER_TYPE_CUSTOM                                          1
 
-// Values for RFMXDEMOD_ATTR_DDEMOD_SYMBOL_MAP_TYPE
-#define RFMXDEMOD_VAL_DDEMOD_SYMBOL_MAP_TYPE_AUTO                                                    0
-#define RFMXDEMOD_VAL_DDEMOD_SYMBOL_MAP_TYPE_CUSTOM                                                  1
+// Values for RFMXDEMOD_ATTR_DDEMOD_EQUALIZER_MODE
+#define RFMXDEMOD_VAL_DDEMOD_EQUALIZER_MODE_OFF                                                      0
+#define RFMXDEMOD_VAL_DDEMOD_EQUALIZER_MODE_TRAIN                                                    1
+#define RFMXDEMOD_VAL_DDEMOD_EQUALIZER_MODE_HOLD                                                     2
 
 // Values for RFMXDEMOD_ATTR_DDEMOD_SYNCHRONIZATION_ENABLED
 #define RFMXDEMOD_VAL_DDEMOD_SYNCHRONIZATION_ENABLED_FALSE                                           0
 #define RFMXDEMOD_VAL_DDEMOD_SYNCHRONIZATION_ENABLED_TRUE                                            1
 
-// Values for RFMXDEMOD_ATTR_LIMITED_CONFIGURATION_CHANGE
-#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                          0
-#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE                                         1
-#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY                                         2
-#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL                                   3
-#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
-#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
-
-// Values for Boolean
-#define RFMXDEMOD_VAL_FALSE                                                                          0
-#define RFMXDEMOD_VAL_TRUE                                                                           1
-
-// Values for MeasurementTypes
-#define RFMXDEMOD_VAL_ADEMOD                                                                         1 << 0
-#define RFMXDEMOD_VAL_DDEMOD                                                                         1 << 1
-
-// Values for FrequencyReferenceSource
-#define RFMXDEMOD_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
-#define RFMXDEMOD_VAL_REF_IN_STR                                                                     "RefIn"
-#define RFMXDEMOD_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
-#define RFMXDEMOD_VAL_CLK_IN_STR                                                                     "ClkIn"
-
-// Values for RFAttenuationAuto
-#define RFMXDEMOD_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
-#define RFMXDEMOD_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
-
-// Values for MechanicalAttenuationAuto
-#define RFMXDEMOD_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
-#define RFMXDEMOD_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
+// Values for RFMXDEMOD_ATTR_DDEMOD_AVERAGING_ENABLED
+#define RFMXDEMOD_VAL_DDEMOD_AVERAGING_ENABLED_FALSE                                                 0
+#define RFMXDEMOD_VAL_DDEMOD_AVERAGING_ENABLED_TRUE                                                  1
 
 // Values for RFMXDEMOD_ATTR_DDEMOD_SIGNAL_STRUCTURE
 #define RFMXDEMOD_VAL_DDEMOD_SIGNAL_STRUCTURE_BURSTED                                                0
@@ -363,6 +338,36 @@
 // Values for RFMXDEMOD_ATTR_DDEMOD_SEARCH_LENGTH_AUTO
 #define RFMXDEMOD_VAL_DDEMOD_SEARCH_LENGTH_AUTO_FALSE                                                0
 #define RFMXDEMOD_VAL_DDEMOD_SEARCH_LENGTH_AUTO_TRUE                                                 1
+
+// Values for RFMXDEMOD_ATTR_LIMITED_CONFIGURATION_CHANGE
+#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                          0
+#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE                                         1
+#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY                                         2
+#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL                                   3
+#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
+#define RFMXDEMOD_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
+
+// Values for FrequencyReferenceSource
+#define RFMXDEMOD_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
+#define RFMXDEMOD_VAL_REF_IN_STR                                                                     "RefIn"
+#define RFMXDEMOD_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
+#define RFMXDEMOD_VAL_CLK_IN_STR                                                                     "ClkIn"
+
+// Values for Boolean
+#define RFMXDEMOD_VAL_FALSE                                                                          0
+#define RFMXDEMOD_VAL_TRUE                                                                           1
+
+// Values for MeasurementTypes
+#define RFMXDEMOD_VAL_ADEMOD                                                                         1<<0
+#define RFMXDEMOD_VAL_DDEMOD                                                                         1<<1
+
+// Values for RFAttenuationAuto
+#define RFMXDEMOD_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
+#define RFMXDEMOD_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
+
+// Values for MechanicalAttenuationAuto
+#define RFMXDEMOD_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
+#define RFMXDEMOD_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
 
 /* ---------------- RFmxDemod APIs ------------------ */
 
@@ -756,21 +761,6 @@ int32 __stdcall RFmxDemod_GetAttributeString(
    char attrVal[]
 );
 
-int32 __stdcall RFmxDemod_DDemodSetSymbolMap(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   NIComplexSingle attrVal[],
-   int32 arraySize
-);
-
-int32 __stdcall RFmxDemod_DDemodSetSymbolMapSplit(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float32 attrValI[],
-   float32 attrValQ[],
-   int32 arraySize
-);
-
 int32 __stdcall RFmxDemod_DDemodCfgSymbolMap(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -804,6 +794,21 @@ int32 __stdcall RFmxDemod_DDemodCfgEqualizerInitialCoefficientsSplit(
    float64 dx,
    float32 equalizerInitialCoefficientsI[],
    float32 equalizerInitialCoefficientsQ[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxDemod_DDemodSetSymbolMap(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   NIComplexSingle attrVal[],
+   int32 arraySize
+);
+
+int32 __stdcall RFmxDemod_DDemodSetSymbolMapSplit(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float32 attrValI[],
+   float32 attrValQ[],
    int32 arraySize
 );
 
@@ -896,6 +901,61 @@ int32 __stdcall RFmxDemod_CloneSignalConfiguration(
 int32 __stdcall RFmxDemod_DeleteSignalConfiguration(
    niRFmxInstrHandle instrumentHandle,
    char signalName[]
+);
+
+int32 __stdcall RFmxDemod_ADemodCfgModulationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 modulationType
+);
+
+int32 __stdcall RFmxDemod_ADemodCfgMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 measurementInterval
+);
+
+int32 __stdcall RFmxDemod_ADemodCfgAMCarrierSuppressed(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 AMCarrierSuppressedEnabled
+);
+
+int32 __stdcall RFmxDemod_ADemodCfgAudioFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 audioFilterType,
+   float64 audioFilterLowerCutoffFrequency,
+   float64 audioFilterUpperCutoffFrequency
+);
+
+int32 __stdcall RFmxDemod_ADemodCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
+);
+
+int32 __stdcall RFmxDemod_ADemodCfgCarrierCorrection(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 carrierFrequencyCorrectionEnabled,
+   int32 carrierPhaseCorrectionEnabled
+);
+
+int32 __stdcall RFmxDemod_ADemodCfgFMDeEmphasis(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 deEmphasis
+);
+
+int32 __stdcall RFmxDemod_ADemodCfgRBWFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 RBW,
+   int32 RBWFilterType,
+   float64 RBWRRCAlpha
 );
 
 int32 __stdcall RFmxDemod_DDemodCfgModulationType(
@@ -1019,61 +1079,6 @@ int32 __stdcall RFmxDemod_CfgExternalAttenuation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 externalAttenuation
-);
-
-int32 __stdcall RFmxDemod_ADemodCfgModulationType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 modulationType
-);
-
-int32 __stdcall RFmxDemod_ADemodCfgMeasurementInterval(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 measurementInterval
-);
-
-int32 __stdcall RFmxDemod_ADemodCfgAMCarrierSuppressed(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 AMCarrierSuppressedEnabled
-);
-
-int32 __stdcall RFmxDemod_ADemodCfgAudioFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 audioFilterType,
-   float64 audioFilterLowerCutoffFrequency,
-   float64 audioFilterUpperCutoffFrequency
-);
-
-int32 __stdcall RFmxDemod_ADemodCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
-int32 __stdcall RFmxDemod_ADemodCfgCarrierCorrection(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 carrierFrequencyCorrectionEnabled,
-   int32 carrierPhaseCorrectionEnabled
-);
-
-int32 __stdcall RFmxDemod_ADemodCfgFMDeEmphasis(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 deEmphasis
-);
-
-int32 __stdcall RFmxDemod_ADemodCfgRBWFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 RBW,
-   int32 RBWFilterType,
-   float64 RBWRRCAlpha
 );
 
 int32 __stdcall RFmxDemod_DDemodCfgEqualizer(
@@ -1204,6 +1209,143 @@ int32 __stdcall RFmxDemod_GetAttributeNIComplexDouble(
    char selectorString[],
    int32 attributeID,
    NIComplexDouble *attrVal
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchDemodSignalTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 demodulatedSignal[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchDemodSpectrumTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 demodulatedSpectrum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchCarrierMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanCarrierFrequencyError,
+   float64* meanCarrierPower
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchMeanModulationFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanModulationFrequency
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchAMMaximumModulationDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* maximumModulationDepth,
+   float64* maximumHalfPeakToPeak,
+   float64* maximumRMS,
+   float64* maximumPositivePeak,
+   float64* maximumNegativePeak
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchAMMeanModulationDepth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanModulationDepth,
+   float64* meanHalfPeakToPeak,
+   float64* meanRMS,
+   float64* meanPositivePeak,
+   float64* meanNegativePeak
+);
+
+int32 __stdcall RFmxDemod_ADemodReadAM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanModulationDepth,
+   float64* meanCarrierPower
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchFMMaximumDeviation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* maximumDeviation,
+   float64* maximumHalfPeakToPeak,
+   float64* maximumRMS,
+   float64* maximumPositivePeak,
+   float64* maximumNegativePeak
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchFMMeanDeviation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanDeviation,
+   float64* meanHalfPeakToPeak,
+   float64* meanRMS,
+   float64* meanPositivePeak,
+   float64* meanNegativePeak
+);
+
+int32 __stdcall RFmxDemod_ADemodReadFM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanDeviation,
+   float64* meanCarrierFrequencyError
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchPMMaximumDeviation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* maximumDeviation,
+   float64* maximumHalfPeakToPeak,
+   float64* maximumRMS,
+   float64* maximumPositivePeak,
+   float64* maximumNegativePeak
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchPMMeanDeviation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanDeviation,
+   float64* meanHalfPeakToPeak,
+   float64* meanRMS,
+   float64* meanPositivePeak,
+   float64* meanNegativePeak
+);
+
+int32 __stdcall RFmxDemod_ADemodReadPM(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* meanDeviation,
+   float64* meanCarrierFrequencyError
+);
+
+int32 __stdcall RFmxDemod_ADemodFetchDistortions(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* averageSINAD,
+   float64* averageSNR,
+   float64* averageTHD,
+   float64* averageTHDWithNoise
 );
 
 int32 __stdcall RFmxDemod_DDemodGetEqualizerInitialCoefficients(
@@ -1528,141 +1670,223 @@ int32 __stdcall RFmxDemod_DDemodRead(
    float64* meanModulationErrorRatio
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchDemodSignalTrace(
+int32 __stdcall RFmxDemod_GetSelectedPorts(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 demodulatedSignal[],
    int32 arraySize,
-   int32* actualArraySize
+   char attrVal[]
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchDemodSpectrumTrace(
+int32 __stdcall RFmxDemod_SetSelectedPorts(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 demodulatedSpectrum[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxDemod_GetCenterFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetCenterFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetReferenceLevelHeadroom(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetReferenceLevelHeadroom(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetDigitalEdgeTriggerSource(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
    int32 arraySize,
-   int32* actualArraySize
+   char attrVal[]
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchCarrierMeasurement(
+int32 __stdcall RFmxDemod_SetDigitalEdgeTriggerSource(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* meanCarrierFrequencyError,
-   float64* meanCarrierPower
+   char attrVal[]
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchMeanModulationFrequency(
+int32 __stdcall RFmxDemod_GetDigitalEdgeTriggerEdge(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* meanModulationFrequency
+   int32 *attrVal
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchAMMaximumModulationDepth(
+int32 __stdcall RFmxDemod_SetDigitalEdgeTriggerEdge(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* maximumModulationDepth,
-   float64* maximumHalfPeakToPeak,
-   float64* maximumRMS,
-   float64* maximumPositivePeak,
-   float64* maximumNegativePeak
+   int32 attrVal
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchAMMeanModulationDepth(
+int32 __stdcall RFmxDemod_GetIQPowerEdgeTriggerSource(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* meanModulationDepth,
-   float64* meanHalfPeakToPeak,
-   float64* meanRMS,
-   float64* meanPositivePeak,
-   float64* meanNegativePeak
+   int32 arraySize,
+   char attrVal[]
 );
 
-int32 __stdcall RFmxDemod_ADemodReadAM(
+int32 __stdcall RFmxDemod_SetIQPowerEdgeTriggerSource(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* meanModulationDepth,
-   float64* meanCarrierPower
+   char attrVal[]
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchFMMaximumDeviation(
+int32 __stdcall RFmxDemod_GetIQPowerEdgeTriggerLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* maximumDeviation,
-   float64* maximumHalfPeakToPeak,
-   float64* maximumRMS,
-   float64* maximumPositivePeak,
-   float64* maximumNegativePeak
+   float64 *attrVal
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchFMMeanDeviation(
+int32 __stdcall RFmxDemod_SetIQPowerEdgeTriggerLevel(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* meanDeviation,
-   float64* meanHalfPeakToPeak,
-   float64* meanRMS,
-   float64* meanPositivePeak,
-   float64* meanNegativePeak
+   float64 attrVal
 );
 
-int32 __stdcall RFmxDemod_ADemodReadFM(
+int32 __stdcall RFmxDemod_GetIQPowerEdgeTriggerLevelType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* meanDeviation,
-   float64* meanCarrierFrequencyError
+   int32 *attrVal
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchPMMaximumDeviation(
+int32 __stdcall RFmxDemod_SetIQPowerEdgeTriggerLevelType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* maximumDeviation,
-   float64* maximumHalfPeakToPeak,
-   float64* maximumRMS,
-   float64* maximumPositivePeak,
-   float64* maximumNegativePeak
+   int32 attrVal
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchPMMeanDeviation(
+int32 __stdcall RFmxDemod_GetIQPowerEdgeTriggerSlope(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* meanDeviation,
-   float64* meanHalfPeakToPeak,
-   float64* meanRMS,
-   float64* meanPositivePeak,
-   float64* meanNegativePeak
+   int32 *attrVal
 );
 
-int32 __stdcall RFmxDemod_ADemodReadPM(
+int32 __stdcall RFmxDemod_SetIQPowerEdgeTriggerSlope(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* meanDeviation,
-   float64* meanCarrierFrequencyError
+   int32 attrVal
 );
 
-int32 __stdcall RFmxDemod_ADemodFetchDistortions(
+int32 __stdcall RFmxDemod_GetTriggerDelay(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 timeout,
-   float64* averageSINAD,
-   float64* averageSNR,
-   float64* averageTHD,
-   float64* averageTHDWithNoise
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetTriggerDelay(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetTriggerMinimumQuietTimeMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetTriggerMinimumQuietTimeMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetTriggerMinimumQuietTimeDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetTriggerMinimumQuietTimeDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetAutoLevelInitialReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetAutoLevelInitialReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetLimitedConfigurationChange(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetLimitedConfigurationChange(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_GetResultFetchTimeout(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_SetResultFetchTimeout(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxDemod_ADemodGetMeasurementEnabled(
@@ -2247,6 +2471,30 @@ int32 __stdcall RFmxDemod_DDemodSetFSKReferenceCompensationEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxDemod_DDemodGetAPSKR2ToR1Ratio(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodSetAPSKR2ToR1Ratio(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodGetAPSKR3ToR1Ratio(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodSetAPSKR3ToR1Ratio(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
 int32 __stdcall RFmxDemod_DDemodGetSymbolMapType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2404,6 +2652,90 @@ int32 __stdcall RFmxDemod_DDemodSetAveragingCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodGetSignalStructure(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodSetSignalStructure(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodGetBurstStartExclusionSymbols(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodSetBurstStartExclusionSymbols(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodGetBurstEndExclusionSymbols(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodSetBurstEndExclusionSymbols(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodGetIQOffsetRemovalEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodSetIQOffsetRemovalEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodGetCFOEstimationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodSetCFOEstimationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodGetSearchLengthAuto(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodSetSearchLengthAuto(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodGetSearchLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxDemod_DDemodSetSearchLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxDemod_DDemodGetAllTracesEnabled(
@@ -2566,309 +2898,6 @@ int32 __stdcall RFmxDemod_DDemodGetResultsSyncFound(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodGetSignalStructure(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodSetSignalStructure(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodGetBurstStartExclusionSymbols(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodSetBurstStartExclusionSymbols(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodGetBurstEndExclusionSymbols(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodSetBurstEndExclusionSymbols(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodGetIQOffsetRemovalEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodSetIQOffsetRemovalEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodGetCFOEstimationMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodSetCFOEstimationMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodGetSearchLengthAuto(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodSetSearchLengthAuto(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodGetSearchLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_DDemodSetSearchLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetResultFetchTimeout(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetResultFetchTimeout(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetLimitedConfigurationChange(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetLimitedConfigurationChange(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetCenterFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetCenterFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetExternalAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetExternalAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetTriggerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetTriggerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetDigitalEdgeTriggerSource(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxDemod_SetDigitalEdgeTriggerSource(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char attrVal[]
-);
-
-int32 __stdcall RFmxDemod_GetDigitalEdgeTriggerEdge(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetDigitalEdgeTriggerEdge(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetIQPowerEdgeTriggerSource(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxDemod_SetIQPowerEdgeTriggerSource(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char attrVal[]
-);
-
-int32 __stdcall RFmxDemod_GetIQPowerEdgeTriggerLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetIQPowerEdgeTriggerLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetIQPowerEdgeTriggerLevelType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetIQPowerEdgeTriggerLevelType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetIQPowerEdgeTriggerSlope(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetIQPowerEdgeTriggerSlope(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetTriggerDelay(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetTriggerDelay(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetTriggerMinimumQuietTimeMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetTriggerMinimumQuietTimeMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetTriggerMinimumQuietTimeDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetTriggerMinimumQuietTimeDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetAutoLevelInitialReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetAutoLevelInitialReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxDemod_GetSelectedPorts(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxDemod_SetSelectedPorts(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char attrVal[]
-);
-
-int32 __stdcall RFmxDemod_GetReferenceLevelHeadroom(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxDemod_SetReferenceLevelHeadroom(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
 );
 
 #ifdef __cplusplus

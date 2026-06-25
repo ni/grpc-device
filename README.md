@@ -20,7 +20,7 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-RFmx Bluetooth         | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx BluetoothGen      | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx CDMA2k            | 2025 Q1       | Not Supported | Not Supported |
-| NI-RFmx Demod             | 2025 Q1       | Not Supported | Not Supported |
+| NI-RFmx Demod             | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx GSM               | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx LTE               | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx Pulse             | 2026 Q3       | Not Supported | Not Supported |

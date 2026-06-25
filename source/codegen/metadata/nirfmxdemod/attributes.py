@@ -590,6 +590,16 @@ attributes = {
         'name': 'DDEMOD_SEARCH_LENGTH',
         'type': 'float64'
     },
+    2101321: {
+        'access': 'read-write',
+        'name': 'DDEMOD_APSK_R2_TO_R1_RATIO',
+        'type': 'float64'
+    },
+    2101322: {
+        'access': 'read-write',
+        'name': 'DDEMOD_APSK_R3_TO_R1_RATIO',
+        'type': 'float64'
+    },
     2105345: {
         'access': 'read-write',
         'name': 'CENTER_FREQUENCY',

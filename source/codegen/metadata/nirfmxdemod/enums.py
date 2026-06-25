@@ -324,6 +324,10 @@ enums = {
             {
                 'name': 'MSK',
                 'value': 4
+            },
+            {
+                'name': 'APSK',
+                'value': 5
             }
         ]
     },
@@ -348,6 +352,10 @@ enums = {
             {
                 'name': '3PI_BY_8_8PSK',
                 'value': 4
+            },
+            {
+                'name': 'SHAPED_OFFSET_QPSK',
+                'value': 5
             }
         ]
     },
@@ -380,6 +388,10 @@ enums = {
             {
                 'name': 'LINEARIZED_GMSK_EDGE',
                 'value': 6
+            },
+            {
+                'name': 'SOQPSK_TG',
+                'value': 7
             }
         ]
     },
