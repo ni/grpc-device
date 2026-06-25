@@ -501,6 +501,12 @@ int32 __stdcall niBTSG_ChannelNumberToCarrierFrequency(
 	int32 channelNumber,
 	int32 standard,
 	float64 *carrierFrequency);
+
+int32 __stdcall niBTSG_ChannelNumberToCarrierFrequencyV2(
+	int32 channelNumber,
+	int32 standard,
+	int32 frequencyBand,
+	float64 *carrierFrequency);
 	
 int32 __stdcall niBTSG_CarrierFrequencyToChannelNumber(
     float64 carrierFrequency,
