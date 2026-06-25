@@ -142,8 +142,8 @@ The server supports specifying the address to bind to in the JSON configuration 
 
 **Default behavior by version:**
 
-- **Versions < 2.17:** If no `"address"` field is specified, the server defaults to binding on all interfaces (`"[::]"`), allowing remote connections.
-- **Versions >= 2.17:** If no `"address"` field is specified, the server defaults to binding on localhost only (`"[::1]"`). To allow remote connections, explicitly set `"address": "[::]"` in the configuration file.
+- **Versions < 2.18:** If no `"address"` field is specified, the server defaults to binding on all interfaces (`"[::]"`), allowing remote connections.
+- **Versions >= 2.18:** If no `"address"` field is specified, the server defaults to binding on localhost only (`"[::1]"`). To allow remote connections, explicitly set `"address": "[::]"` in the configuration file.
 
 Starting with version 2.17, the server logs a warning at startup if the bound address is a loopback address without TLS enabled, and also warns if binding to all interfaces without TLS. This helps ensure that remote-accessible deployments are configured securely.
 
