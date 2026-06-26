@@ -18,6 +18,7 @@ class NiRFmxBluetoothGenLibraryInterface {
 
   virtual int32 CarrierFrequencyToChannelNumber(float64 carrierFrequency, int32 standard, int32* channelNumber) = 0;
   virtual int32 ChannelNumberToCarrierFrequency(int32 channelNumber, int32 standard, float64* carrierFrequency) = 0;
+  virtual int32 ChannelNumberToCarrierFrequencyV2(int32 channelNumber, int32 standard, int32 frequencyBand, float64* carrierFrequency) = 0;
   virtual int32 CloseSession(niBTSGSession session) = 0;
   virtual int32 CreateAndWriteWaveformsToFile(niBTSGSession session, char filePath[], int32 fileOperation) = 0;
   virtual int32 CreateWaveformComplexF64(niBTSGSession session, int32 reset, float64* t0, float64* dt, NIComplexNumber_struct waveform[], int32 waveformSize, int32* actualWaveformSize, int32* generationDone) = 0;

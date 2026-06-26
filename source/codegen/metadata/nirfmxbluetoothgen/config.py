@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '26.3.0',
+    'api_version': '26.5.0',
     'c_header': 'niBTGeneration.h',
     'c_function_prefix': 'niBTSG_',
     'service_class_prefix': 'NiRFmxBluetoothGen',
