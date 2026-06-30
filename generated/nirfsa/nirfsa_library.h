@@ -101,6 +101,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus Initiate(ViSession vi) override;
   ViStatus InvalidateAllAttributes(ViSession vi) override;
   ViStatus IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps) override;
+  ViStatus LoadConfigurationsFromFile(ViSession vi, ViConstString channelName, ViConstString filePath) override;
   ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) override;
   ViStatus PerformThermalCorrection(ViSession vi) override;
   ViStatus ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct data[], ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo) override;
@@ -112,6 +113,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus ResetWithDefaults(ViSession vi) override;
   ViStatus ResetWithOptions(ViSession vi, ViUInt64 stepsToOmit) override;
   ViStatus RevisionQuery(ViSession vi, ViChar driverRev[256], ViChar instrRev[256]) override;
+  ViStatus SaveConfigurationsToFile(ViSession vi, ViConstString channelName, ViConstString filePath) override;
   ViStatus SelfCal(ViSession vi) override;
   ViStatus SelfCalibrate(ViSession vi, ViInt64 stepsToOmit) override;
   ViStatus SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minReferenceLevel, ViReal64 maxReferenceLevel) override;
@@ -208,6 +210,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using InitiatePtr = decltype(&niRFSA_Initiate);
   using InvalidateAllAttributesPtr = decltype(&niRFSA_InvalidateAllAttributes);
   using IsSelfCalValidPtr = decltype(&niRFSA_IsSelfCalValid);
+  using LoadConfigurationsFromFilePtr = decltype(&niRFSA_LoadConfigurationsFromFile);
   using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using PerformThermalCorrectionPtr = decltype(&niRFSA_PerformThermalCorrection);
   using ReadIQSingleRecordComplexF64Ptr = decltype(&niRFSA_ReadIQSingleRecordComplexF64);
@@ -219,6 +222,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using ResetWithDefaultsPtr = decltype(&niRFSA_ResetWithDefaults);
   using ResetWithOptionsPtr = decltype(&niRFSA_ResetWithOptions);
   using RevisionQueryPtr = decltype(&niRFSA_revision_query);
+  using SaveConfigurationsToFilePtr = decltype(&niRFSA_SaveConfigurationsToFile);
   using SelfCalPtr = decltype(&niRFSA_SelfCal);
   using SelfCalibratePtr = decltype(&niRFSA_SelfCalibrate);
   using SelfCalibrateRangePtr = decltype(&niRFSA_SelfCalibrateRange);
@@ -315,6 +319,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     InitiatePtr Initiate;
     InvalidateAllAttributesPtr InvalidateAllAttributes;
     IsSelfCalValidPtr IsSelfCalValid;
+    LoadConfigurationsFromFilePtr LoadConfigurationsFromFile;
     LockSessionPtr LockSession;
     PerformThermalCorrectionPtr PerformThermalCorrection;
     ReadIQSingleRecordComplexF64Ptr ReadIQSingleRecordComplexF64;
@@ -326,6 +331,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     ResetWithDefaultsPtr ResetWithDefaults;
     ResetWithOptionsPtr ResetWithOptions;
     RevisionQueryPtr RevisionQuery;
+    SaveConfigurationsToFilePtr SaveConfigurationsToFile;
     SelfCalPtr SelfCal;
     SelfCalibratePtr SelfCalibrate;
     SelfCalibrateRangePtr SelfCalibrateRange;

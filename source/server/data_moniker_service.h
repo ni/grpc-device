@@ -9,6 +9,8 @@
 #include <data_moniker.grpc.pb.h>
 #include <type_traits>
 #include <map>
+#include <mutex>
+#include <random>
 #include <sideband_data.h>
 #include "feature_toggles.h"
 #include "moniker_stream_processor.h"
@@ -42,12 +44,20 @@ namespace ni::data_monikers
         static void RegisterMonikerEndpoint(std::string endpointName, MonikerEndpointPtr endpoint);
         static void RegisterMonikerInstance(std::string endpointName, void* instanceData, Moniker& moniker);
 
+        // CWE-822: Opaque handle registry — maps server-generated handles to instance
+        // pointers so that raw pointers are never exposed over gRPC.
+        static void* LookupInstance(int64_t handle);
+
     private:
         static DataMonikerService* s_Server;
         std::map<std::string, MonikerEndpointPtr> _endpoints;
 
+        std::mutex instance_mutex_;
+        std::mt19937_64 rng_{std::random_device{}()};
+        std::map<int64_t, void*> instance_registry_;
+
     private:
         void InitiateMonikerList(const MonikerList& monikers, EndpointList* readers, EndpointList* writers);
-        static void RunSidebandReadWriteLoop(std::string sidebandIdentifier, ::SidebandStrategy strategy, EndpointList* readers, EndpointList* writers);
+        static void RunSidebandReadWriteLoop(std::string sidebandIdentifier, ::SidebandStrategy strategy, EndpointList readers, EndpointList writers);
     };
 }

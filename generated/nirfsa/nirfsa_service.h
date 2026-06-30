@@ -122,6 +122,7 @@ public:
   ::grpc::Status Initiate(::grpc::ServerContext* context, const InitiateRequest* request, InitiateResponse* response) override;
   ::grpc::Status InvalidateAllAttributes(::grpc::ServerContext* context, const InvalidateAllAttributesRequest* request, InvalidateAllAttributesResponse* response) override;
   ::grpc::Status IsSelfCalValid(::grpc::ServerContext* context, const IsSelfCalValidRequest* request, IsSelfCalValidResponse* response) override;
+  ::grpc::Status LoadConfigurationsFromFile(::grpc::ServerContext* context, const LoadConfigurationsFromFileRequest* request, LoadConfigurationsFromFileResponse* response) override;
   ::grpc::Status PerformThermalCorrection(::grpc::ServerContext* context, const PerformThermalCorrectionRequest* request, PerformThermalCorrectionResponse* response) override;
   ::grpc::Status ReadIQSingleRecordComplexF64(::grpc::ServerContext* context, const ReadIQSingleRecordComplexF64Request* request, ReadIQSingleRecordComplexF64Response* response) override;
   ::grpc::Status ReadPowerSpectrumF32(::grpc::ServerContext* context, const ReadPowerSpectrumF32Request* request, ReadPowerSpectrumF32Response* response) override;
@@ -132,6 +133,7 @@ public:
   ::grpc::Status ResetWithDefaults(::grpc::ServerContext* context, const ResetWithDefaultsRequest* request, ResetWithDefaultsResponse* response) override;
   ::grpc::Status ResetWithOptions(::grpc::ServerContext* context, const ResetWithOptionsRequest* request, ResetWithOptionsResponse* response) override;
   ::grpc::Status RevisionQuery(::grpc::ServerContext* context, const RevisionQueryRequest* request, RevisionQueryResponse* response) override;
+  ::grpc::Status SaveConfigurationsToFile(::grpc::ServerContext* context, const SaveConfigurationsToFileRequest* request, SaveConfigurationsToFileResponse* response) override;
   ::grpc::Status SelfCal(::grpc::ServerContext* context, const SelfCalRequest* request, SelfCalResponse* response) override;
   ::grpc::Status SelfCalibrate(::grpc::ServerContext* context, const SelfCalibrateRequest* request, SelfCalibrateResponse* response) override;
   ::grpc::Status SelfCalibrateRange(::grpc::ServerContext* context, const SelfCalibrateRangeRequest* request, SelfCalibrateRangeResponse* response) override;

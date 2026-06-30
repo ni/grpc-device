@@ -252,6 +252,30 @@ enums = {
             }
         ]
     },
+    'FrequencyBand': {
+        'values': [
+            {
+                'name': '2_4_GHZ',
+                'value': 0
+            },
+            {
+                'name': '5_GHZ_1',
+                'value': 1
+            },
+            {
+                'name': '5_GHZ_3',
+                'value': 2
+            },
+            {
+                'name': '5_GHZ_4',
+                'value': 3
+            },
+            {
+                'name': '5_GHZ_3_4',
+                'value': 4
+            }
+        ]
+    },
     'FrequencyRangeAveragingEnabled': {
         'values': [
             {

@@ -867,6 +867,11 @@ int32 OFDMModAccFetchRUOffsetAndSize(niRFmxInstrHandle instrumentHandle, char se
   return RFmxWLAN_OFDMModAccFetchRUOffsetAndSize(instrumentHandle, selectorString, timeout, ruOffset, ruSize);
 }
 
+int32 OFDMModAccFetchReferenceDataConstellationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, NIComplexSingle referenceDataConstellation[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTrace(instrumentHandle, selectorString, timeout, referenceDataConstellation, arraySize, actualArraySize);
+}
+
 int32 OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 referenceDataConstellation[], int32 arraySize, int32* actualArraySize)
 {
   return RFmxWLAN_OFDMModAccFetchReferenceDataConstellationTrace(instrumentHandle, selectorString, timeout, reinterpret_cast<NIComplexSingle*>(referenceDataConstellation), arraySize, actualArraySize);

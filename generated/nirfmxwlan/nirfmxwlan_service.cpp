@@ -89,7 +89,8 @@ namespace nirfmxwlan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
-      int32 array_size = static_cast<int32>(request->iq().size());
+      auto array_size_raw = request->iq().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
@@ -121,7 +122,8 @@ namespace nirfmxwlan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = const_cast<float32*>(request->iq().data());
-      int32 array_size = static_cast<int32>(request->iq().size());
+      auto array_size_raw = request->iq().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1WaveformInterleavedIQ(instrument, selector_string, result_name, x0, dx, iq, array_size, reset, reserved);
@@ -407,7 +409,8 @@ namespace nirfmxwlan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto spectrum = const_cast<float32*>(request->spectrum().data());
-      int32 array_size = static_cast<int32>(request->spectrum().size());
+      auto array_size_raw = request->spectrum().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
@@ -462,7 +465,8 @@ namespace nirfmxwlan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
-      int32 array_size = static_cast<int32>(request->iq().size());
+      auto array_size_raw = request->iq().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->AutoDetectSignalAnalysisOnly(instrument, selector_string, x0, dx, iq.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -490,7 +494,8 @@ namespace nirfmxwlan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = const_cast<float32*>(request->iq().data());
-      int32 array_size = static_cast<int32>(request->iq().size());
+      auto array_size_raw = request->iq().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->AutoDetectSignalAnalysisOnlyInterleavedIQ(instrument, selector_string, x0, dx, iq, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -919,8 +924,28 @@ namespace nirfmxwlan_grpc {
       niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
-      auto digital_edge_source_mbcs = convert_from_grpc<std::string>(request->digital_edge_source());
-      char* digital_edge_source = (char*)digital_edge_source_mbcs.c_str();
+      char* digital_edge_source;
+      std::string digital_edge_source_buffer;
+      switch (request->digital_edge_source_enum_case()) {
+        case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceMapped: {
+          auto digital_edge_source_imap_it = digitaledgetriggersource_input_map_.find(request->digital_edge_source_mapped());
+          if (digital_edge_source_imap_it == digitaledgetriggersource_input_map_.end()) {
+            return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge_source_mapped was not specified or out of range.");
+          }
+          digital_edge_source = const_cast<char*>((digital_edge_source_imap_it->second).c_str());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::kDigitalEdgeSourceRaw: {
+          digital_edge_source_buffer = convert_from_grpc<std::string>(request->digital_edge_source_raw());
+          digital_edge_source = const_cast<char*>(digital_edge_source_buffer.c_str());
+          break;
+        }
+        case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeSourceEnumCase::DIGITAL_EDGE_SOURCE_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for digital_edge_source was not specified or out of range");
+          break;
+        }
+      }
+
       int32 digital_edge;
       switch (request->digital_edge_enum_case()) {
         case nirfmxwlan_grpc::CfgDigitalEdgeTriggerRequest::DigitalEdgeEnumCase::kDigitalEdge: {
@@ -1014,7 +1039,8 @@ namespace nirfmxwlan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto center_frequency = const_cast<float64*>(request->center_frequency().data());
-      int32 number_of_elements = static_cast<int32>(request->center_frequency().size());
+      auto number_of_elements_raw = request->center_frequency().size();
+      int32 number_of_elements = nidevice_grpc::converters::convert_size<int32>(number_of_elements_raw, "number_of_elements");
       auto status = library_->CfgFrequencyArray(instrument, selector_string, center_frequency, number_of_elements);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3350,7 +3376,8 @@ namespace nirfmxwlan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
-      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto array_size_raw = request->reference_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->OFDMModAccCfg1ReferenceWaveform(instrument, selector_string, x0, dx, reference_waveform.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3378,7 +3405,8 @@ namespace nirfmxwlan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto reference_waveform = const_cast<float32*>(request->reference_waveform().data());
-      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto array_size_raw = request->reference_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->OFDMModAccCfg1ReferenceWaveformInterleavedIQ(instrument, selector_string, x0, dx, reference_waveform, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -6339,6 +6367,53 @@ namespace nirfmxwlan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchReferenceDataConstellationTrace(::grpc::ServerContext* context, const OFDMModAccFetchReferenceDataConstellationTraceRequest* request, OFDMModAccFetchReferenceDataConstellationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchReferenceDataConstellationTrace(instrument, selector_string, timeout, nullptr, 0, &actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::vector<NIComplexSingle> reference_data_constellation(actual_array_size, NIComplexSingle());
+        auto array_size = actual_array_size;
+        status = library_->OFDMModAccFetchReferenceDataConstellationTrace(instrument, selector_string, timeout, reference_data_constellation.data(), array_size, &actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        convert_to_grpc(reference_data_constellation, response->mutable_reference_data_constellation());
+        {
+          auto shrunk_size = actual_array_size;
+          auto current_size = response->mutable_reference_data_constellation()->size();
+          if (shrunk_size != current_size) {
+            response->mutable_reference_data_constellation()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
+          }
+        }
+        response->set_actual_array_size(actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQ(::grpc::ServerContext* context, const OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQRequest* request, OFDMModAccFetchReferenceDataConstellationTraceInterleavedIQResponse* response)
   {
     if (context->IsCancelled()) {
@@ -8760,7 +8835,8 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -8813,7 +8889,8 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -8924,7 +9001,8 @@ namespace nirfmxwlan_grpc {
         [](auto x) { return x; });
       auto attr_val = attr_val_vector.data();
 
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -8977,7 +9055,8 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -9056,7 +9135,8 @@ namespace nirfmxwlan_grpc {
               return static_cast<int8>(x);
         });
 
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -9083,7 +9163,8 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -9110,7 +9191,8 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -9245,7 +9327,8 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -9272,7 +9355,8 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -9325,7 +9409,8 @@ namespace nirfmxwlan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);

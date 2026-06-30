@@ -109,6 +109,7 @@
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_COUNT                           0x00d00019
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_DESCRIPTION                     0x00d0001a
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY                 0x00d00800
+#define RFMXVNA_ATTR_CORRECTION_SWITCH_PORTS_MULTIPATH_CALIBRATION               0x00d00047
 #define RFMXVNA_ATTR_SPARAMS_MEASUREMENT_ENABLED                                 0x00d01000
 #define RFMXVNA_ATTR_SPARAMS_NUMBER_OF_SPARAMETERS                               0x00d01002
 #define RFMXVNA_ATTR_SPARAMS_RECEIVER_PORT                                       0x00d01003
@@ -322,6 +323,11 @@
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_UNDEFINED_THRU                                             3
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_VCAL_THRU_AS_UNKNOWN_THRU                                  5
 
+// Values for RFMXVNA_ATTR_CORRECTION_SWITCH_PORTS_MULTIPATH_CALIBRATION
+#define RFMXVNA_VAL_CORRECTION_SWITCH_PORTS_MULTIPATH_CALIBRATION_AUTO                                            0
+#define RFMXVNA_VAL_CORRECTION_SWITCH_PORTS_MULTIPATH_CALIBRATION_DISABLED                                        1
+#define RFMXVNA_VAL_CORRECTION_SWITCH_PORTS_MULTIPATH_CALIBRATION_ENABLED                                         2
+
 // Values for RFMXVNA_ATTR_SPARAMS_FORMAT
 #define RFMXVNA_VAL_SPARAMS_FORMAT_MAGNITUDE                                                                      0
 #define RFMXVNA_VAL_SPARAMS_FORMAT_PHASE                                                                          1
@@ -436,6 +442,7 @@
 #define RFMXVNA_VAL_SPARAMS                                                                                       1<<0
 #define RFMXVNA_VAL_WAVES                                                                                         1<<1
 #define RFMXVNA_VAL_IQ                                                                                            1<<2
+#define RFMXVNA_VAL_INTEGRATEDPOWER                                                                               1<<3
 
 // Values for CalFrequencyGrid
 #define RFMXVNA_VAL_CAL_FREQUENCY_GRID_DIRECTIVITY                                                                0
@@ -3076,6 +3083,18 @@ int32 __stdcall RFmxVNA_GetCorrectionCalibrationEstimatedThruDelay(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionSwitchPortsMultipathCalibration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionSwitchPortsMultipathCalibration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxVNA_GetLimitedConfigurationChange(

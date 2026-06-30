@@ -24,6 +24,7 @@ using namespace nidevice_grpc::experimental::client;
 
 CarrierFrequencyToChannelNumberResponse carrier_frequency_to_channel_number(const StubPtr& stub, const double& carrier_frequency, const pb::int32& standard);
 ChannelNumberToCarrierFrequencyResponse channel_number_to_carrier_frequency(const StubPtr& stub, const pb::int32& channel_number, const pb::int32& standard);
+ChannelNumberToCarrierFrequencyV2Response channel_number_to_carrier_frequency_v2(const StubPtr& stub, const pb::int32& channel_number, const pb::int32& standard, const pb::int32& frequency_band);
 CloseSessionResponse close_session(const StubPtr& stub, const nidevice_grpc::Session& session);
 CreateAndWriteWaveformsToFileResponse create_and_write_waveforms_to_file(const StubPtr& stub, const nidevice_grpc::Session& session, const std::string& file_path, const simple_variant<FileOperationMode, pb::int32>& file_operation);
 CreateWaveformComplexF64Response create_waveform_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& session, const bool& reset);

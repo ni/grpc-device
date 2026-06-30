@@ -161,7 +161,8 @@ namespace nirfsg_restricted_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       auto table_name = table_name_mbcs.c_str();
       auto frequencies = const_cast<ViReal64*>(request->frequencies().data());
-      ViInt32 frequencies_size = static_cast<ViInt32>(request->frequencies().size());
+      auto frequencies_size_raw = request->frequencies().size();
+      ViInt32 frequencies_size = nidevice_grpc::converters::convert_size<ViInt32>(frequencies_size_raw, "frequencies_size");
       auto status = library_->ConfigureSparameterTableFrequencies(vi, port, table_name, frequencies, frequencies_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -189,7 +190,8 @@ namespace nirfsg_restricted_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       auto table_name = table_name_mbcs.c_str();
       auto sparameter_table = convert_from_grpc<NIComplexNumber_struct>(request->sparameter_table());
-      ViInt32 sparameter_table_size = static_cast<ViInt32>(request->sparameter_table().size());
+      auto sparameter_table_size_raw = request->sparameter_table().size();
+      ViInt32 sparameter_table_size = nidevice_grpc::converters::convert_size<ViInt32>(sparameter_table_size_raw, "sparameter_table_size");
       ViInt32 sparameter_orientation;
       switch (request->sparameter_orientation_enum_case()) {
         case nirfsg_restricted_grpc::ConfigureSparameterTableSparametersRequest::SparameterOrientationEnumCase::kSparameterOrientation: {

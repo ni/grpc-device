@@ -102,6 +102,7 @@ InitWithOptionsResponse init_with_options(const StubPtr& stub, const std::string
 InitiateResponse initiate(const StubPtr& stub, const nidevice_grpc::Session& vi);
 InvalidateAllAttributesResponse invalidate_all_attributes(const StubPtr& stub, const nidevice_grpc::Session& vi);
 IsSelfCalValidResponse is_self_cal_valid(const StubPtr& stub, const nidevice_grpc::Session& vi);
+LoadConfigurationsFromFileResponse load_configurations_from_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& file_path);
 PerformThermalCorrectionResponse perform_thermal_correction(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ReadIQSingleRecordComplexF64Response read_iq_single_record_complex_f64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const pb::int64& data_array_size);
 ReadPowerSpectrumF32Response read_power_spectrum_f32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_list, const double& timeout, const pb::int32& data_array_size);
@@ -112,6 +113,7 @@ ResetDeviceResponse reset_device(const StubPtr& stub, const nidevice_grpc::Sessi
 ResetWithDefaultsResponse reset_with_defaults(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ResetWithOptionsResponse reset_with_options(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<ResetWithOptionsStepsToOmit, pb::uint64>& steps_to_omit);
 RevisionQueryResponse revision_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
+SaveConfigurationsToFileResponse save_configurations_to_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const std::string& file_path);
 SelfCalResponse self_cal(const StubPtr& stub, const nidevice_grpc::Session& vi);
 SelfCalibrateResponse self_calibrate(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateSteps, pb::int64>& steps_to_omit);
 SelfCalibrateRangeResponse self_calibrate_range(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<SelfCalibrateSteps, pb::int64>& steps_to_omit, const double& min_frequency, const double& max_frequency, const double& min_reference_level, const double& max_reference_level);

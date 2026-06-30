@@ -506,9 +506,11 @@ namespace nirfmxinstr_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       char* table_name = (char*)table_name_mbcs.c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
-      int32 frequency_array_size = static_cast<int32>(request->frequency().size());
+      auto frequency_array_size_raw = request->frequency().size();
+      int32 frequency_array_size = nidevice_grpc::converters::convert_size<int32>(frequency_array_size_raw, "frequency_array_size");
       auto s_parameters = convert_from_grpc<NIComplexDouble>(request->s_parameters());
-      int32 s_parameter_table_size = static_cast<int32>(request->s_parameters().size());
+      auto s_parameter_table_size_raw = request->s_parameters().size();
+      int32 s_parameter_table_size = nidevice_grpc::converters::convert_size<int32>(s_parameter_table_size_raw, "s_parameter_table_size");
       int32 number_of_ports = request->number_of_ports();
       int32 s_parameter_orientation;
       switch (request->s_parameter_orientation_enum_case()) {
@@ -553,9 +555,11 @@ namespace nirfmxinstr_grpc {
       auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
       char* table_name = (char*)table_name_mbcs.c_str();
       auto frequency = const_cast<float64*>(request->frequency().data());
-      int32 frequency_array_size = static_cast<int32>(request->frequency().size());
+      auto frequency_array_size_raw = request->frequency().size();
+      int32 frequency_array_size = nidevice_grpc::converters::convert_size<int32>(frequency_array_size_raw, "frequency_array_size");
       auto s_parameters = const_cast<float64*>(request->s_parameters().data());
-      int32 s_parameter_table_size = static_cast<int32>(request->s_parameters().size());
+      auto s_parameter_table_size_raw = request->s_parameters().size();
+      int32 s_parameter_table_size = nidevice_grpc::converters::convert_size<int32>(s_parameter_table_size_raw, "s_parameter_table_size");
       int32 number_of_ports = request->number_of_ports();
       int32 s_parameter_orientation;
       switch (request->s_parameter_orientation_enum_case()) {
@@ -574,6 +578,71 @@ namespace nirfmxinstr_grpc {
       }
 
       auto status = library_->CfgSParameterExternalAttenuationTableInterleavedIQ(instrument, selector_string, table_name, frequency, frequency_array_size, s_parameters, s_parameter_table_size, number_of_ports, s_parameter_orientation);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::CfgSParameterExternalAttenuationTableSplit(::grpc::ServerContext* context, const CfgSParameterExternalAttenuationTableSplitRequest* request, CfgSParameterExternalAttenuationTableSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      auto table_name_mbcs = convert_from_grpc<std::string>(request->table_name());
+      char* table_name = (char*)table_name_mbcs.c_str();
+      auto frequency = const_cast<float64*>(request->frequency().data());
+      auto frequency_array_size_raw = request->frequency().size();
+      int32 frequency_array_size = nidevice_grpc::converters::convert_size<int32>(frequency_array_size_raw, "frequency_array_size");
+      auto s_parameters_i = const_cast<float64*>(request->s_parameters_i().data());
+      auto s_parameters_q = const_cast<float64*>(request->s_parameters_q().data());
+      auto s_parameter_table_size_determine_from_sizes = std::array<int, 2>
+      {
+        request->s_parameters_i_size(),
+        request->s_parameters_q_size()
+      };
+      const auto s_parameter_table_size_size_calculation = calculate_linked_array_size(s_parameter_table_size_determine_from_sizes, true);
+
+      if (s_parameter_table_size_size_calculation.match_state == MatchState::MISMATCH) {
+        return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The sizes of linked repeated fields [s_parameters_i, s_parameters_q] do not match");
+      }
+      // NULL out optional params with zero sizes.
+      if (s_parameter_table_size_size_calculation.match_state == MatchState::MATCH_OR_ZERO) {
+        s_parameters_i = request->s_parameters_i_size() ? std::move(s_parameters_i) : nullptr;
+        s_parameters_q = request->s_parameters_q_size() ? std::move(s_parameters_q) : nullptr;
+      }
+      auto s_parameter_table_size = s_parameter_table_size_size_calculation.size;
+
+      int32 number_of_ports = request->number_of_ports();
+      int32 s_parameter_orientation;
+      switch (request->s_parameter_orientation_enum_case()) {
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTableSplitRequest::SParameterOrientationEnumCase::kSParameterOrientation: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTableSplitRequest::SParameterOrientationEnumCase::kSParameterOrientationRaw: {
+          s_parameter_orientation = static_cast<int32>(request->s_parameter_orientation_raw());
+          break;
+        }
+        case nirfmxinstr_grpc::CfgSParameterExternalAttenuationTableSplitRequest::SParameterOrientationEnumCase::S_PARAMETER_ORIENTATION_ENUM_NOT_SET: {
+          return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for s_parameter_orientation was not specified or out of range");
+          break;
+        }
+      }
+
+      auto status = library_->CfgSParameterExternalAttenuationTableSplit(instrument, selector_string, table_name, frequency, frequency_array_size, s_parameters_i, s_parameters_q, s_parameter_table_size, number_of_ports, s_parameter_orientation);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
       }
@@ -983,6 +1052,57 @@ namespace nirfmxinstr_grpc {
         response->set_dx(dx);
         response->mutable_data()->Resize(actual_array_size * 2, 0);
         response->set_actual_array_size(actual_array_size * 2);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxInstrService::FetchRawIQDataSplit(::grpc::ServerContext* context, const FetchRawIQDataSplitRequest* request, FetchRawIQDataSplitResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 records_to_fetch = request->records_to_fetch();
+      int64 samples_to_read = request->samples_to_read();
+      auto reserved = nullptr;
+      float64 x0 {};
+      float64 dx {};
+      int32 actual_array_size {};
+      while (true) {
+        auto status = library_->FetchRawIQDataSplit(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, nullptr, nullptr, 0, &actual_array_size, reserved);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->mutable_data_i()->Resize(actual_array_size, 0);
+        float32* data_i = response->mutable_data_i()->mutable_data();
+        response->mutable_data_q()->Resize(actual_array_size, 0);
+        float32* data_q = response->mutable_data_q()->mutable_data();
+        auto array_size = actual_array_size;
+        status = library_->FetchRawIQDataSplit(instrument, selector_string, timeout, records_to_fetch, samples_to_read, &x0, &dx, data_i, data_q, array_size, &actual_array_size, reserved);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        response->set_x0(x0);
+        response->set_dx(dx);
+        response->mutable_data_i()->Resize(actual_array_size, 0);
+        response->mutable_data_q()->Resize(actual_array_size, 0);
+        response->set_actual_array_size(actual_array_size);
         return ::grpc::Status::OK;
       }
     }
@@ -2310,7 +2430,8 @@ namespace nirfmxinstr_grpc {
         nirfsa_sessions_request.end(),
         std::back_inserter(nirfsa_sessions),
         [&](auto session) { return vi_session_resource_repository_->access_session(session.name()); }); 
-      int32 number_of_nirfsa_sessions = static_cast<int32>(request->nirfsa_sessions().size());
+      auto number_of_nirfsa_sessions_raw = request->nirfsa_sessions().size();
+      int32 number_of_nirfsa_sessions = nidevice_grpc::converters::convert_size<int32>(number_of_nirfsa_sessions_raw, "number_of_nirfsa_sessions");
       auto initialization_behavior = request->initialization_behavior();
 
       bool new_session_initialized {};
@@ -2787,7 +2908,8 @@ namespace nirfmxinstr_grpc {
       char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeF32Array(instrument, channel_name, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2840,7 +2962,8 @@ namespace nirfmxinstr_grpc {
       char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeF64Array(instrument, channel_name, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -2951,7 +3074,8 @@ namespace nirfmxinstr_grpc {
         [](auto x) { return x; });
       auto attr_val = attr_val_vector.data();
 
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI32Array(instrument, channel_name, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3004,7 +3128,8 @@ namespace nirfmxinstr_grpc {
       char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI64Array(instrument, channel_name, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3083,7 +3208,8 @@ namespace nirfmxinstr_grpc {
               return static_cast<int8>(x);
         });
 
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI8Array(instrument, channel_name, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3110,7 +3236,8 @@ namespace nirfmxinstr_grpc {
       char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, channel_name, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3137,7 +3264,8 @@ namespace nirfmxinstr_grpc {
       char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeNIComplexSingleArray(instrument, channel_name, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3272,7 +3400,8 @@ namespace nirfmxinstr_grpc {
       char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU32Array(instrument, channel_name, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3299,7 +3428,8 @@ namespace nirfmxinstr_grpc {
       char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU64Array(instrument, channel_name, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -3352,7 +3482,8 @@ namespace nirfmxinstr_grpc {
       char* channel_name = (char*)channel_name_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU8Array(instrument, channel_name, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);

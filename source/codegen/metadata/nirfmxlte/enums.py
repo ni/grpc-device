@@ -1678,6 +1678,18 @@ enums = {
             }
         ]
     },
+    'SemComponentCarrierOutputPowerType': {
+        'values': [
+            {
+                'name': 'MAXIMUM_OUTPUT_POWER',
+                'value': 0
+            },
+            {
+                'name': 'RATED_OUTPUT_POWER',
+                'value': 1
+            }
+        ]
+    },
     'SemDownlinkMaskType': {
         'values': [
             {

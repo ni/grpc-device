@@ -218,6 +218,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_ATTR_DIGITAL_GAIN                                        0x00000054
 #define RFMXINSTR_ATTR_LO_SPLITTER_LOSS_FREQUENCY                          0x000000b8
 #define RFMXINSTR_ATTR_LO_SPLITTER_LOSS                                    0x000000b9
+#define RFMXINSTR_ATTR_FIXED_GROUP_DELAY_ACROSS_PORTS                      0x000000bc
 
 
 /* -- Values for binary attributes -- */
@@ -374,6 +375,15 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_VAL_PXIE_DSTARC_STR                                      "PXIe_DStarC"
 #define RFMXINSTR_VAL_PXIE_DSTARB_STR                                      "PXIe_DStarB"
 #define RFMXINSTR_VAL_TIMER_EVENT_STR                                      "TimerEvent"
+#define RFMXINSTR_VAL_PULSE_IN_STR                                         "PulseIn"
+#define RFMXINSTR_VAL_DIO_PFI0_STR                                         "DIO/PFI0"
+#define RFMXINSTR_VAL_DIO_PFI1_STR                                         "DIO/PFI1"
+#define RFMXINSTR_VAL_DIO_PFI2_STR                                         "DIO/PFI2"
+#define RFMXINSTR_VAL_DIO_PFI3_STR                                         "DIO/PFI3"
+#define RFMXINSTR_VAL_DIO_PFI4_STR                                         "DIO/PFI4"
+#define RFMXINSTR_VAL_DIO_PFI5_STR                                         "DIO/PFI5"
+#define RFMXINSTR_VAL_DIO_PFI6_STR                                         "DIO/PFI6"
+#define RFMXINSTR_VAL_DIO_PFI7_STR                                         "DIO/PFI7"
 
 /* -- Values for LO Leakage Avoidance Enabled -- */
 #define RFMXINSTR_VAL_LO_LEAKAGE_AVOIDANCE_ENABLED_FALSE                   0
@@ -426,6 +436,8 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 /* Values for S-Parameter Type */
 #define RFMXINSTR_VAL_SPARAMETER_TYPE_SCALAR                               1
 #define RFMXINSTR_VAL_SPARAMETER_TYPE_VECTOR                               2
+#define RFMXINSTR_VAL_SPARAMETER_TYPE_AMPLITUDE_FLATNESS                   3
+#define RFMXINSTR_VAL_SPARAMETER_TYPE_AMPLITUDE_AND_PHASE_FLATNESS         4
 
 /* Values for Self Calibration Validity Check */
 #define RFMXINSTR_VAL_SELF_CALIBRATION_VALIDITY_CHECK_OFF                  0
@@ -556,6 +568,19 @@ extern "C"
       float64 frequency[],
       int32 frequencyArraySize,
       NIComplexDouble sParameters[],
+      int32 sParameterTableSize,
+      int32 numberOfPorts,
+      int32 sParameterOrientation
+   );
+
+   int32 __stdcall RFmxInstr_CfgSParameterExternalAttenuationTableSplit(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char tableName[],
+      float64 frequency[],
+      int32 frequencyArraySize,
+      float64 sParametersI[],
+      float64 sParametersQ[],
       int32 sParameterTableSize,
       int32 numberOfPorts,
       int32 sParameterOrientation
@@ -2101,6 +2126,19 @@ int32 __stdcall RFmxInstr_FetchRawIQData(
       char selectorString[],
       float64 attrVal[],
       int32 arraySize
+   );
+
+   int32 __stdcall RFmxInstr_GetFixedGroupDelayAcrossPorts(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      int32 arraySize,
+      char attrVal[]
+   );
+
+   int32 __stdcall RFmxInstr_SetFixedGroupDelayAcrossPorts(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      char attrVal[]
    );
 
 #ifdef __cplusplus

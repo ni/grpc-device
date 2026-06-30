@@ -17,21 +17,21 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-Digital Pattern Driver | 2023 Q1       | Not Supported | Not Supported |
 | NI-DMM                    | 2025 Q4       | 2025 Q4       | 2025 Q4       |
 | NI-FGEN                   | 2023 Q1       | 2023 Q1       | 2023 Q1       |
-| NI-RFmx Bluetooth         | 2026 Q2       | Not Supported | Not Supported |
-| NI-RFmx BluetoothGen      | 2026 Q2       | Not Supported | Not Supported |
+| NI-RFmx Bluetooth         | 2026 Q3       | Not Supported | Not Supported |
+| NI-RFmx BluetoothGen      | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx CDMA2k            | 2025 Q1       | Not Supported | Not Supported |
-| NI-RFmx Demod             | 2025 Q1       | Not Supported | Not Supported |
+| NI-RFmx Demod             | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx GSM               | 2025 Q1       | Not Supported | Not Supported |
-| NI-RFmx LTE               | 2026 Q2       | Not Supported | Not Supported |
-| NI-RFmx Pulse             | 2025 Q1       | Not Supported | Not Supported |
-| NI-RFmx NR                | 2026 Q2       | Not Supported | Not Supported |
+| NI-RFmx LTE               | 2026 Q3       | Not Supported | Not Supported |
+| NI-RFmx Pulse             | 2026 Q3       | Not Supported | Not Supported |
+| NI-RFmx NR                | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx SpecAn            | 2025 Q4       | Not Supported | Not Supported |
 | NI-RFmx TD-SCDMA          | 2025 Q1       | Not Supported | Not Supported |
-| NI-RFmx VNA               | 2026 Q2       | Not Supported | Not Supported |
+| NI-RFmx VNA               | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx WCDMA             | 2025 Q1       | Not Supported | Not Supported |
-| NI-RFmx WLAN              | 2026 Q2       | Not Supported | Not Supported |
+| NI-RFmx WLAN              | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx WLANGen           | 2026 Q2       | Not Supported | Not Supported |
-| NI-RFSA                   | 21.0.0        | 21.0.0        | Not Supported |
+| NI-RFSA                   | 2026 Q2       | 2026 Q2       | 2026 Q2       |
 | NI-RFSG                   | 2025 Q3       | 2025 Q3       | 2025 Q3       |
 | NI-SCOPE                  | 2023 Q2       | 2023 Q2       | 2023 Q2       |
 | NI-SWITCH                 | 2023 Q1       | 2023 Q1       | 2023 Q1       |
@@ -133,7 +133,28 @@ Below are the contents of a default configuration file accepting localhost conne
 
 ### Bind Address Support
 
-The server supports specifying the address to bind to. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address. To bind to local (loopback) connection, specify address `"[::1]"`. To bind to any address, specify address `"[::]"`. If no address is specified, the server configuration defaults to any address `"[::]"`.
+The server supports specifying the address to bind to in the JSON configuration file via the `"address"` field. The address can be used to enable local or remote connections. Address values include any valid IPv4 or IPv6 address.
+
+| Address | Effect |
+|---------|--------|
+| `"[::1]"` or `"127.0.0.1"` | Bind to loopback only (local connections) |
+| `"[::]"` or `"0.0.0.0"` | Bind to all interfaces (remote connections) |
+
+**Default behavior by version:**
+
+- **Versions < 2.18:** If no `"address"` field is specified, the server defaults to binding on all interfaces (`"[::]"`), allowing remote connections.
+- **Versions >= 2.18:** If no `"address"` field is specified, the server defaults to binding on localhost only (`"[::1]"`). To allow remote connections, explicitly set `"address": "[::]"` in the configuration file.
+
+Starting with version 2.18, the server logs a warning at startup if the bound address is a loopback address without TLS enabled, and also warns if binding to all interfaces without TLS. This helps ensure that remote-accessible deployments are configured securely.
+
+Example configuration for remote access:
+```json
+{
+   "port": 31763,
+   "address": "[::]",
+   "security": "..."
+}
+```
 
 ### Licensing behaviour
 
@@ -149,11 +170,10 @@ The server supports both server-side TLS and mutual TLS. Security configuration 
 
 ### NI TLS Config Integration
 
-Alternatively, when the `ni-tls-config` package is installed, the server can delegate TLS configuration to it by setting the top-level `"security"` field to `"ni-tls-config"` in `server_config.json`:
+Alternatively, when the `ni-tls-config` package is installed, the server can delegate TLS configuration by setting the top-level `"security"` field to `"ni-tls-config"` in `server_config.json`. The following snippet shows only the `ni-tls-config`-specific fields; keep other required fields (for example, `port`) in your configuration.
 
 ```json
 {
-   "port": 31763,
    "security": "ni-tls-config",
    "feature_toggles": {
       "ni-tls-config": true
@@ -161,9 +181,13 @@ Alternatively, when the `ni-tls-config` package is installed, the server can del
 }
 ```
 
+When `ni-tls-config` is enabled, certificate and trust settings are read from the `ni-tls-config` YAML file instead of `server_config.json` certificate fields.
+
 With this setting the server reads TLS configuration at startup from the per-service YAML file managed by `ni-tls-config` (`ni-grpc-device.conf.yml`). A template for this file is distributed alongside the server binary. Place it in the location expected by `ni-tls-config`:
 
 - **Windows**: `C:\ProgramData\National Instruments\nitlsconfig\server.d\ni-grpc-device.conf.yml`
 - **Linux**: `/etc/nitlsconfig/server.d/ni-grpc-device.conf.yml`
 
-If `"security": "ni-tls-config"` is set but the `ni-tls-config` library is not installed, the server logs an error and exits rather than starting insecurely.
+If `"security": "ni-tls-config"` is configured but the `ni-tls-config` library is not installed, the server logs an error and exits instead of starting insecurely.
+
+Once `ni-tls-config` is enabled, use NI Hardware Configuration Utility on each client machine to configure the desired security settings.

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.18.0)
 
 project(ni_grpc_device_server
   LANGUAGES C CXX
-  VERSION 2.18.0)
+  VERSION 2.19.0)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
@@ -137,9 +137,18 @@ include_directories(
   "./generated"
   "./imports/include"
   "./source"
-  "./third_party/grpc-sideband/src"
-  "./third_party/grpc-sideband/moniker_src"
 )
+
+if(USE_SUBMODULE_LIBS)
+  include_directories(
+    "./third_party/grpc-sideband/src"
+    "./third_party/grpc-sideband/moniker_src"
+  )
+else()
+  find_path(GRPC_SIDEBAND_INCLUDE_DIR ni-grpc-sideband REQUIRED)
+  include_directories("${GRPC_SIDEBAND_INCLUDE_DIR}/ni-grpc-sideband")
+endif()
+
 if(WIN32)
   link_directories("./imports/lib/win64")
 endif()
@@ -310,11 +319,12 @@ function(GenerateGrpcSources)
   set(output_files "${GENERATE_ARGS_OUTPUT}")
   set(proto_file "${GENERATE_ARGS_PROTO}")
   if(USE_SUBMODULE_LIBS)
-    set(protobuf_includes_arg 
-      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/
-      -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/ # for session.proto
-      -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/)
+    set(protobuf_includes_arg
+      -I ${CMAKE_SOURCE_DIR}/third_party/grpc/third_party/protobuf/src/)
   endif()
+  list(APPEND protobuf_includes_arg
+    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/ni/grpcdevice/v1/ # for session.proto
+    -I ${CMAKE_SOURCE_DIR}/third_party/ni-apis/)
   get_filename_component(proto_name "${proto_file}" NAME)
   get_filename_component(proto_path "${proto_file}" PATH)
   # Asssumption: all outputs are in the same directory: use the zero-th.
@@ -666,12 +676,21 @@ add_custom_command(
             $<TARGET_FILE_DIR:ni_grpc_device_server>/server_config.json)
 
 #----------------------------------------------------------------------
+# Copy server_nitlsconfig.json to binary output directory
+#----------------------------------------------------------------------
+add_custom_command(
+   TARGET ni_grpc_device_server POST_BUILD
+   COMMAND  ${CMAKE_COMMAND} -E copy_if_different
+            ${CMAKE_SOURCE_DIR}/source/config/server_nitlsconfig.json
+            $<TARGET_FILE_DIR:ni_grpc_device_server>/server_nitlsconfig.json)
+
+#----------------------------------------------------------------------
 # Copy ni-grpc-device.conf.yml to binary output directory
 #----------------------------------------------------------------------
 add_custom_command(
    TARGET ni_grpc_device_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different
-            ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.conf.yml
+        ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.server.conf.yml
             $<TARGET_FILE_DIR:ni_grpc_device_server>/ni-grpc-device.conf.yml)
 
 #----------------------------------------------------------------------
@@ -680,7 +699,7 @@ add_custom_command(
 add_custom_command(
    TARGET ni_grpc_device_server POST_BUILD
    COMMAND  ${CMAKE_COMMAND} -E copy_if_different
-            ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.caps.yml
+        ${CMAKE_SOURCE_DIR}/source/config/ni-grpc-device.server.caps.yml
             $<TARGET_FILE_DIR:ni_grpc_device_server>/ni-grpc-device.caps.yml)
 
 #----------------------------------------------------------------------

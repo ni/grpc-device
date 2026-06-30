@@ -1,4 +1,5 @@
 {
+   "address": "[::]" ,
    "port": 31763,
    "security": "ni-tls-config",
    "feature_toggles": {

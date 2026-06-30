@@ -29,6 +29,7 @@ NiRFmxBluetoothGenLibrary::NiRFmxBluetoothGenLibrary(std::shared_ptr<nidevice_gr
   }
   function_pointers_.CarrierFrequencyToChannelNumber = reinterpret_cast<CarrierFrequencyToChannelNumberPtr>(shared_library_->get_function_pointer("niBTSG_CarrierFrequencyToChannelNumber"));
   function_pointers_.ChannelNumberToCarrierFrequency = reinterpret_cast<ChannelNumberToCarrierFrequencyPtr>(shared_library_->get_function_pointer("niBTSG_ChannelNumberToCarrierFrequency"));
+  function_pointers_.ChannelNumberToCarrierFrequencyV2 = reinterpret_cast<ChannelNumberToCarrierFrequencyV2Ptr>(shared_library_->get_function_pointer("niBTSG_ChannelNumberToCarrierFrequencyV2"));
   function_pointers_.CloseSession = reinterpret_cast<CloseSessionPtr>(shared_library_->get_function_pointer("niBTSG_CloseSession"));
   function_pointers_.CreateAndWriteWaveformsToFile = reinterpret_cast<CreateAndWriteWaveformsToFilePtr>(shared_library_->get_function_pointer("niBTSG_CreateAndWriteWaveformsToFile"));
   function_pointers_.CreateWaveformComplexF64 = reinterpret_cast<CreateWaveformComplexF64Ptr>(shared_library_->get_function_pointer("niBTSG_CreateWaveformComplexF64"));
@@ -90,6 +91,14 @@ int32 NiRFmxBluetoothGenLibrary::ChannelNumberToCarrierFrequency(int32 channelNu
     throw nidevice_grpc::LibraryLoadException("Could not find niBTSG_ChannelNumberToCarrierFrequency.");
   }
   return function_pointers_.ChannelNumberToCarrierFrequency(channelNumber, standard, carrierFrequency);
+}
+
+int32 NiRFmxBluetoothGenLibrary::ChannelNumberToCarrierFrequencyV2(int32 channelNumber, int32 standard, int32 frequencyBand, float64* carrierFrequency)
+{
+  if (!function_pointers_.ChannelNumberToCarrierFrequencyV2) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niBTSG_ChannelNumberToCarrierFrequencyV2.");
+  }
+  return function_pointers_.ChannelNumberToCarrierFrequencyV2(channelNumber, standard, frequencyBand, carrierFrequency);
 }
 
 int32 NiRFmxBluetoothGenLibrary::CloseSession(niBTSGSession session)

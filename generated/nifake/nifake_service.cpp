@@ -86,7 +86,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 count = static_cast<ViInt32>(request->delays().size());
+      auto count_raw = request->delays().size();
+      ViInt32 count = nidevice_grpc::converters::convert_size<ViInt32>(count_raw, "count");
       auto delays = const_cast<ViReal64*>(request->delays().data());
       auto status = library_->AcceptListOfDurationsInSeconds(vi, count, delays);
       if (!status_ok(status)) {
@@ -138,7 +139,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 array_len = static_cast<ViInt32>(request->u_int32_array().size());
+      auto array_len_raw = request->u_int32_array().size();
+      ViInt32 array_len = nidevice_grpc::converters::convert_size<ViInt32>(array_len_raw, "array_len");
       auto u_int32_array = const_cast<ViUInt32*>(reinterpret_cast<const ViUInt32*>(request->u_int32_array().data()));
       auto status = library_->AcceptViUInt32Array(vi, array_len, u_int32_array);
       if (!status_ok(status)) {
@@ -400,7 +402,8 @@ namespace nifake_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      ViInt32 number_of_list_attributes = static_cast<ViInt32>(request->list_attribute_ids().size());
+      auto number_of_list_attributes_raw = request->list_attribute_ids().size();
+      ViInt32 number_of_list_attributes = nidevice_grpc::converters::convert_size<ViInt32>(number_of_list_attributes_raw, "number_of_list_attributes");
       auto list_attribute_ids = const_cast<ViAttr*>(reinterpret_cast<const ViAttr*>(request->list_attribute_ids().data()));
       auto status = library_->CreateConfigurationList(number_of_list_attributes, list_attribute_ids);
       if (!status_ok(status)) {
@@ -447,7 +450,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 number_count = static_cast<ViInt32>(request->numbers().size());
+      auto number_count_raw = request->numbers().size();
+      ViInt32 number_count = nidevice_grpc::converters::convert_size<ViInt32>(number_count_raw, "number_count");
       auto numbers = const_cast<ViReal64*>(request->numbers().data());
       auto status = library_->DoubleAllTheNums(vi, number_count, numbers);
       if (!status_ok(status)) {
@@ -902,7 +906,8 @@ namespace nifake_grpc {
     }
     try {
       auto data_in = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->data_in().data()));
-      ViInt32 array_size_in = static_cast<ViInt32>(request->data_in().size());
+      auto array_size_in_raw = request->data_in().size();
+      ViInt32 array_size_in = nidevice_grpc::converters::convert_size<ViInt32>(array_size_in_raw, "array_size_in");
       ViInt32 actual_size {};
       while (true) {
         auto status = library_->GetAnIviDanceWithATwistArrayWithInputArray(data_in, array_size_in, 0, nullptr, &actual_size);
@@ -1652,7 +1657,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 size_in_bytes = static_cast<ViInt32>(request->configuration().size());
+      auto size_in_bytes_raw = request->configuration().size();
+      ViInt32 size_in_bytes = nidevice_grpc::converters::convert_size<ViInt32>(size_in_bytes_raw, "size_in_bytes");
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size_in_bytes, configuration);
       if (!status_ok(status)) {
@@ -1676,7 +1682,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 size = static_cast<ViInt32>(request->configuration().size());
+      auto size_raw = request->configuration().size();
+      ViInt32 size = nidevice_grpc::converters::convert_size<ViInt32>(size_raw, "size");
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBufferEx(vi, size, configuration);
       if (!status_ok(status)) {
@@ -2756,7 +2763,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 number_of_elements = static_cast<ViInt32>(request->cs().size());
+      auto number_of_elements_raw = request->cs().size();
+      ViInt32 number_of_elements = nidevice_grpc::converters::convert_size<ViInt32>(number_of_elements_raw, "number_of_elements");
       auto cs = convert_from_grpc<CustomStruct>(request->cs());
       auto status = library_->SetCustomTypeArray(vi, number_of_elements, cs.data());
       if (!status_ok(status)) {
@@ -2906,7 +2914,8 @@ namespace nifake_grpc {
       }
 
       auto array_lengths = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->array_lengths().data()));
-      ViInt32 array_size = static_cast<ViInt32>(request->array_lengths().size());
+      auto array_size_raw = request->array_lengths().size();
+      ViInt32 array_size = nidevice_grpc::converters::convert_size<ViInt32>(array_size_raw, "array_size");
       auto status = library_->UseATwoDimensionParameter(vi, array, array_lengths, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2929,7 +2938,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 number_of_elements = static_cast<ViInt32>(request->an_array().size());
+      auto number_of_elements_raw = request->an_array().size();
+      ViInt32 number_of_elements = nidevice_grpc::converters::convert_size<ViInt32>(number_of_elements_raw, "number_of_elements");
       auto an_array_request = request->an_array();
       std::vector<ViInt16> an_array;
       std::transform(
@@ -3008,7 +3018,8 @@ namespace nifake_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 number_of_samples = static_cast<ViInt32>(request->waveform().size());
+      auto number_of_samples_raw = request->waveform().size();
+      ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
       auto waveform = const_cast<ViReal64*>(request->waveform().data());
       auto status = library_->WriteWaveform(vi, number_of_samples, waveform);
       if (!status_ok(status)) {

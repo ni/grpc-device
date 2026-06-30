@@ -2260,6 +2260,10 @@ functions = {
                 'direction': 'in',
                 'grpc_name': 'connector_ids',
                 'name': 'connectorIDs',
+                'size': {
+                    'mechanism': 'len',
+                    'value': 'arraySize'
+                },
                 'type': 'char[]'
             },
             {

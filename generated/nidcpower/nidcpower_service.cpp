@@ -929,7 +929,8 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 custom_cable_compensation_data_size = static_cast<ViInt32>(request->custom_cable_compensation_data().size());
+      auto custom_cable_compensation_data_size_raw = request->custom_cable_compensation_data().size();
+      ViInt32 custom_cable_compensation_data_size = nidevice_grpc::converters::convert_size<ViInt32>(custom_cable_compensation_data_size_raw, "custom_cable_compensation_data_size");
       ViInt8* custom_cable_compensation_data = (ViInt8*)request->custom_cable_compensation_data().c_str();
       auto status = library_->ConfigureLCRCustomCableCompensation(vi, channel_name, custom_cable_compensation_data_size, custom_cable_compensation_data);
       if (!status_ok(status)) {
@@ -1881,7 +1882,8 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto sequence_name_mbcs = convert_from_grpc<std::string>(request->sequence_name());
       auto sequence_name = sequence_name_mbcs.c_str();
-      ViInt32 attribute_id_count = static_cast<ViInt32>(request->attribute_ids().size());
+      auto attribute_id_count_raw = request->attribute_ids().size();
+      ViInt32 attribute_id_count = nidevice_grpc::converters::convert_size<ViInt32>(attribute_id_count_raw, "attribute_id_count");
       auto attribute_ids = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->attribute_ids().data()));
       ViBoolean set_as_active_sequence = request->set_as_active_sequence();
       auto status = library_->CreateAdvancedSequence(vi, sequence_name, attribute_id_count, attribute_ids, set_as_active_sequence);
@@ -1983,7 +1985,8 @@ namespace nidcpower_grpc {
       auto channel_name = channel_name_mbcs.c_str();
       auto sequence_name_mbcs = convert_from_grpc<std::string>(request->sequence_name());
       auto sequence_name = sequence_name_mbcs.c_str();
-      ViInt32 attribute_id_count = static_cast<ViInt32>(request->attribute_ids().size());
+      auto attribute_id_count_raw = request->attribute_ids().size();
+      ViInt32 attribute_id_count = nidevice_grpc::converters::convert_size<ViInt32>(attribute_id_count_raw, "attribute_id_count");
       auto attribute_ids = const_cast<ViInt32*>(reinterpret_cast<const ViInt32*>(request->attribute_ids().data()));
       ViBoolean set_as_active_sequence = request->set_as_active_sequence();
       auto status = library_->CreateAdvancedSequenceWithChannels(vi, channel_name, sequence_name, attribute_id_count, attribute_ids, set_as_active_sequence);
@@ -3183,7 +3186,8 @@ namespace nidcpower_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 size = static_cast<ViInt32>(request->configuration().size());
+      auto size_raw = request->configuration().size();
+      ViInt32 size = nidevice_grpc::converters::convert_size<ViInt32>(size_raw, "size");
       ViInt8* configuration = (ViInt8*)request->configuration().c_str();
       auto status = library_->ImportAttributeConfigurationBuffer(vi, size, configuration);
       if (!status_ok(status)) {
@@ -3423,7 +3427,8 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 num_compensation_spots = static_cast<ViInt32>(request->compensation_spots().size());
+      auto num_compensation_spots_raw = request->compensation_spots().size();
+      ViInt32 num_compensation_spots = nidevice_grpc::converters::convert_size<ViInt32>(num_compensation_spots_raw, "num_compensation_spots");
       auto compensation_spots = convert_from_grpc<NILCRLoadCompensationSpot_struct>(request->compensation_spots());
       auto status = library_->PerformLCRLoadCompensation(vi, channel_name, num_compensation_spots, compensation_spots.data());
       if (!status_ok(status)) {
@@ -3449,7 +3454,8 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 num_frequencies = static_cast<ViInt32>(request->additional_frequencies().size());
+      auto num_frequencies_raw = request->additional_frequencies().size();
+      ViInt32 num_frequencies = nidevice_grpc::converters::convert_size<ViInt32>(num_frequencies_raw, "num_frequencies");
       auto additional_frequencies = const_cast<ViReal64*>(request->additional_frequencies().data());
       auto status = library_->PerformLCROpenCompensation(vi, channel_name, num_frequencies, additional_frequencies);
       if (!status_ok(status)) {
@@ -3499,7 +3505,8 @@ namespace nidcpower_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
       auto channel_name = channel_name_mbcs.c_str();
-      ViInt32 num_frequencies = static_cast<ViInt32>(request->additional_frequencies().size());
+      auto num_frequencies_raw = request->additional_frequencies().size();
+      ViInt32 num_frequencies = nidevice_grpc::converters::convert_size<ViInt32>(num_frequencies_raw, "num_frequencies");
       auto additional_frequencies = const_cast<ViReal64*>(request->additional_frequencies().data());
       auto status = library_->PerformLCRShortCompensation(vi, channel_name, num_frequencies, additional_frequencies);
       if (!status_ok(status)) {

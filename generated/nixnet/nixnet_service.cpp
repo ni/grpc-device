@@ -182,7 +182,8 @@ namespace nixnet_grpc {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
       u8* value_buffer = (u8*)request->value_buffer().c_str();
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(u8));
+      auto size_of_value_buffer_raw = request->value_buffer().size() * sizeof(u8);
+      u32 size_of_value_buffer = nidevice_grpc::converters::convert_size<u32>(size_of_value_buffer_raw, "size_of_value_buffer");
       u32 number_of_frames = request->number_of_frames();
       u32 max_payload_per_frame = request->max_payload_per_frame();
       u32 protocol;
@@ -286,7 +287,8 @@ namespace nixnet_grpc {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
+      auto size_of_value_buffer_raw = request->value_buffer().size() * sizeof(f64);
+      u32 size_of_value_buffer = nidevice_grpc::converters::convert_size<u32>(size_of_value_buffer_raw, "size_of_value_buffer");
       u32 number_of_frames = request->number_of_frames();
       u32 max_payload_per_frame = request->max_payload_per_frame();
       u32 protocol;
@@ -433,7 +435,8 @@ namespace nixnet_grpc {
       return ::grpc::Status::CANCELLED;
     }
     try {
-      u32 number_of_database_ref = static_cast<u32>(request->array_of_database_ref().size());
+      auto number_of_database_ref_raw = request->array_of_database_ref().size();
+      u32 number_of_database_ref = nidevice_grpc::converters::convert_size<u32>(number_of_database_ref_raw, "number_of_database_ref");
       auto array_of_database_ref_request = request->array_of_database_ref();
       std::vector<nxDatabaseRef_t> array_of_database_ref;
       std::transform(
@@ -1608,7 +1611,8 @@ namespace nixnet_grpc {
       auto session_grpc_session = request->session();
       nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
+      auto size_of_value_buffer_raw = request->value_buffer().size() * sizeof(f64);
+      u32 size_of_value_buffer = nidevice_grpc::converters::convert_size<u32>(size_of_value_buffer_raw, "size_of_value_buffer");
       auto status = library_->WriteSignalSinglePoint(session, value_buffer, size_of_value_buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
@@ -1648,7 +1652,8 @@ namespace nixnet_grpc {
       }
 
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
+      auto size_of_value_buffer_raw = request->value_buffer().size() * sizeof(f64);
+      u32 size_of_value_buffer = nidevice_grpc::converters::convert_size<u32>(size_of_value_buffer_raw, "size_of_value_buffer");
       auto status = library_->WriteSignalWaveform(session, timeout, value_buffer, size_of_value_buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);
@@ -1688,11 +1693,14 @@ namespace nixnet_grpc {
       }
 
       auto value_buffer = const_cast<f64*>(request->value_buffer().data());
-      u32 size_of_value_buffer = static_cast<u32>(request->value_buffer().size() * sizeof(f64));
+      auto size_of_value_buffer_raw = request->value_buffer().size() * sizeof(f64);
+      u32 size_of_value_buffer = nidevice_grpc::converters::convert_size<u32>(size_of_value_buffer_raw, "size_of_value_buffer");
       auto timestamp_buffer = const_cast<nxTimestamp100ns_t*>(reinterpret_cast<const nxTimestamp100ns_t*>(request->timestamp_buffer().data()));
-      u32 size_of_timestamp_buffer = static_cast<u32>(request->timestamp_buffer().size() * sizeof(nxTimestamp100ns_t));
+      auto size_of_timestamp_buffer_raw = request->timestamp_buffer().size() * sizeof(nxTimestamp100ns_t);
+      u32 size_of_timestamp_buffer = nidevice_grpc::converters::convert_size<u32>(size_of_timestamp_buffer_raw, "size_of_timestamp_buffer");
       auto num_pairs_buffer = const_cast<u32*>(request->num_pairs_buffer().data());
-      u32 size_of_num_pairs_buffer = static_cast<u32>(request->num_pairs_buffer().size() * sizeof(u32));
+      auto size_of_num_pairs_buffer_raw = request->num_pairs_buffer().size() * sizeof(u32);
+      u32 size_of_num_pairs_buffer = nidevice_grpc::converters::convert_size<u32>(size_of_num_pairs_buffer_raw, "size_of_num_pairs_buffer");
       auto status = library_->WriteSignalXY(session, timeout, value_buffer, size_of_value_buffer, timestamp_buffer, size_of_timestamp_buffer, num_pairs_buffer, size_of_num_pairs_buffer);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNxSessionRef_t(context, status, session);

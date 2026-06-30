@@ -97,6 +97,31 @@ namespace nirfmxbluetoothgen_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxBluetoothGenService::ChannelNumberToCarrierFrequencyV2(::grpc::ServerContext* context, const ChannelNumberToCarrierFrequencyV2Request* request, ChannelNumberToCarrierFrequencyV2Response* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      int32 channel_number = request->channel_number();
+      int32 standard = request->standard();
+      int32 frequency_band = request->frequency_band();
+      float64 carrier_frequency {};
+      auto status = library_->ChannelNumberToCarrierFrequencyV2(channel_number, standard, frequency_band, &carrier_frequency);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForNiBTSGSession(context, status, 0);
+      }
+      response->set_status(status);
+      response->set_carrier_frequency(carrier_frequency);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxBluetoothGenService::CloseSession(::grpc::ServerContext* context, const CloseSessionRequest* request, CloseSessionResponse* response)
   {
     if (context->IsCancelled()) {
@@ -1195,7 +1220,8 @@ namespace nirfmxbluetoothgen_grpc {
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto data = const_cast<float64*>(request->data().data());
-      int32 data_array_size = static_cast<int32>(request->data().size());
+      auto data_array_size_raw = request->data().size();
+      int32 data_array_size = nidevice_grpc::converters::convert_size<int32>(data_array_size_raw, "data_array_size");
       auto status = library_->SetVectorAttributeF64(session, channel_string, attribute_id, data, data_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiBTSGSession(context, status, session);
@@ -1222,7 +1248,8 @@ namespace nirfmxbluetoothgen_grpc {
       char* channel_string = (char*)channel_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto data = const_cast<int32*>(reinterpret_cast<const int32*>(request->data().data()));
-      int32 data_array_size = static_cast<int32>(request->data().size());
+      auto data_array_size_raw = request->data().size();
+      int32 data_array_size = nidevice_grpc::converters::convert_size<int32>(data_array_size_raw, "data_array_size");
       auto status = library_->SetVectorAttributeI32(session, channel_string, attribute_id, data, data_array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiBTSGSession(context, status, session);

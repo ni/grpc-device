@@ -2140,6 +2140,22 @@ enums = {
             }
         ]
     },
+    'SatelliteAccessNodeType': {
+        'values': [
+            {
+                'name': '1H',
+                'value': 0
+            },
+            {
+                'name': '1O',
+                'value': 1
+            },
+            {
+                'name': '2O',
+                'value': 2
+            }
+        ]
+    },
     'SchDetectedModulationType': {
         'values': [
             {
@@ -2445,6 +2461,42 @@ enums = {
             {
                 'name': 'NS12N',
                 'value': 16
+            },
+            {
+                'name': 'NS203N',
+                'value': 17
+            },
+            {
+                'name': 'NS204N',
+                'value': 18
+            },
+            {
+                'name': 'NS207N',
+                'value': 19
+            },
+            {
+                'name': 'NS208N',
+                'value': 20
+            },
+            {
+                'name': 'NS02N',
+                'value': 21
+            },
+            {
+                'name': 'NS03N',
+                'value': 22
+            },
+            {
+                'name': 'NS06N',
+                'value': 23
+            },
+            {
+                'name': 'NS07N',
+                'value': 24
+            },
+            {
+                'name': 'NS08N',
+                'value': 25
             }
         ]
     },

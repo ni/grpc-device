@@ -678,12 +678,27 @@ ${initialize_standard_input_param(parameter)}
   if len(linked_array_param_name) > 1 and calculate_len_in_bytes:
     raise f"{parameter['name']} has 'len-in-bytes' set but has more than one 'determine-size-from' values!"
 %>\
+<%
+  target_type = parameter['type']
+  needs_range_check = target_type not in ['size_t']
+%>\
+%if not needs_range_check:
 %if calculate_len_in_bytes:
-    ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size() * sizeof(${linked_array_param_underlying_type}));\
+    ${target_type} ${parameter_name} = static_cast<${target_type}>(request->${size_field_name}().size() * sizeof(${linked_array_param_underlying_type}));\
 %elif linked_array_param['type'] in ['ViConstString', 'const char[]']:
-    ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(convert_from_grpc<std::string>(request->${size_field_name}()).size());\
+    ${target_type} ${parameter_name} = static_cast<${target_type}>(convert_from_grpc<std::string>(request->${size_field_name}()).size());\
 %else:
-    ${parameter['type']} ${parameter_name} = static_cast<${parameter['type']}>(request->${size_field_name}().size());\
+    ${target_type} ${parameter_name} = static_cast<${target_type}>(request->${size_field_name}().size());\
+%endif
+%else:
+%if calculate_len_in_bytes:
+    auto ${parameter_name}_raw = request->${size_field_name}().size() * sizeof(${linked_array_param_underlying_type});
+%elif linked_array_param['type'] in ['ViConstString', 'const char[]']:
+    auto ${parameter_name}_raw = convert_from_grpc<std::string>(request->${size_field_name}()).size();
+%else:
+    auto ${parameter_name}_raw = request->${size_field_name}().size();
+%endif
+    ${target_type} ${parameter_name} = nidevice_grpc::converters::convert_size<${target_type}>(${parameter_name}_raw, "${parameter_name}");\
 %endif
 % endif
 </%def>

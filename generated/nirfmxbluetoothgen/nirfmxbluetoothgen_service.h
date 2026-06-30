@@ -46,6 +46,7 @@ public:
 
   ::grpc::Status CarrierFrequencyToChannelNumber(::grpc::ServerContext* context, const CarrierFrequencyToChannelNumberRequest* request, CarrierFrequencyToChannelNumberResponse* response) override;
   ::grpc::Status ChannelNumberToCarrierFrequency(::grpc::ServerContext* context, const ChannelNumberToCarrierFrequencyRequest* request, ChannelNumberToCarrierFrequencyResponse* response) override;
+  ::grpc::Status ChannelNumberToCarrierFrequencyV2(::grpc::ServerContext* context, const ChannelNumberToCarrierFrequencyV2Request* request, ChannelNumberToCarrierFrequencyV2Response* response) override;
   ::grpc::Status CloseSession(::grpc::ServerContext* context, const CloseSessionRequest* request, CloseSessionResponse* response) override;
   ::grpc::Status CreateAndWriteWaveformsToFile(::grpc::ServerContext* context, const CreateAndWriteWaveformsToFileRequest* request, CreateAndWriteWaveformsToFileResponse* response) override;
   ::grpc::Status CreateWaveformComplexF64(::grpc::ServerContext* context, const CreateWaveformComplexF64Request* request, CreateWaveformComplexF64Response* response) override;

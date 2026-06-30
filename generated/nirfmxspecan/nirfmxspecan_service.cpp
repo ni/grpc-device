@@ -671,7 +671,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto integration_bandwidth = const_cast<float64*>(request->integration_bandwidth().data());
-      int32 number_of_elements = static_cast<int32>(request->integration_bandwidth().size());
+      auto number_of_elements_raw = request->integration_bandwidth().size();
+      int32 number_of_elements = nidevice_grpc::converters::convert_size<int32>(number_of_elements_raw, "number_of_elements");
       auto status = library_->ACPCfgOffsetIntegrationBandwidthArray(instrument, selector_string, integration_bandwidth, number_of_elements);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -906,7 +907,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto relative_attenuation = const_cast<float64*>(request->relative_attenuation().data());
-      int32 number_of_elements = static_cast<int32>(request->relative_attenuation().size());
+      auto number_of_elements_raw = request->relative_attenuation().size();
+      int32 number_of_elements = nidevice_grpc::converters::convert_size<int32>(number_of_elements_raw, "number_of_elements");
       auto status = library_->ACPCfgOffsetRelativeAttenuationArray(instrument, selector_string, relative_attenuation, number_of_elements);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1578,7 +1580,8 @@ namespace nirfmxspecan_grpc {
       }
 
       auto compression_level = const_cast<float64*>(request->compression_level().data());
-      int32 array_size = static_cast<int32>(request->compression_level().size());
+      auto array_size_raw = request->compression_level().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->AMPMCfgCompressionPoints(instrument, selector_string, compression_point_enabled, compression_level, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -1737,7 +1740,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
-      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto array_size_raw = request->reference_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::AMPMCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -1797,7 +1801,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto reference_waveform = const_cast<float32*>(request->reference_waveform().data());
-      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto array_size_raw = request->reference_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::AMPMCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -2708,7 +2713,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = convert_from_grpc<NIComplexSingle>(request->iq());
-      int32 array_size = static_cast<int32>(request->iq().size());
+      auto array_size_raw = request->iq().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1Waveform(instrument, selector_string, result_name, x0, dx, iq.data(), array_size, reset, reserved);
@@ -2740,7 +2746,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto iq = const_cast<float32*>(request->iq().data());
-      int32 array_size = static_cast<int32>(request->iq().size());
+      auto array_size_raw = request->iq().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeIQ1WaveformInterleavedIQ(instrument, selector_string, result_name, x0, dx, iq, array_size, reset, reserved);
@@ -2821,7 +2828,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto spectrum = const_cast<float32*>(request->spectrum().data());
-      int32 array_size = static_cast<int32>(request->spectrum().size());
+      auto array_size_raw = request->spectrum().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 reset = request->reset();
       auto reserved = 0;
       auto status = library_->AnalyzeSpectrum1Waveform(instrument, selector_string, result_name, x0, dx, spectrum, array_size, reset, reserved);
@@ -4922,7 +4930,8 @@ namespace nirfmxspecan_grpc {
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
       auto waveform_in = convert_from_grpc<NIComplexSingle>(request->waveform_in());
-      int32 array_size_in = static_cast<int32>(request->waveform_in().size());
+      auto array_size_in_raw = request->waveform_in().size();
+      int32 array_size_in = nidevice_grpc::converters::convert_size<int32>(array_size_in_raw, "array_size_in");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::DPDApplyDigitalPredistortionRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -4997,7 +5006,8 @@ namespace nirfmxspecan_grpc {
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
       auto waveform_in = const_cast<float32*>(request->waveform_in().data());
-      int32 array_size_in = static_cast<int32>(request->waveform_in().size());
+      auto array_size_in_raw = request->waveform_in().size();
+      int32 array_size_in = nidevice_grpc::converters::convert_size<int32>(array_size_in_raw, "array_size_in");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::DPDApplyDigitalPredistortionInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -5155,7 +5165,8 @@ namespace nirfmxspecan_grpc {
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
       auto waveform_in = convert_from_grpc<NIComplexSingle>(request->waveform_in());
-      int32 array_size_in = static_cast<int32>(request->waveform_in().size());
+      auto array_size_in_raw = request->waveform_in().size();
+      int32 array_size_in = nidevice_grpc::converters::convert_size<int32>(array_size_in_raw, "array_size_in");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -5227,7 +5238,8 @@ namespace nirfmxspecan_grpc {
       float64 x0_in = request->x0_in();
       float64 dx_in = request->dx_in();
       auto waveform_in = const_cast<float32*>(request->waveform_in().data());
-      int32 array_size_in = static_cast<int32>(request->waveform_in().size());
+      auto array_size_in_raw = request->waveform_in().size();
+      int32 array_size_in = nidevice_grpc::converters::convert_size<int32>(array_size_in_raw, "array_size_in");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::DPDApplyPreDPDSignalConditioningInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -5497,7 +5509,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto dpd_polynomial = convert_from_grpc<NIComplexSingle>(request->dpd_polynomial());
-      int32 array_size = static_cast<int32>(request->dpd_polynomial().size());
+      auto array_size_raw = request->dpd_polynomial().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DPDCfgApplyDPDUserDPDPolynomial(instrument, selector_string, dpd_polynomial.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -5523,7 +5536,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto dpd_polynomial = const_cast<float32*>(request->dpd_polynomial().data());
-      int32 array_size = static_cast<int32>(request->dpd_polynomial().size());
+      auto array_size_raw = request->dpd_polynomial().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DPDCfgApplyDPDUserDPDPolynomialInterleavedIQ(instrument, selector_string, dpd_polynomial, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -5789,7 +5803,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto target_waveform = convert_from_grpc<NIComplexSingle>(request->target_waveform());
-      int32 array_size = static_cast<int32>(request->target_waveform().size());
+      auto array_size_raw = request->target_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DPDCfgExtractModelTargetWaveform(instrument, selector_string, x0, dx, target_waveform.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -5817,7 +5832,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto target_waveform = const_cast<float32*>(request->target_waveform().data());
-      int32 array_size = static_cast<int32>(request->target_waveform().size());
+      auto array_size_raw = request->target_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DPDCfgExtractModelTargetWaveformInterleavedIQ(instrument, selector_string, x0, dx, target_waveform, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -6254,7 +6270,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto previous_dpd_polynomial = convert_from_grpc<NIComplexSingle>(request->previous_dpd_polynomial());
-      int32 array_size = static_cast<int32>(request->previous_dpd_polynomial().size());
+      auto array_size_raw = request->previous_dpd_polynomial().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DPDCfgPreviousDPDPolynomial(instrument, selector_string, previous_dpd_polynomial.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -6280,7 +6297,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto previous_dpd_polynomial = const_cast<float32*>(request->previous_dpd_polynomial().data());
-      int32 array_size = static_cast<int32>(request->previous_dpd_polynomial().size());
+      auto array_size_raw = request->previous_dpd_polynomial().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->DPDCfgPreviousDPDPolynomialInterleavedIQ(instrument, selector_string, previous_dpd_polynomial, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -6351,7 +6369,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
-      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto array_size_raw = request->reference_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::DPDCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -6411,7 +6430,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto reference_waveform = const_cast<float32*>(request->reference_waveform().data());
-      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto array_size_raw = request->reference_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::DPDCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -9191,7 +9211,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto equalizer_coefficients = convert_from_grpc<NIComplexSingle>(request->equalizer_coefficients());
-      int32 array_size = static_cast<int32>(request->equalizer_coefficients().size());
+      auto array_size_raw = request->equalizer_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->IDPDCfgEqualizerCoefficients(instrument, selector_string, x0, dx, equalizer_coefficients.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -9219,7 +9240,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto equalizer_coefficients = const_cast<float32*>(request->equalizer_coefficients().data());
-      int32 array_size = static_cast<int32>(request->equalizer_coefficients().size());
+      auto array_size_raw = request->equalizer_coefficients().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->IDPDCfgEqualizerCoefficientsInterleavedIQ(instrument, selector_string, x0, dx, equalizer_coefficients, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -9292,7 +9314,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto predistorted_waveform = convert_from_grpc<NIComplexSingle>(request->predistorted_waveform());
-      int32 array_size = static_cast<int32>(request->predistorted_waveform().size());
+      auto array_size_raw = request->predistorted_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       float64 target_gain = request->target_gain();
       auto status = library_->IDPDCfgPredistortedWaveform(instrument, selector_string, x0, dx, predistorted_waveform.data(), array_size, target_gain);
       if (!status_ok(status)) {
@@ -9321,7 +9344,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto predistorted_waveform = const_cast<float32*>(request->predistorted_waveform().data());
-      int32 array_size = static_cast<int32>(request->predistorted_waveform().size());
+      auto array_size_raw = request->predistorted_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       float64 target_gain = request->target_gain();
       auto status = library_->IDPDCfgPredistortedWaveformInterleavedIQ(instrument, selector_string, x0, dx, predistorted_waveform, array_size, target_gain);
       if (!status_ok(status)) {
@@ -9396,7 +9420,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto reference_waveform = convert_from_grpc<NIComplexSingle>(request->reference_waveform());
-      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto array_size_raw = request->reference_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::IDPDCfgReferenceWaveformRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -9456,7 +9481,8 @@ namespace nirfmxspecan_grpc {
       float64 x0 = request->x0();
       float64 dx = request->dx();
       auto reference_waveform = const_cast<float32*>(request->reference_waveform().data());
-      int32 array_size = static_cast<int32>(request->reference_waveform().size());
+      auto array_size_raw = request->reference_waveform().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       int32 idle_duration_present;
       switch (request->idle_duration_present_enum_case()) {
         case nirfmxspecan_grpc::IDPDCfgReferenceWaveformInterleavedIQRequest::IdleDurationPresentEnumCase::kIdleDurationPresent: {
@@ -12216,7 +12242,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto frequency_list = const_cast<float64*>(request->frequency_list().data());
-      int32 array_size = static_cast<int32>(request->frequency_list().size());
+      auto array_size_raw = request->frequency_list().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->NFCfgFrequencyList(instrument, selector_string, frequency_list, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -13841,7 +13868,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto segment_start_time = const_cast<float64*>(request->segment_start_time().data());
-      int32 number_of_elements = static_cast<int32>(request->segment_start_time().size());
+      auto number_of_elements_raw = request->segment_start_time().size();
+      int32 number_of_elements = nidevice_grpc::converters::convert_size<int32>(number_of_elements_raw, "number_of_elements");
       auto status = library_->PAVTCfgSegmentStartTimeList(instrument, selector_string, segment_start_time, number_of_elements);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -13942,7 +13970,8 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto segment_type = segment_type_vector.data();
 
-      int32 number_of_elements = static_cast<int32>(request->segment_type().size());
+      auto number_of_elements_raw = request->segment_type().size();
+      int32 number_of_elements = nidevice_grpc::converters::convert_size<int32>(number_of_elements_raw, "number_of_elements");
       auto status = library_->PAVTCfgSegmentTypeArray(instrument, selector_string, segment_type, number_of_elements);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -14469,7 +14498,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto frequency_list = const_cast<float64*>(request->frequency_list().data());
-      int32 array_size = static_cast<int32>(request->frequency_list().size());
+      auto array_size_raw = request->frequency_list().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->PhaseNoiseCfgSpotNoiseFrequencyList(instrument, selector_string, frequency_list, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -15794,7 +15824,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto relative_attenuation = const_cast<float64*>(request->relative_attenuation().data());
-      int32 number_of_elements = static_cast<int32>(request->relative_attenuation().size());
+      auto number_of_elements_raw = request->relative_attenuation().size();
+      int32 number_of_elements = nidevice_grpc::converters::convert_size<int32>(number_of_elements_raw, "number_of_elements");
       auto status = library_->SEMCfgOffsetRelativeAttenuationArray(instrument, selector_string, relative_attenuation, number_of_elements);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -16749,7 +16780,8 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float32*>(request->attr_val().data());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeF32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -16802,7 +16834,8 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<float64*>(request->attr_val().data());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeF64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -16913,7 +16946,8 @@ namespace nirfmxspecan_grpc {
         [](auto x) { return x; });
       auto attr_val = attr_val_vector.data();
 
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -16966,7 +17000,8 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<int64*>(reinterpret_cast<const int64*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -17045,7 +17080,8 @@ namespace nirfmxspecan_grpc {
               return static_cast<int8>(x);
         });
 
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeI8Array(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -17072,7 +17108,8 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexDouble>(request->attr_val());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeNIComplexDoubleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -17099,7 +17136,8 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = convert_from_grpc<NIComplexSingle>(request->attr_val());
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeNIComplexSingleArray(instrument, selector_string, attribute_id, attr_val.data(), array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -17234,7 +17272,8 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt32*>(reinterpret_cast<const uInt32*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU32Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -17261,7 +17300,8 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       auto attr_val = const_cast<uInt64*>(reinterpret_cast<const uInt64*>(request->attr_val().data()));
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU64Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -17314,7 +17354,8 @@ namespace nirfmxspecan_grpc {
       char* selector_string = (char*)selector_string_mbcs.c_str();
       int32 attribute_id = request->attribute_id();
       uInt8* attr_val = (uInt8*)request->attr_val().c_str();
-      int32 array_size = static_cast<int32>(request->attr_val().size());
+      auto array_size_raw = request->attr_val().size();
+      int32 array_size = nidevice_grpc::converters::convert_size<int32>(array_size_raw, "array_size");
       auto status = library_->SetAttributeU8Array(instrument, selector_string, attribute_id, attr_val, array_size);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -18414,7 +18455,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto number_of_spurs_to_report = const_cast<int32*>(reinterpret_cast<const int32*>(request->number_of_spurs_to_report().data()));
-      int32 number_of_elements = static_cast<int32>(request->number_of_spurs_to_report().size());
+      auto number_of_elements_raw = request->number_of_spurs_to_report().size();
+      int32 number_of_elements = nidevice_grpc::converters::convert_size<int32>(number_of_elements_raw, "number_of_elements");
       auto status = library_->SpurCfgRangeNumberOfSpursToReportArray(instrument, selector_string, number_of_spurs_to_report, number_of_elements);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
@@ -18653,7 +18695,8 @@ namespace nirfmxspecan_grpc {
       auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
       char* selector_string = (char*)selector_string_mbcs.c_str();
       auto relative_attenuation = const_cast<float64*>(request->relative_attenuation().data());
-      int32 number_of_elements = static_cast<int32>(request->relative_attenuation().size());
+      auto number_of_elements_raw = request->relative_attenuation().size();
+      int32 number_of_elements = nidevice_grpc::converters::convert_size<int32>(number_of_elements_raw, "number_of_elements");
       auto status = library_->SpurCfgRangeRelativeAttenuationArray(instrument, selector_string, relative_attenuation, number_of_elements);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);

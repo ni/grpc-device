@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-rfmxpulse API metadata version 25.3.0
+// This file is generated from NI-rfmxpulse API metadata version 26.5.0
 //---------------------------------------------------------------------
 // Proto file for the NI-rfmxpulse Metadata
 //---------------------------------------------------------------------
@@ -876,7 +876,7 @@ message DisableTriggerResponse {
 message FetchAcquiredAmplitudeTraceRequest {
   nidevice_grpc.Session instrument = 1;
   string selector_string = 2;
-  int32 array_size = 3;
+  int32 timeout = 3;
 }
 
 message FetchAcquiredAmplitudeTraceResponse {
