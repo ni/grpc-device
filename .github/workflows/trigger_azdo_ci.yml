@@ -16,19 +16,25 @@ jobs:
     runs-on: windows-latest
     steps:
     - name: Trigger Main CI 
-      uses: Azure/pipelines@v1.2
       if: ${{ github.repository == 'ni/grpc-device' && github.event.workflow_run.head_branch == 'main' }}
-      with:
-        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
-        azure-pipeline-name: 'ni-central-grpc_device'
-        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-        azure-pipeline-variables: '{"BRANCH": "main", "EXPORT_NAME": "ni-grpc-device", "PHASE": "d"}'
+      shell: pwsh
+      env:
+        AZDO_TOKEN: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
+      run: |
+        $token = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$env:AZDO_TOKEN"))
+        $headers = @{ Authorization = "Basic $token"; 'Content-Type' = 'application/json' }
+        $defs = Invoke-RestMethod -Uri 'https://dev.azure.com/ni/DevCentral/_apis/build/definitions?name=ni-central-grpc_device&api-version=7.1' -Headers $headers
+        $body = @{ definition = @{ id = $defs.value[0].id }; parameters = '{"BRANCH": "main", "EXPORT_NAME": "ni-grpc-device", "PHASE": "d"}' } | ConvertTo-Json
+        Invoke-RestMethod -Method Post -Uri 'https://dev.azure.com/ni/DevCentral/_apis/build/builds?api-version=7.1' -Headers $headers -Body $body
                                   
     - name: Trigger Release CI 
-      uses: Azure/pipelines@v1.2
       if: ${{ github.repository == 'ni/grpc-device' && startsWith(github.event.workflow_run.head_branch, 'releases') }}
-      with:
-        azure-devops-project-url: 'https://dev.azure.com/ni/DevCentral'
-        azure-pipeline-name: 'ni-central-grpc_device'
-        azure-devops-token: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
-        azure-pipeline-variables: '{"BRANCH": "releases", "EXPORT_NAME": "ni-grpc-device", "PHASE": "f", "RELEASE_BRANCH_OPTION": "--release-branch"}'
+      shell: pwsh
+      env:
+        AZDO_TOKEN: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
+      run: |
+        $token = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$env:AZDO_TOKEN"))
+        $headers = @{ Authorization = "Basic $token"; 'Content-Type' = 'application/json' }
+        $defs = Invoke-RestMethod -Uri 'https://dev.azure.com/ni/DevCentral/_apis/build/definitions?name=ni-central-grpc_device&api-version=7.1' -Headers $headers
+        $body = @{ definition = @{ id = $defs.value[0].id }; parameters = '{"BRANCH": "releases", "EXPORT_NAME": "ni-grpc-device", "PHASE": "f", "RELEASE_BRANCH_OPTION": "--release-branch"}' } | ConvertTo-Json
+        Invoke-RestMethod -Method Post -Uri 'https://dev.azure.com/ni/DevCentral/_apis/build/builds?api-version=7.1' -Headers $headers -Body $body
