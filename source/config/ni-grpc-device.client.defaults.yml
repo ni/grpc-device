@@ -23,8 +23,8 @@ file_version: 1
 #   SystemDefault: Use system-default CA certificates.
 #   To use specific certificates, override in known_servers.yml per-server.
 #
-certificate_mode: Disabled
+certificate_mode: Managed
 certificate_chain: file://$(UserServicesDir)/$(Service)/cert.pem
 certificate_key: file://$(UserServicesDir)/$(Service)/key.pem
-server_mode: Disabled
+server_mode: TrustedCertificates
 trusted_certificates: SystemDefault
