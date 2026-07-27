@@ -18,6 +18,9 @@ typedef void (*log_fn_impl)(Level level, const char* fmt, va_list args);
 void set_logger(log_fn_impl impl);
 void log(Level level, const char* fmt, ...);
 
+// Special log option that routes to the platform audit log (Windows Event Log or Syslog)
+void log_to_audit_source(Level level, const char* fmt, ...);
+
 }  // namespace logging
 }  // namespace nidevice_grpc
 

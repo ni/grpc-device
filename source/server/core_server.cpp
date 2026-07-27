@@ -7,6 +7,7 @@
 #include <thread>
 #include <algorithm>
 
+#include "client_connection_logger.h"
 #include "feature_toggles.h"
 #include "logging.h"
 #include "tls_config_loader.h"
@@ -98,6 +99,8 @@ static void RunServer(const ServerConfiguration& config)
         "Using server configuration from %s",
         config.config_file_path.c_str());
   }
+
+  nidevice_grpc::register_client_connection_logger();
 
   grpc::EnableDefaultHealthCheckService(true);
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();

@@ -71,6 +71,7 @@ if(USE_SUBMODULE_LIBS)
   add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json)
   add_subdirectory(third_party/utfcpp ${CMAKE_CURRENT_BINARY_DIR}/utfcpp)
   add_subdirectory(third_party/grpc-sideband ${CMAKE_CURRENT_BINARY_DIR}/grpc-sideband)
+  add_subdirectory(third_party/spdlog ${CMAKE_CURRENT_BINARY_DIR}/spdlog EXCLUDE_FROM_ALL)
 
   set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
   set(_REFLECTION grpc++_reflection)
@@ -80,6 +81,7 @@ if(USE_SUBMODULE_LIBS)
   set(_PROTOBUF_LIBPROTOBUF libprotobuf)
   set(_UTF8CPP utf8cpp)
   set(_GRPC_SIDEBAND ni_grpc_sideband)
+  set(_SPDLOG spdlog::spdlog)
 else()
   find_program(_PROTOBUF_PROTOC protoc)
   find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
@@ -103,9 +105,11 @@ else()
     find_package(GTest REQUIRED)
     find_package(nlohmann_json REQUIRED)
     find_package(utf8cpp REQUIRED)
+    find_package(spdlog REQUIRED)
 
     set(_GRPC gRPC::grpc)
     set(_UTF8CPP utf8cpp::utf8cpp)
+    set(_SPDLOG spdlog::spdlog)
   endif()
 endif()
 
@@ -548,6 +552,7 @@ add_executable(ni_grpc_device_server
    "imports/include/nierr_Status.cpp"
    "source/server/calibration_operations_restricted_service_registrar.cpp"
    "source/server/calibration_operations_restricted_service.cpp"
+   "source/server/client_connection_logger.cpp"
    "source/server/core_server.cpp"
    "source/server/core_services_registrar.cpp"
    "source/server/data_moniker_service.cpp"
@@ -657,6 +662,7 @@ set(server_lib_deps
   ${_UTF8CPP}
   ${CMAKE_DL_LIBS}
   ${_GRPC_SIDEBAND}
+  ${_SPDLOG}
   nlohmann_json::nlohmann_json
 )
 
