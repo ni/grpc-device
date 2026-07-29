@@ -56,7 +56,9 @@ std::shared_ptr<spdlog::logger> get_audit_logger()
 #else
     auto sink = std::make_shared<spdlog::sinks::syslog_sink_mt>("ni-grpc-device-server", LOG_PID, LOG_USER, /*enable_formatting=*/true);
 #endif
-    return std::make_shared<spdlog::logger>("audit", sink);
+    auto logger = std::make_shared<spdlog::logger>("Server", sink);
+    logger->set_pattern("[ni-grpc-device-server][%n] %v");
+    return logger;
   }();
   return audit_logger;
 }
