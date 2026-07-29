@@ -52,9 +52,9 @@ std::shared_ptr<spdlog::logger> get_audit_logger()
 {
   static std::shared_ptr<spdlog::logger> audit_logger = []() {
 #if defined(_WIN32)
-    auto sink = std::make_shared<spdlog::sinks::win_eventlog_sink_mt>("ni_grpc_device_server");
+    auto sink = std::make_shared<spdlog::sinks::win_eventlog_sink_mt>("ni-grpc-device-server");
 #else
-    auto sink = std::make_shared<spdlog::sinks::syslog_sink_mt>("ni_grpc_device_server", LOG_PID, LOG_USER, /*enable_formatting=*/true);
+    auto sink = std::make_shared<spdlog::sinks::syslog_sink_mt>("ni-grpc-device-server", LOG_PID, LOG_USER, /*enable_formatting=*/true);
 #endif
     return std::make_shared<spdlog::logger>("audit", sink);
   }();
