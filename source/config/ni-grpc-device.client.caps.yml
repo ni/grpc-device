@@ -6,6 +6,7 @@
 #
 # supports_certificate_chain_file_scheme: Whether file:// URI scheme is supported for certs
 # supports_certificate_key_file_scheme: Whether file:// URI scheme is supported for keys
+# supports_trusted_certificates_core_schemes: Indicates the client supports whatever schemes are supported natively by ni-tls-config.
 # supports_trusted_certificates_file_scheme: Whether file:// URI scheme is supported for trusted certs
 # supports_trusted_certificates_directory_scheme: Whether directory:// URI scheme is supported for trusted certs
 #
@@ -14,5 +15,6 @@ supports_server_mode_trust_always: false
 
 supports_certificate_chain_file_scheme: true
 supports_certificate_key_file_scheme: true
+supports_trusted_certificates_core_schemes: true
 supports_trusted_certificates_file_scheme: true
 supports_trusted_certificates_directory_scheme: false
