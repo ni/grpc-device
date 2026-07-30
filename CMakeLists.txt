@@ -113,6 +113,18 @@ else()
   endif()
 endif()
 
+# Abseil logging targets, used to route gRPC's internal logs into our logger.
+# These come from Abseil directly in the submodule/NILRT builds, and from the
+# absl package that gRPC's config pulls in otherwise.
+set(_ABSEIL_LOG
+  absl::log
+  absl::log_entry
+  absl::log_globals
+  absl::log_initialize
+  absl::log_sink
+  absl::log_sink_registry
+)
+
 # Python3 Virtual Environment
 if(USE_PYTHON_VIRTUALENV)
   include(CreateVirtualEnvironment)
@@ -654,6 +666,7 @@ endif()
 
 set(server_lib_deps
   ${_ABSEIL_SYNC}
+  ${_ABSEIL_LOG}
   ${_GRPC_GPR}
   ${_GRPC_GRPCPP}
   ${_GRPC}
