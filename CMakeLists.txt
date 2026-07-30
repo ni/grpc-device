@@ -91,9 +91,13 @@ else()
   if(USE_NILRT_LEGACY_TOOLCHAIN)
     # The archetypical NILRT SDK toolchain build case
     add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
+    
+    find_package(spdlog REQUIRED)
+
     set(_REFLECTION grpc++_reflection)
     set(_GRPC_GRPCPP grpc++)
     set(_PROTOBUF_LIBPROTOBUF libprotobuf)
+    set(_SPDLOG spdlog::spdlog)
   else()
     # The archetypical linux build case (including OpenEmbedded)
     find_library(_GRPC_GRPCPP grpc++)

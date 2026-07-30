@@ -203,3 +203,5 @@ Then add the following values:
   - `TypesSupported (REG_DWORD): 7`
 
 This recommendation is taken directly from [spdlog's documentation](https://github.com/gabime/spdlog/blob/v1.x/include/spdlog/sinks/win_eventlog_sink.h).
+
+NI's official installer for `grpc-device` automatically sets this registry key. This installer is included with installations of Instument Studio, several MI drivers, and more.
