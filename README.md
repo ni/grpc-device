@@ -191,3 +191,15 @@ With this setting the server reads TLS configuration at startup from the per-ser
 If `"security": "ni-tls-config"` is configured but the `ni-tls-config` library is not installed, the server logs an error and exits instead of starting insecurely.
 
 Once `ni-tls-config` is enabled, use NI Hardware Configuration Utility on each client machine to configure the desired security settings.
+
+### Audit Logging
+
+The server logs audit messages to the Windows Event Log and Linux Syslog. On Windows, events are logged from the `ni-grpc-device-server` source. These events will be automatically placed under the default Application log (seen under the Windows folder in the Event Viewer app). It is recommended to add the following registry key to properly register it as a source:
+
+`HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\EventLog\National Instruments\ni-grpc-device-server`
+
+Then add the following values:
+  - `EventMessageFile (REG_EXPAND_SZ): %systemroot%\System32\mscoree.dll`
+  - `TypesSupported (REG_DWORD): 7`
+
+This recommendation is taken directly from [spdlog's documentation](https://github.com/gabime/spdlog/blob/v1.x/include/spdlog/sinks/win_eventlog_sink.h).
