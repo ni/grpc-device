@@ -1,4 +1,5 @@
 #include "client_connection_logger.h"
+#include "logging.h"
 
 #include <absl/log/globals.h>
 #include <absl/log/initialize.h>
@@ -6,8 +7,6 @@
 #include <absl/log/log_sink.h>
 #include <absl/log/log_sink_registry.h>
 #include <absl/strings/match.h>
-
-#include "logging.h"
 
 #include <grpc/grpc_security_constants.h>
 
@@ -27,7 +26,7 @@ std::string describe_authentication(const grpc::AuthContext& auth_context)
   description += transport_type.empty() ? "unknown transport" : std::string(transport_type[0].data(), transport_type[0].size());
 
   if (!common_names.empty())
-    description += ", client cert CN:" + std::string(common_names[0].data(), common_names[0].size());
+    description += ", client cert CN: " + std::string(common_names[0].data(), common_names[0].size());
 
   return description;
 }
@@ -77,8 +76,6 @@ class AuditLogSink : public absl::LogSink {
     logging::log_to_audit_source(to_logging_level(entry.log_severity()), "%s", message.c_str());
   }
 };
-
-}  // namespace
 
 void ClientConnectionLogger::PreSynchronousRequest(grpc::ServerContext* context)
 {
