@@ -70,9 +70,10 @@ void ClientConnectionLogger::PostSynchronousRequest(grpc::ServerContext*)
 
 void register_client_connection_logger()
 {
-  // gRPC does not take ownership of the callbacks object, so it will be a static object.
-  static ClientConnectionLogger logger;
-  grpc::Server::SetGlobalCallbacks(&logger);
+  // gRPC stores this in an owning shared_ptr (see Server::SetGlobalCallbacks inserver_cc.cc) and deletes it at static destruction. Even
+  // if that changes to non-owning, intentionally leaking one process-wide object is correct and avoids a static-destruction-order hazard
+  // against grpc::Server.
+  grpc::Server::SetGlobalCallbacks(new ClientConnectionLogger());
 }
 
 }  // namespace nidevice_grpc
