@@ -91,9 +91,6 @@ void register_grpc_log_sink()
 {
   absl::InitializeLog();
 
-  // By default we will not log anything less severe than a warning.
-  absl::SetMinLogLevel(absl::LogSeverityAtLeast::kWarning);
-
   // Abseil does not take ownership of the sink, so it will be a static object.
   static AuditLogSink sink;
   absl::AddLogSink(&sink);
