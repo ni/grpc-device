@@ -313,8 +313,9 @@ int main(int argc, char** argv)
   auto config = GetConfiguration(options.config_file_path);
   setlocale(LC_ALL, "");
 #if defined(__GNUC__)
+  // syslog is always needed for audit logging even when general output goes to the terminal
+  nidevice_grpc::logging::setup_syslog(options.daemonize, options.identity);
   if (options.use_syslog) {
-    nidevice_grpc::logging::setup_syslog(options.daemonize, options.identity);
     nidevice_grpc::logging::set_logger(&nidevice_grpc::logging::log_syslog);
   }
 

@@ -7,23 +7,6 @@ namespace nidevice_grpc {
 
 namespace {
 
-bool parse_peer(const std::string& peer, std::string& ip, std::string& port)
-{
-  if (peer.rfind("ipv4:", 0) != 0 && peer.rfind("ipv6:", 0) != 0)
-    return false;
-
-  const auto scheme_end = peer.find(':');
-  const auto port_pos = peer.rfind(':');
-  if (port_pos <= scheme_end)
-    return false;
-
-  ip = peer.substr(scheme_end + 1, port_pos - scheme_end - 1);
-  port = peer.substr(port_pos + 1);
-
-  return !ip.empty() && !port.empty();
-}
-
-// Describes how (if at all) the peer was authenticated, for inclusion in the audit log.
 std::string describe_authentication(const grpc::AuthContext& auth_context)
 {
   if (!auth_context.IsPeerAuthenticated())
@@ -41,6 +24,22 @@ std::string describe_authentication(const grpc::AuthContext& auth_context)
   return description;
 }
 
+}
+
+bool parse_peer(const std::string& peer, std::string& ip, std::string& port)
+{
+  if (peer.rfind("ipv4:", 0) != 0 && peer.rfind("ipv6:", 0) != 0)
+    return false;
+
+  const auto scheme_end = peer.find(':');
+  const auto port_pos = peer.rfind(':');
+  if (port_pos <= scheme_end)
+    return false;
+
+  ip = peer.substr(scheme_end + 1, port_pos - scheme_end - 1);
+  port = peer.substr(port_pos + 1);
+
+  return !ip.empty() && !port.empty();
 }
 
 void ClientConnectionLogger::PreSynchronousRequest(grpc::ServerContext* context)

@@ -2,14 +2,15 @@
 
 #include <cstdio>
 #include <iostream>
-#include <memory>
 #include <string>
 
-#include <spdlog/spdlog.h>
 #if defined(_WIN32)
+  #include <memory>
+
   #include <spdlog/sinks/win_eventlog_sink.h>
+  #include <spdlog/spdlog.h>
 #else
-  #include <spdlog/sinks/syslog_sink.h>
+  #include "linux/syslog_logging.h"
 #endif
 
 namespace nidevice_grpc {
@@ -46,16 +47,13 @@ void log(Level level, const char* fmt, ...)
   va_end(args);
 }
 
+#if defined(_WIN32)
 namespace {
 
-std::shared_ptr<spdlog::logger> get_audit_logger()
+std::shared_ptr<spdlog::logger> get_event_log_logger()
 {
   static std::shared_ptr<spdlog::logger> audit_logger = []() {
-#if defined(_WIN32)
     auto sink = std::make_shared<spdlog::sinks::win_eventlog_sink_mt>("ni-grpc-device-server");
-#else
-    auto sink = std::make_shared<spdlog::sinks::syslog_sink_mt>("ni-grpc-device-server", LOG_PID, LOG_USER, /*enable_formatting=*/true);
-#endif
     auto logger = std::make_shared<spdlog::logger>("Server", sink);
     logger->set_pattern("[ni-grpc-device-server][%n] %v");
     return logger;
@@ -77,16 +75,18 @@ std::string format_message(const char* fmt, va_list args)
   return result;
 }
 
-}
+}  // namespace
+#endif
 
 void log_to_audit_source(Level level, const char* fmt, ...)
 {
+#if defined(_WIN32)
   va_list args;
   va_start(args, fmt);
   const std::string message = format_message(fmt, args);
   va_end(args);
 
-  auto audit_logger = get_audit_logger();
+  auto audit_logger = get_event_log_logger();
   switch (level) {
     case Level_Info:
       audit_logger->info("{}", message);
@@ -98,6 +98,15 @@ void log_to_audit_source(Level level, const char* fmt, ...)
       audit_logger->error("{}", message);
       break;
   }
+#else
+  // We're manually prefixing audit logs in the Windows spdlog path, so manually add it here on the Linux path before sending it over to syslog.
+  const std::string message = "[ni-grpc-device-server][Server] " + std::string(fmt);
+
+  va_list args;
+  va_start(args, fmt);
+  log_syslog(level, message.c_str(), args);
+  va_end(args);
+#endif
 }
 
 }  // namespace logging
