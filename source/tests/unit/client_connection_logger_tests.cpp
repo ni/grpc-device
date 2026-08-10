@@ -51,32 +51,60 @@ TEST(ClientConnectionLoggerTests, EmptyPeer_ParsePeer_ReturnsFalse)
   EXPECT_FALSE(nidevice_grpc::parse_peer("", ip, port));
 }
 
-TEST(ClientConnectionLoggerTests, MissingPort_ParsePeer_ReturnsFalse)
+TEST(ClientConnectionLoggerTests, IPv4MissingPort_ParsePeer_ReturnsFalse)
 {
   std::string ip, port;
 
   EXPECT_FALSE(nidevice_grpc::parse_peer("ipv4:127.0.0.1", ip, port));
 }
 
-TEST(ClientConnectionLoggerTests, EmptyPort_ParsePeer_ReturnsFalse)
+TEST(ClientConnectionLoggerTests, IPv4EmptyPort_ParsePeer_ReturnsFalse)
 {
   std::string ip, port;
 
   EXPECT_FALSE(nidevice_grpc::parse_peer("ipv4:127.0.0.1:", ip, port));
 }
 
-TEST(ClientConnectionLoggerTests, EmptyIp_ParsePeer_ReturnsFalse)
+TEST(ClientConnectionLoggerTests, IPv4EmptyIp_ParsePeer_ReturnsFalse)
 {
   std::string ip, port;
 
   EXPECT_FALSE(nidevice_grpc::parse_peer("ipv4::12345", ip, port));
 }
 
-TEST(ClientConnectionLoggerTests, SchemeOnly_ParsePeer_ReturnsFalse)
+TEST(ClientConnectionLoggerTests, IPv4SchemeOnly_ParsePeer_ReturnsFalse)
 {
   std::string ip, port;
 
   EXPECT_FALSE(nidevice_grpc::parse_peer("ipv4:", ip, port));
+}
+
+TEST(ClientConnectionLoggerTests, IPv6MissingPort_ParsePeer_ReturnsFalse)
+{
+  std::string ip, port;
+
+  EXPECT_FALSE(nidevice_grpc::parse_peer("ipv6:[::1]", ip, port));
+}
+
+TEST(ClientConnectionLoggerTests, IPv6EmptyPort_ParsePeer_ReturnsFalse)
+{
+  std::string ip, port;
+
+  EXPECT_FALSE(nidevice_grpc::parse_peer("ipv6:[::1]:", ip, port));
+}
+
+TEST(ClientConnectionLoggerTests, IPv6EmptyIp_ParsePeer_ReturnsFalse)
+{
+  std::string ip, port;
+
+  EXPECT_FALSE(nidevice_grpc::parse_peer("ipv6:[]:12345", ip, port));
+}
+
+TEST(ClientConnectionLoggerTests, IPv6SchemeOnly_ParsePeer_ReturnsFalse)
+{
+  std::string ip, port;
+
+  EXPECT_FALSE(nidevice_grpc::parse_peer("ipv6:", ip, port));
 }
 
 }  // namespace unit

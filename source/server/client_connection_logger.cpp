@@ -32,11 +32,27 @@ bool parse_peer(const std::string& peer, std::string& ip, std::string& port)
     return false;
 
   const auto scheme_end = peer.find(':');
-  const auto port_pos = peer.rfind(':');
-  if (port_pos <= scheme_end)
+  const auto addr_start = scheme_end + 1;
+  if (scheme_end == std::string::npos)
     return false;
 
-  ip = peer.substr(scheme_end + 1, port_pos - scheme_end - 1);
+  // Find the start of the port; IPv6 addresses are enclosed in brackets, so we need to find the closing bracket first.
+  size_t port_pos;
+  if (peer[addr_start] == '[') {
+    const auto bracket_end = peer.find(']', addr_start);
+    if (bracket_end == std::string::npos)
+      return false;
+    port_pos = bracket_end + 1;
+    if (port_pos >= peer.size() || peer[port_pos] != ':')
+      return false;
+  }
+  else {
+    port_pos = peer.rfind(':');
+    if (port_pos <= scheme_end)
+      return false;
+  }
+
+  ip = peer.substr(addr_start, port_pos - addr_start);
   port = peer.substr(port_pos + 1);
 
   return !ip.empty() && !port.empty();
