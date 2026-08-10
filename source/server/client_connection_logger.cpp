@@ -40,7 +40,7 @@ bool parse_peer(const std::string& peer, std::string& ip, std::string& port)
   size_t port_pos;
   if (peer[addr_start] == '[') {
     const auto bracket_end = peer.find(']', addr_start);
-    if (bracket_end == std::string::npos)
+    if (bracket_end == std::string::npos || bracket_end == addr_start + 1)
       return false;
     port_pos = bracket_end + 1;
     if (port_pos >= peer.size() || peer[port_pos] != ':')
