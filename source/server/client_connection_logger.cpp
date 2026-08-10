@@ -66,9 +66,17 @@ void ClientConnectionLogger::PreSynchronousRequest(grpc::ServerContext* context)
 
   // Only log the first connection seen from a given IP.
   {
+    const auto& key = parsed ? ip : peer;
     std::lock_guard<std::mutex> lock(seen_ips_mutex_);
-    if (!seen_ips_.insert(parsed ? ip : peer).second)
+    if (!seen_ips_.insert(key).second)
       return;
+
+    // If the client cache is full, evict the oldest entry.
+    seen_ips_order_.push_back(key);
+    if (seen_ips_order_.size() > kMaxSeenIps) {
+      seen_ips_.erase(seen_ips_order_.front());
+      seen_ips_order_.pop_front();
+    }
   }
 
   const auto auth_description = describe_authentication(*context->auth_context());

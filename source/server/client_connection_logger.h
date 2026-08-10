@@ -3,6 +3,8 @@
 
 #include <grpcpp/grpcpp.h>
 
+#include <cstddef>
+#include <deque>
 #include <mutex>
 #include <string>
 #include <unordered_set>
@@ -20,8 +22,12 @@ class ClientConnectionLogger : public grpc::Server::GlobalCallbacks {
   void PostSynchronousRequest(grpc::ServerContext* context) override;
 
  private:
+  // We cache a set number of seen clients to avoid noise from repeated calls
+  static constexpr std::size_t kMaxSeenIps = 3000;
+
   std::mutex seen_ips_mutex_;
   std::unordered_set<std::string> seen_ips_;
+  std::deque<std::string> seen_ips_order_;
 };
 
 // Registers a process-wide ClientConnectionLogger with gRPC, must be called before any grpc::Server is built.
