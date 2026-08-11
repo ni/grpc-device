@@ -94,6 +94,11 @@ For Debian/Ubuntu, install git, cmake (3.18.0 or newer), and mako:
 > sudo apt-get install ninja-build   # optional
 ```
 
+For Debian, install the headers for the running kernel before installing NI drivers:
+```
+> sudo apt-get install linux-headers-$(uname -r)
+```
+
 For NI Linux RT, install packagegroup-core-buildessential, git, git-perltools, cmake (3.18.0 or newer), python3-utils, and mako:
 ```
 > opkg update
