@@ -39,11 +39,27 @@ bool parse_peer(const std::string& peer, std::string& ip, std::string& port)
     return false;
 
   const auto scheme_end = peer.find(':');
-  const auto port_pos = peer.rfind(':');
-  if (port_pos <= scheme_end)
+  const auto addr_start = scheme_end + 1;
+  if (scheme_end == std::string::npos)
     return false;
 
-  ip = peer.substr(scheme_end + 1, port_pos - scheme_end - 1);
+  // Find the start of the port; IPv6 addresses are enclosed in brackets, so we need to find the closing bracket first.
+  size_t port_pos;
+  if (peer[addr_start] == '[') {
+    const auto bracket_end = peer.find(']', addr_start);
+    if (bracket_end == std::string::npos || bracket_end == addr_start + 1)
+      return false;
+    port_pos = bracket_end + 1;
+    if (port_pos >= peer.size() || peer[port_pos] != ':')
+      return false;
+  }
+  else {
+    port_pos = peer.rfind(':');
+    if (port_pos <= scheme_end)
+      return false;
+  }
+
+  ip = peer.substr(addr_start, port_pos - addr_start);
   port = peer.substr(port_pos + 1);
 
   return !ip.empty() && !port.empty();
@@ -57,9 +73,17 @@ void ClientConnectionLogger::PreSynchronousRequest(grpc::ServerContext* context)
 
   // Only log the first connection seen from a given IP.
   {
+    const auto& key = parsed ? ip : peer;
     std::lock_guard<std::mutex> lock(seen_ips_mutex_);
-    if (!seen_ips_.insert(parsed ? ip : peer).second)
+    if (!seen_ips_.insert(key).second)
       return;
+
+    // If the client cache is full, evict the oldest entry.
+    seen_ips_order_.push_back(key);
+    if (seen_ips_order_.size() > kMaxSeenIps) {
+      seen_ips_.erase(seen_ips_order_.front());
+      seen_ips_order_.pop_front();
+    }
   }
 
   const auto auth_description = describe_authentication(*context->auth_context());

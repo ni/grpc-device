@@ -25,8 +25,8 @@ file_version: 1
 #   directory://: Server loads all .pem files in the directory.
 #   Substitution variables: $(SystemServicesDir), $(Service)
 #
-certificate_mode: Disabled
+certificate_mode: ManagedSelfSigned
 certificate_chain: file://$(SystemServicesDir)/$(Service)/cert.pem
 certificate_key: file://$(SystemServicesDir)/$(Service)/key.pem
-client_mode: Disabled
+client_mode: ManagedSelfSigned
 trusted_certificates: directory://$(SystemServicesDir)/$(Service)/trusted.d
