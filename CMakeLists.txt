@@ -116,9 +116,7 @@ else()
   endif()
 endif()
 
-# Abseil logging targets, used to route gRPC's internal logs into our logger.
-# These come from Abseil directly in the submodule/NILRT builds, and from the
-# absl package that gRPC's config pulls in otherwise.
+# Used to route gRPC's internal logs into our logger.
 set(_ABSEIL_LOG
   absl::log
   absl::log_entry
