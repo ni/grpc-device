@@ -128,6 +128,7 @@ logging::Level to_logging_level(absl::LogSeverity severity)
 class AuditLogSinkWrapper {
   public:
     AuditLogSinkWrapper() {
+      absl::InitializeLog();
       absl::AddLogSink(&sink_);
     }
     ~AuditLogSinkWrapper() {
@@ -160,8 +161,6 @@ class AuditLogSinkWrapper {
 
 void register_grpc_log_sink()
 {
-  absl::InitializeLog();
-
   // The wrapper handles adding and removing the log sink from absl.
   static AuditLogSinkWrapper sink;
 }
