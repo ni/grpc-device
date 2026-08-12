@@ -7,6 +7,7 @@
 #include <thread>
 #include <algorithm>
 
+#include "client_connection_logger.h"
 #include "feature_toggles.h"
 #include "logging.h"
 #include "tls_config_loader.h"
@@ -98,6 +99,8 @@ static void RunServer(const ServerConfiguration& config)
         "Using server configuration from %s",
         config.config_file_path.c_str());
   }
+
+  nidevice_grpc::register_client_connection_logger();
 
   grpc::EnableDefaultHealthCheckService(true);
   grpc::reflection::InitProtoReflectionServerBuilderPlugin();
@@ -310,8 +313,9 @@ int main(int argc, char** argv)
   auto config = GetConfiguration(options.config_file_path);
   setlocale(LC_ALL, "");
 #if defined(__GNUC__)
+  // syslog is always needed for audit logging even when general output goes to the terminal
+  nidevice_grpc::logging::setup_syslog(options.daemonize, options.identity);
   if (options.use_syslog) {
-    nidevice_grpc::logging::setup_syslog(options.daemonize, options.identity);
     nidevice_grpc::logging::set_logger(&nidevice_grpc::logging::log_syslog);
   }
 

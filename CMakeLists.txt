@@ -71,6 +71,9 @@ if(USE_SUBMODULE_LIBS)
   add_subdirectory(third_party/json ${CMAKE_CURRENT_BINARY_DIR}/json)
   add_subdirectory(third_party/utfcpp ${CMAKE_CURRENT_BINARY_DIR}/utfcpp)
   add_subdirectory(third_party/grpc-sideband ${CMAKE_CURRENT_BINARY_DIR}/grpc-sideband)
+  if(WIN32)
+    add_subdirectory(third_party/spdlog ${CMAKE_CURRENT_BINARY_DIR}/spdlog EXCLUDE_FROM_ALL)
+  endif()
 
   set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
   set(_REFLECTION grpc++_reflection)
@@ -80,6 +83,9 @@ if(USE_SUBMODULE_LIBS)
   set(_PROTOBUF_LIBPROTOBUF libprotobuf)
   set(_UTF8CPP utf8cpp)
   set(_GRPC_SIDEBAND ni_grpc_sideband)
+  if(WIN32)
+    set(_SPDLOG spdlog::spdlog)
+  endif()
 else()
   find_program(_PROTOBUF_PROTOC protoc)
   find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin)
@@ -89,6 +95,7 @@ else()
   if(USE_NILRT_LEGACY_TOOLCHAIN)
     # The archetypical NILRT SDK toolchain build case
     add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc EXCLUDE_FROM_ALL)
+
     set(_REFLECTION grpc++_reflection)
     set(_GRPC_GRPCPP grpc++)
     set(_PROTOBUF_LIBPROTOBUF libprotobuf)
@@ -548,6 +555,7 @@ add_executable(ni_grpc_device_server
    "imports/include/nierr_Status.cpp"
    "source/server/calibration_operations_restricted_service_registrar.cpp"
    "source/server/calibration_operations_restricted_service.cpp"
+   "source/server/client_connection_logger.cpp"
    "source/server/core_server.cpp"
    "source/server/core_services_registrar.cpp"
    "source/server/data_moniker_service.cpp"
@@ -657,6 +665,7 @@ set(server_lib_deps
   ${_UTF8CPP}
   ${CMAKE_DL_LIBS}
   ${_GRPC_SIDEBAND}
+  ${_SPDLOG}
   nlohmann_json::nlohmann_json
 )
 
@@ -830,10 +839,13 @@ add_executable(UnitTestsRunner
     "source/tests/unit/xnet_converters_tests.cpp"
     "source/tests/unit/xnet_socket_converters_tests.cpp"
     "source/tests/unit/tls_config_loader_tests.cpp"
+    "source/tests/unit/client_connection_logger_tests.cpp"
     "source/server/calibration_operations_restricted_service.cpp"
+    "source/server/client_connection_logger.cpp"
     "source/server/debug_session_properties_restricted_service.cpp"
     "source/server/device_enumerator.cpp"
     "source/server/feature_toggles.cpp"
+    "source/server/logging.cpp"
     "source/server/tls_config_loader.cpp"
     "source/server/semaphore.cpp"
     "source/server/server_configuration_parser.cpp"
@@ -897,6 +909,11 @@ target_include_directories(UnitTestsRunner
     PRIVATE "${service_output_dir}/nifake_extension"
     PRIVATE "${service_output_dir}/nifake_non_ivi"
     PRIVATE "source/server")
+
+if(CMAKE_SYSTEM_NAME STREQUAL Linux)
+  target_sources(UnitTestsRunner
+    PRIVATE "source/server/linux/syslog_logging.cpp")
+endif()
 
 target_link_libraries(UnitTestsRunner
     ${CMAKE_DL_LIBS}
