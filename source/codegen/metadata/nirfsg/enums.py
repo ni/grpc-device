@@ -838,13 +838,6 @@ enums = {
                 },
                 'name': 'AMPLITUDE_FLATNESS',
                 'value': 25003
-            },
-            {
-                'documentation': {
-                    'description': ' De-embeds the measurement using wideband amplitude and phase flatness correction.'
-                },
-                'name': 'AMPLITUDE_AND_PHASE_FLATNESS',
-                'value': 25004
             }
         ]
     },
