@@ -6,7 +6,8 @@
 #include <absl/log/log_entry.h>
 #include <absl/log/log_sink.h>
 #include <absl/log/log_sink_registry.h>
-#include <absl/strings/match.h>
+
+#include <regex>
 
 #include <grpc/grpc_security_constants.h>
 
@@ -130,6 +131,12 @@ class AuditLogSinkWrapper {
     AuditLogSinkWrapper() {
       absl::InitializeLog();
       absl::AddLogSink(&sink_);
+
+      // gpr_log_verbosity_init() may raise the global floor above INFO and silence audit records.
+      if (absl::MinLogLevel() > absl::LogSeverityAtLeast::kInfo) { 
+        logging::log(logging::Level_Error, "GRPC_VERBOSITY suppresses connection-failure audit logging; forcing INFO."); 
+        absl::SetMinLogLevel(absl::LogSeverityAtLeast::kInfo); 
+      }
     }
     ~AuditLogSinkWrapper() {
       absl::RemoveLogSink(&sink_);
@@ -146,7 +153,9 @@ class AuditLogSinkWrapper {
     public:
       void Send(const absl::LogEntry& entry) override
       {
-        if (!absl::StrContainsIgnoreCase(entry.text_message(), "handshake"))
+        static const std::regex handshake_fail_pattern(R"(\bhandshake\b.*\bfail)", std::regex::icase);
+        const auto& text = entry.text_message();
+        if (!std::regex_search(text.begin(), text.end(), handshake_fail_pattern))
           return;
 
         const auto message = std::string(entry.text_message());
