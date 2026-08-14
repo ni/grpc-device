@@ -53,9 +53,9 @@ namespace {
 std::shared_ptr<spdlog::logger> get_event_log_logger()
 {
   static std::shared_ptr<spdlog::logger> audit_logger = []() {
-    auto sink = std::make_shared<spdlog::sinks::win_eventlog_sink_mt>("ni-grpc-device-server");
+    auto sink = std::make_shared<spdlog::sinks::win_eventlog_sink_mt>("ni-grpc-device");
     auto logger = std::make_shared<spdlog::logger>("Server", sink);
-    logger->set_pattern("[ni-grpc-device-server][%n] %v");
+    logger->set_pattern("[ni-grpc-device][%n] %v");
     return logger;
   }();
   return audit_logger;
@@ -100,7 +100,7 @@ void log_to_audit_source(Level level, const char* fmt, ...)
   }
 #else
   // We're manually prefixing audit logs in the Windows spdlog path, so manually add it here on the Linux path before sending it over to syslog.
-  const std::string message = "[ni-grpc-device-server][Server] " + std::string(fmt);
+  const std::string message = "[ni-grpc-device][Server] " + std::string(fmt);
 
   va_list args;
   va_start(args, fmt);
