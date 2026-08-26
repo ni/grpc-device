@@ -1,0 +1,1361 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-rfmxofdm API metadata version 26.8.0
+//---------------------------------------------------------------------
+// Proto file for the NI-rfmxofdm Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxofdm";
+option java_outer_classname = "NiRFmxOFDM";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxOFDM";
+
+package nirfmxofdm_grpc;
+
+import "nidevice.proto";
+import "session.proto";
+
+service NiRFmxOFDM {
+  rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
+  rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformInterleavedIQ(AnalyzeIQ1WaveformInterleavedIQRequest) returns (AnalyzeIQ1WaveformInterleavedIQResponse);
+  rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
+  rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
+  rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
+  rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
+  rpc CfgDigitalEdgeTrigger(CfgDigitalEdgeTriggerRequest) returns (CfgDigitalEdgeTriggerResponse);
+  rpc CfgExternalAttenuation(CfgExternalAttenuationRequest) returns (CfgExternalAttenuationResponse);
+  rpc CfgFrequency(CfgFrequencyRequest) returns (CfgFrequencyResponse);
+  rpc CfgFrequencyReference(CfgFrequencyReferenceRequest) returns (CfgFrequencyReferenceResponse);
+  rpc CfgIQPowerEdgeTrigger(CfgIQPowerEdgeTriggerRequest) returns (CfgIQPowerEdgeTriggerResponse);
+  rpc CfgMechanicalAttenuation(CfgMechanicalAttenuationRequest) returns (CfgMechanicalAttenuationResponse);
+  rpc CfgRF(CfgRFRequest) returns (CfgRFResponse);
+  rpc CfgRFAttenuation(CfgRFAttenuationRequest) returns (CfgRFAttenuationResponse);
+  rpc CfgReferenceLevel(CfgReferenceLevelRequest) returns (CfgReferenceLevelResponse);
+  rpc CfgSoftwareEdgeTrigger(CfgSoftwareEdgeTriggerRequest) returns (CfgSoftwareEdgeTriggerResponse);
+  rpc CheckMeasurementStatus(CheckMeasurementStatusRequest) returns (CheckMeasurementStatusResponse);
+  rpc ClearAllNamedResults(ClearAllNamedResultsRequest) returns (ClearAllNamedResultsResponse);
+  rpc ClearNamedResult(ClearNamedResultRequest) returns (ClearNamedResultResponse);
+  rpc CloneSignalConfiguration(CloneSignalConfigurationRequest) returns (CloneSignalConfigurationResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
+  rpc Commit(CommitRequest) returns (CommitResponse);
+  rpc CreateSignalConfiguration(CreateSignalConfigurationRequest) returns (CreateSignalConfigurationResponse);
+  rpc DeleteSignalConfiguration(DeleteSignalConfigurationRequest) returns (DeleteSignalConfigurationResponse);
+  rpc DisableTrigger(DisableTriggerRequest) returns (DisableTriggerResponse);
+  rpc GetAllNamedResultNames(GetAllNamedResultNamesRequest) returns (GetAllNamedResultNamesResponse);
+  rpc GetAttributeF32(GetAttributeF32Request) returns (GetAttributeF32Response);
+  rpc GetAttributeF32Array(GetAttributeF32ArrayRequest) returns (GetAttributeF32ArrayResponse);
+  rpc GetAttributeF64(GetAttributeF64Request) returns (GetAttributeF64Response);
+  rpc GetAttributeF64Array(GetAttributeF64ArrayRequest) returns (GetAttributeF64ArrayResponse);
+  rpc GetAttributeI16(GetAttributeI16Request) returns (GetAttributeI16Response);
+  rpc GetAttributeI32(GetAttributeI32Request) returns (GetAttributeI32Response);
+  rpc GetAttributeI32Array(GetAttributeI32ArrayRequest) returns (GetAttributeI32ArrayResponse);
+  rpc GetAttributeI64(GetAttributeI64Request) returns (GetAttributeI64Response);
+  rpc GetAttributeI64Array(GetAttributeI64ArrayRequest) returns (GetAttributeI64ArrayResponse);
+  rpc GetAttributeI8(GetAttributeI8Request) returns (GetAttributeI8Response);
+  rpc GetAttributeI8Array(GetAttributeI8ArrayRequest) returns (GetAttributeI8ArrayResponse);
+  rpc GetAttributeNIComplexDoubleArray(GetAttributeNIComplexDoubleArrayRequest) returns (GetAttributeNIComplexDoubleArrayResponse);
+  rpc GetAttributeNIComplexSingleArray(GetAttributeNIComplexSingleArrayRequest) returns (GetAttributeNIComplexSingleArrayResponse);
+  rpc GetAttributeString(GetAttributeStringRequest) returns (GetAttributeStringResponse);
+  rpc GetAttributeU16(GetAttributeU16Request) returns (GetAttributeU16Response);
+  rpc GetAttributeU32(GetAttributeU32Request) returns (GetAttributeU32Response);
+  rpc GetAttributeU32Array(GetAttributeU32ArrayRequest) returns (GetAttributeU32ArrayResponse);
+  rpc GetAttributeU64Array(GetAttributeU64ArrayRequest) returns (GetAttributeU64ArrayResponse);
+  rpc GetAttributeU8(GetAttributeU8Request) returns (GetAttributeU8Response);
+  rpc GetAttributeU8Array(GetAttributeU8ArrayRequest) returns (GetAttributeU8ArrayResponse);
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
+  rpc Initialize(InitializeRequest) returns (InitializeResponse);
+  rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
+  rpc Initiate(InitiateRequest) returns (InitiateResponse);
+  rpc LoadResourceAllocationCustomIQValuesFromFile(LoadResourceAllocationCustomIQValuesFromFileRequest) returns (LoadResourceAllocationCustomIQValuesFromFileResponse);
+  rpc ModAccFetchChannelFrequencyResponseMeanTrace(ModAccFetchChannelFrequencyResponseMeanTraceRequest) returns (ModAccFetchChannelFrequencyResponseMeanTraceResponse);
+  rpc ModAccFetchDataConstellationTrace(ModAccFetchDataConstellationTraceRequest) returns (ModAccFetchDataConstellationTraceResponse);
+  rpc ModAccFetchDataConstellationTraceInterleavedIQ(ModAccFetchDataConstellationTraceInterleavedIQRequest) returns (ModAccFetchDataConstellationTraceInterleavedIQResponse);
+  rpc ModAccFetchDataConstellationTraceSplit(ModAccFetchDataConstellationTraceSplitRequest) returns (ModAccFetchDataConstellationTraceSplitResponse);
+  rpc ModAccFetchDataRMSEVMPerSymbolMeanTrace(ModAccFetchDataRMSEVMPerSymbolMeanTraceRequest) returns (ModAccFetchDataRMSEVMPerSymbolMeanTraceResponse);
+  rpc ModAccFetchEVMSubcarrierIndices(ModAccFetchEVMSubcarrierIndicesRequest) returns (ModAccFetchEVMSubcarrierIndicesResponse);
+  rpc ModAccFetchPilotConstellationTrace(ModAccFetchPilotConstellationTraceRequest) returns (ModAccFetchPilotConstellationTraceResponse);
+  rpc ModAccFetchPilotConstellationTraceInterleavedIQ(ModAccFetchPilotConstellationTraceInterleavedIQRequest) returns (ModAccFetchPilotConstellationTraceInterleavedIQResponse);
+  rpc ModAccFetchPilotConstellationTraceSplit(ModAccFetchPilotConstellationTraceSplitRequest) returns (ModAccFetchPilotConstellationTraceSplitResponse);
+  rpc ModAccFetchPilotRMSEVMPerSymbolMeanTrace(ModAccFetchPilotRMSEVMPerSymbolMeanTraceRequest) returns (ModAccFetchPilotRMSEVMPerSymbolMeanTraceResponse);
+  rpc ModAccFetchRMSEVMPerSubcarrierMeanTrace(ModAccFetchRMSEVMPerSubcarrierMeanTraceRequest) returns (ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse);
+  rpc ModAccFetchRMSEVMPerSymbolMeanTrace(ModAccFetchRMSEVMPerSymbolMeanTraceRequest) returns (ModAccFetchRMSEVMPerSymbolMeanTraceResponse);
+  rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
+  rpc ResetToDefault(ResetToDefaultRequest) returns (ResetToDefaultResponse);
+  rpc SelectMeasurements(SelectMeasurementsRequest) returns (SelectMeasurementsResponse);
+  rpc SendSoftwareEdgeTrigger(SendSoftwareEdgeTriggerRequest) returns (SendSoftwareEdgeTriggerResponse);
+  rpc SetAttributeF32(SetAttributeF32Request) returns (SetAttributeF32Response);
+  rpc SetAttributeF32Array(SetAttributeF32ArrayRequest) returns (SetAttributeF32ArrayResponse);
+  rpc SetAttributeF64(SetAttributeF64Request) returns (SetAttributeF64Response);
+  rpc SetAttributeF64Array(SetAttributeF64ArrayRequest) returns (SetAttributeF64ArrayResponse);
+  rpc SetAttributeI16(SetAttributeI16Request) returns (SetAttributeI16Response);
+  rpc SetAttributeI32(SetAttributeI32Request) returns (SetAttributeI32Response);
+  rpc SetAttributeI32Array(SetAttributeI32ArrayRequest) returns (SetAttributeI32ArrayResponse);
+  rpc SetAttributeI64(SetAttributeI64Request) returns (SetAttributeI64Response);
+  rpc SetAttributeI64Array(SetAttributeI64ArrayRequest) returns (SetAttributeI64ArrayResponse);
+  rpc SetAttributeI8(SetAttributeI8Request) returns (SetAttributeI8Response);
+  rpc SetAttributeI8Array(SetAttributeI8ArrayRequest) returns (SetAttributeI8ArrayResponse);
+  rpc SetAttributeNIComplexDoubleArray(SetAttributeNIComplexDoubleArrayRequest) returns (SetAttributeNIComplexDoubleArrayResponse);
+  rpc SetAttributeNIComplexSingleArray(SetAttributeNIComplexSingleArrayRequest) returns (SetAttributeNIComplexSingleArrayResponse);
+  rpc SetAttributeString(SetAttributeStringRequest) returns (SetAttributeStringResponse);
+  rpc SetAttributeU16(SetAttributeU16Request) returns (SetAttributeU16Response);
+  rpc SetAttributeU32(SetAttributeU32Request) returns (SetAttributeU32Response);
+  rpc SetAttributeU32Array(SetAttributeU32ArrayRequest) returns (SetAttributeU32ArrayResponse);
+  rpc SetAttributeU64Array(SetAttributeU64ArrayRequest) returns (SetAttributeU64ArrayResponse);
+  rpc SetAttributeU8(SetAttributeU8Request) returns (SetAttributeU8Response);
+  rpc SetAttributeU8Array(SetAttributeU8ArrayRequest) returns (SetAttributeU8ArrayResponse);
+  rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
+  rpc WaitForMeasurementComplete(WaitForMeasurementCompleteRequest) returns (WaitForMeasurementCompleteResponse);
+}
+
+enum NiRFmxOFDMAttribute {
+  NIRFMXOFDM_ATTRIBUTE_UNSPECIFIED = 0;
+  NIRFMXOFDM_ATTRIBUTE_CENTER_FREQUENCY = 15728641;
+  NIRFMXOFDM_ATTRIBUTE_REFERENCE_LEVEL = 15728642;
+  NIRFMXOFDM_ATTRIBUTE_EXTERNAL_ATTENUATION = 15728643;
+  NIRFMXOFDM_ATTRIBUTE_TRIGGER_TYPE = 15728644;
+  NIRFMXOFDM_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE = 15728645;
+  NIRFMXOFDM_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_EDGE = 15728646;
+  NIRFMXOFDM_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_SOURCE = 15728647;
+  NIRFMXOFDM_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL = 15728648;
+  NIRFMXOFDM_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_SLOPE = 15728649;
+  NIRFMXOFDM_ATTRIBUTE_TRIGGER_DELAY = 15728650;
+  NIRFMXOFDM_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_MODE = 15728651;
+  NIRFMXOFDM_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_DURATION = 15728652;
+  NIRFMXOFDM_ATTRIBUTE_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL = 15728653;
+  NIRFMXOFDM_ATTRIBUTE_LIMITED_CONFIGURATION_CHANGE = 15728654;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_FFT_SIZE = 15728655;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_SUBCARRIER_SPACING = 15728656;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_GUARD_INTERVAL_PREFIX = 15728657;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_GUARD_INTERVAL_SUFFIX = 15728658;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_GUARD_INTERVAL_REPEAT_INDEX = 15728659;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_NUMBER_OF_RESOURCE_ALLOCATIONS = 15728660;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_RESOURCE_ALLOCATION_TYPE = 15728661;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_RESOURCE_ALLOCATION_SYMBOL_RANGE = 15728662;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_RESOURCE_ALLOCATION_SUBCARRIER_RANGE = 15728663;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_RESOURCE_ALLOCATION_DATA_TYPE = 15728664;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_RESOURCE_ALLOCATION_MODULATION_TYPE = 15728665;
+  NIRFMXOFDM_ATTRIBUTE_FRAME_RESOURCE_ALLOCATION_IQ_VALUES = 15728666;
+  NIRFMXOFDM_ATTRIBUTE_REFERENCE_LEVEL_HEADROOM = 15732732;
+  NIRFMXOFDM_ATTRIBUTE_SELECTED_PORTS = 15732733;
+  NIRFMXOFDM_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE = 15732735;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_MEASUREMENT_ENABLED = 15732736;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_AVERAGING_ENABLED = 15732738;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_AVERAGING_COUNT = 15732739;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_EVM_UNIT = 15732740;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_ACQUISITION_LENGTH = 15732741;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_ALL_TRACES_ENABLED = 15732742;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_NUMBER_OF_ANALYSIS_THREADS = 15732743;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN = 15732744;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_DATA_RMS_EVM_MEAN = 15732745;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PILOT_RMS_EVM_MEAN = 15732746;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET = 15732747;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_MAXIMUM_MEASUREMENT_LENGTH = 15732748;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_SYMBOL_TIME_ADJUSTMENT = 15732749;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_SYMBOL_CLOCK_OFFSET_CORRECTION_ENABLED = 15732751;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_CHANNEL_ESTIMATION_SMOOTHING_METHOD = 15732752;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_CHANNEL_ESTIMATION_SMOOTHING_WINDOW_LENGTH = 15732753;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_AMPLITUDE_TRACKING_ENABLED = 15732754;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_PHASE_TRACKING_ENABLED = 15732755;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_TIME_TRACKING_ENABLED = 15732756;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_RESULTS_NUMBER_OF_SYMBOLS_USED = 15732758;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_RESULTS_FREQUENCY_ERROR_MEAN = 15732759;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_RESULTS_SYMBOL_CLOCK_ERROR_MEAN = 15732760;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM = 15732761;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_DATA_PEAK_EVM_MAXIMUM = 15732762;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_RESULTS_COMPOSITE_PILOT_PEAK_EVM_MAXIMUM = 15732763;
+  NIRFMXOFDM_ATTRIBUTE_MODACC_AUTO_SYMBOL_TIME_ADJUSTMENT_ENABLED = 15732764;
+  NIRFMXOFDM_ATTRIBUTE_RESULT_FETCH_TIMEOUT = 15777792;
+}
+
+enum DigitalEdgeTriggerEdge {
+  DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
+  DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
+}
+
+enum FrequencyReferenceSource {
+  FREQUENCY_REFERENCE_SOURCE_UNSPECIFIED = 0;
+  FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK = 1;
+  FREQUENCY_REFERENCE_SOURCE_REF_IN = 2;
+  FREQUENCY_REFERENCE_SOURCE_PXI_CLK = 3;
+  FREQUENCY_REFERENCE_SOURCE_CLK_IN = 4;
+}
+
+enum IQPowerEdgeTriggerLevelType {
+  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
+  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
+}
+
+enum IQPowerEdgeTriggerSlope {
+  IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE = 0;
+  IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING_SLOPE = 1;
+}
+
+enum MeasurementTypes {
+  MEASUREMENT_TYPES_UNSPECIFIED = 0;
+  MEASUREMENT_TYPES_MODACC = 1;
+}
+
+enum MechanicalAttenuationAuto {
+  MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
+  MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum RFAttenuationAuto {
+  RF_ATTENUATION_AUTO_FALSE = 0;
+  RF_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum TriggerMinimumQuietTimeMode {
+  TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
+  TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+}
+
+enum NiRFmxOFDMInt32AttributeValues {
+  option allow_alias = true;
+  NIRFMXOFDM_INT32_UNSPECIFIED = 0;
+  NIRFMXOFDM_INT32_DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
+  NIRFMXOFDM_INT32_DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
+  NIRFMXOFDM_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
+  NIRFMXOFDM_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
+  NIRFMXOFDM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING_SLOPE = 0;
+  NIRFMXOFDM_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING_SLOPE = 1;
+  NIRFMXOFDM_INT32_LIMITED_CONFIGURATION_CHANGE_DISABLED = 0;
+  NIRFMXOFDM_INT32_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE = 1;
+  NIRFMXOFDM_INT32_LIMITED_CONFIGURATION_CHANGE_FREQUENCY = 2;
+  NIRFMXOFDM_INT32_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL = 3;
+  NIRFMXOFDM_INT32_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL = 4;
+  NIRFMXOFDM_INT32_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL = 5;
+  NIRFMXOFDM_INT32_MODACC_AMPLITUDE_TRACKING_ENABLED_FALSE = 0;
+  NIRFMXOFDM_INT32_MODACC_AMPLITUDE_TRACKING_ENABLED_TRUE = 1;
+  NIRFMXOFDM_INT32_MODACC_AUTO_SYMBOL_TIME_ADJUSTMENT_ENABLED_FALSE = 0;
+  NIRFMXOFDM_INT32_MODACC_AUTO_SYMBOL_TIME_ADJUSTMENT_ENABLED_TRUE = 1;
+  NIRFMXOFDM_INT32_MODACC_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXOFDM_INT32_MODACC_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXOFDM_INT32_MODACC_CHANNEL_ESTIMATION_SMOOTHING_METHOD_NONE = 0;
+  NIRFMXOFDM_INT32_MODACC_CHANNEL_ESTIMATION_SMOOTHING_METHOD_RECTANGULAR_WINDOW = 1;
+  NIRFMXOFDM_INT32_MODACC_CHANNEL_ESTIMATION_SMOOTHING_METHOD_TRIANGULAR_WINDOW = 2;
+  NIRFMXOFDM_INT32_MODACC_EVM_UNIT_PERCENTAGE = 0;
+  NIRFMXOFDM_INT32_MODACC_EVM_UNIT_DB = 1;
+  NIRFMXOFDM_INT32_MODACC_PHASE_TRACKING_ENABLED_FALSE = 0;
+  NIRFMXOFDM_INT32_MODACC_PHASE_TRACKING_ENABLED_TRUE = 1;
+  NIRFMXOFDM_INT32_MODACC_SYMBOL_CLOCK_OFFSET_CORRECTION_ENABLED_FALSE = 0;
+  NIRFMXOFDM_INT32_MODACC_SYMBOL_CLOCK_OFFSET_CORRECTION_ENABLED_TRUE = 1;
+  NIRFMXOFDM_INT32_MODACC_TIME_TRACKING_ENABLED_FALSE = 0;
+  NIRFMXOFDM_INT32_MODACC_TIME_TRACKING_ENABLED_TRUE = 1;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_DATA_TYPE_UNKNOWN = 0;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_DATA_TYPE_CUSTOM = 1;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_UNKNOWN = 0;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_BPSK = 1;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_QPSK = 2;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_8_QAM = 3;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_16_QAM = 4;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_32_QAM = 5;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_64_QAM = 6;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_128_QAM = 7;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_256_QAM = 8;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_512_QAM = 9;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_MODULATION_TYPE_1024_QAM = 10;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_TYPE_PREAMBLE = 0;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_TYPE_CHANNEL_ESTIMATION = 1;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_TYPE_DATA = 2;
+  NIRFMXOFDM_INT32_RESOURCE_ALLOCATION_TYPE_PILOT = 3;
+  NIRFMXOFDM_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
+  NIRFMXOFDM_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+  NIRFMXOFDM_INT32_TRIGGER_TYPE_NONE = 0;
+  NIRFMXOFDM_INT32_TRIGGER_TYPE_DIGITAL_EDGE = 1;
+  NIRFMXOFDM_INT32_TRIGGER_TYPE_IQ_POWER_EDGE = 2;
+  NIRFMXOFDM_INT32_TRIGGER_TYPE_SOFTWARE = 3;
+}
+
+enum NiRFmxOFDMStringAttributeValuesMapped {
+  NIRFMXOFDM_STRING_MAPPED_UNSPECIFIED = 0;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI0 = 1;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI1 = 2;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0 = 3;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG1 = 4;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG2 = 5;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG3 = 6;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG4 = 7;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG5 = 8;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG6 = 9;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG7 = 10;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PULSE_IN = 14;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI0 = 15;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI1 = 16;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI2 = 17;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI3 = 18;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI4 = 19;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI5 = 20;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI6 = 21;
+  NIRFMXOFDM_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI7 = 22;
+}
+
+message AbortMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message AbortMeasurementsResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iqi = 6;
+  repeated float iqq = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeIQ1WaveformSplitResponse {
+  int32 status = 1;
+}
+
+message AnalyzeSpectrum1WaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float spectrum = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeSpectrum1WaveformResponse {
+  int32 status = 1;
+}
+
+message AutoLevelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double bandwidth = 3;
+  double measurement_interval = 4;
+}
+
+message AutoLevelResponse {
+  int32 status = 1;
+  double reference_level = 2;
+}
+
+message BuildSignalStringRequest {
+  string signal_name = 1;
+  string result_name = 2;
+}
+
+message BuildSignalStringResponse {
+  int32 status = 1;
+  string selector_string = 2;
+}
+
+message CfgDigitalEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string digital_edge_source = 3;
+  oneof digital_edge_enum {
+    DigitalEdgeTriggerEdge digital_edge = 4;
+    int32 digital_edge_raw = 5;
+  }
+  double trigger_delay = 6;
+  int32 enable_trigger = 7;
+}
+
+message CfgDigitalEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgExternalAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double external_attenuation = 3;
+}
+
+message CfgExternalAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double center_frequency = 3;
+}
+
+message CfgFrequencyResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyReferenceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof frequency_reference_source_enum {
+    FrequencyReferenceSource frequency_reference_source_mapped = 3;
+    string frequency_reference_source_raw = 4;
+  }
+  double frequency_reference_frequency = 5;
+}
+
+message CfgFrequencyReferenceResponse {
+  int32 status = 1;
+}
+
+message CfgIQPowerEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string iq_power_edge_source = 3;
+  oneof iq_power_edge_slope_enum {
+    IQPowerEdgeTriggerSlope iq_power_edge_slope = 4;
+    int32 iq_power_edge_slope_raw = 5;
+  }
+  double iq_power_edge_level = 6;
+  double trigger_delay = 7;
+  oneof trigger_min_quiet_time_mode_enum {
+    TriggerMinimumQuietTimeMode trigger_min_quiet_time_mode = 8;
+    int32 trigger_min_quiet_time_mode_raw = 9;
+  }
+  double trigger_min_quiet_time_duration = 10;
+  oneof iq_power_edge_level_type_enum {
+    IQPowerEdgeTriggerLevelType iq_power_edge_level_type = 11;
+    int32 iq_power_edge_level_type_raw = 12;
+  }
+  int32 enable_trigger = 13;
+}
+
+message CfgIQPowerEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgMechanicalAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof mechanical_attenuation_auto_enum {
+    MechanicalAttenuationAuto mechanical_attenuation_auto = 3;
+    int32 mechanical_attenuation_auto_raw = 4;
+  }
+  double mechanical_attenuation_value = 5;
+}
+
+message CfgMechanicalAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgRFRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double center_frequency = 3;
+  double reference_level = 4;
+  double external_attenuation = 5;
+}
+
+message CfgRFResponse {
+  int32 status = 1;
+}
+
+message CfgRFAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof rf_attenuation_auto_enum {
+    RFAttenuationAuto rf_attenuation_auto = 3;
+    int32 rf_attenuation_auto_raw = 4;
+  }
+  double rf_attenuation_value = 5;
+}
+
+message CfgRFAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgReferenceLevelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double reference_level = 3;
+}
+
+message CfgReferenceLevelResponse {
+  int32 status = 1;
+}
+
+message CfgSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double trigger_delay = 3;
+  int32 enable_trigger = 4;
+}
+
+message CfgSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CheckMeasurementStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CheckMeasurementStatusResponse {
+  int32 status = 1;
+  bool is_done = 2;
+}
+
+message ClearAllNamedResultsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearAllNamedResultsResponse {
+  int32 status = 1;
+}
+
+message ClearNamedResultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearNamedResultResponse {
+  int32 status = 1;
+}
+
+message CloneSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string old_signal_name = 2;
+  string new_signal_name = 3;
+}
+
+message CloneSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message CloseRequest {
+  nidevice_grpc.Session instrument = 1;
+  bool force_destroy = 2;
+}
+
+message CloseResponse {
+  int32 status = 1;
+}
+
+message CommitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CommitResponse {
+  int32 status = 1;
+}
+
+message CreateSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message CreateSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DeleteSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message DeleteSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DisableTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message DisableTriggerResponse {
+  int32 status = 1;
+}
+
+message GetAllNamedResultNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetAllNamedResultNamesResponse {
+  int32 status = 1;
+  string result_names = 2;
+  int32 actual_result_names_size = 3;
+  int32 default_result_exists = 4;
+}
+
+message GetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeF32Response {
+  int32 status = 1;
+  float attr_val = 2;
+}
+
+message GetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeF32ArrayResponse {
+  int32 status = 1;
+  repeated float attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeF64Response {
+  int32 status = 1;
+  double attr_val = 2;
+}
+
+message GetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeF64ArrayResponse {
+  int32 status = 1;
+  repeated double attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeI16Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeI32Response {
+  int32 status = 1;
+  NiRFmxOFDMInt32AttributeValues attr_val = 2;
+  int32 attr_val_raw = 3;
+}
+
+message GetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeI32ArrayResponse {
+  int32 status = 1;
+  repeated NiRFmxOFDMInt32AttributeValues attr_val = 2;
+  repeated int32 attr_val_raw = 3;
+  int32 actual_array_size = 4;
+}
+
+message GetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeI64Response {
+  int32 status = 1;
+  int64 attr_val = 2;
+}
+
+message GetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeI64ArrayResponse {
+  int32 status = 1;
+  repeated int64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeI8Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeI8ArrayResponse {
+  int32 status = 1;
+  repeated int32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeStringResponse {
+  int32 status = 1;
+  string attr_val = 2;
+}
+
+message GetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeU16Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeU32Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeU32ArrayResponse {
+  int32 status = 1;
+  repeated uint32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeU64ArrayResponse {
+  int32 status = 1;
+  repeated uint64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeU8Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message GetAttributeU8ArrayResponse {
+  int32 status = 1;
+  bytes attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetErrorRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  int32 error_code = 2;
+  string error_description = 3;
+}
+
+message GetErrorStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  int32 error_code = 2;
+}
+
+message GetErrorStringResponse {
+  int32 status = 1;
+  string error_description = 2;
+}
+
+message InitializeRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  string option_string = 3;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 4;
+}
+
+message InitializeResponse {
+  int32 status = 1;
+  nidevice_grpc.Session instrument = 2;
+  int32 is_new_session = 3;
+  string error_message = 4 [deprecated = true];
+  bool new_session_initialized = 5;
+}
+
+message InitializeFromNIRFSASessionRequest {
+  string session_name = 1;
+  nidevice_grpc.Session nirfsa_session = 2;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 3;
+}
+
+message InitializeFromNIRFSASessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session instrument = 2;
+  string error_message = 3 [deprecated = true];
+  bool new_session_initialized = 4;
+}
+
+message InitiateRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+}
+
+message InitiateResponse {
+  int32 status = 1;
+}
+
+message LoadResourceAllocationCustomIQValuesFromFileRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string file_path = 3;
+}
+
+message LoadResourceAllocationCustomIQValuesFromFileResponse {
+  int32 status = 1;
+}
+
+message ModAccFetchChannelFrequencyResponseMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchChannelFrequencyResponseMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float channel_frequency_response_mean_magnitude = 4;
+  repeated float channel_frequency_response_mean_phase = 5;
+  int32 actual_array_size = 6;
+}
+
+message ModAccFetchDataConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDataConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 data_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchDataConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDataConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float data_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchDataConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDataConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float data_constellation_i = 2;
+  repeated float data_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
+message ModAccFetchDataRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchDataRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float data_rms_evm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchEVMSubcarrierIndicesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchEVMSubcarrierIndicesResponse {
+  int32 status = 1;
+  repeated int32 subcarrier_indices = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchPilotConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPilotConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 pilot_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchPilotConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPilotConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float pilot_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchPilotConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPilotConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float pilot_constellation_i = 2;
+  repeated float pilot_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
+message ModAccFetchPilotRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPilotRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float pilot_rms_evm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchRMSEVMPerSubcarrierMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchRMSEVMPerSubcarrierMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float rms_evm_per_subcarrier_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchRMSEVMPerSymbolMeanTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchRMSEVMPerSymbolMeanTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float rms_evm_per_symbol_mean = 4;
+  int32 actual_array_size = 5;
+}
+
+message ResetAttributeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+}
+
+message ResetAttributeResponse {
+  int32 status = 1;
+}
+
+message ResetToDefaultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ResetToDefaultResponse {
+  int32 status = 1;
+}
+
+message SelectMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof measurements_enum {
+    MeasurementTypes measurements = 3;
+    uint32 measurements_raw = 4;
+  }
+  bool enable_all_traces = 5;
+}
+
+message SelectMeasurementsResponse {
+  int32 status = 1;
+}
+
+message SendSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message SendSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  float attr_val = 4;
+}
+
+message SetAttributeF32Response {
+  int32 status = 1;
+}
+
+message SetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  repeated float attr_val = 4;
+}
+
+message SetAttributeF32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  double attr_val = 4;
+}
+
+message SetAttributeF64Response {
+  int32 status = 1;
+}
+
+message SetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  repeated double attr_val = 4;
+}
+
+message SetAttributeF64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI16Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxOFDMInt32AttributeValues attr_val = 4;
+    int32 attr_val_raw = 5;
+  }
+}
+
+message SetAttributeI32Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  repeated NiRFmxOFDMInt32AttributeValues attr_val = 4;
+}
+
+message SetAttributeI32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  int64 attr_val = 4;
+}
+
+message SetAttributeI64Response {
+  int32 status = 1;
+}
+
+message SetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  repeated int64 attr_val = 4;
+}
+
+message SetAttributeI64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI8Response {
+  int32 status = 1;
+}
+
+message SetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  repeated int32 attr_val = 4;
+}
+
+message SetAttributeI8ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 4;
+}
+
+message SetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 4;
+}
+
+message SetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxOFDMStringAttributeValuesMapped attr_val_mapped = 4;
+    string attr_val_raw = 5;
+  }
+}
+
+message SetAttributeStringResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU16Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU32Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  repeated uint32 attr_val = 4;
+}
+
+message SetAttributeU32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  repeated uint64 attr_val = 4;
+}
+
+message SetAttributeU64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU8Response {
+  int32 status = 1;
+}
+
+message SetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxOFDMAttribute attribute_id = 3;
+  bytes attr_val = 4;
+}
+
+message SetAttributeU8ArrayResponse {
+  int32 status = 1;
+}
+
+message WaitForAcquisitionCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  double timeout = 2;
+}
+
+message WaitForAcquisitionCompleteResponse {
+  int32 status = 1;
+}
+
+message WaitForMeasurementCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message WaitForMeasurementCompleteResponse {
+  int32 status = 1;
+}
+
