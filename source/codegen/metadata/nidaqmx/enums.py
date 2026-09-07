@@ -1495,13 +1495,6 @@ enums = {
                 'documentation': {
                     'description': ' '
                 },
-                'name': '58_W_POWER_AND_COOLING_CHASSIS_REQUIRED',
-                'value': -209905
-            },
-            {
-                'documentation': {
-                    'description': ' '
-                },
                 'name': 'ID_PIN_NO_EEPROM',
                 'value': -209904
             },
