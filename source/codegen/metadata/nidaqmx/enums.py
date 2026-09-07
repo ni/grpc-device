@@ -1495,6 +1495,13 @@ enums = {
                 'documentation': {
                     'description': ' '
                 },
+                'name': '58_W_POWER_AND_COOLING_CHASSIS_REQUIRED',
+                'value': -209905
+            },
+            {
+                'documentation': {
+                    'description': ' '
+                },
                 'name': 'ID_PIN_NO_EEPROM',
                 'value': -209904
             },
@@ -18593,6 +18600,13 @@ enums = {
                 },
                 'name': 'AMPS',
                 'value': 10342
+            },
+            {
+                'documentation': {
+                    'description': 'Watts.'
+                },
+                'name': 'WATTS',
+                'value': 16203
             },
             {
                 'documentation': {

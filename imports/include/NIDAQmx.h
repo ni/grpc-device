@@ -1,7 +1,7 @@
 /*============================================================================*/
 /*                 National Instruments / Data Acquisition                    */
 /*----------------------------------------------------------------------------*/
-/*    Copyright (c) National Instruments 2003-2025.  All Rights Reserved.     */
+/*    Copyright (c) National Instruments 2003-2026.  All Rights Reserved.     */
 /*----------------------------------------------------------------------------*/
 /*                                                                            */
 /* Title:       NIDAQmx.h                                                     */
@@ -303,6 +303,9 @@ typedef uInt32             CalHandle;
 #define DAQmx_AI_FilterDelayUnits                                        0x3071 // Specifies the units of Filter Delay and Filter Delay Adjustment.
 #define DAQmx_AI_RemoveFilterDelay                                       0x2FBD // Specifies if filter delay removal is enabled on the device.
 #define DAQmx_AI_FilterDelayAdjustment                                   0x3074 // Specifies the amount of filter delay that gets removed if Remove Filter Delay is enabled. This delay adjustment is in addition to the value indicated by Filter Delay. This delay adjustment is in the units you specify with Filter Delay Units.
+#define DAQmx_AI_AnalogPathDelay                                         0x31F7 // Indicates the analog path delay for the channel's configuration. This value is in the units you specify with Analog Path Delay Units.
+#define DAQmx_AI_AnalogPathDelayUnits                                    0x31F8 // Specifies the units for Analog Path Delay.
+#define DAQmx_AI_RemoveAnalogPathDelay                                   0x31F6 // Specifies whether to remove the analog path delay from the timing path on the device.
 #define DAQmx_AI_AveragingWinSize                                        0x2FEE // Specifies the number of samples to average while acquiring data. Increasing the number of samples to average reduces noise in your measurement.
 #define DAQmx_AI_ResolutionUnits                                         0x1764 // Indicates the units of Resolution Value.
 #define DAQmx_AI_Resolution                                              0x1765 // Indicates the resolution of the analog-to-digital converter of the channel. This value is in the units you specify with Resolution Units.
@@ -966,7 +969,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_Read_OpenCurrentLoopChansExist                             0x2A09 // Indicates if the device(s) detected an open current loop for any virtual channel in the task. Reading this property clears the open current loop status for all channels in the task. You must read this property before you read Open Current Loop Channels. Otherwise, you will receive an error.
 #define DAQmx_Read_OpenCurrentLoopChans                                  0x2A0A // Indicates a list of names of any virtual channels in the task for which the device(s) detected an open current loop. You must read Open Current Loop Channels Exist before you read this property. Otherwise, you will receive an error.
 #define DAQmx_Read_OpenThrmcplChansExist                                 0x2A96 // Indicates if the device(s) detected an open thermocouple connected to any virtual channel in the task. Reading this property clears the open thermocouple status for all channels in the task. You must read this property before you read Open Thermocouple Channels. Otherwise, you will receive an error.
-#define DAQmx_Read_OpenThrmcplChans                                      0x2A97 // Indicates a list of names of any virtual channels in the task for which the device(s) detected an open thermcouple. You must read Open Thermocouple Channels Exist before you read this property. Otherwise, you will receive an error.
+#define DAQmx_Read_OpenThrmcplChans                                      0x2A97 // Indicates a list of names of any virtual channels in the task for which the device(s) detected an open thermocouple. You must read Open Thermocouple Channels Exist before you read this property. Otherwise, you will receive an error.
 #define DAQmx_Read_OverloadedChansExist                                  0x2174 // Indicates if the device(s) detected an overload in any virtual channel in the task. Reading this property clears the overload status for all channels in the task. You must read this property before you read Overloaded Channels. Otherwise, you will receive an error.
 #define DAQmx_Read_OverloadedChans                                       0x2175 // Indicates a list of names of any overloaded virtual channels in the task. You must read Overloaded Channels Exist before you read this property. Otherwise, you will receive an error.
 #define DAQmx_Read_InputLimitsFaultChansExist                            0x318F // Indicates if the device or devices detected a sample that was outside the upper or lower limits configured for each channel in the task. Reading this property clears the input limits fault channel status for all channels in the task. You must read this property before you read Input Limits Fault Channels. Otherwise, you will receive an error. Note: Fault detection applies to both positive and negative inputs. For ...
@@ -1202,7 +1205,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_AnlgEdge_RefTrig_Hyst                                      0x1421 // Specifies a hysteresis level in the units of the measurement. If Slope is DAQmx_Val_RisingSlope, the trigger does not deassert until the source signal passes below Level minus the hysteresis. If Slope is DAQmx_Val_FallingSlope, the trigger does not deassert until the source signal passes above Level plus the hysteresis. Hysteresis is always enabled. Set this property to a non-zero value to use hysteresis.
 #define DAQmx_AnlgEdge_RefTrig_Coupling                                  0x2235 // Specifies the coupling for the source signal of the trigger if the source is a terminal rather than a virtual channel.
 #define DAQmx_AnlgEdge_RefTrig_DigFltr_Enable                            0x2EE6 // Specifies whether to apply a digital filter to the digital output of the analog triggering circuitry (the Analog Comparison Event). When enabled, the analog signal must stay above or below the trigger level for the minimum pulse width before being recognized. Use filtering  for noisy trigger signals that transition in and out of the hysteresis window rapidly.
-#define DAQmx_AnlgEdge_RefTrig_DigFltr_MinPulseWidth                     0x2EE7 // Specifies in seconds the minimum pulse width thefilter recognizes.
+#define DAQmx_AnlgEdge_RefTrig_DigFltr_MinPulseWidth                     0x2EE7 // Specifies in seconds the minimum pulse width the filter recognizes.
 #define DAQmx_AnlgEdge_RefTrig_DigFltr_TimebaseSrc                       0x2EE8 // Specifies the terminal of the signal to use as the timebase of the digital filter.
 #define DAQmx_AnlgEdge_RefTrig_DigFltr_TimebaseRate                      0x2EE9 // Specifies in hertz the rate of the digital filter timebase. NI-DAQmx uses this value to compute settings for the filter.
 #define DAQmx_AnlgEdge_RefTrig_DigSync_Enable                            0x2EEA // Specifies whether to synchronize recognition of transitions in the signal to the internal timebase of the device.
@@ -1872,6 +1875,7 @@ typedef uInt32             CalHandle;
 #define DAQmx_Val_Seconds                                                 10364 // Seconds
 
 //*** Values for DAQmx_AI_FilterDelayUnits ***
+//*** Values for DAQmx_AI_AnalogPathDelayUnits ***
 //*** Values for DAQmx_AO_FilterDelayUnits ***
 //*** Values for DAQmx_CI_FilterDelayUnits ***
 //*** Value set DigitalWidthUnits4 ***
@@ -2598,6 +2602,7 @@ typedef uInt32             CalHandle;
 //*** Value set UnitsPreScaled ***
 #define DAQmx_Val_Volts                                                   10348 // Volts
 #define DAQmx_Val_Amps                                                    10342 // Amps
+#define DAQmx_Val_Watts                                                   16203 // Watts
 #define DAQmx_Val_DegF                                                    10144 // Deg F
 #define DAQmx_Val_DegC                                                    10143 // Deg C
 #define DAQmx_Val_DegR                                                    10145 // Deg R
@@ -3598,6 +3603,8 @@ int32 __CFUNC     DAQmxAdjust9266Cal(CalHandle calHandle, const char channelName
 int32 __CFUNC     DAQmxGet9269CalAdjustPoints(CalHandle calHandle, int32* adjustmentPoints, uInt32 bufferSize);
 int32 __CFUNC     DAQmxSetup9269Cal(CalHandle calHandle, const char channelNames[], int32 value);
 int32 __CFUNC     DAQmxAdjust9269Cal(CalHandle calHandle, const char channelNames[], float64 value);
+int32 __CFUNC     DAQmxGet9313CalAdjustPoints(CalHandle calHandle, float64 rangeMin, float64 rangeMax, float64* adjustmentPoints, uInt32 bufferSize);
+int32 __CFUNC     DAQmxAdjust9313Cal(CalHandle calHandle, const char channelNames[], float64 rangeMin, float64 rangeMax, float64 value);
 int32 __CFUNC     DAQmxGet9320CalAdjustPoints(CalHandle calHandle, float64* adjustmentPoints, uInt32 bufferSize);
 int32 __CFUNC     DAQmxAdjust9320Cal(CalHandle calHandle, const char channelNames[], float64 value);
 int32 __CFUNC     DAQmxGet9628AICalAdjustPoints(CalHandle calHandle, float64 rangeMin, float64 rangeMax, float64* adjustmentPoints, uInt32 bufferSize);
@@ -4471,6 +4478,17 @@ int32 __CFUNC DAQmxResetAIRemoveFilterDelay(TaskHandle taskHandle, const char ch
 int32 __CFUNC DAQmxGetAIFilterDelayAdjustment(TaskHandle taskHandle, const char channel[], float64 *data);
 int32 __CFUNC DAQmxSetAIFilterDelayAdjustment(TaskHandle taskHandle, const char channel[], float64 data);
 int32 __CFUNC DAQmxResetAIFilterDelayAdjustment(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_AI_AnalogPathDelay ***
+int32 __CFUNC DAQmxGetAIAnalogPathDelay(TaskHandle taskHandle, const char channel[], float64 *data);
+//*** Set/Get functions for DAQmx_AI_AnalogPathDelayUnits ***
+// Uses value set DigitalWidthUnits4
+int32 __CFUNC DAQmxGetAIAnalogPathDelayUnits(TaskHandle taskHandle, const char channel[], int32 *data);
+int32 __CFUNC DAQmxSetAIAnalogPathDelayUnits(TaskHandle taskHandle, const char channel[], int32 data);
+int32 __CFUNC DAQmxResetAIAnalogPathDelayUnits(TaskHandle taskHandle, const char channel[]);
+//*** Set/Get functions for DAQmx_AI_RemoveAnalogPathDelay ***
+int32 __CFUNC DAQmxGetAIRemoveAnalogPathDelay(TaskHandle taskHandle, const char channel[], bool32 *data);
+int32 __CFUNC DAQmxSetAIRemoveAnalogPathDelay(TaskHandle taskHandle, const char channel[], bool32 data);
+int32 __CFUNC DAQmxResetAIRemoveAnalogPathDelay(TaskHandle taskHandle, const char channel[]);
 //*** Set/Get functions for DAQmx_AI_AveragingWinSize ***
 int32 __CFUNC DAQmxGetAIAveragingWinSize(TaskHandle taskHandle, const char channel[], uInt32 *data);
 int32 __CFUNC DAQmxSetAIAveragingWinSize(TaskHandle taskHandle, const char channel[], uInt32 data);
@@ -8169,6 +8187,7 @@ int32 __CFUNC DAQmxResetSampClkTimingResponseMode(TaskHandle taskHandle);
 #define DAQmxFailed(error)                            ((error)<0)
 
 // Error and Warning Codes
+#define DAQmxError58WPowerAndCoolingChassisRequired                                     (-209905)
 #define DAQmxErrorIDPinNoEEPROM                                                         (-209904)
 #define DAQmxErrorIDPinNameInvalid                                                      (-209903)
 #define DAQmxErrorIDPinDataWriteError                                                   (-209902)
