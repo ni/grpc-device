@@ -292,6 +292,33 @@ attributes = {
         'name': 'MODACC_AUTO_SYMBOL_TIME_ADJUSTMENT_ENABLED',
         'type': 'int32'
     },
+    15732765: {
+        'access': 'read-write',
+        'enum': 'ModAccMulticarrierFilterType',
+        'name': 'MODACC_MULTICARRIER_FILTER_TYPE',
+        'type': 'int32'
+    },
+    15732766: {
+        'access': 'read-write',
+        'name': 'MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_6DB_BANDWIDTH',
+        'type': 'float64'
+    },
+    15732767: {
+        'access': 'read-write',
+        'enum': 'ModAccMulticarrierFilterWindowedSincAutoFilterLengthEnabled',
+        'name': 'MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_AUTO_FILTER_LENGTH_ENABLED',
+        'type': 'int32'
+    },
+    15732768: {
+        'access': 'read-write',
+        'name': 'MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_50DB_BANDWIDTH',
+        'type': 'float64'
+    },
+    15732769: {
+        'access': 'read-write',
+        'name': 'MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_FILTER_LENGTH',
+        'type': 'int32'
+    },
     15777792: {
         'access': 'read-write',
         'name': 'RESULT_FETCH_TIMEOUT',

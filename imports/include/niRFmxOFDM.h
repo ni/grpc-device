@@ -19,62 +19,67 @@
 
 #include "niRFmxInstr.h"
 
-#define RFMXOFDM_ATTR_SELECTED_PORTS                                         0x00f00ffd
-#define RFMXOFDM_ATTR_CENTER_FREQUENCY                                       0x00f00001
-#define RFMXOFDM_ATTR_REFERENCE_LEVEL                                        0x00f00002
-#define RFMXOFDM_ATTR_EXTERNAL_ATTENUATION                                   0x00f00003
-#define RFMXOFDM_ATTR_REFERENCE_LEVEL_HEADROOM                               0x00f00ffc
-#define RFMXOFDM_ATTR_TRIGGER_TYPE                                           0x00f00004
-#define RFMXOFDM_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                            0x00f00005
-#define RFMXOFDM_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                              0x00f00006
-#define RFMXOFDM_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                           0x00f00007
-#define RFMXOFDM_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                            0x00f00008
-#define RFMXOFDM_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                       0x00f00fff
-#define RFMXOFDM_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                            0x00f00009
-#define RFMXOFDM_ATTR_TRIGGER_DELAY                                          0x00f0000a
-#define RFMXOFDM_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                        0x00f0000b
-#define RFMXOFDM_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                    0x00f0000c
-#define RFMXOFDM_ATTR_FRAME_FFT_SIZE                                         0x00f0000f
-#define RFMXOFDM_ATTR_FRAME_SUBCARRIER_SPACING                               0x00f00010
-#define RFMXOFDM_ATTR_FRAME_GUARD_INTERVAL_PREFIX                            0x00f00011
-#define RFMXOFDM_ATTR_FRAME_GUARD_INTERVAL_SUFFIX                            0x00f00012
-#define RFMXOFDM_ATTR_FRAME_GUARD_INTERVAL_REPEAT_INDEX                      0x00f00013
-#define RFMXOFDM_ATTR_FRAME_NUMBER_OF_RESOURCE_ALLOCATIONS                   0x00f00014
-#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_TYPE                         0x00f00015
-#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_SYMBOL_RANGE                 0x00f00016
-#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_SUBCARRIER_RANGE             0x00f00017
-#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_DATA_TYPE                    0x00f00018
-#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_MODULATION_TYPE              0x00f00019
-#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_IQ_VALUES                    0x00f0001a
-#define RFMXOFDM_ATTR_MODACC_MEASUREMENT_ENABLED                             0x00f01000
-#define RFMXOFDM_ATTR_MODACC_AVERAGING_ENABLED                               0x00f01002
-#define RFMXOFDM_ATTR_MODACC_AVERAGING_COUNT                                 0x00f01003
-#define RFMXOFDM_ATTR_MODACC_EVM_UNIT                                        0x00f01004
-#define RFMXOFDM_ATTR_MODACC_ACQUISITION_LENGTH                              0x00f01005
-#define RFMXOFDM_ATTR_MODACC_MEASUREMENT_OFFSET                              0x00f0100b
-#define RFMXOFDM_ATTR_MODACC_MAXIMUM_MEASUREMENT_LENGTH                      0x00f0100c
-#define RFMXOFDM_ATTR_MODACC_AUTO_SYMBOL_TIME_ADJUSTMENT_ENABLED             0x00f0101c
-#define RFMXOFDM_ATTR_MODACC_SYMBOL_TIME_ADJUSTMENT                          0x00f0100d
-#define RFMXOFDM_ATTR_MODACC_SYMBOL_CLOCK_OFFSET_CORRECTION_ENABLED          0x00f0100f
-#define RFMXOFDM_ATTR_MODACC_CHANNEL_ESTIMATION_SMOOTHING_METHOD             0x00f01010
-#define RFMXOFDM_ATTR_MODACC_CHANNEL_ESTIMATION_SMOOTHING_WINDOW_LENGTH      0x00f01011
-#define RFMXOFDM_ATTR_MODACC_AMPLITUDE_TRACKING_ENABLED                      0x00f01012
-#define RFMXOFDM_ATTR_MODACC_PHASE_TRACKING_ENABLED                          0x00f01013
-#define RFMXOFDM_ATTR_MODACC_TIME_TRACKING_ENABLED                           0x00f01014
-#define RFMXOFDM_ATTR_MODACC_ALL_TRACES_ENABLED                              0x00f01006
-#define RFMXOFDM_ATTR_MODACC_NUMBER_OF_ANALYSIS_THREADS                      0x00f01007
-#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN                  0x00f01008
-#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_DATA_RMS_EVM_MEAN             0x00f01009
-#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_PILOT_RMS_EVM_MEAN            0x00f0100a
-#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM              0x00f01019
-#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_DATA_PEAK_EVM_MAXIMUM         0x00f0101a
-#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_PILOT_PEAK_EVM_MAXIMUM        0x00f0101b
-#define RFMXOFDM_ATTR_MODACC_RESULTS_NUMBER_OF_SYMBOLS_USED                  0x00f01016
-#define RFMXOFDM_ATTR_MODACC_RESULTS_FREQUENCY_ERROR_MEAN                    0x00f01017
-#define RFMXOFDM_ATTR_MODACC_RESULTS_SYMBOL_CLOCK_ERROR_MEAN                 0x00f01018
-#define RFMXOFDM_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                     0x00f0000d
-#define RFMXOFDM_ATTR_LIMITED_CONFIGURATION_CHANGE                           0x00f0000e
-#define RFMXOFDM_ATTR_RESULT_FETCH_TIMEOUT                                   0x00f0c000
+#define RFMXOFDM_ATTR_SELECTED_PORTS                                                           0x00f00ffd
+#define RFMXOFDM_ATTR_CENTER_FREQUENCY                                                         0x00f00001
+#define RFMXOFDM_ATTR_REFERENCE_LEVEL                                                          0x00f00002
+#define RFMXOFDM_ATTR_EXTERNAL_ATTENUATION                                                     0x00f00003
+#define RFMXOFDM_ATTR_REFERENCE_LEVEL_HEADROOM                                                 0x00f00ffc
+#define RFMXOFDM_ATTR_TRIGGER_TYPE                                                             0x00f00004
+#define RFMXOFDM_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                                              0x00f00005
+#define RFMXOFDM_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                                                0x00f00006
+#define RFMXOFDM_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                                             0x00f00007
+#define RFMXOFDM_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                                              0x00f00008
+#define RFMXOFDM_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                                         0x00f00fff
+#define RFMXOFDM_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                                              0x00f00009
+#define RFMXOFDM_ATTR_TRIGGER_DELAY                                                            0x00f0000a
+#define RFMXOFDM_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                                          0x00f0000b
+#define RFMXOFDM_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                                      0x00f0000c
+#define RFMXOFDM_ATTR_FRAME_FFT_SIZE                                                           0x00f0000f
+#define RFMXOFDM_ATTR_FRAME_SUBCARRIER_SPACING                                                 0x00f00010
+#define RFMXOFDM_ATTR_FRAME_GUARD_INTERVAL_PREFIX                                              0x00f00011
+#define RFMXOFDM_ATTR_FRAME_GUARD_INTERVAL_SUFFIX                                              0x00f00012
+#define RFMXOFDM_ATTR_FRAME_GUARD_INTERVAL_REPEAT_INDEX                                        0x00f00013
+#define RFMXOFDM_ATTR_FRAME_NUMBER_OF_RESOURCE_ALLOCATIONS                                     0x00f00014
+#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_TYPE                                           0x00f00015
+#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_SYMBOL_RANGE                                   0x00f00016
+#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_SUBCARRIER_RANGE                               0x00f00017
+#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_DATA_TYPE                                      0x00f00018
+#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_MODULATION_TYPE                                0x00f00019
+#define RFMXOFDM_ATTR_FRAME_RESOURCE_ALLOCATION_IQ_VALUES                                      0x00f0001a
+#define RFMXOFDM_ATTR_MODACC_MEASUREMENT_ENABLED                                               0x00f01000
+#define RFMXOFDM_ATTR_MODACC_AVERAGING_ENABLED                                                 0x00f01002
+#define RFMXOFDM_ATTR_MODACC_AVERAGING_COUNT                                                   0x00f01003
+#define RFMXOFDM_ATTR_MODACC_EVM_UNIT                                                          0x00f01004
+#define RFMXOFDM_ATTR_MODACC_ACQUISITION_LENGTH                                                0x00f01005
+#define RFMXOFDM_ATTR_MODACC_MEASUREMENT_OFFSET                                                0x00f0100b
+#define RFMXOFDM_ATTR_MODACC_MAXIMUM_MEASUREMENT_LENGTH                                        0x00f0100c
+#define RFMXOFDM_ATTR_MODACC_AUTO_SYMBOL_TIME_ADJUSTMENT_ENABLED                               0x00f0101c
+#define RFMXOFDM_ATTR_MODACC_SYMBOL_TIME_ADJUSTMENT                                            0x00f0100d
+#define RFMXOFDM_ATTR_MODACC_SYMBOL_CLOCK_OFFSET_CORRECTION_ENABLED                            0x00f0100f
+#define RFMXOFDM_ATTR_MODACC_CHANNEL_ESTIMATION_SMOOTHING_METHOD                               0x00f01010
+#define RFMXOFDM_ATTR_MODACC_CHANNEL_ESTIMATION_SMOOTHING_WINDOW_LENGTH                        0x00f01011
+#define RFMXOFDM_ATTR_MODACC_AMPLITUDE_TRACKING_ENABLED                                        0x00f01012
+#define RFMXOFDM_ATTR_MODACC_PHASE_TRACKING_ENABLED                                            0x00f01013
+#define RFMXOFDM_ATTR_MODACC_TIME_TRACKING_ENABLED                                             0x00f01014
+#define RFMXOFDM_ATTR_MODACC_MULTICARRIER_FILTER_TYPE                                          0x00f0101d
+#define RFMXOFDM_ATTR_MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_6DB_BANDWIDTH                   0x00f0101e
+#define RFMXOFDM_ATTR_MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_AUTO_FILTER_LENGTH_ENABLED      0x00f0101f
+#define RFMXOFDM_ATTR_MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_50DB_BANDWIDTH                  0x00f01020
+#define RFMXOFDM_ATTR_MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_FILTER_LENGTH                   0x00f01021
+#define RFMXOFDM_ATTR_MODACC_ALL_TRACES_ENABLED                                                0x00f01006
+#define RFMXOFDM_ATTR_MODACC_NUMBER_OF_ANALYSIS_THREADS                                        0x00f01007
+#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_RMS_EVM_MEAN                                    0x00f01008
+#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_DATA_RMS_EVM_MEAN                               0x00f01009
+#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_PILOT_RMS_EVM_MEAN                              0x00f0100a
+#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_PEAK_EVM_MAXIMUM                                0x00f01019
+#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_DATA_PEAK_EVM_MAXIMUM                           0x00f0101a
+#define RFMXOFDM_ATTR_MODACC_RESULTS_COMPOSITE_PILOT_PEAK_EVM_MAXIMUM                          0x00f0101b
+#define RFMXOFDM_ATTR_MODACC_RESULTS_NUMBER_OF_SYMBOLS_USED                                    0x00f01016
+#define RFMXOFDM_ATTR_MODACC_RESULTS_FREQUENCY_ERROR_MEAN                                      0x00f01017
+#define RFMXOFDM_ATTR_MODACC_RESULTS_SYMBOL_CLOCK_ERROR_MEAN                                   0x00f01018
+#define RFMXOFDM_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                                       0x00f0000d
+#define RFMXOFDM_ATTR_LIMITED_CONFIGURATION_CHANGE                                             0x00f0000e
+#define RFMXOFDM_ATTR_RESULT_FETCH_TIMEOUT                                                     0x00f0c000
 
 // Values for RFMXOFDM_ATTR_TRIGGER_TYPE
 #define RFMXOFDM_VAL_TRIGGER_TYPE_NONE                                                              0
@@ -177,6 +182,14 @@
 // Values for RFMXOFDM_ATTR_MODACC_TIME_TRACKING_ENABLED
 #define RFMXOFDM_VAL_MODACC_TIME_TRACKING_ENABLED_FALSE                                             0
 #define RFMXOFDM_VAL_MODACC_TIME_TRACKING_ENABLED_TRUE                                              1
+
+// Values for RFMXOFDM_ATTR_MODACC_MULTICARRIER_FILTER_TYPE
+#define RFMXOFDM_VAL_MODACC_MULTICARRIER_FILTER_TYPE_NONE                                           0
+#define RFMXOFDM_VAL_MODACC_MULTICARRIER_FILTER_TYPE_WINDOWED_SINC                                  1
+
+// Values for RFMXOFDM_ATTR_MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_AUTO_FILTER_LENGTH_ENABLED
+#define RFMXOFDM_VAL_MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_AUTO_FILTER_LENGTH_ENABLED_FALSE      0
+#define RFMXOFDM_VAL_MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_AUTO_FILTER_LENGTH_ENABLED_TRUE       1
 
 // Values for RFMXOFDM_ATTR_LIMITED_CONFIGURATION_CHANGE
 #define RFMXOFDM_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                          0
@@ -285,6 +298,13 @@ int32 __stdcall RFmxOFDM_BuildSignalString(
    char resultName[],
    int32 selectorStringLength,
    char selectorString[]
+);
+
+int32 __stdcall RFmxOFDM_BuildAllocationString(
+   char selectorString[],
+   int32 allocationNumber,
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
 );
 
 int32 __stdcall RFmxOFDM_SetAttributeI8(
@@ -1441,6 +1461,66 @@ int32 __stdcall RFmxOFDM_ModAccGetTimeTrackingEnabled(
 );
 
 int32 __stdcall RFmxOFDM_ModAccSetTimeTrackingEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccGetMulticarrierFilterType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccSetMulticarrierFilterType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccGetMulticarrierFilterWindowedSinc6dBBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccSetMulticarrierFilterWindowedSinc6dBBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccGetMulticarrierFilterWindowedSincAutoFilterLengthEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccSetMulticarrierFilterWindowedSincAutoFilterLengthEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccGetMulticarrierFilterWindowedSinc50dBBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccSetMulticarrierFilterWindowedSinc50dBBandwidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccGetMulticarrierFilterWindowedSincFilterLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxOFDM_ModAccSetMulticarrierFilterWindowedSincFilterLength(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

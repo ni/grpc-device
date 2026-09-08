@@ -266,6 +266,32 @@ enums = {
             }
         ]
     },
+    'ModAccMulticarrierFilterType': {
+        'enum-value-prefix': 'MODACC_MULTICARRIER_FILTER_TYPE',
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'WINDOWED_SINC',
+                'value': 1
+            }
+        ]
+    },
+    'ModAccMulticarrierFilterWindowedSincAutoFilterLengthEnabled': {
+        'enum-value-prefix': 'MODACC_MULTICARRIER_FILTER_WINDOWED_SINC_AUTO_FILTER_LENGTH_ENABLED',
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'ModAccPhaseTrackingEnabled': {
         'enum-value-prefix': 'MODACC_PHASE_TRACKING_ENABLED',
         'values': [
