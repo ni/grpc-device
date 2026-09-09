@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFSA API metadata version 21.0.0
+// This file is generated from NI-RFSA API metadata version 26.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFSA Metadata
 //---------------------------------------------------------------------
@@ -53,8 +53,10 @@ service NiRFSA {
   rpc DeleteDeembeddingTable(DeleteDeembeddingTableRequest) returns (DeleteDeembeddingTableResponse);
   rpc Disable(DisableRequest) returns (DisableResponse);
   rpc DisableAdvanceTrigger(DisableAdvanceTriggerRequest) returns (DisableAdvanceTriggerResponse);
+  rpc DisableCalibrationPlane(DisableCalibrationPlaneRequest) returns (DisableCalibrationPlaneResponse);
   rpc DisableRefTrigger(DisableRefTriggerRequest) returns (DisableRefTriggerResponse);
   rpc DisableStartTrigger(DisableStartTriggerRequest) returns (DisableStartTriggerResponse);
+  rpc EnableCalibrationPlane(EnableCalibrationPlaneRequest) returns (EnableCalibrationPlaneResponse);
   rpc EnableSessionAccess(EnableSessionAccessRequest) returns (EnableSessionAccessResponse);
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
@@ -1154,6 +1156,15 @@ message DisableAdvanceTriggerResponse {
   int32 status = 1;
 }
 
+message DisableCalibrationPlaneRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message DisableCalibrationPlaneResponse {
+  int32 status = 1;
+}
+
 message DisableRefTriggerRequest {
   nidevice_grpc.Session vi = 1;
 }
@@ -1167,6 +1178,15 @@ message DisableStartTriggerRequest {
 }
 
 message DisableStartTriggerResponse {
+  int32 status = 1;
+}
+
+message EnableCalibrationPlaneRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message EnableCalibrationPlaneResponse {
   int32 status = 1;
 }
 

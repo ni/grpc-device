@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '25.5.0',
+    'api_version': '26.8.0',
     'c_header': 'niRFSG.h',
     'c_function_prefix': 'niRFSG_',
     'service_class_prefix': 'NiRFSG',

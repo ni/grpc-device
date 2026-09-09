@@ -57,6 +57,7 @@ class NiRFSGLibraryInterface {
   virtual ViStatus CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation) = 0;
   virtual ViStatus CreateDeembeddingSparameterTableS2PFile(ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation) = 0;
   virtual ViStatus DeleteAllDeembeddingTables(ViSession vi) = 0;
+  virtual ViStatus DisableCalibrationPlane(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus DeleteConfigurationList(ViSession vi, ViConstString listName) = 0;
   virtual ViStatus DeleteDeembeddingTable(ViSession vi, ViConstString port, ViConstString tableName) = 0;
   virtual ViStatus DeleteScript(ViSession vi, ViConstString scriptName) = 0;
@@ -65,6 +66,7 @@ class NiRFSGLibraryInterface {
   virtual ViStatus DisableConfigurationListStepTrigger(ViSession vi) = 0;
   virtual ViStatus DisableScriptTrigger(ViSession vi, ViConstString triggerID) = 0;
   virtual ViStatus DisableStartTrigger(ViSession vi) = 0;
+  virtual ViStatus EnableCalibrationPlane(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[1024]) = 0;
   virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) = 0;
   virtual ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) = 0;

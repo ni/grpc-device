@@ -63,8 +63,10 @@ NiRFSALibrary::NiRFSALibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.DeleteDeembeddingTable = reinterpret_cast<DeleteDeembeddingTablePtr>(shared_library_->get_function_pointer("niRFSA_DeleteDeembeddingTable"));
   function_pointers_.Disable = reinterpret_cast<DisablePtr>(shared_library_->get_function_pointer("niRFSA_Disable"));
   function_pointers_.DisableAdvanceTrigger = reinterpret_cast<DisableAdvanceTriggerPtr>(shared_library_->get_function_pointer("niRFSA_DisableAdvanceTrigger"));
+  function_pointers_.DisableCalibrationPlane = reinterpret_cast<DisableCalibrationPlanePtr>(shared_library_->get_function_pointer("niRFSA_DisableCalibrationPlane"));
   function_pointers_.DisableRefTrigger = reinterpret_cast<DisableRefTriggerPtr>(shared_library_->get_function_pointer("niRFSA_DisableRefTrigger"));
   function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_->get_function_pointer("niRFSA_DisableStartTrigger"));
+  function_pointers_.EnableCalibrationPlane = reinterpret_cast<EnableCalibrationPlanePtr>(shared_library_->get_function_pointer("niRFSA_EnableCalibrationPlane"));
   function_pointers_.EnableSessionAccess = reinterpret_cast<EnableSessionAccessPtr>(shared_library_->get_function_pointer("niRFSA_EnableSessionAccess"));
   function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_->get_function_pointer("niRFSA_error_message"));
   function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_->get_function_pointer("niRFSA_error_query"));
@@ -435,6 +437,14 @@ ViStatus NiRFSALibrary::DisableAdvanceTrigger(ViSession vi)
   return function_pointers_.DisableAdvanceTrigger(vi);
 }
 
+ViStatus NiRFSALibrary::DisableCalibrationPlane(ViSession vi, ViConstString channelName)
+{
+  if (!function_pointers_.DisableCalibrationPlane) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_DisableCalibrationPlane.");
+  }
+  return function_pointers_.DisableCalibrationPlane(vi, channelName);
+}
+
 ViStatus NiRFSALibrary::DisableRefTrigger(ViSession vi)
 {
   if (!function_pointers_.DisableRefTrigger) {
@@ -449,6 +459,14 @@ ViStatus NiRFSALibrary::DisableStartTrigger(ViSession vi)
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_DisableStartTrigger.");
   }
   return function_pointers_.DisableStartTrigger(vi);
+}
+
+ViStatus NiRFSALibrary::EnableCalibrationPlane(ViSession vi, ViConstString channelName)
+{
+  if (!function_pointers_.EnableCalibrationPlane) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSA_EnableCalibrationPlane.");
+  }
+  return function_pointers_.EnableCalibrationPlane(vi, channelName);
 }
 
 ViStatus NiRFSALibrary::EnableSessionAccess(ViSession vi, ViBoolean enable)

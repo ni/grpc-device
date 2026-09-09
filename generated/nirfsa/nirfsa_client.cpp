@@ -779,6 +779,24 @@ disable_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+DisableCalibrationPlaneResponse
+disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DisableCalibrationPlaneRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+
+  auto response = DisableCalibrationPlaneResponse{};
+
+  raise_if_error(
+      stub->DisableCalibrationPlane(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DisableRefTriggerResponse
 disable_ref_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -808,6 +826,24 @@ disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->DisableStartTrigger(&context, request, &response),
+      context);
+
+  return response;
+}
+
+EnableCalibrationPlaneResponse
+enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = EnableCalibrationPlaneRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+
+  auto response = EnableCalibrationPlaneResponse{};
+
+  raise_if_error(
+      stub->EnableCalibrationPlane(&context, request, &response),
       context);
 
   return response;

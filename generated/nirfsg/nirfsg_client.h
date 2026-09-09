@@ -64,6 +64,7 @@ CreateConfigurationListStepResponse create_configuration_list_step(const StubPtr
 CreateDeembeddingSparameterTableArrayResponse create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const std::vector<double>& frequencies, const std::vector<nidevice_grpc::NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& sparameter_orientation);
 CreateDeembeddingSparameterTableS2PFileResponse create_deembedding_sparameter_table_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const std::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& sparameter_orientation);
 DeleteAllDeembeddingTablesResponse delete_all_deembedding_tables(const StubPtr& stub, const nidevice_grpc::Session& vi);
+DisableCalibrationPlaneResponse disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name);
 DeleteConfigurationListResponse delete_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& list_name);
 DeleteDeembeddingTableResponse delete_deembedding_table(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name);
 DeleteScriptResponse delete_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& script_name);
@@ -72,6 +73,7 @@ DisableAllModulationResponse disable_all_modulation(const StubPtr& stub, const n
 DisableConfigurationListStepTriggerResponse disable_configuration_list_step_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
 DisableScriptTriggerResponse disable_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeScriptTriggerIdentifier, std::string>& trigger_id);
 DisableStartTriggerResponse disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+EnableCalibrationPlaneResponse enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name);
 ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& error_code);
 ErrorQueryResponse error_query(const StubPtr& stub, const nidevice_grpc::Session& vi);
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RoutedSignal, pb::int32>& signal, const simple_variant<SignalIdentifier, std::string>& signal_identifier, const simple_variant<OutputSignal, std::string>& output_terminal);

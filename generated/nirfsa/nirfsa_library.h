@@ -57,8 +57,10 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus DeleteDeembeddingTable(ViSession vi, ViConstString port, ViConstString tableName) override;
   ViStatus Disable(ViSession vi) override;
   ViStatus DisableAdvanceTrigger(ViSession vi) override;
+  ViStatus DisableCalibrationPlane(ViSession vi, ViConstString channelName) override;
   ViStatus DisableRefTrigger(ViSession vi) override;
   ViStatus DisableStartTrigger(ViSession vi) override;
+  ViStatus EnableCalibrationPlane(ViSession vi, ViConstString channelName) override;
   ViStatus EnableSessionAccess(ViSession vi, ViBoolean enable) override;
   ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024]) override;
   ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) override;
@@ -166,8 +168,10 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using DeleteDeembeddingTablePtr = decltype(&niRFSA_DeleteDeembeddingTable);
   using DisablePtr = decltype(&niRFSA_Disable);
   using DisableAdvanceTriggerPtr = decltype(&niRFSA_DisableAdvanceTrigger);
+  using DisableCalibrationPlanePtr = decltype(&niRFSA_DisableCalibrationPlane);
   using DisableRefTriggerPtr = decltype(&niRFSA_DisableRefTrigger);
   using DisableStartTriggerPtr = decltype(&niRFSA_DisableStartTrigger);
+  using EnableCalibrationPlanePtr = decltype(&niRFSA_EnableCalibrationPlane);
   using EnableSessionAccessPtr = decltype(&niRFSA_EnableSessionAccess);
   using ErrorMessagePtr = decltype(&niRFSA_error_message);
   using ErrorQueryPtr = decltype(&niRFSA_error_query);
@@ -275,8 +279,10 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     DeleteDeembeddingTablePtr DeleteDeembeddingTable;
     DisablePtr Disable;
     DisableAdvanceTriggerPtr DisableAdvanceTrigger;
+    DisableCalibrationPlanePtr DisableCalibrationPlane;
     DisableRefTriggerPtr DisableRefTrigger;
     DisableStartTriggerPtr DisableStartTrigger;
+    EnableCalibrationPlanePtr EnableCalibrationPlane;
     EnableSessionAccessPtr EnableSessionAccess;
     ErrorMessagePtr ErrorMessage;
     ErrorQueryPtr ErrorQuery;

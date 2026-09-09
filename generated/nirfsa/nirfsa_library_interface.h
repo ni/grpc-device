@@ -52,8 +52,10 @@ class NiRFSALibraryInterface {
   virtual ViStatus DeleteDeembeddingTable(ViSession vi, ViConstString port, ViConstString tableName) = 0;
   virtual ViStatus Disable(ViSession vi) = 0;
   virtual ViStatus DisableAdvanceTrigger(ViSession vi) = 0;
+  virtual ViStatus DisableCalibrationPlane(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus DisableRefTrigger(ViSession vi) = 0;
   virtual ViStatus DisableStartTrigger(ViSession vi) = 0;
+  virtual ViStatus EnableCalibrationPlane(ViSession vi, ViConstString channelName) = 0;
   virtual ViStatus EnableSessionAccess(ViSession vi, ViBoolean enable) = 0;
   virtual ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024]) = 0;
   virtual ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) = 0;

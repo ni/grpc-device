@@ -53,8 +53,10 @@ class NiRFSAMockLibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   MOCK_METHOD(ViStatus, DeleteDeembeddingTable, (ViSession vi, ViConstString port, ViConstString tableName), (override));
   MOCK_METHOD(ViStatus, Disable, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, DisableAdvanceTrigger, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, DisableCalibrationPlane, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, DisableRefTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, DisableStartTrigger, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, EnableCalibrationPlane, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, EnableSessionAccess, (ViSession vi, ViBoolean enable), (override));
   MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus statusCode, ViChar errorMessage[1024]), (override));
   MOCK_METHOD(ViStatus, ErrorQuery, (ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]), (override));

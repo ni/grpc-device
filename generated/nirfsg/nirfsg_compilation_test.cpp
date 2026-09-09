@@ -217,6 +217,11 @@ ViStatus DeleteAllDeembeddingTables(ViSession vi)
   return niRFSG_DeleteAllDeembeddingTables(vi);
 }
 
+ViStatus DisableCalibrationPlane(ViSession vi, ViConstString channelName)
+{
+  return niRFSG_DisableCalibrationPlane(vi, channelName);
+}
+
 ViStatus DeleteConfigurationList(ViSession vi, ViConstString listName)
 {
   return niRFSG_DeleteConfigurationList(vi, listName);
@@ -255,6 +260,11 @@ ViStatus DisableScriptTrigger(ViSession vi, ViConstString triggerID)
 ViStatus DisableStartTrigger(ViSession vi)
 {
   return niRFSG_DisableStartTrigger(vi);
+}
+
+ViStatus EnableCalibrationPlane(ViSession vi, ViConstString channelName)
+{
+  return niRFSG_EnableCalibrationPlane(vi, channelName);
 }
 
 ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[1024])

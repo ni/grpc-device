@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 config = {
-    'api_version': '21.0.0',
+    'api_version': '26.8.0',
     'c_header': 'niRFSA.h',
     'c_function_prefix': 'niRFSA_',
     'service_class_prefix': 'NiRFSA',

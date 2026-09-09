@@ -69,6 +69,7 @@ NiRFSGLibrary::NiRFSGLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.CreateDeembeddingSparameterTableArray = reinterpret_cast<CreateDeembeddingSparameterTableArrayPtr>(shared_library_->get_function_pointer("niRFSG_CreateDeembeddingSparameterTableArray"));
   function_pointers_.CreateDeembeddingSparameterTableS2PFile = reinterpret_cast<CreateDeembeddingSparameterTableS2PFilePtr>(shared_library_->get_function_pointer("niRFSG_CreateDeembeddingSparameterTableS2PFile"));
   function_pointers_.DeleteAllDeembeddingTables = reinterpret_cast<DeleteAllDeembeddingTablesPtr>(shared_library_->get_function_pointer("niRFSG_DeleteAllDeembeddingTables"));
+  function_pointers_.DisableCalibrationPlane = reinterpret_cast<DisableCalibrationPlanePtr>(shared_library_->get_function_pointer("niRFSG_DisableCalibrationPlane"));
   function_pointers_.DeleteConfigurationList = reinterpret_cast<DeleteConfigurationListPtr>(shared_library_->get_function_pointer("niRFSG_DeleteConfigurationList"));
   function_pointers_.DeleteDeembeddingTable = reinterpret_cast<DeleteDeembeddingTablePtr>(shared_library_->get_function_pointer("niRFSG_DeleteDeembeddingTable"));
   function_pointers_.DeleteScript = reinterpret_cast<DeleteScriptPtr>(shared_library_->get_function_pointer("niRFSG_DeleteScript"));
@@ -77,6 +78,7 @@ NiRFSGLibrary::NiRFSGLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryInterfa
   function_pointers_.DisableConfigurationListStepTrigger = reinterpret_cast<DisableConfigurationListStepTriggerPtr>(shared_library_->get_function_pointer("niRFSG_DisableConfigurationListStepTrigger"));
   function_pointers_.DisableScriptTrigger = reinterpret_cast<DisableScriptTriggerPtr>(shared_library_->get_function_pointer("niRFSG_DisableScriptTrigger"));
   function_pointers_.DisableStartTrigger = reinterpret_cast<DisableStartTriggerPtr>(shared_library_->get_function_pointer("niRFSG_DisableStartTrigger"));
+  function_pointers_.EnableCalibrationPlane = reinterpret_cast<EnableCalibrationPlanePtr>(shared_library_->get_function_pointer("niRFSG_EnableCalibrationPlane"));
   function_pointers_.ErrorMessage = reinterpret_cast<ErrorMessagePtr>(shared_library_->get_function_pointer("niRFSG_error_message"));
   function_pointers_.ErrorQuery = reinterpret_cast<ErrorQueryPtr>(shared_library_->get_function_pointer("niRFSG_error_query"));
   function_pointers_.ExportSignal = reinterpret_cast<ExportSignalPtr>(shared_library_->get_function_pointer("niRFSG_ExportSignal"));
@@ -491,6 +493,14 @@ ViStatus NiRFSGLibrary::DeleteAllDeembeddingTables(ViSession vi)
   return function_pointers_.DeleteAllDeembeddingTables(vi);
 }
 
+ViStatus NiRFSGLibrary::DisableCalibrationPlane(ViSession vi, ViConstString channelName)
+{
+  if (!function_pointers_.DisableCalibrationPlane) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DisableCalibrationPlane.");
+  }
+  return function_pointers_.DisableCalibrationPlane(vi, channelName);
+}
+
 ViStatus NiRFSGLibrary::DeleteConfigurationList(ViSession vi, ViConstString listName)
 {
   if (!function_pointers_.DeleteConfigurationList) {
@@ -553,6 +563,14 @@ ViStatus NiRFSGLibrary::DisableStartTrigger(ViSession vi)
     throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_DisableStartTrigger.");
   }
   return function_pointers_.DisableStartTrigger(vi);
+}
+
+ViStatus NiRFSGLibrary::EnableCalibrationPlane(ViSession vi, ViConstString channelName)
+{
+  if (!function_pointers_.EnableCalibrationPlane) {
+    throw nidevice_grpc::LibraryLoadException("Could not find niRFSG_EnableCalibrationPlane.");
+  }
+  return function_pointers_.EnableCalibrationPlane(vi, channelName);
 }
 
 ViStatus NiRFSGLibrary::ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[1024])

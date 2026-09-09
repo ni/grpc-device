@@ -63,6 +63,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ViStatus CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation) override;
   ViStatus CreateDeembeddingSparameterTableS2PFile(ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation) override;
   ViStatus DeleteAllDeembeddingTables(ViSession vi) override;
+  ViStatus DisableCalibrationPlane(ViSession vi, ViConstString channelName) override;
   ViStatus DeleteConfigurationList(ViSession vi, ViConstString listName) override;
   ViStatus DeleteDeembeddingTable(ViSession vi, ViConstString port, ViConstString tableName) override;
   ViStatus DeleteScript(ViSession vi, ViConstString scriptName) override;
@@ -71,6 +72,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   ViStatus DisableConfigurationListStepTrigger(ViSession vi) override;
   ViStatus DisableScriptTrigger(ViSession vi, ViConstString triggerID) override;
   ViStatus DisableStartTrigger(ViSession vi) override;
+  ViStatus EnableCalibrationPlane(ViSession vi, ViConstString channelName) override;
   ViStatus ErrorMessage(ViSession vi, ViStatus errorCode, ViChar errorMessage[1024]) override;
   ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) override;
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) override;
@@ -180,6 +182,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using CreateDeembeddingSparameterTableArrayPtr = decltype(&niRFSG_CreateDeembeddingSparameterTableArray);
   using CreateDeembeddingSparameterTableS2PFilePtr = decltype(&niRFSG_CreateDeembeddingSparameterTableS2PFile);
   using DeleteAllDeembeddingTablesPtr = decltype(&niRFSG_DeleteAllDeembeddingTables);
+  using DisableCalibrationPlanePtr = decltype(&niRFSG_DisableCalibrationPlane);
   using DeleteConfigurationListPtr = decltype(&niRFSG_DeleteConfigurationList);
   using DeleteDeembeddingTablePtr = decltype(&niRFSG_DeleteDeembeddingTable);
   using DeleteScriptPtr = decltype(&niRFSG_DeleteScript);
@@ -188,6 +191,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   using DisableConfigurationListStepTriggerPtr = decltype(&niRFSG_DisableConfigurationListStepTrigger);
   using DisableScriptTriggerPtr = decltype(&niRFSG_DisableScriptTrigger);
   using DisableStartTriggerPtr = decltype(&niRFSG_DisableStartTrigger);
+  using EnableCalibrationPlanePtr = decltype(&niRFSG_EnableCalibrationPlane);
   using ErrorMessagePtr = decltype(&niRFSG_error_message);
   using ErrorQueryPtr = decltype(&niRFSG_error_query);
   using ExportSignalPtr = decltype(&niRFSG_ExportSignal);
@@ -297,6 +301,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
     CreateDeembeddingSparameterTableArrayPtr CreateDeembeddingSparameterTableArray;
     CreateDeembeddingSparameterTableS2PFilePtr CreateDeembeddingSparameterTableS2PFile;
     DeleteAllDeembeddingTablesPtr DeleteAllDeembeddingTables;
+    DisableCalibrationPlanePtr DisableCalibrationPlane;
     DeleteConfigurationListPtr DeleteConfigurationList;
     DeleteDeembeddingTablePtr DeleteDeembeddingTable;
     DeleteScriptPtr DeleteScript;
@@ -305,6 +310,7 @@ class NiRFSGLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
     DisableConfigurationListStepTriggerPtr DisableConfigurationListStepTrigger;
     DisableScriptTriggerPtr DisableScriptTrigger;
     DisableStartTriggerPtr DisableStartTrigger;
+    EnableCalibrationPlanePtr EnableCalibrationPlane;
     ErrorMessagePtr ErrorMessage;
     ErrorQueryPtr ErrorQuery;
     ExportSignalPtr ExportSignal;
