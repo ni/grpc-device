@@ -9,27 +9,27 @@
 
 namespace nidevice_grpc {
 
-static const char* kConfigFileNotFoundMessage = "The server configuration file was not found at: ";
-static const char* kInvalidAddressMessage = "The specified address is not valid.\n Use a valid IPv4 or IPv6 address. Valid values include localhost, 192.168.1.1, [::], [::1], etc.";
-static const char* kWrongAddressTypeMessage = "The server address must be specified in the server's configuration file as a string: \n\n";
-static const char* kInvalidPortMessage = "The specified port number must between 0 and 65535.";
-static const char* kInvalidMonikerStreamProcessorMessage = "The specified moniker stream processor must be -1 or greater. -1 indicates that any available cpu core can be used.";
-static const char* kMalformedJsonMessage = "The JSON in the server configuration file is malformed: \n\n";
-static const char* kWrongPortTypeMessage = "The server port must be specified in the server's configuration file as an integer: \n\n";
-static const char* kWrongMonikerStreamProcessorTypeMessage = "The moniker stream processor must be specified in the server's configuration file as an integer: \n\n";
-static const char* kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file.";
-static const char* kValueTypeNotStringMessage = "The following key must be specified in the server's configuration file as a string enclosed with double quotes: ";
-static const char* kFileNotFoundMessage = "The following certificate file was not found: ";
-static const char* kInvalidExePathMessage = "The server was unable to resolve the current executable path.";
-static const char* kInvalidMaxMessageSizeMessage = "The max message size must be an integer.";
-static const char* kInvalidFeatureToggleMessage = "Feature Toggles must be specified as boolean fields in the form \"feature_toggles\": { \"feature1\": true, \"feature2\": false }. \n\n";
-static const char* kInvalidCodeReadinessMessage = "code_readiness must be a string in [Release, RestrictedRelease, NextRelease, RestrictedNextRelease, Incomplete, Prototype].\n\n";
+inline constexpr auto kConfigFileNotFoundMessage = "The server configuration file was not found at: ";
+inline constexpr auto kInvalidAddressMessage = "The specified address is not valid.\n Use a valid IPv4 or IPv6 address. Valid values include localhost, 192.168.1.1, [::], [::1], etc.";
+inline constexpr auto kWrongAddressTypeMessage = "The server address must be specified in the server's configuration file as a string: \n\n";
+inline constexpr auto kInvalidPortMessage = "The specified port number must between 0 and 65535.";
+inline constexpr auto kInvalidMonikerStreamProcessorMessage = "The specified moniker stream processor must be -1 or greater. -1 indicates that any available cpu core can be used.";
+inline constexpr auto kMalformedJsonMessage = "The JSON in the server configuration file is malformed: \n\n";
+inline constexpr auto kWrongPortTypeMessage = "The server port must be specified in the server's configuration file as an integer: \n\n";
+inline constexpr auto kWrongMonikerStreamProcessorTypeMessage = "The moniker stream processor must be specified in the server's configuration file as an integer: \n\n";
+inline constexpr auto kUnspecifiedPortMessage = "The server port must be specified in the server's configuration file.";
+inline constexpr auto kValueTypeNotStringMessage = "The following key must be specified in the server's configuration file as a string enclosed with double quotes: ";
+inline constexpr auto kFileNotFoundMessage = "The following certificate file was not found: ";
+inline constexpr auto kInvalidExePathMessage = "The server was unable to resolve the current executable path.";
+inline constexpr auto kInvalidMaxMessageSizeMessage = "The max message size must be an integer.";
+inline constexpr auto kInvalidFeatureToggleMessage = "Feature Toggles must be specified as boolean fields in the form \"feature_toggles\": { \"feature1\": true, \"feature2\": false }. \n\n";
+inline constexpr auto kInvalidCodeReadinessMessage = "code_readiness must be a string in [Release, RestrictedRelease, NextRelease, RestrictedNextRelease, Incomplete, Prototype].\n\n";
 // CWE-306: Default to the IPv6 loopback address so the server is only reachable
 // from the local machine when no address is specified in the configuration file.
 // This prevents unintentional exposure on all network interfaces when insecure
 // (non-TLS) credentials are used. Deployments that need to accept remote
 // connections should set an explicit address (e.g. "[::]") in their config file.
-static const char* kDefaultAddress = "[::1]";
+inline constexpr auto kDefaultAddress = "[::1]";
 constexpr int UNLIMITED_MAX_MESSAGE_SIZE = -1;
 constexpr int DEFAULT_SIDEBAND_PORT = 50055;
 

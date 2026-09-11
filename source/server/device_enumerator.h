@@ -12,7 +12,7 @@
 
 namespace nidevice_grpc {
 
-static const char* kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices.";
+inline constexpr auto kDeviceEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the devices.";
 
 class DeviceEnumerator : public SysCfgSessionHandler {
  public:
