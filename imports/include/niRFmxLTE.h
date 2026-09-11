@@ -38,9 +38,11 @@
 #define RFMXLTE_ATTR_DUPLEX_SCHEME                                                          0x0030000d
 #define RFMXLTE_ATTR_UPLINK_DOWNLINK_CONFIGURATION                                          0x0030000e
 #define RFMXLTE_ATTR_ENODEB_CATEGORY                                                        0x00300050
+#define RFMXLTE_ATTR_SATELLITE_ACCESS_NODE_CLASS                                            0x003000a3
 #define RFMXLTE_ATTR_SPECIAL_SUBFRAME_CONFIGURATION                                         0x0030002a
 #define RFMXLTE_ATTR_NUMBER_OF_DUT_ANTENNAS                                                 0x0030002b
 #define RFMXLTE_ATTR_TRANSMIT_ANTENNA_TO_ANALYZE                                            0x0030002c
+#define RFMXLTE_ATTR_POWER_CLASS                                                            0x0030009c
 #define RFMXLTE_ATTR_NUMBER_OF_SUBBLOCKS                                                    0x00300023
 #define RFMXLTE_ATTR_SUBBLOCK_FREQUENCY                                                     0x00300059
 #define RFMXLTE_ATTR_BAND                                                                   0x00300017
@@ -113,6 +115,8 @@
 #define RFMXLTE_ATTR_NCELL_ID                                                               0x0030405e
 #define RFMXLTE_ATTR_NB_IOT_UPLINK_SUBCARRIER_SPACING                                       0x0030405f
 #define RFMXLTE_ATTR_AUTO_NPUSCH_CHANNEL_DETECTION_ENABLED                                  0x00304060
+#define RFMXLTE_ATTR_OCC_ENABLED                                                            0x00304095
+#define RFMXLTE_ATTR_OCC_SEQUENCE_INDEX                                                     0x00304096
 #define RFMXLTE_ATTR_NPUSCH_FORMAT                                                          0x00304061
 #define RFMXLTE_ATTR_NPUSCH_STARTING_SLOT                                                   0x00304072
 #define RFMXLTE_ATTR_NPUSCH_TONE_OFFSET                                                     0x00304062
@@ -502,6 +506,10 @@
 #define RFMXLTE_VAL_ENODEB_HOME_BASE_STATION                                                       4
 #define RFMXLTE_VAL_ENODEB_MEDIUM_RANGE_BASE_STATION                                               5
 
+// Values for RFMXLTE_ATTR_SATELLITE_ACCESS_NODE_CLASS
+#define RFMXLTE_VAL_SATELLITE_ACCESS_NODE_CLASS_GEO                                                0
+#define RFMXLTE_VAL_SATELLITE_ACCESS_NODE_CLASS_LEO                                                1
+
 // Values for RFMXLTE_ATTR_COMPONENT_CARRIER_SPACING_TYPE
 #define RFMXLTE_VAL_COMPONENT_CARRIER_SPACING_TYPE_NOMINAL                                         0
 #define RFMXLTE_VAL_COMPONENT_CARRIER_SPACING_TYPE_MINIMUM                                         1
@@ -639,6 +647,10 @@
 // Values for RFMXLTE_ATTR_AUTO_NPUSCH_CHANNEL_DETECTION_ENABLED
 #define RFMXLTE_VAL_AUTO_NPUSCH_CHANNEL_DETECTION_ENABLED_FALSE                                    0
 #define RFMXLTE_VAL_AUTO_NPUSCH_CHANNEL_DETECTION_ENABLED_TRUE                                     1
+
+// Values for RFMXLTE_ATTR_OCC_ENABLED
+#define RFMXLTE_VAL_OCC_ENABLED_FALSE                                                              0
+#define RFMXLTE_VAL_OCC_ENABLED_TRUE                                                               1
 
 // Values for RFMXLTE_ATTR_NPUSCH_MODULATION_TYPE
 #define RFMXLTE_VAL_NPUSCH_MODULATION_TYPE_BPSK                                                    0
@@ -931,6 +943,20 @@
 #define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS28                                                      10
 #define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_CANS09                                                    11
 #define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_CANS10                                                    12
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS02N                                                     13
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS03N                                                     14
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS04N                                                     15
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS05N                                                     16
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS06N                                                     17
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS07N                                                     18
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS08N                                                     19
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS11N                                                     20
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS12N                                                     21
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS09N                                                     22
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS10N                                                     23
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS15N                                                     24
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS16N                                                     25
+#define RFMXLTE_VAL_SEM_UPLINK_MASK_TYPE_NS17N                                                     26
 
 // Values for RFMXLTE_ATTR_SEM_DOWNLINK_MASK_TYPE
 #define RFMXLTE_VAL_SEM_DOWNLINK_MASK_TYPE_ENODEB_CATEGORY_BASED                                   0
@@ -4015,6 +4041,18 @@ int32 __stdcall RFmxLTE_SeteNodeBCategory(
    int32 attrVal
 );
 
+int32 __stdcall RFmxLTE_GetSatelliteAccessNodeClass(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetSatelliteAccessNodeClass(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxLTE_GetSpecialSubframeConfiguration(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -4046,6 +4084,18 @@ int32 __stdcall RFmxLTE_GetTransmitAntennaToAnalyze(
 );
 
 int32 __stdcall RFmxLTE_SetTransmitAntennaToAnalyze(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_GetPowerClass(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetPowerClass(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -4911,6 +4961,30 @@ int32 __stdcall RFmxLTE_GetAutoNPUSCHChannelDetectionEnabled(
 );
 
 int32 __stdcall RFmxLTE_SetAutoNPUSCHChannelDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_GetOCCEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetOCCEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxLTE_GetOCCSequenceIndex(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxLTE_SetOCCSequenceIndex(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal

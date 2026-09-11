@@ -306,6 +306,7 @@
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_RMS_COMMON_PHASE_ERROR_MEAN                    0x00a04030
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_RMS_COMMON_PILOT_ERROR_MEAN                    0x00a0406d
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PPDU_TYPE                                      0x00a04031
+#define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PREAMBLE_TYPE                                  0x00a040e9
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_MCS_INDEX                                      0x00a04032
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_AGGREGATION                                    0x00a040c9
 #define RFMXWLAN_ATTR_OFDMMODACC_RESULTS_FEC_CODING_TYPE                                0x00a040aa
@@ -467,6 +468,7 @@
 #define RFMXWLAN_VAL_STANDARD_802_11_AX                                                             6
 #define RFMXWLAN_VAL_STANDARD_802_11_BE                                                             7
 #define RFMXWLAN_VAL_STANDARD_802_11_BN                                                             8
+#define RFMXWLAN_VAL_STANDARD_802_11_AH                                                             9
 #define RFMXWLAN_VAL_STANDARD_UNKNOWN                                                               -1
 
 // Values for RFMXWLAN_ATTR_OFDM_TRANSMIT_POWER_CLASS
@@ -783,6 +785,11 @@
 // Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_NOISE_COMPENSATION_APPLIED
 #define RFMXWLAN_VAL_OFDMMODACC_NOISE_COMPENSATION_APPLIED_FALSE                                    0
 #define RFMXWLAN_VAL_OFDMMODACC_NOISE_COMPENSATION_APPLIED_TRUE                                     1
+
+// Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_PREAMBLE_TYPE
+#define RFMXWLAN_VAL_OFDMMODACC_PREAMBLE_TYPE_NOT_APPLICABLE                                        -1
+#define RFMXWLAN_VAL_OFDMMODACC_PREAMBLE_TYPE_LONG                                                  0
+#define RFMXWLAN_VAL_OFDMMODACC_PREAMBLE_TYPE_SHORT                                                 1
 
 // Values for RFMXWLAN_ATTR_OFDMMODACC_RESULTS_FEC_CODING_TYPE
 #define RFMXWLAN_VAL_OFDMMODACC_FEC_CODING_TYPE_BCC                                                 0
@@ -1799,6 +1806,18 @@ int32 __stdcall RFmxWLAN_OFDMModAccCfgSymbolClockErrorCorrectionEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 symbolClockErrorCorrectionEnabled
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccFetchDecodedHeaderInformationTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   char fieldNames[],
+   int32 fieldNamesArraySize,
+   int32* fieldNamesActualArraySize,
+   char fieldValues[],
+   int32 fieldValuesArraySize,
+   int32* fieldValuesActualArraySize
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccCfgNReferenceWaveforms(
@@ -5594,6 +5613,12 @@ int32 __stdcall RFmxWLAN_OFDMModAccGetResultsRMSCommonPilotErrorMean(
 );
 
 int32 __stdcall RFmxWLAN_OFDMModAccGetResultsPPDUType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxWLAN_OFDMModAccGetResultsPreambleType(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal

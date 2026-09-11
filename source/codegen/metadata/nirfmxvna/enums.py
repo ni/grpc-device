@@ -291,6 +291,18 @@ enums = {
             }
         ]
     },
+    'CorrectionCalibrationThruPortsAuto': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'CorrectionEnabled': {
         'values': [
             {

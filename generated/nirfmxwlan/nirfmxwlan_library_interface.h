@@ -142,6 +142,7 @@ class NiRFmxWLANLibraryInterface {
   virtual int32 OFDMModAccFetchDataPeakPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* dataPeakPowerMaximum) = 0;
   virtual int32 OFDMModAccFetchDecodedEHTSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedEHTSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedELRSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedELRSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
+  virtual int32 OFDMModAccFetchDecodedHeaderInformationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, char fieldNames[], int32 fieldNamesArraySize, int32* fieldNamesActualArraySize, char fieldValues[], int32 fieldValuesArraySize, int32* fieldValuesActualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedLSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedLSIGBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedPSDUBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedPSDUBits[], int32 arraySize, int32* actualArraySize) = 0;
   virtual int32 OFDMModAccFetchDecodedSIGBBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedSIGBBits[], int32 arraySize, int32* actualArraySize) = 0;

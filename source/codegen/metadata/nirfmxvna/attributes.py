@@ -452,6 +452,16 @@ attributes = {
         'name': 'TRIGGER_DELAY',
         'type': 'float64'
     },
+    13631601: {
+        'access': 'read-write',
+        'name': 'CORRECTION_CALIBRATION_STEP_VCAL_ORIENTATION',
+        'type': 'char[]'
+    },
+    13631602: {
+        'access': 'read-write',
+        'name': 'CORRECTION_CALIBRATION_STEP_PORT_ASSIGNMENT',
+        'type': 'char[]'
+    },
     13631609: {
         'access': 'read-write',
         'name': 'CORRECTION_PORT_SUBSET_RESPONSE_PORTS',
@@ -489,6 +499,22 @@ attributes = {
         'access': 'read-write',
         'name': 'CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY',
         'type': 'float64'
+    },
+    13633537: {
+        'access': 'read-write',
+        'enum': 'CorrectionCalibrationThruPortsAuto',
+        'name': 'CORRECTION_CALIBRATION_THRU_PORTS_AUTO',
+        'type': 'int32'
+    },
+    13633538: {
+        'access': 'read-write',
+        'name': 'CORRECTION_CALIBRATION_NUMBER_OF_THRUS',
+        'type': 'int32'
+    },
+    13633539: {
+        'access': 'read-write',
+        'name': 'CORRECTION_CALIBRATION_THRU_PORTS',
+        'type': 'char[]'
     },
     13635584: {
         'access': 'read-write',

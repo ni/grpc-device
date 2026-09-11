@@ -338,6 +338,11 @@ attributes = {
         'name': 'TXP_RESULTS_LE_CS_PHASE_MEASUREMENT_PERIOD_AVERAGE_POWER_MEAN',
         'type': 'float64'
     },
+    11538457: {
+        'access': 'read-write',
+        'name': 'TXP_RESULTS_RAMP_UP_TIME_MEAN',
+        'type': 'float64'
+    },
     11542528: {
         'access': 'read-write',
         'name': 'TWENTY_DB_BANDWIDTH_MEASUREMENT_ENABLED',
@@ -803,6 +808,12 @@ attributes = {
         'access': 'read-write',
         'enum': 'AcpReferenceChannelBandwidthMode',
         'name': 'ACP_REFERENCE_CHANNEL_BANDWIDTH_MODE',
+        'type': 'int32'
+    },
+    11554839: {
+        'access': 'read-write',
+        'enum': 'AcpSpecificationRelease',
+        'name': 'ACP_SPECIFICATION_RELEASE',
         'type': 'int32'
     },
     11583488: {

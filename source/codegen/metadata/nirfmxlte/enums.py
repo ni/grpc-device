@@ -1530,6 +1530,18 @@ enums = {
             }
         ]
     },
+    'OccEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'PsschModulationType': {
         'values': [
             {
@@ -1626,6 +1638,18 @@ enums = {
             },
             {
                 'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
+    'SatelliteAccessNodeClass': {
+        'values': [
+            {
+                'name': 'GEO',
+                'value': 0
+            },
+            {
+                'name': 'LEO',
                 'value': 1
             }
         ]
@@ -1863,6 +1887,62 @@ enums = {
             {
                 'name': 'CANS10',
                 'value': 12
+            },
+            {
+                'name': 'NS02N',
+                'value': 13
+            },
+            {
+                'name': 'NS03N',
+                'value': 14
+            },
+            {
+                'name': 'NS04N',
+                'value': 15
+            },
+            {
+                'name': 'NS05N',
+                'value': 16
+            },
+            {
+                'name': 'NS06N',
+                'value': 17
+            },
+            {
+                'name': 'NS07N',
+                'value': 18
+            },
+            {
+                'name': 'NS08N',
+                'value': 19
+            },
+            {
+                'name': 'NS11N',
+                'value': 20
+            },
+            {
+                'name': 'NS12N',
+                'value': 21
+            },
+            {
+                'name': 'NS09N',
+                'value': 22
+            },
+            {
+                'name': 'NS10N',
+                'value': 23
+            },
+            {
+                'name': 'NS15N',
+                'value': 24
+            },
+            {
+                'name': 'NS16N',
+                'value': 25
+            },
+            {
+                'name': 'NS17N',
+                'value': 26
             }
         ]
     },

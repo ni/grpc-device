@@ -154,6 +154,7 @@ NiRFmxWLANLibrary::NiRFmxWLANLibrary(std::shared_ptr<nidevice_grpc::SharedLibrar
   function_pointers_.OFDMModAccFetchDataPeakPower = reinterpret_cast<OFDMModAccFetchDataPeakPowerPtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDataPeakPower"));
   function_pointers_.OFDMModAccFetchDecodedEHTSIGBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedEHTSIGBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedEHTSIGBitsTrace"));
   function_pointers_.OFDMModAccFetchDecodedELRSIGBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedELRSIGBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedELRSIGBitsTrace"));
+  function_pointers_.OFDMModAccFetchDecodedHeaderInformationTrace = reinterpret_cast<OFDMModAccFetchDecodedHeaderInformationTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedHeaderInformationTrace"));
   function_pointers_.OFDMModAccFetchDecodedLSIGBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedLSIGBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedLSIGBitsTrace"));
   function_pointers_.OFDMModAccFetchDecodedPSDUBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedPSDUBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedPSDUBitsTrace"));
   function_pointers_.OFDMModAccFetchDecodedSIGBBitsTrace = reinterpret_cast<OFDMModAccFetchDecodedSIGBBitsTracePtr>(shared_library_->get_function_pointer("RFmxWLAN_OFDMModAccFetchDecodedSIGBBitsTrace"));
@@ -1313,6 +1314,14 @@ int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedELRSIGBitsTrace(niRFmxInstrHandle
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedELRSIGBitsTrace.");
   }
   return function_pointers_.OFDMModAccFetchDecodedELRSIGBitsTrace(instrumentHandle, selectorString, timeout, decodedELRSIGBits, arraySize, actualArraySize);
+}
+
+int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedHeaderInformationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, char fieldNames[], int32 fieldNamesArraySize, int32* fieldNamesActualArraySize, char fieldValues[], int32 fieldValuesArraySize, int32* fieldValuesActualArraySize)
+{
+  if (!function_pointers_.OFDMModAccFetchDecodedHeaderInformationTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxWLAN_OFDMModAccFetchDecodedHeaderInformationTrace.");
+  }
+  return function_pointers_.OFDMModAccFetchDecodedHeaderInformationTrace(instrumentHandle, selectorString, timeout, fieldNames, fieldNamesArraySize, fieldNamesActualArraySize, fieldValues, fieldValuesArraySize, fieldValuesActualArraySize);
 }
 
 int32 NiRFmxWLANLibrary::OFDMModAccFetchDecodedLSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedLSIGBits[], int32 arraySize, int32* actualArraySize)

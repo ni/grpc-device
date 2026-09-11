@@ -118,6 +118,7 @@ NiRFmxGSMLibrary::NiRFmxGSMLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.ORFSFetchSwitchingPowerTrace = reinterpret_cast<ORFSFetchSwitchingPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSFetchSwitchingPowerTrace"));
   function_pointers_.ORFSFetchSwitchingResultsArray = reinterpret_cast<ORFSFetchSwitchingResultsArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSFetchSwitchingResultsArray"));
   function_pointers_.PVTCfgAveraging = reinterpret_cast<PVTCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTCfgAveraging"));
+  function_pointers_.PVTFetchMaximumAndMinimumPowerTrace = reinterpret_cast<PVTFetchMaximumAndMinimumPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchMaximumAndMinimumPowerTrace"));
   function_pointers_.PVTFetchMeasurementStatus = reinterpret_cast<PVTFetchMeasurementStatusPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchMeasurementStatus"));
   function_pointers_.PVTFetchPowerTrace = reinterpret_cast<PVTFetchPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchPowerTrace"));
   function_pointers_.PVTFetchSlotMeasurement = reinterpret_cast<PVTFetchSlotMeasurementPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchSlotMeasurement"));
@@ -887,6 +888,14 @@ int32 NiRFmxGSMLibrary::PVTCfgAveraging(niRFmxInstrHandle instrumentHandle, char
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxGSM_PVTCfgAveraging.");
   }
   return function_pointers_.PVTCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
+}
+
+int32 NiRFmxGSMLibrary::PVTFetchMaximumAndMinimumPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumSignalPower[], float32 minimumSignalPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.PVTFetchMaximumAndMinimumPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxGSM_PVTFetchMaximumAndMinimumPowerTrace.");
+  }
+  return function_pointers_.PVTFetchMaximumAndMinimumPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumSignalPower, minimumSignalPower, arraySize, actualArraySize);
 }
 
 int32 NiRFmxGSMLibrary::PVTFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)

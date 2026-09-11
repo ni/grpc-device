@@ -1171,6 +1171,23 @@ enums = {
             }
         ]
     },
+    'OfdmModAccPreambleType': {
+        'enum-value-prefix': 'OFDMMODACC_PREAMBLE_TYPE',
+        'values': [
+            {
+                'name': 'NOT_APPLICABLE',
+                'value': -1
+            },
+            {
+                'name': 'LONG',
+                'value': 0
+            },
+            {
+                'name': 'SHORT',
+                'value': 1
+            }
+        ]
+    },
     'OfdmModAccPsduCrcStatus': {
         'enum-value-prefix': 'OFDMMODACC_PSDU_CRC_STATUS',
         'values': [
@@ -1696,6 +1713,10 @@ enums = {
             {
                 'name': '802_11_BN',
                 'value': 8
+            },
+            {
+                'name': '802_11_AH',
+                'value': 9
             },
             {
                 'name': 'UNKNOWN',

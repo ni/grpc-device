@@ -112,6 +112,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
   int32 ORFSFetchSwitchingPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float32 offsetFrequency[], float32 absolutePower[], float32 relativePower[], int32 arraySize, int32* actualArraySize) override;
   int32 ORFSFetchSwitchingResultsArray(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* switchingCarrierPower, float64 lowerRelativePower[], float64 upperRelativePower[], float64 lowerAbsolutePower[], float64 upperAbsolutePower[], int32 arraySize, int32* actualArraySize) override;
   int32 PVTCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[], int32 averagingEnabled, int32 averagingCount, int32 averagingType) override;
+  int32 PVTFetchMaximumAndMinimumPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumSignalPower[], float32 minimumSignalPower[], int32 arraySize, int32* actualArraySize) override;
   int32 PVTFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus) override;
   int32 PVTFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 upperMask[], float32 signalPower[], float32 lowerMask[], int32 arraySize, int32* actualArraySize) override;
   int32 PVTFetchSlotMeasurement(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* slotAveragePower, float64* slotBurstWidth, int32* slotMeasurementStatus, float64* slotMaximumPower, float64* slotMinimumPower, float64* slotBurstThreshold) override;
@@ -235,6 +236,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
   using ORFSFetchSwitchingPowerTracePtr = decltype(&RFmxGSM_ORFSFetchSwitchingPowerTrace);
   using ORFSFetchSwitchingResultsArrayPtr = decltype(&RFmxGSM_ORFSFetchSwitchingResultsArray);
   using PVTCfgAveragingPtr = decltype(&RFmxGSM_PVTCfgAveraging);
+  using PVTFetchMaximumAndMinimumPowerTracePtr = decltype(&RFmxGSM_PVTFetchMaximumAndMinimumPowerTrace);
   using PVTFetchMeasurementStatusPtr = decltype(&RFmxGSM_PVTFetchMeasurementStatus);
   using PVTFetchPowerTracePtr = decltype(&RFmxGSM_PVTFetchPowerTrace);
   using PVTFetchSlotMeasurementPtr = decltype(&RFmxGSM_PVTFetchSlotMeasurement);
@@ -358,6 +360,7 @@ class NiRFmxGSMLibrary : public nirfmxgsm_grpc::NiRFmxGSMLibraryInterface {
     ORFSFetchSwitchingPowerTracePtr ORFSFetchSwitchingPowerTrace;
     ORFSFetchSwitchingResultsArrayPtr ORFSFetchSwitchingResultsArray;
     PVTCfgAveragingPtr PVTCfgAveraging;
+    PVTFetchMaximumAndMinimumPowerTracePtr PVTFetchMaximumAndMinimumPowerTrace;
     PVTFetchMeasurementStatusPtr PVTFetchMeasurementStatus;
     PVTFetchPowerTracePtr PVTFetchPowerTrace;
     PVTFetchSlotMeasurementPtr PVTFetchSlotMeasurement;

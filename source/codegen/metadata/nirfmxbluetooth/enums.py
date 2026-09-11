@@ -67,6 +67,18 @@ enums = {
             }
         ]
     },
+    'AcpSpecificationRelease': {
+        'values': [
+            {
+                'name': 'VERSION1',
+                'value': 0
+            },
+            {
+                'name': 'VERSION2',
+                'value': 1
+            }
+        ]
+    },
     'AutoPreambleDetectionEnabled': {
         'values': [
             {
