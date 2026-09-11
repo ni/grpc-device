@@ -7,6 +7,7 @@ set(CMAKE_SYSTEM_PROCESSOR armv7-a)
 #----------------------------------------------------------------------
 # Path variables for toolchains
 #----------------------------------------------------------------------
+list(APPEND CMAKE_TRY_COMPILE_PLATFORM_VARIABLES NILRT_TOOLCHAIN_ROOT)
 if(NOT NILRT_TOOLCHAIN_ROOT)
   message(FATAL_ERROR "NILRT_TOOLCHAIN_ROOT must point to the extracted NI Linux RT toolchain")
 endif()
