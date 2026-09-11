@@ -64,6 +64,11 @@ if(USE_SUBMODULE_LIBS)
   # The archetypical WIN32 build case
   # protobuf_INSTALL must be turned OFF whenever building it as a cmake subdir.
   set(protobuf_INSTALL OFF)
+  if(CMAKE_CROSSCOMPILING)
+    set(gRPC_BUILD_CODEGEN OFF CACHE BOOL "Build gRPC code generators" FORCE)
+    set(protobuf_BUILD_PROTOC_BINARIES OFF CACHE BOOL "Build libprotoc and protoc compiler" FORCE)
+    set(protobuf_BUILD_LIBUPB OFF CACHE BOOL "Build libupb" FORCE)
+  endif()
 
   add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc)
   set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
