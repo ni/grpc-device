@@ -3,17 +3,22 @@
 import argparse
 import json
 from pathlib import Path
+from typing import Optional, Set
 
 from common_helpers import get_driver_readiness, is_driver_restricted
 from template_helpers import load_metadata
 
 
-def _generate_file(metadata_dir: Path, output_dir: Path) -> None:
+def _generate_file(
+    metadata_dir: Path, output_dir: Path, included_drivers: Optional[Set[str]] = None
+) -> None:
     service_instance_names = []
     driver_modules = [
         load_metadata(p)
         for p in sorted(metadata_dir.iterdir())
-        if p.is_dir() and "fake" not in p.name
+        if p.is_dir()
+        and "fake" not in p.name
+        and (included_drivers is None or p.name in included_drivers)
     ]
     for data in driver_modules:
         config = data["config"]
@@ -40,6 +45,12 @@ if __name__ == "__main__":
         "-o",
         help="The path to the top-level directory to save the generated files. The API-specific sub-directories will be automatically created.",
     )
+    parser.add_argument(
+        "--drivers",
+        nargs="+",
+        help="Driver metadata directory names to include. All drivers are included if omitted.",
+    )
     args = parser.parse_args()
     output_path = "." if args.output is None else args.output
-    _generate_file(Path(args.metadata), Path(output_path))
+    included_drivers = None if args.drivers is None else set(args.drivers)
+    _generate_file(Path(args.metadata), Path(output_path), included_drivers)
