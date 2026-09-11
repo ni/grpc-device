@@ -33,6 +33,9 @@ set(CMAKE_CXX_FLAGS_DEBUG_INIT "-O0 -g3")
 set(CMAKE_C_FLAGS_RELEASE_INIT "-O3")
 set(CMAKE_CXX_FLAGS_RELEASE_INIT "-O3")
 
+# c-ares fails to detect fcntl when probing the 2018 sysroot with the host cross-compiler.
+set(HAVE_FCNTL 1 CACHE INTERNAL "fcntl is available on NI Linux RT")
+
 #----------------------------------------------------------------------
 # Define proper search behavior for cross compilation
 #----------------------------------------------------------------------
