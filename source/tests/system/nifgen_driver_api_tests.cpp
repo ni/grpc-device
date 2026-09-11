@@ -530,8 +530,6 @@ TEST_F(NiFgenDriverApiTest, ConfigureTriggerMode_ConfiguresSuccessfully)
 
 TEST_F(NiFgenDriverApiTest, ResetInterchangeCheck_ResetsSuccessfully)
 {
-  const char* channel_name = "0";
-  double expected_current_level = 3.0;
   ::grpc::ClientContext context;
   fgen::ResetInterchangeCheckRequest request;
   request.mutable_vi()->set_name(GetSessionName());

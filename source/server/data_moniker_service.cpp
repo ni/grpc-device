@@ -5,7 +5,14 @@
 #include "moniker_stream_processor.h"
 
 #include <sideband_data.h>
+#if defined(__GNUC__)
+  #pragma GCC diagnostic push
+  #pragma GCC diagnostic ignored "-Wunknown-pragmas"
+#endif
 #include <sideband_grpc.h>
+#if defined(__GNUC__)
+  #pragma GCC diagnostic pop
+#endif
 #include <sideband_internal.h>
 
 #include <thread>
@@ -188,7 +195,7 @@ void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::S
     }
     if (writers.size() > 0) {
       int x = 0;
-      if (writers.size() != writeRequest->values().values_size()) {
+      if (writers.size() != static_cast<size_t>(writeRequest->values().values_size())) {
         break;
       }
       for (auto writer : writers) {
@@ -197,7 +204,6 @@ void DataMonikerService::RunSidebandReadWriteLoop(string sidebandIdentifier, ::S
     }
     auto readResult = Arena::Create<SidebandReadResponse>(&arena);
     if (readers.size() > 0) {
-      int x = 0;
       for (auto reader : readers) {
         auto readValue = readResult->mutable_values()->add_values();
         std::get<0>(reader)(std::get<1>(reader), arena, *readValue);
