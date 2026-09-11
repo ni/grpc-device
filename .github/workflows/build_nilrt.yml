@@ -41,9 +41,16 @@ jobs:
         python-version: '3.x'
 
     - name: Setup Ninja
+      if: ${{ matrix.config.arch == 'x64' }}
       uses: seanmiddleditch/gha-setup-ninja@v5
       with:
           version: 1.12.1
+
+    - name: Install Ninja on ARM64 Host
+      if: ${{ matrix.config.arch == 'armv7-a' }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y ninja-build
 
     - name: Setup cmake
       uses: jwlawson/actions-setup-cmake@v2
