@@ -79,6 +79,11 @@ jobs:
         sudo apt-get install -y gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
         wget -nv https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-cortexa9-vfpv3-toolchain-6.0.sh -O nilrt-armv7-toolchain.sh
         chmod a+x ./nilrt-armv7-toolchain.sh
+        # The wrapper rejects non-x64 hosts, but its target sysroot payload and Python relocator
+        # are host-neutral. The bundled x64 compiler tools are not used by this build.
+        grep -qF 'SDK_ARCH=$(echo x86_64 |' ./nilrt-armv7-toolchain.sh
+        sed -i 's/^SDK_ARCH=.*$/SDK_ARCH=$(uname -m)/' ./nilrt-armv7-toolchain.sh
+        grep -qxF 'SDK_ARCH=$(uname -m)' ./nilrt-armv7-toolchain.sh
         ./nilrt-armv7-toolchain.sh -y -d $GITHUB_WORKSPACE/nilrt-toolchain/
 
     - name: Update Submodules
