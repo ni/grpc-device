@@ -46,13 +46,14 @@ jobs:
       with:
           version: 1.12.1
 
-    - name: Install Ninja on ARM64 Host
+    - name: Install Build Tools on ARM64 Host
       if: ${{ matrix.config.arch == 'armv7-a' }}
       run: |
         sudo apt-get update
-        sudo apt-get install -y ninja-build
+        sudo apt-get install -y cmake ninja-build
 
     - name: Setup cmake
+      if: ${{ matrix.config.arch == 'x64' }}
       uses: jwlawson/actions-setup-cmake@v2
       with:
           cmake-version: '3.18.x'
