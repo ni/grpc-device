@@ -13,7 +13,6 @@ else()
 	find_program(COMPILER_PATH x86_64-nilrt-linux-gcc REQUIRED)
 	get_filename_component(toolchain_path ${COMPILER_PATH}/../../../../.. REALPATH DIRECTORY)
 endif()
-set(include_path core2-64-nilrt-linux/usr/include/c++/6.3.0)
 
 #----------------------------------------------------------------------
 # Compilers
@@ -26,11 +25,6 @@ find_program(CMAKE_OBJCOPY x86_64-nilrt-linux-objcopy REQUIRED)
 # Default compiler flags
 #----------------------------------------------------------------------
 set(CMAKE_SYSROOT ${toolchain_path}/core2-64-nilrt-linux)
-set(CMAKE_C_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_SYSROOT}/usr/include)
-set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES
-  ${toolchain_path}/${include_path}
-  ${toolchain_path}/${include_path}/x86_64-nilrt-linux
-  ${CMAKE_SYSROOT}/usr/include)
 set(CMAKE_C_FLAGS_INIT "-Wall -fmessage-length=0")
 set(CMAKE_CXX_FLAGS_INIT "-Wall -fmessage-length=0")
 set(CMAKE_C_FLAGS_DEBUG_INIT "-O0 -g3")
