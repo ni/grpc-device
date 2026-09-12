@@ -55,12 +55,20 @@ def get_enum_definitions(enums_to_define, enums):
         enum_value_prefix = common_helpers.get_enum_value_prefix(enum_name, enum)
         if enum.get("generate-mappings", False):
             values = [
-                {"name": f"{enum_value_prefix}_{value['name']}", "value": index + 1}
+                {
+                    "name": f"{enum_value_prefix}_{value['name']}",
+                    "value": index + 1,
+                    "deprecated": value.get("deprecated", False),
+                }
                 for index, value in enumerate(enum["values"])
             ]
         else:
             values = [
-                {"name": f"{enum_value_prefix}_{value['name']}", "value": value["value"]}
+                {
+                    "name": f"{enum_value_prefix}_{value['name']}",
+                    "value": value["value"],
+                    "deprecated": value.get("deprecated", False),
+                }
                 for value in enum["values"]
             ]
 
@@ -73,7 +81,11 @@ def get_enum_definitions(enums_to_define, enums):
             values.insert(0, {"name": unspecified_value_name, "value": 0})
 
         allow_alias = _should_allow_alias(values)
-        enum_definition = {"allow_alias": allow_alias, "values": values}
+        enum_definition = {
+            "allow_alias": allow_alias,
+            "deprecated": enum.get("deprecated", False),
+            "values": values,
+        }
 
         enum_definitions.update({enum_name: enum_definition})
 
