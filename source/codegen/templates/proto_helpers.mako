@@ -32,8 +32,9 @@ enum ${common_helpers.get_attribute_enum_name(group_name, sub_group, config)} {
 %   for attribute in attributes:
 <%
    attribute_name = attributes[attribute]["name"]
+   attribute_deprecated = attributes[attribute].get("deprecated", False)
 %>\
-  ${attribute_value_prefix}_${attribute_name} = ${attribute};
+  ${attribute_value_prefix}_${attribute_name} = ${attribute}${" [deprecated = true]" if attribute_deprecated else ""};
 %   endfor
 }
 
@@ -48,11 +49,14 @@ enum ${common_helpers.get_attribute_enum_name(group_name, sub_group, config)} {
 %>\
 % for enum_name in enum_definitions:
 enum ${enum_name} {
+%   if enum_definitions[enum_name].get("deprecated", False):
+  option deprecated = true;
+%   endif
 %   if enum_definitions[enum_name]["allow_alias"]:
   option allow_alias = true;
 %   endif
 %   for value in enum_definitions[enum_name]["values"]:
-  ${value["name"]} = ${value["value"]};
+  ${value["name"]} = ${value["value"]}${" [deprecated = true]" if value.get("deprecated", False) else ""};
 %   endfor
 }
 

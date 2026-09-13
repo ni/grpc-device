@@ -179,6 +179,7 @@ FUNCTION_SCHEMA = Schema(
         Optional("timeout_error"): str,
         Optional("supports_streaming"): bool,
         Optional("moniker_streaming_type"): str,
+        Optional("deprecated"): bool,
     }
 )
 
@@ -219,6 +220,7 @@ ATTRIBUTE_SCHEMA = Schema(
         Optional("python_class_name"): str,
         Optional("python_data_type"): str,
         Optional("python_description"): str,
+        Optional("deprecated"): bool,
     }
 )
 
@@ -231,6 +233,7 @@ SIMPLE_ATTRIBUTE_SCHEMA = Schema(
 ENUM_SCHEMA = Schema(
     {
         Optional("python_name"): str,
+        Optional("deprecated"): bool,
         "values": [
             {
                 "name": str,
@@ -239,6 +242,7 @@ ENUM_SCHEMA = Schema(
                 Optional("python_name"): str,
                 Optional("documentation"): DOCUMENTATION_SCHEMA,
                 Optional("type"): str,
+                Optional("deprecated"): bool,
             }
         ],
         Optional("generate-mappings"): bool,

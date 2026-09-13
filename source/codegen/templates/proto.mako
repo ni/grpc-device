@@ -45,7 +45,7 @@ service ${service_class_prefix} {
   method_name = common_helpers.snake_to_pascal(function)
   streaming_qualifier = proto_helpers.get_streaming_response_qualifier(functions[function])
 %>\
-  rpc ${method_name}(${method_name}Request) returns (${streaming_qualifier}${method_name}Response);
+  rpc ${method_name}(${method_name}Request) returns (${streaming_qualifier}${method_name}Response)${" { option deprecated = true; }" if functions[function].get("deprecated", False) else ";"}
 % endfor
 }
 
