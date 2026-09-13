@@ -84,6 +84,7 @@ public:
   ::grpc::Status CreateDeembeddingSparameterTableArray(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableArrayRequest* request, CreateDeembeddingSparameterTableArrayResponse* response) override;
   ::grpc::Status CreateDeembeddingSparameterTableS2PFile(::grpc::ServerContext* context, const CreateDeembeddingSparameterTableS2PFileRequest* request, CreateDeembeddingSparameterTableS2PFileResponse* response) override;
   ::grpc::Status DeleteAllDeembeddingTables(::grpc::ServerContext* context, const DeleteAllDeembeddingTablesRequest* request, DeleteAllDeembeddingTablesResponse* response) override;
+  ::grpc::Status DisableCalibrationPlane(::grpc::ServerContext* context, const DisableCalibrationPlaneRequest* request, DisableCalibrationPlaneResponse* response) override;
   ::grpc::Status DeleteConfigurationList(::grpc::ServerContext* context, const DeleteConfigurationListRequest* request, DeleteConfigurationListResponse* response) override;
   ::grpc::Status DeleteDeembeddingTable(::grpc::ServerContext* context, const DeleteDeembeddingTableRequest* request, DeleteDeembeddingTableResponse* response) override;
   ::grpc::Status DeleteScript(::grpc::ServerContext* context, const DeleteScriptRequest* request, DeleteScriptResponse* response) override;
@@ -92,6 +93,7 @@ public:
   ::grpc::Status DisableConfigurationListStepTrigger(::grpc::ServerContext* context, const DisableConfigurationListStepTriggerRequest* request, DisableConfigurationListStepTriggerResponse* response) override;
   ::grpc::Status DisableScriptTrigger(::grpc::ServerContext* context, const DisableScriptTriggerRequest* request, DisableScriptTriggerResponse* response) override;
   ::grpc::Status DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response) override;
+  ::grpc::Status EnableCalibrationPlane(::grpc::ServerContext* context, const EnableCalibrationPlaneRequest* request, EnableCalibrationPlaneResponse* response) override;
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
   ::grpc::Status ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response) override;
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;

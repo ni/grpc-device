@@ -708,6 +708,21 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
+    'DisableCalibrationPlane': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
     'DisableRefTrigger': {
         'parameters': [
             {
@@ -724,6 +739,21 @@ functions = {
                 'direction': 'in',
                 'name': 'vi',
                 'type': 'ViSession'
+            }
+        ],
+        'returns': 'ViStatus'
+    },
+    'EnableCalibrationPlane': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'vi',
+                'type': 'ViSession'
+            },
+            {
+                'direction': 'in',
+                'name': 'channelName',
+                'type': 'ViConstString'
             }
         ],
         'returns': 'ViStatus'

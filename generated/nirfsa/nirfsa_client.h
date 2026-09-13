@@ -58,8 +58,10 @@ DeleteConfigurationListResponse delete_configuration_list(const StubPtr& stub, c
 DeleteDeembeddingTableResponse delete_deembedding_table(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name);
 DisableResponse disable(const StubPtr& stub, const nidevice_grpc::Session& vi);
 DisableAdvanceTriggerResponse disable_advance_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+DisableCalibrationPlaneResponse disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name);
 DisableRefTriggerResponse disable_ref_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
 DisableStartTriggerResponse disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
+EnableCalibrationPlaneResponse enable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name);
 EnableSessionAccessResponse enable_session_access(const StubPtr& stub, const nidevice_grpc::Session& vi, const bool& enable);
 ErrorMessageResponse error_message(const StubPtr& stub, const nidevice_grpc::Session& vi, const pb::int32& status_code);
 ErrorQueryResponse error_query(const StubPtr& stub, const nidevice_grpc::Session& vi);

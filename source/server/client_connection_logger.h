@@ -33,6 +33,9 @@ class ClientConnectionLogger : public grpc::Server::GlobalCallbacks {
 // Registers a process-wide ClientConnectionLogger with gRPC, must be called before any grpc::Server is built.
 void register_client_connection_logger();
 
+// Registers an absl::LogSink that captures all of gRPC's internal log messages; used for logging connection failures
+void register_grpc_log_sink();
+
 }  // namespace nidevice_grpc
 
 #endif  // NIDEVICE_GRPC_CLIENT_CONNECTION_LOGGER_H

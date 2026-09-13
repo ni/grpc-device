@@ -187,6 +187,11 @@ ViStatus DisableAdvanceTrigger(ViSession vi)
   return niRFSA_DisableAdvanceTrigger(vi);
 }
 
+ViStatus DisableCalibrationPlane(ViSession vi, ViConstString channelName)
+{
+  return niRFSA_DisableCalibrationPlane(vi, channelName);
+}
+
 ViStatus DisableRefTrigger(ViSession vi)
 {
   return niRFSA_DisableRefTrigger(vi);
@@ -195,6 +200,11 @@ ViStatus DisableRefTrigger(ViSession vi)
 ViStatus DisableStartTrigger(ViSession vi)
 {
   return niRFSA_DisableStartTrigger(vi);
+}
+
+ViStatus EnableCalibrationPlane(ViSession vi, ViConstString channelName)
+{
+  return niRFSA_EnableCalibrationPlane(vi, channelName);
 }
 
 ViStatus EnableSessionAccess(ViSession vi, ViBoolean enable)

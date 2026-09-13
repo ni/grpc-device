@@ -327,6 +327,8 @@ int main(int argc, char** argv)
   nidevice_grpc::set_console_ctrl_handler(&StopServer);
 #endif
 
+  nidevice_grpc::register_grpc_log_sink();
+
   RunServer(config);
   return EXIT_SUCCESS;
 }

@@ -1,6 +1,14 @@
 #include "client_connection_logger.h"
 #include "logging.h"
 
+#include <absl/log/globals.h>
+#include <absl/log/initialize.h>
+#include <absl/log/log_entry.h>
+#include <absl/log/log_sink.h>
+#include <absl/log/log_sink_registry.h>
+
+#include <regex>
+
 #include <grpc/grpc_security_constants.h>
 
 namespace nidevice_grpc {
@@ -19,12 +27,12 @@ std::string describe_authentication(const grpc::AuthContext& auth_context)
   description += transport_type.empty() ? "unknown transport" : std::string(transport_type[0].data(), transport_type[0].size());
 
   if (!common_names.empty())
-    description += ", client cert CN:" + std::string(common_names[0].data(), common_names[0].size());
+    description += ", client cert CN: " + std::string(common_names[0].data(), common_names[0].size());
 
   return description;
 }
 
-}
+} // namespace
 
 bool parse_peer(const std::string& peer, std::string& ip, std::string& port)
 {
@@ -98,6 +106,72 @@ void register_client_connection_logger()
   // if that changes to non-owning, intentionally leaking one process-wide object is correct and avoids a static-destruction-order hazard
   // against grpc::Server.
   grpc::Server::SetGlobalCallbacks(new ClientConnectionLogger());
+}
+
+namespace {
+
+// Converts absl's severity levels to our own.
+logging::Level to_logging_level(absl::LogSeverity severity)
+{
+  switch (severity) {
+    case absl::LogSeverity::kWarning:
+      return logging::Level_Warning;
+    case absl::LogSeverity::kError:
+    case absl::LogSeverity::kFatal:
+      return logging::Level_Error;
+    case absl::LogSeverity::kInfo:
+    default:
+      return logging::Level_Info;
+  }
+}
+
+// This sink captures gRPC's own internal logs and calls Send for each of them. We only use it to log handshake failures.
+class AuditLogSinkWrapper {
+  public:
+    AuditLogSinkWrapper() {
+      absl::InitializeLog();
+      absl::AddLogSink(&sink_);
+
+      // gpr_log_verbosity_init() may raise the global floor above INFO and silence audit records.
+      if (absl::MinLogLevel() > absl::LogSeverityAtLeast::kInfo) { 
+        logging::log(logging::Level_Error, "GRPC_VERBOSITY suppresses connection-failure audit logging; forcing INFO."); 
+        absl::SetMinLogLevel(absl::LogSeverityAtLeast::kInfo); 
+      }
+    }
+    ~AuditLogSinkWrapper() {
+      absl::RemoveLogSink(&sink_);
+    }
+
+    // Disable copy/move constructors and assignment operators.
+    AuditLogSinkWrapper(const AuditLogSinkWrapper&) = delete;
+    AuditLogSinkWrapper& operator=(const AuditLogSinkWrapper&) = delete;
+    AuditLogSinkWrapper(AuditLogSinkWrapper&&) = delete;
+    AuditLogSinkWrapper& operator=(AuditLogSinkWrapper&&) = delete;
+
+  private:
+    class AuditLogSink : public absl::LogSink {
+    public:
+      void Send(const absl::LogEntry& entry) override
+      {
+        static const std::regex handshake_fail_pattern(R"(\bhandshake\b.*\bfail)", std::regex::icase);
+        const auto& text = entry.text_message();
+        if (!std::regex_search(text.begin(), text.end(), handshake_fail_pattern))
+          return;
+
+        const auto message = std::string(entry.text_message());
+        logging::log_to_audit_source(to_logging_level(entry.log_severity()), "%s", message.c_str());
+      }
+    };
+
+    AuditLogSink sink_;
+};
+
+} // namespace
+
+void register_grpc_log_sink()
+{
+  // The wrapper handles adding and removing the log sink from absl.
+  static AuditLogSinkWrapper sink;
 }
 
 }  // namespace nidevice_grpc

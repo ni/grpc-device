@@ -59,6 +59,7 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   MOCK_METHOD(ViStatus, CreateDeembeddingSparameterTableArray, (ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation), (override));
   MOCK_METHOD(ViStatus, CreateDeembeddingSparameterTableS2PFile, (ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation), (override));
   MOCK_METHOD(ViStatus, DeleteAllDeembeddingTables, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, DisableCalibrationPlane, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, DeleteConfigurationList, (ViSession vi, ViConstString listName), (override));
   MOCK_METHOD(ViStatus, DeleteDeembeddingTable, (ViSession vi, ViConstString port, ViConstString tableName), (override));
   MOCK_METHOD(ViStatus, DeleteScript, (ViSession vi, ViConstString scriptName), (override));
@@ -67,6 +68,7 @@ class NiRFSGMockLibrary : public nirfsg_grpc::NiRFSGLibraryInterface {
   MOCK_METHOD(ViStatus, DisableConfigurationListStepTrigger, (ViSession vi), (override));
   MOCK_METHOD(ViStatus, DisableScriptTrigger, (ViSession vi, ViConstString triggerID), (override));
   MOCK_METHOD(ViStatus, DisableStartTrigger, (ViSession vi), (override));
+  MOCK_METHOD(ViStatus, EnableCalibrationPlane, (ViSession vi, ViConstString channelName), (override));
   MOCK_METHOD(ViStatus, ErrorMessage, (ViSession vi, ViStatus errorCode, ViChar errorMessage[1024]), (override));
   MOCK_METHOD(ViStatus, ErrorQuery, (ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]), (override));
   MOCK_METHOD(ViStatus, ExportSignal, (ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal), (override));

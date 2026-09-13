@@ -78,8 +78,10 @@ public:
   ::grpc::Status DeleteDeembeddingTable(::grpc::ServerContext* context, const DeleteDeembeddingTableRequest* request, DeleteDeembeddingTableResponse* response) override;
   ::grpc::Status Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response) override;
   ::grpc::Status DisableAdvanceTrigger(::grpc::ServerContext* context, const DisableAdvanceTriggerRequest* request, DisableAdvanceTriggerResponse* response) override;
+  ::grpc::Status DisableCalibrationPlane(::grpc::ServerContext* context, const DisableCalibrationPlaneRequest* request, DisableCalibrationPlaneResponse* response) override;
   ::grpc::Status DisableRefTrigger(::grpc::ServerContext* context, const DisableRefTriggerRequest* request, DisableRefTriggerResponse* response) override;
   ::grpc::Status DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response) override;
+  ::grpc::Status EnableCalibrationPlane(::grpc::ServerContext* context, const EnableCalibrationPlaneRequest* request, EnableCalibrationPlaneResponse* response) override;
   ::grpc::Status EnableSessionAccess(::grpc::ServerContext* context, const EnableSessionAccessRequest* request, EnableSessionAccessResponse* response) override;
   ::grpc::Status ErrorMessage(::grpc::ServerContext* context, const ErrorMessageRequest* request, ErrorMessageResponse* response) override;
   ::grpc::Status ErrorQuery(::grpc::ServerContext* context, const ErrorQueryRequest* request, ErrorQueryResponse* response) override;

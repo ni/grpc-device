@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFSG API metadata version 25.5.0
+// This file is generated from NI-RFSG API metadata version 26.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFSG Metadata
 //---------------------------------------------------------------------
@@ -59,6 +59,7 @@ service NiRFSG {
   rpc CreateDeembeddingSparameterTableArray(CreateDeembeddingSparameterTableArrayRequest) returns (CreateDeembeddingSparameterTableArrayResponse);
   rpc CreateDeembeddingSparameterTableS2PFile(CreateDeembeddingSparameterTableS2PFileRequest) returns (CreateDeembeddingSparameterTableS2PFileResponse);
   rpc DeleteAllDeembeddingTables(DeleteAllDeembeddingTablesRequest) returns (DeleteAllDeembeddingTablesResponse);
+  rpc DisableCalibrationPlane(DisableCalibrationPlaneRequest) returns (DisableCalibrationPlaneResponse);
   rpc DeleteConfigurationList(DeleteConfigurationListRequest) returns (DeleteConfigurationListResponse);
   rpc DeleteDeembeddingTable(DeleteDeembeddingTableRequest) returns (DeleteDeembeddingTableResponse);
   rpc DeleteScript(DeleteScriptRequest) returns (DeleteScriptResponse);
@@ -67,6 +68,7 @@ service NiRFSG {
   rpc DisableConfigurationListStepTrigger(DisableConfigurationListStepTriggerRequest) returns (DisableConfigurationListStepTriggerResponse);
   rpc DisableScriptTrigger(DisableScriptTriggerRequest) returns (DisableScriptTriggerResponse);
   rpc DisableStartTrigger(DisableStartTriggerRequest) returns (DisableStartTriggerResponse);
+  rpc EnableCalibrationPlane(EnableCalibrationPlaneRequest) returns (EnableCalibrationPlaneResponse);
   rpc ErrorMessage(ErrorMessageRequest) returns (ErrorMessageResponse);
   rpc ErrorQuery(ErrorQueryRequest) returns (ErrorQueryResponse);
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
@@ -1286,6 +1288,15 @@ message DeleteAllDeembeddingTablesResponse {
   int32 status = 1;
 }
 
+message DisableCalibrationPlaneRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message DisableCalibrationPlaneResponse {
+  int32 status = 1;
+}
+
 message DeleteConfigurationListRequest {
   nidevice_grpc.Session vi = 1;
   string list_name = 2;
@@ -1355,6 +1366,15 @@ message DisableStartTriggerRequest {
 }
 
 message DisableStartTriggerResponse {
+  int32 status = 1;
+}
+
+message EnableCalibrationPlaneRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message EnableCalibrationPlaneResponse {
   int32 status = 1;
 }
 
