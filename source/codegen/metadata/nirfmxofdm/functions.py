@@ -292,6 +292,35 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'BuildAllocationString': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'allocationNumber',
+                'type': 'int32'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorStringOutLength',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'selectorStringOut',
+                'size': {
+                    'mechanism': 'ivi-dance',
+                    'value': 'selectorStringOutLength'
+                },
+                'type': 'char[]'
+            }
+        ],
+        'returns': 'int32'
+    },
     'BuildSignalString': {
         'parameters': [
             {

@@ -148,6 +148,24 @@ auto_level(const StubPtr& stub, const nidevice_grpc::Session& instrument, const 
   return response;
 }
 
+BuildAllocationStringResponse
+build_allocation_string(const StubPtr& stub, const std::string& selector_string, const pb::int32& allocation_number)
+{
+  ::grpc::ClientContext context;
+
+  auto request = BuildAllocationStringRequest{};
+  request.set_selector_string(selector_string);
+  request.set_allocation_number(allocation_number);
+
+  auto response = BuildAllocationStringResponse{};
+
+  raise_if_error(
+      stub->BuildAllocationString(&context, request, &response),
+      context);
+
+  return response;
+}
+
 BuildSignalStringResponse
 build_signal_string(const StubPtr& stub, const std::string& signal_name, const std::string& result_name)
 {

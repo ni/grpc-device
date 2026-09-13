@@ -37,6 +37,11 @@ int32 AutoLevel(niRFmxInstrHandle instrumentHandle, char selectorString[], float
   return RFmxOFDM_AutoLevel(instrumentHandle, selectorString, bandwidth, measurementInterval, referenceLevel);
 }
 
+int32 BuildAllocationString(char selectorString[], int32 allocationNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  return RFmxOFDM_BuildAllocationString(selectorString, allocationNumber, selectorStringOutLength, selectorStringOut);
+}
+
 int32 BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])
 {
   return RFmxOFDM_BuildSignalString(signalName, resultName, selectorStringLength, selectorString);

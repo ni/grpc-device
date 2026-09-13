@@ -33,6 +33,7 @@ NiRFmxOFDMLibrary::NiRFmxOFDMLibrary(std::shared_ptr<nidevice_grpc::SharedLibrar
   function_pointers_.AnalyzeIQ1WaveformSplit = reinterpret_cast<AnalyzeIQ1WaveformSplitPtr>(shared_library_->get_function_pointer("RFmxOFDM_AnalyzeIQ1WaveformSplit"));
   function_pointers_.AnalyzeSpectrum1Waveform = reinterpret_cast<AnalyzeSpectrum1WaveformPtr>(shared_library_->get_function_pointer("RFmxOFDM_AnalyzeSpectrum1Waveform"));
   function_pointers_.AutoLevel = reinterpret_cast<AutoLevelPtr>(shared_library_->get_function_pointer("RFmxOFDM_AutoLevel"));
+  function_pointers_.BuildAllocationString = reinterpret_cast<BuildAllocationStringPtr>(shared_library_->get_function_pointer("RFmxOFDM_BuildAllocationString"));
   function_pointers_.BuildSignalString = reinterpret_cast<BuildSignalStringPtr>(shared_library_->get_function_pointer("RFmxOFDM_BuildSignalString"));
   function_pointers_.CfgDigitalEdgeTrigger = reinterpret_cast<CfgDigitalEdgeTriggerPtr>(shared_library_->get_function_pointer("RFmxOFDM_CfgDigitalEdgeTrigger"));
   function_pointers_.CfgExternalAttenuation = reinterpret_cast<CfgExternalAttenuationPtr>(shared_library_->get_function_pointer("RFmxOFDM_CfgExternalAttenuation"));
@@ -177,6 +178,14 @@ int32 NiRFmxOFDMLibrary::AutoLevel(niRFmxInstrHandle instrumentHandle, char sele
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxOFDM_AutoLevel.");
   }
   return function_pointers_.AutoLevel(instrumentHandle, selectorString, bandwidth, measurementInterval, referenceLevel);
+}
+
+int32 NiRFmxOFDMLibrary::BuildAllocationString(char selectorString[], int32 allocationNumber, int32 selectorStringOutLength, char selectorStringOut[])
+{
+  if (!function_pointers_.BuildAllocationString) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxOFDM_BuildAllocationString.");
+  }
+  return function_pointers_.BuildAllocationString(selectorString, allocationNumber, selectorStringOutLength, selectorStringOut);
 }
 
 int32 NiRFmxOFDMLibrary::BuildSignalString(char signalName[], char resultName[], int32 selectorStringLength, char selectorString[])

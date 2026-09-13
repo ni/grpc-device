@@ -23,6 +23,7 @@ service NiRFmxOFDM {
   rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
   rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
   rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
+  rpc BuildAllocationString(BuildAllocationStringRequest) returns (BuildAllocationStringResponse);
   rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
   rpc CfgDigitalEdgeTrigger(CfgDigitalEdgeTriggerRequest) returns (CfgDigitalEdgeTriggerResponse);
   rpc CfgExternalAttenuation(CfgExternalAttenuationRequest) returns (CfgExternalAttenuationResponse);
@@ -381,6 +382,16 @@ message AutoLevelRequest {
 message AutoLevelResponse {
   int32 status = 1;
   double reference_level = 2;
+}
+
+message BuildAllocationStringRequest {
+  string selector_string = 1;
+  int32 allocation_number = 2;
+}
+
+message BuildAllocationStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
 }
 
 message BuildSignalStringRequest {

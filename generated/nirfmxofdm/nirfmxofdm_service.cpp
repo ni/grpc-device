@@ -248,6 +248,50 @@ namespace nirfmxofdm_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxOFDMService::BuildAllocationString(::grpc::ServerContext* context, const BuildAllocationStringRequest* request, BuildAllocationStringResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      int32 allocation_number = request->allocation_number();
+
+      while (true) {
+        auto status = library_->BuildAllocationString(selector_string, allocation_number, 0, nullptr);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        int32 selector_string_out_length = status;
+
+        std::string selector_string_out;
+        if (selector_string_out_length > 0) {
+            selector_string_out.resize(selector_string_out_length - 1);
+        }
+        status = library_->BuildAllocationString(selector_string, allocation_number, selector_string_out_length, (char*)selector_string_out.data());
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(selector_string_out_length)) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, 0);
+        }
+        response->set_status(status);
+        std::string selector_string_out_utf8;
+        convert_to_grpc(selector_string_out, &selector_string_out_utf8);
+        response->set_selector_string_out(selector_string_out_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_selector_string_out()));
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxOFDMService::BuildSignalString(::grpc::ServerContext* context, const BuildSignalStringRequest* request, BuildSignalStringResponse* response)
   {
     if (context->IsCancelled()) {
