@@ -23,6 +23,7 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-RFmx Demod             | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx GSM               | 2025 Q1       | Not Supported | Not Supported |
 | NI-RFmx LTE               | 2026 Q3       | Not Supported | Not Supported |
+| NI-RFmx OFDM              | 2026 Q4       | Not Supported | Not Supported |
 | NI-RFmx Pulse             | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx NR                | 2026 Q3       | Not Supported | Not Supported |
 | NI-RFmx SpecAn            | 2025 Q4       | Not Supported | Not Supported |
