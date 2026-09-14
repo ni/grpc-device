@@ -140,6 +140,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_ATTR_INSTRUMENT_FIRMWARE_REVISION                        0x0000001b
 #define RFMXINSTR_ATTR_PRESELECTOR_PRESENT                                 0x0000001f
 #define RFMXINSTR_ATTR_RF_PREAMP_PRESENT                                   0x00000020
+#define RFMXINSTR_ATTR_TOTAL_EXTERNAL_ATTENUATION                          0x000000be
 #define RFMXINSTR_ATTR_PREAMP_ENABLED                                      0x0000000e
 #define RFMXINSTR_ATTR_CHANNEL_COUPLING                                    0x0000000b
 #define RFMXINSTR_ATTR_TUNING_SPEED                                        0x00000008
@@ -152,6 +153,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_ATTR_OSP_DELAY_ENABLED                                   0x00000017
 #define RFMXINSTR_ATTR_PHASE_OFFSET                                        0x00000013
 #define RFMXINSTR_ATTR_FFT_WIDTH                                           0x00000016
+#define RFMXINSTR_ATTR_CLEANER_IQ                                          0x000000bd
 #define RFMXINSTR_ATTR_CLEANER_SPECTRUM                                    0x00000025
 #define RFMXINSTR_ATTR_IF_OUTPUT_POWER_LEVEL_OFFSET                        0x00000011
 #define RFMXINSTR_ATTR_DIGITIZER_DITHER_ENABLED                            0x00000015
@@ -259,6 +261,11 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_VAL_FREQUENCY_SETTLING_UNITS_PPM                         0
 #define RFMXINSTR_VAL_FREQUENCY_SETTLING_UNITS_SECONDS_AFTER_LOCK          1
 #define RFMXINSTR_VAL_FREQUENCY_SETTLING_UNITS_SECONDS_AFTER_IO            2
+
+/* -- Values for Cleaner IQ -- */
+
+#define RFMXINSTR_VAL_CLEANER_IQ_DISABLED                                  0
+#define RFMXINSTR_VAL_CLEANER_IQ_ENABLED                                   1
 
 /* -- Values for Cleaner Spectrum -- */
 
@@ -405,6 +412,7 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_VAL_PERSONALITY_VNA                                      (1 << 12)
 #define RFMXINSTR_VAL_PERSONALITY_PULSE                                    (1 << 11)
 #define RFMXINSTR_VAL_PERSONALITY_UWB                                      (1 << 13)
+#define RFMXINSTR_VAL_PERSONALITY_OFDM                                     (1 << 14)
 #define RFMXINSTR_VAL_PERSONALITY_ALL                                      0x7FFFFFFF
 
 /* -- Values for Overflow Error Reporting -- */
@@ -437,7 +445,6 @@ typedef union CVIAbsoluteTime { CVITime cviTime; unsigned int u32Data[4]; } CVIA
 #define RFMXINSTR_VAL_SPARAMETER_TYPE_SCALAR                               1
 #define RFMXINSTR_VAL_SPARAMETER_TYPE_VECTOR                               2
 #define RFMXINSTR_VAL_SPARAMETER_TYPE_AMPLITUDE_FLATNESS                   3
-#define RFMXINSTR_VAL_SPARAMETER_TYPE_AMPLITUDE_AND_PHASE_FLATNESS         4
 
 /* Values for Self Calibration Validity Check */
 #define RFMXINSTR_VAL_SELF_CALIBRATION_VALIDITY_CHECK_OFF                  0
@@ -1461,6 +1468,11 @@ int32 __stdcall RFmxInstr_FetchRawIQData(
       char channelName[],
       int32 attrVal);
 
+   int32 __stdcall RFmxInstr_GetTotalExternalAttenuation(
+      niRFmxInstrHandle instrumentHandle,
+      char selectorString[],
+      float64 *attrVal);
+
    int32 __stdcall RFmxInstr_GetLOExportEnabled(
       niRFmxInstrHandle instrumentHandle,
       char channelName[],
@@ -1503,6 +1515,16 @@ int32 __stdcall RFmxInstr_FetchRawIQData(
       char channelName[],
       int32 arraySize,
       char attrVal[]);
+
+   int32 __stdcall RFmxInstr_GetCleanerIQ(
+      niRFmxInstrHandle instrumentHandle,
+      char channelName[],
+      int32* attrVal);
+
+   int32 __stdcall RFmxInstr_SetCleanerIQ(
+      niRFmxInstrHandle instrumentHandle,
+      char channelName[],
+      int32 attrVal);
 
    int32 __stdcall RFmxInstr_SetCleanerSpectrum(
       niRFmxInstrHandle instrumentHandle,
@@ -2159,6 +2181,10 @@ int32 __stdcall RFmxInstr_FetchRawIQData(
 
 #define RFMXINSTR_VAL_LO_SHARING_MODE_ONBOARD_STAR   					         1
 #define RFMXINSTR_VAL_LO_SHARING_MODE_ONBOARD_DAISY_CHAIN				      2
+
+/* Values for S-Parameter Type */
+#define RFMXINSTR_VAL_SPARAMETER_TYPE_AMPLITUDE_AND_PHASE_FLATNESS         4
+
 
 #ifdef __cplusplus
 extern "C"
