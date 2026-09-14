@@ -1,9 +1,17 @@
 diff --git a/third_party/abseil-cpp/absl/flags/internal/flag.h b/third_party/abseil-cpp/absl/flags/internal/flag.h
 --- a/third_party/abseil-cpp/absl/flags/internal/flag.h
 +++ b/third_party/abseil-cpp/absl/flags/internal/flag.h
-@@ -376,2 +376,5 @@ class MaskedPointer {
+@@ -373,9 +373,13 @@ class MaskedPointer {
+
+   static constexpr int RequiredAlignment() { return 4; }
+
 +  constexpr MaskedPointer() : ptr_(nullptr) {}
    constexpr explicit MaskedPointer(ptr_t rhs) : ptr_(rhs) {}
    MaskedPointer(ptr_t rhs, bool is_candidate);
+
 +  MaskedPointer(const MaskedPointer& rhs) = default;
 +  MaskedPointer& operator=(const MaskedPointer& rhs) = default;
++
+   void* Ptr() const {
+     return reinterpret_cast<void*>(reinterpret_cast<mask_t>(ptr_) &
+                                    kPtrValueMask);
