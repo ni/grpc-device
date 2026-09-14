@@ -113,7 +113,7 @@ inline void _set_property_value(SetPropertyRequest& request, const std::vector<n
 {
   request.mutable_db_ref_array()->clear_db_ref();
   request.mutable_db_ref_array()->mutable_db_ref()->Reserve(static_cast<int>(value.size()));
-  for (int i = 0; i < value.size(); ++i) {
+  for (size_t i = 0; i < value.size(); ++i) {
     request.mutable_db_ref_array()->mutable_db_ref()->at(i) = value[i];
   }
 }
@@ -122,7 +122,7 @@ inline void _set_property_value(SetPropertyRequest& request, const std::vector<E
 {
   request.mutable_ept_rx_filter_array()->clear_ept_rx_filter();
   request.mutable_ept_rx_filter_array()->mutable_ept_rx_filter()->Reserve(static_cast<int>(value.size()));
-  for (int i = 0; i < value.size(); ++i) {
+  for (size_t i = 0; i < value.size(); ++i) {
     request.mutable_ept_rx_filter_array()->mutable_ept_rx_filter()->at(i) = value[i];
   }
 }
