@@ -136,8 +136,10 @@ jobs:
       run: |
         # Backport Abseil c6b27359 for GCC 6 libstdc++'s std::atomic<T>::load().
         abseil_patch="$GITHUB_WORKSPACE/cmake/patches/abseil-c6b27359-masked-pointer.patch"
+        grpc_patch="$GITHUB_WORKSPACE/cmake/patches/grpc-remove-redundant-optional-includes.patch"
         if [ "${{ matrix.config.arch }}" = "armv7-a" ]; then
           git -C "$GITHUB_WORKSPACE/third_party/grpc/third_party/abseil-cpp" apply -p3 "$abseil_patch"
+          git -C "$GITHUB_WORKSPACE/third_party/grpc" apply "$grpc_patch"
         fi
 
         build_status=0
@@ -147,6 +149,7 @@ jobs:
           -j ${{ steps.cpu-cores.outputs.count }} || build_status=$?
 
         if [ "${{ matrix.config.arch }}" = "armv7-a" ]; then
+          git -C "$GITHUB_WORKSPACE/third_party/grpc" apply --reverse "$grpc_patch"
           git -C "$GITHUB_WORKSPACE/third_party/grpc/third_party/abseil-cpp" apply --reverse -p3 "$abseil_patch"
         fi
         exit "$build_status"
