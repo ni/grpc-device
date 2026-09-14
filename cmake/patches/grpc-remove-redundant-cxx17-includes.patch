@@ -30,3 +30,23 @@ diff --git a/src/core/lib/security/credentials/tls/grpc_tls_crl_provider.h b/src
 -#include <optional>
  #include <string>
  #include <utility>
+diff --git a/src/core/lib/promise/all_ok.h b/src/core/lib/promise/all_ok.h
+--- a/src/core/lib/promise/all_ok.h
++++ b/src/core/lib/promise/all_ok.h
+@@ -20,2 +20 @@
+ #include <tuple>
+-#include <variant>
+diff --git a/src/core/lib/promise/try_join.h b/src/core/lib/promise/try_join.h
+--- a/src/core/lib/promise/try_join.h
++++ b/src/core/lib/promise/try_join.h
+@@ -20,2 +20 @@
+ #include <tuple>
+-#include <variant>
+diff --git a/src/core/xds/grpc/xds_transport_grpc.cc b/src/core/xds/grpc/xds_transport_grpc.cc
+--- a/src/core/xds/grpc/xds_transport_grpc.cc
++++ b/src/core/xds/grpc/xds_transport_grpc.cc
+@@ -30,4 +30,3 @@
+ #include <functional>
+ #include <memory>
+-#include <string_view>
+ #include <utility>
