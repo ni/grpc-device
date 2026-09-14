@@ -16,8 +16,8 @@ set(toolchain_path ${NILRT_TOOLCHAIN_ROOT}/sysroots)
 #----------------------------------------------------------------------
 # Compilers
 #----------------------------------------------------------------------
-set(CMAKE_C_COMPILER arm-linux-gnueabi-gcc)
-set(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++)
+set(CMAKE_C_COMPILER arm-linux-gnueabi-gcc-12)
+set(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++-12)
 find_program(CMAKE_OBJCOPY arm-linux-gnueabi-objcopy REQUIRED)
 
 #----------------------------------------------------------------------
@@ -26,7 +26,8 @@ find_program(CMAKE_OBJCOPY arm-linux-gnueabi-objcopy REQUIRED)
 set(CMAKE_SYSROOT ${toolchain_path}/cortexa9-vfpv3-nilrt-linux-gnueabi)
 set(nilrt_cxx_include_path ${CMAKE_SYSROOT}/usr/include/c++/6.3.0)
 
-# Use the newer host compiler with the headers and runtime from the 2018 NILRT sysroot.
+# Use GCC 12 with the headers and runtime from the 2018 NILRT sysroot. GCC 13
+# reserves identifiers such as __remove_cv that are used by the GCC 6 headers.
 # GCC 6 reported 201500L in C++1z mode; preserve that library feature profile so
 # its headers do not expose final C++17 facilities that they do not provide.
 set(CMAKE_C_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_SYSROOT}/usr/include)

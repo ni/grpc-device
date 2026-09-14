@@ -50,7 +50,7 @@ jobs:
       if: ${{ matrix.config.arch == 'armv7-a' }}
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
+        sudo apt-get install -y cmake ninja-build gcc-12-arm-linux-gnueabi g++-12-arm-linux-gnueabi
 
     - name: Setup cmake
       if: ${{ matrix.config.arch == 'x64' }}
