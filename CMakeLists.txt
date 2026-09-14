@@ -75,6 +75,7 @@ if(USE_SUBMODULE_LIBS)
     set(gRPC_BUILD_GRPC_RUBY_PLUGIN OFF CACHE BOOL "Build grpc_ruby_plugin" FORCE)
     set(protobuf_BUILD_PROTOC_BINARIES OFF CACHE BOOL "Build libprotoc and protoc compiler" FORCE)
     set(protobuf_BUILD_LIBUPB OFF CACHE BOOL "Build libupb" FORCE)
+    find_program(_gRPC_PROTOBUF_PROTOC_EXECUTABLE protoc REQUIRED)
   endif()
 
   add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc)
