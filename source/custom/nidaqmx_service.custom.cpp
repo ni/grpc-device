@@ -482,7 +482,7 @@ bool NiDAQmxService::IsInternalAttribute(int32 attribute, const google::protobuf
       const auto signal_count = waveform.signal_count();
       const auto& y_data = waveform.y_data();
       
-      if (y_data.size() != number_of_samples_per_channel * signal_count) {
+      if (static_cast<int32>(y_data.size()) != number_of_samples_per_channel * signal_count) {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The waveforms must all have the same sample count.");
       }
       
