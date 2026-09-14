@@ -659,6 +659,15 @@ else()
     PROPERTIES
     COMPILE_OPTIONS "-Werror"
   )
+
+  set_property(
+    SOURCE
+      "source/server/data_moniker_service.cpp"
+      "source/tests/integration/ni_fake_daqmx_streaming_tests.cpp"
+      "source/tests/integration/ni_fake_fpga_streaming_tests.cpp"
+    APPEND
+    PROPERTY COMPILE_OPTIONS "-Wno-unknown-pragmas"
+  )
 endif()
 
 if(WIN32)

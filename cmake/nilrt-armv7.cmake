@@ -16,9 +16,10 @@ set(toolchain_path ${NILRT_TOOLCHAIN_ROOT}/sysroots)
 #----------------------------------------------------------------------
 # Compilers
 #----------------------------------------------------------------------
-set(CMAKE_C_COMPILER arm-linux-gnueabi-gcc)
-set(CMAKE_CXX_COMPILER arm-linux-gnueabi-g++)
-find_program(CMAKE_OBJCOPY arm-linux-gnueabi-objcopy REQUIRED)
+set(compiler_path ${toolchain_path}/x86_64-nilrtsdk-linux/usr/bin/arm-nilrt-linux-gnueabi)
+set(CMAKE_C_COMPILER ${compiler_path}/arm-nilrt-linux-gnueabi-gcc)
+set(CMAKE_CXX_COMPILER ${compiler_path}/arm-nilrt-linux-gnueabi-g++)
+set(CMAKE_OBJCOPY ${compiler_path}/arm-nilrt-linux-gnueabi-objcopy)
 
 #----------------------------------------------------------------------
 # Default compiler flags

@@ -172,26 +172,26 @@ namespace visa_grpc {
       case VI_ATTR_WR_BUF_SIZE:
         return AttributeValueData::kValueU32;
 
-      case VI_ATTR_MEM_BASE_64:
-      case VI_ATTR_MEM_SIZE_64:
-      case VI_ATTR_PXI_MEM_BASE_BAR0_64:
-      case VI_ATTR_PXI_MEM_BASE_BAR1_64:
-      case VI_ATTR_PXI_MEM_BASE_BAR2_64:
-      case VI_ATTR_PXI_MEM_BASE_BAR3_64:
-      case VI_ATTR_PXI_MEM_BASE_BAR4_64:
-      case VI_ATTR_PXI_MEM_BASE_BAR5_64:
-      case VI_ATTR_PXI_MEM_SIZE_BAR0_64:
-      case VI_ATTR_PXI_MEM_SIZE_BAR1_64:
-      case VI_ATTR_PXI_MEM_SIZE_BAR2_64:
-      case VI_ATTR_PXI_MEM_SIZE_BAR3_64:
-      case VI_ATTR_PXI_MEM_SIZE_BAR4_64:
-      case VI_ATTR_PXI_MEM_SIZE_BAR5_64:
-    #ifdef VI_ATTR_RET_COUNT_64
+    case VI_ATTR_MEM_BASE_64:
+    case VI_ATTR_MEM_SIZE_64:
+    case VI_ATTR_PXI_MEM_BASE_BAR0_64:
+    case VI_ATTR_PXI_MEM_BASE_BAR1_64:
+    case VI_ATTR_PXI_MEM_BASE_BAR2_64:
+    case VI_ATTR_PXI_MEM_BASE_BAR3_64:
+    case VI_ATTR_PXI_MEM_BASE_BAR4_64:
+    case VI_ATTR_PXI_MEM_BASE_BAR5_64:
+    case VI_ATTR_PXI_MEM_SIZE_BAR0_64:
+    case VI_ATTR_PXI_MEM_SIZE_BAR1_64:
+    case VI_ATTR_PXI_MEM_SIZE_BAR2_64:
+    case VI_ATTR_PXI_MEM_SIZE_BAR3_64:
+    case VI_ATTR_PXI_MEM_SIZE_BAR4_64:
+    case VI_ATTR_PXI_MEM_SIZE_BAR5_64:
+#ifdef VI_ATTR_RET_COUNT_64
       case VI_ATTR_RET_COUNT_64:
-    #endif
-      case VI_ATTR_USER_DATA:
-      case VI_ATTR_WIN_BASE_ADDR_64:
-      case VI_ATTR_WIN_SIZE_64:
+#endif
+    case VI_ATTR_USER_DATA:
+    case VI_ATTR_WIN_BASE_ADDR_64:
+    case VI_ATTR_WIN_SIZE_64:
         return AttributeValueData::kValueU64;
 
       case VI_ATTR_4882_COMPLIANT:

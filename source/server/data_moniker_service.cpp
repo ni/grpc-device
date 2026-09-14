@@ -5,14 +5,7 @@
 #include "moniker_stream_processor.h"
 
 #include <sideband_data.h>
-#if defined(__GNUC__)
-  #pragma GCC diagnostic push
-  #pragma GCC diagnostic ignored "-Wunknown-pragmas"
-#endif
 #include <sideband_grpc.h>
-#if defined(__GNUC__)
-  #pragma GCC diagnostic pop
-#endif
 #include <sideband_internal.h>
 
 #include <thread>

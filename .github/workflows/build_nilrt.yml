@@ -50,7 +50,7 @@ jobs:
       if: ${{ matrix.config.arch == 'armv7-a' }}
       run: |
         sudo apt-get update
-        sudo apt-get install -y cmake ninja-build
+        sudo apt-get install -y cmake ninja-build qemu-user-binfmt
 
     - name: Setup cmake
       if: ${{ matrix.config.arch == 'x64' }}
@@ -75,12 +75,10 @@ jobs:
     - name: Install NI Linux RT ARMv7 Toolchain
       if: ${{ matrix.config.arch == 'armv7-a' }}
       run: |
-        sudo apt-get update
-        sudo apt-get install -y gcc-arm-linux-gnueabi g++-arm-linux-gnueabi
         wget -nv https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-cortexa9-vfpv3-toolchain-6.0.sh -O nilrt-armv7-toolchain.sh
         chmod a+x ./nilrt-armv7-toolchain.sh
-        # The wrapper rejects non-x64 hosts, but its target sysroot payload and Python relocator
-        # are host-neutral. The bundled x64 compiler tools are not used by this build.
+        # The wrapper rejects non-x64 hosts. QEMU runs the bundled x64 compiler tools so they
+        # remain ABI-compatible with the 2018 target sysroot.
         grep -qF 'SDK_ARCH=$(echo x86_64 |' ./nilrt-armv7-toolchain.sh
         sed -i 's/^SDK_ARCH=.*$/SDK_ARCH=$(uname -m)/' ./nilrt-armv7-toolchain.sh
         grep -qxF 'SDK_ARCH=$(uname -m)' ./nilrt-armv7-toolchain.sh
