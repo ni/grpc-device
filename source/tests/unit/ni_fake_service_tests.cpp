@@ -1,11 +1,15 @@
 #include <gtest/gtest.h>
 #include <nifake/nifake_mock_library.h>
+#if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable : 4616)
 #pragma warning(disable : 4146)
 #pragma warning(disable : 4244)
+#endif
 #include <nifake/nifake_service.h>
+#if defined(_MSC_VER)
 #pragma warning(pop)
+#endif
 #include <nifake_extension/nifake_extension_mock_library.h>
 #include <nifake_extension/nifake_extension_service.h>
 #include <server/session_repository.h>
