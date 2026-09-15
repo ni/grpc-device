@@ -668,6 +668,15 @@ else()
     APPEND
     PROPERTY COMPILE_OPTIONS "-Wno-unknown-pragmas"
   )
+
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "armv7-a")
+    # GCC 6.3 reports false positives from its libstdc++ regex implementation.
+    set_property(
+      SOURCE "source/server/client_connection_logger.cpp"
+      APPEND
+      PROPERTY COMPILE_OPTIONS "-Wno-error=uninitialized;-Wno-error=maybe-uninitialized"
+    )
+  endif()
 endif()
 
 if(WIN32)
