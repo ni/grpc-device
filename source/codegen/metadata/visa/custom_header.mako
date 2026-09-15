@@ -86,7 +86,13 @@ namespace ${namespace_prefix} {
         return AttributeValueData::kValueU32;
 
 % for attr in sorted(u64_attrs):
+% if attr == "VI_ATTR_RET_COUNT_64":
+#ifdef VI_ATTR_RET_COUNT_64
       case ${attr}:
+#endif
+% else:
+    case ${attr}:
+% endif
 % endfor
         return AttributeValueData::kValueU64;
 

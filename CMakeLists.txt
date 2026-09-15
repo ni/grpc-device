@@ -64,6 +64,19 @@ if(USE_SUBMODULE_LIBS)
   # The archetypical WIN32 build case
   # protobuf_INSTALL must be turned OFF whenever building it as a cmake subdir.
   set(protobuf_INSTALL OFF)
+  if(CMAKE_CROSSCOMPILING)
+    set(gRPC_BUILD_CODEGEN ON CACHE BOOL "Build gRPC codegen libraries" FORCE)
+    set(gRPC_BUILD_GRPC_CPP_PLUGIN OFF CACHE BOOL "Build grpc_cpp_plugin" FORCE)
+    set(gRPC_BUILD_GRPC_CSHARP_PLUGIN OFF CACHE BOOL "Build grpc_csharp_plugin" FORCE)
+    set(gRPC_BUILD_GRPC_NODE_PLUGIN OFF CACHE BOOL "Build grpc_node_plugin" FORCE)
+    set(gRPC_BUILD_GRPC_OBJECTIVE_C_PLUGIN OFF CACHE BOOL "Build grpc_objective_c_plugin" FORCE)
+    set(gRPC_BUILD_GRPC_PHP_PLUGIN OFF CACHE BOOL "Build grpc_php_plugin" FORCE)
+    set(gRPC_BUILD_GRPC_PYTHON_PLUGIN OFF CACHE BOOL "Build grpc_python_plugin" FORCE)
+    set(gRPC_BUILD_GRPC_RUBY_PLUGIN OFF CACHE BOOL "Build grpc_ruby_plugin" FORCE)
+    set(protobuf_BUILD_PROTOC_BINARIES OFF CACHE BOOL "Build libprotoc and protoc compiler" FORCE)
+    set(protobuf_BUILD_LIBUPB OFF CACHE BOOL "Build libupb" FORCE)
+    find_program(_gRPC_PROTOBUF_PROTOC_EXECUTABLE protoc REQUIRED)
+  endif()
 
   add_subdirectory(third_party/grpc ${CMAKE_CURRENT_BINARY_DIR}/grpc)
   set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
@@ -75,10 +88,15 @@ if(USE_SUBMODULE_LIBS)
     add_subdirectory(third_party/spdlog ${CMAKE_CURRENT_BINARY_DIR}/spdlog EXCLUDE_FROM_ALL)
   endif()
 
-  set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
+  if(CMAKE_CROSSCOMPILING)
+    find_program(_PROTOBUF_PROTOC protoc REQUIRED)
+    find_program(_GRPC_CPP_PLUGIN_EXECUTABLE grpc_cpp_plugin REQUIRED)
+  else()
+    set(_PROTOBUF_PROTOC $<TARGET_FILE:protobuf::protoc>)
+    set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
+  endif()
   set(_REFLECTION grpc++_reflection)
   set(_GRPC grpc)
-  set(_GRPC_CPP_PLUGIN_EXECUTABLE $<TARGET_FILE:grpc_cpp_plugin>)
   set(_GRPC_GRPCPP grpc++)
   set(_PROTOBUF_LIBPROTOBUF libprotobuf)
   set(_UTF8CPP utf8cpp)
@@ -178,6 +196,7 @@ set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
 set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nidmm_restricted" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nifpga" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxpulse" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxwlan" "nirfmxvna" "nirfmxbluetoothgen" "nirfmxwlangen" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "nirfsg_restricted" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket" "visa")
+set(NIDRIVERS_TO_BUILD "" CACHE STRING "Semicolon-separated NI driver services to include; empty includes all supported drivers")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -217,12 +236,23 @@ set(nidriver_client_srcs "")
 
 # We'll codegen all drivers, but some are not included in the server build.
 set(nidrivers_to_build ${nidrivers})
+if(NIDRIVERS_TO_BUILD)
+  foreach(api IN LISTS NIDRIVERS_TO_BUILD)
+    if(NOT api IN_LIST nidrivers)
+      message(FATAL_ERROR "Unknown NI driver '${api}' in NIDRIVERS_TO_BUILD")
+    endif()
+  endforeach()
+  set(nidrivers_to_build ${NIDRIVERS_TO_BUILD})
+endif()
 # Fake drivers are not in the server and are added manually to the UnitTestRunner build.
 list(FILTER nidrivers_to_build EXCLUDE REGEX "^nifake.*")
 if (NOT WIN32)
   # None of the RFmx drivers support Linux and building against the headers fails.
   # Exclude them on Linux.
   list(FILTER nidrivers_to_build EXCLUDE REGEX "^nirfmx.*")
+endif()
+if(NIDRIVERS_TO_BUILD AND NOT nidrivers_to_build)
+  message(FATAL_ERROR "NIDRIVERS_TO_BUILD does not contain any drivers supported by this platform")
 endif()
 
 set(all_codegen_dependencies "")
@@ -309,6 +339,16 @@ add_custom_command(
 set(nidriver_service_srcs
     ${nidriver_service_srcs}
     ${service_output_dir}/register_all_services.cpp
+)
+
+set(nidriver_compile_definitions "")
+foreach(api IN LISTS nidrivers_to_build)
+  string(TOUPPER "${api}" api_upper)
+  list(APPEND nidriver_compile_definitions "NIDEVICE_GRPC_INCLUDE_${api_upper}")
+endforeach()
+set_property(
+  SOURCE ${service_output_dir}/register_all_services.cpp
+  PROPERTY COMPILE_DEFINITIONS ${nidriver_compile_definitions}
 )
 
 #----------------------------------------------------------------------
@@ -619,6 +659,28 @@ else()
     PROPERTIES
     COMPILE_OPTIONS "-Werror"
   )
+
+  set_property(
+    SOURCE
+      "source/server/data_moniker_service.cpp"
+      "source/tests/integration/ni_fake_daqmx_streaming_tests.cpp"
+      "source/tests/integration/ni_fake_fpga_streaming_tests.cpp"
+    APPEND
+    PROPERTY COMPILE_OPTIONS "-Wno-unknown-pragmas"
+  )
+
+  if(CMAKE_SYSTEM_PROCESSOR STREQUAL "armv7-a")
+    # GCC 6.3 reports false positives from its libstdc++ regex and std::function
+    # implementations.
+    set_property(
+      SOURCE
+        "source/server/client_connection_logger.cpp"
+        "source/server/server_configuration_parser.cpp"
+        "source/server/session_repository.cpp"
+      APPEND
+      PROPERTY COMPILE_OPTIONS "-Wno-error=uninitialized;-Wno-error=maybe-uninitialized"
+    )
+  endif()
 endif()
 
 if(WIN32)
@@ -728,7 +790,8 @@ add_custom_command(
 add_custom_command(
    TARGET ni_grpc_device_server POST_BUILD
    COMMAND  ${PYTHON_EXE} ${codegen_dir}/generate_server_capabilities.py ${metadata_dir}/
-            -o $<TARGET_FILE_DIR:ni_grpc_device_server>/)
+        -o $<TARGET_FILE_DIR:ni_grpc_device_server>/
+        --drivers ${nidrivers_to_build})
 
 #----------------------------------------------------------------------
 # Split binary into release and debug symbols for Linux/GCC

@@ -9,8 +9,27 @@ env:
 
 jobs:
   build-nilrt:
-    name: NILRT Cross Compile
-    runs-on: ubuntu-latest
+    name: NILRT ${{ matrix.config.arch }} Cross Compile
+    runs-on: ${{ matrix.config.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+        - {
+            arch: "x64", os: ubuntu-latest,
+            toolchain_file: "cmake/nilrt-x86_64.cmake",
+            drivers: "", build_target: "all", package_tests: true
+          }
+        - {
+            arch: "armv7-a", os: ubuntu-24.04-arm,
+            toolchain_file: "cmake/nilrt-armv7.cmake",
+            drivers: "visa", build_target: "ni_grpc_device_server", package_tests: false
+          }
+
+    env:
+      # TEMPORARY: Upload PR artifacts while validating ARMv7 packaging in this PR.
+      # Remove the pull_request clause after validation to restore release-only uploads.
+      UPLOAD_SERVER_ARTIFACTS: ${{ github.event_name == 'pull_request' || github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
 
     steps:
     - name: Checkout Repo
@@ -22,11 +41,19 @@ jobs:
         python-version: '3.x'
 
     - name: Setup Ninja
+      if: ${{ matrix.config.arch == 'x64' }}
       uses: seanmiddleditch/gha-setup-ninja@v5
       with:
           version: 1.12.1
 
+    - name: Install Build Tools on ARM64 Host
+      if: ${{ matrix.config.arch == 'armv7-a' }}
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y cmake ninja-build gcc-12-arm-linux-gnueabi g++-12-arm-linux-gnueabi
+
     - name: Setup cmake
+      if: ${{ matrix.config.arch == 'x64' }}
       uses: jwlawson/actions-setup-cmake@v2
       with:
           cmake-version: '3.18.x'
@@ -37,12 +64,25 @@ jobs:
 
     # The URL used to download this toolchain may change in the future as
     # improvements to hosting and exports of the NILRT toolchain are made.
-    - name: Install NI Linux RT CC Toolchain
+    - name: Install NI Linux RT x64 Toolchain
+      if: ${{ matrix.config.arch == 'x64' }}
       run: |
         wget -nv https://download.ni.com/support/softlib/labview/labview_rt/2023Q4/LinuxToolchains/linux/oecore-x86_64-core2-64-toolchain-10.0.sh
         sudo chmod a+x ./oecore-x86_64-core2-64-toolchain-10.0.sh
         sudo ./oecore-x86_64-core2-64-toolchain-10.0.sh -y -d $GITHUB_WORKSPACE/nilrt-toolchain/
         echo "$GITHUB_WORKSPACE/nilrt-toolchain/sysroots/x86_64-nilrtsdk-linux/usr/bin/x86_64-nilrt-linux" >> $GITHUB_PATH
+
+    - name: Install NI Linux RT ARMv7 Toolchain
+      if: ${{ matrix.config.arch == 'armv7-a' }}
+      run: |
+        wget -nv https://download.ni.com/support/softlib/labview/labview_rt/2018/Linux%20Toolchains/linux/oecore-x86_64-cortexa9-vfpv3-toolchain-6.0.sh -O nilrt-armv7-toolchain.sh
+        chmod a+x ./nilrt-armv7-toolchain.sh
+        # The wrapper rejects non-x64 hosts, but its target sysroot payload and Python relocator
+        # are host-neutral. The bundled x64 compiler tools are not used by this build.
+        grep -qF 'SDK_ARCH=$(echo x86_64 |' ./nilrt-armv7-toolchain.sh
+        sed -i 's/^SDK_ARCH=.*$/SDK_ARCH=$(uname -m)/' ./nilrt-armv7-toolchain.sh
+        grep -qxF 'SDK_ARCH=$(uname -m)' ./nilrt-armv7-toolchain.sh
+        ./nilrt-armv7-toolchain.sh -y -d $GITHUB_WORKSPACE/nilrt-toolchain/
 
     - name: Update Submodules
       id: submodules
@@ -57,7 +97,7 @@ jobs:
         cache-name: hostgrpccache
       with:
         path: third_party/grpc/build/
-        key: ${{ github.repository }}-${{ runner.os }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
+        key: ${{ github.repository }}-${{ runner.os }}-${{ runner.arch }}-${{ env.cache-name }}-${{ steps.submodules.outputs.grpc-commit }}
 
     - name: Configure Host OS gRPC Support
       if: steps.hostgrpccache.outputs.cache-hit != 'true'
@@ -86,14 +126,33 @@ jobs:
         -S .
         -B build
         -D CMAKE_BUILD_TYPE=$BUILD_TYPE
+        -D CMAKE_TOOLCHAIN_FILE=${{ matrix.config.toolchain_file }}
+        -D NILRT_TOOLCHAIN_ROOT=$GITHUB_WORKSPACE/nilrt-toolchain
+        -D NIDRIVERS_TO_BUILD=${{ matrix.config.drivers }}
         -D USE_NILRT_LEGACY_TOOLCHAIN=on
         -G "Ninja"
 
     - name: Cross Compile
-      run: >
-        cmake
-        --build build
-        -j ${{ steps.cpu-cores.outputs.count }}
+      run: |
+        # Backport Abseil c6b27359 for GCC 6 libstdc++'s std::atomic<T>::load().
+        abseil_patch="$GITHUB_WORKSPACE/cmake/patches/abseil-c6b27359-masked-pointer.patch"
+        grpc_patch="$GITHUB_WORKSPACE/cmake/patches/grpc-remove-redundant-cxx17-includes.patch"
+        if [ "${{ matrix.config.arch }}" = "armv7-a" ]; then
+          git -C "$GITHUB_WORKSPACE/third_party/grpc/third_party/abseil-cpp" apply -p3 "$abseil_patch"
+          git -C "$GITHUB_WORKSPACE/third_party/grpc" apply "$grpc_patch"
+        fi
+
+        build_status=0
+        cmake \
+          --build build \
+          --target ${{ matrix.config.build_target }} \
+          -j ${{ steps.cpu-cores.outputs.count }} || build_status=$?
+
+        if [ "${{ matrix.config.arch }}" = "armv7-a" ]; then
+          git -C "$GITHUB_WORKSPACE/third_party/grpc" apply --reverse "$grpc_patch"
+          git -C "$GITHUB_WORKSPACE/third_party/grpc/third_party/abseil-cpp" apply --reverse -p3 "$abseil_patch"
+        fi
+        exit "$build_status"
 
     # The generated source in git must match the output of workflow builds.
     # If this step fails, something is changing during build. Either:
@@ -103,9 +162,9 @@ jobs:
       run: git diff --exit-code
 
     - name: Tar Server Build Files
-      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ env.UPLOAD_SERVER_ARTIFACTS == 'true' }}
       run: >-
-        tar -cvzf ni-grpc-device-server-ni-linux-rt-x64.tar.gz
+        tar -cvzf ni-grpc-device-server-ni-linux-rt-${{ matrix.config.arch }}.tar.gz
         -C $GITHUB_WORKSPACE/build
         ni_grpc_device_server
         server_config.json
@@ -117,16 +176,34 @@ jobs:
         LICENSE
         ThirdPartyNotices.txt
 
+    - name: Tar Server Debug Symbols
+      if: ${{ env.UPLOAD_SERVER_ARTIFACTS == 'true' }}
+      run: >-
+        tar -cvzf ni-grpc-device-server-ni-linux-rt-${{ matrix.config.arch }}-debug-symbols.tar.gz
+        -C $GITHUB_WORKSPACE/build
+        ni_grpc_device_server.dbg
+        -C $GITHUB_WORKSPACE
+        LICENSE
+        ThirdPartyNotices.txt
+
     - name: Upload Server Artifact
       uses: actions/upload-artifact@v4
-      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ env.UPLOAD_SERVER_ARTIFACTS == 'true' }}
       with:
-        name: ni-grpc-device-server-ni-linux-rt-x64
-        path: ni-grpc-device-server-ni-linux-rt-x64.tar.gz
+        name: ni-grpc-device-server-ni-linux-rt-${{ matrix.config.arch }}
+        path: ni-grpc-device-server-ni-linux-rt-${{ matrix.config.arch }}.tar.gz
+        retention-days: 5
+
+    - name: Upload Server Debug Symbols Artifact
+      uses: actions/upload-artifact@v4
+      if: ${{ env.UPLOAD_SERVER_ARTIFACTS == 'true' }}
+      with:
+        name: ni-grpc-device-server-ni-linux-rt-${{ matrix.config.arch }}-debug-symbols
+        path: ni-grpc-device-server-ni-linux-rt-${{ matrix.config.arch }}-debug-symbols.tar.gz
         retention-days: 5
 
     - name: Tar Test Build Files
-      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ matrix.config.package_tests && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) }}
       run: >-
         tar -cvzf ni-grpc-device-tests-ni-linux-rt-x64.tar.gz
         -C $GITHUB_WORKSPACE/build
@@ -143,7 +220,7 @@ jobs:
 
     - name: Upload Tests Artifact
       uses: actions/upload-artifact@v4
-      if: ${{ github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases') }}
+      if: ${{ matrix.config.package_tests && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/releases')) }}
       with:
         name: ni-grpc-device-tests-ni-linux-rt-x64
         path: ni-grpc-device-tests-ni-linux-rt-x64.tar.gz
