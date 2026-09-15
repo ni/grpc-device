@@ -676,6 +676,7 @@ else()
       SOURCE
         "source/server/client_connection_logger.cpp"
         "source/server/server_configuration_parser.cpp"
+        "source/server/session_repository.cpp"
       APPEND
       PROPERTY COMPILE_OPTIONS "-Wno-error=uninitialized;-Wno-error=maybe-uninitialized"
     )
