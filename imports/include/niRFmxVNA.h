@@ -104,10 +104,15 @@
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_CALKIT_ELECTRONIC_ORIENTATION        0x00d0001e
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_CALKIT_MECHANICAL_NAME               0x00d00014
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_METHOD                               0x00d00015
+#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_NUMBER_OF_THRUS                      0x00d00802
+#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_PORTS_AUTO                      0x00d00801
+#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_PORTS                           0x00d00803
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_METHOD                          0x00d00017
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_COAX_DELAY                      0x00d00018
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_COUNT                           0x00d00019
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_DESCRIPTION                     0x00d0001a
+#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_VCAL_ORIENTATION                0x00d00071
+#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_PORT_ASSIGNMENT                 0x00d00072
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY                 0x00d00800
 #define RFMXVNA_ATTR_CORRECTION_SWITCH_PORTS_MULTIPATH_CALIBRATION               0x00d00047
 #define RFMXVNA_ATTR_SPARAMS_MEASUREMENT_ENABLED                                 0x00d01000
@@ -315,6 +320,10 @@
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_METHOD_SOL                                                             0
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_METHOD_SOLT                                                            1
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_METHOD_TRL                                                             2
+
+// Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_PORTS_AUTO
+#define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_PORTS_AUTO_FALSE                                                  0
+#define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_PORTS_AUTO_TRUE                                                   1
 
 // Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_METHOD
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_AUTO                                                       0
@@ -706,6 +715,13 @@ int32 __stdcall RFmxVNA_BuildMarkerString(
 int32 __stdcall RFmxVNA_BuildMeasurementMemoryString(
    char selectorString[],
    char measurementMemoryName[],
+   int32 selectorStringOutLength,
+   char selectorStringOut[]
+);
+
+int32 __stdcall RFmxVNA_BuildThruString(
+   char selectorString[],
+   int32 thruNumber,
    int32 selectorStringOutLength,
    char selectorStringOut[]
 );
@@ -3036,6 +3052,31 @@ int32 __stdcall RFmxVNA_SetCorrectionCalibrationMethod(
    int32 attrVal
 );
 
+int32 __stdcall RFmxVNA_GetCorrectionCalibrationNumberOfThrus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionCalibrationNumberOfThrus(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionCalibrationThruPortsAuto(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionCalibrationThruPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
 int32 __stdcall RFmxVNA_GetCorrectionCalibrationThruMethod(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3076,6 +3117,32 @@ int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepDescription(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepVCalOrientation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepVCalOrientation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepPortAssignment(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepPortAssignment(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
    char attrVal[]
 );
 

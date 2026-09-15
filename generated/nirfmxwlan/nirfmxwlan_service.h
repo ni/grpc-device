@@ -171,6 +171,7 @@ public:
   ::grpc::Status OFDMModAccFetchDataPeakPower(::grpc::ServerContext* context, const OFDMModAccFetchDataPeakPowerRequest* request, OFDMModAccFetchDataPeakPowerResponse* response) override;
   ::grpc::Status OFDMModAccFetchDecodedEHTSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedEHTSIGBitsTraceRequest* request, OFDMModAccFetchDecodedEHTSIGBitsTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchDecodedELRSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedELRSIGBitsTraceRequest* request, OFDMModAccFetchDecodedELRSIGBitsTraceResponse* response) override;
+  ::grpc::Status OFDMModAccFetchDecodedHeaderInformationTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedHeaderInformationTraceRequest* request, OFDMModAccFetchDecodedHeaderInformationTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchDecodedLSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedLSIGBitsTraceRequest* request, OFDMModAccFetchDecodedLSIGBitsTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchDecodedPSDUBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedPSDUBitsTraceRequest* request, OFDMModAccFetchDecodedPSDUBitsTraceResponse* response) override;
   ::grpc::Status OFDMModAccFetchDecodedSIGBBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedSIGBBitsTraceRequest* request, OFDMModAccFetchDecodedSIGBBitsTraceResponse* response) override;

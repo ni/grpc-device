@@ -422,6 +422,17 @@ attributes = {
         'name': 'SUBBLOCK_FREQUENCY',
         'type': 'float64'
     },
+    3145884: {
+        'access': 'read-write',
+        'name': 'POWER_CLASS',
+        'type': 'int32'
+    },
+    3145891: {
+        'access': 'read-write',
+        'enum': 'SatelliteAccessNodeClass',
+        'name': 'SATELLITE_ACCESS_NODE_CLASS',
+        'type': 'int32'
+    },
     3149814: {
         'access': 'read-write',
         'enum': 'ListStepTimerUnit',
@@ -1529,6 +1540,17 @@ attributes = {
         'access': 'read-write',
         'name': 'MODACC_RESULTS_DOWNLINK_NRS_TRANSMIT_POWER',
         'type': 'float64'
+    },
+    3162261: {
+        'access': 'read-write',
+        'enum': 'OccEnabled',
+        'name': 'OCC_ENABLED',
+        'type': 'int32'
+    },
+    3162262: {
+        'access': 'read-write',
+        'name': 'OCC_SEQUENCE_INDEX',
+        'type': 'int32'
     },
     3170304: {
         'access': 'read-write',

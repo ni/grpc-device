@@ -119,6 +119,7 @@
 #define RFMXBT_ATTR_MODACC_RESULTS_PREAMBLE_START_TIME_MEAN                                        0x00b04033
 #define RFMXBT_ATTR_MODACC_RESULTS_FRACTIONAL_TIME_OFFSET_MEAN                                     0x00b04039
 #define RFMXBT_ATTR_ACP_MEASUREMENT_ENABLED                                                        0x00b05000
+#define RFMXBT_ATTR_ACP_SPECIFICATION_RELEASE                                                      0x00b05017
 #define RFMXBT_ATTR_ACP_OFFSET_CHANNEL_MODE                                                        0x00b05002
 #define RFMXBT_ATTR_ACP_NUMBER_OF_OFFSETS                                                          0x00b05003
 #define RFMXBT_ATTR_ACP_OFFSET_FREQUENCY                                                           0x00b05004
@@ -182,6 +183,7 @@
 #define RFMXBT_ATTR_TXP_RESULTS_LE_CTE_TRANSMIT_SLOT_AVERAGE_POWER_MEAN                            0x00b01016
 #define RFMXBT_ATTR_TXP_RESULTS_LE_CTE_TRANSMIT_SLOT_PEAK_ABSOLUTE_POWER_DEVIATION_MAXIMUM         0x00b01017
 #define RFMXBT_ATTR_TXP_RESULTS_LE_CS_PHASE_MEASUREMENT_PERIOD_AVERAGE_POWER_MEAN                  0x00b01018
+#define RFMXBT_ATTR_TXP_RESULTS_RAMP_UP_TIME_MEAN                                                  0x00b01019
 #define RFMXBT_ATTR_POWERRAMP_MEASUREMENT_ENABLED                                                  0x00b0e000
 #define RFMXBT_ATTR_POWERRAMP_BURST_SYNCHRONIZATION_TYPE                                           0x00b0e002
 #define RFMXBT_ATTR_POWERRAMP_AVERAGING_ENABLED                                                    0x00b0e005
@@ -333,6 +335,10 @@
 // Values for RFMXBT_ATTR_MODACC_AVERAGING_ENABLED
 #define RFMXBT_VAL_MODACC_AVERAGING_ENABLED_FALSE                                                 0
 #define RFMXBT_VAL_MODACC_AVERAGING_ENABLED_TRUE                                                  1
+
+// Values for RFMXBT_ATTR_ACP_SPECIFICATION_RELEASE
+#define RFMXBT_VAL_ACP_SPECIFICATION_RELEASE_VERSION1                                             0
+#define RFMXBT_VAL_ACP_SPECIFICATION_RELEASE_VERSION2                                             1
 
 // Values for RFMXBT_ATTR_ACP_OFFSET_CHANNEL_MODE
 #define RFMXBT_VAL_ACP_OFFSET_CHANNEL_MODE_SYMMETRIC                                              0
@@ -2482,6 +2488,18 @@ int32 __stdcall RFmxBT_ACPSetMeasurementEnabled(
    int32 attrVal
 );
 
+int32 __stdcall RFmxBT_ACPGetSpecificationRelease(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxBT_ACPSetSpecificationRelease(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
 int32 __stdcall RFmxBT_ACPGetOffsetChannelMode(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3047,6 +3065,12 @@ int32 __stdcall RFmxBT_TXPGetResultsLECTETransmitSlotPeakAbsolutePowerDeviationM
 );
 
 int32 __stdcall RFmxBT_TXPGetResultsLECSPhaseMeasurementPeriodAveragePowerMean(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxBT_TXPGetResultsRampUpTimeMean(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal

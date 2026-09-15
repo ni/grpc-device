@@ -542,5 +542,16 @@ attributes = {
         'access': 'read-write',
         'name': 'FIXED_GROUP_DELAY_ACROSS_PORTS',
         'type': 'char[]'
+    },
+    189: {
+        'access': 'read-write',
+        'enum': 'CleanerIQ',
+        'name': 'CLEANER_IQ',
+        'type': 'int32'
+    },
+    190: {
+        'access': 'read-write',
+        'name': 'TOTAL_EXTERNAL_ATTENUATION',
+        'type': 'float64'
     }
 }

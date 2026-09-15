@@ -4820,6 +4820,63 @@ namespace nirfmxwlan_grpc {
 
   //---------------------------------------------------------------------
   //---------------------------------------------------------------------
+  ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedHeaderInformationTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedHeaderInformationTraceRequest* request, OFDMModAccFetchDecodedHeaderInformationTraceResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto instrument_grpc_session = request->instrument();
+      niRFmxInstrHandle instrument = session_repository_->access_session(instrument_grpc_session.name());
+      auto selector_string_mbcs = convert_from_grpc<std::string>(request->selector_string());
+      char* selector_string = (char*)selector_string_mbcs.c_str();
+      float64 timeout = request->timeout();
+      int32 field_names_actual_array_size {};
+      int32 field_values_actual_array_size {};
+      while (true) {
+        auto status = library_->OFDMModAccFetchDecodedHeaderInformationTrace(instrument, selector_string, timeout, nullptr, 0, &field_names_actual_array_size, nullptr, 0, &field_values_actual_array_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        std::string field_names;
+        if (field_names_actual_array_size > 0) {
+            field_names.resize(field_names_actual_array_size - 1);
+        }
+        std::string field_values;
+        if (field_values_actual_array_size > 0) {
+            field_values.resize(field_values_actual_array_size - 1);
+        }
+        auto field_names_array_size = field_names_actual_array_size;
+        auto field_values_array_size = field_values_actual_array_size;
+        status = library_->OFDMModAccFetchDecodedHeaderInformationTrace(instrument, selector_string, timeout, (char*)field_names.data(), field_names_array_size, &field_names_actual_array_size, (char*)field_values.data(), field_values_array_size, &field_values_actual_array_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForNiRFmxInstrHandle(context, status, instrument);
+        }
+        response->set_status(status);
+        std::string field_names_utf8;
+        convert_to_grpc(field_names, &field_names_utf8);
+        response->set_field_names(field_names_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_field_names()));
+        response->set_field_names_actual_array_size(field_names_actual_array_size);
+        std::string field_values_utf8;
+        convert_to_grpc(field_values, &field_values_utf8);
+        response->set_field_values(field_values_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_field_values()));
+        response->set_field_values_actual_array_size(field_values_actual_array_size);
+        return ::grpc::Status::OK;
+      }
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
   ::grpc::Status NiRFmxWLANService::OFDMModAccFetchDecodedLSIGBitsTrace(::grpc::ServerContext* context, const OFDMModAccFetchDecodedLSIGBitsTraceRequest* request, OFDMModAccFetchDecodedLSIGBitsTraceResponse* response)
   {
     if (context->IsCancelled()) {

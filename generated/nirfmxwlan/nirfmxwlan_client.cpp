@@ -2667,6 +2667,25 @@ ofdm_mod_acc_fetch_decoded_elrsig_bits_trace(const StubPtr& stub, const nidevice
   return response;
 }
 
+OFDMModAccFetchDecodedHeaderInformationTraceResponse
+ofdm_mod_acc_fetch_decoded_header_information_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = OFDMModAccFetchDecodedHeaderInformationTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = OFDMModAccFetchDecodedHeaderInformationTraceResponse{};
+
+  raise_if_error(
+      stub->OFDMModAccFetchDecodedHeaderInformationTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 OFDMModAccFetchDecodedLSIGBitsTraceResponse
 ofdm_mod_acc_fetch_decoded_lsig_bits_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

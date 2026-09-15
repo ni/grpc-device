@@ -1965,6 +1965,25 @@ pvt_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument,
   return response;
 }
 
+PVTFetchMaximumAndMinimumPowerTraceResponse
+pvt_fetch_maximum_and_minimum_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
+{
+  ::grpc::ClientContext context;
+
+  auto request = PVTFetchMaximumAndMinimumPowerTraceRequest{};
+  request.mutable_instrument()->CopyFrom(instrument);
+  request.set_selector_string(selector_string);
+  request.set_timeout(timeout);
+
+  auto response = PVTFetchMaximumAndMinimumPowerTraceResponse{};
+
+  raise_if_error(
+      stub->PVTFetchMaximumAndMinimumPowerTrace(&context, request, &response),
+      context);
+
+  return response;
+}
+
 PVTFetchMeasurementStatusResponse
 pvt_fetch_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout)
 {

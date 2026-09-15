@@ -148,6 +148,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   int32 OFDMModAccFetchDataPeakPower(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* dataPeakPowerMaximum) override;
   int32 OFDMModAccFetchDecodedEHTSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedEHTSIGBits[], int32 arraySize, int32* actualArraySize) override;
   int32 OFDMModAccFetchDecodedELRSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedELRSIGBits[], int32 arraySize, int32* actualArraySize) override;
+  int32 OFDMModAccFetchDecodedHeaderInformationTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, char fieldNames[], int32 fieldNamesArraySize, int32* fieldNamesActualArraySize, char fieldValues[], int32 fieldValuesArraySize, int32* fieldValuesActualArraySize) override;
   int32 OFDMModAccFetchDecodedLSIGBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedLSIGBits[], int32 arraySize, int32* actualArraySize) override;
   int32 OFDMModAccFetchDecodedPSDUBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedPSDUBits[], int32 arraySize, int32* actualArraySize) override;
   int32 OFDMModAccFetchDecodedSIGBBitsTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32 decodedSIGBBits[], int32 arraySize, int32* actualArraySize) override;
@@ -409,6 +410,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
   using OFDMModAccFetchDataPeakPowerPtr = decltype(&RFmxWLAN_OFDMModAccFetchDataPeakPower);
   using OFDMModAccFetchDecodedEHTSIGBitsTracePtr = decltype(&RFmxWLAN_OFDMModAccFetchDecodedEHTSIGBitsTrace);
   using OFDMModAccFetchDecodedELRSIGBitsTracePtr = decltype(&RFmxWLAN_OFDMModAccFetchDecodedELRSIGBitsTrace);
+  using OFDMModAccFetchDecodedHeaderInformationTracePtr = decltype(&RFmxWLAN_OFDMModAccFetchDecodedHeaderInformationTrace);
   using OFDMModAccFetchDecodedLSIGBitsTracePtr = decltype(&RFmxWLAN_OFDMModAccFetchDecodedLSIGBitsTrace);
   using OFDMModAccFetchDecodedPSDUBitsTracePtr = decltype(&RFmxWLAN_OFDMModAccFetchDecodedPSDUBitsTrace);
   using OFDMModAccFetchDecodedSIGBBitsTracePtr = decltype(&RFmxWLAN_OFDMModAccFetchDecodedSIGBBitsTrace);
@@ -670,6 +672,7 @@ class NiRFmxWLANLibrary : public nirfmxwlan_grpc::NiRFmxWLANLibraryInterface {
     OFDMModAccFetchDataPeakPowerPtr OFDMModAccFetchDataPeakPower;
     OFDMModAccFetchDecodedEHTSIGBitsTracePtr OFDMModAccFetchDecodedEHTSIGBitsTrace;
     OFDMModAccFetchDecodedELRSIGBitsTracePtr OFDMModAccFetchDecodedELRSIGBitsTrace;
+    OFDMModAccFetchDecodedHeaderInformationTracePtr OFDMModAccFetchDecodedHeaderInformationTrace;
     OFDMModAccFetchDecodedLSIGBitsTracePtr OFDMModAccFetchDecodedLSIGBitsTrace;
     OFDMModAccFetchDecodedPSDUBitsTracePtr OFDMModAccFetchDecodedPSDUBitsTrace;
     OFDMModAccFetchDecodedSIGBBitsTracePtr OFDMModAccFetchDecodedSIGBBitsTrace;

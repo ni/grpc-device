@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXWLAN API metadata version 26.5.0
+// This file is generated from NI-RFMXWLAN API metadata version 26.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXWLAN Metadata
 //---------------------------------------------------------------------
@@ -144,6 +144,7 @@ service NiRFmxWLAN {
   rpc OFDMModAccFetchDataPeakPower(OFDMModAccFetchDataPeakPowerRequest) returns (OFDMModAccFetchDataPeakPowerResponse);
   rpc OFDMModAccFetchDecodedEHTSIGBitsTrace(OFDMModAccFetchDecodedEHTSIGBitsTraceRequest) returns (OFDMModAccFetchDecodedEHTSIGBitsTraceResponse);
   rpc OFDMModAccFetchDecodedELRSIGBitsTrace(OFDMModAccFetchDecodedELRSIGBitsTraceRequest) returns (OFDMModAccFetchDecodedELRSIGBitsTraceResponse);
+  rpc OFDMModAccFetchDecodedHeaderInformationTrace(OFDMModAccFetchDecodedHeaderInformationTraceRequest) returns (OFDMModAccFetchDecodedHeaderInformationTraceResponse);
   rpc OFDMModAccFetchDecodedLSIGBitsTrace(OFDMModAccFetchDecodedLSIGBitsTraceRequest) returns (OFDMModAccFetchDecodedLSIGBitsTraceResponse);
   rpc OFDMModAccFetchDecodedPSDUBitsTrace(OFDMModAccFetchDecodedPSDUBitsTraceRequest) returns (OFDMModAccFetchDecodedPSDUBitsTraceResponse);
   rpc OFDMModAccFetchDecodedSIGBBitsTrace(OFDMModAccFetchDecodedSIGBBitsTraceRequest) returns (OFDMModAccFetchDecodedSIGBBitsTraceResponse);
@@ -623,6 +624,7 @@ enum NiRFmxWLANAttribute {
   NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_UNEQUAL_MODULATION_PATTERN_INDEX = 10502374;
   NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_NUMBER_OF_SIG_SYMBOLS = 10502375;
   NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_CHAIN_STREAM_CROSS_POWER_MEAN = 10502376;
+  NIRFMXWLAN_ATTRIBUTE_OFDMMODACC_RESULTS_PREAMBLE_TYPE = 10502377;
   NIRFMXWLAN_ATTRIBUTE_SEM_MEASUREMENT_ENABLED = 10506240;
   NIRFMXWLAN_ATTRIBUTE_SEM_MASK_TYPE = 10506242;
   NIRFMXWLAN_ATTRIBUTE_SEM_CARRIER_INTEGRATION_BANDWIDTH = 10506245;
@@ -962,6 +964,7 @@ enum Standard {
   STANDARD_802_11_AX = 6;
   STANDARD_802_11_BE = 7;
   STANDARD_802_11_BN = 8;
+  STANDARD_802_11_AH = 9;
   STANDARD_UNKNOWN = -1;
 }
 
@@ -1149,6 +1152,9 @@ enum NiRFmxWLANInt32AttributeValues {
   NIRFMXWLAN_INT32_OFDMMODACC_PHASE_TRACKING_ENABLED_TRUE = 1;
   NIRFMXWLAN_INT32_OFDMMODACC_POWER_MEASUREMENT_ENABLED_FALSE = 0;
   NIRFMXWLAN_INT32_OFDMMODACC_POWER_MEASUREMENT_ENABLED_TRUE = 1;
+  NIRFMXWLAN_INT32_OFDMMODACC_PREAMBLE_TYPE_LONG = 0;
+  NIRFMXWLAN_INT32_OFDMMODACC_PREAMBLE_TYPE_NOT_APPLICABLE = -1;
+  NIRFMXWLAN_INT32_OFDMMODACC_PREAMBLE_TYPE_SHORT = 1;
   NIRFMXWLAN_INT32_OFDMMODACC_PSDU_CRC_STATUS_FAIL = 0;
   NIRFMXWLAN_INT32_OFDMMODACC_PSDU_CRC_STATUS_PASS = 1;
   NIRFMXWLAN_INT32_OFDMMODACC_RU_TYPE_RRU = 0;
@@ -1240,6 +1246,7 @@ enum NiRFmxWLANInt32AttributeValues {
   NIRFMXWLAN_INT32_STANDARD_802_11_AX = 6;
   NIRFMXWLAN_INT32_STANDARD_802_11_BE = 7;
   NIRFMXWLAN_INT32_STANDARD_802_11_BN = 8;
+  NIRFMXWLAN_INT32_STANDARD_802_11_AH = 9;
   NIRFMXWLAN_INT32_STANDARD_UNKNOWN = -1;
   NIRFMXWLAN_INT32_TRIGGER_GATE_ENABLED_FALSE = 0;
   NIRFMXWLAN_INT32_TRIGGER_GATE_ENABLED_TRUE = 1;
@@ -2836,6 +2843,20 @@ message OFDMModAccFetchDecodedELRSIGBitsTraceResponse {
   int32 status = 1;
   repeated int32 decoded_elr_sig_bits = 2;
   int32 actual_array_size = 3;
+}
+
+message OFDMModAccFetchDecodedHeaderInformationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OFDMModAccFetchDecodedHeaderInformationTraceResponse {
+  int32 status = 1;
+  string field_names = 2;
+  int32 field_names_actual_array_size = 3;
+  string field_values = 4;
+  int32 field_values_actual_array_size = 5;
 }
 
 message OFDMModAccFetchDecodedLSIGBitsTraceRequest {

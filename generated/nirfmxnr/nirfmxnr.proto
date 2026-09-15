@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXNR API metadata version 26.5.0
+// This file is generated from NI-RFMXNR API metadata version 26.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXNR Metadata
 //---------------------------------------------------------------------
@@ -1064,6 +1064,8 @@ enum SemUplinkMaskType {
   SEM_UPLINK_MASK_TYPE_NS06N = 23;
   SEM_UPLINK_MASK_TYPE_NS07N = 24;
   SEM_UPLINK_MASK_TYPE_NS08N = 25;
+  SEM_UPLINK_MASK_TYPE_NS15N = 26;
+  SEM_UPLINK_MASK_TYPE_NS16N = 27;
 }
 
 enum SemUpperOffsetMeasurementStatus {
@@ -1494,6 +1496,8 @@ enum NiRFmxNRInt32AttributeValues {
   NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS06N = 23;
   NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS07N = 24;
   NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS08N = 25;
+  NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS15N = 26;
+  NIRFMXNR_INT32_SEM_UPLINK_MASK_TYPE_NS16N = 27;
   NIRFMXNR_INT32_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
   NIRFMXNR_INT32_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
   NIRFMXNR_INT32_SSB_ENABLED_FALSE = 0;

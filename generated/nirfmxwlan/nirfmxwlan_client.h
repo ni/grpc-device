@@ -149,6 +149,7 @@ OFDMModAccFetchDataConstellationTraceSplitResponse ofdm_mod_acc_fetch_data_const
 OFDMModAccFetchDataPeakPowerResponse ofdm_mod_acc_fetch_data_peak_power(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 OFDMModAccFetchDecodedEHTSIGBitsTraceResponse ofdm_mod_acc_fetch_decoded_ehtsig_bits_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 OFDMModAccFetchDecodedELRSIGBitsTraceResponse ofdm_mod_acc_fetch_decoded_elrsig_bits_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
+OFDMModAccFetchDecodedHeaderInformationTraceResponse ofdm_mod_acc_fetch_decoded_header_information_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 OFDMModAccFetchDecodedLSIGBitsTraceResponse ofdm_mod_acc_fetch_decoded_lsig_bits_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 OFDMModAccFetchDecodedPSDUBitsTraceResponse ofdm_mod_acc_fetch_decoded_psdu_bits_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 OFDMModAccFetchDecodedSIGBBitsTraceResponse ofdm_mod_acc_fetch_decoded_sigb_bits_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);

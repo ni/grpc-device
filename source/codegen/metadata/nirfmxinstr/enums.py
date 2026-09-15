@@ -39,6 +39,18 @@ enums = {
             }
         ]
     },
+    'CleanerIQ': {
+        'values': [
+            {
+                'name': 'DISABLED',
+                'value': 0
+            },
+            {
+                'name': 'ENABLED',
+                'value': 1
+            }
+        ]
+    },
     'CleanerSpectrumEnabled': {
         'values': [
             {

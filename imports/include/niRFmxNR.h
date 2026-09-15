@@ -1141,6 +1141,8 @@
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS06N                                                     23
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS07N                                                     24
 #define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS08N                                                     25
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS15N                                                     26
+#define RFMXNR_VAL_SEM_UPLINK_MASK_TYPE_NS16N                                                     27
 
 // Values for RFMXNR_ATTR_SEM_DOWNLINK_MASK_TYPE
 #define RFMXNR_VAL_SEM_DOWNLINK_MASK_TYPE_STANDARD                                                0

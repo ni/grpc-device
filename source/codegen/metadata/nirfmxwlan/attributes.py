@@ -1820,6 +1820,12 @@ attributes = {
         'name': 'OFDMMODACC_RESULTS_CHAIN_STREAM_CROSS_POWER_MEAN',
         'type': 'float64'
     },
+    10502377: {
+        'access': 'read-write',
+        'enum': 'OfdmModAccPreambleType',
+        'name': 'OFDMMODACC_RESULTS_PREAMBLE_TYPE',
+        'type': 'int32'
+    },
     10506240: {
         'access': 'read-write',
         'name': 'SEM_MEASUREMENT_ENABLED',

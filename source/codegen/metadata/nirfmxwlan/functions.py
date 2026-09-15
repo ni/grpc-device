@@ -4574,6 +4574,67 @@ functions = {
         ],
         'returns': 'int32'
     },
+    'OFDMModAccFetchDecodedHeaderInformationTrace': {
+        'parameters': [
+            {
+                'direction': 'in',
+                'grpc_name': 'instrument',
+                'name': 'instrumentHandle',
+                'type': 'niRFmxInstrHandle'
+            },
+            {
+                'direction': 'in',
+                'name': 'selectorString',
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'timeout',
+                'type': 'float64'
+            },
+            {
+                'direction': 'out',
+                'name': 'fieldNames',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'fieldNamesArraySize',
+                    'value_twist': 'fieldNamesActualArraySize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'fieldNamesArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'fieldNamesActualArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'fieldValues',
+                'size': {
+                    'mechanism': 'ivi-dance-with-a-twist',
+                    'value': 'fieldValuesArraySize',
+                    'value_twist': 'fieldValuesActualArraySize'
+                },
+                'type': 'char[]'
+            },
+            {
+                'direction': 'in',
+                'name': 'fieldValuesArraySize',
+                'type': 'int32'
+            },
+            {
+                'direction': 'out',
+                'name': 'fieldValuesActualArraySize',
+                'type': 'int32'
+            }
+        ],
+        'returns': 'int32'
+    },
     'OFDMModAccFetchDecodedLSIGBitsTrace': {
         'parameters': [
             {

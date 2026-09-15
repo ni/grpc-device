@@ -2497,6 +2497,14 @@ enums = {
             {
                 'name': 'NS08N',
                 'value': 25
+            },
+            {
+                'name': 'NS15N',
+                'value': 26
+            },
+            {
+                'name': 'NS16N',
+                'value': 27
             }
         ]
     },

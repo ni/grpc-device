@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFMXINSTR API metadata version 26.5.0
+// This file is generated from NI-RFMXINSTR API metadata version 26.8.0
 //---------------------------------------------------------------------
 // Proto file for the NI-RFMXINSTR Metadata
 //---------------------------------------------------------------------
@@ -223,6 +223,8 @@ enum NiRFmxInstrAttribute {
   NIRFMXINSTR_ATTRIBUTE_LO_SPLITTER_LOSS_FREQUENCY = 184;
   NIRFMXINSTR_ATTRIBUTE_LO_SPLITTER_LOSS = 185;
   NIRFMXINSTR_ATTRIBUTE_FIXED_GROUP_DELAY_ACROSS_PORTS = 188;
+  NIRFMXINSTR_ATTRIBUTE_CLEANER_IQ = 189;
+  NIRFMXINSTR_ATTRIBUTE_TOTAL_EXTERNAL_ATTENUATION = 190;
 }
 
 enum ExportSignalSource {
@@ -403,6 +405,8 @@ enum NiRFmxInstrInt32AttributeValues {
   NIRFMXINSTR_INT32_AUTOMATIC_SGSA_SHARED_LO_ENABLED_TRUE = 1;
   NIRFMXINSTR_INT32_CHANNEL_COUPLING_AC_COUPLED = 0;
   NIRFMXINSTR_INT32_CHANNEL_COUPLING_DC_COUPLED = 1;
+  NIRFMXINSTR_INT32_CLEANER_IQ_DISABLED = 0;
+  NIRFMXINSTR_INT32_CLEANER_IQ_ENABLED = 1;
   NIRFMXINSTR_INT32_CLEANER_SPECTRUM_ENABLED_FALSE = 0;
   NIRFMXINSTR_INT32_CLEANER_SPECTRUM_ENABLED_TRUE = 1;
   NIRFMXINSTR_INT32_DIGITIZER_DITHER_ENABLED_FALSE = 0;

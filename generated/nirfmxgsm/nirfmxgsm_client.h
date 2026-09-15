@@ -113,6 +113,7 @@ ORFSFetchModulationResultsArrayResponse orfs_fetch_modulation_results_array(cons
 ORFSFetchSwitchingPowerTraceResponse orfs_fetch_switching_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 ORFSFetchSwitchingResultsArrayResponse orfs_fetch_switching_results_array(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 PVTCfgAveragingResponse pvt_cfg_averaging(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const simple_variant<PvtAveragingEnabled, pb::int32>& averaging_enabled, const pb::int32& averaging_count, const simple_variant<PvtAveragingType, pb::int32>& averaging_type);
+PVTFetchMaximumAndMinimumPowerTraceResponse pvt_fetch_maximum_and_minimum_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 PVTFetchMeasurementStatusResponse pvt_fetch_measurement_status(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 PVTFetchPowerTraceResponse pvt_fetch_power_trace(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
 PVTFetchSlotMeasurementResponse pvt_fetch_slot_measurement(const StubPtr& stub, const nidevice_grpc::Session& instrument, const std::string& selector_string, const double& timeout);
