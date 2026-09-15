@@ -352,7 +352,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     // We store device, interface and session references in session_repository_ itself, either as owned session or
     // as dependent session. So we should always do a lookup in session_repository_.
     nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
-    u32 property_id;
+    u32 property_id{};
     switch (request->property_id_enum_case()) {
       case nixnet_grpc::GetPropertyRequest::PropertyIdEnumCase::kPropertyId: {
         property_id = static_cast<u32>(request->property_id());
@@ -595,7 +595,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     auto session_grpc_session = request->session();
     nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
     u32 active_index = request->active_index();
-    u32 property_id;
+    u32 property_id{};
     switch (request->subproperty_id_enum_case()) {
       case nixnet_grpc::GetSubPropertyRequest::SubpropertyIdEnumCase::kPropertyId: {
         property_id = static_cast<u32>(request->property_id());
@@ -671,7 +671,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   try {
     auto dbobject_grpc_session = request->dbobject();
     nxDatabaseRef_t dbobject = nx_database_ref_t_resource_repository_->access_session(dbobject_grpc_session.name());
-    u32 property_id;
+    u32 property_id{};
     switch (request->dbproperty_id_enum_case()) {
       case nixnet_grpc::DbGetPropertyRequest::DbpropertyIdEnumCase::kPropertyId: {
         property_id = static_cast<u32>(request->property_id());
@@ -830,7 +830,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   try {
     auto session_grpc_session = request->session();
     nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
-    u32 property_id;
+    u32 property_id{};
     switch (request->property_id_enum_case()) {
       case nixnet_grpc::SetPropertyRequest::PropertyIdEnumCase::kPropertyId: {
         property_id = static_cast<u32>(request->property_id());
@@ -946,7 +946,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
     auto session_grpc_session = request->session();
     nxSessionRef_t session = session_repository_->access_session(session_grpc_session.name());
     u32 active_index = request->active_index();
-    u32 property_id;
+    u32 property_id{};
     switch (request->subproperty_id_enum_case()) {
       case nixnet_grpc::SetSubPropertyRequest::SubpropertyIdEnumCase::kPropertyId: {
         property_id = static_cast<u32>(request->property_id());
@@ -1009,7 +1009,7 @@ u32 GetLinDiagnosticScheduleChangeValue(const WriteStateRequest* request)
   try {
     auto dbobject_grpc_session = request->dbobject();
     nxDatabaseRef_t dbobject = nx_database_ref_t_resource_repository_->access_session(dbobject_grpc_session.name());
-    u32 property_id;
+    u32 property_id{};
     switch (request->dbproperty_id_enum_case()) {
       case nixnet_grpc::DbSetPropertyRequest::DbpropertyIdEnumCase::kPropertyId: {
         property_id = static_cast<u32>(request->property_id());
