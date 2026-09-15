@@ -670,9 +670,12 @@ else()
   )
 
   if(CMAKE_SYSTEM_PROCESSOR STREQUAL "armv7-a")
-    # GCC 6.3 reports false positives from its libstdc++ regex implementation.
+    # GCC 6.3 reports false positives from its libstdc++ regex and std::function
+    # implementations.
     set_property(
-      SOURCE "source/server/client_connection_logger.cpp"
+      SOURCE
+        "source/server/client_connection_logger.cpp"
+        "source/server/server_configuration_parser.cpp"
       APPEND
       PROPERTY COMPILE_OPTIONS "-Wno-error=uninitialized;-Wno-error=maybe-uninitialized"
     )

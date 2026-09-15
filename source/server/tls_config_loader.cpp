@@ -134,7 +134,7 @@ std::string TlsConfigLoader::read_contents(
   size_t actual_size = 0;
 
   NiErrStatusGuard s;
-  (void)func(service_name.c_str(), contents.data(), kBufferSize, &actual_size, &s);
+  (void)func(service_name.c_str(), &contents[0], kBufferSize, &actual_size, &s);
   if (s.is_fatal()) {
     throw std::runtime_error(
         std::string("ni-tls-config: failed to read ") + description +
@@ -145,7 +145,7 @@ std::string TlsConfigLoader::read_contents(
   if (actual_size > kBufferSize) {
     contents.resize(actual_size, '\0');
     NiErrStatusGuard s2;
-    (void)func(service_name.c_str(), contents.data(), actual_size, &actual_size, &s2);
+    (void)func(service_name.c_str(), &contents[0], actual_size, &actual_size, &s2);
     if (s2.is_fatal()) {
       throw std::runtime_error(
           std::string("ni-tls-config: failed to read ") + description +
