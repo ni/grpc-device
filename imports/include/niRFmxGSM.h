@@ -19,38 +19,11 @@
 
 #include "niRFmxInstr.h"
 
-#define RFMXGSM_ATTR_SELECTED_PORTS                                          0x00400ffd
-#define RFMXGSM_ATTR_CENTER_FREQUENCY                                        0x00400001
-#define RFMXGSM_ATTR_REFERENCE_LEVEL                                         0x00400002
-#define RFMXGSM_ATTR_EXTERNAL_ATTENUATION                                    0x00400003
-#define RFMXGSM_ATTR_REFERENCE_LEVEL_HEADROOM                                0x00400ffc
-#define RFMXGSM_ATTR_TRIGGER_TYPE                                            0x00400004
-#define RFMXGSM_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                             0x00400005
-#define RFMXGSM_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                               0x00400006
-#define RFMXGSM_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                            0x00400007
-#define RFMXGSM_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                             0x00400008
-#define RFMXGSM_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                        0x00400fff
-#define RFMXGSM_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                             0x00400009
-#define RFMXGSM_ATTR_TRIGGER_DELAY                                           0x0040000a
-#define RFMXGSM_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                         0x0040000b
-#define RFMXGSM_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                     0x0040000c
-#define RFMXGSM_ATTR_LINK_DIRECTION                                          0x0040000d
-#define RFMXGSM_ATTR_BAND                                                    0x0040000e
-#define RFMXGSM_ATTR_SIGNAL_STRUCTURE                                        0x00400017
-#define RFMXGSM_ATTR_NUMBER_OF_TIMESLOTS                                     0x0040000f
-#define RFMXGSM_ATTR_MODULATION_TYPE                                         0x00400010
-#define RFMXGSM_ATTR_BURST_TYPE                                              0x00400011
-#define RFMXGSM_ATTR_HB_FILTER_WIDTH                                         0x00400012
-#define RFMXGSM_ATTR_AUTO_TSC_DETECTION_ENABLED                              0x00400013
-#define RFMXGSM_ATTR_TSC                                                     0x00400014
-#define RFMXGSM_ATTR_POWER_CONTROL_LEVEL                                     0x00400015
-#define RFMXGSM_ATTR_TIMING_ADVANCE                                          0x00400018
-#define RFMXGSM_ATTR_BURST_SYNCHRONIZATION_TYPE                              0x00400016
 #define RFMXGSM_ATTR_MODACC_MEASUREMENT_ENABLED                              0x00401000
-#define RFMXGSM_ATTR_MODACC_MEASUREMENT_INTERVAL                             0x0040102a
-#define RFMXGSM_ATTR_MODACC_MEASUREMENT_OFFSET                               0x0040102b
 #define RFMXGSM_ATTR_MODACC_AVERAGING_ENABLED                                0x00401002
 #define RFMXGSM_ATTR_MODACC_AVERAGING_COUNT                                  0x00401004
+#define RFMXGSM_ATTR_MODACC_MEASUREMENT_INTERVAL                             0x0040102a
+#define RFMXGSM_ATTR_MODACC_MEASUREMENT_OFFSET                               0x0040102b
 #define RFMXGSM_ATTR_MODACC_DROOP_COMPENSATION_ENABLED                       0x00401005
 #define RFMXGSM_ATTR_MODACC_ALL_TRACES_ENABLED                               0x00401006
 #define RFMXGSM_ATTR_MODACC_NUMBER_OF_ANALYSIS_THREADS                       0x00401007
@@ -62,14 +35,8 @@
 #define RFMXGSM_ATTR_MODACC_RESULTS_EVM_PEAK_EVM_SYMBOL                      0x0040100d
 #define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MEAN_MAGNITUDE_ERROR                 0x0040100e
 #define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MAXIMUM_MAGNITUDE_ERROR              0x0040100f
-#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MEAN_PEAK_MAGNITUDE_ERROR            0x00401023
-#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MAXIMUM_PEAK_MAGNITUDE_ERROR         0x00401024
-#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_95TH_PERCENTILE_MAGNITUDE_ERROR      0x00401025
 #define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MEAN_PHASE_ERROR                     0x00401010
 #define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MAXIMUM_PHASE_ERROR                  0x00401011
-#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MEAN_PEAK_PHASE_ERROR                0x00401026
-#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MAXIMUM_PEAK_PHASE_ERROR             0x00401027
-#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_95TH_PERCENTILE_PHASE_ERROR          0x00401028
 #define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MEAN_FREQUENCY_ERROR                 0x00401012
 #define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MAXIMUM_FREQUENCY_ERROR              0x00401013
 #define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MEAN_AMPLITUDE_DROOP                 0x00401014
@@ -79,7 +46,6 @@
 #define RFMXGSM_ATTR_MODACC_RESULTS_PFER_MEAN_PEAK_PHASE_ERROR               0x00401018
 #define RFMXGSM_ATTR_MODACC_RESULTS_PFER_MAXIMUM_PEAK_PHASE_ERROR            0x00401019
 #define RFMXGSM_ATTR_MODACC_RESULTS_PFER_PEAK_PHASE_ERROR_SYMBOL             0x0040101a
-#define RFMXGSM_ATTR_MODACC_RESULTS_PFER_95TH_PERCENTILE_PHASE_ERROR         0x00401029
 #define RFMXGSM_ATTR_MODACC_RESULTS_PFER_MEAN_FREQUENCY_ERROR                0x0040101b
 #define RFMXGSM_ATTR_MODACC_RESULTS_PFER_MAXIMUM_FREQUENCY_ERROR             0x0040101c
 #define RFMXGSM_ATTR_MODACC_RESULTS_MEAN_IQ_GAIN_IMBALANCE                   0x0040101d
@@ -88,11 +54,11 @@
 #define RFMXGSM_ATTR_MODACC_RESULTS_MAXIMUM_IQ_ORIGIN_OFFSET                 0x00401020
 #define RFMXGSM_ATTR_MODACC_RESULTS_DETECTED_TSC                             0x00401021
 #define RFMXGSM_ATTR_ORFS_MEASUREMENT_ENABLED                                0x00402000
-#define RFMXGSM_ATTR_ORFS_MEASUREMENT_INTERVAL                               0x00402025
-#define RFMXGSM_ATTR_ORFS_MEASUREMENT_OFFSET                                 0x00402026
 #define RFMXGSM_ATTR_ORFS_AVERAGING_ENABLED                                  0x00402002
 #define RFMXGSM_ATTR_ORFS_AVERAGING_TYPE                                     0x00402003
 #define RFMXGSM_ATTR_ORFS_AVERAGING_COUNT                                    0x00402004
+#define RFMXGSM_ATTR_ORFS_MEASUREMENT_INTERVAL                               0x00402025
+#define RFMXGSM_ATTR_ORFS_MEASUREMENT_OFFSET                                 0x00402026
 #define RFMXGSM_ATTR_ORFS_MEASUREMENT_TYPE                                   0x00402005
 #define RFMXGSM_ATTR_ORFS_OFFSET_FREQUENCY_MODE                              0x00402007
 #define RFMXGSM_ATTR_ORFS_EVALUATION_SYMBOLS_START                           0x00402011
@@ -115,8 +81,6 @@
 #define RFMXGSM_ATTR_PVT_AVERAGING_TYPE                                      0x00403004
 #define RFMXGSM_ATTR_PVT_AVERAGING_COUNT                                     0x00403005
 #define RFMXGSM_ATTR_PVT_RBW_FILTER_BANDWIDTH                                0x00403007
-#define RFMXGSM_ATTR_PVT_MAXIMUM_POWER_TRACE_ENABLED                         0x00403013
-#define RFMXGSM_ATTR_PVT_MINIMUM_POWER_TRACE_ENABLED                         0x00403014
 #define RFMXGSM_ATTR_PVT_ALL_TRACES_ENABLED                                  0x00403009
 #define RFMXGSM_ATTR_PVT_NUMBER_OF_ANALYSIS_THREADS                          0x0040300a
 #define RFMXGSM_ATTR_PVT_RESULTS_MEASUREMENT_STATUS                          0x0040300b
@@ -126,9 +90,43 @@
 #define RFMXGSM_ATTR_PVT_RESULTS_SLOT_MINIMUM_POWER                          0x0040300f
 #define RFMXGSM_ATTR_PVT_RESULTS_SLOT_BURST_THRESHOLD                        0x00403010
 #define RFMXGSM_ATTR_PVT_RESULTS_SLOT_MEASUREMENT_STATUS                     0x00403011
-#define RFMXGSM_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                      0x0040d000
 #define RFMXGSM_ATTR_LIMITED_CONFIGURATION_CHANGE                            0x0040d003
 #define RFMXGSM_ATTR_RESULT_FETCH_TIMEOUT                                    0x0040c000
+#define RFMXGSM_ATTR_CENTER_FREQUENCY                                        0x00400001
+#define RFMXGSM_ATTR_REFERENCE_LEVEL                                         0x00400002
+#define RFMXGSM_ATTR_EXTERNAL_ATTENUATION                                    0x00400003
+#define RFMXGSM_ATTR_TRIGGER_TYPE                                            0x00400004
+#define RFMXGSM_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                             0x00400005
+#define RFMXGSM_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                               0x00400006
+#define RFMXGSM_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                            0x00400007
+#define RFMXGSM_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                             0x00400008
+#define RFMXGSM_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                        0x00400fff
+#define RFMXGSM_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                             0x00400009
+#define RFMXGSM_ATTR_TRIGGER_DELAY                                           0x0040000a
+#define RFMXGSM_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                         0x0040000b
+#define RFMXGSM_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                     0x0040000c
+#define RFMXGSM_ATTR_LINK_DIRECTION                                          0x0040000d
+#define RFMXGSM_ATTR_BAND                                                    0x0040000e
+#define RFMXGSM_ATTR_SIGNAL_STRUCTURE                                        0x00400017
+#define RFMXGSM_ATTR_NUMBER_OF_TIMESLOTS                                     0x0040000f
+#define RFMXGSM_ATTR_MODULATION_TYPE                                         0x00400010
+#define RFMXGSM_ATTR_BURST_TYPE                                              0x00400011
+#define RFMXGSM_ATTR_HB_FILTER_WIDTH                                         0x00400012
+#define RFMXGSM_ATTR_AUTO_TSC_DETECTION_ENABLED                              0x00400013
+#define RFMXGSM_ATTR_TSC                                                     0x00400014
+#define RFMXGSM_ATTR_POWER_CONTROL_LEVEL                                     0x00400015
+#define RFMXGSM_ATTR_TIMING_ADVANCE                                          0x00400018
+#define RFMXGSM_ATTR_BURST_SYNCHRONIZATION_TYPE                              0x00400016
+#define RFMXGSM_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                      0x0040d000
+#define RFMXGSM_ATTR_SELECTED_PORTS                                          0x00400ffd
+#define RFMXGSM_ATTR_REFERENCE_LEVEL_HEADROOM                                0x00400ffc
+#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MEAN_PEAK_MAGNITUDE_ERROR            0x00401023
+#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MAXIMUM_PEAK_MAGNITUDE_ERROR         0x00401024
+#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_95TH_PERCENTILE_MAGNITUDE_ERROR      0x00401025
+#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MEAN_PEAK_PHASE_ERROR                0x00401026
+#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_MAXIMUM_PEAK_PHASE_ERROR             0x00401027
+#define RFMXGSM_ATTR_MODACC_RESULTS_EVM_95TH_PERCENTILE_PHASE_ERROR          0x00401028
+#define RFMXGSM_ATTR_MODACC_RESULTS_PFER_95TH_PERCENTILE_PHASE_ERROR         0x00401029
 
 // Values for RFMXGSM_ATTR_TRIGGER_TYPE
 #define RFMXGSM_VAL_TRIGGER_TYPE_NONE                                                              0
@@ -231,13 +229,13 @@
 #define RFMXGSM_VAL_BURST_SYNC_TYPE_AMPLITUDE                                                      1
 #define RFMXGSM_VAL_BURST_SYNC_TYPE_NONE                                                           2
 
-// Values for RFMXGSM_ATTR_MODACC_MEASUREMENT_INTERVAL
-#define RFMXGSM_VAL_MODACC_MEASUREMENT_INTERVAL_NUMBER_OF_TIMESLOTS                                0
-#define RFMXGSM_VAL_MODACC_MEASUREMENT_INTERVAL_TIMESLOT_AT_OFFSET                                 1
-
 // Values for RFMXGSM_ATTR_MODACC_AVERAGING_ENABLED
 #define RFMXGSM_VAL_MODACC_AVERAGING_ENABLED_FALSE                                                 0
 #define RFMXGSM_VAL_MODACC_AVERAGING_ENABLED_TRUE                                                  1
+
+// Values for RFMXGSM_ATTR_MODACC_MEASUREMENT_INTERVAL
+#define RFMXGSM_VAL_MODACC_MEASUREMENT_INTERVAL_NUMBER_OF_TIMESLOTS                                0
+#define RFMXGSM_VAL_MODACC_MEASUREMENT_INTERVAL_TIMESLOT_AT_OFFSET                                 1
 
 // Values for RFMXGSM_ATTR_MODACC_DROOP_COMPENSATION_ENABLED
 #define RFMXGSM_VAL_MODACC_DROOP_COMPENSATION_ENABLED_FALSE                                        0
@@ -254,10 +252,6 @@
 #define RFMXGSM_VAL_MODACC_DETECTED_TSC_TSC6                                                       6
 #define RFMXGSM_VAL_MODACC_DETECTED_TSC_TSC7                                                       7
 
-// Values for RFMXGSM_ATTR_ORFS_MEASUREMENT_INTERVAL
-#define RFMXGSM_VAL_ORFS_MEASUREMENT_INTERVAL_NUMBER_OF_TIMESLOTS                                  0
-#define RFMXGSM_VAL_ORFS_MEASUREMENT_INTERVAL_TIMESLOT_AT_OFFSET                                   1
-
 // Values for RFMXGSM_ATTR_ORFS_AVERAGING_ENABLED
 #define RFMXGSM_VAL_ORFS_AVERAGING_ENABLED_FALSE                                                   0
 #define RFMXGSM_VAL_ORFS_AVERAGING_ENABLED_TRUE                                                    1
@@ -265,6 +259,10 @@
 // Values for RFMXGSM_ATTR_ORFS_AVERAGING_TYPE
 #define RFMXGSM_VAL_ORFS_AVERAGING_TYPE_RMS                                                        0
 #define RFMXGSM_VAL_ORFS_AVERAGING_TYPE_LOG                                                        1
+
+// Values for RFMXGSM_ATTR_ORFS_MEASUREMENT_INTERVAL
+#define RFMXGSM_VAL_ORFS_MEASUREMENT_INTERVAL_NUMBER_OF_TIMESLOTS                                  0
+#define RFMXGSM_VAL_ORFS_MEASUREMENT_INTERVAL_TIMESLOT_AT_OFFSET                                   1
 
 // Values for RFMXGSM_ATTR_ORFS_MEASUREMENT_TYPE
 #define RFMXGSM_VAL_ORFS_MEASUREMENT_TYPE_MODULATION_AND_SWITCHING                                 0
@@ -298,14 +296,6 @@
 #define RFMXGSM_VAL_PVT_AVERAGING_TYPE_MAXIMUM                                                     3
 #define RFMXGSM_VAL_PVT_AVERAGING_TYPE_MINIMUM                                                     4
 
-// Values for RFMXGSM_ATTR_PVT_MAXIMUM_POWER_TRACE_ENABLED
-#define RFMXGSM_VAL_PVT_MAXIMUM_POWER_TRACE_ENABLED_FALSE                                          0
-#define RFMXGSM_VAL_PVT_MAXIMUM_POWER_TRACE_ENABLED_TRUE                                           1
-
-// Values for RFMXGSM_ATTR_PVT_MINIMUM_POWER_TRACE_ENABLED
-#define RFMXGSM_VAL_PVT_MINIMUM_POWER_TRACE_ENABLED_FALSE                                          0
-#define RFMXGSM_VAL_PVT_MINIMUM_POWER_TRACE_ENABLED_TRUE                                           1
-
 // Values for RFMXGSM_ATTR_PVT_RESULTS_MEASUREMENT_STATUS
 #define RFMXGSM_VAL_PVT_MEASUREMENT_STATUS_FAIL                                                    0
 #define RFMXGSM_VAL_PVT_MEASUREMENT_STATUS_PASS                                                    1
@@ -326,24 +316,24 @@
 #define RFMXGSM_VAL_FALSE                                                                          0
 #define RFMXGSM_VAL_TRUE                                                                           1
 
+// Values for MeasurementTypes
+#define RFMXGSM_VAL_MODACC                                                                         1 << 0
+#define RFMXGSM_VAL_ORFS                                                                           1 << 1
+#define RFMXGSM_VAL_PVT                                                                            1 << 2
+
 // Values for FrequencyReferenceSource
 #define RFMXGSM_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
 #define RFMXGSM_VAL_REF_IN_STR                                                                     "RefIn"
 #define RFMXGSM_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
 #define RFMXGSM_VAL_CLK_IN_STR                                                                     "ClkIn"
 
-// Values for MeasurementTypes
-#define RFMXGSM_VAL_MODACC                                                                         1<<0
-#define RFMXGSM_VAL_ORFS                                                                           1<<1
-#define RFMXGSM_VAL_PVT                                                                            1<<2
+// Values for RFAttenuationAuto
+#define RFMXGSM_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
+#define RFMXGSM_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
 
 // Values for MechanicalAttenuationAuto
 #define RFMXGSM_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
 #define RFMXGSM_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
-
-// Values for RFAttenuationAuto
-#define RFMXGSM_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
-#define RFMXGSM_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
 
 /* ---------------- RFmxGSM APIs ------------------ */
 
@@ -841,14 +831,6 @@ int32 __stdcall RFmxGSM_DeleteSignalConfiguration(
    char signalName[]
 );
 
-int32 __stdcall RFmxGSM_PVTCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
 int32 __stdcall RFmxGSM_ORFSCfgAveraging(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -972,6 +954,14 @@ int32 __stdcall RFmxGSM_CfgPowerControlLevel(
    int32 powerControlLevel
 );
 
+int32 __stdcall RFmxGSM_PVTCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
+);
+
 int32 __stdcall RFmxGSM_GetDigitalEdgeTriggerSource(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1012,11 +1002,6 @@ int32 __stdcall RFmxGSM_ORFSCfgSwitchingCustomOffsetFrequencyArray(
    int32 arraySize
 );
 
-int32 __stdcall RFmxGSM_AbortMeasurements(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[]
-);
-
 int32 __stdcall RFmxGSM_CfgFrequencyARFCN(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1030,6 +1015,11 @@ int32 __stdcall RFmxGSM_SelectMeasurements(
    char selectorString[],
    uInt32 measurements,
    int32 enableAllTraces
+);
+
+int32 __stdcall RFmxGSM_AbortMeasurements(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[]
 );
 
 int32 __stdcall RFmxGSM_DisableTrigger(
@@ -1073,112 +1063,6 @@ int32 __stdcall RFmxGSM_GetAllNamedResultNames(
    int32 resultNamesBufferSize,
    int32* actualResultNamesSize,
    int32* defaultResultExists
-);
-
-int32 __stdcall RFmxGSM_PVTFetchSlotMeasurementArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 slotAveragePower[],
-   float64 slotBurstWidth[],
-   int32 slotMeasurementStatus[],
-   float64 slotMaximumPower[],
-   float64 slotMinimumPower[],
-   float64 slotBurstThreshold[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxGSM_PVTFetchPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 upperMask[],
-   float32 signalPower[],
-   float32 lowerMask[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxGSM_PVTFetchMaximumAndMinimumPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 maximumSignalPower[],
-   float32 minimumSignalPower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxGSM_PVTFetchMeasurementStatus(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32* measurementStatus
-);
-
-int32 __stdcall RFmxGSM_PVTFetchSlotMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* slotAveragePower,
-   float64* slotBurstWidth,
-   int32* slotMeasurementStatus,
-   float64* slotMaximumPower,
-   float64* slotMinimumPower,
-   float64* slotBurstThreshold
-);
-
-int32 __stdcall RFmxGSM_ORFSFetchModulationPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 offsetFrequency[],
-   float32 absolutePower[],
-   float32 relativePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxGSM_ORFSFetchModulationResultsArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* modulationCarrierPower,
-   float64 lowerRelativePower[],
-   float64 upperRelativePower[],
-   float64 lowerAbsolutePower[],
-   float64 upperAbsolutePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxGSM_ORFSFetchSwitchingPowerTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float32 offsetFrequency[],
-   float32 absolutePower[],
-   float32 relativePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxGSM_ORFSFetchSwitchingResultsArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* switchingCarrierPower,
-   float64 lowerRelativePower[],
-   float64 upperRelativePower[],
-   float64 lowerAbsolutePower[],
-   float64 upperAbsolutePower[],
-   int32 arraySize,
-   int32* actualArraySize
 );
 
 int32 __stdcall RFmxGSM_ModAccFetchDemodulatedBits(
@@ -1317,341 +1201,98 @@ int32 __stdcall RFmxGSM_ModAccFetchPFER(
    int32* peakSymbol
 );
 
-int32 __stdcall RFmxGSM_GetSelectedPorts(
+int32 __stdcall RFmxGSM_ORFSFetchModulationPowerTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
+   float64 timeout,
+   float32 offsetFrequency[],
+   float32 absolutePower[],
+   float32 relativePower[],
    int32 arraySize,
-   char attrVal[]
+   int32* actualArraySize
 );
 
-int32 __stdcall RFmxGSM_SetSelectedPorts(
+int32 __stdcall RFmxGSM_ORFSFetchModulationResultsArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   char attrVal[]
+   float64 timeout,
+   float64* modulationCarrierPower,
+   float64 lowerRelativePower[],
+   float64 upperRelativePower[],
+   float64 lowerAbsolutePower[],
+   float64 upperAbsolutePower[],
+   int32 arraySize,
+   int32* actualArraySize
 );
 
-int32 __stdcall RFmxGSM_GetCenterFrequency(
+int32 __stdcall RFmxGSM_ORFSFetchSwitchingPowerTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 *attrVal
+   float64 timeout,
+   float32 offsetFrequency[],
+   float32 absolutePower[],
+   float32 relativePower[],
+   int32 arraySize,
+   int32* actualArraySize
 );
 
-int32 __stdcall RFmxGSM_SetCenterFrequency(
+int32 __stdcall RFmxGSM_ORFSFetchSwitchingResultsArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 attrVal
+   float64 timeout,
+   float64* switchingCarrierPower,
+   float64 lowerRelativePower[],
+   float64 upperRelativePower[],
+   float64 lowerAbsolutePower[],
+   float64 upperAbsolutePower[],
+   int32 arraySize,
+   int32* actualArraySize
 );
 
-int32 __stdcall RFmxGSM_GetReferenceLevel(
+int32 __stdcall RFmxGSM_PVTFetchSlotMeasurementArray(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 *attrVal
+   float64 timeout,
+   float64 slotAveragePower[],
+   float64 slotBurstWidth[],
+   int32 slotMeasurementStatus[],
+   float64 slotMaximumPower[],
+   float64 slotMinimumPower[],
+   float64 slotBurstThreshold[],
+   int32 arraySize,
+   int32* actualArraySize
 );
 
-int32 __stdcall RFmxGSM_SetReferenceLevel(
+int32 __stdcall RFmxGSM_PVTFetchPowerTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 attrVal
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 upperMask[],
+   float32 signalPower[],
+   float32 lowerMask[],
+   int32 arraySize,
+   int32* actualArraySize
 );
 
-int32 __stdcall RFmxGSM_GetExternalAttenuation(
+int32 __stdcall RFmxGSM_PVTFetchMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 *attrVal
+   float64 timeout,
+   int32* measurementStatus
 );
 
-int32 __stdcall RFmxGSM_SetExternalAttenuation(
+int32 __stdcall RFmxGSM_PVTFetchSlotMeasurement(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetReferenceLevelHeadroom(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetReferenceLevelHeadroom(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetTriggerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetTriggerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetDigitalEdgeTriggerEdge(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetDigitalEdgeTriggerEdge(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetIQPowerEdgeTriggerLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetIQPowerEdgeTriggerLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetIQPowerEdgeTriggerLevelType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetIQPowerEdgeTriggerLevelType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetIQPowerEdgeTriggerSlope(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetIQPowerEdgeTriggerSlope(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetTriggerDelay(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetTriggerDelay(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetTriggerMinimumQuietTimeMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetTriggerMinimumQuietTimeMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetTriggerMinimumQuietTimeDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetTriggerMinimumQuietTimeDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetLinkDirection(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetLinkDirection(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetBand(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetBand(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetSignalStructure(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetSignalStructure(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetNumberOfTimeslots(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetNumberOfTimeslots(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetModulationType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetModulationType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetBurstType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetBurstType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetHBFilterWidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetHBFilterWidth(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetAutoTSCDetectionEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetAutoTSCDetectionEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetTSC(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetTSC(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetPowerControlLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetPowerControlLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetTimingAdvance(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetTimingAdvance(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetBurstSynchronizationType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetBurstSynchronizationType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetAutoLevelInitialReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetAutoLevelInitialReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetLimitedConfigurationChange(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetLimitedConfigurationChange(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_GetResultFetchTimeout(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_SetResultFetchTimeout(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
+   float64 timeout,
+   float64* slotAveragePower,
+   float64* slotBurstWidth,
+   int32* slotMeasurementStatus,
+   float64* slotMaximumPower,
+   float64* slotMinimumPower,
+   float64* slotBurstThreshold
 );
 
 int32 __stdcall RFmxGSM_ModAccGetMeasurementEnabled(
@@ -1661,30 +1302,6 @@ int32 __stdcall RFmxGSM_ModAccGetMeasurementEnabled(
 );
 
 int32 __stdcall RFmxGSM_ModAccSetMeasurementEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_ModAccGetMeasurementInterval(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_ModAccSetMeasurementInterval(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_ModAccGetMeasurementOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_ModAccSetMeasurementOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -1709,6 +1326,30 @@ int32 __stdcall RFmxGSM_ModAccGetAveragingCount(
 );
 
 int32 __stdcall RFmxGSM_ModAccSetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccGetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccSetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccGetMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccSetMeasurementOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -1798,24 +1439,6 @@ int32 __stdcall RFmxGSM_ModAccGetResultsEVMMaximumMagnitudeError(
    float64 *attrVal
 );
 
-int32 __stdcall RFmxGSM_ModAccGetResultsEVMMeanPeakMagnitudeError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_ModAccGetResultsEVMMaximumPeakMagnitudeError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_ModAccGetResultsEVM95thPercentileMagnitudeError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
 int32 __stdcall RFmxGSM_ModAccGetResultsEVMMeanPhaseError(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1823,24 +1446,6 @@ int32 __stdcall RFmxGSM_ModAccGetResultsEVMMeanPhaseError(
 );
 
 int32 __stdcall RFmxGSM_ModAccGetResultsEVMMaximumPhaseError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_ModAccGetResultsEVMMeanPeakPhaseError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_ModAccGetResultsEVMMaximumPeakPhaseError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxGSM_ModAccGetResultsEVM95thPercentilePhaseError(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
@@ -1900,12 +1505,6 @@ int32 __stdcall RFmxGSM_ModAccGetResultsPFERPeakPhaseErrorSymbol(
    int32 *attrVal
 );
 
-int32 __stdcall RFmxGSM_ModAccGetResultsPFER95thPercentilePhaseError(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
 int32 __stdcall RFmxGSM_ModAccGetResultsPFERMeanFrequencyError(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1948,6 +1547,48 @@ int32 __stdcall RFmxGSM_ModAccGetResultsDetectedTSC(
    int32 *attrVal
 );
 
+int32 __stdcall RFmxGSM_ModAccGetResultsEVMMeanPeakMagnitudeError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccGetResultsEVMMaximumPeakMagnitudeError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccGetResultsEVM95thPercentileMagnitudeError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccGetResultsEVMMeanPeakPhaseError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccGetResultsEVMMaximumPeakPhaseError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccGetResultsEVM95thPercentilePhaseError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ModAccGetResultsPFER95thPercentilePhaseError(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxGSM_ORFSGetMeasurementEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1955,30 +1596,6 @@ int32 __stdcall RFmxGSM_ORFSGetMeasurementEnabled(
 );
 
 int32 __stdcall RFmxGSM_ORFSSetMeasurementEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_ORFSGetMeasurementInterval(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_ORFSSetMeasurementInterval(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_ORFSGetMeasurementOffset(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_ORFSSetMeasurementOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -2015,6 +1632,30 @@ int32 __stdcall RFmxGSM_ORFSGetAveragingCount(
 );
 
 int32 __stdcall RFmxGSM_ORFSSetAveragingCount(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_ORFSGetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ORFSSetMeasurementInterval(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_ORFSGetMeasurementOffset(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_ORFSSetMeasurementOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 attrVal
@@ -2272,30 +1913,6 @@ int32 __stdcall RFmxGSM_PVTSetRBWFilterBandwidth(
    float64 attrVal
 );
 
-int32 __stdcall RFmxGSM_PVTGetMaximumPowerTraceEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_PVTSetMaximumPowerTraceEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxGSM_PVTGetMinimumPowerTraceEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxGSM_PVTSetMinimumPowerTraceEnabled(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
 int32 __stdcall RFmxGSM_PVTGetAllTracesEnabled(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2360,6 +1977,343 @@ int32 __stdcall RFmxGSM_PVTGetResultsSlotMeasurementStatus(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_GetLimitedConfigurationChange(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetLimitedConfigurationChange(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetResultFetchTimeout(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetResultFetchTimeout(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetCenterFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetCenterFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetDigitalEdgeTriggerEdge(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetDigitalEdgeTriggerEdge(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetIQPowerEdgeTriggerLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetIQPowerEdgeTriggerLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetIQPowerEdgeTriggerLevelType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetIQPowerEdgeTriggerLevelType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetIQPowerEdgeTriggerSlope(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetIQPowerEdgeTriggerSlope(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetTriggerDelay(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetTriggerDelay(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetTriggerMinimumQuietTimeMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetTriggerMinimumQuietTimeMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetTriggerMinimumQuietTimeDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetTriggerMinimumQuietTimeDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetLinkDirection(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetLinkDirection(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetBand(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetBand(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetSignalStructure(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetSignalStructure(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetNumberOfTimeslots(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetNumberOfTimeslots(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetModulationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetModulationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetBurstType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetBurstType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetHBFilterWidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetHBFilterWidth(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetAutoTSCDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetAutoTSCDetectionEnabled(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetTSC(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetTSC(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetPowerControlLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetPowerControlLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetTimingAdvance(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetTimingAdvance(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetBurstSynchronizationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetBurstSynchronizationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetAutoLevelInitialReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetAutoLevelInitialReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxGSM_GetSelectedPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxGSM_SetSelectedPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxGSM_GetReferenceLevelHeadroom(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxGSM_SetReferenceLevelHeadroom(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 #ifdef __cplusplus
