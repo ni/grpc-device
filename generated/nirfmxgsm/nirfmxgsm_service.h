@@ -135,7 +135,9 @@ public:
   ::grpc::Status ORFSFetchSwitchingPowerTrace(::grpc::ServerContext* context, const ORFSFetchSwitchingPowerTraceRequest* request, ORFSFetchSwitchingPowerTraceResponse* response) override;
   ::grpc::Status ORFSFetchSwitchingResultsArray(::grpc::ServerContext* context, const ORFSFetchSwitchingResultsArrayRequest* request, ORFSFetchSwitchingResultsArrayResponse* response) override;
   ::grpc::Status PVTCfgAveraging(::grpc::ServerContext* context, const PVTCfgAveragingRequest* request, PVTCfgAveragingResponse* response) override;
+  ::grpc::Status PVTFetchMaximumPowerTrace(::grpc::ServerContext* context, const PVTFetchMaximumPowerTraceRequest* request, PVTFetchMaximumPowerTraceResponse* response) override;
   ::grpc::Status PVTFetchMeasurementStatus(::grpc::ServerContext* context, const PVTFetchMeasurementStatusRequest* request, PVTFetchMeasurementStatusResponse* response) override;
+  ::grpc::Status PVTFetchMinimumPowerTrace(::grpc::ServerContext* context, const PVTFetchMinimumPowerTraceRequest* request, PVTFetchMinimumPowerTraceResponse* response) override;
   ::grpc::Status PVTFetchPowerTrace(::grpc::ServerContext* context, const PVTFetchPowerTraceRequest* request, PVTFetchPowerTraceResponse* response) override;
   ::grpc::Status PVTFetchSlotMeasurement(::grpc::ServerContext* context, const PVTFetchSlotMeasurementRequest* request, PVTFetchSlotMeasurementResponse* response) override;
   ::grpc::Status PVTFetchSlotMeasurementArray(::grpc::ServerContext* context, const PVTFetchSlotMeasurementArrayRequest* request, PVTFetchSlotMeasurementArrayResponse* response) override;
