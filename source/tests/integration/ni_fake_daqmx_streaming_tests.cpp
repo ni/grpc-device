@@ -122,6 +122,7 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamRead_Scalar)
   }
 
   moniker_context.TryCancel();
+  stream->Finish();
 }
 
 TEST_F(NiFakeDAQmxStreamingTests, StreamRead_Array)
@@ -156,6 +157,7 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamRead_Array)
   }
 
   moniker_context.TryCancel();
+  stream->Finish();
 }
 
 TEST_F(NiFakeDAQmxStreamingTests, StreamWrite_Array)
@@ -192,6 +194,7 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamWrite_Array)
 
   write_stream->WritesDone();
   moniker_context.TryCancel();
+  write_stream->Finish();
 }
 
 TEST_F(NiFakeDAQmxStreamingTests, StreamReadWrite_Array)
@@ -249,6 +252,7 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamReadWrite_Array)
 
   write_stream->WritesDone();
   moniker_context.TryCancel();
+  write_stream->Finish();
 }
 
 TEST_F(NiFakeDAQmxStreamingTests, InvalidSidebandStrategy_BeginSidebandStream_ReturnsInvalidArgument)

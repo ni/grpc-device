@@ -145,6 +145,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_scalar)
   }
 
   moniker_context.TryCancel();
+  stream->Finish();
 }
 
 TEST_F(NiFakeFpgaStreamingTests, StreamRead_Array)
@@ -194,6 +195,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_Array)
   }
 
   moniker_context.TryCancel();
+  stream->Finish();
 }
 
 TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
@@ -245,6 +247,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
 
   write_stream->WritesDone();
   moniker_context.TryCancel();
+  write_stream->Finish();
 }
 
 TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
@@ -330,6 +333,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
 
   write_stream->WritesDone();
   moniker_context.TryCancel();
+  write_stream->Finish();
 }
 
 // disable this test since we are not supporting sideband streaming inprocess
