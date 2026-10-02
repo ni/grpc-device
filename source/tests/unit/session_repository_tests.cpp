@@ -29,7 +29,7 @@ TEST(SessionRepositoryTests, AddSessionWithNonZeroStatus_InitializedNewSessionIs
   nidevice_grpc::SessionRepository session_repository;
   std::string session_name = "42";
   bool initialized_new_session;
-  int status = session_repository.add_session(
+  session_repository.add_session(
       session_name,
       [session_name]() { return 1; },
       NULL,
@@ -112,7 +112,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_RemoveSession_RemovesSession)
 {
   std::string session_name = "session_name";
   nidevice_grpc::SessionRepository session_repository;
-  int status = session_repository.add_session(
+  session_repository.add_session(
       session_name,
       []() { return 0; },
       NULL);
@@ -180,7 +180,7 @@ TEST(SessionRepositoryTests, NamedSessionAdded_ResetServer_RemovesSession)
 {
   std::string session_name = "session_name";
   nidevice_grpc::SessionRepository session_repository;
-  int status = session_repository.add_session(
+  session_repository.add_session(
       session_name,
       []() { return 0; },
       NULL);
@@ -210,7 +210,7 @@ TEST(SessionRepositoryTests, NamedAndUnnamedSessionsAdded_ResetServer_RemovesBot
 {
   std::string session_name = "session_name";
   nidevice_grpc::SessionRepository session_repository;
-  int status = session_repository.add_session(
+  session_repository.add_session(
       session_name,
       []() { return 0; },
       NULL);

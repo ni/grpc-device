@@ -297,7 +297,6 @@ struct VirtualInterfaceOutputConverter {
 
   void to_grpc(pb_::RepeatedPtrField<VirtualInterface>& output)
   {
-    auto curr_vi_ptr = virtual_interface_ptr;
     for (
         auto curr_vi_ptr = virtual_interface_ptr;
         curr_vi_ptr != nullptr;
@@ -425,6 +424,8 @@ struct SockOptDataInputConverter {
                 sizeof(data_ipv6mreq.ipv6mr_multiaddr.addr),
                 static_cast<size_t>(input.data_ipv6_mreq().multiaddr().addr().size())));
         data_ipv6mreq.ipv6mr_interface = input.data_ipv6_mreq().ipv6mr_interface();
+        break;
+      case SockOptData::DataCase::DATA_NOT_SET:
         break;
     }
   }

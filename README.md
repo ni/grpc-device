@@ -39,6 +39,8 @@ Indicates the most recent driver version used to test builds of the current sour
 | NI-VISA                   | 2024 Q1       | 2024 Q1       | 2024 Q1       |
 | NI-XNET                   | 21.5.0        | 21.5.0        | 21.5.0        |
 
+The NI Linux RT ARMv7 server includes the NI-VISA service and core services only. The NI Linux RT x64 server includes all supported NI Linux RT driver services.
+
 ## Build Status
 ![Linux Build](https://github.com/ni/grpc-device/workflows/Build%20Matrix/badge.svg)
 ![NI Linux Real-Time Build](https://github.com/ni/grpc-device/workflows/NI%20Linux%20Real-Time%20Build/badge.svg)
@@ -54,7 +56,7 @@ Indicates the most recent driver version used to test builds of the current sour
 * **List of supported OS:**
   - Windows 64-bit
   - Linux 64-bit
-  - NI Linux RT
+   - NI Linux RT x64 and ARMv7
 
 ### Download the Client Files
 1. Navigate to the [Releases](https://github.com/ni/grpc-device/releases) page.

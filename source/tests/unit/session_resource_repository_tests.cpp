@@ -229,19 +229,17 @@ TEST(SessionResourceRepositoryTests, AddSessionResource_AddSessionWithSameNameFr
   auto repository = std::make_shared<SessionRepository>();
   SessionResourceRepository<int32_t> resource_repository(repository);
   SessionResourceRepository<int32_t> other_resource_repository(repository);
-  const int32_t kResourceHandle1 = -123456;
   std::string kTestResource("test_resource");
-  auto result = resource_repository.add_session(
+  resource_repository.add_session(
       kTestResource,
       []() { return std::make_tuple(0, 5555); },
       [](int32_t handle) {});
 
-  const int32_t kErrorCode = 9999;
   using MockInitDelegate = ::testing::MockFunction<std::tuple<int32_t, int32_t>(void)>;
   MockInitDelegate mock_init;
   EXPECT_THROW({
     try {
-      result = other_resource_repository.add_session(
+      other_resource_repository.add_session(
           kTestResource,
           mock_init.AsStdFunction(),
           [](int32_t handle) { FAIL() << "Unexpected Cleanup"; });

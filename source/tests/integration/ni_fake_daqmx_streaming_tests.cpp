@@ -163,7 +163,6 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamWrite_Array)
   // create some setup for writing
   auto session = std::make_unique<nidevice_grpc::Session>();
   std::vector<pb::uint32> data_int_u32 = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
-  int size = data_int_u32.size();
 
   // Set expectation on the mocked fpga lib method.
   EXPECT_CALL(*library(), WriteDigitalU32(_, 10, TRUE, 0, DAQmx_Val_GroupByChannel, ::testing::_, _, _))
