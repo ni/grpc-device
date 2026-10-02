@@ -38,7 +38,7 @@ class DebugSessionPropertiesSysCfgMockLibrary : public NiceMock<ni::tests::utili
     NISysCfgStatus status = NISysCfg_InvalidArg;
     va_list args;
     va_start(args, property_ID);
-    switch(property_ID) {
+    switch (static_cast<int>(property_ID)) {
       case nidevice_restricted_grpc::kDebugSessionEnabledPropertyId: {
         if (expect_debug_enabled_)
         {

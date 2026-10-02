@@ -48,8 +48,8 @@ class SessionResourceRepository {
 
     SessionResourceCreator(const InitFunc& init_func)
         : init_func_(init_func),
-          added_new_handle_(false),
-          handle_()
+          handle_(),
+          added_new_handle_(false)
     {
     }
 

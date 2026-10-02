@@ -463,7 +463,7 @@ class VisaRegisterBasedLoopbackTest : public VisaDriverApiTest {
     EXPECT_EQ(VI_SUCCESS, response.status());
     std::vector<ViUInt8> retval;
     const std::string& responseBuffer = response.buffer();
-    for (int i = 0; i < responseBuffer.length(); i++) {
+    for (size_t i = 0; i < responseBuffer.length(); i++) {
       retval.push_back(responseBuffer[i]);
     }
     return retval;

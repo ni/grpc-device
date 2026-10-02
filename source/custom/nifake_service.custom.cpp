@@ -1,10 +1,14 @@
 
+#if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable : 4616)
 #pragma warning(disable : 4146)
 #pragma warning(disable : 4244)
+#endif
 #include <nifake/nifake_service.h>
+#if defined(_MSC_VER)
 #pragma warning(pop)
+#endif
 
 namespace nifake_grpc {
 

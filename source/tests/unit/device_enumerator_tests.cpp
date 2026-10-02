@@ -378,12 +378,12 @@ TEST(DeviceEnumeratorTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledClo
   EXPECT_CALL(mock_library, CloseHandle)
       .Times(1);
   NISysCfgSessionHandle session = nullptr;
-  NISysCfgStatus status = device_enumerator.open_or_get_localhost_syscfg_session(&session);
+  device_enumerator.open_or_get_localhost_syscfg_session(&session);
 
   device_enumerator.clear_syscfg_session();
   device_enumerator.clear_syscfg_session();
 
-  status = device_enumerator.open_or_get_localhost_syscfg_session(&session);
+  device_enumerator.open_or_get_localhost_syscfg_session(&session);
 }
 
 static NISysCfgStatus SetAliasName(void* value)

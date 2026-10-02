@@ -93,7 +93,6 @@ TEST(XnetConvertersTests, FlexRayCommStateValue_SetFlexRayCommResponse_ExtractBi
 
 TEST(XnetConvertersTests, LINCommStateValue_SetLINCommResponse_ExtractBitFields)
 {
-  u32 reserved = 0;
   u32 sleep = 1;
   u32 linCommunicationState = 1;
   u32 lastError = 3;

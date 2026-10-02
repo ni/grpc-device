@@ -15,7 +15,7 @@
 
 namespace nidevice_restricted_grpc {
 
-static const char* kCalibrationPropertyAccessFailedMessage = "The NI System Configuration API was unable to access the calibration property.";
+inline constexpr auto kCalibrationPropertyAccessFailedMessage = "The NI System Configuration API was unable to access the calibration property.";
 
 struct CalibrationOperationsRestrictedFeatureToggles {
   using CodeReadiness = nidevice_grpc::FeatureToggles::CodeReadiness;

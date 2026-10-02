@@ -38,8 +38,8 @@ class NiFakeNonIviServiceTests_EndToEnd : public ::testing::Test {
 
   NiFakeNonIviServiceTests_EndToEnd()
       : session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
-        resource_repository_(std::make_shared<FakeResourceRepository>(session_repository_)),
         secondary_session_repository_(std::make_shared<nidevice_grpc::SessionRepository>()),
+        resource_repository_(std::make_shared<FakeResourceRepository>(session_repository_)),
         secondary_resource_repository_(std::make_shared<SecondaryResourceRepository>(secondary_session_repository_)),
         library_(std::make_shared<ni::tests::unit::NiFakeNonIviMockLibrary>()),
         service_(library_, resource_repository_, std::make_shared<FakeCrossDriverResourceRepository>(session_repository_), std::make_shared<FakeCrossDriverResourceRepository>(secondary_session_repository_)),

@@ -24,8 +24,8 @@ class NiTClkDriverApiTest : public ::testing::Test {
  protected:
   NiTClkDriverApiTest()
       : device_server_(DeviceServerInterface::Singleton()),
-        nitclk_stub_(tclk::NiTClk::NewStub(device_server_->InProcessChannel())),
-        niscope_stub_(scope::NiScope::NewStub(device_server_->InProcessChannel()))
+      niscope_stub_(scope::NiScope::NewStub(device_server_->InProcessChannel())),
+      nitclk_stub_(tclk::NiTClk::NewStub(device_server_->InProcessChannel()))
   {
     device_server_->ResetServer();
   }
