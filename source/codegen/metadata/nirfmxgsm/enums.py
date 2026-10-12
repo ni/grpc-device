@@ -384,6 +384,19 @@ enums = {
             }
         ]
     },
+    'ModAccMeasurementInterval': {
+        'enum-value-prefix': 'MODACC_MEASUREMENT_INTERVAL',
+        'values': [
+            {
+                'name': 'NUMBER_OF_TIMESLOTS',
+                'value': 0
+            },
+            {
+                'name': 'TIMESLOT_AT_OFFSET',
+                'value': 1
+            }
+        ]
+    },
     'ModulationType': {
         'values': [
             {
@@ -452,6 +465,18 @@ enums = {
             },
             {
                 'name': 'OFFSET_AND_CARRIER',
+                'value': 1
+            }
+        ]
+    },
+    'OrfsMeasurementInterval': {
+        'values': [
+            {
+                'name': 'NUMBER_OF_TIMESLOTS',
+                'value': 0
+            },
+            {
+                'name': 'TIMESLOT_AT_OFFSET',
                 'value': 1
             }
         ]
@@ -532,6 +557,18 @@ enums = {
             }
         ]
     },
+    'PvtMaximumPowerTraceEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
+                'value': 1
+            }
+        ]
+    },
     'PvtMeasurementStatus': {
         'values': [
             {
@@ -540,6 +577,18 @@ enums = {
             },
             {
                 'name': 'PASS',
+                'value': 1
+            }
+        ]
+    },
+    'PvtMinimumPowerTraceEnabled': {
+        'values': [
+            {
+                'name': 'FALSE',
+                'value': 0
+            },
+            {
+                'name': 'TRUE',
                 'value': 1
             }
         ]

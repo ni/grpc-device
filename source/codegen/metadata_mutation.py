@@ -314,31 +314,36 @@ def _add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
         # then append all ordered entries sorted by their 'order' field. We collect them
         # separately and merge after processing all contributing enums of this type.
         mapped_legacy_values = {}
-        mapped_ordered_values = []  # list of tuples (order, value_name, value_value)
+        mapped_ordered_values = []  # list of tuples (order, value_name, value_value, deprecated)
 
         for enum_name in sorted(attribute_enums_by_type[type_name]):
             enum = enums[enum_name]
             is_mapped_enum = enum.get("generate-mappings", False)
+            enum_deprecated = enum.get("deprecated", False)
             for value in enum["values"]:
                 # Remove the leading group name (if any) because it will be redundant in the
                 # aggregate enum.
                 value_name = _remove_leading_group_name(value["name"], group_name)
                 # Add a leading enum to differentiate sub-enums within the aggregate values enum.
                 value_name = _add_leading_enum_name(value_name, enum_name, enum)
+                # A value is deprecated if either its own enum or the value itself is deprecated.
+                deprecated = enum_deprecated or value.get("deprecated", False)
                 if is_mapped_enum:
                     if "order" in value:
-                        mapped_ordered_values.append((value["order"], value_name, value["value"]))
+                        mapped_ordered_values.append(
+                            (value["order"], value_name, value["value"], deprecated)
+                        )
                     else:
-                        mapped_legacy_values[value_name] = value["value"]
+                        mapped_legacy_values[value_name] = (value["value"], deprecated)
                 else:
-                    unmapped_values[value_name] = value["value"]
+                    unmapped_values[value_name] = (value["value"], deprecated)
 
         # Now append ordered mapped entries sorted by their 'order'.
         if mapped_ordered_values:
             # stable sort to maintain original order in case of same order fields
             mapped_ordered_values.sort(key=lambda t: t[0])
-            for _, value_name, value_val in mapped_ordered_values:
-                mapped_legacy_values[value_name] = value_val
+            for _, value_name, value_val, deprecated in mapped_ordered_values:
+                mapped_legacy_values[value_name] = (value_val, deprecated)
 
         shortened_type_name = _get_short_enum_type_name(type_name)
         enum_value_prefix = (f"{group_name}_{shortened_type_name}").upper()
@@ -495,7 +500,10 @@ def _get_attribute_values_enum_name(group_name, type, is_mapped=False):
 def _add_enum(enum_name, enum_values, enums, enum_value_prefix, is_mapped=False):
     if not enum_values:
         return
-    values = [{"name": name, "value": enum_values[name]} for name in enum_values]
+    values = [
+        {"name": name, "value": value, "deprecated": deprecated}
+        for name, (value, deprecated) in enum_values.items()
+    ]
     new_enum = {
         "enum-value-prefix": enum_value_prefix,
         "generate-mappings": is_mapped,

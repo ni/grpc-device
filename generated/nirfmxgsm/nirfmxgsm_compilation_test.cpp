@@ -462,9 +462,19 @@ int32 PVTCfgAveraging(niRFmxInstrHandle instrumentHandle, char selectorString[],
   return RFmxGSM_PVTCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
 }
 
+int32 PVTFetchMaximumPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumSignalPower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxGSM_PVTFetchMaximumPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumSignalPower, arraySize, actualArraySize);
+}
+
 int32 PVTFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
 {
   return RFmxGSM_PVTFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
+}
+
+int32 PVTFetchMinimumPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 minimumSignalPower[], int32 arraySize, int32* actualArraySize)
+{
+  return RFmxGSM_PVTFetchMinimumPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, minimumSignalPower, arraySize, actualArraySize);
 }
 
 int32 PVTFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 upperMask[], float32 signalPower[], float32 lowerMask[], int32 arraySize, int32* actualArraySize)

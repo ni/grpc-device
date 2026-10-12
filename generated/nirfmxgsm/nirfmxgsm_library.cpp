@@ -118,7 +118,9 @@ NiRFmxGSMLibrary::NiRFmxGSMLibrary(std::shared_ptr<nidevice_grpc::SharedLibraryI
   function_pointers_.ORFSFetchSwitchingPowerTrace = reinterpret_cast<ORFSFetchSwitchingPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSFetchSwitchingPowerTrace"));
   function_pointers_.ORFSFetchSwitchingResultsArray = reinterpret_cast<ORFSFetchSwitchingResultsArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_ORFSFetchSwitchingResultsArray"));
   function_pointers_.PVTCfgAveraging = reinterpret_cast<PVTCfgAveragingPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTCfgAveraging"));
+  function_pointers_.PVTFetchMaximumPowerTrace = reinterpret_cast<PVTFetchMaximumPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchMaximumPowerTrace"));
   function_pointers_.PVTFetchMeasurementStatus = reinterpret_cast<PVTFetchMeasurementStatusPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchMeasurementStatus"));
+  function_pointers_.PVTFetchMinimumPowerTrace = reinterpret_cast<PVTFetchMinimumPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchMinimumPowerTrace"));
   function_pointers_.PVTFetchPowerTrace = reinterpret_cast<PVTFetchPowerTracePtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchPowerTrace"));
   function_pointers_.PVTFetchSlotMeasurement = reinterpret_cast<PVTFetchSlotMeasurementPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchSlotMeasurement"));
   function_pointers_.PVTFetchSlotMeasurementArray = reinterpret_cast<PVTFetchSlotMeasurementArrayPtr>(shared_library_->get_function_pointer("RFmxGSM_PVTFetchSlotMeasurementArray"));
@@ -889,12 +891,28 @@ int32 NiRFmxGSMLibrary::PVTCfgAveraging(niRFmxInstrHandle instrumentHandle, char
   return function_pointers_.PVTCfgAveraging(instrumentHandle, selectorString, averagingEnabled, averagingCount, averagingType);
 }
 
+int32 NiRFmxGSMLibrary::PVTFetchMaximumPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 maximumSignalPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.PVTFetchMaximumPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxGSM_PVTFetchMaximumPowerTrace.");
+  }
+  return function_pointers_.PVTFetchMaximumPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, maximumSignalPower, arraySize, actualArraySize);
+}
+
 int32 NiRFmxGSMLibrary::PVTFetchMeasurementStatus(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, int32* measurementStatus)
 {
   if (!function_pointers_.PVTFetchMeasurementStatus) {
     throw nidevice_grpc::LibraryLoadException("Could not find RFmxGSM_PVTFetchMeasurementStatus.");
   }
   return function_pointers_.PVTFetchMeasurementStatus(instrumentHandle, selectorString, timeout, measurementStatus);
+}
+
+int32 NiRFmxGSMLibrary::PVTFetchMinimumPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 minimumSignalPower[], int32 arraySize, int32* actualArraySize)
+{
+  if (!function_pointers_.PVTFetchMinimumPowerTrace) {
+    throw nidevice_grpc::LibraryLoadException("Could not find RFmxGSM_PVTFetchMinimumPowerTrace.");
+  }
+  return function_pointers_.PVTFetchMinimumPowerTrace(instrumentHandle, selectorString, timeout, x0, dx, minimumSignalPower, arraySize, actualArraySize);
 }
 
 int32 NiRFmxGSMLibrary::PVTFetchPowerTrace(niRFmxInstrHandle instrumentHandle, char selectorString[], float64 timeout, float64* x0, float64* dx, float32 upperMask[], float32 signalPower[], float32 lowerMask[], int32 arraySize, int32* actualArraySize)

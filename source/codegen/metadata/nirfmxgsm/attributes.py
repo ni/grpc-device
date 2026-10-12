@@ -347,6 +347,17 @@ attributes = {
         'name': 'MODACC_RESULTS_PFER_95TH_PERCENTILE_PHASE_ERROR',
         'type': 'float64'
     },
+    4198442: {
+        'access': 'read-write',
+        'enum': 'ModAccMeasurementInterval',
+        'name': 'MODACC_MEASUREMENT_INTERVAL',
+        'type': 'int32'
+    },
+    4198443: {
+        'access': 'read-write',
+        'name': 'MODACC_MEASUREMENT_OFFSET',
+        'type': 'int32'
+    },
     4202496: {
         'access': 'read-write',
         'name': 'ORFS_MEASUREMENT_ENABLED',
@@ -459,6 +470,17 @@ attributes = {
         'name': 'ORFS_EVALUATION_SYMBOLS_SCOPE',
         'type': 'int32'
     },
+    4202533: {
+        'access': 'read-write',
+        'enum': 'OrfsMeasurementInterval',
+        'name': 'ORFS_MEASUREMENT_INTERVAL',
+        'type': 'int32'
+    },
+    4202534: {
+        'access': 'read-write',
+        'name': 'ORFS_MEASUREMENT_OFFSET',
+        'type': 'int32'
+    },
     4206592: {
         'access': 'read-write',
         'name': 'PVT_MEASUREMENT_ENABLED',
@@ -531,6 +553,18 @@ attributes = {
         'access': 'read-write',
         'enum': 'PvtSlotMeasurementStatus',
         'name': 'PVT_RESULTS_SLOT_MEASUREMENT_STATUS',
+        'type': 'int32'
+    },
+    4206611: {
+        'access': 'read-write',
+        'enum': 'PvtMaximumPowerTraceEnabled',
+        'name': 'PVT_MAXIMUM_POWER_TRACE_ENABLED',
+        'type': 'int32'
+    },
+    4206612: {
+        'access': 'read-write',
+        'enum': 'PvtMinimumPowerTraceEnabled',
+        'name': 'PVT_MINIMUM_POWER_TRACE_ENABLED',
         'type': 'int32'
     },
     4243456: {

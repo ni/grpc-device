@@ -1,14 +1,14 @@
 # Default code owner for the repository
-* @astarche @reckenro @maxxboehme
+* @astarche @reckenro @etm-mboehme
 
 # Owners for the build files
-/CMakeLists.txt      @astarche @reckenro @maxxboehme
-/.github/**/*.yml    @astarche @reckenro @maxxboehme
-/scripts/            @astarche @reckenro @maxxboehme
+/CMakeLists.txt      @astarche @reckenro @etm-mboehme
+/.github/**/*.yml    @astarche @reckenro @etm-mboehme
+/scripts/            @astarche @reckenro @etm-mboehme
 
 # Codegen
-/generated           @reckenro @astarche @maxxboehme
-/source/codegen/     @reckenro @astarche @maxxboehme
+/generated           @reckenro @astarche @etm-mboehme
+/source/codegen/     @reckenro @astarche @etm-mboehme
 
 # Test
-/source/tests/       @reckenro @astarche @maxxboehme
+/source/tests/       @reckenro @astarche @etm-mboehme

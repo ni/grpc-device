@@ -109,11 +109,11 @@
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_PORTS                           0x00d00803
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_METHOD                          0x00d00017
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_COAX_DELAY                      0x00d00018
+#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY                 0x00d00800
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_COUNT                           0x00d00019
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_DESCRIPTION                     0x00d0001a
-#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_VCAL_ORIENTATION                0x00d00071
 #define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_PORT_ASSIGNMENT                 0x00d00072
-#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_ESTIMATED_THRU_DELAY                 0x00d00800
+#define RFMXVNA_ATTR_CORRECTION_CALIBRATION_STEP_VCAL_ORIENTATION                0x00d00071
 #define RFMXVNA_ATTR_CORRECTION_SWITCH_PORTS_MULTIPATH_CALIBRATION               0x00d00047
 #define RFMXVNA_ATTR_SPARAMS_MEASUREMENT_ENABLED                                 0x00d01000
 #define RFMXVNA_ATTR_SPARAMS_NUMBER_OF_SPARAMETERS                               0x00d01002
@@ -151,7 +151,6 @@
 #define RFMXVNA_ATTR_IQ_ACQUISITION_TIME                                         0x00d0100d
 #define RFMXVNA_ATTR_IQ_RECEIVER_PORT                                            0x00d0100f
 #define RFMXVNA_ATTR_IQ_SOURCE_PORT                                              0x00d01010
-#define RFMXVNA_ATTR_IQ_RESULTS_CORRECTION_STATE                                 0x00d01019
 #define RFMXVNA_ATTR_LIMITED_CONFIGURATION_CHANGE                                0x00d0200b
 #define RFMXVNA_ATTR_SOURCE_POWER_MODE                                           0x00d0200c
 #define RFMXVNA_ATTR_GROUND_TERMINATED_PORTS                                     0x00d0200d
@@ -416,12 +415,6 @@
 #define RFMXVNA_VAL_WAVES_CORRECTION_STATE_CORRECTED                                                              1
 #define RFMXVNA_VAL_WAVES_CORRECTION_STATE_INTERPOLATED                                                           2
 #define RFMXVNA_VAL_WAVES_CORRECTION_STATE_SETTINGS_MODIFIED                                                      3
-
-// Values for RFMXVNA_ATTR_IQ_RESULTS_CORRECTION_STATE
-#define RFMXVNA_VAL_IQ_CORRECTION_STATE_NONE                                                                      0
-#define RFMXVNA_VAL_IQ_CORRECTION_STATE_CORRECTED                                                                 1
-#define RFMXVNA_VAL_IQ_CORRECTION_STATE_INTERPOLATED                                                              2
-#define RFMXVNA_VAL_IQ_CORRECTION_STATE_SETTINGS_MODIFIED                                                         3
 
 // Values for RFMXVNA_ATTR_LIMITED_CONFIGURATION_CHANGE
 #define RFMXVNA_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                                         0
@@ -3101,6 +3094,12 @@ int32 __stdcall RFmxVNA_SetCorrectionCalibrationThruCoaxDelay(
    float64 attrVal
 );
 
+int32 __stdcall RFmxVNA_GetCorrectionCalibrationEstimatedThruDelay(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepCount(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3120,19 +3119,6 @@ int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepDescription(
    char attrVal[]
 );
 
-int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepVCalOrientation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepVCalOrientation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char attrVal[]
-);
-
 int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepPortAssignment(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -3146,10 +3132,17 @@ int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepPortAssignment(
    char attrVal[]
 );
 
-int32 __stdcall RFmxVNA_GetCorrectionCalibrationEstimatedThruDelay(
+int32 __stdcall RFmxVNA_GetCorrectionCalibrationStepVCalOrientation(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
-   float64 *attrVal
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxVNA_SetCorrectionCalibrationStepVCalOrientation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
 );
 
 int32 __stdcall RFmxVNA_GetCorrectionSwitchPortsMultipathCalibration(
@@ -3632,12 +3625,6 @@ int32 __stdcall RFmxVNA_IQSetSourcePort(
    char attrVal[]
 );
 
-int32 __stdcall RFmxVNA_IQGetResultsCorrectionState(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
 #ifdef __cplusplus
 }
 #endif
@@ -3646,6 +3633,21 @@ int32 __stdcall RFmxVNA_IQGetResultsCorrectionState(
 
 #define RFMXVNA_ATTR_CORRECTION_PORT_SUBSET_PORTS                                0x00d0000f
 #define RFMXVNA_ATTR_NUMBER_OF_FREQUENCY_POINTS                                  0x00d00053
+#define RFMXVNA_VAL_IQ_CORRECTION_STATE                                                                           0x00d01019
+#define RFMXVNA_VAL_INTEGRATEDPOWER_CORRECTION_STATE                                                              0x00d0400C
+
+// Values for RFMXVNA_VAL_INTEGRATEDPOWER_CORRECTION_STATE
+#define RFMXVNA_VAL_INTEGRATEDPOWER_CORRECTION_STATE_NONE                                                         0
+#define RFMXVNA_VAL_INTEGRATEDPOWER_CORRECTION_STATE_CORRECTED                                                    1
+#define RFMXVNA_VAL_INTEGRATEDPOWER_CORRECTION_STATE_INTERPOLATED                                                 2
+#define RFMXVNA_VAL_INTEGRATEDPOWER_CORRECTION_STATE_SETTINGS_MODIFIED                                            3
+
+// Values for RFMXVNA_VAL_IQ_CORRECTION_STATE
+#define RFMXVNA_VAL_IQ_CORRECTION_STATE_NONE                                                                      0
+#define RFMXVNA_VAL_IQ_CORRECTION_STATE_CORRECTED                                                                 1
+#define RFMXVNA_VAL_IQ_CORRECTION_STATE_INTERPOLATED                                                              2
+#define RFMXVNA_VAL_IQ_CORRECTION_STATE_SETTINGS_MODIFIED                                                         3
+
 // Values for RFMXVNA_ATTR_CORRECTION_CALIBRATION_THRU_METHOD
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_UNDEFINED_THRU_USING_DEFINED_THRU                          4
 #define RFMXVNA_VAL_CORRECTION_CALIBRATION_THRU_METHOD_DELAY_THRU_USING_DEFINED_THRU                              5
