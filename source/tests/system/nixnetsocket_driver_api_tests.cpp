@@ -270,11 +270,6 @@ socket(client::StubPtr& stub, const nidevice_grpc::Session& stack)
   return client::socket(stub, stack, ADDRESS_FAMILY_INET, SOCKET_PROTOCOL_TYPE_STREAM, IP_PROTOCOL_TCP);
 }
 
-SocketResponse socket(client::StubPtr& stub)
-{
-  return socket(stub, nidevice_grpc::Session{});
-}
-
 TEST_F(NiXnetSocketNoHardwareTests, InitWithInvalidIpStack_Close_ReturnsAndSetsExpectedErrors)
 {
   SocketResponse invalid_socket;
@@ -360,7 +355,7 @@ TEST_F(NiXnetSocketNoHardwareTests, InvalidEmptyConfigJson_IpStackCreate_Returns
   constexpr auto JSON_OBJECT_MISSING_VALUE = -13017;
 
   EXPECT_THROW_DRIVER_ERROR({
-    client::ip_stack_create(stub(), "", "{}");
+    client::ip_stack_create(stub(), "", TEST_CONFIG);
   }, JSON_OBJECT_MISSING_VALUE);
 }
 
@@ -545,9 +540,9 @@ TEST_F(NiXnetSocketLoopbackTests, MultiAddressIpStack_GetInfoString_ReturnsReaso
 
   EXPECT_SUCCESS(create_stack_response);
   EXPECT_SUCCESS(wait_response);
-  for (const auto response : {json_stack_info, text_stack_info}) {
+  for (const auto& response : {json_stack_info, text_stack_info}) {
     EXPECT_SUCCESS(response);
-    for (const auto expected_sub_str : {"ENET1"s, "10.23.45.67"s, "ff01::1"s}) {
+    for (const auto& expected_sub_str : {"ENET1"s, "10.23.45.67"s, "ff01::1"s}) {
       EXPECT_THAT(response.info(), HasSubstr(expected_sub_str));
     }
   }

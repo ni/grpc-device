@@ -9,9 +9,9 @@
 
 namespace nidevice_grpc {
 
-static const char* kLocalHostTargetName = "localhost";
-static const char* kNetworkExpertName = "network";
-static const int kConnectionTimeoutMilliSec = 10000;
+inline constexpr auto kLocalHostTargetName = "localhost";
+inline constexpr auto kNetworkExpertName = "network";
+inline constexpr auto kConnectionTimeoutMilliSec = 10000;
 
 class SysCfgSessionHandler : public ServerResetObserverInterface {
  public:

@@ -76,11 +76,11 @@ inline LinkedArraySize calculate_linked_array_size(const std::array<int, N>& siz
 template <typename T>
 class nullable_vector {
  public:
-  nullable_vector(std::vector<T>&& vec) : vec_(std::move(vec)), is_null_(false)
+  nullable_vector(std::vector<T>&& vec) : is_null_(false), vec_(std::move(vec))
   {
   }
 
-  nullable_vector(std::nullptr_t) : vec_(), is_null_(true)
+  nullable_vector(std::nullptr_t) : is_null_(true), vec_()
   {
   }
 

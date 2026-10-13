@@ -138,7 +138,7 @@ struct ResourceRepositoryHolder {
 ResourceRepositoryHolder create_resource_repository(std::unordered_map<std::string, nxSOCKET> socket_sessions)
 {
   auto repository = ResourceRepositoryHolder{};
-  for (const auto pair : socket_sessions) {
+  for (const auto& pair : socket_sessions) {
     std::string session_name = pair.first;
     repository.resource_repository->add_session(
         session_name, [pair]() { return std::make_tuple(0, pair.second); }, nullptr);
@@ -573,7 +573,6 @@ TEST(XnetSocketConvertersTests, AddrOutputConverterWithIPv6Address_ConvertToGrpc
 TEST(XnetSocketConvertersTests, AddrOutputConverterWithUnspecifiedFamily_ConvertToGrpc_DoesNotSetAddrCase)
 {
   auto converter = allocate_output_storage<void, Addr>(nxAF_UNSPEC);
-  auto data_ptr = reinterpret_cast<nxin6_addr*>(static_cast<void*>(&converter));
 
   auto grpc_addr = nixnetsocket_grpc::Addr{};
   converter.to_grpc(grpc_addr);
@@ -584,7 +583,6 @@ TEST(XnetSocketConvertersTests, AddrOutputConverterWithUnspecifiedFamily_Convert
 TEST(XnetSocketConvertersTests, AddrOutputConverterWithBogusFamily_ConvertToGrpc_DoesNotSetAddrCase)
 {
   auto converter = allocate_output_storage<void, Addr>(42);
-  auto data_ptr = reinterpret_cast<nxin6_addr*>(static_cast<void*>(&converter));
 
   auto grpc_addr = nixnetsocket_grpc::Addr{};
   converter.to_grpc(grpc_addr);
@@ -664,7 +662,7 @@ void EXPECT_ADDR_INFO(
   int expected_flags_raw = std::accumulate(flags.begin(), flags.end(), 0, std::bit_or<int>());
   EXPECT_EQ(expected_flags_raw, addr_info.flags_raw());
   EXPECT_EQ(flags.size(), addr_info.flags_array().size());
-  for (int i = 0; i < std::min<size_t>(flags.size(), addr_info.flags_array().size()); i++) {
+  for (size_t i = 0; i < std::min<size_t>(flags.size(), addr_info.flags_array().size()); i++) {
     EXPECT_EQ(flags.at(i), addr_info.flags_array(i));
   }
   EXPECT_EQ(family, addr_info.family());

@@ -129,6 +129,7 @@ TEST(SharedLibraryTests, LibraryAndFunctionsLoaded_FunctionCallsSucceed)
   EXPECT_EQ(0, readData(session, attribute, &buffer_length, buffer));
   EXPECT_STREQ(value, buffer);
   delete[] buffer;
+  EXPECT_EQ(0, closeSession(session));
 }
 
 TEST(SharedLibraryTests, LoadedLibrary_SetLibraryName_DoesNotUpdateLibraryName)

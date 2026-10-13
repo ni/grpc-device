@@ -10,12 +10,12 @@
 namespace nidevice_grpc {
 
 #if defined(_MSC_VER)
-static const char* kSysCfgApiLibraryName = "nisyscfg.dll";
+inline constexpr auto kSysCfgApiLibraryName = "nisyscfg.dll";
 #else
-static const char* kSysCfgApiLibraryName = "libnisyscfg.so";
+inline constexpr auto kSysCfgApiLibraryName = "libnisyscfg.so";
 #endif
 
-static const char* kSysCfgApiNotInstalledMessage = "The NI System Configuration API is not installed on the server.";
+inline constexpr auto kSysCfgApiNotInstalledMessage = "The NI System Configuration API is not installed on the server.";
 
 class SysCfgLibrary : public SysCfgLibraryInterface {
  public:

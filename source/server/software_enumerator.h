@@ -14,7 +14,7 @@
 
 namespace nidevice_grpc {
 
-static const char* kSoftwareEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the installed software.";
+inline constexpr auto kSoftwareEnumerationFailedMessage = "The NI System Configuration API was unable to enumerate the installed software.";
 
 class SoftwareEnumerator : public SysCfgSessionHandler {
  public:
