@@ -24,6 +24,7 @@ constexpr auto SYNC_FAILURE_WARNING = 374603;
 constexpr auto SYNC_FAILURE_WARNING_STR = "Unable to synchronize";
 constexpr auto MODACC_NB_IOT_AUTODETECT_CHECK = -376649;
 constexpr auto MODACC_NB_IOT_AUTODETECT_CHECK_STR = "Autodetected NPUSCH channel parameters are not ";
+constexpr auto MAX_NB_IOT_AUTODETECT_ATTEMPTS = 10;
 
 class NiRFmxLTEDriverApiTests : public Test {
  protected:
@@ -369,7 +370,7 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccFromExample_FetchData_DataLooksReason
       const auto& error = ex.Trailers().find("ni-error")->second;
       actualStatus = std::stoi(error);
     }
-    if (actualStatus == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < 5) {
+    if (actualStatus == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < MAX_NB_IOT_AUTODETECT_ATTEMPTS) {
       TearDown();
       SetUp();
       ++attempts;
@@ -449,7 +450,7 @@ TEST_F(NiRFmxLTEDriverApiTests, NBIoTModAccAcpChpObwSemCompositeSingleCarrierFro
       const auto& error = ex.Trailers().find("ni-error")->second;
       actualStatus = std::stoi(error);
     }
-    if (actualStatus == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < 5) {
+    if (actualStatus == MODACC_NB_IOT_AUTODETECT_CHECK && attempts < MAX_NB_IOT_AUTODETECT_ATTEMPTS) {
       TearDown();
       SetUp();
       ++attempts;

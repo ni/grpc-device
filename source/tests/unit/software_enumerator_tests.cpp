@@ -286,12 +286,12 @@ TEST(SoftwareEnumeratorTests, NISysCfgLibraryIsLoaded_ClearSysCfgSession_CalledC
   EXPECT_CALL(mock_library, CloseHandle)
       .Times(1);
   NISysCfgSessionHandle session = nullptr;
-  NISysCfgStatus status = software_enumerator.open_or_get_localhost_syscfg_session(&session);
+  software_enumerator.open_or_get_localhost_syscfg_session(&session);
 
   software_enumerator.clear_syscfg_session();
   software_enumerator.clear_syscfg_session();
 
-  status = software_enumerator.open_or_get_localhost_syscfg_session(&session);
+  software_enumerator.open_or_get_localhost_syscfg_session(&session);
 }
 
 NISysCfgStatus SetPackageId(void* value)

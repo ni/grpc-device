@@ -157,6 +157,13 @@ Build a release build for use in a production environment:
 > make
 ```
 
+To build a server with only selected driver services, set `NIDRIVERS_TO_BUILD` to a semicolon-separated list of metadata directory names. Core services are always included.
+
+```
+> cmake -DNIDRIVERS_TO_BUILD="visa;nidaqmx" ../..
+> make ni_grpc_device_server
+```
+
 ## C++ Coding Conventions
 
 This project follows the Google style guidelines for all C++ and protobuf files with the exceptions documented below.

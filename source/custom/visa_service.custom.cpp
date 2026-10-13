@@ -401,9 +401,9 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
         address_space = static_cast<ViUInt16>(request->address_space_raw());
         break;
       }
-      case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET: {
+      case visa_grpc::MoveIn16Request::AddressSpaceEnumCase::ADDRESS_SPACE_ENUM_NOT_SET:
+      default: {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for address_space was not specified or out of range");
-        break;
       }
     }
 
@@ -658,9 +658,9 @@ static ViStatus GetAttributeValue(ViObject vi, ViAttr attributeID, VisaService::
         in_event_type = static_cast<ViEventType>(request->in_event_type_raw());
         break;
       }
-      case visa_grpc::WaitOnEventRequest::InEventTypeEnumCase::IN_EVENT_TYPE_ENUM_NOT_SET: {
+      case visa_grpc::WaitOnEventRequest::InEventTypeEnumCase::IN_EVENT_TYPE_ENUM_NOT_SET:
+      default: {
         return ::grpc::Status(::grpc::INVALID_ARGUMENT, "The value for in_event_type was not specified or out of range");
-        break;
       }
     }
 

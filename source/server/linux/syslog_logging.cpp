@@ -22,7 +22,7 @@ void setup_syslog(bool is_daemon, const std::string& identity)
 
 void log_syslog(Level level, const char* fmt, va_list args)
 {
-  int priority;
+  int priority = LOG_INFO;
   switch (level) {
     case Level_Info:
       priority = LOG_INFO;
