@@ -145,6 +145,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_scalar)
   }
 
   moniker_context.TryCancel();
+  stream->Finish();
 }
 
 TEST_F(NiFakeFpgaStreamingTests, StreamRead_Array)
@@ -187,13 +188,14 @@ TEST_F(NiFakeFpgaStreamingTests, StreamRead_Array)
 
     read_result.data().values(0).UnpackTo(&read_values_i16);
     read_result.data().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i16.array(), SizeIs(10));
-    ASSERT_THAT(read_values_i16.array(), ElementsAreArray(data_int_i16));
-    ASSERT_THAT(read_values_i64.array(), SizeIs(9));
-    ASSERT_THAT(read_values_i64.array(), ElementsAreArray(data_int_i64));
+    EXPECT_THAT(read_values_i16.array(), SizeIs(10));
+    EXPECT_THAT(read_values_i16.array(), ElementsAreArray(data_int_i16));
+    EXPECT_THAT(read_values_i64.array(), SizeIs(9));
+    EXPECT_THAT(read_values_i64.array(), ElementsAreArray(data_int_i64));
   }
 
   moniker_context.TryCancel();
+  stream->Finish();
 }
 
 TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
@@ -245,6 +247,7 @@ TEST_F(NiFakeFpgaStreamingTests, StreamWrite_Array)
 
   write_stream->WritesDone();
   moniker_context.TryCancel();
+  write_stream->Finish();
 }
 
 TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
@@ -322,14 +325,15 @@ TEST_F(NiFakeFpgaStreamingTests, StreamReadWrite_Array)
 
     read_result.data().values(0).UnpackTo(&read_values_i16);
     read_result.data().values(1).UnpackTo(&read_values_i64);
-    ASSERT_THAT(read_values_i16.array(), SizeIs(read_size_i16));
-    ASSERT_THAT(read_values_i16.array(), ElementsAreArray(read_data_int16));
-    ASSERT_THAT(read_values_i64.array(), SizeIs(read_size_i64));
-    ASSERT_THAT(read_values_i64.array(), ElementsAreArray(read_data_int64));
+    EXPECT_THAT(read_values_i16.array(), SizeIs(read_size_i16));
+    EXPECT_THAT(read_values_i16.array(), ElementsAreArray(read_data_int16));
+    EXPECT_THAT(read_values_i64.array(), SizeIs(read_size_i64));
+    EXPECT_THAT(read_values_i64.array(), ElementsAreArray(read_data_int64));
   }
 
   write_stream->WritesDone();
   moniker_context.TryCancel();
+  write_stream->Finish();
 }
 
 // disable this test since we are not supporting sideband streaming inprocess

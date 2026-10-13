@@ -122,6 +122,7 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamRead_Scalar)
   }
 
   moniker_context.TryCancel();
+  stream->Finish();
 }
 
 TEST_F(NiFakeDAQmxStreamingTests, StreamRead_Array)
@@ -152,10 +153,11 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamRead_Array)
     ni::data_monikers::MonikerReadResponse read_result;
     stream->Read(&read_result);
     read_result.data().values(0).UnpackTo(&read_values_u32);
-    ASSERT_THAT(read_values_u32.read_array(), ElementsAreArray(data_u32));
+    EXPECT_THAT(read_values_u32.read_array(), ElementsAreArray(data_u32));
   }
 
   moniker_context.TryCancel();
+  stream->Finish();
 }
 
 TEST_F(NiFakeDAQmxStreamingTests, StreamWrite_Array)
@@ -192,6 +194,7 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamWrite_Array)
 
   write_stream->WritesDone();
   moniker_context.TryCancel();
+  write_stream->Finish();
 }
 
 TEST_F(NiFakeDAQmxStreamingTests, StreamReadWrite_Array)
@@ -243,12 +246,13 @@ TEST_F(NiFakeDAQmxStreamingTests, StreamReadWrite_Array)
     ni::data_monikers::MonikerReadResponse read_result;
     write_stream->Read(&read_result);
     read_result.data().values(0).UnpackTo(&read_values_u32);
-    ASSERT_THAT(read_values_u32.read_array(), SizeIs(read_size));
-    ASSERT_THAT(read_values_u32.read_array(), ElementsAreArray(data_u32));
+    EXPECT_THAT(read_values_u32.read_array(), SizeIs(read_size));
+    EXPECT_THAT(read_values_u32.read_array(), ElementsAreArray(data_u32));
   }
 
   write_stream->WritesDone();
   moniker_context.TryCancel();
+  write_stream->Finish();
 }
 
 TEST_F(NiFakeDAQmxStreamingTests, InvalidSidebandStrategy_BeginSidebandStream_ReturnsInvalidArgument)
