@@ -109,6 +109,8 @@ _ALREADY_MUTATED = (
     "NI-SCOPE",
     "NI-SWITCH",
     "NI-TClk",
+    "NI-RFSA",
+    "NI-RFSG",
 )
 
 
@@ -310,8 +312,8 @@ def _add_attribute_values_enums(enums, attribute_enums_by_type, group_name):
     """Add new enums to enums metadata, for use as the value parameter of SetAttribute APIs."""
     for type_name in attribute_enums_by_type:
         unmapped_values = {}
-        # For mapped enums, we want legacy (no 'order') entries first (in encounter order),
-        # then append all ordered entries sorted by their 'order' field. We collect them
+        # For mapped enums, we want legacy (no 'mapped_enum_append_index') entries first (in
+        # encounter order), then append all indexed entries sorted by that index. We collect them
         # separately and merge after processing all contributing enums of this type.
         mapped_legacy_values = {}
         mapped_ordered_values = []  # list of tuples (order, value_name, value_value, deprecated)

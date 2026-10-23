@@ -18,6 +18,8 @@ _ALREADY_MUTATED = (
     "NI-SCOPE",
     "NI-SWITCH",
     "NI-TClk",
+    "NI-RFSA",
+    "NI-RFSG",
 )
 
 
