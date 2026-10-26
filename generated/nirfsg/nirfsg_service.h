@@ -90,6 +90,7 @@ public:
   ::grpc::Status DeleteScript(::grpc::ServerContext* context, const DeleteScriptRequest* request, DeleteScriptResponse* response) override;
   ::grpc::Status Disable(::grpc::ServerContext* context, const DisableRequest* request, DisableResponse* response) override;
   ::grpc::Status DisableAllModulation(::grpc::ServerContext* context, const DisableAllModulationRequest* request, DisableAllModulationResponse* response) override;
+  ::grpc::Status DisableCalibrationPlane(::grpc::ServerContext* context, const DisableCalibrationPlaneRequest* request, DisableCalibrationPlaneResponse* response) override;
   ::grpc::Status DisableConfigurationListStepTrigger(::grpc::ServerContext* context, const DisableConfigurationListStepTriggerRequest* request, DisableConfigurationListStepTriggerResponse* response) override;
   ::grpc::Status DisableScriptTrigger(::grpc::ServerContext* context, const DisableScriptTriggerRequest* request, DisableScriptTriggerResponse* response) override;
   ::grpc::Status DisableStartTrigger(::grpc::ServerContext* context, const DisableStartTriggerRequest* request, DisableStartTriggerResponse* response) override;
@@ -99,7 +100,6 @@ public:
   ::grpc::Status ExportSignal(::grpc::ServerContext* context, const ExportSignalRequest* request, ExportSignalResponse* response) override;
   ::grpc::Status GetAllNamedWaveformNames(::grpc::ServerContext* context, const GetAllNamedWaveformNamesRequest* request, GetAllNamedWaveformNamesResponse* response) override;
   ::grpc::Status GetAllScriptNames(::grpc::ServerContext* context, const GetAllScriptNamesRequest* request, GetAllScriptNamesResponse* response) override;
-  ::grpc::Status GetScript(::grpc::ServerContext* context, const GetScriptRequest* request, GetScriptResponse* response) override;
   ::grpc::Status GetAttributeViBoolean(::grpc::ServerContext* context, const GetAttributeViBooleanRequest* request, GetAttributeViBooleanResponse* response) override;
   ::grpc::Status GetAttributeViInt32(::grpc::ServerContext* context, const GetAttributeViInt32Request* request, GetAttributeViInt32Response* response) override;
   ::grpc::Status GetAttributeViInt64(::grpc::ServerContext* context, const GetAttributeViInt64Request* request, GetAttributeViInt64Response* response) override;
@@ -111,6 +111,7 @@ public:
   ::grpc::Status GetError(::grpc::ServerContext* context, const GetErrorRequest* request, GetErrorResponse* response) override;
   ::grpc::Status GetExternalCalibrationLastDateAndTime(::grpc::ServerContext* context, const GetExternalCalibrationLastDateAndTimeRequest* request, GetExternalCalibrationLastDateAndTimeResponse* response) override;
   ::grpc::Status GetMaxSettablePower(::grpc::ServerContext* context, const GetMaxSettablePowerRequest* request, GetMaxSettablePowerResponse* response) override;
+  ::grpc::Status GetScript(::grpc::ServerContext* context, const GetScriptRequest* request, GetScriptResponse* response) override;
   ::grpc::Status GetSelfCalibrationDateAndTime(::grpc::ServerContext* context, const GetSelfCalibrationDateAndTimeRequest* request, GetSelfCalibrationDateAndTimeResponse* response) override;
   ::grpc::Status GetSelfCalibrationTemperature(::grpc::ServerContext* context, const GetSelfCalibrationTemperatureRequest* request, GetSelfCalibrationTemperatureResponse* response) override;
   ::grpc::Status GetTerminalName(::grpc::ServerContext* context, const GetTerminalNameRequest* request, GetTerminalNameResponse* response) override;

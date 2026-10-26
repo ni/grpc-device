@@ -70,6 +70,7 @@ DeleteDeembeddingTableResponse delete_deembedding_table(const StubPtr& stub, con
 DeleteScriptResponse delete_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& script_name);
 DisableResponse disable(const StubPtr& stub, const nidevice_grpc::Session& vi);
 DisableAllModulationResponse disable_all_modulation(const StubPtr& stub, const nidevice_grpc::Session& vi);
+DisableCalibrationPlaneResponse disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name);
 DisableConfigurationListStepTriggerResponse disable_configuration_list_step_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
 DisableScriptTriggerResponse disable_script_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<DigitalEdgeScriptTriggerIdentifier, std::string>& trigger_id);
 DisableStartTriggerResponse disable_start_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi);
@@ -79,7 +80,6 @@ ErrorQueryResponse error_query(const StubPtr& stub, const nidevice_grpc::Session
 ExportSignalResponse export_signal(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RoutedSignal, pb::int32>& signal, const simple_variant<SignalIdentifier, std::string>& signal_identifier, const simple_variant<OutputSignal, std::string>& output_terminal);
 GetAllNamedWaveformNamesResponse get_all_named_waveform_names(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetAllScriptNamesResponse get_all_script_names(const StubPtr& stub, const nidevice_grpc::Session& vi);
-GetScriptResponse get_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& script_name);
 GetAttributeViBooleanResponse get_attribute_vi_boolean(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSGAttribute& attribute_id);
 GetAttributeViInt32Response get_attribute_vi_int32(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSGAttribute& attribute_id);
 GetAttributeViInt64Response get_attribute_vi_int64(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name, const NiRFSGAttribute& attribute_id);
@@ -91,6 +91,7 @@ GetDeembeddingSparametersResponse get_deembedding_sparameters(const StubPtr& stu
 GetErrorResponse get_error(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetExternalCalibrationLastDateAndTimeResponse get_external_calibration_last_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi);
 GetMaxSettablePowerResponse get_max_settable_power(const StubPtr& stub, const nidevice_grpc::Session& vi);
+GetScriptResponse get_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& script_name);
 GetSelfCalibrationDateAndTimeResponse get_self_calibration_date_and_time(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Module, pb::int32>& module);
 GetSelfCalibrationTemperatureResponse get_self_calibration_temperature(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<Module, pb::int32>& module);
 GetTerminalNameResponse get_terminal_name(const StubPtr& stub, const nidevice_grpc::Session& vi, const simple_variant<RoutedSignal, pb::int32>& signal, const simple_variant<SignalIdentifier, std::string>& signal_identifier);

@@ -240,7 +240,7 @@ ENUM_SCHEMA = Schema(
             {
                 "name": str,
                 "value": Or(str, int, float),
-                Optional("order"): int,
+                Optional("mapped_enum_append_index"): int,
                 Optional("python_name"): str,
                 Optional("documentation"): DOCUMENTATION_SCHEMA,
                 Optional("type"): str,

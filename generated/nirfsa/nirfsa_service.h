@@ -153,8 +153,8 @@ private:
   LibrarySharedPtr library_;
   ResourceRepositorySharedPtr session_repository_;
   ::grpc::Status ConvertApiErrorStatusForViSession(::grpc::ServerContextBase* context, int32_t status, ViSession vi);
-  std::map<std::int32_t, std::string> digitaledgetriggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "PXI_Trig0"},{13, "PXI_Trig1"},{14, "PXI_Trig2"},{15, "PXI_Trig3"},{16, "PXI_Trig4"},{17, "PXI_Trig5"},{18, "PXI_Trig6"},{19, "PXI_Trig7"},{20, "TimerEvent"}, };
-  std::map<std::string, std::int32_t> digitaledgetriggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"PXI_Trig0", 12},{"PXI_Trig1", 13},{"PXI_Trig2", 14},{"PXI_Trig3", 15},{"PXI_Trig4", 16},{"PXI_Trig5", 17},{"PXI_Trig6", 18},{"PXI_Trig7", 19},{"TimerEvent", 20}, };
+  std::map<std::int32_t, std::string> digitaledgetriggersource_input_map_ { {1, "PFI0"},{2, "PFI1"},{3, "PXI_Trig0"},{4, "PXI_Trig1"},{5, "PXI_Trig2"},{6, "PXI_Trig3"},{7, "PXI_Trig4"},{8, "PXI_Trig5"},{9, "PXI_Trig6"},{10, "PXI_Trig7"},{11, "PXI_STAR"},{12, "NIRFSA_VAL_PXI_TRIG0_STR"},{13, "NIRFSA_VAL_PXI_TRIG1_STR"},{14, "NIRFSA_VAL_PXI_TRIG2_STR"},{15, "NIRFSA_VAL_PXI_TRIG3_STR"},{16, "NIRFSA_VAL_PXI_TRIG4_STR"},{17, "NIRFSA_VAL_PXI_TRIG5_STR"},{18, "NIRFSA_VAL_PXI_TRIG6_STR"},{19, "NIRFSA_VAL_PXI_TRIG7_STR"},{20, "TimerEvent"}, };
+  std::map<std::string, std::int32_t> digitaledgetriggersource_output_map_ { {"PFI0", 1},{"PFI1", 2},{"PXI_Trig0", 3},{"PXI_Trig1", 4},{"PXI_Trig2", 5},{"PXI_Trig3", 6},{"PXI_Trig4", 7},{"PXI_Trig5", 8},{"PXI_Trig6", 9},{"PXI_Trig7", 10},{"PXI_STAR", 11},{"NIRFSA_VAL_PXI_TRIG0_STR", 12},{"NIRFSA_VAL_PXI_TRIG1_STR", 13},{"NIRFSA_VAL_PXI_TRIG2_STR", 14},{"NIRFSA_VAL_PXI_TRIG3_STR", 15},{"NIRFSA_VAL_PXI_TRIG4_STR", 16},{"NIRFSA_VAL_PXI_TRIG5_STR", 17},{"NIRFSA_VAL_PXI_TRIG6_STR", 18},{"NIRFSA_VAL_PXI_TRIG7_STR", 19},{"TimerEvent", 20}, };
   std::map<std::int32_t, std::string> exportterminal_input_map_ { {1, ""},{2, "PFI0"},{3, "PFI1"},{4, "PXI_Trig0"},{5, "PXI_Trig1"},{6, "PXI_Trig2"},{7, "PXI_Trig3"},{8, "PXI_Trig4"},{9, "PXI_Trig5"},{10, "PXI_Trig6"},{11, "PXI_Trig7"},{12, "PXI_STAR"},{13, "PXIe_DStarC"},{14, "RefOut"},{15, "RefOut2"},{16, "ClkOut"}, };
   std::map<std::string, std::int32_t> exportterminal_output_map_ { {"", 1},{"PFI0", 2},{"PFI1", 3},{"PXI_Trig0", 4},{"PXI_Trig1", 5},{"PXI_Trig2", 6},{"PXI_Trig3", 7},{"PXI_Trig4", 8},{"PXI_Trig5", 9},{"PXI_Trig6", 10},{"PXI_Trig7", 11},{"PXI_STAR", 12},{"PXIe_DStarC", 13},{"RefOut", 14},{"RefOut2", 15},{"ClkOut", 16}, };
   std::map<std::int32_t, std::string> nirfsastringattributevaluesmapped_input_map_ { {1, "None"},{2, "ClkOut"},{3, "OnboardClock"},{4, "ClkIn"},{5, "LORefClk"},{6, "PXI_STAR"},{7, ""},{8, "PFI0"},{9, "PFI1"},{10, "PXI_Trig0"},{11, "PXI_Trig1"},{12, "PXI_Trig2"},{13, "PXI_Trig3"},{14, "PXI_Trig4"},{15, "PXI_Trig5"},{16, "PXI_Trig6"},{17, "PXI_Trig7"},{18, "PXI_STAR"},{19, "PXIe_DStarC"},{20, "RefOut"},{21, "RefOut2"},{22, "ClkOut"},{23, "Onboard"},{24, "LO_In"},{25, "Secondary"},{26, "SG_SA_Shared"},{27, "None"},{28, "OnboardClock"},{29, "RefIn"},{30, "None"},{31, "RefOut"},{32, "RefOut2"},{33, "ClkOut"},{34, "IFCondRefOut"},{35, "None"},{36, "OnboardClock"},{37, "RefIn"},{38, "PXI_Clk"},{39, "ClkIn"},{40, "RefIn2"},{41, "PXI_ClkMaster"},{42, "PFI0"},{43, "PFI1"},{44, "PXI_Trig0"},{45, "PXI_Trig1"},{46, "PXI_Trig2"},{47, "PXI_Trig3"},{48, "PXI_Trig4"},{49, "PXI_Trig5"},{50, "PXI_Trig6"},{51, "PXI_Trig7"},{52, "PXI_STAR"},{53, "PXIe_DStarB"},{54, "TimerEvent"},{55, "EndOfRecordEvent"},{56, "StartTrigger"},{57, "ReferenceTrigger"},{58, "Sync_Start"},{59, "Sync_Ref"},{60, "Sync_Advance"}, };
@@ -172,11 +172,11 @@ private:
 namespace nidevice_grpc {
 namespace converters {
 template <>
-void convert_to_grpc(const niRFSA_wfmInfo_struct& input, nirfsa_grpc::WaveformInfo* output);
+void convert_to_grpc(const niRFSA_coefficientInfo& input, nirfsa_grpc::CoefficientInfo* output);
 template <>
-void convert_to_grpc(const niRFSA_coefficientInfo_struct& input, nirfsa_grpc::CoefficientInfo* output);
+void convert_to_grpc(const niRFSA_wfmInfo& input, nirfsa_grpc::WaveformInfo* output);
 template <>
-void convert_to_grpc(const niRFSA_spectrumInfo_struct& input, nirfsa_grpc::SpectrumInfo* output);
+void convert_to_grpc(const niRFSA_spectrumInfo& input, nirfsa_grpc::SpectrumInfo* output);
 } // namespace converters
 } // namespace nidevice_grpc
 

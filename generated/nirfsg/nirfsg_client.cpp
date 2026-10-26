@@ -1054,6 +1054,24 @@ disable_all_modulation(const StubPtr& stub, const nidevice_grpc::Session& vi)
   return response;
 }
 
+DisableCalibrationPlaneResponse
+disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = DisableCalibrationPlaneRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_channel_name(channel_name);
+
+  auto response = DisableCalibrationPlaneResponse{};
+
+  raise_if_error(
+      stub->DisableCalibrationPlane(&context, request, &response),
+      context);
+
+  return response;
+}
+
 DisableConfigurationListStepTriggerResponse
 disable_configuration_list_step_trigger(const StubPtr& stub, const nidevice_grpc::Session& vi)
 {
@@ -1236,24 +1254,6 @@ get_all_script_names(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->GetAllScriptNames(&context, request, &response),
-      context);
-
-  return response;
-}
-
-GetScriptResponse
-get_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& script_name)
-{
-  ::grpc::ClientContext context;
-
-  auto request = GetScriptRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_script_name(script_name);
-
-  auto response = GetScriptResponse{};
-
-  raise_if_error(
-      stub->GetScript(&context, request, &response),
       context);
 
   return response;
@@ -1454,6 +1454,24 @@ get_max_settable_power(const StubPtr& stub, const nidevice_grpc::Session& vi)
 
   raise_if_error(
       stub->GetMaxSettablePower(&context, request, &response),
+      context);
+
+  return response;
+}
+
+GetScriptResponse
+get_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& script_name)
+{
+  ::grpc::ClientContext context;
+
+  auto request = GetScriptRequest{};
+  request.mutable_vi()->CopyFrom(vi);
+  request.set_script_name(script_name);
+
+  auto response = GetScriptResponse{};
+
+  raise_if_error(
+      stub->GetScript(&context, request, &response),
       context);
 
   return response;
