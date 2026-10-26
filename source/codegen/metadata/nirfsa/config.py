@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 # This file is generated from NI-RFSA API metadata version 27.0.0d9999
 config = {
-    'api_version': '26.8.0',
-    'c_header': 'niRFSA.h',
+    'additional_headers': {
+    },
+    'api_version': '27.0.0d9999',
     'c_function_prefix': 'niRFSA_',
     'c_header': 'niRFSA.h',
     'close_function': 'Close',

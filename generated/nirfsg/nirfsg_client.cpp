@@ -947,24 +947,6 @@ delete_all_deembedding_tables(const StubPtr& stub, const nidevice_grpc::Session&
   return response;
 }
 
-DisableCalibrationPlaneResponse
-disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name)
-{
-  ::grpc::ClientContext context;
-
-  auto request = DisableCalibrationPlaneRequest{};
-  request.mutable_vi()->CopyFrom(vi);
-  request.set_channel_name(channel_name);
-
-  auto response = DisableCalibrationPlaneResponse{};
-
-  raise_if_error(
-      stub->DisableCalibrationPlane(&context, request, &response),
-      context);
-
-  return response;
-}
-
 DeleteConfigurationListResponse
 delete_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& list_name)
 {

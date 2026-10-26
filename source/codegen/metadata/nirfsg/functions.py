@@ -1165,21 +1165,6 @@ functions = {
         ],
         'returns': 'ViStatus'
     },
-    'DisableCalibrationPlane': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
     'DeleteConfigurationList': {
         'codegen_method': 'public',
         'parameters': [
@@ -1341,22 +1326,7 @@ functions = {
         'returns': 'ViStatus'
     },
     'EnableCalibrationPlane': {
-        'parameters': [
-            {
-                'direction': 'in',
-                'name': 'vi',
-                'type': 'ViSession'
-            },
-            {
-                'direction': 'in',
-                'name': 'channelName',
-                'type': 'ViConstString'
-            }
-        ],
-        'returns': 'ViStatus'
-    },
-    'ErrorMessage': {
-        'cname': 'niRFSG_error_message',
+        'codegen_method': 'public',
         'parameters': [
             {
                 'cppName': 'vi',

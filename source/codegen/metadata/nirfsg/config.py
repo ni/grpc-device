@@ -1,18 +1,7 @@
 # -*- coding: utf-8 -*-
 # This file is generated from NI-RFSG API metadata version 27.0.0d9999
 config = {
-    'api_version': '26.8.0',
-    'c_header': 'niRFSG.h',
-    'c_function_prefix': 'niRFSG_',
-    'service_class_prefix': 'NiRFSG',
-    'java_package': 'com.ni.grpc.nirfsg',
-    'csharp_namespace': 'NationalInstruments.Grpc.NiRFSG',
-    'namespace_component': 'nirfsg',
-    'close_function': 'Close',
-    'context_manager_name': {
-        'abort_function': 'Abort',
-        'initiate_function': 'Initiate',
-        'task': 'generation'
+    'additional_headers': {
     },
     'api_version': '27.0.0d9999',
     'c_function_prefix': 'niRFSG_',

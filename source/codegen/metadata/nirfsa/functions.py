@@ -967,14 +967,19 @@ functions = {
         'returns': 'ViStatus'
     },
     'DisableCalibrationPlane': {
+        'codegen_method': 'public',
         'parameters': [
             {
+                'cppName': 'vi',
                 'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             }
@@ -1008,14 +1013,19 @@ functions = {
         'returns': 'ViStatus'
     },
     'EnableCalibrationPlane': {
+        'codegen_method': 'public',
         'parameters': [
             {
+                'cppName': 'vi',
                 'direction': 'in',
+                'grpc_type': 'nidevice_grpc.Session',
                 'name': 'vi',
                 'type': 'ViSession'
             },
             {
+                'cppName': 'channelName',
                 'direction': 'in',
+                'grpc_type': 'string',
                 'name': 'channelName',
                 'type': 'ViConstString'
             }

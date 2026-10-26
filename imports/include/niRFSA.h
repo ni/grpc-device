@@ -1491,14 +1491,6 @@ ViStatus _VI_FUNC niRFSA_EnableSessionAccess
    ViBoolean enable
 );
 
-ViStatus _VI_FUNC niRFSA_EnableCalibrationPlane(
-   ViSession vi,
-   ViConstString channelName);
-
-ViStatus _VI_FUNC niRFSA_DisableCalibrationPlane(
-   ViSession vi,
-   ViConstString channelName);
-
 
 /*-------------------------------- List Mode API ----------------------------------------*/
 ViStatus _VI_FUNC niRFSA_CreateConfigurationList(

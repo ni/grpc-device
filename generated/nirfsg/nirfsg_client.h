@@ -64,7 +64,6 @@ CreateConfigurationListStepResponse create_configuration_list_step(const StubPtr
 CreateDeembeddingSparameterTableArrayResponse create_deembedding_sparameter_table_array(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const std::vector<double>& frequencies, const std::vector<nidevice_grpc::NIComplexNumber>& sparameter_table, const pb::int32& number_of_ports, const simple_variant<SParameterOrientation, pb::int32>& sparameter_orientation);
 CreateDeembeddingSparameterTableS2PFileResponse create_deembedding_sparameter_table_s2p_file(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name, const std::string& s2p_file_path, const simple_variant<SParameterOrientation, pb::int32>& sparameter_orientation);
 DeleteAllDeembeddingTablesResponse delete_all_deembedding_tables(const StubPtr& stub, const nidevice_grpc::Session& vi);
-DisableCalibrationPlaneResponse disable_calibration_plane(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& channel_name);
 DeleteConfigurationListResponse delete_configuration_list(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& list_name);
 DeleteDeembeddingTableResponse delete_deembedding_table(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& port, const std::string& table_name);
 DeleteScriptResponse delete_script(const StubPtr& stub, const nidevice_grpc::Session& vi, const std::string& script_name);
