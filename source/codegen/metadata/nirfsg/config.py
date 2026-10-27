@@ -1,26 +1,17 @@
 # -*- coding: utf-8 -*-
+# This file is generated from NI-RFSG API metadata version 27.0.0d9999
 config = {
-    'api_version': '26.8.0',
-    'c_header': 'niRFSG.h',
-    'c_function_prefix': 'niRFSG_',
-    'service_class_prefix': 'NiRFSG',
-    'java_package': 'com.ni.grpc.nirfsg',
-    'csharp_namespace': 'NationalInstruments.Grpc.NiRFSG',
-    'namespace_component': 'nirfsg',
-    'close_function': 'Close',
-    'context_manager_name': {
-        'abort_function': 'Abort',
-        'initiate_function': 'Initiate',
-        'task': 'generation'
+    'additional_headers': {
     },
-    'custom_types': [],
-    'additional_headers': {'custom/ivi_errors.h': ['service.cpp']},
-    'code_readiness': 'Release',
-    'driver_name': 'NI-RFSG',
-    'extra_errors_used': [
+    'api_version': '27.0.0d9999',
+    'c_function_prefix': 'niRFSG_',
+    'c_header': 'niRFSG.h',
+    'close_function': 'Close',
+    'csharp_namespace': 'NationalInstruments.Grpc.NiRFSG',
+    'custom_types': [
     ],
-    'init_function': 'InitWithOptions',
-    'status_ok': 'status >= 0',
+    'driver_name': 'NI-RFSG',
+    'java_package': 'com.ni.grpc.nirfsg',
     'library_info': {
         'Linux': {
             '64bit': {
@@ -30,7 +21,7 @@ config = {
         },
         'Windows': {
             '32bit': {
-                'name': 'niRFSG_32.dll',
+                'name': 'niRFSG.dll',
                 'type': 'windll'
             },
             '64bit': {
@@ -39,9 +30,10 @@ config = {
             }
         }
     },
-    'linux_rt_support': False,
-    'metadata_version': '0.1',
+    'linux_rt_support': True,
     'module_name': 'nirfsg',
-    'session_class_description': 'An NI-RFSG session to a National Instruments RF Vector Signal Generator.',
-    'session_handle_parameter_name': 'vi'
+    'namespace_component': 'nirfsg',
+    'service_class_prefix': 'NiRFSG',
+    'session_handle_parameter_name': 'vi',
+    'status_ok': 'status >= 0'
 }
