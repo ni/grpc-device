@@ -15,16 +15,50 @@ jobs:
     name: Trigger Main CI
     runs-on: windows-latest
     steps:
+    - name: Checkout CMakeLists.txt
+      if: ${{ github.repository == 'ni/grpc-device' }}
+      uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event.workflow_run.head_sha }}
+        sparse-checkout: CMakeLists.txt
+        sparse-checkout-cone-mode: false
+
+    - name: Get version from CMakeLists.txt
+      id: version
+      if: ${{ github.repository == 'ni/grpc-device' }}
+      shell: pwsh
+      run: |
+        $cmake = Get-Content -Raw CMakeLists.txt
+        if ($cmake -notmatch 'project\(ni_grpc_device_server[\s\S]*?VERSION\s+(\d+)\.(\d+)\.(\d+)') {
+          Write-Error 'Could not find project VERSION in CMakeLists.txt'
+          exit 1
+        }
+        "major=$($Matches[1])" >> $env:GITHUB_OUTPUT
+        "minor=$($Matches[2])" >> $env:GITHUB_OUTPUT
+        "update=$($Matches[3])" >> $env:GITHUB_OUTPUT
+        Write-Host "Version: $($Matches[1]).$($Matches[2]).$($Matches[3])"
+
     - name: Trigger Main CI 
       if: ${{ github.repository == 'ni/grpc-device' && github.event.workflow_run.head_branch == 'main' }}
       shell: pwsh
       env:
         AZDO_TOKEN: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
+        VERSION_MAJOR: ${{ steps.version.outputs.major }}
+        VERSION_MINOR: ${{ steps.version.outputs.minor }}
+        VERSION_UPDATE: ${{ steps.version.outputs.update }}
       run: |
         $token = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$env:AZDO_TOKEN"))
         $headers = @{ Authorization = "Basic $token"; 'Content-Type' = 'application/json' }
         $defs = Invoke-RestMethod -Uri 'https://dev.azure.com/ni/DevCentral/_apis/build/definitions?name=ni-central-grpc_device&api-version=7.1' -Headers $headers
-        $body = @{ definition = @{ id = $defs.value[0].id }; parameters = '{"BRANCH": "main", "EXPORT_NAME": "ni-grpc-device", "PHASE": "d"}' } | ConvertTo-Json
+        $parameters = @{
+          BRANCH = 'main'
+          EXPORT_NAME = 'ni-grpc-device'
+          PHASE = 'd'
+          VERSION_MAJOR = $env:VERSION_MAJOR
+          VERSION_MINOR = $env:VERSION_MINOR
+          VERSION_UPDATE = $env:VERSION_UPDATE
+        } | ConvertTo-Json -Compress
+        $body = @{ definition = @{ id = $defs.value[0].id }; parameters = $parameters } | ConvertTo-Json
         Invoke-RestMethod -Method Post -Uri 'https://dev.azure.com/ni/DevCentral/_apis/build/builds?api-version=7.1' -Headers $headers -Body $body
                                   
     - name: Trigger Release CI 
@@ -32,9 +66,21 @@ jobs:
       shell: pwsh
       env:
         AZDO_TOKEN: ${{ secrets.AZDO_PIPELINE_TRIGGERS }}
+        VERSION_MAJOR: ${{ steps.version.outputs.major }}
+        VERSION_MINOR: ${{ steps.version.outputs.minor }}
+        VERSION_UPDATE: ${{ steps.version.outputs.update }}
       run: |
         $token = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(":$env:AZDO_TOKEN"))
         $headers = @{ Authorization = "Basic $token"; 'Content-Type' = 'application/json' }
         $defs = Invoke-RestMethod -Uri 'https://dev.azure.com/ni/DevCentral/_apis/build/definitions?name=ni-central-grpc_device&api-version=7.1' -Headers $headers
-        $body = @{ definition = @{ id = $defs.value[0].id }; parameters = '{"BRANCH": "releases", "EXPORT_NAME": "ni-grpc-device", "PHASE": "f", "RELEASE_BRANCH_OPTION": "--release-branch"}' } | ConvertTo-Json
+        $parameters = @{
+          BRANCH = 'releases'
+          EXPORT_NAME = 'ni-grpc-device'
+          PHASE = 'f'
+          RELEASE_BRANCH_OPTION = '--release-branch'
+          VERSION_MAJOR = $env:VERSION_MAJOR
+          VERSION_MINOR = $env:VERSION_MINOR
+          VERSION_UPDATE = $env:VERSION_UPDATE
+        } | ConvertTo-Json -Compress
+        $body = @{ definition = @{ id = $defs.value[0].id }; parameters = $parameters } | ConvertTo-Json
         Invoke-RestMethod -Method Post -Uri 'https://dev.azure.com/ni/DevCentral/_apis/build/builds?api-version=7.1' -Headers $headers -Body $body
