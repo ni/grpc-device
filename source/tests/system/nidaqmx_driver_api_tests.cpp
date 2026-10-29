@@ -1533,7 +1533,6 @@ TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_WithAutoStart_Succeeds)
 
 TEST_F(NiDAQmxDriverApiTests, WriteDigitalWaveforms_EmptyWaveforms_Fails)
 {
-  const auto NUM_SAMPLES = 10;
   CreateDOChanResponse create_channel_response;
   auto create_channel_status = create_do_chan(create_channel_response, "gRPCSystemTestDAQ/port1/line0", "do_line0", LineGrouping::LINE_GROUPING_CHAN_PER_LINE);
   EXPECT_SUCCESS(create_channel_status, create_channel_response);

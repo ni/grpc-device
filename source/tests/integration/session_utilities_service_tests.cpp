@@ -434,7 +434,7 @@ TEST(SessionUtilitiesServiceTests, ReservationAndSession_ResetServer_UnreservesA
   nidevice_grpc::SoftwareEnumerator software_enumerator(&syscfg_mock_library);
   nidevice_grpc::SessionUtilitiesService service(&session_repository, &device_enumerator, &software_enumerator);
   std::string session_name = "session_name";
-  int status = session_repository.add_session(
+  session_repository.add_session(
       session_name,
       []() { return 0; },
       NULL);

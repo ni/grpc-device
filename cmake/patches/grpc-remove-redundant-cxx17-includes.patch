@@ -1,0 +1,58 @@
+diff --git a/src/core/ext/transport/chaotic_good/server_transport.h b/src/core/ext/transport/chaotic_good/server_transport.h
+--- a/src/core/ext/transport/chaotic_good/server_transport.h
++++ b/src/core/ext/transport/chaotic_good/server_transport.h
+@@ -28,7 +28,6 @@
+ #include <iostream>
+ #include <map>
+ #include <memory>
+-#include <optional>
+ #include <string>
+ #include <tuple>
+ #include <type_traits>
+diff --git a/src/core/ext/transport/chaotic_good_legacy/server_transport.h b/src/core/ext/transport/chaotic_good_legacy/server_transport.h
+--- a/src/core/ext/transport/chaotic_good_legacy/server_transport.h
++++ b/src/core/ext/transport/chaotic_good_legacy/server_transport.h
+@@ -28,7 +28,6 @@
+ #include <iostream>
+ #include <map>
+ #include <memory>
+-#include <optional>
+ #include <string>
+ #include <tuple>
+ #include <type_traits>
+diff --git a/src/core/lib/security/credentials/tls/grpc_tls_crl_provider.h b/src/core/lib/security/credentials/tls/grpc_tls_crl_provider.h
+--- a/src/core/lib/security/credentials/tls/grpc_tls_crl_provider.h
++++ b/src/core/lib/security/credentials/tls/grpc_tls_crl_provider.h
+@@ -27,6 +27,5 @@
+ #include <chrono>
+ #include <functional>
+ #include <memory>
+-#include <optional>
+ #include <string>
+ #include <utility>
+diff --git a/src/core/lib/promise/all_ok.h b/src/core/lib/promise/all_ok.h
+--- a/src/core/lib/promise/all_ok.h
++++ b/src/core/lib/promise/all_ok.h
+@@ -20,4 +20,3 @@
+ #include <tuple>
+-#include <variant>
+-
++
+ #include "absl/meta/type_traits.h"
+diff --git a/src/core/lib/promise/try_join.h b/src/core/lib/promise/try_join.h
+--- a/src/core/lib/promise/try_join.h
++++ b/src/core/lib/promise/try_join.h
+@@ -20,4 +20,3 @@
+ #include <tuple>
+-#include <variant>
+-
++
+ #include "absl/log/check.h"
+diff --git a/src/core/xds/grpc/xds_transport_grpc.cc b/src/core/xds/grpc/xds_transport_grpc.cc
+--- a/src/core/xds/grpc/xds_transport_grpc.cc
++++ b/src/core/xds/grpc/xds_transport_grpc.cc
+@@ -30,4 +30,3 @@
+ #include <functional>
+ #include <memory>
+-#include <string_view>
+ #include <utility>

@@ -215,7 +215,7 @@ void CheckStatus(int status)
     auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
     ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 array_meas_function;
+    ViInt32 array_meas_function{};
     switch (request->array_meas_function_enum_case()) {
       case niscope_grpc::FetchArrayMeasurementRequest::ArrayMeasFunctionEnumCase::kArrayMeasFunction:
         array_meas_function = (ViInt32)request->array_meas_function();
@@ -279,7 +279,7 @@ void CheckStatus(int status)
     auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
     ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 scalar_meas_function;
+    ViInt32 scalar_meas_function{};
     switch (request->scalar_meas_function_enum_case()) {
       case niscope_grpc::FetchMeasurementStatsRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
         scalar_meas_function = (ViInt32)request->scalar_meas_function();
@@ -475,7 +475,7 @@ void CheckStatus(int status)
     auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
     ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 scalar_meas_function;
+    ViInt32 scalar_meas_function{};
     switch (request->scalar_meas_function_enum_case()) {
       case niscope_grpc::FetchMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
         scalar_meas_function = (ViInt32)request->scalar_meas_function();
@@ -526,7 +526,7 @@ void CheckStatus(int status)
     auto channel_list_mbcs = convert_from_grpc<std::string>(request->channel_list());
     ViConstString channel_list = channel_list_mbcs.c_str();
     ViReal64 timeout = request->timeout();
-    ViInt32 scalar_meas_function;
+    ViInt32 scalar_meas_function{};
     switch (request->scalar_meas_function_enum_case()) {
       case niscope_grpc::ReadMeasurementRequest::ScalarMeasFunctionEnumCase::kScalarMeasFunction:
         scalar_meas_function = (ViInt32)request->scalar_meas_function();
