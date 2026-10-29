@@ -592,7 +592,7 @@ TEST(ServerConfigurationParserTests, JsonConfigWitIllFormedMaxMessageSize_ParseM
 
   EXPECT_THROW(
       {
-        const auto message_size = server_config_parser.parse_max_message_size();
+        server_config_parser.parse_max_message_size();
       },
       nidevice_grpc::ServerConfigurationParser::InvalidMaxMessageSizeException);
 }
@@ -661,7 +661,7 @@ TEST_P(ServerConfigurationParserInvalidCodeReadinessTests, InvalidCodeReadinessC
 
   EXPECT_THROW(
       {
-        const auto feature_toggles = server_config_parser.parse_code_readiness();
+        server_config_parser.parse_code_readiness();
       },
       nidevice_grpc::ServerConfigurationParser::InvalidCodeReadinessException);
 }
@@ -673,7 +673,7 @@ TEST_P(ServerConfigurationParserInvalidCodeReadinessTests, InvalidCodeReadinessC
 
   EXPECT_THROW(
       {
-        const auto feature_toggles = server_config_parser.parse_feature_toggles();
+        server_config_parser.parse_feature_toggles();
       },
       nidevice_grpc::ServerConfigurationParser::InvalidCodeReadinessException);
 }

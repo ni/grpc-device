@@ -11,81 +11,155 @@
 #include <server/core_services_registrar.h>
 #include <server/session_repository.h>
 
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDAQMX)
 #include "nidaqmx/nidaqmx_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDCPOWER)
 #include "nidcpower/nidcpower_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDIGITALPATTERN)
 #include "nidigitalpattern/nidigitalpattern_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDMM)
 #include "nidmm/nidmm_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDMM_RESTRICTED)
 #include "nidmm_restricted/nidmm_restricted_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIFGEN)
 #include "nifgen/nifgen_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIFPGA)
 #include "nifpga/nifpga_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIMXLCTERMINALADAPTOR_RESTRICTED)
 #if defined(_MSC_VER)
 #include "nimxlcterminaladaptor_restricted/nimxlcterminaladaptor_restricted_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXBLUETOOTH)
 #if defined(_MSC_VER)
 #include "nirfmxbluetooth/nirfmxbluetooth_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXBLUETOOTHGEN)
 #if defined(_MSC_VER)
 #include "nirfmxbluetoothgen/nirfmxbluetoothgen_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXCDMA2K)
 #if defined(_MSC_VER)
 #include "nirfmxcdma2k/nirfmxcdma2k_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXDEMOD)
 #if defined(_MSC_VER)
 #include "nirfmxdemod/nirfmxdemod_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXGSM)
 #if defined(_MSC_VER)
 #include "nirfmxgsm/nirfmxgsm_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXINSTR)
 #if defined(_MSC_VER)
 #include "nirfmxinstr/nirfmxinstr_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXINSTR_RESTRICTED)
 #if defined(_MSC_VER)
 #include "nirfmxinstr_restricted/nirfmxinstr_restricted_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXLTE)
 #if defined(_MSC_VER)
 #include "nirfmxlte/nirfmxlte_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXNR)
 #if defined(_MSC_VER)
 #include "nirfmxnr/nirfmxnr_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXPULSE)
 #if defined(_MSC_VER)
 #include "nirfmxpulse/nirfmxpulse_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXSPECAN)
 #if defined(_MSC_VER)
 #include "nirfmxspecan/nirfmxspecan_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXSPECAN_RESTRICTED)
 #if defined(_MSC_VER)
 #include "nirfmxspecan_restricted/nirfmxspecan_restricted_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXTDSCDMA)
 #if defined(_MSC_VER)
 #include "nirfmxtdscdma/nirfmxtdscdma_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXVNA)
 #if defined(_MSC_VER)
 #include "nirfmxvna/nirfmxvna_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWCDMA)
 #if defined(_MSC_VER)
 #include "nirfmxwcdma/nirfmxwcdma_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLAN)
 #if defined(_MSC_VER)
 #include "nirfmxwlan/nirfmxwlan_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLAN_RESTRICTED)
 #if defined(_MSC_VER)
 #include "nirfmxwlan_restricted/nirfmxwlan_restricted_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLANGEN)
 #if defined(_MSC_VER)
 #include "nirfmxwlangen/nirfmxwlangen_service_registrar.h"
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFSA)
 #include "nirfsa/nirfsa_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFSG)
 #include "nirfsg/nirfsg_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFSG_RESTRICTED)
 #include "nirfsg_restricted/nirfsg_restricted_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NISCOPE)
 #include "niscope/niscope_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NISCOPE_RESTRICTED)
 #include "niscope_restricted/niscope_restricted_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NISWITCH)
 #include "niswitch/niswitch_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NISYNC)
 #include "nisync/nisync_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NITCLK)
 #include "nitclk/nitclk_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIXNET)
 #include "nixnet/nixnet_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIXNETSOCKET)
 #include "nixnetsocket/nixnetsocket_service_registrar.h"
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_VISA)
 #include "visa/visa_service_registrar.h"
+#endif
 
 namespace nidevice_grpc {
 
@@ -99,62 +173,101 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
   service_vector->push_back(session_repository);
   nidevice_grpc::register_core_services(service_vector, server_builder, session_repository, feature_toggles);
 
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDAQMX)
   auto task_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<TaskHandle>>(session_repository);
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDCPOWER) || defined(NIDEVICE_GRPC_INCLUDE_NIDIGITALPATTERN) || defined(NIDEVICE_GRPC_INCLUDE_NIDMM) || defined(NIDEVICE_GRPC_INCLUDE_NIDMM_RESTRICTED) || defined(NIDEVICE_GRPC_INCLUDE_NIFGEN) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXBLUETOOTH) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXBLUETOOTHGEN) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXCDMA2K) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXDEMOD) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXGSM) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXINSTR) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXLTE) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXNR) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXPULSE) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXSPECAN) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXTDSCDMA) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXVNA) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWCDMA) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLAN) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLANGEN) || defined(NIDEVICE_GRPC_INCLUDE_NIRFSA) || defined(NIDEVICE_GRPC_INCLUDE_NIRFSG) || defined(NIDEVICE_GRPC_INCLUDE_NIRFSG_RESTRICTED) || defined(NIDEVICE_GRPC_INCLUDE_NISCOPE) || defined(NIDEVICE_GRPC_INCLUDE_NISCOPE_RESTRICTED) || defined(NIDEVICE_GRPC_INCLUDE_NISWITCH) || defined(NIDEVICE_GRPC_INCLUDE_NISYNC) || defined(NIDEVICE_GRPC_INCLUDE_NITCLK) || defined(NIDEVICE_GRPC_INCLUDE_VISA)
   auto vi_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViSession>>(session_repository);
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIFPGA)
   auto ni_fpga_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<NiFpga_Session>>(session_repository);
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIMXLCTERMINALADAPTOR_RESTRICTED)
 #if defined(_MSC_VER)
   auto nimxlc_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nimxlc_Session>>(session_repository);
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXBLUETOOTH) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXCDMA2K) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXDEMOD) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXGSM) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXINSTR) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXINSTR_RESTRICTED) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXLTE) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXNR) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXPULSE) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXSPECAN) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXSPECAN_RESTRICTED) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXTDSCDMA) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXVNA) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWCDMA) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLAN) || defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLAN_RESTRICTED)
 #if defined(_MSC_VER)
   auto ni_r_fmx_instr_handle_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niRFmxInstrHandle>>(session_repository);
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXBLUETOOTHGEN)
 #if defined(_MSC_VER)
   auto ni_btsg_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niBTSGSession>>(session_repository);
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLANGEN)
 #if defined(_MSC_VER)
   auto ni_wlan_generation_session_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<niWLANGenerationSession>>(session_repository);
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIXNET)
   auto nx_session_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSessionRef_t>>(session_repository);
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIXNET)
   auto nx_database_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxDatabaseRef_t>>(session_repository);
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIXNETSOCKET)
   auto nx_socket_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxSOCKET>>(session_repository);
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIXNETSOCKET)
   auto nx_ip_stack_ref_t_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<nxIpStackRef_t>>(session_repository);
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_VISA)
   auto vi_object_repository = std::make_shared<nidevice_grpc::SessionResourceRepository<ViObject>>(session_repository);
+#endif
 
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDAQMX)
   service_vector->push_back(
     nidaqmx_grpc::register_service(
       server_builder, 
       task_handle_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDCPOWER)
   service_vector->push_back(
     nidcpower_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDIGITALPATTERN)
   service_vector->push_back(
     nidigitalpattern_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDMM)
   service_vector->push_back(
     nidmm_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIDMM_RESTRICTED)
   service_vector->push_back(
     nidmm_restricted_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIFGEN)
   service_vector->push_back(
     nifgen_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIFPGA)
   service_vector->push_back(
     nifpga_grpc::register_service(
       server_builder, 
       ni_fpga_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIMXLCTERMINALADAPTOR_RESTRICTED)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nimxlcterminaladaptor_restricted_grpc::register_service(
@@ -162,6 +275,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       nimxlc_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXBLUETOOTH)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxbluetooth_grpc::register_service(
@@ -170,6 +285,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXBLUETOOTHGEN)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxbluetoothgen_grpc::register_service(
@@ -178,6 +295,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXCDMA2K)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxcdma2k_grpc::register_service(
@@ -186,6 +305,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXDEMOD)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxdemod_grpc::register_service(
@@ -194,6 +315,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXGSM)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxgsm_grpc::register_service(
@@ -202,6 +325,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXINSTR)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxinstr_grpc::register_service(
@@ -210,6 +335,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXINSTR_RESTRICTED)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxinstr_restricted_grpc::register_service(
@@ -217,6 +344,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       ni_r_fmx_instr_handle_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXLTE)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxlte_grpc::register_service(
@@ -225,6 +354,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXNR)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxnr_grpc::register_service(
@@ -233,6 +364,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXPULSE)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxpulse_grpc::register_service(
@@ -241,6 +374,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXSPECAN)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxspecan_grpc::register_service(
@@ -249,6 +384,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXSPECAN_RESTRICTED)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxspecan_restricted_grpc::register_service(
@@ -256,6 +393,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       ni_r_fmx_instr_handle_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXTDSCDMA)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxtdscdma_grpc::register_service(
@@ -264,6 +403,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXVNA)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxvna_grpc::register_service(
@@ -272,6 +413,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWCDMA)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxwcdma_grpc::register_service(
@@ -280,6 +423,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLAN)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxwlan_grpc::register_service(
@@ -288,6 +433,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLAN_RESTRICTED)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxwlan_restricted_grpc::register_service(
@@ -295,6 +442,8 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       ni_r_fmx_instr_handle_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFMXWLANGEN)
 #if defined(_MSC_VER)
   service_vector->push_back(
     nirfmxwlangen_grpc::register_service(
@@ -303,64 +452,87 @@ std::shared_ptr<std::vector<std::shared_ptr<void>>> register_all_services(
       vi_session_repository,
       feature_toggles));
 #endif // defined(_MSC_VER)
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFSA)
   service_vector->push_back(
     nirfsa_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFSG)
   service_vector->push_back(
     nirfsg_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIRFSG_RESTRICTED)
   service_vector->push_back(
     nirfsg_restricted_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NISCOPE)
   service_vector->push_back(
     niscope_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NISCOPE_RESTRICTED)
   service_vector->push_back(
     niscope_restricted_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NISWITCH)
   service_vector->push_back(
     niswitch_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NISYNC)
   service_vector->push_back(
     nisync_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NITCLK)
   service_vector->push_back(
     nitclk_grpc::register_service(
       server_builder, 
       vi_session_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIXNET)
   service_vector->push_back(
     nixnet_grpc::register_service(
       server_builder, 
       nx_session_ref_t_repository,
       nx_database_ref_t_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_NIXNETSOCKET)
   service_vector->push_back(
     nixnetsocket_grpc::register_service(
       server_builder, 
       nx_socket_repository,
       nx_ip_stack_ref_t_repository,
       feature_toggles));
+#endif
+#if defined(NIDEVICE_GRPC_INCLUDE_VISA)
   service_vector->push_back(
     visa_grpc::register_service(
       server_builder, 
       vi_session_repository,
       vi_object_repository,
       feature_toggles));
+#endif
 
   return service_vector;
 }

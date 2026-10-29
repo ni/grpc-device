@@ -1,11 +1,15 @@
 #include <gtest/gtest.h>
 #include <nifake/nifake_mock_library.h>
+#if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable : 4616)
 #pragma warning(disable : 4146)
 #pragma warning(disable : 4244)
+#endif
 #include <nifake/nifake_service.h>
+#if defined(_MSC_VER)
 #pragma warning(pop)
+#endif
 #include <nifake_extension/nifake_extension_mock_library.h>
 #include <nifake_extension/nifake_extension_service.h>
 #include <server/session_repository.h>
@@ -515,7 +519,6 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithNoArguments_FailsAndDo
   nifake_grpc::NiFakeService service(library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
-  nifake_grpc::Turtle defaultTurtle = nifake_grpc::Turtle::TURTLE_LEONARDO;
   EXPECT_CALL(*library, InitWithVarArgs)
       .Times(0);
 
@@ -539,7 +542,6 @@ TEST(NiFakeServiceTests, NiFakeService_InitWithVarArgsWithFourArguments_FailsAnd
   nifake_grpc::NiFakeService service(library, resource_repository);
   const char* resource_name = "Dev0";
   const char* session_name = "sessionName";
-  nifake_grpc::Turtle defaultTurtle = nifake_grpc::Turtle::TURTLE_LEONARDO;
   EXPECT_CALL(*library, InitWithVarArgs)
       .Times(0);
 
@@ -853,7 +855,6 @@ TEST(NiFakeServiceTests, NiFakeService_GetCalInterval_CallsGetCalInterval)
   auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
-  nifake_grpc::NiFakeAttribute attribute_id = nifake_grpc::NIFAKE_ATTRIBUTE_READ_WRITE_DOUBLE;
   std::int32_t months = 24;
   EXPECT_CALL(*library, GetCalInterval(kTestViSession, _))
       .WillOnce(DoAll(SetArgPointee<1>(months), Return(kDriverSuccess)));
@@ -1253,7 +1254,6 @@ TEST(NiFakeServiceTests, NiFakeService_MultipleArraysSameSizeWithOptionals_Diffe
   nifake_grpc::NiFakeService service(library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const std::vector<double> doubles = {1.2, 2.3, 4.5, 6};
-  const auto expected_size = static_cast<std::int32_t>(doubles.size());
   EXPECT_CALL(*library, MultipleArraysSameSize)
       .Times(0);
 
@@ -1305,7 +1305,6 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypes_CallsParameter
   double a_float = 4.2;
   nifake_grpc::FloatEnum a_float_enum = nifake_grpc::FloatEnum::FLOAT_ENUM_SIX_POINT_FIVE;
   float expected_float_enum_value = 6.5;
-  std::int32_t expected_string_size = 12;
   char a_string[] = "Hello There!";
   EXPECT_CALL(
       *library,
@@ -1350,7 +1349,6 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValues_C
   nifake_grpc::Turtle an_int_enum = nifake_grpc::Turtle::TURTLE_MICHELANGELO;
   double a_float = 4.2;
   float expected_float_enum_value = 6.5;
-  std::int32_t expected_string_size = 12;
   char a_string[] = "Hello There!";
   EXPECT_CALL(
       *library,
@@ -1395,7 +1393,6 @@ TEST(NiFakeServiceTests, NiFakeService_ParametersAreMultipleTypesWithRawValuesNo
   std::int32_t expected_int_enum_value = 5;  // value not in enum
   double a_float = 4.2;
   float expected_float_enum_value = 8.5;  // value not in enum
-  std::int32_t expected_string_size = 12;
   char a_string[] = "Hello There!";
   EXPECT_CALL(
       *library,
@@ -2130,8 +2127,6 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithWarning_C
   nifake_grpc::NiFakeService service(library, resource_repository);
   auto session_name = create_session(library, service, kTestViSession);
   const char* a_string = "abc";
-  const auto data_in = std::array<ViInt32, 4>{0, -1, 100, 5};
-  ViInt32 input_size = 2;
   ViInt32 array_out[] = {1, 2, 3};
   ViInt32 expected_size = 3;
 
@@ -2167,7 +2162,6 @@ TEST(NiFakeServiceTests, NiFakeService_GetAnIviDanceWithATwistArrayWithInputArra
   auto resource_repository = std::make_shared<FakeResourceRepository>(session_repository);
   nifake_grpc::NiFakeService service(library, resource_repository);
   const auto data_in = std::array<ViInt32, 4>{0, -1, 100, 5};
-  ViInt32 input_size = 2;
   ViInt32 array_out[] = {1, 2, 3};
   ViInt32 expected_size = 3;
   // ivi-dance-with-a-twist call: ensure that data and size are passed in.
