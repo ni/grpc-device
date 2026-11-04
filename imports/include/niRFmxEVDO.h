@@ -2,7 +2,7 @@
 /****************************************************************************************************
 *          National Instruments RFmx EVDO
 *----------------------------------------------------------------------------------------------------
-*   Copyright(c) National Instruments 2021.  All Rights Reserved.
+*   Copyright(c) National Instruments 2027.  All Rights Reserved.
 *----------------------------------------------------------------------------------------------------
 *
 * Title:    niRFmxEVDO.h
@@ -19,6 +19,33 @@
 
 #include "niRFmxInstr.h"
 
+#define RFMXEVDO_ATTR_SELECTED_PORTS                                               0x00800ffd
+#define RFMXEVDO_ATTR_CENTER_FREQUENCY                                             0x00800001
+#define RFMXEVDO_ATTR_REFERENCE_LEVEL                                              0x00800002
+#define RFMXEVDO_ATTR_EXTERNAL_ATTENUATION                                         0x00800003
+#define RFMXEVDO_ATTR_REFERENCE_LEVEL_HEADROOM                                     0x00800ffc
+#define RFMXEVDO_ATTR_TRIGGER_TYPE                                                 0x00800004
+#define RFMXEVDO_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                                  0x00800005
+#define RFMXEVDO_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                                    0x00800006
+#define RFMXEVDO_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                                 0x00800007
+#define RFMXEVDO_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                                  0x00800008
+#define RFMXEVDO_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                             0x00800fff
+#define RFMXEVDO_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                                  0x00800009
+#define RFMXEVDO_ATTR_TRIGGER_DELAY                                                0x0080000a
+#define RFMXEVDO_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                              0x0080000b
+#define RFMXEVDO_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                          0x0080000c
+#define RFMXEVDO_ATTR_BAND_CLASS                                                   0x00800010
+#define RFMXEVDO_ATTR_NUMBER_OF_CARRIERS                                           0x0080000e
+#define RFMXEVDO_ATTR_CARRIER_FREQUENCY                                            0x0080000f
+#define RFMXEVDO_ATTR_PHYSICAL_LAYER_SUBTYPE                                       0x00800011
+#define RFMXEVDO_ATTR_CHANNEL_CONFIGURATION_MODE                                   0x00800012
+#define RFMXEVDO_ATTR_UPLINK_NUMBER_OF_CHANNELS                                    0x00800018
+#define RFMXEVDO_ATTR_UPLINK_DATA_MODULATION_TYPE                                  0x00800019
+#define RFMXEVDO_ATTR_UPLINK_WALSH_CODE_LENGTH                                     0x0080001a
+#define RFMXEVDO_ATTR_UPLINK_WALSH_CODE_NUMBER                                     0x0080001b
+#define RFMXEVDO_ATTR_UPLINK_BRANCH                                                0x0080001c
+#define RFMXEVDO_ATTR_UPLINK_SPREADING_I_MASK                                      0x00800029
+#define RFMXEVDO_ATTR_UPLINK_SPREADING_Q_MASK                                      0x0080002a
 #define RFMXEVDO_ATTR_MODACC_MEASUREMENT_ENABLED                                   0x00811000
 #define RFMXEVDO_ATTR_MODACC_SYNCHRONIZATION_MODE                                  0x00811002
 #define RFMXEVDO_ATTR_MODACC_MEASUREMENT_OFFSET                                    0x00811004
@@ -69,9 +96,12 @@
 #define RFMXEVDO_ATTR_ACP_AVERAGING_ENABLED                                        0x00801016
 #define RFMXEVDO_ATTR_ACP_AVERAGING_COUNT                                          0x00801015
 #define RFMXEVDO_ATTR_ACP_AVERAGING_TYPE                                           0x00801018
+#define RFMXEVDO_ATTR_ACP_FFT_OVERLAP_MODE                                         0x00801039
+#define RFMXEVDO_ATTR_ACP_FFT_OVERLAP                                              0x0080103a
 #define RFMXEVDO_ATTR_ACP_IF_OUTPUT_POWER_OFFSET_AUTO                              0x00801034
 #define RFMXEVDO_ATTR_ACP_NEAR_IF_OUTPUT_POWER_OFFSET                              0x00801035
 #define RFMXEVDO_ATTR_ACP_FAR_IF_OUTPUT_POWER_OFFSET                               0x00801036
+#define RFMXEVDO_ATTR_ACP_SEQUENTIAL_FFT_SIZE                                      0x00801038
 #define RFMXEVDO_ATTR_ACP_ALL_TRACES_ENABLED                                       0x00801021
 #define RFMXEVDO_ATTR_ACP_NUMBER_OF_ANALYSIS_THREADS                               0x00801014
 #define RFMXEVDO_ATTR_ACP_RESULTS_TOTAL_CARRIER_POWER                              0x00801022
@@ -81,7 +111,6 @@
 #define RFMXEVDO_ATTR_ACP_RESULTS_LOWER_OFFSET_RELATIVE_POWER                      0x0080102d
 #define RFMXEVDO_ATTR_ACP_RESULTS_UPPER_OFFSET_ABSOLUTE_POWER                      0x00801032
 #define RFMXEVDO_ATTR_ACP_RESULTS_UPPER_OFFSET_RELATIVE_POWER                      0x00801033
-#define RFMXEVDO_ATTR_ACP_SEQUENTIAL_FFT_SIZE                                      0x00801038
 #define RFMXEVDO_ATTR_CHP_MEASUREMENT_ENABLED                                      0x00803000
 #define RFMXEVDO_ATTR_CHP_CARRIER_INTEGRATION_BANDWIDTH                            0x00803002
 #define RFMXEVDO_ATTR_CHP_RBW_FILTER_AUTO_BANDWIDTH                                0x0080300c
@@ -154,34 +183,6 @@
 #define RFMXEVDO_ATTR_SEM_RESULTS_UPPER_OFFSET_MARGIN_ABSOLUTE_POWER               0x00808047
 #define RFMXEVDO_ATTR_SEM_RESULTS_UPPER_OFFSET_MARGIN_RELATIVE_POWER               0x00808048
 #define RFMXEVDO_ATTR_SEM_RESULTS_UPPER_OFFSET_MARGIN_FREQUENCY                    0x00808049
-#define RFMXEVDO_ATTR_LIMITED_CONFIGURATION_CHANGE                                 0x0080d003
-#define RFMXEVDO_ATTR_RESULT_FETCH_TIMEOUT                                         0x0080c000
-#define RFMXEVDO_ATTR_CENTER_FREQUENCY                                             0x00800001
-#define RFMXEVDO_ATTR_REFERENCE_LEVEL                                              0x00800002
-#define RFMXEVDO_ATTR_EXTERNAL_ATTENUATION                                         0x00800003
-#define RFMXEVDO_ATTR_TRIGGER_TYPE                                                 0x00800004
-#define RFMXEVDO_ATTR_DIGITAL_EDGE_TRIGGER_SOURCE                                  0x00800005
-#define RFMXEVDO_ATTR_DIGITAL_EDGE_TRIGGER_EDGE                                    0x00800006
-#define RFMXEVDO_ATTR_IQ_POWER_EDGE_TRIGGER_SOURCE                                 0x00800007
-#define RFMXEVDO_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL                                  0x00800008
-#define RFMXEVDO_ATTR_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE                             0x00800fff
-#define RFMXEVDO_ATTR_IQ_POWER_EDGE_TRIGGER_SLOPE                                  0x00800009
-#define RFMXEVDO_ATTR_TRIGGER_DELAY                                                0x0080000a
-#define RFMXEVDO_ATTR_TRIGGER_MINIMUM_QUIET_TIME_MODE                              0x0080000b
-#define RFMXEVDO_ATTR_TRIGGER_MINIMUM_QUIET_TIME_DURATION                          0x0080000c
-#define RFMXEVDO_ATTR_BAND_CLASS                                                   0x00800010
-#define RFMXEVDO_ATTR_NUMBER_OF_CARRIERS                                           0x0080000e
-#define RFMXEVDO_ATTR_CARRIER_FREQUENCY                                            0x0080000f
-#define RFMXEVDO_ATTR_PHYSICAL_LAYER_SUBTYPE                                       0x00800011
-#define RFMXEVDO_ATTR_CHANNEL_CONFIGURATION_MODE                                   0x00800012
-#define RFMXEVDO_ATTR_UPLINK_NUMBER_OF_CHANNELS                                    0x00800018
-#define RFMXEVDO_ATTR_UPLINK_DATA_MODULATION_TYPE                                  0x00800019
-#define RFMXEVDO_ATTR_UPLINK_WALSH_CODE_LENGTH                                     0x0080001a
-#define RFMXEVDO_ATTR_UPLINK_WALSH_CODE_NUMBER                                     0x0080001b
-#define RFMXEVDO_ATTR_UPLINK_BRANCH                                                0x0080001c
-#define RFMXEVDO_ATTR_UPLINK_SPREADING_I_MASK                                      0x00800029
-#define RFMXEVDO_ATTR_UPLINK_SPREADING_Q_MASK                                      0x0080002a
-#define RFMXEVDO_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                           0x0080d000
 #define RFMXEVDO_ATTR_CDA_MEASUREMENT_ENABLED                                      0x00813000
 #define RFMXEVDO_ATTR_CDA_SYNCHRONIZATION_MODE                                     0x00813002
 #define RFMXEVDO_ATTR_CDA_MEASUREMENT_OFFSET                                       0x00813003
@@ -233,10 +234,9 @@
 #define RFMXEVDO_ATTR_SLOTPHASE_TRANSIENT_DURATION                                 0x00815007
 #define RFMXEVDO_ATTR_SLOTPHASE_ALL_TRACES_ENABLED                                 0x00815008
 #define RFMXEVDO_ATTR_SLOTPHASE_RESULTS_MAXIMUM_HALF_SLOT_PHASE_DISCONTINUITY      0x0081500b
-#define RFMXEVDO_ATTR_SELECTED_PORTS                                               0x00800ffd
-#define RFMXEVDO_ATTR_REFERENCE_LEVEL_HEADROOM                                     0x00800ffc
-#define RFMXEVDO_ATTR_ACP_FFT_OVERLAP_MODE                                         0x00801039
-#define RFMXEVDO_ATTR_ACP_FFT_OVERLAP                                              0x0080103a
+#define RFMXEVDO_ATTR_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL                           0x0080d000
+#define RFMXEVDO_ATTR_LIMITED_CONFIGURATION_CHANGE                                 0x0080d003
+#define RFMXEVDO_ATTR_RESULT_FETCH_TIMEOUT                                         0x0080c000
 
 // Values for RFMXEVDO_ATTR_TRIGGER_TYPE
 #define RFMXEVDO_VAL_TRIGGER_TYPE_NONE                                                              0
@@ -397,6 +397,10 @@
 #define RFMXEVDO_VAL_ACP_AVERAGING_TYPE_MAXIMUM                                                     3
 #define RFMXEVDO_VAL_ACP_AVERAGING_TYPE_MINIMUM                                                     4
 
+// Values for RFMXEVDO_ATTR_ACP_FFT_OVERLAP_MODE
+#define RFMXEVDO_VAL_ACP_FFT_OVERLAP_MODE_DISABLED                                                  0
+#define RFMXEVDO_VAL_ACP_FFT_OVERLAP_MODE_AUTOMATIC                                                 1
+
 // Values for RFMXEVDO_ATTR_ACP_IF_OUTPUT_POWER_OFFSET_AUTO
 #define RFMXEVDO_VAL_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_FALSE                                          0
 #define RFMXEVDO_VAL_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_TRUE                                           1
@@ -483,45 +487,6 @@
 #define RFMXEVDO_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL                                       0
 #define RFMXEVDO_VAL_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS                                       1
 
-// Values for RFMXEVDO_ATTR_LIMITED_CONFIGURATION_CHANGE
-#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                          0
-#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE                                         1
-#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY                                         2
-#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL                                   3
-#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
-#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
-
-// Values for Boolean
-#define RFMXEVDO_VAL_FALSE                                                                          0
-#define RFMXEVDO_VAL_TRUE                                                                           1
-
-// Values for MeasurementTypes
-#define RFMXEVDO_VAL_MODACC                                                                         1 << 0
-#define RFMXEVDO_VAL_ACP                                                                            1 << 1
-#define RFMXEVDO_VAL_CHP                                                                            1 << 2
-#define RFMXEVDO_VAL_OBW                                                                            1 << 3
-#define RFMXEVDO_VAL_SEM                                                                            1 << 4
-#define RFMXEVDO_VAL_CDA                                                                            1 << 5
-#define RFMXEVDO_VAL_SLOTPHASE                                                                      1 << 6
-#define RFMXEVDO_VAL_SLOTPOWER                                                                      1 << 7
-
-// Values for FrequencyReferenceSource
-#define RFMXEVDO_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
-#define RFMXEVDO_VAL_REF_IN_STR                                                                     "RefIn"
-#define RFMXEVDO_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
-#define RFMXEVDO_VAL_CLK_IN_STR                                                                     "ClkIn"
-
-// Values for RFMXEVDO_ATTR_LINK_DIRECTION
-#define RFMXEVDO_VAL_LINK_DIRECTION_UPLINK                                                          1
-
-// Values for RFAttenuationAuto
-#define RFMXEVDO_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
-#define RFMXEVDO_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
-
-// Values for MechanicalAttenuationAuto
-#define RFMXEVDO_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
-#define RFMXEVDO_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
-
 // Values for RFMXEVDO_ATTR_CDA_SYNCHRONIZATION_MODE
 #define RFMXEVDO_VAL_CDA_SYNCHRONIZATION_MODE_FRAME                                                 0
 #define RFMXEVDO_VAL_CDA_SYNCHRONIZATION_MODE_SLOT                                                  1
@@ -580,9 +545,44 @@
 #define RFMXEVDO_VAL_SLOTPHASE_RECEIVE_FILTER_ENABLED_FALSE                                         0
 #define RFMXEVDO_VAL_SLOTPHASE_RECEIVE_FILTER_ENABLED_TRUE                                          1
 
-// Values for RFMXEVDO_ATTR_ACP_FFT_OVERLAP_MODE
-#define RFMXEVDO_VAL_ACP_FFT_OVERLAP_MODE_DISABLED                                                  0
-#define RFMXEVDO_VAL_ACP_FFT_OVERLAP_MODE_AUTOMATIC                                                 1
+// Values for RFMXEVDO_ATTR_LIMITED_CONFIGURATION_CHANGE
+#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_DISABLED                                          0
+#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE                                         1
+#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY                                         2
+#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL                                   3
+#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL                     4
+#define RFMXEVDO_VAL_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL      5
+
+// Values for MeasurementTypes
+#define RFMXEVDO_VAL_MODACC                                                                         1<<0
+#define RFMXEVDO_VAL_ACP                                                                            1<<1
+#define RFMXEVDO_VAL_CHP                                                                            1<<2
+#define RFMXEVDO_VAL_OBW                                                                            1<<3
+#define RFMXEVDO_VAL_SEM                                                                            1<<4
+#define RFMXEVDO_VAL_CDA                                                                            1<<5
+#define RFMXEVDO_VAL_SLOTPHASE                                                                      1<<6
+#define RFMXEVDO_VAL_SLOTPOWER                                                                      1<<7
+
+// Values for Boolean
+#define RFMXEVDO_VAL_FALSE                                                                          0
+#define RFMXEVDO_VAL_TRUE                                                                           1
+
+// Values for RFAttenuationAuto
+#define RFMXEVDO_VAL_RF_ATTENUATION_AUTO_FALSE                                                      0
+#define RFMXEVDO_VAL_RF_ATTENUATION_AUTO_TRUE                                                       1
+
+// Values for MechanicalAttenuationAuto
+#define RFMXEVDO_VAL_MECHANICAL_ATTENUATION_AUTO_FALSE                                              0
+#define RFMXEVDO_VAL_MECHANICAL_ATTENUATION_AUTO_TRUE                                               1
+
+// Values for FrequencyReferenceSource
+#define RFMXEVDO_VAL_ONBOARD_CLOCK_STR                                                              "OnboardClock"
+#define RFMXEVDO_VAL_REF_IN_STR                                                                     "RefIn"
+#define RFMXEVDO_VAL_PXI_CLK_STR                                                                    "PXI_Clk"
+#define RFMXEVDO_VAL_CLK_IN_STR                                                                     "ClkIn"
+
+// Values for RFMXEVDO_ATTR_LINK_DIRECTION
+#define RFMXEVDO_VAL_LINK_DIRECTION_UPLINK                                                          1
 
 /* ---------------- RFmxEVDO APIs ------------------ */
 
@@ -1214,67 +1214,6 @@ int32 __stdcall RFmxEVDO_CfgCarrierFrequencyArray(
    int32 numberOfElements
 );
 
-int32 __stdcall RFmxEVDO_SEMCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
-int32 __stdcall RFmxEVDO_SEMCfgSweepTime(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 sweepTimeAuto,
-   float64 sweepTimeInterval
-);
-
-int32 __stdcall RFmxEVDO_CHPCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
-int32 __stdcall RFmxEVDO_CHPCfgRBWFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 RBWAuto,
-   float64 RBW,
-   int32 RBWFilterType
-);
-
-int32 __stdcall RFmxEVDO_CHPCfgSweepTime(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 sweepTimeAuto,
-   float64 sweepTimeInterval
-);
-
-int32 __stdcall RFmxEVDO_OBWCfgAveraging(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 averagingEnabled,
-   int32 averagingCount,
-   int32 averagingType
-);
-
-int32 __stdcall RFmxEVDO_OBWCfgRBWFilter(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 RBWAuto,
-   float64 RBW,
-   int32 RBWFilterType
-);
-
-int32 __stdcall RFmxEVDO_OBWCfgSweepTime(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 sweepTimeAuto,
-   float64 sweepTimeInterval
-);
-
 int32 __stdcall RFmxEVDO_ModAccCfgSynchronizationModeAndInterval(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -1331,6 +1270,67 @@ int32 __stdcall RFmxEVDO_ACPCfgRBWFilter(
 );
 
 int32 __stdcall RFmxEVDO_ACPCfgSweepTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 sweepTimeAuto,
+   float64 sweepTimeInterval
+);
+
+int32 __stdcall RFmxEVDO_CHPCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
+);
+
+int32 __stdcall RFmxEVDO_CHPCfgRBWFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 RBWAuto,
+   float64 RBW,
+   int32 RBWFilterType
+);
+
+int32 __stdcall RFmxEVDO_CHPCfgSweepTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 sweepTimeAuto,
+   float64 sweepTimeInterval
+);
+
+int32 __stdcall RFmxEVDO_OBWCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
+);
+
+int32 __stdcall RFmxEVDO_OBWCfgRBWFilter(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 RBWAuto,
+   float64 RBW,
+   int32 RBWFilterType
+);
+
+int32 __stdcall RFmxEVDO_OBWCfgSweepTime(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 sweepTimeAuto,
+   float64 sweepTimeInterval
+);
+
+int32 __stdcall RFmxEVDO_SEMCfgAveraging(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 averagingEnabled,
+   int32 averagingCount,
+   int32 averagingType
+);
+
+int32 __stdcall RFmxEVDO_SEMCfgSweepTime(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    int32 sweepTimeAuto,
@@ -1454,88 +1454,6 @@ int32 __stdcall RFmxEVDO_GetAllNamedResultNames(
    int32 resultNamesBufferSize,
    int32* actualResultNamesSize,
    int32* defaultResultExists
-);
-
-int32 __stdcall RFmxEVDO_ACPFetchCarrierMeasurementArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 absolutePower[],
-   float64 relativePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxEVDO_ACPFetchOffsetMeasurementArray(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64 lowerRelativePower[],
-   float64 upperRelativePower[],
-   float64 lowerAbsolutePower[],
-   float64 upperAbsolutePower[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxEVDO_ACPFetchSpectrum(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* x0,
-   float64* dx,
-   float32 spectrum[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxEVDO_ACPFetchRelativePowersTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 traceIndex,
-   float64* x0,
-   float64* dx,
-   float32 relativePowersTrace[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxEVDO_ACPFetchAbsolutePowersTrace(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   int32 traceIndex,
-   float64* x0,
-   float64* dx,
-   float32 absolutePowersTrace[],
-   int32 arraySize,
-   int32* actualArraySize
-);
-
-int32 __stdcall RFmxEVDO_ACPFetchCarrierMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* absolutePower,
-   float64* relativePower
-);
-
-int32 __stdcall RFmxEVDO_ACPFetchOffsetMeasurement(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* lowerRelativePower,
-   float64* upperRelativePower,
-   float64* lowerAbsolutePower,
-   float64* upperAbsolutePower
-);
-
-int32 __stdcall RFmxEVDO_ACPFetchTotalCarrierPower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 timeout,
-   float64* totalCarrierPower
 );
 
 int32 __stdcall RFmxEVDO_ModAccFetchConstellationTrace(
@@ -1665,7 +1583,29 @@ int32 __stdcall RFmxEVDO_ModAccFetchUplinkPeakCDE(
    int32* uplinkPeakCDEBranch
 );
 
-int32 __stdcall RFmxEVDO_OBWFetchSpectrum(
+int32 __stdcall RFmxEVDO_ACPFetchCarrierMeasurementArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 absolutePower[],
+   float64 relativePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxEVDO_ACPFetchOffsetMeasurementArray(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64 lowerRelativePower[],
+   float64 upperRelativePower[],
+   float64 lowerAbsolutePower[],
+   float64 upperAbsolutePower[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxEVDO_ACPFetchSpectrum(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
@@ -1676,14 +1616,53 @@ int32 __stdcall RFmxEVDO_OBWFetchSpectrum(
    int32* actualArraySize
 );
 
-int32 __stdcall RFmxEVDO_OBWFetchMeasurement(
+int32 __stdcall RFmxEVDO_ACPFetchRelativePowersTrace(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 timeout,
-   float64* occupiedBandwidth,
+   int32 traceIndex,
+   float64* x0,
+   float64* dx,
+   float32 relativePowersTrace[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxEVDO_ACPFetchAbsolutePowersTrace(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   int32 traceIndex,
+   float64* x0,
+   float64* dx,
+   float32 absolutePowersTrace[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxEVDO_ACPFetchCarrierMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
    float64* absolutePower,
-   float64* startFrequency,
-   float64* stopFrequency
+   float64* relativePower
+);
+
+int32 __stdcall RFmxEVDO_ACPFetchOffsetMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* lowerRelativePower,
+   float64* upperRelativePower,
+   float64* lowerAbsolutePower,
+   float64* upperAbsolutePower
+);
+
+int32 __stdcall RFmxEVDO_ACPFetchTotalCarrierPower(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* totalCarrierPower
 );
 
 int32 __stdcall RFmxEVDO_CHPFetchCarrierMeasurementArray(
@@ -1720,6 +1699,27 @@ int32 __stdcall RFmxEVDO_CHPFetchTotalCarrierPower(
    char selectorString[],
    float64 timeout,
    float64* totalCarrierPower
+);
+
+int32 __stdcall RFmxEVDO_OBWFetchSpectrum(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* x0,
+   float64* dx,
+   float32 spectrum[],
+   int32 arraySize,
+   int32* actualArraySize
+);
+
+int32 __stdcall RFmxEVDO_OBWFetchMeasurement(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 timeout,
+   float64* occupiedBandwidth,
+   float64* absolutePower,
+   float64* startFrequency,
+   float64* stopFrequency
 );
 
 int32 __stdcall RFmxEVDO_SEMFetchCarrierMeasurementArray(
@@ -2018,6 +2018,343 @@ int32 __stdcall RFmxEVDO_SlotPowerFetchPowers(
    float64 halfSlotPowerDelta[],
    int32 arraySize,
    int32* actualArraySize
+);
+
+int32 __stdcall RFmxEVDO_GetSelectedPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 arraySize,
+   char attrVal[]
+);
+
+int32 __stdcall RFmxEVDO_SetSelectedPorts(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   char attrVal[]
+);
+
+int32 __stdcall RFmxEVDO_GetCenterFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetCenterFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetExternalAttenuation(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetReferenceLevelHeadroom(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetReferenceLevelHeadroom(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetTriggerType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetDigitalEdgeTriggerEdge(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetDigitalEdgeTriggerEdge(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetIQPowerEdgeTriggerLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetIQPowerEdgeTriggerLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetIQPowerEdgeTriggerLevelType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetIQPowerEdgeTriggerLevelType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetIQPowerEdgeTriggerSlope(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetIQPowerEdgeTriggerSlope(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetTriggerDelay(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetTriggerDelay(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetTriggerMinimumQuietTimeMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetTriggerMinimumQuietTimeMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetTriggerMinimumQuietTimeDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetTriggerMinimumQuietTimeDuration(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetBandClass(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetBandClass(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetNumberOfCarriers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetNumberOfCarriers(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetCarrierFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetCarrierFrequency(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetPhysicalLayerSubtype(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetPhysicalLayerSubtype(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetChannelConfigurationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetChannelConfigurationMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetUplinkNumberOfChannels(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetUplinkNumberOfChannels(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetUplinkDataModulationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetUplinkDataModulationType(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetUplinkWalshCodeLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetUplinkWalshCodeLength(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetUplinkWalshCodeNumber(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetUplinkWalshCodeNumber(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetUplinkBranch(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetUplinkBranch(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetUplinkSpreadingImask(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetUplinkSpreadingImask(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetUplinkSpreadingQmask(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetUplinkSpreadingQmask(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetAutoLevelInitialReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetAutoLevelInitialReferenceLevel(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetLimitedConfigurationChange(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetLimitedConfigurationChange(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_GetResultFetchTimeout(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_SetResultFetchTimeout(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 attrVal
 );
 
 int32 __stdcall RFmxEVDO_ModAccGetMeasurementEnabled(
@@ -2470,6 +2807,24 @@ int32 __stdcall RFmxEVDO_ACPSetAveragingType(
    int32 attrVal
 );
 
+int32 __stdcall RFmxEVDO_ACPGetFFTOverlapMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_ACPSetFFTOverlapMode(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
+);
+
+int32 __stdcall RFmxEVDO_ACPGetFFTOverlap(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   float64 *attrVal
+);
+
 int32 __stdcall RFmxEVDO_ACPGetIFOutputPowerOffsetAuto(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
@@ -2504,6 +2859,18 @@ int32 __stdcall RFmxEVDO_ACPSetFarIFOutputPowerOffset(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 attrVal
+);
+
+int32 __stdcall RFmxEVDO_ACPGetSequentialFFTSize(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 *attrVal
+);
+
+int32 __stdcall RFmxEVDO_ACPSetSequentialFFTSize(
+   niRFmxInstrHandle instrumentHandle,
+   char selectorString[],
+   int32 attrVal
 );
 
 int32 __stdcall RFmxEVDO_ACPGetAllTracesEnabled(
@@ -2567,36 +2934,6 @@ int32 __stdcall RFmxEVDO_ACPGetResultsUpperOffsetAbsolutePower(
 );
 
 int32 __stdcall RFmxEVDO_ACPGetResultsUpperOffsetRelativePower(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_ACPGetSequentialFFTSize(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_ACPSetSequentialFFTSize(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_ACPGetFFTOverlapMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_ACPSetFFTOverlapMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_ACPGetFFTOverlap(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
@@ -3212,343 +3549,6 @@ int32 __stdcall RFmxEVDO_SEMGetResultsUpperOffsetMarginFrequency(
    niRFmxInstrHandle instrumentHandle,
    char selectorString[],
    float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetLimitedConfigurationChange(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetLimitedConfigurationChange(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetResultFetchTimeout(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetResultFetchTimeout(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetCenterFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetCenterFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetExternalAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetExternalAttenuation(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetTriggerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetTriggerType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetDigitalEdgeTriggerEdge(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetDigitalEdgeTriggerEdge(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetIQPowerEdgeTriggerLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetIQPowerEdgeTriggerLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetIQPowerEdgeTriggerLevelType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetIQPowerEdgeTriggerLevelType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetIQPowerEdgeTriggerSlope(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetIQPowerEdgeTriggerSlope(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetTriggerDelay(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetTriggerDelay(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetTriggerMinimumQuietTimeMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetTriggerMinimumQuietTimeMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetTriggerMinimumQuietTimeDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetTriggerMinimumQuietTimeDuration(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetBandClass(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetBandClass(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetNumberOfCarriers(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetNumberOfCarriers(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetCarrierFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetCarrierFrequency(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetPhysicalLayerSubtype(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetPhysicalLayerSubtype(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetChannelConfigurationMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetChannelConfigurationMode(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetUplinkNumberOfChannels(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetUplinkNumberOfChannels(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetUplinkDataModulationType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetUplinkDataModulationType(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetUplinkWalshCodeLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetUplinkWalshCodeLength(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetUplinkWalshCodeNumber(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetUplinkWalshCodeNumber(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetUplinkBranch(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetUplinkBranch(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetUplinkSpreadingImask(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetUplinkSpreadingImask(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetUplinkSpreadingQmask(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetUplinkSpreadingQmask(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetAutoLevelInitialReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetAutoLevelInitialReferenceLevel(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
-);
-
-int32 __stdcall RFmxEVDO_GetSelectedPorts(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   int32 arraySize,
-   char attrVal[]
-);
-
-int32 __stdcall RFmxEVDO_SetSelectedPorts(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   char attrVal[]
-);
-
-int32 __stdcall RFmxEVDO_GetReferenceLevelHeadroom(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 *attrVal
-);
-
-int32 __stdcall RFmxEVDO_SetReferenceLevelHeadroom(
-   niRFmxInstrHandle instrumentHandle,
-   char selectorString[],
-   float64 attrVal
 );
 
 int32 __stdcall RFmxEVDO_CDAGetMeasurementEnabled(
