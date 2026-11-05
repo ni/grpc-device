@@ -142,9 +142,9 @@ ViStatus ConfigureSpectrumFrequencyStartStop(ViSession vi, ViConstString channel
   return niRFSA_ConfigureSpectrumFrequencyStartStop(vi, channelList, startFrequency, stopFrequency);
 }
 
-ViStatus CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIds[], ViBoolean setAsActiveList)
+ViStatus CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIDs[], ViBoolean setAsActiveList)
 {
-  return niRFSA_CreateConfigurationList(vi, listName, numberOfListAttributes, listAttributeIds, setAsActiveList);
+  return niRFSA_CreateConfigurationList(vi, listName, numberOfListAttributes, listAttributeIDs, setAsActiveList);
 }
 
 ViStatus CreateConfigurationListStep(ViSession vi, ViBoolean setAsActiveStep)
@@ -152,7 +152,7 @@ ViStatus CreateConfigurationListStep(ViSession vi, ViBoolean setAsActiveStep)
   return niRFSA_CreateConfigurationListStep(vi, setAsActiveStep);
 }
 
-ViStatus CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation)
+ViStatus CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation)
 {
   return niRFSA_CreateDeembeddingSparameterTableArray(vi, port, tableName, frequencies, frequenciesSize, sparameterTable, sparameterTableSize, numberOfPorts, sparameterOrientation);
 }
@@ -212,12 +212,12 @@ ViStatus EnableSessionAccess(ViSession vi, ViBoolean enable)
   return niRFSA_EnableSessionAccess(vi, enable);
 }
 
-ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024])
+ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[256])
 {
   return niRFSA_error_message(vi, statusCode, errorMessage);
 }
 
-ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024])
+ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256])
 {
   return niRFSA_error_query(vi, errorCode, errorMessage);
 }
@@ -227,32 +227,32 @@ ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifi
   return niRFSA_ExportSignal(vi, signal, signalIdentifier, outputTerminal);
 }
 
-ViStatus FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
+ViStatus FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32 data[], niRFSA_wfmInfo wfmInfo[])
 {
   return niRFSA_FetchIQMultiRecordComplexF32(vi, channelList, startingRecord, numberOfRecords, numberOfSamples, timeout, data, wfmInfo);
 }
 
-ViStatus FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
+ViStatus FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber data[], niRFSA_wfmInfo wfmInfo[])
 {
   return niRFSA_FetchIQMultiRecordComplexF64(vi, channelList, startingRecord, numberOfRecords, numberOfSamples, timeout, data, wfmInfo);
 }
 
-ViStatus FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct wfmInfo[])
+ViStatus FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16 data[], niRFSA_wfmInfo wfmInfo[])
 {
   return niRFSA_FetchIQMultiRecordComplexI16(vi, channelList, startingRecord, numberOfRecords, numberOfSamples, timeout, data, wfmInfo);
 }
 
-ViStatus FetchIQSingleRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus FetchIQSingleRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32 data[], niRFSA_wfmInfo* wfmInfo)
 {
   return niRFSA_FetchIQSingleRecordComplexF32(vi, channelList, recordNumber, numberOfSamples, timeout, data, wfmInfo);
 }
 
-ViStatus FetchIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus FetchIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber data[], niRFSA_wfmInfo* wfmInfo)
 {
   return niRFSA_FetchIQSingleRecordComplexF64(vi, channelList, recordNumber, numberOfSamples, timeout, data, wfmInfo);
 }
 
-ViStatus FetchIQSingleRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus FetchIQSingleRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16 data[], niRFSA_wfmInfo* wfmInfo)
 {
   return niRFSA_FetchIQSingleRecordComplexI16(vi, channelList, recordNumber, numberOfSamples, timeout, data, wfmInfo);
 }
@@ -287,7 +287,7 @@ ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr at
   return niRFSA_GetAttributeViString(vi, channelName, attributeId, bufSize, value);
 }
 
-ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[2048])
+ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[22])
 {
   return niRFSA_GetCalUserDefinedInfo(vi, info);
 }
@@ -297,14 +297,14 @@ ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize)
   return niRFSA_GetCalUserDefinedInfoMaxSize(vi, infoSize);
 }
 
-ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts)
+ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts)
 {
   return niRFSA_GetDeembeddingSparameters(vi, sparameters, sparametersArraySize, numberOfSparameters, numberOfPorts);
 }
 
-ViStatus GetDeviceResponse(ViSession vi, ViConstString channelList, ViInt32 responseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies)
+ViStatus GetDeviceResponse(ViSession vi, ViConstString channelList, ViInt32 deviceResponseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies)
 {
-  return niRFSA_GetDeviceResponse(vi, channelList, responseType, bufferSize, frequencies, magnitudeResponse, phaseResponse, numberOfFrequencies);
+  return niRFSA_GetDeviceResponse(vi, channelList, deviceResponseType, bufferSize, frequencies, magnitudeResponse, phaseResponse, numberOfFrequencies);
 }
 
 ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[])
@@ -337,7 +337,7 @@ ViStatus GetFrequencyResponse(ViSession vi, ViConstString channelList, ViInt32 b
   return niRFSA_GetFrequencyResponse(vi, channelList, bufferSize, frequencies, magnitudeResponse, phaseResponse, numberOfFrequencies);
 }
 
-ViStatus GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo_struct coefficientInfo[], ViInt32* numberOfCoefficientSets)
+ViStatus GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets)
 {
   return niRFSA_GetNormalizationCoefficients(vi, channelList, arraySize, coefficientInfo, numberOfCoefficientSets);
 }
@@ -357,7 +357,7 @@ ViStatus GetRelayOperationsCount(ViSession vi, ViConstString channelList, ViInt3
   return niRFSA_GetRelayOperationsCount(vi, channelList, operationsCount, bufferSize);
 }
 
-ViStatus GetScalingCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo_struct coefficientInfo[], ViInt32* numberOfCoefficientSets)
+ViStatus GetScalingCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets)
 {
   return niRFSA_GetScalingCoefficients(vi, channelList, arraySize, coefficientInfo, numberOfCoefficientSets);
 }
@@ -367,12 +367,12 @@ ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt64 selfCalibrationStep, Vi
   return niRFSA_GetSelfCalLastDateAndTime(vi, selfCalibrationStep, year, month, day, hour, minute);
 }
 
-ViStatus GetSelfCalLastTemp(ViSession vi, ViInt64 selfCalibrationStep, ViReal64* temp)
+ViStatus GetSelfCalLastTemp(ViSession vi, ViInt64 selfCalibrationStep, ViReal64* temperature)
 {
-  return niRFSA_GetSelfCalLastTemp(vi, selfCalibrationStep, temp);
+  return niRFSA_GetSelfCalLastTemp(vi, selfCalibrationStep, temperature);
 }
 
-ViStatus GetSpectralInfoForSMT(ViSession vi, SmtSpectrumInfo_struct* spectrumInfo)
+ViStatus GetSpectralInfoForSMT(ViSession vi, SmtSpectrumInfo* spectrumInfo)
 {
   return niRFSA_GetSpectralInfoForSMT(vi, spectrumInfo);
 }
@@ -397,9 +397,9 @@ ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession
   return niRFSA_init(resourceName, idQuery, reset, vi);
 }
 
-ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViConstString optionString, ViSession* vi)
+ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi)
 {
-  return niRFSA_InitWithOptions(resourceName, idQuery, reset, optionString, vi);
+  return niRFSA_InitWithOptions(resourceName, idQuery, resetDevice, optionString, newVi);
 }
 
 ViStatus Initiate(ViSession vi)
@@ -427,17 +427,17 @@ ViStatus PerformThermalCorrection(ViSession vi)
   return niRFSA_PerformThermalCorrection(vi);
 }
 
-ViStatus ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct data[], ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo)
+ViStatus ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber data[], ViInt64 dataArraySize, niRFSA_wfmInfo* wfmInfo)
 {
   return niRFSA_ReadIQSingleRecordComplexF64(vi, channelList, timeout, data, dataArraySize, wfmInfo);
 }
 
-ViStatus ReadPowerSpectrumF32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal32 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo)
+ViStatus ReadPowerSpectrumF32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal32 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo* spectrumInfo)
 {
   return niRFSA_ReadPowerSpectrumF32(vi, channelList, timeout, powerSpectrumData, dataArraySize, spectrumInfo);
 }
 
-ViStatus ReadPowerSpectrumF64(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal64 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo)
+ViStatus ReadPowerSpectrumF64(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal64 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo* spectrumInfo)
 {
   return niRFSA_ReadPowerSpectrumF64(vi, channelList, timeout, powerSpectrumData, dataArraySize, spectrumInfo);
 }
@@ -492,9 +492,9 @@ ViStatus SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequ
   return niRFSA_SelfCalibrateRange(vi, stepsToOmit, minFrequency, maxFrequency, minReferenceLevel, maxReferenceLevel);
 }
 
-ViStatus SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[2048])
+ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256])
 {
-  return niRFSA_self_test(vi, testResult, testMessage);
+  return niRFSA_self_test(vi, selfTestResult, selfTestMessage);
 }
 
 ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier)

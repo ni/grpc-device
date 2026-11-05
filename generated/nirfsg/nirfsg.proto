@@ -1,6 +1,6 @@
 
 //---------------------------------------------------------------------
-// This file is generated from NI-RFSG API metadata version 26.8.0
+// This file is generated from NI-RFSG API metadata version 27.0.0d9999
 //---------------------------------------------------------------------
 // Proto file for the NI-RFSG Metadata
 //---------------------------------------------------------------------
@@ -59,12 +59,12 @@ service NiRFSG {
   rpc CreateDeembeddingSparameterTableArray(CreateDeembeddingSparameterTableArrayRequest) returns (CreateDeembeddingSparameterTableArrayResponse);
   rpc CreateDeembeddingSparameterTableS2PFile(CreateDeembeddingSparameterTableS2PFileRequest) returns (CreateDeembeddingSparameterTableS2PFileResponse);
   rpc DeleteAllDeembeddingTables(DeleteAllDeembeddingTablesRequest) returns (DeleteAllDeembeddingTablesResponse);
-  rpc DisableCalibrationPlane(DisableCalibrationPlaneRequest) returns (DisableCalibrationPlaneResponse);
   rpc DeleteConfigurationList(DeleteConfigurationListRequest) returns (DeleteConfigurationListResponse);
   rpc DeleteDeembeddingTable(DeleteDeembeddingTableRequest) returns (DeleteDeembeddingTableResponse);
   rpc DeleteScript(DeleteScriptRequest) returns (DeleteScriptResponse);
   rpc Disable(DisableRequest) returns (DisableResponse);
   rpc DisableAllModulation(DisableAllModulationRequest) returns (DisableAllModulationResponse);
+  rpc DisableCalibrationPlane(DisableCalibrationPlaneRequest) returns (DisableCalibrationPlaneResponse);
   rpc DisableConfigurationListStepTrigger(DisableConfigurationListStepTriggerRequest) returns (DisableConfigurationListStepTriggerResponse);
   rpc DisableScriptTrigger(DisableScriptTriggerRequest) returns (DisableScriptTriggerResponse);
   rpc DisableStartTrigger(DisableStartTriggerRequest) returns (DisableStartTriggerResponse);
@@ -74,7 +74,6 @@ service NiRFSG {
   rpc ExportSignal(ExportSignalRequest) returns (ExportSignalResponse);
   rpc GetAllNamedWaveformNames(GetAllNamedWaveformNamesRequest) returns (GetAllNamedWaveformNamesResponse);
   rpc GetAllScriptNames(GetAllScriptNamesRequest) returns (GetAllScriptNamesResponse);
-  rpc GetScript(GetScriptRequest) returns (GetScriptResponse);
   rpc GetAttributeViBoolean(GetAttributeViBooleanRequest) returns (GetAttributeViBooleanResponse);
   rpc GetAttributeViInt32(GetAttributeViInt32Request) returns (GetAttributeViInt32Response);
   rpc GetAttributeViInt64(GetAttributeViInt64Request) returns (GetAttributeViInt64Response);
@@ -86,6 +85,7 @@ service NiRFSG {
   rpc GetError(GetErrorRequest) returns (GetErrorResponse);
   rpc GetExternalCalibrationLastDateAndTime(GetExternalCalibrationLastDateAndTimeRequest) returns (GetExternalCalibrationLastDateAndTimeResponse);
   rpc GetMaxSettablePower(GetMaxSettablePowerRequest) returns (GetMaxSettablePowerResponse);
+  rpc GetScript(GetScriptRequest) returns (GetScriptResponse);
   rpc GetSelfCalibrationDateAndTime(GetSelfCalibrationDateAndTimeRequest) returns (GetSelfCalibrationDateAndTimeResponse);
   rpc GetSelfCalibrationTemperature(GetSelfCalibrationTemperatureRequest) returns (GetSelfCalibrationTemperatureResponse);
   rpc GetTerminalName(GetTerminalNameRequest) returns (GetTerminalNameResponse);
@@ -439,9 +439,9 @@ enum GenerationMode {
 
 enum LinearInterpolationFormat {
   LINEAR_INTERPOLATION_FORMAT_UNSPECIFIED = 0;
-  LINEAR_INTERPOLATION_FORMAT_REAL_AND_IMAGINARY = 26000;
   LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_AND_PHASE = 26001;
   LINEAR_INTERPOLATION_FORMAT_MAGNITUDE_DB_AND_PHASE = 26002;
+  LINEAR_INTERPOLATION_FORMAT_REAL_AND_IMAGINARY = 26000;
 }
 
 enum Module {
@@ -449,132 +449,6 @@ enum Module {
   MODULE_PRIMARY_MODULE = 13000;
   MODULE_AWG = 13001;
   MODULE_LO = 13002;
-}
-
-enum OutputSignal {
-  OUTPUT_SIGNAL_UNSPECIFIED = 0;
-  OUTPUT_SIGNAL_DO_NOT_EXPORT = 1;
-  OUTPUT_SIGNAL_PFI0 = 2;
-  OUTPUT_SIGNAL_PFI1 = 3;
-  OUTPUT_SIGNAL_PFI4 = 4;
-  OUTPUT_SIGNAL_PFI5 = 5;
-  OUTPUT_SIGNAL_PXI_STAR = 6;
-  OUTPUT_SIGNAL_PXI_TRIG0 = 7;
-  OUTPUT_SIGNAL_PXI_TRIG1 = 8;
-  OUTPUT_SIGNAL_PXI_TRIG2 = 9;
-  OUTPUT_SIGNAL_PXI_TRIG3 = 10;
-  OUTPUT_SIGNAL_PXI_TRIG4 = 11;
-  OUTPUT_SIGNAL_PXI_TRIG5 = 12;
-  OUTPUT_SIGNAL_PXI_TRIG6 = 13;
-  OUTPUT_SIGNAL_REF_OUT2 = 14;
-  OUTPUT_SIGNAL_REF_OUT = 15;
-  OUTPUT_SIGNAL_TRIG_OUT = 16;
-}
-
-enum PXIChassisClk10 {
-  PXI_CHASSIS_CLK10_UNSPECIFIED = 0;
-  PXI_CHASSIS_CLK10_NONE = 1;
-  PXI_CHASSIS_CLK10_ONBOARD_CLOCK = 2;
-  PXI_CHASSIS_CLK10_REF_IN = 3;
-}
-
-enum PowerLevelType {
-  POWER_LEVEL_TYPE_UNSPECIFIED = 0;
-  POWER_LEVEL_TYPE_AVERAGE_POWER = 7000;
-  POWER_LEVEL_TYPE_PEAK_POWER = 7001;
-}
-
-enum RefClockSource {
-  REF_CLOCK_SOURCE_UNSPECIFIED = 0;
-  REF_CLOCK_SOURCE_ONBOARD_CLOCK = 1;
-  REF_CLOCK_SOURCE_REF_IN = 2;
-  REF_CLOCK_SOURCE_PXI_CLK = 3;
-  REF_CLOCK_SOURCE_CLK_IN = 4;
-  REF_CLOCK_SOURCE_REF_IN_2 = 5;
-  REF_CLOCK_SOURCE_PXI_CLK_MASTER = 6;
-}
-
-enum RelativeTo {
-  RELATIVE_TO_UNSPECIFIED = 0;
-  RELATIVE_TO_START_OF_WAVEFORM = 8000;
-  RELATIVE_TO_CURRENT_POSITION = 8001;
-}
-
-enum ResetWithOptionsStepsToOmit {
-  RESET_WITH_OPTIONS_STEPS_TO_OMIT_NONE = 0;
-  RESET_WITH_OPTIONS_STEPS_TO_OMIT_WAVEFORMS = 1;
-  RESET_WITH_OPTIONS_STEPS_TO_OMIT_SCRIPTS = 2;
-  RESET_WITH_OPTIONS_STEPS_TO_OMIT_ROUTES = 4;
-  RESET_WITH_OPTIONS_STEPS_TO_OMIT_DEEMBEDDING_TABLES = 8;
-}
-
-enum RoutedSignal {
-  ROUTED_SIGNAL_START_TRIGGER = 0;
-  ROUTED_SIGNAL_CONFIGURATION_LIST_STEP_TRIGGER = 6;
-  ROUTED_SIGNAL_CONFIGURATION_SETTLED_EVENT = 7;
-  ROUTED_SIGNAL_DONE_EVENT = 5;
-  ROUTED_SIGNAL_MARKER_EVENT = 2;
-  ROUTED_SIGNAL_REF_CLOCK = 3;
-  ROUTED_SIGNAL_SCRIPT_TRIGGER = 1;
-  ROUTED_SIGNAL_STARTED_EVENT = 4;
-}
-
-enum SParameterOrientation {
-  S_PARAMETER_ORIENTATION_UNSPECIFIED = 0;
-  S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 24000;
-  S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 24001;
-}
-
-enum SelfCalibrateRangeStepsToOmit {
-  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_OMIT_NONE = 0;
-  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_LO_SELF_CAL = 1;
-  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_POWER_LEVEL_ACCURACY = 2;
-  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_RESIDUAL_LO_POWER = 4;
-  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_IMAGE_SUPPRESSION = 8;
-  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_SYNTHESIZER_ALIGNMENT = 16;
-}
-
-enum SignalIdentifier {
-  SIGNAL_IDENTIFIER_UNSPECIFIED = 0;
-  SIGNAL_IDENTIFIER_NONE = 1;
-  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER0 = 2;
-  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER1 = 3;
-  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER2 = 4;
-  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER3 = 5;
-  SIGNAL_IDENTIFIER_MARKER0 = 6;
-  SIGNAL_IDENTIFIER_MARKER1 = 7;
-  SIGNAL_IDENTIFIER_MARKER2 = 8;
-  SIGNAL_IDENTIFIER_MARKER3 = 9;
-}
-
-enum TriggerSource {
-  TRIGGER_SOURCE_UNSPECIFIED = 0;
-  TRIGGER_SOURCE_PFI0 = 1;
-  TRIGGER_SOURCE_PFI1 = 2;
-  TRIGGER_SOURCE_PFI2 = 3;
-  TRIGGER_SOURCE_PFI3 = 4;
-  TRIGGER_SOURCE_PXI_TRIG0 = 5;
-  TRIGGER_SOURCE_PXI_TRIG1 = 6;
-  TRIGGER_SOURCE_PXI_TRIG2 = 7;
-  TRIGGER_SOURCE_PXI_TRIG3 = 8;
-  TRIGGER_SOURCE_PXI_TRIG4 = 9;
-  TRIGGER_SOURCE_PXI_TRIG5 = 10;
-  TRIGGER_SOURCE_PXI_TRIG6 = 11;
-  TRIGGER_SOURCE_PXI_TRIG7 = 12;
-  TRIGGER_SOURCE_PXI_STAR = 13;
-  TRIGGER_SOURCE_PXIE_DSTARB = 14;
-  TRIGGER_SOURCE_SYNC_START_TRIGGER = 15;
-  TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER = 16;
-  TRIGGER_SOURCE_TRIG_IN = 17;
-  TRIGGER_SOURCE_PULSE_IN = 18;
-  TRIGGER_SOURCE_DIO0 = 19;
-  TRIGGER_SOURCE_DIO1 = 20;
-  TRIGGER_SOURCE_DIO2 = 21;
-  TRIGGER_SOURCE_DIO3 = 22;
-  TRIGGER_SOURCE_DIO4 = 23;
-  TRIGGER_SOURCE_DIO5 = 24;
-  TRIGGER_SOURCE_DIO6 = 25;
-  TRIGGER_SOURCE_DIO7 = 26;
 }
 
 enum NiRFSGInt32AttributeValues {
@@ -634,6 +508,7 @@ enum NiRFSGInt32AttributeValues {
   NIRFSG_INT32_LIST_STEP_TRIGGER_TYPE_DIGITAL_EDGE = 1;
   NIRFSG_INT32_LOAD_OPTIONS_SKIP_NONE = 0;
   NIRFSG_INT32_LOAD_OPTIONS_SKIP_WAVEFORMS = 1;
+  NIRFSG_INT32_LOAD_OPTIONS_SKIP_SCRIPTS = 2;
   NIRFSG_INT32_LOOP_BANDWIDTH_NARROW = 0;
   NIRFSG_INT32_LOOP_BANDWIDTH_MEDIUM = 1;
   NIRFSG_INT32_LOOP_BANDWIDTH_WIDE = 2;
@@ -659,13 +534,15 @@ enum NiRFSGInt32AttributeValues {
   NIRFSG_INT32_POWER_LEVEL_TYPE_PEAK_POWER = 7001;
   NIRFSG_INT32_PULSE_MODULATION_MODE_OPTIMAL_MATCH = 20000;
   NIRFSG_INT32_PULSE_MODULATION_MODE_HIGH_ISOLATION = 20001;
-  NIRFSG_INT32_RESET_OPTIONS_SKIP_NONE = 0;
-  NIRFSG_INT32_RESET_OPTIONS_SKIP_WAVEFORMS = 1;
-  NIRFSG_INT32_RESET_OPTIONS_SKIP_SCRIPTS = 2;
-  NIRFSG_INT32_RESET_OPTIONS_SKIP_DEEMBEDING_TABLES = 8;
+  NIRFSG_INT32_PULSE_MODULATION_MODE_ANALOG = 20002;
+  NIRFSG_INT32_PULSE_MODULATION_MODE_DIGITAL = 20003;
   NIRFSG_INT32_RF_IN_LO_EXPORT_ENABLED_DISABLE = 0;
   NIRFSG_INT32_RF_IN_LO_EXPORT_ENABLED_UNSPECIFIED = -2;
   NIRFSG_INT32_RF_IN_LO_EXPORT_ENABLED_ENABLE = 1;
+  NIRFSG_INT32_RESET_OPTIONS_SKIP_NONE = 0;
+  NIRFSG_INT32_RESET_OPTIONS_SKIP_WAVEFORMS = 1;
+  NIRFSG_INT32_RESET_OPTIONS_SKIP_DEEMBEDING_TABLES = 8;
+  NIRFSG_INT32_RESET_OPTIONS_SKIP_SCRIPTS = 2;
   NIRFSG_INT32_SCRIPT_TRIGGER_TYPE_NONE = 0;
   NIRFSG_INT32_SCRIPT_TRIGGER_TYPE_DIGITAL_EDGE = 1;
   NIRFSG_INT32_SCRIPT_TRIGGER_TYPE_DIGITAL_LEVEL = 8000;
@@ -685,8 +562,8 @@ enum NiRFSGInt32AttributeValues {
 
 enum NiRFSGReal64AttributeValues {
   NIRFSG_REAL64_UNSPECIFIED = 0;
-  NIRFSG_REAL64_REF_CLOCK_RATE_10_MHZ = 10000000;
   NIRFSG_REAL64_REF_CLOCK_RATE_AUTO = -1;
+  NIRFSG_REAL64_REF_CLOCK_RATE_10_MHZ = 10000000;
 }
 
 enum NiRFSGStringAttributeValuesMapped {
@@ -814,6 +691,132 @@ enum NiRFSGStringAttributeValuesMapped {
   NIRFSG_STRING_TRIGGER_SOURCE_DIO5 = 121;
   NIRFSG_STRING_TRIGGER_SOURCE_DIO6 = 122;
   NIRFSG_STRING_TRIGGER_SOURCE_DIO7 = 123;
+}
+
+enum OutputSignal {
+  OUTPUT_SIGNAL_UNSPECIFIED = 0;
+  OUTPUT_SIGNAL_DO_NOT_EXPORT = 1;
+  OUTPUT_SIGNAL_PFI0 = 2;
+  OUTPUT_SIGNAL_PFI1 = 3;
+  OUTPUT_SIGNAL_PFI4 = 4;
+  OUTPUT_SIGNAL_PFI5 = 5;
+  OUTPUT_SIGNAL_PXI_STAR = 6;
+  OUTPUT_SIGNAL_PXI_TRIG0 = 7;
+  OUTPUT_SIGNAL_PXI_TRIG1 = 8;
+  OUTPUT_SIGNAL_PXI_TRIG2 = 9;
+  OUTPUT_SIGNAL_PXI_TRIG3 = 10;
+  OUTPUT_SIGNAL_PXI_TRIG4 = 11;
+  OUTPUT_SIGNAL_PXI_TRIG5 = 12;
+  OUTPUT_SIGNAL_PXI_TRIG6 = 13;
+  OUTPUT_SIGNAL_REF_OUT2 = 14;
+  OUTPUT_SIGNAL_REF_OUT = 15;
+  OUTPUT_SIGNAL_TRIG_OUT = 16;
+}
+
+enum PXIChassisClk10 {
+  PXI_CHASSIS_CLK10_UNSPECIFIED = 0;
+  PXI_CHASSIS_CLK10_NONE = 1;
+  PXI_CHASSIS_CLK10_ONBOARD_CLOCK = 2;
+  PXI_CHASSIS_CLK10_REF_IN = 3;
+}
+
+enum PowerLevelType {
+  POWER_LEVEL_TYPE_UNSPECIFIED = 0;
+  POWER_LEVEL_TYPE_AVERAGE_POWER = 7000;
+  POWER_LEVEL_TYPE_PEAK_POWER = 7001;
+}
+
+enum RefClockSource {
+  REF_CLOCK_SOURCE_UNSPECIFIED = 0;
+  REF_CLOCK_SOURCE_ONBOARD_CLOCK = 1;
+  REF_CLOCK_SOURCE_REF_IN = 2;
+  REF_CLOCK_SOURCE_PXI_CLK = 3;
+  REF_CLOCK_SOURCE_CLK_IN = 4;
+  REF_CLOCK_SOURCE_REF_IN_2 = 5;
+  REF_CLOCK_SOURCE_PXI_CLK_MASTER = 6;
+}
+
+enum RelativeTo {
+  RELATIVE_TO_UNSPECIFIED = 0;
+  RELATIVE_TO_CURRENT_POSITION = 8001;
+  RELATIVE_TO_START_OF_WAVEFORM = 8000;
+}
+
+enum ResetWithOptionsStepsToOmit {
+  RESET_WITH_OPTIONS_STEPS_TO_OMIT_NONE = 0;
+  RESET_WITH_OPTIONS_STEPS_TO_OMIT_DEEMBEDDING_TABLES = 8;
+  RESET_WITH_OPTIONS_STEPS_TO_OMIT_ROUTES = 4;
+  RESET_WITH_OPTIONS_STEPS_TO_OMIT_SCRIPTS = 2;
+  RESET_WITH_OPTIONS_STEPS_TO_OMIT_WAVEFORMS = 1;
+}
+
+enum RoutedSignal {
+  ROUTED_SIGNAL_START_TRIGGER = 0;
+  ROUTED_SIGNAL_SCRIPT_TRIGGER = 1;
+  ROUTED_SIGNAL_MARKER_EVENT = 2;
+  ROUTED_SIGNAL_REF_CLOCK = 3;
+  ROUTED_SIGNAL_STARTED_EVENT = 4;
+  ROUTED_SIGNAL_DONE_EVENT = 5;
+  ROUTED_SIGNAL_CONFIGURATION_LIST_STEP_TRIGGER = 6;
+  ROUTED_SIGNAL_CONFIGURATION_SETTLED_EVENT = 7;
+}
+
+enum SParameterOrientation {
+  S_PARAMETER_ORIENTATION_UNSPECIFIED = 0;
+  S_PARAMETER_ORIENTATION_PORT1_TOWARDS_DUT = 24000;
+  S_PARAMETER_ORIENTATION_PORT2_TOWARDS_DUT = 24001;
+}
+
+enum SelfCalibrateRangeStepsToOmit {
+  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_OMIT_NONE = 0;
+  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_IMAGE_SUPPRESSION = 8;
+  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_LO_SELF_CAL = 1;
+  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_POWER_LEVEL_ACCURACY = 2;
+  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_RESIDUAL_LO_POWER = 4;
+  SELF_CALIBRATE_RANGE_STEPS_TO_OMIT_SYNTHESIZER_ALIGNMENT = 16;
+}
+
+enum SignalIdentifier {
+  SIGNAL_IDENTIFIER_UNSPECIFIED = 0;
+  SIGNAL_IDENTIFIER_NONE = 1;
+  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER0 = 2;
+  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER1 = 3;
+  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER2 = 4;
+  SIGNAL_IDENTIFIER_SCRIPT_TRIGGER3 = 5;
+  SIGNAL_IDENTIFIER_MARKER0 = 6;
+  SIGNAL_IDENTIFIER_MARKER1 = 7;
+  SIGNAL_IDENTIFIER_MARKER2 = 8;
+  SIGNAL_IDENTIFIER_MARKER3 = 9;
+}
+
+enum TriggerSource {
+  TRIGGER_SOURCE_UNSPECIFIED = 0;
+  TRIGGER_SOURCE_PFI0 = 1;
+  TRIGGER_SOURCE_PFI1 = 2;
+  TRIGGER_SOURCE_PFI2 = 3;
+  TRIGGER_SOURCE_PFI3 = 4;
+  TRIGGER_SOURCE_PXI_TRIG0 = 5;
+  TRIGGER_SOURCE_PXI_TRIG1 = 6;
+  TRIGGER_SOURCE_PXI_TRIG2 = 7;
+  TRIGGER_SOURCE_PXI_TRIG3 = 8;
+  TRIGGER_SOURCE_PXI_TRIG4 = 9;
+  TRIGGER_SOURCE_PXI_TRIG5 = 10;
+  TRIGGER_SOURCE_PXI_TRIG6 = 11;
+  TRIGGER_SOURCE_PXI_TRIG7 = 12;
+  TRIGGER_SOURCE_PXI_STAR = 13;
+  TRIGGER_SOURCE_PXIE_DSTARB = 14;
+  TRIGGER_SOURCE_SYNC_START_TRIGGER = 15;
+  TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER = 16;
+  TRIGGER_SOURCE_TRIG_IN = 17;
+  TRIGGER_SOURCE_PULSE_IN = 18;
+  TRIGGER_SOURCE_DIO0 = 19;
+  TRIGGER_SOURCE_DIO1 = 20;
+  TRIGGER_SOURCE_DIO2 = 21;
+  TRIGGER_SOURCE_DIO3 = 22;
+  TRIGGER_SOURCE_DIO4 = 23;
+  TRIGGER_SOURCE_DIO5 = 24;
+  TRIGGER_SOURCE_DIO6 = 25;
+  TRIGGER_SOURCE_DIO7 = 26;
 }
 
 message AbortRequest {
@@ -1288,15 +1291,6 @@ message DeleteAllDeembeddingTablesResponse {
   int32 status = 1;
 }
 
-message DisableCalibrationPlaneRequest {
-  nidevice_grpc.Session vi = 1;
-  string channel_name = 2;
-}
-
-message DisableCalibrationPlaneResponse {
-  int32 status = 1;
-}
-
 message DeleteConfigurationListRequest {
   nidevice_grpc.Session vi = 1;
   string list_name = 2;
@@ -1338,6 +1332,15 @@ message DisableAllModulationRequest {
 }
 
 message DisableAllModulationResponse {
+  int32 status = 1;
+}
+
+message DisableCalibrationPlaneRequest {
+  nidevice_grpc.Session vi = 1;
+  string channel_name = 2;
+}
+
+message DisableCalibrationPlaneResponse {
   int32 status = 1;
 }
 
@@ -1435,17 +1438,6 @@ message GetAllScriptNamesRequest {
 message GetAllScriptNamesResponse {
   int32 status = 1;
   string script_names = 2;
-  sint32 actual_buffer_size = 3;
-}
-
-message GetScriptRequest {
-  nidevice_grpc.Session vi = 1;
-  string script_name = 2;
-}
-
-message GetScriptResponse {
-  int32 status = 1;
-  string script = 2;
   sint32 actual_buffer_size = 3;
 }
 
@@ -1567,6 +1559,17 @@ message GetMaxSettablePowerRequest {
 message GetMaxSettablePowerResponse {
   int32 status = 1;
   double value = 2;
+}
+
+message GetScriptRequest {
+  nidevice_grpc.Session vi = 1;
+  string script_name = 2;
+}
+
+message GetScriptResponse {
+  int32 status = 1;
+  string script = 2;
+  sint32 actual_buffer_size = 3;
 }
 
 message GetSelfCalibrationDateAndTimeRequest {

@@ -1,847 +1,545 @@
+# -*- coding: utf-8 -*-
+# This file is generated from NI-RFSG API metadata version 27.0.0d9999
 enums = {
     'AmpPath': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Sets the amplification path to use the high power path. \n'
-                },
                 'name': 'HIGH_POWER',
                 'value': 16000
             },
             {
-                'documentation': {
-                    'description': ' Sets the amplification path to use the low harmonic path. \n'
-                },
                 'name': 'LOW_HARMONIC',
                 'value': 16001
             }
         ]
     },
-    'AnalogModulationFMBand': {
+    'AnalogModulationFmBand': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies narrowband frequency modulation.\n'
-                },
                 'name': 'NARROWBAND',
                 'value': 17000
             },
             {
-                'documentation': {
-                    'description': ' Specifies wideband frequency modulation.\n'
-                },
                 'name': 'WIDEBAND',
                 'value': 17001
             }
         ]
     },
-    'AnalogModulationFMNarrowbandIntegrator': {
+    'AnalogModulationFmNarrowbandIntegrator': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies a range from 100 Hz to 1 kHz.\n'
-                },
                 'name': '100_HZ_TO_1_KHZ',
                 'value': 18000
             },
             {
-                'documentation': {
-                    'description': ' Specifies a range from 1 kHz to 10 kHz.\n'
-                },
                 'name': '1_KHZ_TO_10_KHZ',
                 'value': 18001
             },
             {
-                'documentation': {
-                    'description': ' Specifies a range from 10 kHz to 100 kHz.\n'
-                },
                 'name': '10_KHZ_TO_100_KHZ',
                 'value': 18002
             }
         ]
     },
-    'AnalogModulationPMMode': {
+    'AnalogModulationPmMode': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies high deviation. High deviation comes at the expense of a higher phase noise.\n'
-                },
                 'name': 'HIGH_DEVIATION',
                 'value': 19000
             },
             {
-                'documentation': {
-                    'description': ' Specifies low phase noise. Low phase noise comes at the expense of a lower maximum deviation.\n'
-                },
                 'name': 'LOW_PHASE_NOISE',
                 'value': 19001
             }
         ]
     },
     'AnalogModulationType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Disables analog modulation.\n'
-                },
                 'name': 'NONE',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the analog modulation type is FM.\n'
-                },
                 'name': 'FM',
                 'value': 2000
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the analog modulation type is PM.\n'
-                },
                 'name': 'PM',
                 'value': 2001
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the analog modulation type is AM.\n'
-                },
                 'name': 'AM',
                 'value': 2002
             }
         ]
     },
     'AnalogModulationWaveformType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies that the analog modulation waveform type is sine.\n'
-                },
                 'name': 'SINE',
                 'value': 3000
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the analog modulation waveform type is square.\n'
-                },
                 'name': 'SQUARE',
                 'value': 3001
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the analog modulation waveform type is triangle.\n'
-                },
                 'name': 'TRIANGLE',
                 'value': 3002
             }
         ]
     },
     'AnySignalOutputTerm': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
-                'documentation': {
-                    'description': ' The signal is not exported.\n'
-                },
                 'name': 'DO_NOT_EXPORT',
                 'value': ''
             },
             {
-                'documentation': {
-                    'description': ' PFI 0 on the front panel SMB connector.  For the PXIe-5841 with PXIe-5655, the signal is exported to the PXIe-5841 PFI 0.\n'
-                },
                 'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
-                'documentation': {
-                    'description': ' PFI 1 on the front panel SMB connector.\n'
-                },
                 'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
-                'documentation': {
-                    'description': ' PFI 4 on the front panel DDC connector.\n'
-                },
                 'name': 'PFI4',
                 'value': 'PFI4'
             },
             {
-                'documentation': {
-                    'description': ' PFI 5 on the front panel DDC connector.\n'
-                },
                 'name': 'PFI5',
                 'value': 'PFI5'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 0.\n'
-                },
                 'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 1.\n'
-                },
                 'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 2.\n'
-                },
                 'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 3.\n'
-                },
                 'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 4.\n'
-                },
                 'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 5.\n'
-                },
                 'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 6.\n'
-                },
                 'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
-                'documentation': {
-                    'description': ' PXIe DStar C trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.\n'
-                },
                 'name': 'PXIE_DSTARC',
                 'value': 'PXIe_DStarC'
             },
             {
-                'documentation': {
-                    'description': ' TRIG IN/OUT terminal.\n'
-                },
                 'name': 'TRIG_OUT',
                 'value': 'TrigOut'
             },
             {
-                'documentation': {
-                    'description': ' PFI 0 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 1,
                 'name': 'DIO0',
-                'value': 'DIO/PFI0',
-                'order': 1
+                'value': 'DIO/PFI0'
             },
             {
-                'documentation': {
-                    'description': ' PFI 1 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 2,
                 'name': 'DIO1',
-                'value': 'DIO/PFI1',
-                'order': 2
+                'value': 'DIO/PFI1'
             },
             {
-                'documentation': {
-                    'description': ' PFI 2 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 3,
                 'name': 'DIO2',
-                'value': 'DIO/PFI2',
-                'order': 3
+                'value': 'DIO/PFI2'
             },
             {
-                'documentation': {
-                    'description': ' PFI 3 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 4,
                 'name': 'DIO3',
-                'value': 'DIO/PFI3',
-                'order': 4
+                'value': 'DIO/PFI3'
             },
             {
-                'documentation': {
-                    'description': ' PFI 4 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 5,
                 'name': 'DIO4',
-                'value': 'DIO/PFI4',
-                'order': 5
+                'value': 'DIO/PFI4'
             },
             {
-                'documentation': {
-                    'description': ' PFI 5 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 6,
                 'name': 'DIO5',
-                'value': 'DIO/PFI5',
-                'order': 6
+                'value': 'DIO/PFI5'
             },
             {
-                'documentation': {
-                    'description': ' PFI 6 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 7,
                 'name': 'DIO6',
-                'value': 'DIO/PFI6',
-                'order': 7
+                'value': 'DIO/PFI6'
             },
             {
-                'documentation': {
-                    'description': ' PFI 7 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 8,
                 'name': 'DIO7',
-                'value': 'DIO/PFI7',
-                'order': 8
+                'value': 'DIO/PFI7'
             }
         ]
     },
     'ArbFilterType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' None'
-                },
                 'name': 'NONE',
                 'value': 10000
             },
             {
-                'documentation': {
-                    'description': ' Applies a root-raised cosine filter to the data with the alpha value  specified with the NIRFSG_ATTR_ARB_FILTER_ROOT_RAISED_COSINE_ALPHA  attribute. '
-                },
                 'name': 'ROOT_RAISED_COSINE',
                 'value': 10001
             },
             {
-                'documentation': {
-                    'description': ' Applies a raised cosine filter to the data with the alpha value specified  with the NIRFSG_ATTR_ARB_FILTER_RAISED_COSINE_ALPHA attribute. '
-                },
                 'name': 'RAISED_COSINE',
                 'value': 10002
             }
         ]
     },
     'ArbOnboardSampleClockMode': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies that the clock mode is high resoultion. High resolution  sampling is when a sample rate is generated by a high resolution clock  source.\n'
-                },
                 'name': 'HIGH_RESOLUTION',
                 'value': 6000
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the clock mode is divide down. Divide down sampling is  when sample rates are generated by dividing the source frequency.\n'
-                },
                 'name': 'DIVIDE_DOWN',
                 'value': 6001
             }
         ]
     },
     'ArbSampleClockSource': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
-                'documentation': {
-                    'description': ' Use the AWG module onboard clock as the clock source.\n'
-                },
                 'name': 'ONBOARD_CLOCK',
                 'value': 'OnboardClock'
             },
             {
-                'documentation': {
-                    'description': ' Use the external clock as the clock source.\n'
-                },
                 'name': 'CLK_IN',
                 'value': 'ClkIn'
             }
         ]
     },
     'ConfigListTrigOutputTerm': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
-                'documentation': {
-                    'description': ' The signal is not exported.\n'
-                },
                 'name': 'DO_NOT_EXPORT',
                 'value': ''
             },
             {
-                'documentation': {
-                    'description': ' PFI 0 on the front panel SMB connector.  For the PXIe-5841 with PXIe-5655, the signal is exported to the PXIe-5841 PFI 0.\n'
-                },
                 'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
-                'documentation': {
-                    'description': ' PFI 1 on the front panel SMB connector.\n'
-                },
                 'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 0.\n'
-                },
                 'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 1.\n'
-                },
                 'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 2.\n'
-                },
                 'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 3.\n'
-                },
                 'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 4.\n'
-                },
                 'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 5.\n'
-                },
                 'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 6.\n'
-                },
                 'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
-                'documentation': {
-                    'description': ' PXIe DStar C trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.\n'
-                },
                 'name': 'PXIE_DSTARC',
                 'value': 'PXIe_DStarC'
             },
             {
-                'documentation': {
-                    'description': ' TRIG IN/OUT terminal.\n'
-                },
                 'name': 'TRIG_OUT',
                 'value': 'TrigOut'
             },
             {
-                'documentation': {
-                    'description': ' PFI 0 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 9,
                 'name': 'DIO0',
-                'value': 'DIO/PFI0',
-                'order': 9
+                'value': 'DIO/PFI0'
             },
             {
-                'documentation': {
-                    'description': ' PFI 1 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 10,
                 'name': 'DIO1',
-                'value': 'DIO/PFI1',
-                'order': 10
+                'value': 'DIO/PFI1'
             },
             {
-                'documentation': {
-                    'description': ' PFI 2 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 11,
                 'name': 'DIO2',
-                'value': 'DIO/PFI2',
-                'order': 11
+                'value': 'DIO/PFI2'
             },
             {
-                'documentation': {
-                    'description': ' PFI 3 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 12,
                 'name': 'DIO3',
-                'value': 'DIO/PFI3',
-                'order': 12
+                'value': 'DIO/PFI3'
             },
             {
-                'documentation': {
-                    'description': ' PFI 4 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 13,
                 'name': 'DIO4',
-                'value': 'DIO/PFI4',
-                'order': 13
+                'value': 'DIO/PFI4'
             },
             {
-                'documentation': {
-                    'description': ' PFI 5 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 14,
                 'name': 'DIO5',
-                'value': 'DIO/PFI5',
-                'order': 14
+                'value': 'DIO/PFI5'
             },
             {
-                'documentation': {
-                    'description': ' PFI 6 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 15,
                 'name': 'DIO6',
-                'value': 'DIO/PFI6',
-                'order': 15
+                'value': 'DIO/PFI6'
             },
             {
-                'documentation': {
-                    'description': ' PFI 7 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 16,
                 'name': 'DIO7',
-                'value': 'DIO/PFI7',
-                'order': 16
+                'value': 'DIO/PFI7'
             }
         ]
     },
     'ConfigListTrigSource': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
-                'documentation': {
-                    'description': ' PFI 0 on the front panel SMB connector.\n'
-                },
                 'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
-                'documentation': {
-                    'description': ' PFI 1 on the front panel SMB connector.\n'
-                },
                 'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 0.\n'
-                },
                 'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 1.\n'
-                },
                 'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 2.\n'
-                },
                 'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 3.\n'
-                },
                 'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 4.\n'
-                },
                 'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 5.\n'
-                },
                 'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 6.\n'
-                },
                 'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 7.\n'
-                },
                 'name': 'PXI_TRIG7',
                 'value': 'PXI_Trig7'
             },
             {
-                'documentation': {
-                    'description': ' PXI Star trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.\n'
-                },
                 'name': 'PXIE_DSTARB',
                 'value': 'PXIe_DStarB'
             },
             {
-                'documentation': {
-                    'description': ' Marker Event 0.\n'
-                },
                 'name': 'MARKER0_EVENT',
                 'value': 'Marker0Event'
             },
             {
-                'documentation': {
-                    'description': ' Marker Event 1.\n'
-                },
                 'name': 'MARKER1_EVENT',
                 'value': 'Marker1Event'
             },
             {
-                'documentation': {
-                    'description': ' Marker Event 2.\n'
-                },
                 'name': 'MARKER2_EVENT',
                 'value': 'Marker2Event'
             },
             {
-                'documentation': {
-                    'description': ' Marker Event 3.\n'
-                },
                 'name': 'MARKER3_EVENT',
                 'value': 'Marker3Event'
             },
             {
-                'documentation': {
-                    'description': ' Timer Event.\n'
-                },
                 'name': 'TIMER_EVENT',
                 'value': 'TimerEvent'
             },
             {
-                'documentation': {
-                    'description': ' TRIG IN/OUT terminal.\n'
-                },
                 'name': 'TRIG_IN',
                 'value': 'TrigIn'
             },
             {
-                'documentation': {
-                    'description': ' PFI 0 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 17,
                 'name': 'DIO0',
-                'value': 'DIO/PFI0',
-                'order': 17
+                'value': 'DIO/PFI0'
             },
             {
-                'documentation': {
-                    'description': ' PFI 1 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 18,
                 'name': 'DIO1',
-                'value': 'DIO/PFI1',
-                'order': 18
+                'value': 'DIO/PFI1'
             },
             {
-                'documentation': {
-                    'description': ' PFI 2 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 19,
                 'name': 'DIO2',
-                'value': 'DIO/PFI2',
-                'order': 19
+                'value': 'DIO/PFI2'
             },
             {
-                'documentation': {
-                    'description': ' PFI 3 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 20,
                 'name': 'DIO3',
-                'value': 'DIO/PFI3',
-                'order': 20
+                'value': 'DIO/PFI3'
             },
             {
-                'documentation': {
-                    'description': ' PFI 4 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 21,
                 'name': 'DIO4',
-                'value': 'DIO/PFI4',
-                'order': 21
+                'value': 'DIO/PFI4'
             },
             {
-                'documentation': {
-                    'description': ' PFI 5 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 22,
                 'name': 'DIO5',
-                'value': 'DIO/PFI5',
-                'order': 22
+                'value': 'DIO/PFI5'
             },
             {
-                'documentation': {
-                    'description': ' PFI 6 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 23,
                 'name': 'DIO6',
-                'value': 'DIO/PFI6',
-                'order': 23
+                'value': 'DIO/PFI6'
             },
             {
-                'documentation': {
-                    'description': ' PFI 7 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 24,
                 'name': 'DIO7',
-                'value': 'DIO/PFI7',
-                'order': 24
+                'value': 'DIO/PFI7'
             }
         ]
     },
     'ConfigListTriggerDigEdgeEdge': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies the rising edge as the active edge.  The rising edge  occurs when the signal transitions from low level to high level.\n'
-                },
                 'name': 'RISING_EDGE',
                 'value': 0
             }
         ]
     },
     'ConfigSettledEventOutputTerm': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
-                'documentation': {
-                    'description': ' The signal is not exported.\n'
-                },
                 'name': 'DO_NOT_EXPORT',
                 'value': ''
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 0.\n'
-                },
                 'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 1.\n'
-                },
                 'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 2.\n'
-                },
                 'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 3.\n'
-                },
                 'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 4.\n'
-                },
                 'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 5.\n'
-                },
                 'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 6.\n'
-                },
                 'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
-                'documentation': {
-                    'description': ' PXIe DStar C trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841.\n'
-                },
                 'name': 'PXIE_DSTARC',
                 'value': 'PXIe_DStarC'
             },
             {
-                'documentation': {
-                    'description': ' TRIG IN/OUT terminal.\n'
-                },
                 'name': 'TRIG_OUT',
                 'value': 'TrigOut'
             }
         ]
     },
     'ConfigurationListRepeat': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' NI-RFSG runs the configuration list continuously.\n'
-                },
                 'name': 'CONFIGURATION_LIST_REPEAT_CONTINUOUS',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' NI-RFSG runs the configuration list only once.'
-                },
                 'name': 'CONFIGURATION_LIST_REPEAT_SINGLE',
                 'value': 1
             }
         ]
     },
     'DeembeddingType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' De-embedding is not applied to the measurement. '
-                },
                 'name': 'NONE',
                 'value': 25000
             },
             {
-                'documentation': {
-                    'description': ' De-embeds the measurement using only the gain term.'
-                },
                 'name': 'SCALAR',
                 'value': 25001
             },
             {
-                'documentation': {
-                    'description': ' De-embeds the measurement using the gain term and the reflection term.'
-                },
                 'name': 'VECTOR',
                 'value': 25002
             },
             {
-                'documentation': {
-                    'description': ' De-embeds the measurement using wideband amplitude flatness correction.'
-                },
                 'name': 'AMPLITUDE_FLATNESS',
                 'value': 25003
             }
         ]
     },
     'DigitalEdgeConfigurationListStepTriggerSource': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
@@ -923,24 +621,20 @@ enums = {
         ]
     },
     'DigitalEdgeEdge': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Occurs when the signal transitions from low level to high level. \n'
-                },
                 'name': 'RISING_EDGE',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' Occurs when the signal transitions from high level to low level. \n'
-                },
                 'name': 'FALLING_EDGE',
                 'value': 1
             }
         ]
     },
     'DigitalEdgeScriptTriggerIdentifier': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
@@ -962,142 +656,101 @@ enums = {
         ]
     },
     'DigitalLevelActiveLevel': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Trigger when the digital trigger signal is high. \n'
-                },
                 'name': 'ACTIVE_HIGH',
                 'value': 9000
             },
             {
-                'documentation': {
-                    'description': ' Trigger when the digital trigger signal is low. \n'
-                },
                 'name': 'ACTIVE_LOW',
                 'value': 9001
             }
         ]
     },
     'DigitalModulationType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Disables digital modulation.\n'
-                },
                 'name': 'NONE',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the digital modulation type is frequency-shift keying  (FSK).\n'
-                },
                 'name': 'FSK',
                 'value': 4000
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the digital modulation type is on-off keying (OOK).\n'
-                },
                 'name': 'OOK',
                 'value': 4001
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the digital modulation type is PSK.\n'
-                },
                 'name': 'PSK',
                 'value': 4002
             }
         ]
     },
     'DigitalModulationWaveformType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies that the digital modulation waveform type is pseudorandom bit  sequence (PRBS).\n'
-                },
                 'name': 'PRBS',
                 'value': 5000
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the digital modulation waveform type is user defined. To  specify the user-defined waveform, call the  niRFSG_ConfigureDigitalModulationUserDefinedWaveform function.\n'
-                },
                 'name': 'USER_DEFINED',
                 'value': 5001
             }
         ]
     },
     'EnableValues': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Enabled'
-                },
-                'name': 'ENABLE',
-                'value': 1
-            },
-            {
-                'documentation': {
-                    'description': ' Disabled'
-                },
                 'name': 'DISABLE',
                 'value': 0
+            },
+            {
+                'name': 'ENABLE',
+                'value': 1
             }
         ]
     },
     'FrequencySettlingUnits': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies the value in Frequency Settling is the time to wait after the  frequency PLL locks.\n'
-                },
                 'name': 'TIME_AFTER_LOCK',
                 'value': 12000
             },
             {
-                'documentation': {
-                    'description': ' Specifies the value in Frequency Settling is the time to wait after all  writes to change the frequency occur.\n'
-                },
                 'name': 'TIME_AFTER_IO',
                 'value': 12001
             },
             {
-                'documentation': {
-                    'description': ' Specifies the value in Frequency Settling is the minimum frequency  accuracy when settling completes. Units are in parts per million (PPM or  1E-6).\n'
-                },
                 'name': 'PPM',
                 'value': 12002
             }
         ]
     },
     'GenerationMode': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Configures the RF signal generator to generate a CW signal. \n'
-                },
                 'name': 'CW',
                 'value': 1000
             },
             {
-                'documentation': {
-                    'description': ' Configures the RF signal generator to generate the arbitrary waveform  specified by the NIRFSG_ATTR_ARB_SELECTED_WAVEFORM attribute. \n'
-                },
                 'name': 'ARB_WAVEFORM',
                 'value': 1001
             },
             {
-                'documentation': {
-                    'description': ' Configures the RF signal generator to generate arbitrary waveforms as  directed by the NIRFSG_ATTR_SELECTED_SCRIPT attribute. \n'
-                },
                 'name': 'SCRIPT',
                 'value': 1002
             }
         ]
     },
-    'IqOffsetUnits': {
+    'IQOffsetUnits': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'PERCENT',
@@ -1109,30 +762,22 @@ enums = {
             }
         ]
     },
-    'IqOutPortTermConfig': {
+    'IQOutPortTermConfig': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Sets the terminal configuration to differential. \n'
-                },
                 'name': 'DIFFERENTIAL',
                 'value': 15000
             },
             {
-                'documentation': {
-                    'description': ' Sets the terminal configuration to single-ended. \n'
-                },
                 'name': 'SINGLE_ENDED',
                 'value': 15001
             }
         ]
     },
     'LinearInterpolationFormat': {
+        'codegen_method': 'public',
         'values': [
-            {
-                'name': 'REAL_AND_IMAGINARY',
-                'value': 26000
-            },
             {
                 'name': 'MAGNITUDE_AND_PHASE',
                 'value': 26001
@@ -1140,165 +785,127 @@ enums = {
             {
                 'name': 'MAGNITUDE_DB_AND_PHASE',
                 'value': 26002
+            },
+            {
+                'name': 'REAL_AND_IMAGINARY',
+                'value': 26000
             }
         ]
     },
     'ListStepTriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Generation starts immediately.  No trigger is configured. \n'
-                },
                 'name': 'NONE',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' The data operation does not start until a digital edge is detected.  The  source  of the digital edge is specified in the   NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_SOURCE attribute, and the active  edge is specified in the NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_EDGE  attribute. \n'
-                },
                 'name': 'DIGITAL_EDGE',
                 'value': 1
             }
         ]
     },
     'LoSource': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
-                'documentation': {
-                    'description': ' Uses an internal LO as the LO source. If you specify an internal LO source, the LO is generated  within the device itself. \n\n PXIe-5840 with PXIe-5653: If the center frequency is greater than or equal to 3.2 GHz,  this configuration uses the PXIe-5653 LO source. For frequencies less than 3.2 GHz,  this configuration uses the PXIe-5840 internal LO. \n PXIe-5841 with PXIe-5655: This configuration uses the onboard LO of the PXIe-5655. \n'
-                },
                 'name': 'ONBOARD',
                 'value': 'Onboard'
             },
             {
-                'documentation': {
-                    'description': ' Uses an external LO as the LO source. Connect a signal to the LO IN connector on  the device and use the NIRFSG_ATTR_UPCONVERTER_CENTER_FREQUENCY attribute to specify the LO frequency. \n'
-                },
                 'name': 'LO_IN',
                 'value': 'LO_In'
             },
             {
-                'documentation': {
-                    'description': ' Uses the PXIe-5840 internal LO as the LO source. This value is valid on only the PXIe-5840 with PXIe-5653.'
-                },
                 'name': 'SECONDARY',
                 'value': 'Secondary'
             },
             {
-                'documentation': {
-                    'description': ' Uses the same internal LO during some RX and TX operations. In this mode, an internal synthesizer  is chosen by the driver and the synthesizer signal is switched to both the RF In and RF Out mixers.  This value is valid on only the PXIe-5830/5831/5841 with PXIe-5655. \n'
-                },
                 'name': 'SG_SA_SHARED',
                 'value': 'SG_SA_Shared'
             },
             {
-                'documentation': {
-                    'description': ' NI-RFSG internally makes the configuration to share the LO between NI-RFSA and NI-RFSG. This value is valid only on the PXIe-5820/5830/5831/5832/5840/5841. \n'
-                },
                 'name': 'AUTOMATIC_SG_SA_SHARED',
                 'value': 'Automatic_SG_SA_Shared'
             }
         ]
     },
     'LoadOptions': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' NI-RFSG loads all the configurations to the session.'
-                },
                 'name': 'SKIP_NONE',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' NI-RFSG skips loading the waveform configurations to the session.'
-                },
                 'name': 'SKIP_WAVEFORMS',
                 'value': 1
+            },
+            {
+                'name': 'SKIP_SCRIPTS',
+                'value': 2
             }
         ]
     },
     'LoopBandwidth': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies that the device uses a narrow loop bandwidth.\n'
-                },
                 'name': 'NARROW',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the device uses a medium loop bandwidth.\n'
-                },
                 'name': 'MEDIUM',
                 'value': 1
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the device uses a wide loop bandwidth.\n'
-                },
                 'name': 'WIDE',
                 'value': 2
             }
         ]
     },
     'MarkerEventOutputBehavior': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies the Marker Event output behavior as pulse.  \n'
-                },
                 'name': 'PULSE',
                 'value': 23000
             },
             {
-                'documentation': {
-                    'description': ' Specifies the Marker Event output behavior as toggle. \n'
-                },
                 'name': 'TOGGLE',
                 'value': 23001
             }
         ]
     },
     'MarkerEventPulseWidthUnits': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies the Marker Event pulse width units as seconds.  \n'
-                },
                 'name': 'SECONDS',
                 'value': 22000
             },
             {
-                'documentation': {
-                    'description': ' Specifies the Marker Event pulse width units as Sample Clock periods. \n'
-                },
                 'name': 'SAMPLE_CLOCK_PERIODS',
                 'value': 22001
             }
         ]
     },
     'MarkerEventToggleInitialState': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies the initial state of the Marker Event toggle behavior as digital low. \n'
-                },
                 'name': 'DIGITAL_LOW',
                 'value': 21000
             },
             {
-                'documentation': {
-                    'description': ' Specifies the initial state of the Marker Event toggle behavior as digital high. \n'
-                },
                 'name': 'DIGITAL_HIGH',
                 'value': 21001
             }
         ]
     },
     'Module': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'PRIMARY_MODULE',
@@ -1314,39 +921,963 @@ enums = {
             }
         ]
     },
-    'OutputPort': {
+    'NiRFSGInt32AttributeValues': {
+        'enum-value-prefix': 'NIRFSG_INT32',
+        'generate-mappings': False,
         'values': [
             {
-                'documentation': {
-                    'description': ' Enables the RF OUT port. \n'
-                },
+                'name': 'AMP_PATH_HIGH_POWER',
+                'value': 16000
+            },
+            {
+                'name': 'AMP_PATH_LOW_HARMONIC',
+                'value': 16001
+            },
+            {
+                'name': 'ANALOG_MODULATION_FM_BAND_NARROWBAND',
+                'value': 17000
+            },
+            {
+                'name': 'ANALOG_MODULATION_FM_BAND_WIDEBAND',
+                'value': 17001
+            },
+            {
+                'name': 'ANALOG_MODULATION_FM_NARROWBAND_INTEGRATOR_100_HZ_TO_1_KHZ',
+                'value': 18000
+            },
+            {
+                'name': 'ANALOG_MODULATION_FM_NARROWBAND_INTEGRATOR_1_KHZ_TO_10_KHZ',
+                'value': 18001
+            },
+            {
+                'name': 'ANALOG_MODULATION_FM_NARROWBAND_INTEGRATOR_10_KHZ_TO_100_KHZ',
+                'value': 18002
+            },
+            {
+                'name': 'ANALOG_MODULATION_PM_MODE_HIGH_DEVIATION',
+                'value': 19000
+            },
+            {
+                'name': 'ANALOG_MODULATION_PM_MODE_LOW_PHASE_NOISE',
+                'value': 19001
+            },
+            {
+                'name': 'ANALOG_MODULATION_TYPE_NONE',
+                'value': 0
+            },
+            {
+                'name': 'ANALOG_MODULATION_TYPE_FM',
+                'value': 2000
+            },
+            {
+                'name': 'ANALOG_MODULATION_TYPE_PM',
+                'value': 2001
+            },
+            {
+                'name': 'ANALOG_MODULATION_TYPE_AM',
+                'value': 2002
+            },
+            {
+                'name': 'ANALOG_MODULATION_WAVEFORM_TYPE_SINE',
+                'value': 3000
+            },
+            {
+                'name': 'ANALOG_MODULATION_WAVEFORM_TYPE_SQUARE',
+                'value': 3001
+            },
+            {
+                'name': 'ANALOG_MODULATION_WAVEFORM_TYPE_TRIANGLE',
+                'value': 3002
+            },
+            {
+                'name': 'ARB_FILTER_TYPE_NONE',
+                'value': 10000
+            },
+            {
+                'name': 'ARB_FILTER_TYPE_ROOT_RAISED_COSINE',
+                'value': 10001
+            },
+            {
+                'name': 'ARB_FILTER_TYPE_RAISED_COSINE',
+                'value': 10002
+            },
+            {
+                'name': 'ARB_ONBOARD_SAMPLE_CLOCK_MODE_HIGH_RESOLUTION',
+                'value': 6000
+            },
+            {
+                'name': 'ARB_ONBOARD_SAMPLE_CLOCK_MODE_DIVIDE_DOWN',
+                'value': 6001
+            },
+            {
+                'name': 'CONFIG_LIST_TRIGGER_DIG_EDGE_EDGE_RISING_EDGE',
+                'value': 0
+            },
+            {
+                'name': 'CONFIGURATION_LIST_REPEAT_CONFIGURATION_LIST_REPEAT_CONTINUOUS',
+                'value': 0
+            },
+            {
+                'name': 'CONFIGURATION_LIST_REPEAT_CONFIGURATION_LIST_REPEAT_SINGLE',
+                'value': 1
+            },
+            {
+                'name': 'DEEMBEDDING_TYPE_NONE',
+                'value': 25000
+            },
+            {
+                'name': 'DEEMBEDDING_TYPE_SCALAR',
+                'value': 25001
+            },
+            {
+                'name': 'DEEMBEDDING_TYPE_VECTOR',
+                'value': 25002
+            },
+            {
+                'name': 'DEEMBEDDING_TYPE_AMPLITUDE_FLATNESS',
+                'value': 25003
+            },
+            {
+                'name': 'DIGITAL_EDGE_EDGE_RISING_EDGE',
+                'value': 0
+            },
+            {
+                'name': 'DIGITAL_EDGE_EDGE_FALLING_EDGE',
+                'value': 1
+            },
+            {
+                'name': 'DIGITAL_LEVEL_ACTIVE_LEVEL_ACTIVE_HIGH',
+                'value': 9000
+            },
+            {
+                'name': 'DIGITAL_LEVEL_ACTIVE_LEVEL_ACTIVE_LOW',
+                'value': 9001
+            },
+            {
+                'name': 'DIGITAL_MODULATION_TYPE_NONE',
+                'value': 0
+            },
+            {
+                'name': 'DIGITAL_MODULATION_TYPE_FSK',
+                'value': 4000
+            },
+            {
+                'name': 'DIGITAL_MODULATION_TYPE_OOK',
+                'value': 4001
+            },
+            {
+                'name': 'DIGITAL_MODULATION_TYPE_PSK',
+                'value': 4002
+            },
+            {
+                'name': 'DIGITAL_MODULATION_WAVEFORM_TYPE_PRBS',
+                'value': 5000
+            },
+            {
+                'name': 'DIGITAL_MODULATION_WAVEFORM_TYPE_USER_DEFINED',
+                'value': 5001
+            },
+            {
+                'name': 'ENABLE_VALUES_DISABLE',
+                'value': 0
+            },
+            {
+                'name': 'ENABLE_VALUES_ENABLE',
+                'value': 1
+            },
+            {
+                'name': 'FREQUENCY_SETTLING_UNITS_TIME_AFTER_LOCK',
+                'value': 12000
+            },
+            {
+                'name': 'FREQUENCY_SETTLING_UNITS_TIME_AFTER_IO',
+                'value': 12001
+            },
+            {
+                'name': 'FREQUENCY_SETTLING_UNITS_PPM',
+                'value': 12002
+            },
+            {
+                'name': 'GENERATION_MODE_CW',
+                'value': 1000
+            },
+            {
+                'name': 'GENERATION_MODE_ARB_WAVEFORM',
+                'value': 1001
+            },
+            {
+                'name': 'GENERATION_MODE_SCRIPT',
+                'value': 1002
+            },
+            {
+                'name': 'IQ_OFFSET_UNITS_PERCENT',
+                'value': 11000
+            },
+            {
+                'name': 'IQ_OFFSET_UNITS_VOLTS',
+                'value': 11001
+            },
+            {
+                'name': 'IQ_OUT_PORT_TERM_CONFIG_DIFFERENTIAL',
+                'value': 15000
+            },
+            {
+                'name': 'IQ_OUT_PORT_TERM_CONFIG_SINGLE_ENDED',
+                'value': 15001
+            },
+            {
+                'name': 'LIST_STEP_TRIGGER_TYPE_NONE',
+                'value': 0
+            },
+            {
+                'name': 'LIST_STEP_TRIGGER_TYPE_DIGITAL_EDGE',
+                'value': 1
+            },
+            {
+                'name': 'LOAD_OPTIONS_SKIP_NONE',
+                'value': 0
+            },
+            {
+                'name': 'LOAD_OPTIONS_SKIP_WAVEFORMS',
+                'value': 1
+            },
+            {
+                'name': 'LOAD_OPTIONS_SKIP_SCRIPTS',
+                'value': 2
+            },
+            {
+                'name': 'LOOP_BANDWIDTH_NARROW',
+                'value': 0
+            },
+            {
+                'name': 'LOOP_BANDWIDTH_MEDIUM',
+                'value': 1
+            },
+            {
+                'name': 'LOOP_BANDWIDTH_WIDE',
+                'value': 2
+            },
+            {
+                'name': 'MARKER_EVENT_OUTPUT_BEHAVIOR_PULSE',
+                'value': 23000
+            },
+            {
+                'name': 'MARKER_EVENT_OUTPUT_BEHAVIOR_TOGGLE',
+                'value': 23001
+            },
+            {
+                'name': 'MARKER_EVENT_PULSE_WIDTH_UNITS_SECONDS',
+                'value': 22000
+            },
+            {
+                'name': 'MARKER_EVENT_PULSE_WIDTH_UNITS_SAMPLE_CLOCK_PERIODS',
+                'value': 22001
+            },
+            {
+                'name': 'MARKER_EVENT_TOGGLE_INITIAL_STATE_DIGITAL_LOW',
+                'value': 21000
+            },
+            {
+                'name': 'MARKER_EVENT_TOGGLE_INITIAL_STATE_DIGITAL_HIGH',
+                'value': 21001
+            },
+            {
+                'name': 'OUTPUT_PORT_RF_OUT',
+                'value': 14000
+            },
+            {
+                'name': 'OUTPUT_PORT_IQ_OUT',
+                'value': 14001
+            },
+            {
+                'name': 'OUTPUT_PORT_CAL_OUT',
+                'value': 14002
+            },
+            {
+                'name': 'OUTPUT_PORT_I_ONLY',
+                'value': 14003
+            },
+            {
+                'name': 'OVERFLOW_ERROR_REPORTING_WARNING',
+                'value': 1301
+            },
+            {
+                'name': 'OVERFLOW_ERROR_REPORTING_DISABLED',
+                'value': 1302
+            },
+            {
+                'name': 'PPA_SCRIPT_INHERITANCE_EXACT_MATCH',
+                'value': 0
+            },
+            {
+                'name': 'PPA_SCRIPT_INHERITANCE_MINIMUM',
+                'value': 1
+            },
+            {
+                'name': 'PPA_SCRIPT_INHERITANCE_MAXIMUM',
+                'value': 2
+            },
+            {
+                'name': 'PHASE_CONTINUITY_DISABLE',
+                'value': 0
+            },
+            {
+                'name': 'PHASE_CONTINUITY_AUTO',
+                'value': -1
+            },
+            {
+                'name': 'PHASE_CONTINUITY_ENABLE',
+                'value': 1
+            },
+            {
+                'name': 'POWER_LEVEL_TYPE_AVERAGE_POWER',
+                'value': 7000
+            },
+            {
+                'name': 'POWER_LEVEL_TYPE_PEAK_POWER',
+                'value': 7001
+            },
+            {
+                'name': 'PULSE_MODULATION_MODE_OPTIMAL_MATCH',
+                'value': 20000
+            },
+            {
+                'name': 'PULSE_MODULATION_MODE_HIGH_ISOLATION',
+                'value': 20001
+            },
+            {
+                'name': 'PULSE_MODULATION_MODE_ANALOG',
+                'value': 20002
+            },
+            {
+                'name': 'PULSE_MODULATION_MODE_DIGITAL',
+                'value': 20003
+            },
+            {
+                'name': 'RF_IN_LO_EXPORT_ENABLED_DISABLE',
+                'value': 0
+            },
+            {
+                'name': 'RF_IN_LO_EXPORT_ENABLED_UNSPECIFIED',
+                'value': -2
+            },
+            {
+                'name': 'RF_IN_LO_EXPORT_ENABLED_ENABLE',
+                'value': 1
+            },
+            {
+                'name': 'RESET_OPTIONS_SKIP_NONE',
+                'value': 0
+            },
+            {
+                'name': 'RESET_OPTIONS_SKIP_WAVEFORMS',
+                'value': 1
+            },
+            {
+                'name': 'RESET_OPTIONS_SKIP_DEEMBEDING_TABLES',
+                'value': 8
+            },
+            {
+                'name': 'RESET_OPTIONS_SKIP_SCRIPTS',
+                'value': 2
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_TYPE_NONE',
+                'value': 0
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_TYPE_DIGITAL_EDGE',
+                'value': 1
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_TYPE_DIGITAL_LEVEL',
+                'value': 8000
+            },
+            {
+                'name': 'SCRIPT_TRIGGER_TYPE_SOFTWARE',
+                'value': 2
+            },
+            {
+                'name': 'START_TRIGGER_TYPE_NONE',
+                'value': 0
+            },
+            {
+                'name': 'START_TRIGGER_TYPE_DIGITAL_EDGE',
+                'value': 1
+            },
+            {
+                'name': 'START_TRIGGER_TYPE_SOFTWARE',
+                'value': 2
+            },
+            {
+                'name': 'START_TRIGGER_TYPE_P2_P_ENDPOINT_FULLNESS',
+                'value': 3
+            },
+            {
+                'name': 'UPCONVERTER_FREQUENCY_OFFSET_MODE_AUTO',
+                'value': -1
+            },
+            {
+                'name': 'UPCONVERTER_FREQUENCY_OFFSET_MODE_ENABLE',
+                'value': 1
+            },
+            {
+                'name': 'UPCONVERTER_FREQUENCY_OFFSET_MODE_USER_DEFINED',
+                'value': 5001
+            },
+            {
+                'name': 'WRITE_WAVEFORM_BURST_DETECTION_MODE_MANUAL',
+                'value': 0
+            },
+            {
+                'name': 'WRITE_WAVEFORM_BURST_DETECTION_MODE_AUTO',
+                'value': -1
+            },
+            {
+                'name': 'YIG_MAIN_COIL_SLOW',
+                'value': 0
+            },
+            {
+                'name': 'YIG_MAIN_COIL_FAST',
+                'value': 1
+            }
+        ]
+    },
+    'NiRFSGReal64AttributeValues': {
+        'enum-value-prefix': 'NIRFSG_REAL64',
+        'generate-mappings': False,
+        'values': [
+            {
+                'name': 'REF_CLOCK_RATE_AUTO',
+                'value': -1
+            },
+            {
+                'name': 'REF_CLOCK_RATE_10_MHZ',
+                'value': 10000000
+            }
+        ]
+    },
+    'NiRFSGStringAttributeValuesMapped': {
+        'enum-value-prefix': 'NIRFSG_STRING',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_DO_NOT_EXPORT',
+                'value': ''
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PFI0',
+                'value': 'PFI0'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PFI1',
+                'value': 'PFI1'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PFI4',
+                'value': 'PFI4'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PFI5',
+                'value': 'PFI5'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PXI_TRIG0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PXI_TRIG1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PXI_TRIG2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PXI_TRIG3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PXI_TRIG4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PXI_TRIG5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PXI_TRIG6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_PXIE_DSTARC',
+                'value': 'PXIe_DStarC'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_TRIG_OUT',
+                'value': 'TrigOut'
+            },
+            {
+                'name': 'ARB_SAMPLE_CLOCK_SOURCE_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            },
+            {
+                'name': 'ARB_SAMPLE_CLOCK_SOURCE_CLK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_DO_NOT_EXPORT',
+                'value': ''
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PFI0',
+                'value': 'PFI0'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PFI1',
+                'value': 'PFI1'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PXI_TRIG0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PXI_TRIG1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PXI_TRIG2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PXI_TRIG3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PXI_TRIG4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PXI_TRIG5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PXI_TRIG6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_PXIE_DSTARC',
+                'value': 'PXIe_DStarC'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_TRIG_OUT',
+                'value': 'TrigOut'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PFI0',
+                'value': 'PFI0'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PFI1',
+                'value': 'PFI1'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PXI_TRIG0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PXI_TRIG1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PXI_TRIG2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PXI_TRIG3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PXI_TRIG4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PXI_TRIG5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PXI_TRIG6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PXI_TRIG7',
+                'value': 'PXI_Trig7'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_PXIE_DSTARB',
+                'value': 'PXIe_DStarB'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_MARKER0_EVENT',
+                'value': 'Marker0Event'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_MARKER1_EVENT',
+                'value': 'Marker1Event'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_MARKER2_EVENT',
+                'value': 'Marker2Event'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_MARKER3_EVENT',
+                'value': 'Marker3Event'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_TIMER_EVENT',
+                'value': 'TimerEvent'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_TRIG_IN',
+                'value': 'TrigIn'
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_DO_NOT_EXPORT',
+                'value': ''
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_PXI_TRIG0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_PXI_TRIG1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_PXI_TRIG2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_PXI_TRIG3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_PXI_TRIG4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_PXI_TRIG5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_PXI_TRIG6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_PXIE_DSTARC',
+                'value': 'PXIe_DStarC'
+            },
+            {
+                'name': 'CONFIG_SETTLED_EVENT_OUTPUT_TERM_TRIG_OUT',
+                'value': 'TrigOut'
+            },
+            {
+                'name': 'LO_SOURCE_ONBOARD',
+                'value': 'Onboard'
+            },
+            {
+                'name': 'LO_SOURCE_LO_IN',
+                'value': 'LO_In'
+            },
+            {
+                'name': 'LO_SOURCE_SECONDARY',
+                'value': 'Secondary'
+            },
+            {
+                'name': 'LO_SOURCE_SG_SA_SHARED',
+                'value': 'SG_SA_Shared'
+            },
+            {
+                'name': 'LO_SOURCE_AUTOMATIC_SG_SA_SHARED',
+                'value': 'Automatic_SG_SA_Shared'
+            },
+            {
+                'name': 'PXI_CHASSIS_CLK10_NONE',
+                'value': 'None'
+            },
+            {
+                'name': 'PXI_CHASSIS_CLK10_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            },
+            {
+                'name': 'PXI_CHASSIS_CLK10_REF_IN',
+                'value': 'RefIn'
+            },
+            {
+                'name': 'REF_CLOCK_OUTPUT_TERM_DO_NOT_EXPORT',
+                'value': ''
+            },
+            {
+                'name': 'REF_CLOCK_OUTPUT_TERM_REF_OUT',
+                'value': 'RefOut'
+            },
+            {
+                'name': 'REF_CLOCK_OUTPUT_TERM_REF_OUT2',
+                'value': 'RefOut2'
+            },
+            {
+                'name': 'REF_CLOCK_OUTPUT_TERM_CLK_OUT',
+                'value': 'ClkOut'
+            },
+            {
+                'name': 'REF_CLOCK_SOURCE_ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            },
+            {
+                'name': 'REF_CLOCK_SOURCE_REF_IN',
+                'value': 'RefIn'
+            },
+            {
+                'name': 'REF_CLOCK_SOURCE_PXI_CLK',
+                'value': 'PXI_CLK'
+            },
+            {
+                'name': 'REF_CLOCK_SOURCE_CLK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'REF_CLOCK_SOURCE_REF_IN_2',
+                'value': 'RefIn2'
+            },
+            {
+                'name': 'REF_CLOCK_SOURCE_PXI_CLK_MASTER',
+                'value': 'PXI_ClkMaster'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PFI0',
+                'value': 'PFI0'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PFI1',
+                'value': 'PFI1'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PFI2',
+                'value': 'PFI2'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PFI3',
+                'value': 'PFI3'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXI_TRIG0',
+                'value': 'PXI_Trig0'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXI_TRIG1',
+                'value': 'PXI_Trig1'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXI_TRIG2',
+                'value': 'PXI_Trig2'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXI_TRIG3',
+                'value': 'PXI_Trig3'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXI_TRIG4',
+                'value': 'PXI_Trig4'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXI_TRIG5',
+                'value': 'PXI_Trig5'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXI_TRIG6',
+                'value': 'PXI_Trig6'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXI_TRIG7',
+                'value': 'PXI_Trig7'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXI_STAR',
+                'value': 'PXI_STAR'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PXIE_DSTARB',
+                'value': 'PXIe_DStarB'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_SYNC_START_TRIGGER',
+                'value': 'Sync_Start'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_SYNC_SCRIPT_TRIGGER',
+                'value': 'Sync_Script'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_TRIG_IN',
+                'value': 'TrigIn'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_DIO0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_DIO1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_DIO2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_DIO3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_DIO4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_DIO5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_DIO6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'name': 'ANY_SIGNAL_OUTPUT_TERM_DIO7',
+                'value': 'DIO/PFI7'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_DIO0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_DIO1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_DIO2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_DIO3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_DIO4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_DIO5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_DIO6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_OUTPUT_TERM_DIO7',
+                'value': 'DIO/PFI7'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_DIO0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_DIO1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_DIO2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_DIO3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_DIO4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_DIO5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_DIO6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'name': 'CONFIG_LIST_TRIG_SOURCE_DIO7',
+                'value': 'DIO/PFI7'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_PULSE_IN',
+                'value': 'PulseIn'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_DIO0',
+                'value': 'DIO/PFI0'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_DIO1',
+                'value': 'DIO/PFI1'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_DIO2',
+                'value': 'DIO/PFI2'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_DIO3',
+                'value': 'DIO/PFI3'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_DIO4',
+                'value': 'DIO/PFI4'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_DIO5',
+                'value': 'DIO/PFI5'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_DIO6',
+                'value': 'DIO/PFI6'
+            },
+            {
+                'name': 'TRIGGER_SOURCE_DIO7',
+                'value': 'DIO/PFI7'
+            }
+        ]
+    },
+    'OutputPort': {
+        'codegen_method': 'public',
+        'values': [
+            {
                 'name': 'RF_OUT',
                 'value': 14000
             },
             {
-                'documentation': {
-                    'description': ' Enables the I/Q OUT port. \n'
-                },
                 'name': 'IQ_OUT',
                 'value': 14001
             },
             {
-                'documentation': {
-                    'description': ' Enables the CAL OUT port. \n'
-                },
                 'name': 'CAL_OUT',
                 'value': 14002
             },
             {
-                'documentation': {
-                    'description': ' Enables the I connectors of the I/Q OUT port. \n'
-                },
                 'name': 'I_ONLY',
                 'value': 14003
             }
         ]
     },
     'OutputSignal': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
@@ -1416,304 +1947,114 @@ enums = {
         ]
     },
     'OverflowErrorReporting': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Configures NI-RFSG to return a warning when an OSP overflow occurs.'
-                },
                 'name': 'WARNING',
                 'value': 1301
             },
             {
-                'documentation': {
-                    'description': ' Configures NI-RFSG to not return an error or a warning when an OSP overflow occurs.'
-                },
                 'name': 'DISABLED',
                 'value': 1302
             }
         ]
     },
     'PPAScriptInheritance': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Errors out if different values are detected in the script.\n'
-                },
                 'name': 'EXACT_MATCH',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' Uses the minimum value found in the script.\n'
-                },
                 'name': 'MINIMUM',
                 'value': 1
             },
             {
-                'documentation': {
-                    'description': ' Uses the maximum value found in the script.\n'
-                },
                 'name': 'MAXIMUM',
                 'value': 2
             }
         ]
     },
     'PXIChassisClk10': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
-                'documentation': {
-                    'description': ' Do not drive the PXI_CLK10 signal.\n'
-                },
                 'name': 'NONE',
                 'value': 'None'
             },
             {
-                'documentation': {
-                    'description': ' Use the highly stable oven-controlled onboard Reference Clock to drive  the PXI_CLK10 signal. This value is not valid on the PXIe-5672.\n'
-                },
                 'name': 'ONBOARD_CLOCK',
                 'value': 'OnboardClock'
             },
             {
-                'documentation': {
-                    'description': ' Use the clock present at the front panel REF IN connector to drive the  PXI_CLK10 signal.\n'
-                },
                 'name': 'REF_IN',
                 'value': 'RefIn'
             }
         ]
     },
     'PhaseContinuity': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Auto'
-                },
+                'name': 'DISABLE',
+                'value': 0
+            },
+            {
                 'name': 'AUTO',
                 'value': -1
             },
             {
-                'documentation': {
-                    'description': ' Enabled'
-                },
                 'name': 'ENABLE',
                 'value': 1
-            },
-            {
-                'documentation': {
-                    'description': ' Disabled'
-                },
-                'name': 'DISABLE',
-                'value': 0
             }
         ]
     },
     'PowerLevelType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Specifies that the power level type is average power. Average power  indicates the desired power averaged in time. The driver maximizes the  dynamic range by scaling the IQ waveform. If you write more than one  waveform, NI-RFSG scales each waveform without preserving the power level  ratio between the waveforms. This value is not valid for the PXIe-5820. \n'
-                },
                 'name': 'AVERAGE_POWER',
                 'value': 7000
             },
             {
-                'documentation': {
-                    'description': ' Specifies that the power level type is peak power. Peak power indicates  the maximum power level of the RF signal averaged over one period of the  RF carrier signal frequency (the peak envelope power). This setting  requires that the magnitude of the IQ waveform must always be less than  or equal to one. When using the peak power level type, the power level of  the RF signal matches the specified power level at moments when the  magnitude of the IQ waveform equals one. If you write more than one  waveform, the relative scaling between waveforms is preserved.\n'
-                },
                 'name': 'PEAK_POWER',
                 'value': 7001
             }
         ]
     },
     'PulseModulationMode': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Provides for a more optimal power output match for the device during the off cycle of the pulse mode operation.  \n'
-                },
                 'name': 'OPTIMAL_MATCH',
                 'value': 20000
             },
             {
-                'documentation': {
-                    'description': ' Allows for the best on/off power ratio of the pulsed signal. \n'
-                },
                 'name': 'HIGH_ISOLATION',
                 'value': 20001
+            },
+            {
+                'name': 'ANALOG',
+                'value': 20002
+            },
+            {
+                'name': 'DIGITAL',
+                'value': 20003
             }
         ]
     },
-    'RefClockOutputTerm': {
-        'generate-mappings': True,
+    'RFInLoExportEnabled': {
+        'codegen_method': 'public',
         'values': [
-            {
-                'documentation': {
-                    'description': ' Do not export the Reference Clock.\n'
-                },
-                'name': 'DO_NOT_EXPORT',
-                'value': ''
-            },
-            {
-                'documentation': {
-                    'description': ' Export the Reference Clock signal to the REF OUT connector of the device.\n'
-                },
-                'name': 'REF_OUT',
-                'value': 'RefOut'
-            },
-            {
-                'documentation': {
-                    'description': ' Export the Reference Clock signal to the REF OUT2 connector of the device, if applicable.\n'
-                },
-                'name': 'REF_OUT2',
-                'value': 'RefOut2'
-            },
-            {
-                'documentation': {
-                    'description': ' Export the Reference Clock signal to the CLK OUT connector of the device.\n'
-                },
-                'name': 'CLK_OUT',
-                'value': 'ClkOut'
-            }
-        ]
-    },
-    'RefClockRate': {
-        'values': [
-            {
-                'name': '10_MHZ',
-                'value': 10000000
-            },
-            {
-                'name': 'AUTO',
-                'value': -1
-            }
-        ]
-    },
-    'RefClockSource': {
-        'generate-mappings': True,
-        'values': [
-            {
-                'documentation': {
-                    'description': ' Uses the onboard Reference Clock as the clock source.\n PXIe-5830/5831—For the PXIe-5830, connect the PXIe-5820 REF IN connector to the PXIe-3621 REF OUT connector.  For the PXIe-5831, connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector. \n PXIe-5831 with PXIe-5653—Connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector.  Connect the PXIe-5653 REF OUT (10 MHz) connector to the PXIe-3622 REF IN connector. \n PXIe-5840 with PXIe-5653—Lock to the PXIe-5653 onboard clock. Connect the REF OUT (10 MHz)  connector on the PXIe-5653 to the PXIe-5840 REF IN connector. Configure open NI-RFSA  sessions to the device to use NIRFSA_VAL_REF_IN_STR for the PXIe-5840 or  NIRFSA_VAL_REF_IN_2_STR for the PXIe-5840 with PXIe-5653. \n PXIe-5841 with PXIe-5655—Lock to the PXIe-5655 onboard clock. Connect the REF OUT  connector on the PXIe-5655 to the PXIe-5841 REF IN connector. \n'
-                },
-                'name': 'ONBOARD_CLOCK',
-                'value': 'OnboardClock'
-            },
-            {
-                'documentation': {
-                    'description': ' Use the clock signal present at the front panel RefIn connector as the  clock source.\n PXIe-5830/5831—For the PXIe-5830, connect the PXIe-5820 REF IN connector to the PXIe-3621 REF OUT connector.  For the PXIe-5831, connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector. For the PXIe-5830,  lock the external signal to the PXIe-3621 REF IN connector. For the PXIe-5831, lock the external  signal to the PXIe-3622 REF IN connector. \n PXIe-5831 with PXIe-5653—Connect the PXIe-5820 REF IN connector to the PXIe-3622 REF OUT connector.  Connect the PXIe-5653 REF OUT (10 MHz) connector to the PXIe-3622 REF IN connector. Lock the external signal to the PXIe-5653 REF IN connector.  PXIe-5840 with PXIe-5653—Lock to the PXIe-5653 onboard clock.  Connect the REF OUT (10 MHz) connector on the PXIe-5653 to the PXIe-5840 REF IN connector. \n PXIe-5841 with PXIe-5655—Lock to the signal at the REF IN connector on the associated PXIe-5655.  Connect the PXIe-5655 REF OUT connector to the PXIe-5841 REF IN connector. \n'
-                },
-                'name': 'REF_IN',
-                'value': 'RefIn'
-            },
-            {
-                'documentation': {
-                    'description': ' Use the PXI_CLK signal, which is present on the PXI backplane, as the  clock source.\n'
-                },
-                'name': 'PXI_CLK',
-                'value': 'PXI_CLK'
-            },
-            {
-                'documentation': {
-                    'description': ' Use the clock signal present at the front panel ClkIn connector as the  clock source. This value is not valid for the PXIe-5644/5645/5646 or  PXIe-5820/5830/5831/5831 with PXIe-5653/5840/5840 with PXIe-5653/5841/5841 with PXIe-5655. \n'
-                },
-                'name': 'CLK_IN',
-                'value': 'ClkIn'
-            },
-            {
-                'documentation': {
-                    'description': ' This value is valid on only the PXIe-5840 with PXIe-5653. NI-RFSG locks the  Reference Clock to the clock sourced at the PXIe-5840 REF IN terminal that is already  configured by an NI-RFSA session. Connect the PXIe-5840 REF OUT connector to the PXIe-5653  REF IN connector. Configure open NI-RFSA sessions to the device to use NIRFSA_VAL_REF_IN_STR  for the PXIe-5840 or NIRFSA_VAL_ONBOARD_CLOCK_STR for the PXIe-5840 with PXIe-5653. \n'
-                },
-                'name': 'REF_IN_2',
-                'value': 'RefIn2'
-            },
-            {
-                'documentation': {
-                    'description': ' This value is valid on only the PXIe-5831 with PXIe-5653 and the PXIe-5840 with PXIe-5653.  PXIe-5831 with PXIe-5653—NI-RFSG configures the PXIe-5653 to export the Reference clock and  configures the PXIe-5820 and PXIe-3622 to use NIRFSG_VAL_PXI_CLK_STR as the Reference Clock source.  Connect the PXIe-5653 REF OUT (10 MHz) connector to the PXI chassis REF IN connector. \n PXIe-5840 with PXIe-5653—NI-RFSG configures the  PXIe-5653 to export the Reference Clock, and configures the PXIe-5840 to use  NIRFSG_VAL_PXI_CLK_STR. Connect the PXIe-5653 REF OUT (10 MHz) connector to the  PXI chassis REF IN connector. For best performance, configure all other devices  in the system to use NIRFSG_VAL_PXI_CLK_STR as the Reference Clock source. \n'
-                },
-                'name': 'PXI_CLK_MASTER',
-                'value': 'PXI_ClkMaster'
-            }
-        ]
-    },
-    'RelativeTo': {
-        'values': [
-            {
-                'name': 'START_OF_WAVEFORM',
-                'value': 8000
-            },
-            {
-                'name': 'CURRENT_POSITION',
-                'value': 8001
-            }
-        ]
-    },
-    'ResetOptions': {
-        'values': [
-            {
-                'documentation': {
-                    'description': ' NI-RFSG resets all the configurations.'
-                },
-                'name': 'SKIP_NONE',
-                'value': 0
-            },
-            {
-                'documentation': {
-                    'description': ' NI-RFSG skips resetting the waveform configurations.'
-                },
-                'name': 'SKIP_WAVEFORMS',
-                'value': 1
-            },
-            {
-                'documentation': {
-                    'description': ' NI-RFSG skips resetting the scripts.'
-                },
-                'name': 'SKIP_SCRIPTS',
-                'value': 2
-            },
-            {
-                'documentation': {
-                    'description': ' NI-RFSG skips resetting the de-embeding tables.'
-                },
-                'name': 'SKIP_DEEMBEDING_TABLES',
-                'value': 8
-            }
-        ]
-    },
-    'ResetWithOptionsStepsToOmit': {
-        'values': [
-            {
-                'name': 'NONE',
-                'value': 0
-            },
-            {
-                'name': 'WAVEFORMS',
-                'value': 1
-            },
-            {
-                'name': 'SCRIPTS',
-                'value': 2
-            },
-            {
-                'name': 'ROUTES',
-                'value': 4
-            },
-            {
-                'name': 'DEEMBEDDING_TABLES',
-                'value': 8
-            }
-        ]
-    },
-    'RfInLoExportEnabled': {
-        'values': [
-            {
-                'name': 'UNSPECIFIED',
-                'value': -2
-            },
             {
                 'name': 'DISABLE',
                 'value': 0
+            },
+            {
+                'name': 'UNSPECIFIED',
+                'value': -2
             },
             {
                 'name': 'ENABLE',
@@ -1721,19 +2062,140 @@ enums = {
             }
         ]
     },
-    'RoutedSignal': {
+    'RefClockOutputTerm': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
         'values': [
             {
-                'name': 'CONFIGURATION_LIST_STEP_TRIGGER',
-                'value': 6
+                'name': 'DO_NOT_EXPORT',
+                'value': ''
             },
             {
-                'name': 'CONFIGURATION_SETTLED_EVENT',
-                'value': 7
+                'name': 'REF_OUT',
+                'value': 'RefOut'
             },
             {
-                'name': 'DONE_EVENT',
-                'value': 5
+                'name': 'REF_OUT2',
+                'value': 'RefOut2'
+            },
+            {
+                'name': 'CLK_OUT',
+                'value': 'ClkOut'
+            }
+        ]
+    },
+    'RefClockRate': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'AUTO',
+                'value': -1
+            },
+            {
+                'name': '10_MHZ',
+                'value': 10000000
+            }
+        ]
+    },
+    'RefClockSource': {
+        'codegen_method': 'public',
+        'generate-mappings': True,
+        'values': [
+            {
+                'name': 'ONBOARD_CLOCK',
+                'value': 'OnboardClock'
+            },
+            {
+                'name': 'REF_IN',
+                'value': 'RefIn'
+            },
+            {
+                'name': 'PXI_CLK',
+                'value': 'PXI_CLK'
+            },
+            {
+                'name': 'CLK_IN',
+                'value': 'ClkIn'
+            },
+            {
+                'name': 'REF_IN_2',
+                'value': 'RefIn2'
+            },
+            {
+                'name': 'PXI_CLK_MASTER',
+                'value': 'PXI_ClkMaster'
+            }
+        ]
+    },
+    'RelativeTo': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'CURRENT_POSITION',
+                'value': 8001
+            },
+            {
+                'name': 'START_OF_WAVEFORM',
+                'value': 8000
+            }
+        ]
+    },
+    'ResetOptions': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'SKIP_NONE',
+                'value': 0
+            },
+            {
+                'name': 'SKIP_WAVEFORMS',
+                'value': 1
+            },
+            {
+                'name': 'SKIP_DEEMBEDING_TABLES',
+                'value': 8
+            },
+            {
+                'name': 'SKIP_SCRIPTS',
+                'value': 2
+            }
+        ]
+    },
+    'ResetWithOptionsStepsToOmit': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'NONE',
+                'value': 0
+            },
+            {
+                'name': 'DEEMBEDDING_TABLES',
+                'value': 8
+            },
+            {
+                'name': 'ROUTES',
+                'value': 4
+            },
+            {
+                'name': 'SCRIPTS',
+                'value': 2
+            },
+            {
+                'name': 'WAVEFORMS',
+                'value': 1
+            }
+        ]
+    },
+    'RoutedSignal': {
+        'codegen_method': 'public',
+        'values': [
+            {
+                'name': 'START_TRIGGER',
+                'value': 0
+            },
+            {
+                'name': 'SCRIPT_TRIGGER',
+                'value': 1
             },
             {
                 'name': 'MARKER_EVENT',
@@ -1744,20 +2206,25 @@ enums = {
                 'value': 3
             },
             {
-                'name': 'SCRIPT_TRIGGER',
-                'value': 1
-            },
-            {
                 'name': 'STARTED_EVENT',
                 'value': 4
             },
             {
-                'name': 'START_TRIGGER',
-                'value': 0
+                'name': 'DONE_EVENT',
+                'value': 5
+            },
+            {
+                'name': 'CONFIGURATION_LIST_STEP_TRIGGER',
+                'value': 6
+            },
+            {
+                'name': 'CONFIGURATION_SETTLED_EVENT',
+                'value': 7
             }
         ]
     },
     'SParameterOrientation': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'PORT1_TOWARDS_DUT',
@@ -1770,42 +2237,36 @@ enums = {
         ]
     },
     'ScriptTriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Setting trigger attributes to this value specifies that no trigger is   configured. Signal generation starts immediately. \n'
-                },
                 'name': 'NONE',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' The data operation does not start until a digital edge is detected. The  source of the digital edge is specified in the  NIRFSG_ATTR_DIGITAL_EDGE_SCRIPT_TRIGGER_SOURCE attribute, and the active edge is  specified in the NIRFSG_ATTR_DIGITAL_EDGE_SCRIPT_TRIGGER_EDGE attribute. \n'
-                },
                 'name': 'DIGITAL_EDGE',
                 'value': 1
             },
             {
-                'documentation': {
-                    'description': ' The data operation does not start until a digital level is detected. The  source of the digital level is specified in the  NIRFSG_ATTR_DIGITAL_LEVEL_SCRIPT_TRIGGER_SOURCE attribute, and the active level is  specified in the NIRFSG_ATTR_DIGITAL_LEVEL_SCRIPT_TRIGGER_ACTIVE_LEVEL attribute. \n'
-                },
                 'name': 'DIGITAL_LEVEL',
                 'value': 8000
             },
             {
-                'documentation': {
-                    'description': ' The data operation does not start until a software event occurs. You may  create a software event by calling the niRFSG_SendSoftwareEdgeTrigger function. \n'
-                },
                 'name': 'SOFTWARE',
                 'value': 2
             }
         ]
     },
     'SelfCalibrateRangeStepsToOmit': {
+        'codegen_method': 'public',
         'values': [
             {
                 'name': 'OMIT_NONE',
                 'value': 0
+            },
+            {
+                'name': 'IMAGE_SUPPRESSION',
+                'value': 8
             },
             {
                 'name': 'LO_SELF_CAL',
@@ -1820,16 +2281,13 @@ enums = {
                 'value': 4
             },
             {
-                'name': 'IMAGE_SUPPRESSION',
-                'value': 8
-            },
-            {
                 'name': 'SYNTHESIZER_ALIGNMENT',
                 'value': 16
             }
         ]
     },
     'SignalIdentifier': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
@@ -1871,289 +2329,183 @@ enums = {
         ]
     },
     'StartTriggerType': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Setting trigger attributes to this value specifies that no trigger is  configured. \n'
-                },
                 'name': 'NONE',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' The data operation does not start until a digital edge is detected. The  source of the digital edge is specified in the  NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_SOURCE attribute, and the active  edge is specified in the NIRFSG_ATTR_DIGITAL_EDGE_START_TRIGGER_EDGE  attribute. \n'
-                },
                 'name': 'DIGITAL_EDGE',
                 'value': 1
             },
             {
-                'documentation': {
-                    'description': ' The data operation does not start until a software event occurs. You may  create a software event by calling the niRFSG_SendSoftwareEdgeTrigger function. \n'
-                },
                 'name': 'SOFTWARE',
                 'value': 2
             },
             {
-                'documentation': {
-                    'description': ' Data operation does not start until the endpoint reaches a threshold  specified in the NIRFSG_ATTR_P2P_ENDPOINT_FULLNESS_START_TRIGGER_LEVEL  attribute. \n'
-                },
                 'name': 'P2_P_ENDPOINT_FULLNESS',
                 'value': 3
             }
         ]
     },
     'TriggerSource': {
+        'codegen_method': 'public',
         'generate-mappings': True,
         'values': [
             {
-                'documentation': {
-                    'description': ' PFI 0 on the front panel SMB connector.\n'
-                },
                 'name': 'PFI0',
                 'value': 'PFI0'
             },
             {
-                'documentation': {
-                    'description': ' PFI 1 on the front panel SMB connector.\n'
-                },
                 'name': 'PFI1',
                 'value': 'PFI1'
             },
             {
-                'documentation': {
-                    'description': ' PFI 2 on the front panel DDC connector.\n'
-                },
                 'name': 'PFI2',
                 'value': 'PFI2'
             },
             {
-                'documentation': {
-                    'description': ' PFI 3 on the front panel DDC connector.\n'
-                },
                 'name': 'PFI3',
                 'value': 'PFI3'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 0.\n'
-                },
                 'name': 'PXI_TRIG0',
                 'value': 'PXI_Trig0'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 1.\n'
-                },
                 'name': 'PXI_TRIG1',
                 'value': 'PXI_Trig1'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 2.\n'
-                },
                 'name': 'PXI_TRIG2',
                 'value': 'PXI_Trig2'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 3.\n'
-                },
                 'name': 'PXI_TRIG3',
                 'value': 'PXI_Trig3'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 4.\n'
-                },
                 'name': 'PXI_TRIG4',
                 'value': 'PXI_Trig4'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 5.\n'
-                },
                 'name': 'PXI_TRIG5',
                 'value': 'PXI_Trig5'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 6.\n'
-                },
                 'name': 'PXI_TRIG6',
                 'value': 'PXI_Trig6'
             },
             {
-                'documentation': {
-                    'description': ' PXI trigger line 7.\n'
-                },
                 'name': 'PXI_TRIG7',
                 'value': 'PXI_Trig7'
             },
             {
-                'documentation': {
-                    'description': ' PXI Star trigger line. This value is not valid on the PXIe-5644/5645/5646.\n'
-                },
                 'name': 'PXI_STAR',
                 'value': 'PXI_STAR'
             },
             {
-                'documentation': {
-                    'description': ' PXIe DStar B trigger line. This value is valid on only the PXIe-5820/5830/5831/5840/5841/5842/5860. \n'
-                },
                 'name': 'PXIE_DSTARB',
                 'value': 'PXIe_DStarB'
             },
             {
-                'documentation': {
-                    'description': ' Sync Start trigger line.'
-                },
                 'name': 'SYNC_START_TRIGGER',
                 'value': 'Sync_Start'
             },
             {
-                'documentation': {
-                    'description': ' Sync script trigger line.'
-                },
                 'name': 'SYNC_SCRIPT_TRIGGER',
                 'value': 'Sync_Script'
             },
             {
-                'documentation': {
-                    'description': ' TRIG IN/OUT terminal.\n'
-                },
                 'name': 'TRIG_IN',
                 'value': 'TrigIn'
             },
             {
-                'documentation': {
-                    'description': ' PULSE IN terminal.\n'
-                },
+                'mapped_enum_append_index': 25,
                 'name': 'PULSE_IN',
-                'value': 'PulseIn',
-                'order': 25
+                'value': 'PulseIn'
             },
             {
-                'documentation': {
-                    'description': ' PFI 0 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 26,
                 'name': 'DIO0',
-                'value': 'DIO/PFI0',
-                'order': 26
+                'value': 'DIO/PFI0'
             },
             {
-                'documentation': {
-                    'description': ' PFI 1 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 27,
                 'name': 'DIO1',
-                'value': 'DIO/PFI1',
-                'order': 27
+                'value': 'DIO/PFI1'
             },
             {
-                'documentation': {
-                    'description': ' PFI 2 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 28,
                 'name': 'DIO2',
-                'value': 'DIO/PFI2',
-                'order': 28
+                'value': 'DIO/PFI2'
             },
             {
-                'documentation': {
-                    'description': ' PFI 3 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 29,
                 'name': 'DIO3',
-                'value': 'DIO/PFI3',
-                'order': 29
+                'value': 'DIO/PFI3'
             },
             {
-                'documentation': {
-                    'description': ' PFI 4 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 30,
                 'name': 'DIO4',
-                'value': 'DIO/PFI4',
-                'order': 30
+                'value': 'DIO/PFI4'
             },
             {
-                'documentation': {
-                    'description': ' PFI 5 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 31,
                 'name': 'DIO5',
-                'value': 'DIO/PFI5',
-                'order': 31
+                'value': 'DIO/PFI5'
             },
             {
-                'documentation': {
-                    'description': ' PFI 6 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 32,
                 'name': 'DIO6',
-                'value': 'DIO/PFI6',
-                'order': 32
+                'value': 'DIO/PFI6'
             },
             {
-                'documentation': {
-                    'description': ' PFI 7 on the front panel DIO connector.\n'
-                },
+                'mapped_enum_append_index': 33,
                 'name': 'DIO7',
-                'value': 'DIO/PFI7',
-                'order': 33
+                'value': 'DIO/PFI7'
             }
         ]
     },
     'UpconverterFrequencyOffsetMode': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' NI-RFSG places the upconverter center frequency outside of the signal bandwidth if the  NIRFSG_ATTR_SIGNAL_BANDWIDTH attribute has been set and can be avoided. '
-                },
                 'name': 'AUTO',
                 'value': -1
             },
             {
-                'documentation': {
-                    'description': ' NI-RFSG places the upconverter center frequency outside of the signal bandwidth if the NIRFSG_ATTR_SIGNAL_BANDWIDTH attribute  has been set and can be avoided. NI-RFSG returns an error if unable to avoid the specified signal bandwidth,  or if the NIRFSG_ATTR_SIGNAL_BANDWIDTH attribute has not been set. '
-                },
                 'name': 'ENABLE',
                 'value': 1
             },
             {
-                'documentation': {
-                    'description': ' NI-RFSG uses the offset that you specified with the NIRFSG_ATTR_UPCONVERTER_FREQUENCY_OFFSET  or NIRFSG_ATTR_UPCONVERTER_CENTER_FREQUENCY attributes. '
-                },
                 'name': 'USER_DEFINED',
                 'value': 5001
             }
         ]
     },
     'WriteWaveformBurstDetectionMode': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' NI-RFSG automatically detects the burst start and burst stop locations by analyzing the waveform.'
-                },
-                'name': 'AUTO',
-                'value': -1
-            },
-            {
-                'documentation': {
-                    'description': ' User sets the burst detection parameters.'
-                },
                 'name': 'MANUAL',
                 'value': 0
+            },
+            {
+                'name': 'AUTO',
+                'value': -1
             }
         ]
     },
-    'YigMainCoil': {
+    'YIGMainCoil': {
+        'codegen_method': 'public',
         'values': [
             {
-                'documentation': {
-                    'description': ' Adjusts the YIG main coil for an underdampened response. \n'
-                },
                 'name': 'SLOW',
                 'value': 0
             },
             {
-                'documentation': {
-                    'description': ' Adjusts the YIG main coil for an overdampened response. \n'
-                },
                 'name': 'FAST',
                 'value': 1
             }

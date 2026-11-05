@@ -11,8 +11,6 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include "custom/nirfsa_aliases.h"
-#include "custom/ivi_errors.h"
 #include <server/converters.h>
 
 namespace nirfsa_grpc {
@@ -529,7 +527,7 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto source = "0";
+      auto source = "";
       ViReal64 level = request->level();
       ViInt32 slope;
       switch (request->slope_enum_case()) {
@@ -963,7 +961,7 @@ namespace nirfsa_grpc {
       auto frequencies = const_cast<ViReal64*>(request->frequencies().data());
       auto frequencies_size_raw = request->frequencies().size();
       ViInt32 frequencies_size = nidevice_grpc::converters::convert_size<ViInt32>(frequencies_size_raw, "frequencies_size");
-      auto sparameter_table = convert_from_grpc<NIComplexNumber_struct>(request->sparameter_table());
+      auto sparameter_table = convert_from_grpc<NIComplexNumber>(request->sparameter_table());
       auto sparameter_table_size_raw = request->sparameter_table().size();
       ViInt32 sparameter_table_size = nidevice_grpc::converters::convert_size<ViInt32>(sparameter_table_size_raw, "sparameter_table_size");
       ViInt32 number_of_ports = request->number_of_ports();
@@ -1281,7 +1279,7 @@ namespace nirfsa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViStatus status_code = request->status_code();
-      std::string error_message(1024 - 1, '\0');
+      std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, status_code, (ViChar*)error_message.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1309,7 +1307,7 @@ namespace nirfsa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 error_code {};
-      std::string error_message(1024 - 1, '\0');
+      std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1405,8 +1403,8 @@ namespace nirfsa_grpc {
       ViInt64 number_of_records = request->number_of_records();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      std::vector<NIComplexNumberF32_struct> data(number_of_samples * number_of_records, NIComplexNumberF32_struct());
-      std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
+      std::vector<NIComplexNumberF32> data(number_of_samples, NIComplexNumberF32());
+      std::vector<niRFSA_wfmInfo> wfm_info(number_of_records, niRFSA_wfmInfo());
       auto status = library_->FetchIQMultiRecordComplexF32(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1437,8 +1435,8 @@ namespace nirfsa_grpc {
       ViInt64 number_of_records = request->number_of_records();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      std::vector<NIComplexNumber_struct> data(number_of_samples * number_of_records, NIComplexNumber_struct());
-      std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
+      std::vector<NIComplexNumber> data(number_of_samples, NIComplexNumber());
+      std::vector<niRFSA_wfmInfo> wfm_info(number_of_records, niRFSA_wfmInfo());
       auto status = library_->FetchIQMultiRecordComplexF64(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1469,8 +1467,8 @@ namespace nirfsa_grpc {
       ViInt64 number_of_records = request->number_of_records();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      std::vector<NIComplexI16_struct> data(number_of_samples * number_of_records, NIComplexI16_struct());
-      std::vector<niRFSA_wfmInfo_struct> wfm_info(number_of_records, niRFSA_wfmInfo_struct());
+      std::vector<NIComplexI16> data(number_of_samples, NIComplexI16());
+      std::vector<niRFSA_wfmInfo> wfm_info(number_of_records, niRFSA_wfmInfo());
       auto status = library_->FetchIQMultiRecordComplexI16(vi, channel_list, starting_record, number_of_records, number_of_samples, timeout, data.data(), wfm_info.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1500,8 +1498,8 @@ namespace nirfsa_grpc {
       ViInt64 record_number = request->record_number();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      std::vector<NIComplexNumberF32_struct> data(number_of_samples, NIComplexNumberF32_struct());
-      niRFSA_wfmInfo_struct wfm_info {};
+      std::vector<NIComplexNumberF32> data(number_of_samples, NIComplexNumberF32());
+      niRFSA_wfmInfo wfm_info {};
       auto status = library_->FetchIQSingleRecordComplexF32(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1531,8 +1529,8 @@ namespace nirfsa_grpc {
       ViInt64 record_number = request->record_number();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      std::vector<NIComplexNumber_struct> data(number_of_samples, NIComplexNumber_struct());
-      niRFSA_wfmInfo_struct wfm_info {};
+      std::vector<NIComplexNumber> data(number_of_samples, NIComplexNumber());
+      niRFSA_wfmInfo wfm_info {};
       auto status = library_->FetchIQSingleRecordComplexF64(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1562,8 +1560,8 @@ namespace nirfsa_grpc {
       ViInt64 record_number = request->record_number();
       ViInt64 number_of_samples = request->number_of_samples();
       ViReal64 timeout = request->timeout();
-      std::vector<NIComplexI16_struct> data(number_of_samples, NIComplexI16_struct());
-      niRFSA_wfmInfo_struct wfm_info {};
+      std::vector<NIComplexI16> data(number_of_samples, NIComplexI16());
+      niRFSA_wfmInfo wfm_info {};
       auto status = library_->FetchIQSingleRecordComplexI16(vi, channel_list, record_number, number_of_samples, timeout, data.data(), &wfm_info);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1770,7 +1768,7 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      std::string info(2048 - 1, '\0');
+      std::string info(22 - 1, '\0');
       auto status = library_->GetCalUserDefinedInfo(vi, (ViChar*)info.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1828,7 +1826,7 @@ namespace nirfsa_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
-        std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
+        std::vector<NIComplexNumber> sparameters(number_of_sparameters, NIComplexNumber());
         auto sparameters_array_size = number_of_sparameters;
         status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
@@ -2135,7 +2133,7 @@ namespace nirfsa_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
-        std::vector<niRFSA_coefficientInfo_struct> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo_struct());
+        std::vector<niRFSA_coefficientInfo> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo());
         auto array_size = number_of_coefficient_sets;
         status = library_->GetNormalizationCoefficients(vi, channel_list, array_size, coefficient_info.data(), &number_of_coefficient_sets);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
@@ -2210,7 +2208,7 @@ namespace nirfsa_grpc {
         }
         std::string name;
         if (buffer_size > 0) {
-            name.resize(buffer_size /* Workaround: strlen-bug */);
+            name.resize(buffer_size - 1);
         }
         status = library_->GetRelayName(vi, channel_list, index, (ViChar*)name.data(), &buffer_size);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
@@ -2291,7 +2289,7 @@ namespace nirfsa_grpc {
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
-        std::vector<niRFSA_coefficientInfo_struct> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo_struct());
+        std::vector<niRFSA_coefficientInfo> coefficient_info(number_of_coefficient_sets, niRFSA_coefficientInfo());
         auto array_size = number_of_coefficient_sets;
         status = library_->GetScalingCoefficients(vi, channel_list, array_size, coefficient_info.data(), &number_of_coefficient_sets);
         if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
@@ -2387,7 +2385,7 @@ namespace nirfsa_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      SmtSpectrumInfo_struct spectrum_info {};
+      SmtSpectrumInfo spectrum_info {};
       auto status = library_->GetSpectralInfoForSMT(vi, &spectrum_info);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2746,8 +2744,8 @@ namespace nirfsa_grpc {
       auto channel_list = channel_list_mbcs.c_str();
       ViReal64 timeout = request->timeout();
       ViInt64 data_array_size = request->data_array_size();
-      std::vector<NIComplexNumber_struct> data(data_array_size, NIComplexNumber_struct());
-      niRFSA_wfmInfo_struct wfm_info {};
+      std::vector<NIComplexNumber> data(data_array_size, NIComplexNumber());
+      niRFSA_wfmInfo wfm_info {};
       auto status = library_->ReadIQSingleRecordComplexF64(vi, channel_list, timeout, data.data(), data_array_size, &wfm_info);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2778,7 +2776,7 @@ namespace nirfsa_grpc {
       ViInt32 data_array_size = request->data_array_size();
       response->mutable_power_spectrum_data()->Resize(data_array_size, 0);
       ViReal32* power_spectrum_data = response->mutable_power_spectrum_data()->mutable_data();
-      niRFSA_spectrumInfo_struct spectrum_info {};
+      niRFSA_spectrumInfo spectrum_info {};
       auto status = library_->ReadPowerSpectrumF32(vi, channel_list, timeout, power_spectrum_data, data_array_size, &spectrum_info);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -2808,7 +2806,7 @@ namespace nirfsa_grpc {
       ViInt32 data_array_size = request->data_array_size();
       response->mutable_power_spectrum_data()->Resize(data_array_size, 0);
       ViReal64* power_spectrum_data = response->mutable_power_spectrum_data()->mutable_data();
-      niRFSA_spectrumInfo_struct spectrum_info {};
+      niRFSA_spectrumInfo spectrum_info {};
       auto status = library_->ReadPowerSpectrumF64(vi, channel_list, timeout, power_spectrum_data, data_array_size, &spectrum_info);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3122,7 +3120,7 @@ namespace nirfsa_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt16 test_result {};
-      std::string test_message(2048 - 1, '\0');
+      std::string test_message(256 - 1, '\0');
       auto status = library_->SelfTest(vi, &test_result, (ViChar*)test_message.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3436,7 +3434,14 @@ namespace nirfsa_grpc {
 namespace nidevice_grpc {
 namespace converters {
 template <>
-void convert_to_grpc(const niRFSA_wfmInfo_struct& input, nirfsa_grpc::WaveformInfo* output) 
+void convert_to_grpc(const niRFSA_coefficientInfo& input, nirfsa_grpc::CoefficientInfo* output) 
+{
+  output->set_offset(input.offset);
+  output->set_gain(input.gain);
+}
+
+template <>
+void convert_to_grpc(const niRFSA_wfmInfo& input, nirfsa_grpc::WaveformInfo* output) 
 {
   output->set_absolute_initial_x(input.absoluteInitialX);
   output->set_relative_initial_x(input.relativeInitialX);
@@ -3447,14 +3452,7 @@ void convert_to_grpc(const niRFSA_wfmInfo_struct& input, nirfsa_grpc::WaveformIn
 }
 
 template <>
-void convert_to_grpc(const niRFSA_coefficientInfo_struct& input, nirfsa_grpc::CoefficientInfo* output) 
-{
-  output->set_offset(input.offset);
-  output->set_gain(input.gain);
-}
-
-template <>
-void convert_to_grpc(const niRFSA_spectrumInfo_struct& input, nirfsa_grpc::SpectrumInfo* output) 
+void convert_to_grpc(const niRFSA_spectrumInfo& input, nirfsa_grpc::SpectrumInfo* output) 
 {
   output->set_initial_frequency(input.initialFrequency);
   output->set_frequency_increment(input.frequencyIncrement);

@@ -48,9 +48,9 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus ConfigureSoftwareEdgeStartTrigger(ViSession vi) override;
   ViStatus ConfigureSpectrumFrequencyCenterSpan(ViSession vi, ViConstString channelList, ViReal64 centerFrequency, ViReal64 span) override;
   ViStatus ConfigureSpectrumFrequencyStartStop(ViSession vi, ViConstString channelList, ViReal64 startFrequency, ViReal64 stopFrequency) override;
-  ViStatus CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIds[], ViBoolean setAsActiveList) override;
+  ViStatus CreateConfigurationList(ViSession vi, ViConstString listName, ViInt32 numberOfListAttributes, ViAttr listAttributeIDs[], ViBoolean setAsActiveList) override;
   ViStatus CreateConfigurationListStep(ViSession vi, ViBoolean setAsActiveStep) override;
-  ViStatus CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber_struct sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation) override;
+  ViStatus CreateDeembeddingSparameterTableArray(ViSession vi, ViConstString port, ViConstString tableName, ViReal64 frequencies[], ViInt32 frequenciesSize, NIComplexNumber sparameterTable[], ViInt32 sparameterTableSize, ViInt32 numberOfPorts, ViInt32 sparameterOrientation) override;
   ViStatus CreateDeembeddingSparameterTableS2PFile(ViSession vi, ViConstString port, ViConstString tableName, ViConstString s2pFilePath, ViInt32 sparameterOrientation) override;
   ViStatus DeleteAllDeembeddingTables(ViSession vi) override;
   ViStatus DeleteConfigurationList(ViSession vi, ViConstString listName) override;
@@ -62,53 +62,52 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus DisableStartTrigger(ViSession vi) override;
   ViStatus EnableCalibrationPlane(ViSession vi, ViConstString channelName) override;
   ViStatus EnableSessionAccess(ViSession vi, ViBoolean enable) override;
-  ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[1024]) override;
-  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[1024]) override;
+  ViStatus ErrorMessage(ViSession vi, ViStatus statusCode, ViChar errorMessage[256]) override;
+  ViStatus ErrorQuery(ViSession vi, ViInt32* errorCode, ViChar errorMessage[256]) override;
   ViStatus ExportSignal(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViConstString outputTerminal) override;
-  ViStatus FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct wfmInfo[]) override;
-  ViStatus FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct wfmInfo[]) override;
-  ViStatus FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct wfmInfo[]) override;
-  ViStatus FetchIQSingleRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32_struct data[], niRFSA_wfmInfo_struct* wfmInfo) override;
-  ViStatus FetchIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber_struct data[], niRFSA_wfmInfo_struct* wfmInfo) override;
-  ViStatus FetchIQSingleRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16_struct data[], niRFSA_wfmInfo_struct* wfmInfo) override;
+  ViStatus FetchIQMultiRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32 data[], niRFSA_wfmInfo wfmInfo[]) override;
+  ViStatus FetchIQMultiRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber data[], niRFSA_wfmInfo wfmInfo[]) override;
+  ViStatus FetchIQMultiRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 startingRecord, ViInt64 numberOfRecords, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16 data[], niRFSA_wfmInfo wfmInfo[]) override;
+  ViStatus FetchIQSingleRecordComplexF32(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumberF32 data[], niRFSA_wfmInfo* wfmInfo) override;
+  ViStatus FetchIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexNumber data[], niRFSA_wfmInfo* wfmInfo) override;
+  ViStatus FetchIQSingleRecordComplexI16(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64 numberOfSamples, ViReal64 timeout, NIComplexI16 data[], niRFSA_wfmInfo* wfmInfo) override;
   ViStatus GetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean* value) override;
   ViStatus GetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32* value) override;
   ViStatus GetAttributeViInt64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt64* value) override;
   ViStatus GetAttributeViReal64(ViSession vi, ViConstString channelName, ViAttr attributeId, ViReal64* value) override;
   ViStatus GetAttributeViSession(ViSession vi, ViConstString channelName, ViAttr attributeId, ViSession* value) override;
   ViStatus GetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 bufSize, ViChar value[]) override;
-  ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[2048]) override;
+  ViStatus GetCalUserDefinedInfo(ViSession vi, ViChar info[22]) override;
   ViStatus GetCalUserDefinedInfoMaxSize(ViSession vi, ViInt32* infoSize) override;
-  ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber_struct sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts) override;
-  ViStatus GetDeviceResponse(ViSession vi, ViConstString channelList, ViInt32 responseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies) override;
+  ViStatus GetDeembeddingSparameters(ViSession vi, NIComplexNumber sparameters[], ViInt32 sparametersArraySize, ViInt32* numberOfSparameters, ViInt32* numberOfPorts) override;
+  ViStatus GetDeviceResponse(ViSession vi, ViConstString channelList, ViInt32 deviceResponseType, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies) override;
   ViStatus GetError(ViSession vi, ViStatus* errorCode, ViInt32 errorDescriptionBufferSize, ViChar errorDescription[]) override;
   ViStatus GetExtCalLastDateAndTime(ViSession vi, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute) override;
   ViStatus GetExtCalLastTemp(ViSession vi, ViReal64* temperature) override;
   ViStatus GetExtCalRecommendedInterval(ViSession vi, ViInt32* months) override;
   ViStatus GetFetchBacklog(ViSession vi, ViConstString channelList, ViInt64 recordNumber, ViInt64* backlog) override;
   ViStatus GetFrequencyResponse(ViSession vi, ViConstString channelList, ViInt32 bufferSize, ViReal64 frequencies[], ViReal64 magnitudeResponse[], ViReal64 phaseResponse[], ViInt32* numberOfFrequencies) override;
-  ViStatus GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo_struct coefficientInfo[], ViInt32* numberOfCoefficientSets) override;
+  ViStatus GetNormalizationCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets) override;
   ViStatus GetNumberOfSpectralLines(ViSession vi, ViConstString channelList, ViInt32* numberOfSpectralLines) override;
   ViStatus GetRelayName(ViSession vi, ViConstString channelList, ViInt32 index, ViChar name[], ViInt32* bufferSize) override;
   ViStatus GetRelayOperationsCount(ViSession vi, ViConstString channelList, ViInt32 operationsCount[], ViInt32* bufferSize) override;
-  ViStatus GetScalingCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo_struct coefficientInfo[], ViInt32* numberOfCoefficientSets) override;
+  ViStatus GetScalingCoefficients(ViSession vi, ViConstString channelList, ViInt32 arraySize, niRFSA_coefficientInfo coefficientInfo[], ViInt32* numberOfCoefficientSets) override;
   ViStatus GetSelfCalLastDateAndTime(ViSession vi, ViInt64 selfCalibrationStep, ViInt32* year, ViInt32* month, ViInt32* day, ViInt32* hour, ViInt32* minute) override;
-  ViStatus GetSelfCalLastTemp(ViSession vi, ViInt64 selfCalibrationStep, ViReal64* temp) override;
-  ViStatus GetSpectralInfoForSMT(ViSession vi, SmtSpectrumInfo_struct* spectrumInfo) override;
+  ViStatus GetSelfCalLastTemp(ViSession vi, ViInt64 selfCalibrationStep, ViReal64* temperature) override;
+  ViStatus GetSpectralInfoForSMT(ViSession vi, SmtSpectrumInfo* spectrumInfo) override;
   ViStatus GetStreamEndpointHandle(ViSession vi, ViConstString streamEndpoint, ViUInt32* writerHandle) override;
   ViStatus GetTerminalName(ViSession vi, ViInt32 signal, ViConstString signalIdentifier, ViInt32 bufferSize, ViChar terminalName[]) override;
   ViStatus GetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[], ViInt32* actualDataSize) override;
   ViStatus Init(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViSession* vi) override;
-  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean reset, ViConstString optionString, ViSession* vi) override;
+  ViStatus InitWithOptions(ViRsrc resourceName, ViBoolean idQuery, ViBoolean resetDevice, ViConstString optionString, ViSession* newVi) override;
   ViStatus Initiate(ViSession vi) override;
   ViStatus InvalidateAllAttributes(ViSession vi) override;
   ViStatus IsSelfCalValid(ViSession vi, ViBoolean* selfCalValid, ViInt64* validSteps) override;
   ViStatus LoadConfigurationsFromFile(ViSession vi, ViConstString channelName, ViConstString filePath) override;
-  ViStatus LockSession(ViSession vi, ViBoolean* callerHasLock) override;
   ViStatus PerformThermalCorrection(ViSession vi) override;
-  ViStatus ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber_struct data[], ViInt64 dataArraySize, niRFSA_wfmInfo_struct* wfmInfo) override;
-  ViStatus ReadPowerSpectrumF32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal32 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo) override;
-  ViStatus ReadPowerSpectrumF64(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal64 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo_struct* spectrumInfo) override;
+  ViStatus ReadIQSingleRecordComplexF64(ViSession vi, ViConstString channelList, ViReal64 timeout, NIComplexNumber data[], ViInt64 dataArraySize, niRFSA_wfmInfo* wfmInfo) override;
+  ViStatus ReadPowerSpectrumF32(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal32 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo* spectrumInfo) override;
+  ViStatus ReadPowerSpectrumF64(ViSession vi, ViConstString channelList, ViReal64 timeout, ViReal64 powerSpectrumData[], ViInt32 dataArraySize, niRFSA_spectrumInfo* spectrumInfo) override;
   ViStatus Reset(ViSession vi) override;
   ViStatus ResetAttribute(ViSession vi, ViConstString channelName, ViAttr attributeId) override;
   ViStatus ResetDevice(ViSession vi) override;
@@ -119,7 +118,7 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus SelfCal(ViSession vi) override;
   ViStatus SelfCalibrate(ViSession vi, ViInt64 stepsToOmit) override;
   ViStatus SelfCalibrateRange(ViSession vi, ViInt64 stepsToOmit, ViReal64 minFrequency, ViReal64 maxFrequency, ViReal64 minReferenceLevel, ViReal64 maxReferenceLevel) override;
-  ViStatus SelfTest(ViSession vi, ViInt16* testResult, ViChar testMessage[2048]) override;
+  ViStatus SelfTest(ViSession vi, ViInt16* selfTestResult, ViChar selfTestMessage[256]) override;
   ViStatus SendSoftwareEdgeTrigger(ViSession vi, ViInt32 trigger, ViConstString triggerIdentifier) override;
   ViStatus SetAttributeViBoolean(ViSession vi, ViConstString channelName, ViAttr attributeId, ViBoolean value) override;
   ViStatus SetAttributeViInt32(ViSession vi, ViConstString channelName, ViAttr attributeId, ViInt32 value) override;
@@ -129,7 +128,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   ViStatus SetAttributeViString(ViSession vi, ViConstString channelName, ViAttr attributeId, ViConstString value) override;
   ViStatus SetCalUserDefinedInfo(ViSession vi, ViConstString info) override;
   ViStatus SetUserData(ViSession vi, ViConstString identifier, ViInt32 bufferSize, ViInt8 data[]) override;
-  ViStatus UnlockSession(ViSession vi, ViBoolean* callerHasLock) override;
 
  private:
   using AbortPtr = decltype(&niRFSA_Abort);
@@ -215,7 +213,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using InvalidateAllAttributesPtr = decltype(&niRFSA_InvalidateAllAttributes);
   using IsSelfCalValidPtr = decltype(&niRFSA_IsSelfCalValid);
   using LoadConfigurationsFromFilePtr = decltype(&niRFSA_LoadConfigurationsFromFile);
-  using LockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
   using PerformThermalCorrectionPtr = decltype(&niRFSA_PerformThermalCorrection);
   using ReadIQSingleRecordComplexF64Ptr = decltype(&niRFSA_ReadIQSingleRecordComplexF64);
   using ReadPowerSpectrumF32Ptr = decltype(&niRFSA_ReadPowerSpectrumF32);
@@ -240,7 +237,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
   using SetAttributeViStringPtr = decltype(&niRFSA_SetAttributeViString);
   using SetCalUserDefinedInfoPtr = decltype(&niRFSA_SetCalUserDefinedInfo);
   using SetUserDataPtr = decltype(&niRFSA_SetUserData);
-  using UnlockSessionPtr = ViStatus (*)(ViSession vi, ViBoolean* callerHasLock);
 
   typedef struct FunctionPointers {
     AbortPtr Abort;
@@ -326,7 +322,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     InvalidateAllAttributesPtr InvalidateAllAttributes;
     IsSelfCalValidPtr IsSelfCalValid;
     LoadConfigurationsFromFilePtr LoadConfigurationsFromFile;
-    LockSessionPtr LockSession;
     PerformThermalCorrectionPtr PerformThermalCorrection;
     ReadIQSingleRecordComplexF64Ptr ReadIQSingleRecordComplexF64;
     ReadPowerSpectrumF32Ptr ReadPowerSpectrumF32;
@@ -351,7 +346,6 @@ class NiRFSALibrary : public nirfsa_grpc::NiRFSALibraryInterface {
     SetAttributeViStringPtr SetAttributeViString;
     SetCalUserDefinedInfoPtr SetCalUserDefinedInfo;
     SetUserDataPtr SetUserData;
-    UnlockSessionPtr UnlockSession;
   } FunctionLoadStatus;
 
   std::shared_ptr<nidevice_grpc::SharedLibraryInterface> shared_library_;

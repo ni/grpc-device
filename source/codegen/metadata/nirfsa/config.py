@@ -1,128 +1,90 @@
 # -*- coding: utf-8 -*-
+# This file is generated from NI-RFSA API metadata version 27.0.0d9999
 config = {
-    'api_version': '26.8.0',
-    'c_header': 'niRFSA.h',
+    'additional_headers': {
+    },
+    'api_version': '27.0.0d9999',
     'c_function_prefix': 'niRFSA_',
-    'service_class_prefix': 'NiRFSA',
-    'java_package': 'com.ni.grpc.rfsa',
-    'csharp_namespace': 'NationalInstruments.Grpc.NiRFSA',
-    'namespace_component': 'nirfsa',
+    'c_header': 'niRFSA.h',
     'close_function': 'Close',
+    'csharp_namespace': 'NationalInstruments.Grpc.NiRFSA',
     'custom_types': [
         {
-            'name': 'niRFSA_wfmInfo_struct',
-            'grpc_name': 'WaveformInfo',
             'fields': [
                 {
-                    'type': 'ViReal64',
-                    'name': 'absoluteInitialX'
+                    'grpc_type': 'double',
+                    'name': 'offset',
+                    'type': 'ViReal64'
                 },
                 {
-                    'type': 'ViReal64', 
-                    'name': 'relativeInitialX'
-                },
-                {
-                    'type': 'ViReal64', 
-                    'name': 'xIncrement'
-                },
-                {
-                    'type': 'ViInt64', 
-                    'name': 'actualSamples'
-                },
-                {
-                    'type': 'ViReal64', 
-                    'name': 'offset'
-                },
-                {
-                    'type': 'ViReal64', 
-                    'name': 'gain'
-                },
-                {
-                    'type': 'ViReal64', 
-                    'name': 'reserved1',
-                    'include_in_proto': False,
-                },
-                {
-                    'type': 'ViReal64', 
-                    'name': 'reserved2',
-                    'include_in_proto': False,
-                },
-            ]
-        },
-        {
-            'name': 'niRFSA_coefficientInfo_struct',
+                    'grpc_type': 'double',
+                    'name': 'gain',
+                    'type': 'ViReal64'
+                }
+            ],
             'grpc_name': 'CoefficientInfo',
-            'fields': [
-                {
-                    'type': 'ViReal64', 
-                    'name': 'offset'
-                },
-                {
-                    'type': 'ViReal64', 
-                    'name': 'gain'
-                },
-                {
-                    'type': 'ViReal64', 
-                    'name': 'reserved1',
-                    'include_in_proto': False,
-                },
-                {
-                    'type': 'ViReal64', 
-                    'name': 'reserved2',
-                    'include_in_proto': False,
-                },
-            ]
+            'name': 'niRFSA_coefficientInfo'
         },
         {
-            'name': 'niRFSA_spectrumInfo_struct',
-            'grpc_name': 'SpectrumInfo',
             'fields': [
                 {
-                    'type': 'ViReal64', 
-                    'name': 'initialFrequency'
+                    'grpc_type': 'double',
+                    'name': 'absoluteInitialX',
+                    'type': 'ViReal64'
                 },
                 {
-                    'type': 'ViReal64', 
-                    'name': 'frequencyIncrement'
+                    'grpc_type': 'double',
+                    'name': 'relativeInitialX',
+                    'type': 'ViReal64'
                 },
                 {
-                    'type': 'ViInt32', 
-                    'name': 'numberOfSpectralLines'
-                },
-                
-                {
-                    'type': 'ViReal64', 
-                    'name': 'reserved1',
-                    'include_in_proto': False,
+                    'grpc_type': 'double',
+                    'name': 'xIncrement',
+                    'type': 'ViReal64'
                 },
                 {
-                    'type': 'ViReal64', 
-                    'name': 'reserved2',
-                    'include_in_proto': False,
+                    'grpc_type': 'int64',
+                    'name': 'actualSamples',
+                    'type': 'ViInt64'
                 },
                 {
-                    'type': 'ViReal64', 
-                    'name': 'reserved3',
-                    'include_in_proto': False,
+                    'grpc_type': 'double',
+                    'name': 'offset',
+                    'type': 'ViReal64'
                 },
                 {
-                    'type': 'ViReal64', 
-                    'name': 'reserved4',
-                    'include_in_proto': False,
+                    'grpc_type': 'double',
+                    'name': 'gain',
+                    'type': 'ViReal64'
+                }
+            ],
+            'grpc_name': 'WaveformInfo',
+            'name': 'niRFSA_wfmInfo'
+        },
+        {
+            'fields': [
+                {
+                    'grpc_type': 'double',
+                    'name': 'initialFrequency',
+                    'type': 'ViReal64'
                 },
                 {
-                    'type': 'ViReal64', 
-                    'name': 'reserved5',
-                    'include_in_proto': False,
+                    'grpc_type': 'double',
+                    'name': 'frequencyIncrement',
+                    'type': 'ViReal64'
                 },
-            ]
+                {
+                    'grpc_type': 'sint32',
+                    'name': 'numberOfSpectralLines',
+                    'type': 'ViInt32'
+                }
+            ],
+            'grpc_name': 'SpectrumInfo',
+            'name': 'niRFSA_spectrumInfo'
         }
     ],
-    'additional_headers': { 'custom/nirfsa_aliases.h': ['service.cpp', 'library_interface.h'], 'custom/ivi_errors.h': ['service.cpp'] },
     'driver_name': 'NI-RFSA',
-    'init_function': 'InitWithOptions',
-    'status_ok': 'status >= 0',
-    'code_readiness': 'Release',
+    'java_package': 'com.ni.grpc.rfsa',
     'library_info': {
         'Linux': {
             '64bit': {
@@ -132,7 +94,7 @@ config = {
         },
         'Windows': {
             '32bit': {
-                'name': 'niRFSA_32.dll',
+                'name': 'niRFSA.dll',
                 'type': 'windll'
             },
             '64bit': {
@@ -141,10 +103,10 @@ config = {
             }
         }
     },
-    'linux_rt_support': False,
-    'metadata_version': '1.0',
+    'linux_rt_support': True,
     'module_name': 'nirfsa',
-    'session_class_description': 'An NI-RFSA session.',
+    'namespace_component': 'nirfsa',
+    'service_class_prefix': 'NiRFSA',
     'session_handle_parameter_name': 'vi',
-    'uses_nitclk': True,
+    'status_ok': 'status >= 0'
 }
