@@ -117,7 +117,7 @@ TEST_F(NiRFmxEVDODriverApiTests, CdaFromExample_FetchData_DataLooksReasonable)
   EXPECT_SUCCESS(session, client::cfg_uplink_spreading(stub(), session, "", 0, 0));
   EXPECT_SUCCESS(session, client::select_measurements(stub(), session, "", MEASUREMENT_TYPES_CDA, true));
   EXPECT_SUCCESS(session, client::cda_cfg_synchronization_mode_and_interval(stub(), session, "", CDA_SYNCHRONIZATION_MODE_SLOT, 0, 1));
-  EXPECT_SUCCESS(session, client::cda_cfg_uplink_measurement_channel(stub(), session, "", 64, 0, CDA_UPLINK_BRANCH_I));
+  EXPECT_SUCCESS(session, client::cda_cfg_uplink_measurement_channel(stub(), session, "", 32, 0, CDA_UPLINK_BRANCH_I));
   EXPECT_SUCCESS(session, client::cda_cfg_power_unit(stub(), session, "", CDA_POWER_UNIT_DB));
   EXPECT_SUCCESS(session, client::initiate(stub(), session, "", ""));
 
