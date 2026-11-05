@@ -1,0 +1,3095 @@
+
+//---------------------------------------------------------------------
+// This file is generated from NI-RFMXEVDO API metadata version 27.0.0
+//---------------------------------------------------------------------
+// Proto file for the NI-RFMXEVDO Metadata
+//---------------------------------------------------------------------
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "com.ni.grpc.nirfmxevdo";
+option java_outer_classname = "NiRFmxEVDO";
+option csharp_namespace = "NationalInstruments.Grpc.NiRFmxEVDO";
+
+package nirfmxevdo_grpc;
+
+import "nidevice.proto";
+import "session.proto";
+
+service NiRFmxEVDO {
+  rpc ACPCfgAveraging(ACPCfgAveragingRequest) returns (ACPCfgAveragingResponse);
+  rpc ACPCfgMeasurementMethod(ACPCfgMeasurementMethodRequest) returns (ACPCfgMeasurementMethodResponse);
+  rpc ACPCfgNoiseCompensationEnabled(ACPCfgNoiseCompensationEnabledRequest) returns (ACPCfgNoiseCompensationEnabledResponse);
+  rpc ACPCfgNumberOfOffsets(ACPCfgNumberOfOffsetsRequest) returns (ACPCfgNumberOfOffsetsResponse);
+  rpc ACPCfgOffsetPowerReference(ACPCfgOffsetPowerReferenceRequest) returns (ACPCfgOffsetPowerReferenceResponse);
+  rpc ACPCfgRBWFilter(ACPCfgRBWFilterRequest) returns (ACPCfgRBWFilterResponse);
+  rpc ACPCfgSweepTime(ACPCfgSweepTimeRequest) returns (ACPCfgSweepTimeResponse);
+  rpc ACPFetchAbsolutePowersTrace(ACPFetchAbsolutePowersTraceRequest) returns (ACPFetchAbsolutePowersTraceResponse);
+  rpc ACPFetchCarrierMeasurement(ACPFetchCarrierMeasurementRequest) returns (ACPFetchCarrierMeasurementResponse);
+  rpc ACPFetchCarrierMeasurementArray(ACPFetchCarrierMeasurementArrayRequest) returns (ACPFetchCarrierMeasurementArrayResponse);
+  rpc ACPFetchOffsetMeasurement(ACPFetchOffsetMeasurementRequest) returns (ACPFetchOffsetMeasurementResponse);
+  rpc ACPFetchOffsetMeasurementArray(ACPFetchOffsetMeasurementArrayRequest) returns (ACPFetchOffsetMeasurementArrayResponse);
+  rpc ACPFetchRelativePowersTrace(ACPFetchRelativePowersTraceRequest) returns (ACPFetchRelativePowersTraceResponse);
+  rpc ACPFetchSpectrum(ACPFetchSpectrumRequest) returns (ACPFetchSpectrumResponse);
+  rpc ACPFetchTotalCarrierPower(ACPFetchTotalCarrierPowerRequest) returns (ACPFetchTotalCarrierPowerResponse);
+  rpc AbortMeasurements(AbortMeasurementsRequest) returns (AbortMeasurementsResponse);
+  rpc AnalyzeIQ1Waveform(AnalyzeIQ1WaveformRequest) returns (AnalyzeIQ1WaveformResponse);
+  rpc AnalyzeIQ1WaveformInterleavedIQ(AnalyzeIQ1WaveformInterleavedIQRequest) returns (AnalyzeIQ1WaveformInterleavedIQResponse);
+  rpc AnalyzeIQ1WaveformSplit(AnalyzeIQ1WaveformSplitRequest) returns (AnalyzeIQ1WaveformSplitResponse);
+  rpc AnalyzeSpectrum1Waveform(AnalyzeSpectrum1WaveformRequest) returns (AnalyzeSpectrum1WaveformResponse);
+  rpc AutoLevel(AutoLevelRequest) returns (AutoLevelResponse);
+  rpc BuildCarrierString(BuildCarrierStringRequest) returns (BuildCarrierStringResponse);
+  rpc BuildChannelString(BuildChannelStringRequest) returns (BuildChannelStringResponse);
+  rpc BuildOffsetString(BuildOffsetStringRequest) returns (BuildOffsetStringResponse);
+  rpc BuildSignalString(BuildSignalStringRequest) returns (BuildSignalStringResponse);
+  rpc CDACfgPowerUnit(CDACfgPowerUnitRequest) returns (CDACfgPowerUnitResponse);
+  rpc CDACfgSynchronizationModeAndInterval(CDACfgSynchronizationModeAndIntervalRequest) returns (CDACfgSynchronizationModeAndIntervalResponse);
+  rpc CDACfgUplinkMeasurementChannel(CDACfgUplinkMeasurementChannelRequest) returns (CDACfgUplinkMeasurementChannelResponse);
+  rpc CDAFetchIQImpairments(CDAFetchIQImpairmentsRequest) returns (CDAFetchIQImpairmentsResponse);
+  rpc CDAFetchUplinkCodeDomainIAndQPower(CDAFetchUplinkCodeDomainIAndQPowerRequest) returns (CDAFetchUplinkCodeDomainIAndQPowerResponse);
+  rpc CDAFetchUplinkCodeDomainIAndQPowerTrace(CDAFetchUplinkCodeDomainIAndQPowerTraceRequest) returns (CDAFetchUplinkCodeDomainIAndQPowerTraceResponse);
+  rpc CDAFetchUplinkCodeDomainPower(CDAFetchUplinkCodeDomainPowerRequest) returns (CDAFetchUplinkCodeDomainPowerResponse);
+  rpc CDAFetchUplinkSymbolConstellationTrace(CDAFetchUplinkSymbolConstellationTraceRequest) returns (CDAFetchUplinkSymbolConstellationTraceResponse);
+  rpc CDAFetchUplinkSymbolConstellationTraceInterleavedIQ(CDAFetchUplinkSymbolConstellationTraceInterleavedIQRequest) returns (CDAFetchUplinkSymbolConstellationTraceInterleavedIQResponse);
+  rpc CDAFetchUplinkSymbolConstellationTraceSplit(CDAFetchUplinkSymbolConstellationTraceSplitRequest) returns (CDAFetchUplinkSymbolConstellationTraceSplitResponse);
+  rpc CDAFetchUplinkSymbolEVM(CDAFetchUplinkSymbolEVMRequest) returns (CDAFetchUplinkSymbolEVMResponse);
+  rpc CDAFetchUplinkSymbolEVMTrace(CDAFetchUplinkSymbolEVMTraceRequest) returns (CDAFetchUplinkSymbolEVMTraceResponse);
+  rpc CDAFetchUplinkSymbolMagnitudeErrorTrace(CDAFetchUplinkSymbolMagnitudeErrorTraceRequest) returns (CDAFetchUplinkSymbolMagnitudeErrorTraceResponse);
+  rpc CDAFetchUplinkSymbolPhaseErrorTrace(CDAFetchUplinkSymbolPhaseErrorTraceRequest) returns (CDAFetchUplinkSymbolPhaseErrorTraceResponse);
+  rpc CDAFetchUplinkSymbolPowerTrace(CDAFetchUplinkSymbolPowerTraceRequest) returns (CDAFetchUplinkSymbolPowerTraceResponse);
+  rpc CHPCfgAveraging(CHPCfgAveragingRequest) returns (CHPCfgAveragingResponse);
+  rpc CHPCfgRBWFilter(CHPCfgRBWFilterRequest) returns (CHPCfgRBWFilterResponse);
+  rpc CHPCfgSweepTime(CHPCfgSweepTimeRequest) returns (CHPCfgSweepTimeResponse);
+  rpc CHPFetchCarrierMeasurement(CHPFetchCarrierMeasurementRequest) returns (CHPFetchCarrierMeasurementResponse);
+  rpc CHPFetchCarrierMeasurementArray(CHPFetchCarrierMeasurementArrayRequest) returns (CHPFetchCarrierMeasurementArrayResponse);
+  rpc CHPFetchSpectrum(CHPFetchSpectrumRequest) returns (CHPFetchSpectrumResponse);
+  rpc CHPFetchTotalCarrierPower(CHPFetchTotalCarrierPowerRequest) returns (CHPFetchTotalCarrierPowerResponse);
+  rpc CfgBandClass(CfgBandClassRequest) returns (CfgBandClassResponse);
+  rpc CfgCarrierFrequency(CfgCarrierFrequencyRequest) returns (CfgCarrierFrequencyResponse);
+  rpc CfgCarrierFrequencyArray(CfgCarrierFrequencyArrayRequest) returns (CfgCarrierFrequencyArrayResponse);
+  rpc CfgChannelConfigurationMode(CfgChannelConfigurationModeRequest) returns (CfgChannelConfigurationModeResponse);
+  rpc CfgContiguousCarriers(CfgContiguousCarriersRequest) returns (CfgContiguousCarriersResponse);
+  rpc CfgDigitalEdgeTrigger(CfgDigitalEdgeTriggerRequest) returns (CfgDigitalEdgeTriggerResponse);
+  rpc CfgExternalAttenuation(CfgExternalAttenuationRequest) returns (CfgExternalAttenuationResponse);
+  rpc CfgFrequency(CfgFrequencyRequest) returns (CfgFrequencyResponse);
+  rpc CfgFrequencyChannelNumber(CfgFrequencyChannelNumberRequest) returns (CfgFrequencyChannelNumberResponse);
+  rpc CfgFrequencyReference(CfgFrequencyReferenceRequest) returns (CfgFrequencyReferenceResponse);
+  rpc CfgIQPowerEdgeTrigger(CfgIQPowerEdgeTriggerRequest) returns (CfgIQPowerEdgeTriggerResponse);
+  rpc CfgMechanicalAttenuation(CfgMechanicalAttenuationRequest) returns (CfgMechanicalAttenuationResponse);
+  rpc CfgNumberOfCarriers(CfgNumberOfCarriersRequest) returns (CfgNumberOfCarriersResponse);
+  rpc CfgPhysicalLayerSubtype(CfgPhysicalLayerSubtypeRequest) returns (CfgPhysicalLayerSubtypeResponse);
+  rpc CfgRF(CfgRFRequest) returns (CfgRFResponse);
+  rpc CfgRFAttenuation(CfgRFAttenuationRequest) returns (CfgRFAttenuationResponse);
+  rpc CfgReferenceLevel(CfgReferenceLevelRequest) returns (CfgReferenceLevelResponse);
+  rpc CfgSoftwareEdgeTrigger(CfgSoftwareEdgeTriggerRequest) returns (CfgSoftwareEdgeTriggerResponse);
+  rpc CfgUplinkDataModulationType(CfgUplinkDataModulationTypeRequest) returns (CfgUplinkDataModulationTypeResponse);
+  rpc CfgUplinkNumberOfChannels(CfgUplinkNumberOfChannelsRequest) returns (CfgUplinkNumberOfChannelsResponse);
+  rpc CfgUplinkSpreading(CfgUplinkSpreadingRequest) returns (CfgUplinkSpreadingResponse);
+  rpc CfgUplinkUserDefinedChannel(CfgUplinkUserDefinedChannelRequest) returns (CfgUplinkUserDefinedChannelResponse);
+  rpc CfgUplinkUserDefinedChannelArray(CfgUplinkUserDefinedChannelArrayRequest) returns (CfgUplinkUserDefinedChannelArrayResponse);
+  rpc CheckMeasurementStatus(CheckMeasurementStatusRequest) returns (CheckMeasurementStatusResponse);
+  rpc ClearAllNamedResults(ClearAllNamedResultsRequest) returns (ClearAllNamedResultsResponse);
+  rpc ClearNamedResult(ClearNamedResultRequest) returns (ClearNamedResultResponse);
+  rpc CloneSignalConfiguration(CloneSignalConfigurationRequest) returns (CloneSignalConfigurationResponse);
+  rpc Close(CloseRequest) returns (CloseResponse);
+  rpc Commit(CommitRequest) returns (CommitResponse);
+  rpc CreateSignalConfiguration(CreateSignalConfigurationRequest) returns (CreateSignalConfigurationResponse);
+  rpc DeleteSignalConfiguration(DeleteSignalConfigurationRequest) returns (DeleteSignalConfigurationResponse);
+  rpc DisableTrigger(DisableTriggerRequest) returns (DisableTriggerResponse);
+  rpc GetAllNamedResultNames(GetAllNamedResultNamesRequest) returns (GetAllNamedResultNamesResponse);
+  rpc GetAttributeF32(GetAttributeF32Request) returns (GetAttributeF32Response);
+  rpc GetAttributeF32Array(GetAttributeF32ArrayRequest) returns (GetAttributeF32ArrayResponse);
+  rpc GetAttributeF64(GetAttributeF64Request) returns (GetAttributeF64Response);
+  rpc GetAttributeF64Array(GetAttributeF64ArrayRequest) returns (GetAttributeF64ArrayResponse);
+  rpc GetAttributeI16(GetAttributeI16Request) returns (GetAttributeI16Response);
+  rpc GetAttributeI32(GetAttributeI32Request) returns (GetAttributeI32Response);
+  rpc GetAttributeI32Array(GetAttributeI32ArrayRequest) returns (GetAttributeI32ArrayResponse);
+  rpc GetAttributeI64(GetAttributeI64Request) returns (GetAttributeI64Response);
+  rpc GetAttributeI64Array(GetAttributeI64ArrayRequest) returns (GetAttributeI64ArrayResponse);
+  rpc GetAttributeI8(GetAttributeI8Request) returns (GetAttributeI8Response);
+  rpc GetAttributeI8Array(GetAttributeI8ArrayRequest) returns (GetAttributeI8ArrayResponse);
+  rpc GetAttributeNIComplexDoubleArray(GetAttributeNIComplexDoubleArrayRequest) returns (GetAttributeNIComplexDoubleArrayResponse);
+  rpc GetAttributeNIComplexSingleArray(GetAttributeNIComplexSingleArrayRequest) returns (GetAttributeNIComplexSingleArrayResponse);
+  rpc GetAttributeString(GetAttributeStringRequest) returns (GetAttributeStringResponse);
+  rpc GetAttributeU16(GetAttributeU16Request) returns (GetAttributeU16Response);
+  rpc GetAttributeU32(GetAttributeU32Request) returns (GetAttributeU32Response);
+  rpc GetAttributeU32Array(GetAttributeU32ArrayRequest) returns (GetAttributeU32ArrayResponse);
+  rpc GetAttributeU64Array(GetAttributeU64ArrayRequest) returns (GetAttributeU64ArrayResponse);
+  rpc GetAttributeU8(GetAttributeU8Request) returns (GetAttributeU8Response);
+  rpc GetAttributeU8Array(GetAttributeU8ArrayRequest) returns (GetAttributeU8ArrayResponse);
+  rpc GetError(GetErrorRequest) returns (GetErrorResponse);
+  rpc GetErrorString(GetErrorStringRequest) returns (GetErrorStringResponse);
+  rpc Initialize(InitializeRequest) returns (InitializeResponse);
+  rpc InitializeFromNIRFSASession(InitializeFromNIRFSASessionRequest) returns (InitializeFromNIRFSASessionResponse);
+  rpc Initiate(InitiateRequest) returns (InitiateResponse);
+  rpc ModAccCfgMultiCarrierFilterEnabled(ModAccCfgMultiCarrierFilterEnabledRequest) returns (ModAccCfgMultiCarrierFilterEnabledResponse);
+  rpc ModAccCfgSynchronizationModeAndInterval(ModAccCfgSynchronizationModeAndIntervalRequest) returns (ModAccCfgSynchronizationModeAndIntervalResponse);
+  rpc ModAccFetchConstellationTrace(ModAccFetchConstellationTraceRequest) returns (ModAccFetchConstellationTraceResponse);
+  rpc ModAccFetchConstellationTraceInterleavedIQ(ModAccFetchConstellationTraceInterleavedIQRequest) returns (ModAccFetchConstellationTraceInterleavedIQResponse);
+  rpc ModAccFetchConstellationTraceSplit(ModAccFetchConstellationTraceSplitRequest) returns (ModAccFetchConstellationTraceSplitResponse);
+  rpc ModAccFetchEVMTrace(ModAccFetchEVMTraceRequest) returns (ModAccFetchEVMTraceResponse);
+  rpc ModAccFetchIQImpairments(ModAccFetchIQImpairmentsRequest) returns (ModAccFetchIQImpairmentsResponse);
+  rpc ModAccFetchMagnitudeErrorTrace(ModAccFetchMagnitudeErrorTraceRequest) returns (ModAccFetchMagnitudeErrorTraceResponse);
+  rpc ModAccFetchPhaseErrorTrace(ModAccFetchPhaseErrorTraceRequest) returns (ModAccFetchPhaseErrorTraceResponse);
+  rpc ModAccFetchUplinkDetectedChannel(ModAccFetchUplinkDetectedChannelRequest) returns (ModAccFetchUplinkDetectedChannelResponse);
+  rpc ModAccFetchUplinkDetectedChannelArray(ModAccFetchUplinkDetectedChannelArrayRequest) returns (ModAccFetchUplinkDetectedChannelArrayResponse);
+  rpc ModAccFetchUplinkDetectedDataModulationType(ModAccFetchUplinkDetectedDataModulationTypeRequest) returns (ModAccFetchUplinkDetectedDataModulationTypeResponse);
+  rpc ModAccFetchUplinkEVM(ModAccFetchUplinkEVMRequest) returns (ModAccFetchUplinkEVMResponse);
+  rpc ModAccFetchUplinkNumberOfDetectedChannels(ModAccFetchUplinkNumberOfDetectedChannelsRequest) returns (ModAccFetchUplinkNumberOfDetectedChannelsResponse);
+  rpc ModAccFetchUplinkPeakActiveCDE(ModAccFetchUplinkPeakActiveCDERequest) returns (ModAccFetchUplinkPeakActiveCDEResponse);
+  rpc ModAccFetchUplinkPeakCDE(ModAccFetchUplinkPeakCDERequest) returns (ModAccFetchUplinkPeakCDEResponse);
+  rpc OBWCfgAveraging(OBWCfgAveragingRequest) returns (OBWCfgAveragingResponse);
+  rpc OBWCfgRBWFilter(OBWCfgRBWFilterRequest) returns (OBWCfgRBWFilterResponse);
+  rpc OBWCfgSweepTime(OBWCfgSweepTimeRequest) returns (OBWCfgSweepTimeResponse);
+  rpc OBWFetchMeasurement(OBWFetchMeasurementRequest) returns (OBWFetchMeasurementResponse);
+  rpc OBWFetchSpectrum(OBWFetchSpectrumRequest) returns (OBWFetchSpectrumResponse);
+  rpc ResetAttribute(ResetAttributeRequest) returns (ResetAttributeResponse);
+  rpc ResetToDefault(ResetToDefaultRequest) returns (ResetToDefaultResponse);
+  rpc SEMCfgAveraging(SEMCfgAveragingRequest) returns (SEMCfgAveragingResponse);
+  rpc SEMCfgSweepTime(SEMCfgSweepTimeRequest) returns (SEMCfgSweepTimeResponse);
+  rpc SEMFetchCarrierMeasurement(SEMFetchCarrierMeasurementRequest) returns (SEMFetchCarrierMeasurementResponse);
+  rpc SEMFetchCarrierMeasurementArray(SEMFetchCarrierMeasurementArrayRequest) returns (SEMFetchCarrierMeasurementArrayResponse);
+  rpc SEMFetchLowerOffsetMargin(SEMFetchLowerOffsetMarginRequest) returns (SEMFetchLowerOffsetMarginResponse);
+  rpc SEMFetchLowerOffsetMarginArray(SEMFetchLowerOffsetMarginArrayRequest) returns (SEMFetchLowerOffsetMarginArrayResponse);
+  rpc SEMFetchLowerOffsetPower(SEMFetchLowerOffsetPowerRequest) returns (SEMFetchLowerOffsetPowerResponse);
+  rpc SEMFetchLowerOffsetPowerArray(SEMFetchLowerOffsetPowerArrayRequest) returns (SEMFetchLowerOffsetPowerArrayResponse);
+  rpc SEMFetchMeasurementStatus(SEMFetchMeasurementStatusRequest) returns (SEMFetchMeasurementStatusResponse);
+  rpc SEMFetchSpectrum(SEMFetchSpectrumRequest) returns (SEMFetchSpectrumResponse);
+  rpc SEMFetchTotalCarrierPower(SEMFetchTotalCarrierPowerRequest) returns (SEMFetchTotalCarrierPowerResponse);
+  rpc SEMFetchUpperOffsetMargin(SEMFetchUpperOffsetMarginRequest) returns (SEMFetchUpperOffsetMarginResponse);
+  rpc SEMFetchUpperOffsetMarginArray(SEMFetchUpperOffsetMarginArrayRequest) returns (SEMFetchUpperOffsetMarginArrayResponse);
+  rpc SEMFetchUpperOffsetPower(SEMFetchUpperOffsetPowerRequest) returns (SEMFetchUpperOffsetPowerResponse);
+  rpc SEMFetchUpperOffsetPowerArray(SEMFetchUpperOffsetPowerArrayRequest) returns (SEMFetchUpperOffsetPowerArrayResponse);
+  rpc SelectMeasurements(SelectMeasurementsRequest) returns (SelectMeasurementsResponse);
+  rpc SendSoftwareEdgeTrigger(SendSoftwareEdgeTriggerRequest) returns (SendSoftwareEdgeTriggerResponse);
+  rpc SetAttributeF32(SetAttributeF32Request) returns (SetAttributeF32Response);
+  rpc SetAttributeF32Array(SetAttributeF32ArrayRequest) returns (SetAttributeF32ArrayResponse);
+  rpc SetAttributeF64(SetAttributeF64Request) returns (SetAttributeF64Response);
+  rpc SetAttributeF64Array(SetAttributeF64ArrayRequest) returns (SetAttributeF64ArrayResponse);
+  rpc SetAttributeI16(SetAttributeI16Request) returns (SetAttributeI16Response);
+  rpc SetAttributeI32(SetAttributeI32Request) returns (SetAttributeI32Response);
+  rpc SetAttributeI32Array(SetAttributeI32ArrayRequest) returns (SetAttributeI32ArrayResponse);
+  rpc SetAttributeI64(SetAttributeI64Request) returns (SetAttributeI64Response);
+  rpc SetAttributeI64Array(SetAttributeI64ArrayRequest) returns (SetAttributeI64ArrayResponse);
+  rpc SetAttributeI8(SetAttributeI8Request) returns (SetAttributeI8Response);
+  rpc SetAttributeI8Array(SetAttributeI8ArrayRequest) returns (SetAttributeI8ArrayResponse);
+  rpc SetAttributeNIComplexDoubleArray(SetAttributeNIComplexDoubleArrayRequest) returns (SetAttributeNIComplexDoubleArrayResponse);
+  rpc SetAttributeNIComplexSingleArray(SetAttributeNIComplexSingleArrayRequest) returns (SetAttributeNIComplexSingleArrayResponse);
+  rpc SetAttributeString(SetAttributeStringRequest) returns (SetAttributeStringResponse);
+  rpc SetAttributeU16(SetAttributeU16Request) returns (SetAttributeU16Response);
+  rpc SetAttributeU32(SetAttributeU32Request) returns (SetAttributeU32Response);
+  rpc SetAttributeU32Array(SetAttributeU32ArrayRequest) returns (SetAttributeU32ArrayResponse);
+  rpc SetAttributeU64Array(SetAttributeU64ArrayRequest) returns (SetAttributeU64ArrayResponse);
+  rpc SetAttributeU8(SetAttributeU8Request) returns (SetAttributeU8Response);
+  rpc SetAttributeU8Array(SetAttributeU8ArrayRequest) returns (SetAttributeU8ArrayResponse);
+  rpc SlotPhaseCfgSynchronizationModeAndInterval(SlotPhaseCfgSynchronizationModeAndIntervalRequest) returns (SlotPhaseCfgSynchronizationModeAndIntervalResponse);
+  rpc SlotPhaseFetchChipPhaseErrorLinearFitTrace(SlotPhaseFetchChipPhaseErrorLinearFitTraceRequest) returns (SlotPhaseFetchChipPhaseErrorLinearFitTraceResponse);
+  rpc SlotPhaseFetchChipPhaseErrorTrace(SlotPhaseFetchChipPhaseErrorTraceRequest) returns (SlotPhaseFetchChipPhaseErrorTraceResponse);
+  rpc SlotPhaseFetchMaximumHalfSlotPhaseDiscontinuity(SlotPhaseFetchMaximumHalfSlotPhaseDiscontinuityRequest) returns (SlotPhaseFetchMaximumHalfSlotPhaseDiscontinuityResponse);
+  rpc SlotPhaseFetchPhaseDiscontinuities(SlotPhaseFetchPhaseDiscontinuitiesRequest) returns (SlotPhaseFetchPhaseDiscontinuitiesResponse);
+  rpc SlotPowerCfgSynchronizationModeAndInterval(SlotPowerCfgSynchronizationModeAndIntervalRequest) returns (SlotPowerCfgSynchronizationModeAndIntervalResponse);
+  rpc SlotPowerFetchPowers(SlotPowerFetchPowersRequest) returns (SlotPowerFetchPowersResponse);
+  rpc WaitForAcquisitionComplete(WaitForAcquisitionCompleteRequest) returns (WaitForAcquisitionCompleteResponse);
+  rpc WaitForMeasurementComplete(WaitForMeasurementCompleteRequest) returns (WaitForMeasurementCompleteResponse);
+}
+
+enum NiRFmxEVDOAttribute {
+  NIRFMXEVDO_ATTRIBUTE_UNSPECIFIED = 0;
+  NIRFMXEVDO_ATTRIBUTE_CENTER_FREQUENCY = 8388609;
+  NIRFMXEVDO_ATTRIBUTE_REFERENCE_LEVEL = 8388610;
+  NIRFMXEVDO_ATTRIBUTE_EXTERNAL_ATTENUATION = 8388611;
+  NIRFMXEVDO_ATTRIBUTE_TRIGGER_TYPE = 8388612;
+  NIRFMXEVDO_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_SOURCE = 8388613;
+  NIRFMXEVDO_ATTRIBUTE_DIGITAL_EDGE_TRIGGER_EDGE = 8388614;
+  NIRFMXEVDO_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_SOURCE = 8388615;
+  NIRFMXEVDO_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL = 8388616;
+  NIRFMXEVDO_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_SLOPE = 8388617;
+  NIRFMXEVDO_ATTRIBUTE_TRIGGER_DELAY = 8388618;
+  NIRFMXEVDO_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_MODE = 8388619;
+  NIRFMXEVDO_ATTRIBUTE_TRIGGER_MINIMUM_QUIET_TIME_DURATION = 8388620;
+  NIRFMXEVDO_ATTRIBUTE_NUMBER_OF_CARRIERS = 8388622;
+  NIRFMXEVDO_ATTRIBUTE_CARRIER_FREQUENCY = 8388623;
+  NIRFMXEVDO_ATTRIBUTE_BAND_CLASS = 8388624;
+  NIRFMXEVDO_ATTRIBUTE_PHYSICAL_LAYER_SUBTYPE = 8388625;
+  NIRFMXEVDO_ATTRIBUTE_CHANNEL_CONFIGURATION_MODE = 8388626;
+  NIRFMXEVDO_ATTRIBUTE_UPLINK_NUMBER_OF_CHANNELS = 8388632;
+  NIRFMXEVDO_ATTRIBUTE_UPLINK_DATA_MODULATION_TYPE = 8388633;
+  NIRFMXEVDO_ATTRIBUTE_UPLINK_WALSH_CODE_LENGTH = 8388634;
+  NIRFMXEVDO_ATTRIBUTE_UPLINK_WALSH_CODE_NUMBER = 8388635;
+  NIRFMXEVDO_ATTRIBUTE_UPLINK_BRANCH = 8388636;
+  NIRFMXEVDO_ATTRIBUTE_UPLINK_SPREADING_I_MASK = 8388649;
+  NIRFMXEVDO_ATTRIBUTE_UPLINK_SPREADING_Q_MASK = 8388650;
+  NIRFMXEVDO_ATTRIBUTE_REFERENCE_LEVEL_HEADROOM = 8392700;
+  NIRFMXEVDO_ATTRIBUTE_SELECTED_PORTS = 8392701;
+  NIRFMXEVDO_ATTRIBUTE_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE = 8392703;
+  NIRFMXEVDO_ATTRIBUTE_ACP_MEASUREMENT_ENABLED = 8392704;
+  NIRFMXEVDO_ATTRIBUTE_ACP_CARRIER_INTEGRATION_BANDWIDTH = 8392709;
+  NIRFMXEVDO_ATTRIBUTE_ACP_NUMBER_OF_OFFSETS = 8392712;
+  NIRFMXEVDO_ATTRIBUTE_ACP_OFFSET_FREQUENCY = 8392714;
+  NIRFMXEVDO_ATTRIBUTE_ACP_OFFSET_POWER_REFERENCE_CARRIER = 8392716;
+  NIRFMXEVDO_ATTRIBUTE_ACP_OFFSET_POWER_REFERENCE_SPECIFIC = 8392717;
+  NIRFMXEVDO_ATTRIBUTE_ACP_OFFSET_INTEGRATION_BANDWIDTH = 8392718;
+  NIRFMXEVDO_ATTRIBUTE_ACP_MEASUREMENT_METHOD = 8392722;
+  NIRFMXEVDO_ATTRIBUTE_ACP_NUMBER_OF_ANALYSIS_THREADS = 8392724;
+  NIRFMXEVDO_ATTRIBUTE_ACP_AVERAGING_COUNT = 8392725;
+  NIRFMXEVDO_ATTRIBUTE_ACP_AVERAGING_ENABLED = 8392726;
+  NIRFMXEVDO_ATTRIBUTE_ACP_AVERAGING_TYPE = 8392728;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RBW_FILTER_AUTO_BANDWIDTH = 8392731;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RBW_FILTER_BANDWIDTH = 8392732;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RBW_FILTER_TYPE = 8392733;
+  NIRFMXEVDO_ATTRIBUTE_ACP_SWEEP_TIME_AUTO = 8392734;
+  NIRFMXEVDO_ATTRIBUTE_ACP_SWEEP_TIME_INTERVAL = 8392735;
+  NIRFMXEVDO_ATTRIBUTE_ACP_NOISE_COMPENSATION_ENABLED = 8392736;
+  NIRFMXEVDO_ATTRIBUTE_ACP_ALL_TRACES_ENABLED = 8392737;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RESULTS_TOTAL_CARRIER_POWER = 8392738;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RESULTS_CARRIER_ABSOLUTE_POWER = 8392742;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RESULTS_CARRIER_RELATIVE_POWER = 8392743;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RESULTS_LOWER_OFFSET_ABSOLUTE_POWER = 8392748;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RESULTS_LOWER_OFFSET_RELATIVE_POWER = 8392749;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RESULTS_UPPER_OFFSET_ABSOLUTE_POWER = 8392754;
+  NIRFMXEVDO_ATTRIBUTE_ACP_RESULTS_UPPER_OFFSET_RELATIVE_POWER = 8392755;
+  NIRFMXEVDO_ATTRIBUTE_ACP_IF_OUTPUT_POWER_OFFSET_AUTO = 8392756;
+  NIRFMXEVDO_ATTRIBUTE_ACP_NEAR_IF_OUTPUT_POWER_OFFSET = 8392757;
+  NIRFMXEVDO_ATTRIBUTE_ACP_FAR_IF_OUTPUT_POWER_OFFSET = 8392758;
+  NIRFMXEVDO_ATTRIBUTE_ACP_SEQUENTIAL_FFT_SIZE = 8392760;
+  NIRFMXEVDO_ATTRIBUTE_ACP_FFT_OVERLAP_MODE = 8392761;
+  NIRFMXEVDO_ATTRIBUTE_ACP_FFT_OVERLAP = 8392762;
+  NIRFMXEVDO_ATTRIBUTE_CHP_MEASUREMENT_ENABLED = 8400896;
+  NIRFMXEVDO_ATTRIBUTE_CHP_CARRIER_INTEGRATION_BANDWIDTH = 8400898;
+  NIRFMXEVDO_ATTRIBUTE_CHP_NUMBER_OF_ANALYSIS_THREADS = 8400899;
+  NIRFMXEVDO_ATTRIBUTE_CHP_AVERAGING_COUNT = 8400902;
+  NIRFMXEVDO_ATTRIBUTE_CHP_AVERAGING_ENABLED = 8400903;
+  NIRFMXEVDO_ATTRIBUTE_CHP_AVERAGING_TYPE = 8400905;
+  NIRFMXEVDO_ATTRIBUTE_CHP_RBW_FILTER_AUTO_BANDWIDTH = 8400908;
+  NIRFMXEVDO_ATTRIBUTE_CHP_RBW_FILTER_BANDWIDTH = 8400909;
+  NIRFMXEVDO_ATTRIBUTE_CHP_RBW_FILTER_TYPE = 8400910;
+  NIRFMXEVDO_ATTRIBUTE_CHP_SWEEP_TIME_AUTO = 8400913;
+  NIRFMXEVDO_ATTRIBUTE_CHP_SWEEP_TIME_INTERVAL = 8400914;
+  NIRFMXEVDO_ATTRIBUTE_CHP_ALL_TRACES_ENABLED = 8400916;
+  NIRFMXEVDO_ATTRIBUTE_CHP_RESULTS_CARRIER_ABSOLUTE_POWER = 8400917;
+  NIRFMXEVDO_ATTRIBUTE_CHP_RESULTS_TOTAL_CARRIER_POWER = 8400920;
+  NIRFMXEVDO_ATTRIBUTE_CHP_RESULTS_CARRIER_RELATIVE_POWER = 8400921;
+  NIRFMXEVDO_ATTRIBUTE_OBW_MEASUREMENT_ENABLED = 8413184;
+  NIRFMXEVDO_ATTRIBUTE_OBW_NUMBER_OF_ANALYSIS_THREADS = 8413187;
+  NIRFMXEVDO_ATTRIBUTE_OBW_SPAN = 8413188;
+  NIRFMXEVDO_ATTRIBUTE_OBW_AVERAGING_COUNT = 8413190;
+  NIRFMXEVDO_ATTRIBUTE_OBW_AVERAGING_ENABLED = 8413191;
+  NIRFMXEVDO_ATTRIBUTE_OBW_AVERAGING_TYPE = 8413193;
+  NIRFMXEVDO_ATTRIBUTE_OBW_RBW_FILTER_AUTO_BANDWIDTH = 8413196;
+  NIRFMXEVDO_ATTRIBUTE_OBW_RBW_FILTER_BANDWIDTH = 8413197;
+  NIRFMXEVDO_ATTRIBUTE_OBW_RBW_FILTER_TYPE = 8413198;
+  NIRFMXEVDO_ATTRIBUTE_OBW_SWEEP_TIME_AUTO = 8413199;
+  NIRFMXEVDO_ATTRIBUTE_OBW_SWEEP_TIME_INTERVAL = 8413200;
+  NIRFMXEVDO_ATTRIBUTE_OBW_ALL_TRACES_ENABLED = 8413202;
+  NIRFMXEVDO_ATTRIBUTE_OBW_RESULTS_OCCUPIED_BANDWIDTH = 8413203;
+  NIRFMXEVDO_ATTRIBUTE_OBW_RESULTS_ABSOLUTE_POWER = 8413204;
+  NIRFMXEVDO_ATTRIBUTE_OBW_RESULTS_START_FREQUENCY = 8413205;
+  NIRFMXEVDO_ATTRIBUTE_OBW_RESULTS_STOP_FREQUENCY = 8413206;
+  NIRFMXEVDO_ATTRIBUTE_SEM_MEASUREMENT_ENABLED = 8421376;
+  NIRFMXEVDO_ATTRIBUTE_SEM_CARRIER_INTEGRATION_BANDWIDTH = 8421381;
+  NIRFMXEVDO_ATTRIBUTE_SEM_NUMBER_OF_OFFSETS = 8421387;
+  NIRFMXEVDO_ATTRIBUTE_SEM_OFFSET_BANDWIDTH_INTEGRAL = 8421388;
+  NIRFMXEVDO_ATTRIBUTE_SEM_OFFSET_START_FREQUENCY = 8421396;
+  NIRFMXEVDO_ATTRIBUTE_SEM_OFFSET_STOP_FREQUENCY = 8421397;
+  NIRFMXEVDO_ATTRIBUTE_SEM_OFFSET_RBW_FILTER_BANDWIDTH = 8421399;
+  NIRFMXEVDO_ATTRIBUTE_SEM_OFFSET_RBW_FILTER_TYPE = 8421400;
+  NIRFMXEVDO_ATTRIBUTE_SEM_NUMBER_OF_ANALYSIS_THREADS = 8421405;
+  NIRFMXEVDO_ATTRIBUTE_SEM_AVERAGING_COUNT = 8421406;
+  NIRFMXEVDO_ATTRIBUTE_SEM_AVERAGING_ENABLED = 8421407;
+  NIRFMXEVDO_ATTRIBUTE_SEM_AVERAGING_TYPE = 8421409;
+  NIRFMXEVDO_ATTRIBUTE_SEM_SWEEP_TIME_AUTO = 8421413;
+  NIRFMXEVDO_ATTRIBUTE_SEM_SWEEP_TIME_INTERVAL = 8421414;
+  NIRFMXEVDO_ATTRIBUTE_SEM_ALL_TRACES_ENABLED = 8421415;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_TOTAL_CARRIER_POWER = 8421416;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_COMPOSITE_MEASUREMENT_STATUS = 8421417;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_CARRIER_ABSOLUTE_INTEGRATED_POWER = 8421421;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_CARRIER_RELATIVE_INTEGRATED_POWER = 8421422;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_CARRIER_ABSOLUTE_PEAK_POWER = 8421423;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_CARRIER_PEAK_FREQUENCY = 8421424;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_ABSOLUTE_INTEGRATED_POWER = 8421428;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_RELATIVE_INTEGRATED_POWER = 8421429;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_ABSOLUTE_PEAK_POWER = 8421430;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_RELATIVE_PEAK_POWER = 8421431;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_PEAK_FREQUENCY = 8421432;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MARGIN = 8421433;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MARGIN_ABSOLUTE_POWER = 8421434;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MARGIN_RELATIVE_POWER = 8421435;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MARGIN_FREQUENCY = 8421436;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_LOWER_OFFSET_MEASUREMENT_STATUS = 8421437;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_ABSOLUTE_INTEGRATED_POWER = 8421441;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_RELATIVE_INTEGRATED_POWER = 8421442;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_ABSOLUTE_PEAK_POWER = 8421443;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_RELATIVE_PEAK_POWER = 8421444;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_PEAK_FREQUENCY = 8421445;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MARGIN = 8421446;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MARGIN_ABSOLUTE_POWER = 8421447;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MARGIN_RELATIVE_POWER = 8421448;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MARGIN_FREQUENCY = 8421449;
+  NIRFMXEVDO_ATTRIBUTE_SEM_RESULTS_UPPER_OFFSET_MEASUREMENT_STATUS = 8421450;
+  NIRFMXEVDO_ATTRIBUTE_RESULT_FETCH_TIMEOUT = 8437760;
+  NIRFMXEVDO_ATTRIBUTE_AUTO_LEVEL_INITIAL_REFERENCE_LEVEL = 8441856;
+  NIRFMXEVDO_ATTRIBUTE_LIMITED_CONFIGURATION_CHANGE = 8441859;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_MEASUREMENT_ENABLED = 8458240;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_SYNCHRONIZATION_MODE = 8458242;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_MEASUREMENT_OFFSET = 8458244;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_MEASUREMENT_LENGTH = 8458245;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_SPECTRUM_INVERTED = 8458246;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_IQ_OFFSET_REMOVAL_ENABLED = 8458247;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_MULTI_CARRIER_FILTER_ENABLED = 8458248;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_ALL_TRACES_ENABLED = 8458252;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_FREQUENCY_ERROR = 8458255;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_CHIP_RATE_ERROR = 8458256;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_IQ_ORIGIN_OFFSET = 8458257;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_IQ_GAIN_IMBALANCE = 8458258;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_IQ_QUADRATURE_ERROR = 8458259;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_RMS_EVM = 8458260;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_PEAK_EVM = 8458261;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_RMS_MAGNITUDE_ERROR = 8458262;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_RMS_PHASE_ERROR = 8458263;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_RHO = 8458264;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_PEAK_CDE = 8458265;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_PEAK_CDE_WALSH_CODE_NUMBER = 8458267;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_PEAK_ACTIVE_CDE = 8458268;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_PEAK_ACTIVE_CDE_WALSH_CODE_LENGTH = 8458269;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_PEAK_ACTIVE_CDE_WALSH_CODE_NUMBER = 8458270;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_DETECTED_DATA_MODULATION_TYPE = 8458271;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_NUMBER_OF_DETECTED_CHANNELS = 8458272;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_DETECTED_WALSH_CODE_LENGTH = 8458273;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_DETECTED_WALSH_CODE_NUMBER = 8458274;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_DETECTED_BRANCH = 8458275;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_PEAK_CDE_BRANCH = 8458317;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RESULTS_UPLINK_PEAK_ACTIVE_CDE_BRANCH = 8458318;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_IQ_GAIN_IMBALANCE_REMOVAL_ENABLED = 8458401;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_IQ_QUADRATURE_ERROR_REMOVAL_ENABLED = 8458402;
+  NIRFMXEVDO_ATTRIBUTE_MODACC_RECEIVE_FILTER_ENABLED = 8458403;
+  NIRFMXEVDO_ATTRIBUTE_CDA_MEASUREMENT_ENABLED = 8466432;
+  NIRFMXEVDO_ATTRIBUTE_CDA_SYNCHRONIZATION_MODE = 8466434;
+  NIRFMXEVDO_ATTRIBUTE_CDA_MEASUREMENT_OFFSET = 8466435;
+  NIRFMXEVDO_ATTRIBUTE_CDA_MEASUREMENT_LENGTH = 8466436;
+  NIRFMXEVDO_ATTRIBUTE_CDA_UPLINK_WALSH_CODE_LENGTH = 8466437;
+  NIRFMXEVDO_ATTRIBUTE_CDA_UPLINK_WALSH_CODE_NUMBER = 8466438;
+  NIRFMXEVDO_ATTRIBUTE_CDA_UPLINK_BRANCH = 8466439;
+  NIRFMXEVDO_ATTRIBUTE_CDA_POWER_UNIT = 8466440;
+  NIRFMXEVDO_ATTRIBUTE_CDA_SPECTRUM_INVERTED = 8466441;
+  NIRFMXEVDO_ATTRIBUTE_CDA_IQ_OFFSET_REMOVAL_ENABLED = 8466442;
+  NIRFMXEVDO_ATTRIBUTE_CDA_IQ_GAIN_IMBALANCE_REMOVAL_ENABLED = 8466443;
+  NIRFMXEVDO_ATTRIBUTE_CDA_IQ_QUADRATURE_ERROR_REMOVAL_ENABLED = 8466444;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RECEIVE_FILTER_ENABLED = 8466445;
+  NIRFMXEVDO_ATTRIBUTE_CDA_ALL_TRACES_ENABLED = 8466446;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_FREQUENCY_ERROR = 8466449;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_CHIP_RATE_ERROR = 8466450;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_IQ_ORIGIN_OFFSET = 8466451;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_IQ_GAIN_IMBALANCE = 8466452;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_IQ_QUADRATURE_ERROR = 8466453;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_RMS_SYMBOL_EVM = 8466454;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_PEAK_SYMBOL_EVM = 8466455;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_RMS_SYMBOL_MAGNITUDE_ERROR = 8466456;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_RMS_SYMBOL_PHASE_ERROR = 8466457;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_MEAN_SYMBOL_POWER = 8466458;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_TOTAL_POWER = 8466459;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_TOTAL_ACTIVE_POWER = 8466460;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_MEAN_ACTIVE_POWER = 8466461;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_PEAK_ACTIVE_POWER = 8466462;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_MEAN_INACTIVE_POWER = 8466463;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_PEAK_INACTIVE_POWER = 8466464;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_I_MEAN_ACTIVE_POWER = 8466465;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_I_PEAK_INACTIVE_POWER = 8466466;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_Q_MEAN_ACTIVE_POWER = 8466467;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_Q_PEAK_INACTIVE_POWER = 8466468;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_MEAN_PILOT_POWER = 8466469;
+  NIRFMXEVDO_ATTRIBUTE_CDA_RESULTS_UPLINK_MEAN_AUXILIARY_PILOT_POWER = 8466470;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPOWER_MEASUREMENT_ENABLED = 8470528;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPOWER_SYNCHRONIZATION_MODE = 8470530;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPOWER_MEASUREMENT_OFFSET = 8470531;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPOWER_MEASUREMENT_LENGTH = 8470532;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPOWER_SPECTRUM_INVERTED = 8470533;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPOWER_RECEIVE_FILTER_ENABLED = 8470534;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPHASE_MEASUREMENT_ENABLED = 8474624;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPHASE_SYNCHRONIZATION_MODE = 8474626;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPHASE_MEASUREMENT_OFFSET = 8474627;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPHASE_MEASUREMENT_LENGTH = 8474628;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPHASE_SPECTRUM_INVERTED = 8474629;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPHASE_RECEIVE_FILTER_ENABLED = 8474630;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPHASE_TRANSIENT_DURATION = 8474631;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPHASE_ALL_TRACES_ENABLED = 8474632;
+  NIRFMXEVDO_ATTRIBUTE_SLOTPHASE_RESULTS_MAXIMUM_HALF_SLOT_PHASE_DISCONTINUITY = 8474635;
+}
+
+enum AcpAveragingEnabled {
+  ACP_AVERAGING_ENABLED_FALSE = 0;
+  ACP_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum AcpAveragingType {
+  ACP_AVERAGING_TYPE_RMS = 0;
+  ACP_AVERAGING_TYPE_LOG = 1;
+  ACP_AVERAGING_TYPE_SCALAR = 2;
+  ACP_AVERAGING_TYPE_MAXIMUM = 3;
+  ACP_AVERAGING_TYPE_MINIMUM = 4;
+}
+
+enum AcpMeasurementMethod {
+  ACP_MEASUREMENT_METHOD_NORMAL = 0;
+  ACP_MEASUREMENT_METHOD_DYNAMIC_RANGE = 1;
+  ACP_MEASUREMENT_METHOD_SEQUENTIAL_FFT = 2;
+}
+
+enum AcpNoiseCompensationEnabled {
+  ACP_NOISE_COMPENSATION_ENABLED_FALSE = 0;
+  ACP_NOISE_COMPENSATION_ENABLED_TRUE = 1;
+}
+
+enum AcpOffsetPowerReferenceCarrier {
+  ACP_OFFSET_POWER_REFERENCE_CARRIER_CLOSEST = 0;
+  ACP_OFFSET_POWER_REFERENCE_CARRIER_HIGHEST = 1;
+  ACP_OFFSET_POWER_REFERENCE_CARRIER_COMPOSITE = 2;
+  ACP_OFFSET_POWER_REFERENCE_CARRIER_SPECIFIC = 3;
+}
+
+enum AcpRbwAutoBandwidth {
+  ACP_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  ACP_RBW_AUTO_BANDWIDTH_TRUE = 1;
+}
+
+enum AcpRbwFilterType {
+  ACP_RBW_FILTER_TYPE_FFT_BASED = 0;
+  ACP_RBW_FILTER_TYPE_GAUSSIAN = 1;
+  ACP_RBW_FILTER_TYPE_FLAT = 2;
+}
+
+enum AcpSweepTimeAuto {
+  ACP_SWEEP_TIME_AUTO_FALSE = 0;
+  ACP_SWEEP_TIME_AUTO_TRUE = 1;
+}
+
+enum CdaPowerUnit {
+  CDA_POWER_UNIT_DB = 0;
+  CDA_POWER_UNIT_DBM = 1;
+}
+
+enum CdaSynchronizationMode {
+  CDA_SYNCHRONIZATION_MODE_FRAME = 0;
+  CDA_SYNCHRONIZATION_MODE_SLOT = 1;
+  CDA_SYNCHRONIZATION_MODE_ARBITRARY = 2;
+}
+
+enum CdaUplinkBranch {
+  CDA_UPLINK_BRANCH_I = 0;
+  CDA_UPLINK_BRANCH_Q = 1;
+  CDA_UPLINK_BRANCH_I_AND_Q = 2;
+}
+
+enum ChannelConfigurationMode {
+  CHANNEL_CONFIGURATION_MODE_AUTO_DETECT = 0;
+  CHANNEL_CONFIGURATION_MODE_USER_DEFINED = 1;
+}
+
+enum ChpAveragingEnabled {
+  CHP_AVERAGING_ENABLED_FALSE = 0;
+  CHP_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum ChpAveragingType {
+  CHP_AVERAGING_TYPE_RMS = 0;
+  CHP_AVERAGING_TYPE_LOG = 1;
+  CHP_AVERAGING_TYPE_SCALAR = 2;
+  CHP_AVERAGING_TYPE_MAXIMUM = 3;
+  CHP_AVERAGING_TYPE_MINIMUM = 4;
+}
+
+enum ChpRbwAutoBandwidth {
+  CHP_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  CHP_RBW_AUTO_BANDWIDTH_TRUE = 1;
+}
+
+enum ChpRbwFilterType {
+  CHP_RBW_FILTER_TYPE_FFT_BASED = 0;
+  CHP_RBW_FILTER_TYPE_GAUSSIAN = 1;
+  CHP_RBW_FILTER_TYPE_FLAT = 2;
+}
+
+enum ChpSweepTimeAuto {
+  CHP_SWEEP_TIME_AUTO_FALSE = 0;
+  CHP_SWEEP_TIME_AUTO_TRUE = 1;
+}
+
+enum DigitalEdgeTriggerEdge {
+  DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
+  DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
+}
+
+enum FrequencyReferenceSource {
+  FREQUENCY_REFERENCE_SOURCE_UNSPECIFIED = 0;
+  FREQUENCY_REFERENCE_SOURCE_ONBOARD_CLOCK = 1;
+  FREQUENCY_REFERENCE_SOURCE_REF_IN = 2;
+  FREQUENCY_REFERENCE_SOURCE_PXI_CLK = 3;
+  FREQUENCY_REFERENCE_SOURCE_CLK_IN = 4;
+}
+
+enum IQPowerEdgeTriggerLevelType {
+  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
+  IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
+}
+
+enum IQPowerEdgeTriggerSlope {
+  IQ_POWER_EDGE_TRIGGER_SLOPE_RISING = 0;
+  IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING = 1;
+}
+
+enum MeasurementTypes {
+  MEASUREMENT_TYPES_UNSPECIFIED = 0;
+  MEASUREMENT_TYPES_MODACC = 1;
+  MEASUREMENT_TYPES_ACP = 2;
+  MEASUREMENT_TYPES_CHP = 4;
+  MEASUREMENT_TYPES_OBW = 8;
+  MEASUREMENT_TYPES_SEM = 16;
+  MEASUREMENT_TYPES_CDA = 32;
+  MEASUREMENT_TYPES_SLOTPHASE = 64;
+  MEASUREMENT_TYPES_SLOTPOWER = 128;
+}
+
+enum MechanicalAttenuationAuto {
+  MECHANICAL_ATTENUATION_AUTO_FALSE = 0;
+  MECHANICAL_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum ModAccMultiCarrierFilterEnabled {
+  MODACC_MULTI_CARRIER_FILTER_ENABLED_FALSE = 0;
+  MODACC_MULTI_CARRIER_FILTER_ENABLED_TRUE = 1;
+}
+
+enum ModAccSynchronizationMode {
+  MODACC_SYNCHRONIZATION_MODE_FRAME = 0;
+  MODACC_SYNCHRONIZATION_MODE_SLOT = 1;
+  MODACC_SYNCHRONIZATION_MODE_ARBITRARY = 2;
+}
+
+enum ModAccUplinkDetectedBranch {
+  MODACC_UPLINK_DETECTED_BRANCH_I = 0;
+  MODACC_UPLINK_DETECTED_BRANCH_Q = 1;
+  MODACC_UPLINK_DETECTED_BRANCH_I_AND_Q = 2;
+}
+
+enum ModAccUplinkDetectedDataModulationType {
+  MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_UNSPECIFIED = 0;
+  MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_DATA_CHANNEL_ABSENT = 1;
+  MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_B4 = 2;
+  MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_Q4 = 3;
+  MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_Q2 = 4;
+  MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_Q4Q2 = 5;
+  MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_E4E2 = 6;
+}
+
+enum ModAccUplinkPeakActiveCdeBranch {
+  MODACC_UPLINK_PEAK_ACTIVE_CDE_BRANCH_I = 0;
+  MODACC_UPLINK_PEAK_ACTIVE_CDE_BRANCH_Q = 1;
+  MODACC_UPLINK_PEAK_ACTIVE_CDE_BRANCH_I_AND_Q = 2;
+}
+
+enum ModAccUplinkPeakCdeBranch {
+  MODACC_UPLINK_PEAK_CDE_BRANCH_I = 0;
+  MODACC_UPLINK_PEAK_CDE_BRANCH_Q = 1;
+}
+
+enum ObwAveragingEnabled {
+  OBW_AVERAGING_ENABLED_FALSE = 0;
+  OBW_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum ObwAveragingType {
+  OBW_AVERAGING_TYPE_RMS = 0;
+  OBW_AVERAGING_TYPE_LOG = 1;
+  OBW_AVERAGING_TYPE_SCALAR = 2;
+  OBW_AVERAGING_TYPE_MAXIMUM = 3;
+  OBW_AVERAGING_TYPE_MINIMUM = 4;
+}
+
+enum ObwRbwAutoBandwidth {
+  OBW_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  OBW_RBW_AUTO_BANDWIDTH_TRUE = 1;
+}
+
+enum ObwRbwFilterType {
+  OBW_RBW_FILTER_TYPE_FFT_BASED = 0;
+  OBW_RBW_FILTER_TYPE_GAUSSIAN = 1;
+  OBW_RBW_FILTER_TYPE_FLAT = 2;
+}
+
+enum ObwSweepTimeAuto {
+  OBW_SWEEP_TIME_AUTO_FALSE = 0;
+  OBW_SWEEP_TIME_AUTO_TRUE = 1;
+}
+
+enum PhysicalLayerSubtype {
+  PHYSICAL_LAYER_SUBTYPE_0_1 = 0;
+  PHYSICAL_LAYER_SUBTYPE_2 = 1;
+  PHYSICAL_LAYER_SUBTYPE_3 = 2;
+}
+
+enum RFAttenuationAuto {
+  RF_ATTENUATION_AUTO_FALSE = 0;
+  RF_ATTENUATION_AUTO_TRUE = 1;
+}
+
+enum SemAveragingEnabled {
+  SEM_AVERAGING_ENABLED_FALSE = 0;
+  SEM_AVERAGING_ENABLED_TRUE = 1;
+}
+
+enum SemAveragingType {
+  SEM_AVERAGING_TYPE_RMS = 0;
+  SEM_AVERAGING_TYPE_LOG = 1;
+  SEM_AVERAGING_TYPE_SCALAR = 2;
+  SEM_AVERAGING_TYPE_MAXIMUM = 3;
+  SEM_AVERAGING_TYPE_MINIMUM = 4;
+}
+
+enum SemCompositeMeasurementStatus {
+  SEM_COMPOSITE_MEASUREMENT_STATUS_FAIL = 0;
+  SEM_COMPOSITE_MEASUREMENT_STATUS_PASS = 1;
+}
+
+enum SemLowerOffsetMeasurementStatus {
+  SEM_LOWER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
+  SEM_LOWER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
+}
+
+enum SemSweepTimeAuto {
+  SEM_SWEEP_TIME_AUTO_FALSE = 0;
+  SEM_SWEEP_TIME_AUTO_TRUE = 1;
+}
+
+enum SemUpperOffsetMeasurementStatus {
+  SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
+  SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
+}
+
+enum SlotPhaseSynchronizationMode {
+  SLOT_PHASE_SYNCHRONIZATION_MODE_FRAME = 0;
+  SLOT_PHASE_SYNCHRONIZATION_MODE_SLOT = 1;
+}
+
+enum SlotPowerSynchronizationMode {
+  SLOT_POWER_SYNCHRONIZATION_MODE_FRAME = 0;
+  SLOT_POWER_SYNCHRONIZATION_MODE_SLOT = 1;
+}
+
+enum TriggerMinimumQuietTimeMode {
+  TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
+  TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+}
+
+enum UplinkBranch {
+  UPLINK_BRANCH_I = 0;
+  UPLINK_BRANCH_Q = 1;
+  UPLINK_BRANCH_I_AND_Q = 2;
+}
+
+enum UplinkDataModulationType {
+  UPLINK_DATA_MODULATION_TYPE_AUTO = 0;
+  UPLINK_DATA_MODULATION_TYPE_DATA_CHANNEL_ABSENT = 1;
+  UPLINK_DATA_MODULATION_TYPE_B4 = 2;
+  UPLINK_DATA_MODULATION_TYPE_Q4 = 3;
+  UPLINK_DATA_MODULATION_TYPE_Q2 = 4;
+  UPLINK_DATA_MODULATION_TYPE_Q4Q2 = 5;
+  UPLINK_DATA_MODULATION_TYPE_E4E2 = 6;
+}
+
+enum NiRFmxEVDOInt32AttributeValues {
+  option allow_alias = true;
+  NIRFMXEVDO_INT32_UNSPECIFIED = 0;
+  NIRFMXEVDO_INT32_ACP_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_ACP_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_ACP_AVERAGING_TYPE_RMS = 0;
+  NIRFMXEVDO_INT32_ACP_AVERAGING_TYPE_LOG = 1;
+  NIRFMXEVDO_INT32_ACP_AVERAGING_TYPE_SCALAR = 2;
+  NIRFMXEVDO_INT32_ACP_AVERAGING_TYPE_MAXIMUM = 3;
+  NIRFMXEVDO_INT32_ACP_AVERAGING_TYPE_MINIMUM = 4;
+  NIRFMXEVDO_INT32_ACP_FFT_OVERLAP_MODE_DISABLED = 0;
+  NIRFMXEVDO_INT32_ACP_FFT_OVERLAP_MODE_AUTOMATIC = 1;
+  NIRFMXEVDO_INT32_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_FALSE = 0;
+  NIRFMXEVDO_INT32_ACP_IF_OUTPUT_POWER_OFFSET_AUTO_TRUE = 1;
+  NIRFMXEVDO_INT32_ACP_MEASUREMENT_METHOD_NORMAL = 0;
+  NIRFMXEVDO_INT32_ACP_MEASUREMENT_METHOD_DYNAMIC_RANGE = 1;
+  NIRFMXEVDO_INT32_ACP_MEASUREMENT_METHOD_SEQUENTIAL_FFT = 2;
+  NIRFMXEVDO_INT32_ACP_NOISE_COMPENSATION_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_ACP_NOISE_COMPENSATION_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_ACP_OFFSET_POWER_REFERENCE_CARRIER_CLOSEST = 0;
+  NIRFMXEVDO_INT32_ACP_OFFSET_POWER_REFERENCE_CARRIER_HIGHEST = 1;
+  NIRFMXEVDO_INT32_ACP_OFFSET_POWER_REFERENCE_CARRIER_COMPOSITE = 2;
+  NIRFMXEVDO_INT32_ACP_OFFSET_POWER_REFERENCE_CARRIER_SPECIFIC = 3;
+  NIRFMXEVDO_INT32_ACP_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  NIRFMXEVDO_INT32_ACP_RBW_AUTO_BANDWIDTH_TRUE = 1;
+  NIRFMXEVDO_INT32_ACP_RBW_FILTER_TYPE_FFT_BASED = 0;
+  NIRFMXEVDO_INT32_ACP_RBW_FILTER_TYPE_GAUSSIAN = 1;
+  NIRFMXEVDO_INT32_ACP_RBW_FILTER_TYPE_FLAT = 2;
+  NIRFMXEVDO_INT32_ACP_SWEEP_TIME_AUTO_FALSE = 0;
+  NIRFMXEVDO_INT32_ACP_SWEEP_TIME_AUTO_TRUE = 1;
+  NIRFMXEVDO_INT32_CDA_IQ_GAIN_IMBALANCE_REMOVAL_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_CDA_IQ_GAIN_IMBALANCE_REMOVAL_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_CDA_IQ_OFFSET_REMOVAL_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_CDA_IQ_OFFSET_REMOVAL_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_CDA_IQ_QUADRATURE_ERROR_REMOVAL_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_CDA_IQ_QUADRATURE_ERROR_REMOVAL_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_CDA_POWER_UNIT_DB = 0;
+  NIRFMXEVDO_INT32_CDA_POWER_UNIT_DBM = 1;
+  NIRFMXEVDO_INT32_CDA_RECEIVE_FILTER_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_CDA_RECEIVE_FILTER_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_CDA_SPECTRUM_INVERTED_FALSE = 0;
+  NIRFMXEVDO_INT32_CDA_SPECTRUM_INVERTED_TRUE = 1;
+  NIRFMXEVDO_INT32_CDA_SYNCHRONIZATION_MODE_FRAME = 0;
+  NIRFMXEVDO_INT32_CDA_SYNCHRONIZATION_MODE_SLOT = 1;
+  NIRFMXEVDO_INT32_CDA_SYNCHRONIZATION_MODE_ARBITRARY = 2;
+  NIRFMXEVDO_INT32_CDA_UPLINK_BRANCH_I = 0;
+  NIRFMXEVDO_INT32_CDA_UPLINK_BRANCH_Q = 1;
+  NIRFMXEVDO_INT32_CDA_UPLINK_BRANCH_I_AND_Q = 2;
+  NIRFMXEVDO_INT32_CHANNEL_CONFIGURATION_MODE_AUTO_DETECT = 0;
+  NIRFMXEVDO_INT32_CHANNEL_CONFIGURATION_MODE_USER_DEFINED = 1;
+  NIRFMXEVDO_INT32_CHP_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_CHP_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_CHP_AVERAGING_TYPE_RMS = 0;
+  NIRFMXEVDO_INT32_CHP_AVERAGING_TYPE_LOG = 1;
+  NIRFMXEVDO_INT32_CHP_AVERAGING_TYPE_SCALAR = 2;
+  NIRFMXEVDO_INT32_CHP_AVERAGING_TYPE_MAXIMUM = 3;
+  NIRFMXEVDO_INT32_CHP_AVERAGING_TYPE_MINIMUM = 4;
+  NIRFMXEVDO_INT32_CHP_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  NIRFMXEVDO_INT32_CHP_RBW_AUTO_BANDWIDTH_TRUE = 1;
+  NIRFMXEVDO_INT32_CHP_RBW_FILTER_TYPE_FFT_BASED = 0;
+  NIRFMXEVDO_INT32_CHP_RBW_FILTER_TYPE_GAUSSIAN = 1;
+  NIRFMXEVDO_INT32_CHP_RBW_FILTER_TYPE_FLAT = 2;
+  NIRFMXEVDO_INT32_CHP_SWEEP_TIME_AUTO_FALSE = 0;
+  NIRFMXEVDO_INT32_CHP_SWEEP_TIME_AUTO_TRUE = 1;
+  NIRFMXEVDO_INT32_DIGITAL_EDGE_TRIGGER_EDGE_RISING = 0;
+  NIRFMXEVDO_INT32_DIGITAL_EDGE_TRIGGER_EDGE_FALLING = 1;
+  NIRFMXEVDO_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_RELATIVE = 0;
+  NIRFMXEVDO_INT32_IQ_POWER_EDGE_TRIGGER_LEVEL_TYPE_ABSOLUTE = 1;
+  NIRFMXEVDO_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_RISING = 0;
+  NIRFMXEVDO_INT32_IQ_POWER_EDGE_TRIGGER_SLOPE_FALLING = 1;
+  NIRFMXEVDO_INT32_LIMITED_CONFIGURATION_CHANGE_DISABLED = 0;
+  NIRFMXEVDO_INT32_LIMITED_CONFIGURATION_CHANGE_NO_CHANGE = 1;
+  NIRFMXEVDO_INT32_LIMITED_CONFIGURATION_CHANGE_FREQUENCY = 2;
+  NIRFMXEVDO_INT32_LIMITED_CONFIGURATION_CHANGE_REFERENCE_LEVEL = 3;
+  NIRFMXEVDO_INT32_LIMITED_CONFIGURATION_CHANGE_FREQUENCY_AND_REFERENCE_LEVEL = 4;
+  NIRFMXEVDO_INT32_LIMITED_CONFIGURATION_CHANGE_SELECTED_PORTS_FREQUENCY_AND_REFERENCE_LEVEL = 5;
+  NIRFMXEVDO_INT32_MODACC_IQ_GAIN_IMBALANCE_REMOVAL_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_MODACC_IQ_GAIN_IMBALANCE_REMOVAL_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_MODACC_IQ_OFFSET_REMOVAL_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_MODACC_IQ_OFFSET_REMOVAL_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_MODACC_IQ_QUADRATURE_ERROR_REMOVAL_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_MODACC_IQ_QUADRATURE_ERROR_REMOVAL_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_MODACC_MULTI_CARRIER_FILTER_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_MODACC_MULTI_CARRIER_FILTER_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_MODACC_RECEIVE_FILTER_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_MODACC_RECEIVE_FILTER_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_MODACC_SPECTRUM_INVERTED_FALSE = 0;
+  NIRFMXEVDO_INT32_MODACC_SPECTRUM_INVERTED_TRUE = 1;
+  NIRFMXEVDO_INT32_MODACC_SYNCHRONIZATION_MODE_FRAME = 0;
+  NIRFMXEVDO_INT32_MODACC_SYNCHRONIZATION_MODE_SLOT = 1;
+  NIRFMXEVDO_INT32_MODACC_SYNCHRONIZATION_MODE_ARBITRARY = 2;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_DETECTED_BRANCH_I = 0;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_DETECTED_BRANCH_Q = 1;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_DETECTED_BRANCH_I_AND_Q = 2;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_DATA_CHANNEL_ABSENT = 1;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_B4 = 2;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_Q4 = 3;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_Q2 = 4;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_Q4Q2 = 5;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_DETECTED_DATA_MODULATION_TYPE_E4E2 = 6;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_PEAK_ACTIVE_CDE_BRANCH_I = 0;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_PEAK_ACTIVE_CDE_BRANCH_Q = 1;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_PEAK_ACTIVE_CDE_BRANCH_I_AND_Q = 2;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_PEAK_CDE_BRANCH_I = 0;
+  NIRFMXEVDO_INT32_MODACC_UPLINK_PEAK_CDE_BRANCH_Q = 1;
+  NIRFMXEVDO_INT32_OBW_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_OBW_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_OBW_AVERAGING_TYPE_RMS = 0;
+  NIRFMXEVDO_INT32_OBW_AVERAGING_TYPE_LOG = 1;
+  NIRFMXEVDO_INT32_OBW_AVERAGING_TYPE_SCALAR = 2;
+  NIRFMXEVDO_INT32_OBW_AVERAGING_TYPE_MAXIMUM = 3;
+  NIRFMXEVDO_INT32_OBW_AVERAGING_TYPE_MINIMUM = 4;
+  NIRFMXEVDO_INT32_OBW_RBW_AUTO_BANDWIDTH_FALSE = 0;
+  NIRFMXEVDO_INT32_OBW_RBW_AUTO_BANDWIDTH_TRUE = 1;
+  NIRFMXEVDO_INT32_OBW_RBW_FILTER_TYPE_FFT_BASED = 0;
+  NIRFMXEVDO_INT32_OBW_RBW_FILTER_TYPE_GAUSSIAN = 1;
+  NIRFMXEVDO_INT32_OBW_RBW_FILTER_TYPE_FLAT = 2;
+  NIRFMXEVDO_INT32_OBW_SWEEP_TIME_AUTO_FALSE = 0;
+  NIRFMXEVDO_INT32_OBW_SWEEP_TIME_AUTO_TRUE = 1;
+  NIRFMXEVDO_INT32_PHYSICAL_LAYER_SUBTYPE_0_1 = 0;
+  NIRFMXEVDO_INT32_PHYSICAL_LAYER_SUBTYPE_2 = 1;
+  NIRFMXEVDO_INT32_PHYSICAL_LAYER_SUBTYPE_3 = 2;
+  NIRFMXEVDO_INT32_SEM_AVERAGING_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_SEM_AVERAGING_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_SEM_AVERAGING_TYPE_RMS = 0;
+  NIRFMXEVDO_INT32_SEM_AVERAGING_TYPE_LOG = 1;
+  NIRFMXEVDO_INT32_SEM_AVERAGING_TYPE_SCALAR = 2;
+  NIRFMXEVDO_INT32_SEM_AVERAGING_TYPE_MAXIMUM = 3;
+  NIRFMXEVDO_INT32_SEM_AVERAGING_TYPE_MINIMUM = 4;
+  NIRFMXEVDO_INT32_SEM_COMPOSITE_MEASUREMENT_STATUS_FAIL = 0;
+  NIRFMXEVDO_INT32_SEM_COMPOSITE_MEASUREMENT_STATUS_PASS = 1;
+  NIRFMXEVDO_INT32_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
+  NIRFMXEVDO_INT32_SEM_LOWER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
+  NIRFMXEVDO_INT32_SEM_OFFSET_RBW_FILTER_TYPE_FFT_BASED = 0;
+  NIRFMXEVDO_INT32_SEM_OFFSET_RBW_FILTER_TYPE_GAUSSIAN = 1;
+  NIRFMXEVDO_INT32_SEM_OFFSET_RBW_FILTER_TYPE_FLAT = 2;
+  NIRFMXEVDO_INT32_SEM_OFFSET_RBW_FILTER_TYPE_SYNCH_TUNED_4 = 3;
+  NIRFMXEVDO_INT32_SEM_OFFSET_RBW_FILTER_TYPE_SYNCH_TUNED_5 = 4;
+  NIRFMXEVDO_INT32_SEM_SWEEP_TIME_AUTO_FALSE = 0;
+  NIRFMXEVDO_INT32_SEM_SWEEP_TIME_AUTO_TRUE = 1;
+  NIRFMXEVDO_INT32_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_FAIL = 0;
+  NIRFMXEVDO_INT32_SEM_UPPER_OFFSET_MEASUREMENT_STATUS_PASS = 1;
+  NIRFMXEVDO_INT32_SLOT_PHASE_RECEIVE_FILTER_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_SLOT_PHASE_RECEIVE_FILTER_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_SLOT_PHASE_SPECTRUM_INVERTED_FALSE = 0;
+  NIRFMXEVDO_INT32_SLOT_PHASE_SPECTRUM_INVERTED_TRUE = 1;
+  NIRFMXEVDO_INT32_SLOT_PHASE_SYNCHRONIZATION_MODE_FRAME = 0;
+  NIRFMXEVDO_INT32_SLOT_PHASE_SYNCHRONIZATION_MODE_SLOT = 1;
+  NIRFMXEVDO_INT32_SLOT_POWER_RECEIVE_FILTER_ENABLED_FALSE = 0;
+  NIRFMXEVDO_INT32_SLOT_POWER_RECEIVE_FILTER_ENABLED_TRUE = 1;
+  NIRFMXEVDO_INT32_SLOT_POWER_SPECTRUM_INVERTED_FALSE = 0;
+  NIRFMXEVDO_INT32_SLOT_POWER_SPECTRUM_INVERTED_TRUE = 1;
+  NIRFMXEVDO_INT32_SLOT_POWER_SYNCHRONIZATION_MODE_FRAME = 0;
+  NIRFMXEVDO_INT32_SLOT_POWER_SYNCHRONIZATION_MODE_SLOT = 1;
+  NIRFMXEVDO_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_MANUAL = 0;
+  NIRFMXEVDO_INT32_TRIGGER_MINIMUM_QUIET_TIME_MODE_AUTO = 1;
+  NIRFMXEVDO_INT32_TRIGGER_TYPE_NONE = 0;
+  NIRFMXEVDO_INT32_TRIGGER_TYPE_DIGITAL_EDGE = 1;
+  NIRFMXEVDO_INT32_TRIGGER_TYPE_IQ_POWER_EDGE = 2;
+  NIRFMXEVDO_INT32_TRIGGER_TYPE_SOFTWARE = 3;
+  NIRFMXEVDO_INT32_UPLINK_BRANCH_I = 0;
+  NIRFMXEVDO_INT32_UPLINK_BRANCH_Q = 1;
+  NIRFMXEVDO_INT32_UPLINK_BRANCH_I_AND_Q = 2;
+  NIRFMXEVDO_INT32_UPLINK_DATA_MODULATION_TYPE_AUTO = 0;
+  NIRFMXEVDO_INT32_UPLINK_DATA_MODULATION_TYPE_DATA_CHANNEL_ABSENT = 1;
+  NIRFMXEVDO_INT32_UPLINK_DATA_MODULATION_TYPE_B4 = 2;
+  NIRFMXEVDO_INT32_UPLINK_DATA_MODULATION_TYPE_Q4 = 3;
+  NIRFMXEVDO_INT32_UPLINK_DATA_MODULATION_TYPE_Q2 = 4;
+  NIRFMXEVDO_INT32_UPLINK_DATA_MODULATION_TYPE_Q4Q2 = 5;
+  NIRFMXEVDO_INT32_UPLINK_DATA_MODULATION_TYPE_E4E2 = 6;
+}
+
+enum NiRFmxEVDOStringAttributeValuesMapped {
+  NIRFMXEVDO_STRING_MAPPED_UNSPECIFIED = 0;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI0 = 1;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PFI1 = 2;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG0 = 3;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG1 = 4;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG2 = 5;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG3 = 6;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG4 = 7;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG5 = 8;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG6 = 9;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_TRIG7 = 10;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXI_STAR = 11;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PXIE_DSTARB = 12;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_TIMER_EVENT = 13;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_PULSE_IN = 14;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI0 = 15;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI1 = 16;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI2 = 17;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI3 = 18;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI4 = 19;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI5 = 20;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI6 = 21;
+  NIRFMXEVDO_STRING_DIGITAL_EDGE_TRIGGER_SOURCE_DIO_PFI7 = 22;
+}
+
+message ACPCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    AcpAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+  oneof averaging_type_enum {
+    AcpAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
+  }
+}
+
+message ACPCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message ACPCfgMeasurementMethodRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof measurement_method_enum {
+    AcpMeasurementMethod measurement_method = 3;
+    int32 measurement_method_raw = 4;
+  }
+}
+
+message ACPCfgMeasurementMethodResponse {
+  int32 status = 1;
+}
+
+message ACPCfgNoiseCompensationEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof noise_compensation_enabled_enum {
+    AcpNoiseCompensationEnabled noise_compensation_enabled = 3;
+    int32 noise_compensation_enabled_raw = 4;
+  }
+}
+
+message ACPCfgNoiseCompensationEnabledResponse {
+  int32 status = 1;
+}
+
+message ACPCfgNumberOfOffsetsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 number_of_offsets = 3;
+}
+
+message ACPCfgNumberOfOffsetsResponse {
+  int32 status = 1;
+}
+
+message ACPCfgOffsetPowerReferenceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof offset_power_reference_carrier_enum {
+    AcpOffsetPowerReferenceCarrier offset_power_reference_carrier = 3;
+    int32 offset_power_reference_carrier_raw = 4;
+  }
+  int32 offset_power_reference_specific = 5;
+}
+
+message ACPCfgOffsetPowerReferenceResponse {
+  int32 status = 1;
+}
+
+message ACPCfgRBWFilterRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof rbw_auto_enum {
+    AcpRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
+  oneof rbw_filter_type_enum {
+    AcpRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
+  }
+}
+
+message ACPCfgRBWFilterResponse {
+  int32 status = 1;
+}
+
+message ACPCfgSweepTimeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof sweep_time_auto_enum {
+    AcpSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
+}
+
+message ACPCfgSweepTimeResponse {
+  int32 status = 1;
+}
+
+message ACPFetchAbsolutePowersTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 trace_index = 4;
+}
+
+message ACPFetchAbsolutePowersTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float absolute_powers_trace = 4;
+  int32 actual_array_size = 5;
+}
+
+message ACPFetchCarrierMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchCarrierMeasurementResponse {
+  int32 status = 1;
+  double absolute_power = 2;
+  double relative_power = 3;
+}
+
+message ACPFetchCarrierMeasurementArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchCarrierMeasurementArrayResponse {
+  int32 status = 1;
+  repeated double absolute_power = 2;
+  repeated double relative_power = 3;
+  int32 actual_array_size = 4;
+}
+
+message ACPFetchOffsetMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchOffsetMeasurementResponse {
+  int32 status = 1;
+  double lower_relative_power = 2;
+  double upper_relative_power = 3;
+  double lower_absolute_power = 4;
+  double upper_absolute_power = 5;
+}
+
+message ACPFetchOffsetMeasurementArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchOffsetMeasurementArrayResponse {
+  int32 status = 1;
+  repeated double lower_relative_power = 2;
+  repeated double upper_relative_power = 3;
+  repeated double lower_absolute_power = 4;
+  repeated double upper_absolute_power = 5;
+  int32 actual_array_size = 6;
+}
+
+message ACPFetchRelativePowersTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+  int32 trace_index = 4;
+}
+
+message ACPFetchRelativePowersTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float relative_powers_trace = 4;
+  int32 actual_array_size = 5;
+}
+
+message ACPFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  int32 actual_array_size = 5;
+}
+
+message ACPFetchTotalCarrierPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ACPFetchTotalCarrierPowerResponse {
+  int32 status = 1;
+  double total_carrier_power = 2;
+}
+
+message AbortMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message AbortMeasurementsResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated nidevice_grpc.NIComplexNumberF32 iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iq = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeIQ1WaveformInterleavedIQResponse {
+  int32 status = 1;
+}
+
+message AnalyzeIQ1WaveformSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float iqi = 6;
+  repeated float iqq = 7;
+  int32 reset = 8;
+}
+
+message AnalyzeIQ1WaveformSplitResponse {
+  int32 status = 1;
+}
+
+message AnalyzeSpectrum1WaveformRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+  double x0 = 4;
+  double dx = 5;
+  repeated float spectrum = 6;
+  int32 reset = 7;
+}
+
+message AnalyzeSpectrum1WaveformResponse {
+  int32 status = 1;
+}
+
+message AutoLevelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double measurement_interval = 3;
+}
+
+message AutoLevelResponse {
+  int32 status = 1;
+  double reference_level = 2;
+}
+
+message BuildCarrierStringRequest {
+  string selector_string = 1;
+  int32 carrier_number = 2;
+}
+
+message BuildCarrierStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildChannelStringRequest {
+  string selector_string = 1;
+  int32 channel_number = 2;
+}
+
+message BuildChannelStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildOffsetStringRequest {
+  string selector_string = 1;
+  int32 offset_number = 2;
+}
+
+message BuildOffsetStringResponse {
+  int32 status = 1;
+  string selector_string_out = 2;
+}
+
+message BuildSignalStringRequest {
+  string signal_name = 1;
+  string result_name = 2;
+}
+
+message BuildSignalStringResponse {
+  int32 status = 1;
+  string selector_string = 2;
+}
+
+message CDACfgPowerUnitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof power_unit_enum {
+    CdaPowerUnit power_unit = 3;
+    int32 power_unit_raw = 4;
+  }
+}
+
+message CDACfgPowerUnitResponse {
+  int32 status = 1;
+}
+
+message CDACfgSynchronizationModeAndIntervalRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof synchronization_mode_enum {
+    CdaSynchronizationMode synchronization_mode = 3;
+    int32 synchronization_mode_raw = 4;
+  }
+  int32 measurement_offset = 5;
+  int32 measurement_length = 6;
+}
+
+message CDACfgSynchronizationModeAndIntervalResponse {
+  int32 status = 1;
+}
+
+message CDACfgUplinkMeasurementChannelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 walsh_code_length = 3;
+  int32 walsh_code_number = 4;
+  oneof branch_enum {
+    CdaUplinkBranch branch = 5;
+    int32 branch_raw = 6;
+  }
+}
+
+message CDACfgUplinkMeasurementChannelResponse {
+  int32 status = 1;
+}
+
+message CDAFetchIQImpairmentsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchIQImpairmentsResponse {
+  int32 status = 1;
+  double iq_origin_offset = 2;
+  double iq_gain_imbalance = 3;
+  double iq_quadrature_error = 4;
+}
+
+message CDAFetchUplinkCodeDomainIAndQPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkCodeDomainIAndQPowerResponse {
+  int32 status = 1;
+  double i_mean_active_power = 2;
+  double q_mean_active_power = 3;
+  double i_peak_inactive_power = 4;
+  double q_peak_inactive_power = 5;
+}
+
+message CDAFetchUplinkCodeDomainIAndQPowerTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkCodeDomainIAndQPowerTraceResponse {
+  int32 status = 1;
+  repeated float i_code_domain_powers = 2;
+  repeated float q_code_domain_powers = 3;
+  int32 actual_array_size = 4;
+}
+
+message CDAFetchUplinkCodeDomainPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkCodeDomainPowerResponse {
+  int32 status = 1;
+  double total_power = 2;
+  double total_active_power = 3;
+  double mean_active_power = 4;
+  double peak_active_power = 5;
+  double mean_inactive_power = 6;
+  double peak_inactive_power = 7;
+}
+
+message CDAFetchUplinkSymbolConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkSymbolConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 symbol_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message CDAFetchUplinkSymbolConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkSymbolConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float symbol_constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message CDAFetchUplinkSymbolConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkSymbolConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float symbol_constellation_i = 2;
+  repeated float symbol_constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
+message CDAFetchUplinkSymbolEVMRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkSymbolEVMResponse {
+  int32 status = 1;
+  double rms_symbol_evm = 2;
+  double peak_symbol_evm = 3;
+  double rms_symbol_magnitude_error = 4;
+  double rms_symbol_phase_error = 5;
+  double mean_symbol_power = 6;
+  double frequency_error = 7;
+  double chip_rate_error = 8;
+}
+
+message CDAFetchUplinkSymbolEVMTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkSymbolEVMTraceResponse {
+  int32 status = 1;
+  repeated float symbol_evm = 2;
+  int32 actual_array_size = 3;
+}
+
+message CDAFetchUplinkSymbolMagnitudeErrorTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkSymbolMagnitudeErrorTraceResponse {
+  int32 status = 1;
+  repeated float symbol_magnitude_error = 2;
+  int32 actual_array_size = 3;
+}
+
+message CDAFetchUplinkSymbolPhaseErrorTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkSymbolPhaseErrorTraceResponse {
+  int32 status = 1;
+  repeated float symbol_phase_error = 2;
+  int32 actual_array_size = 3;
+}
+
+message CDAFetchUplinkSymbolPowerTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CDAFetchUplinkSymbolPowerTraceResponse {
+  int32 status = 1;
+  repeated float symbol_powers = 2;
+  int32 actual_array_size = 3;
+}
+
+message CHPCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    ChpAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+  oneof averaging_type_enum {
+    ChpAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
+  }
+}
+
+message CHPCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message CHPCfgRBWFilterRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof rbw_auto_enum {
+    ChpRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
+  oneof rbw_filter_type_enum {
+    ChpRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
+  }
+}
+
+message CHPCfgRBWFilterResponse {
+  int32 status = 1;
+}
+
+message CHPCfgSweepTimeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof sweep_time_auto_enum {
+    ChpSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
+}
+
+message CHPCfgSweepTimeResponse {
+  int32 status = 1;
+}
+
+message CHPFetchCarrierMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CHPFetchCarrierMeasurementResponse {
+  int32 status = 1;
+  double carrier_absolute_power = 2;
+  double carrier_relative_power = 3;
+}
+
+message CHPFetchCarrierMeasurementArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CHPFetchCarrierMeasurementArrayResponse {
+  int32 status = 1;
+  repeated double carrier_absolute_power = 2;
+  repeated double carrier_relative_power = 3;
+  int32 actual_array_size = 4;
+}
+
+message CHPFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CHPFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  int32 actual_array_size = 5;
+}
+
+message CHPFetchTotalCarrierPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message CHPFetchTotalCarrierPowerResponse {
+  int32 status = 1;
+  double total_carrier_power = 2;
+}
+
+message CfgBandClassRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 band_class = 3;
+}
+
+message CfgBandClassResponse {
+  int32 status = 1;
+}
+
+message CfgCarrierFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double carrier_frequency = 3;
+}
+
+message CfgCarrierFrequencyResponse {
+  int32 status = 1;
+}
+
+message CfgCarrierFrequencyArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated double carrier_frequency = 3;
+}
+
+message CfgCarrierFrequencyArrayResponse {
+  int32 status = 1;
+}
+
+message CfgChannelConfigurationModeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof channel_configuration_mode_enum {
+    ChannelConfigurationMode channel_configuration_mode = 3;
+    int32 channel_configuration_mode_raw = 4;
+  }
+}
+
+message CfgChannelConfigurationModeResponse {
+  int32 status = 1;
+}
+
+message CfgContiguousCarriersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 number_of_carriers = 3;
+  int32 carrier_at_center_frequency = 4;
+  int32 band_class = 5;
+}
+
+message CfgContiguousCarriersResponse {
+  int32 status = 1;
+}
+
+message CfgDigitalEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string digital_edge_source = 3;
+  oneof digital_edge_enum {
+    DigitalEdgeTriggerEdge digital_edge = 4;
+    int32 digital_edge_raw = 5;
+  }
+  double trigger_delay = 6;
+  int32 enable_trigger = 7;
+}
+
+message CfgDigitalEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgExternalAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double external_attenuation = 3;
+}
+
+message CfgExternalAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double center_frequency = 3;
+}
+
+message CfgFrequencyResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyChannelNumberRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 link_direction = 3;
+  int32 band_class = 4;
+  int32 channel_number = 5;
+}
+
+message CfgFrequencyChannelNumberResponse {
+  int32 status = 1;
+}
+
+message CfgFrequencyReferenceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof frequency_reference_source_enum {
+    FrequencyReferenceSource frequency_reference_source_mapped = 3;
+    string frequency_reference_source_raw = 4;
+  }
+  double frequency_reference_frequency = 5;
+}
+
+message CfgFrequencyReferenceResponse {
+  int32 status = 1;
+}
+
+message CfgIQPowerEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string iq_power_edge_source = 3;
+  oneof iq_power_edge_slope_enum {
+    IQPowerEdgeTriggerSlope iq_power_edge_slope = 4;
+    int32 iq_power_edge_slope_raw = 5;
+  }
+  double iq_power_edge_level = 6;
+  double trigger_delay = 7;
+  oneof minimum_quiet_time_mode_enum {
+    TriggerMinimumQuietTimeMode minimum_quiet_time_mode = 8;
+    int32 minimum_quiet_time_mode_raw = 9;
+  }
+  double minimum_quiet_time = 10;
+  oneof iq_power_edge_level_type_enum {
+    IQPowerEdgeTriggerLevelType iq_power_edge_level_type = 11;
+    int32 iq_power_edge_level_type_raw = 12;
+  }
+  int32 enable_trigger = 13;
+}
+
+message CfgIQPowerEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgMechanicalAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof mechanical_attenuation_auto_enum {
+    MechanicalAttenuationAuto mechanical_attenuation_auto = 3;
+    int32 mechanical_attenuation_auto_raw = 4;
+  }
+  double mechanical_attenuation_value = 5;
+}
+
+message CfgMechanicalAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgNumberOfCarriersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 number_of_carriers = 3;
+}
+
+message CfgNumberOfCarriersResponse {
+  int32 status = 1;
+}
+
+message CfgPhysicalLayerSubtypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof physical_layer_subtype_enum {
+    PhysicalLayerSubtype physical_layer_subtype = 3;
+    int32 physical_layer_subtype_raw = 4;
+  }
+}
+
+message CfgPhysicalLayerSubtypeResponse {
+  int32 status = 1;
+}
+
+message CfgRFRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double center_frequency = 3;
+  double reference_level = 4;
+  double external_attenuation = 5;
+}
+
+message CfgRFResponse {
+  int32 status = 1;
+}
+
+message CfgRFAttenuationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string channel_name = 2;
+  oneof rf_attenuation_auto_enum {
+    RFAttenuationAuto rf_attenuation_auto = 3;
+    int32 rf_attenuation_auto_raw = 4;
+  }
+  double rf_attenuation_value = 5;
+}
+
+message CfgRFAttenuationResponse {
+  int32 status = 1;
+}
+
+message CfgReferenceLevelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double reference_level = 3;
+}
+
+message CfgReferenceLevelResponse {
+  int32 status = 1;
+}
+
+message CfgSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double trigger_delay = 3;
+  int32 enable_trigger = 4;
+}
+
+message CfgSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message CfgUplinkDataModulationTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof uplink_data_modulation_type_enum {
+    UplinkDataModulationType uplink_data_modulation_type = 3;
+    int32 uplink_data_modulation_type_raw = 4;
+  }
+}
+
+message CfgUplinkDataModulationTypeResponse {
+  int32 status = 1;
+}
+
+message CfgUplinkNumberOfChannelsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 uplink_number_of_channels = 3;
+}
+
+message CfgUplinkNumberOfChannelsResponse {
+  int32 status = 1;
+}
+
+message CfgUplinkSpreadingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int64 uplink_spreading_i_mask = 3;
+  int64 uplink_spreading_q_mask = 4;
+}
+
+message CfgUplinkSpreadingResponse {
+  int32 status = 1;
+}
+
+message CfgUplinkUserDefinedChannelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  int32 uplink_walsh_code_length = 3;
+  int32 uplink_walsh_code_number = 4;
+  oneof uplink_branch_enum {
+    UplinkBranch uplink_branch = 5;
+    int32 uplink_branch_raw = 6;
+  }
+}
+
+message CfgUplinkUserDefinedChannelResponse {
+  int32 status = 1;
+}
+
+message CfgUplinkUserDefinedChannelArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  repeated int32 uplink_walsh_code_length = 3;
+  repeated int32 uplink_walsh_code_number = 4;
+  repeated UplinkBranch uplink_branch = 5;
+}
+
+message CfgUplinkUserDefinedChannelArrayResponse {
+  int32 status = 1;
+}
+
+message CheckMeasurementStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CheckMeasurementStatusResponse {
+  int32 status = 1;
+  int32 done = 2;
+}
+
+message ClearAllNamedResultsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearAllNamedResultsResponse {
+  int32 status = 1;
+}
+
+message ClearNamedResultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ClearNamedResultResponse {
+  int32 status = 1;
+}
+
+message CloneSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string old_signal_name = 2;
+  string new_signal_name = 3;
+}
+
+message CloneSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message CloseRequest {
+  nidevice_grpc.Session instrument = 1;
+  bool force_destroy = 2;
+}
+
+message CloseResponse {
+  int32 status = 1;
+}
+
+message CommitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message CommitResponse {
+  int32 status = 1;
+}
+
+message CreateSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message CreateSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DeleteSignalConfigurationRequest {
+  nidevice_grpc.Session instrument = 1;
+  string signal_name = 2;
+}
+
+message DeleteSignalConfigurationResponse {
+  int32 status = 1;
+}
+
+message DisableTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message DisableTriggerResponse {
+  int32 status = 1;
+}
+
+message GetAllNamedResultNamesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message GetAllNamedResultNamesResponse {
+  int32 status = 1;
+  string result_names = 2;
+  int32 actual_result_names_size = 3;
+  int32 default_result_exists = 4;
+}
+
+message GetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeF32Response {
+  int32 status = 1;
+  float attr_val = 2;
+}
+
+message GetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeF32ArrayResponse {
+  int32 status = 1;
+  repeated float attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeF64Response {
+  int32 status = 1;
+  double attr_val = 2;
+}
+
+message GetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeF64ArrayResponse {
+  int32 status = 1;
+  repeated double attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeI16Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeI32Response {
+  int32 status = 1;
+  NiRFmxEVDOInt32AttributeValues attr_val = 2;
+  int32 attr_val_raw = 3;
+}
+
+message GetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeI32ArrayResponse {
+  int32 status = 1;
+  repeated NiRFmxEVDOInt32AttributeValues attr_val = 2;
+  repeated int32 attr_val_raw = 3;
+  int32 actual_array_size = 4;
+}
+
+message GetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeI64Response {
+  int32 status = 1;
+  int64 attr_val = 2;
+}
+
+message GetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeI64ArrayResponse {
+  int32 status = 1;
+  repeated int64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeI8Response {
+  int32 status = 1;
+  int32 attr_val = 2;
+}
+
+message GetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeI8ArrayResponse {
+  int32 status = 1;
+  repeated int32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeStringResponse {
+  int32 status = 1;
+  string attr_val = 2;
+}
+
+message GetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeU16Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeU32Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeU32ArrayResponse {
+  int32 status = 1;
+  repeated uint32 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeU64ArrayResponse {
+  int32 status = 1;
+  repeated uint64 attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeU8Response {
+  int32 status = 1;
+  uint32 attr_val = 2;
+}
+
+message GetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message GetAttributeU8ArrayResponse {
+  int32 status = 1;
+  bytes attr_val = 2;
+  int32 actual_array_size = 3;
+}
+
+message GetErrorRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message GetErrorResponse {
+  int32 status = 1;
+  int32 error_code = 2;
+  string error_description = 3;
+}
+
+message GetErrorStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  int32 error_code = 2;
+}
+
+message GetErrorStringResponse {
+  int32 status = 1;
+  string error_description = 2;
+}
+
+message InitializeRequest {
+  string session_name = 1;
+  string resource_name = 2;
+  string option_string = 3;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 4;
+}
+
+message InitializeResponse {
+  int32 status = 1;
+  nidevice_grpc.Session instrument = 2;
+  int32 is_new_session = 3;
+  string error_message = 4 [deprecated = true];
+  bool new_session_initialized = 5;
+}
+
+message InitializeFromNIRFSASessionRequest {
+  string session_name = 1;
+  nidevice_grpc.Session nirfsa_session = 2;
+  nidevice_grpc.SessionInitializationBehavior initialization_behavior = 3;
+}
+
+message InitializeFromNIRFSASessionResponse {
+  int32 status = 1;
+  nidevice_grpc.Session instrument = 2;
+  string error_message = 3 [deprecated = true];
+  bool new_session_initialized = 4;
+}
+
+message InitiateRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  string result_name = 3;
+}
+
+message InitiateResponse {
+  int32 status = 1;
+}
+
+message ModAccCfgMultiCarrierFilterEnabledRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof multi_carrier_filter_enabled_enum {
+    ModAccMultiCarrierFilterEnabled multi_carrier_filter_enabled = 3;
+    int32 multi_carrier_filter_enabled_raw = 4;
+  }
+}
+
+message ModAccCfgMultiCarrierFilterEnabledResponse {
+  int32 status = 1;
+}
+
+message ModAccCfgSynchronizationModeAndIntervalRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof synchronization_mode_enum {
+    ModAccSynchronizationMode synchronization_mode = 3;
+    int32 synchronization_mode_raw = 4;
+  }
+  int32 measurement_offset = 5;
+  int32 measurement_length = 6;
+}
+
+message ModAccCfgSynchronizationModeAndIntervalResponse {
+  int32 status = 1;
+}
+
+message ModAccFetchConstellationTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchConstellationTraceResponse {
+  int32 status = 1;
+  repeated nidevice_grpc.NIComplexNumberF32 constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchConstellationTraceInterleavedIQRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchConstellationTraceInterleavedIQResponse {
+  int32 status = 1;
+  repeated float constellation = 2;
+  int32 actual_array_size = 3;
+}
+
+message ModAccFetchConstellationTraceSplitRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchConstellationTraceSplitResponse {
+  int32 status = 1;
+  repeated float constellation_i = 2;
+  repeated float constellation_q = 3;
+  int32 actual_array_size = 4;
+}
+
+message ModAccFetchEVMTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchEVMTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float evm = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchIQImpairmentsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchIQImpairmentsResponse {
+  int32 status = 1;
+  double iq_origin_offset = 2;
+  double iq_gain_imbalance = 3;
+  double iq_quadrature_error = 4;
+}
+
+message ModAccFetchMagnitudeErrorTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchMagnitudeErrorTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float magnitude_error = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchPhaseErrorTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchPhaseErrorTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float phase_error = 4;
+  int32 actual_array_size = 5;
+}
+
+message ModAccFetchUplinkDetectedChannelRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchUplinkDetectedChannelResponse {
+  int32 status = 1;
+  int32 uplink_detected_walsh_code_length = 2;
+  int32 uplink_detected_walsh_code_number = 3;
+  ModAccUplinkDetectedBranch uplink_detected_branch = 4;
+  int32 uplink_detected_branch_raw = 5;
+}
+
+message ModAccFetchUplinkDetectedChannelArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchUplinkDetectedChannelArrayResponse {
+  int32 status = 1;
+  repeated int32 uplink_detected_walsh_code_length = 2;
+  repeated int32 uplink_detected_walsh_code_number = 3;
+  repeated ModAccUplinkDetectedBranch uplink_detected_branch = 4;
+  repeated int32 uplink_detected_branch_raw = 5;
+  int32 actual_array_size = 6;
+}
+
+message ModAccFetchUplinkDetectedDataModulationTypeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchUplinkDetectedDataModulationTypeResponse {
+  int32 status = 1;
+  ModAccUplinkDetectedDataModulationType uplink_detected_data_modulation_type = 2;
+  int32 uplink_detected_data_modulation_type_raw = 3;
+}
+
+message ModAccFetchUplinkEVMRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchUplinkEVMResponse {
+  int32 status = 1;
+  double uplink_rms_evm = 2;
+  double uplink_peak_evm = 3;
+  double uplink_rho = 4;
+  double frequency_error = 5;
+  double chip_rate_error = 6;
+  double uplink_rms_magnitude_error = 7;
+  double uplink_rms_phase_error = 8;
+}
+
+message ModAccFetchUplinkNumberOfDetectedChannelsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchUplinkNumberOfDetectedChannelsResponse {
+  int32 status = 1;
+  int32 uplink_number_of_detected_channels = 2;
+}
+
+message ModAccFetchUplinkPeakActiveCDERequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchUplinkPeakActiveCDEResponse {
+  int32 status = 1;
+  double uplink_peak_active_cde = 2;
+  int32 uplink_peak_active_cde_walsh_code_length = 3;
+  int32 uplink_peak_active_cde_walsh_code_number = 4;
+  ModAccUplinkPeakActiveCdeBranch uplink_peak_active_cde_branch = 5;
+  int32 uplink_peak_active_cde_branch_raw = 6;
+}
+
+message ModAccFetchUplinkPeakCDERequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message ModAccFetchUplinkPeakCDEResponse {
+  int32 status = 1;
+  double uplink_peak_cde = 2;
+  int32 uplink_peak_cde_walsh_code_number = 3;
+  ModAccUplinkPeakCdeBranch uplink_peak_cde_branch = 4;
+  int32 uplink_peak_cde_branch_raw = 5;
+}
+
+message OBWCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    ObwAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+  oneof averaging_type_enum {
+    ObwAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
+  }
+}
+
+message OBWCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message OBWCfgRBWFilterRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof rbw_auto_enum {
+    ObwRbwAutoBandwidth rbw_auto = 3;
+    int32 rbw_auto_raw = 4;
+  }
+  double rbw = 5;
+  oneof rbw_filter_type_enum {
+    ObwRbwFilterType rbw_filter_type = 6;
+    int32 rbw_filter_type_raw = 7;
+  }
+}
+
+message OBWCfgRBWFilterResponse {
+  int32 status = 1;
+}
+
+message OBWCfgSweepTimeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof sweep_time_auto_enum {
+    ObwSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
+}
+
+message OBWCfgSweepTimeResponse {
+  int32 status = 1;
+}
+
+message OBWFetchMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OBWFetchMeasurementResponse {
+  int32 status = 1;
+  double occupied_bandwidth = 2;
+  double absolute_power = 3;
+  double start_frequency = 4;
+  double stop_frequency = 5;
+}
+
+message OBWFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message OBWFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  int32 actual_array_size = 5;
+}
+
+message ResetAttributeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+}
+
+message ResetAttributeResponse {
+  int32 status = 1;
+}
+
+message ResetToDefaultRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+}
+
+message ResetToDefaultResponse {
+  int32 status = 1;
+}
+
+message SEMCfgAveragingRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof averaging_enabled_enum {
+    SemAveragingEnabled averaging_enabled = 3;
+    int32 averaging_enabled_raw = 4;
+  }
+  int32 averaging_count = 5;
+  oneof averaging_type_enum {
+    SemAveragingType averaging_type = 6;
+    int32 averaging_type_raw = 7;
+  }
+}
+
+message SEMCfgAveragingResponse {
+  int32 status = 1;
+}
+
+message SEMCfgSweepTimeRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof sweep_time_auto_enum {
+    SemSweepTimeAuto sweep_time_auto = 3;
+    int32 sweep_time_auto_raw = 4;
+  }
+  double sweep_time_interval = 5;
+}
+
+message SEMCfgSweepTimeResponse {
+  int32 status = 1;
+}
+
+message SEMFetchCarrierMeasurementRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchCarrierMeasurementResponse {
+  int32 status = 1;
+  double absolute_integrated_power = 2;
+  double relative_integrated_power = 3;
+}
+
+message SEMFetchCarrierMeasurementArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchCarrierMeasurementArrayResponse {
+  int32 status = 1;
+  repeated double absolute_integrated_power = 2;
+  repeated double relative_integrated_power = 3;
+  int32 actual_array_size = 4;
+}
+
+message SEMFetchLowerOffsetMarginRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchLowerOffsetMarginResponse {
+  int32 status = 1;
+  SemLowerOffsetMeasurementStatus measurement_status = 2;
+  int32 measurement_status_raw = 3;
+  double margin = 4;
+  double margin_frequency = 5;
+  double margin_absolute_power = 6;
+  double margin_relative_power = 7;
+}
+
+message SEMFetchLowerOffsetMarginArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchLowerOffsetMarginArrayResponse {
+  int32 status = 1;
+  repeated SemLowerOffsetMeasurementStatus measurement_status = 2;
+  repeated int32 measurement_status_raw = 3;
+  repeated double margin = 4;
+  repeated double margin_frequency = 5;
+  repeated double margin_absolute_power = 6;
+  repeated double margin_relative_power = 7;
+  int32 actual_array_size = 8;
+}
+
+message SEMFetchLowerOffsetPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchLowerOffsetPowerResponse {
+  int32 status = 1;
+  double absolute_integrated_power = 2;
+  double relative_integrated_power = 3;
+  double absolute_peak_power = 4;
+  double peak_frequency = 5;
+  double relative_peak_power = 6;
+}
+
+message SEMFetchLowerOffsetPowerArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchLowerOffsetPowerArrayResponse {
+  int32 status = 1;
+  repeated double absolute_integrated_power = 2;
+  repeated double relative_integrated_power = 3;
+  repeated double absolute_peak_power = 4;
+  repeated double peak_frequency = 5;
+  repeated double relative_peak_power = 6;
+  int32 actual_array_size = 7;
+}
+
+message SEMFetchMeasurementStatusRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchMeasurementStatusResponse {
+  int32 status = 1;
+  SemCompositeMeasurementStatus measurement_status = 2;
+  int32 measurement_status_raw = 3;
+}
+
+message SEMFetchSpectrumRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchSpectrumResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float spectrum = 4;
+  repeated float relative_mask = 5;
+  repeated float absolute_mask = 6;
+  int32 actual_array_size = 7;
+}
+
+message SEMFetchTotalCarrierPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchTotalCarrierPowerResponse {
+  int32 status = 1;
+  double total_carrier_power = 2;
+}
+
+message SEMFetchUpperOffsetMarginRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchUpperOffsetMarginResponse {
+  int32 status = 1;
+  SemUpperOffsetMeasurementStatus measurement_status = 2;
+  int32 measurement_status_raw = 3;
+  double margin = 4;
+  double margin_frequency = 5;
+  double margin_absolute_power = 6;
+  double margin_relative_power = 7;
+}
+
+message SEMFetchUpperOffsetMarginArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchUpperOffsetMarginArrayResponse {
+  int32 status = 1;
+  repeated SemUpperOffsetMeasurementStatus measurement_status = 2;
+  repeated int32 measurement_status_raw = 3;
+  repeated double margin = 4;
+  repeated double margin_frequency = 5;
+  repeated double margin_absolute_power = 6;
+  repeated double margin_relative_power = 7;
+  int32 actual_array_size = 8;
+}
+
+message SEMFetchUpperOffsetPowerRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchUpperOffsetPowerResponse {
+  int32 status = 1;
+  double absolute_integrated_power = 2;
+  double relative_integrated_power = 3;
+  double absolute_peak_power = 4;
+  double peak_frequency = 5;
+  double relative_peak_power = 6;
+}
+
+message SEMFetchUpperOffsetPowerArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SEMFetchUpperOffsetPowerArrayResponse {
+  int32 status = 1;
+  repeated double absolute_integrated_power = 2;
+  repeated double relative_integrated_power = 3;
+  repeated double absolute_peak_power = 4;
+  repeated double peak_frequency = 5;
+  repeated double relative_peak_power = 6;
+  int32 actual_array_size = 7;
+}
+
+message SelectMeasurementsRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof measurements_enum {
+    MeasurementTypes measurements = 3;
+    uint32 measurements_raw = 4;
+  }
+  int32 enable_all_traces = 5;
+}
+
+message SelectMeasurementsResponse {
+  int32 status = 1;
+}
+
+message SendSoftwareEdgeTriggerRequest {
+  nidevice_grpc.Session instrument = 1;
+}
+
+message SendSoftwareEdgeTriggerResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  float attr_val = 4;
+}
+
+message SetAttributeF32Response {
+  int32 status = 1;
+}
+
+message SetAttributeF32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  repeated float attr_val = 4;
+}
+
+message SetAttributeF32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeF64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  double attr_val = 4;
+}
+
+message SetAttributeF64Response {
+  int32 status = 1;
+}
+
+message SetAttributeF64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  repeated double attr_val = 4;
+}
+
+message SetAttributeF64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI16Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxEVDOInt32AttributeValues attr_val = 4;
+    int32 attr_val_raw = 5;
+  }
+}
+
+message SetAttributeI32Response {
+  int32 status = 1;
+}
+
+message SetAttributeI32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  repeated NiRFmxEVDOInt32AttributeValues attr_val = 4;
+}
+
+message SetAttributeI32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI64Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  int64 attr_val = 4;
+}
+
+message SetAttributeI64Response {
+  int32 status = 1;
+}
+
+message SetAttributeI64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  repeated int64 attr_val = 4;
+}
+
+message SetAttributeI64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeI8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  int32 attr_val = 4;
+}
+
+message SetAttributeI8Response {
+  int32 status = 1;
+}
+
+message SetAttributeI8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  repeated int32 attr_val = 4;
+}
+
+message SetAttributeI8ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexDoubleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumber attr_val = 4;
+}
+
+message SetAttributeNIComplexDoubleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeNIComplexSingleArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  repeated nidevice_grpc.NIComplexNumberF32 attr_val = 4;
+}
+
+message SetAttributeNIComplexSingleArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeStringRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  oneof attr_val_enum {
+    NiRFmxEVDOStringAttributeValuesMapped attr_val_mapped = 4;
+    string attr_val_raw = 5;
+  }
+}
+
+message SetAttributeStringResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU16Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU16Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU32Response {
+  int32 status = 1;
+}
+
+message SetAttributeU32ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  repeated uint32 attr_val = 4;
+}
+
+message SetAttributeU32ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU64ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  repeated uint64 attr_val = 4;
+}
+
+message SetAttributeU64ArrayResponse {
+  int32 status = 1;
+}
+
+message SetAttributeU8Request {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  uint32 attr_val = 4;
+}
+
+message SetAttributeU8Response {
+  int32 status = 1;
+}
+
+message SetAttributeU8ArrayRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  NiRFmxEVDOAttribute attribute_id = 3;
+  bytes attr_val = 4;
+}
+
+message SetAttributeU8ArrayResponse {
+  int32 status = 1;
+}
+
+message SlotPhaseCfgSynchronizationModeAndIntervalRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof synchronization_mode_enum {
+    SlotPhaseSynchronizationMode synchronization_mode = 3;
+    int32 synchronization_mode_raw = 4;
+  }
+  int32 measurement_offset = 5;
+  int32 measurement_length = 6;
+}
+
+message SlotPhaseCfgSynchronizationModeAndIntervalResponse {
+  int32 status = 1;
+}
+
+message SlotPhaseFetchChipPhaseErrorLinearFitTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SlotPhaseFetchChipPhaseErrorLinearFitTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float chip_phase_error_linear_fit = 4;
+  int32 actual_array_size = 5;
+}
+
+message SlotPhaseFetchChipPhaseErrorTraceRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SlotPhaseFetchChipPhaseErrorTraceResponse {
+  int32 status = 1;
+  double x0 = 2;
+  double dx = 3;
+  repeated float chip_phase_error = 4;
+  int32 actual_array_size = 5;
+}
+
+message SlotPhaseFetchMaximumHalfSlotPhaseDiscontinuityRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SlotPhaseFetchMaximumHalfSlotPhaseDiscontinuityResponse {
+  int32 status = 1;
+  double maximum_half_slot_phase_discontinuity = 2;
+}
+
+message SlotPhaseFetchPhaseDiscontinuitiesRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SlotPhaseFetchPhaseDiscontinuitiesResponse {
+  int32 status = 1;
+  repeated double half_slot_phase_discontinuity = 2;
+  int32 actual_array_size = 3;
+}
+
+message SlotPowerCfgSynchronizationModeAndIntervalRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  oneof synchronization_mode_enum {
+    SlotPowerSynchronizationMode synchronization_mode = 3;
+    int32 synchronization_mode_raw = 4;
+  }
+  int32 measurement_offset = 5;
+  int32 measurement_length = 6;
+}
+
+message SlotPowerCfgSynchronizationModeAndIntervalResponse {
+  int32 status = 1;
+}
+
+message SlotPowerFetchPowersRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message SlotPowerFetchPowersResponse {
+  int32 status = 1;
+  repeated double half_slot_power = 2;
+  repeated double half_slot_power_delta = 3;
+  int32 actual_array_size = 4;
+}
+
+message WaitForAcquisitionCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  double timeout = 2;
+}
+
+message WaitForAcquisitionCompleteResponse {
+  int32 status = 1;
+}
+
+message WaitForMeasurementCompleteRequest {
+  nidevice_grpc.Session instrument = 1;
+  string selector_string = 2;
+  double timeout = 3;
+}
+
+message WaitForMeasurementCompleteResponse {
+  int32 status = 1;
+}
+

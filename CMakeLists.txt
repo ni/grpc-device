@@ -177,7 +177,7 @@ set(metadata_dir ${CMAKE_SOURCE_DIR}/source/codegen/metadata)
 set(service_output_dir ${CMAKE_SOURCE_DIR}/generated)
 set(codegen_dir ${CMAKE_SOURCE_DIR}/source/codegen)
 set(custom_dir ${CMAKE_SOURCE_DIR}/source/custom)
-set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nidmm_restricted" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nifpga" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxpulse" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxwlan" "nirfmxvna" "nirfmxbluetoothgen" "nirfmxwlangen" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "nirfsg_restricted" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket" "visa")
+set(nidrivers "nidaqmx" "nidcpower" "nidigitalpattern" "nidmm" "nidmm_restricted" "nifake" "nifake_extension" "nifake_non_ivi" "nifgen" "nifpga" "nimxlcterminaladaptor_restricted" "nirfmxbluetooth" "nirfmxcdma2k" "nirfmxgsm" "nirfmxinstr" "nirfmxinstr_restricted" "nirfmxlte" "nirfmxnr" "nirfmxpulse" "nirfmxspecan" "nirfmxspecan_restricted" "nirfmxtdscdma" "nirfmxwcdma" "nirfmxdemod" "nirfmxevdo" "nirfmxwlan" "nirfmxvna" "nirfmxbluetoothgen" "nirfmxwlangen" "nirfmxwlan_restricted" "nirfsa" "nirfsg" "nirfsg_restricted" "niscope" "niscope_restricted" "niswitch" "nisync" "nitclk" "nixnet" "nixnetsocket" "visa")
 
 #----------------------------------------------------------------------
 # Create NI Driver APIs proto and server files
@@ -1058,6 +1058,8 @@ if(WIN32)
         "source/tests/system/nirfmxwcdma_session_tests.cpp"
         "source/tests/system/nirfmxdemod_driver_api_tests.cpp"
         "source/tests/system/nirfmxdemod_session_tests.cpp"
+        "source/tests/system/nirfmxevdo_driver_api_tests.cpp"
+        "source/tests/system/nirfmxevdo_session_tests.cpp"
         "source/tests/system/nirfmxvna_driver_api_tests.cpp"
         "source/tests/system/nirfmxvna_session_tests.cpp"
         "source/tests/system/nirfmxwlan_driver_api_tests.cpp"
