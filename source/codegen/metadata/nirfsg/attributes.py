@@ -169,6 +169,55 @@ attributes = {
         'resettable': False,
         'type': 'ViString'
     },
+    1100141: {
+        'codegen_method': 'public',
+        'grpc_type': 'double',
+        'name': 'DDS_AMP',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
+    1100142: {
+        'codegen_method': 'public',
+        'grpc_type': 'double',
+        'name': 'DDS_FREQ',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
+    1100143: {
+        'codegen_method': 'public',
+        'grpc_type': 'double',
+        'name': 'DDS_PHASE',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
+    1100145: {
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
+        'name': 'DDS_ENABLED',
+        'resettable': True,
+        'type': 'ViBoolean'
+    },
+    1100319: {
+        'codegen_method': 'public',
+        'grpc_type': 'sint32',
+        'name': 'VCO_PLL_MODE',
+        'resettable': True,
+        'type': 'ViInt32'
+    },
+    1100320: {
+        'codegen_method': 'public',
+        'grpc_type': 'bool',
+        'name': 'VCO_COARSE_LOCK_DETECTED',
+        'resettable': False,
+        'type': 'ViBoolean'
+    },
+    1100321: {
+        'codegen_method': 'public',
+        'grpc_type': 'double',
+        'name': 'VCO_DDS_FREQ_OFFSET',
+        'resettable': True,
+        'type': 'ViReal64'
+    },
     1150001: {
         'codegen_method': 'public',
         'enum': 'RefClockSource',
