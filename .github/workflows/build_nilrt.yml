@@ -7,6 +7,9 @@ on:
 env:
   BUILD_TYPE: Release
 
+permissions:
+  contents: read
+
 jobs:
   build-nilrt:
     name: NILRT Cross Compile

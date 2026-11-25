@@ -7,6 +7,9 @@ on:
   workflow_call:
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   validate_imported_protos:
     uses: ./.github/workflows/validate_imported_protos.yml
@@ -33,4 +36,7 @@ jobs:
       - build_desktop
       - build_nilrt
       - create_client_artifacts
+    # Only this job needs write access (to create the draft GitHub release).
+    permissions:
+      contents: write
     uses: ./.github/workflows/create_release.yml

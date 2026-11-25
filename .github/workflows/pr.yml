@@ -9,7 +9,17 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   run_ci:
     name: Run CI
+    # Ceiling for the reusable CI workflow. GitHub validates nested job permissions
+    # up front, so this must cover ci.yml's create_release job (contents: write),
+    # even though that job only runs on pushes to releases/** and is skipped for PRs.
+    # Every other job in ci.yml is restricted to contents: read by its own top-level
+    # permissions, and fork PRs always receive a read-only token.
+    permissions:
+      contents: write
     uses: ./.github/workflows/ci.yml

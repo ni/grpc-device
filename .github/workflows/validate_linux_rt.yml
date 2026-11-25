@@ -4,10 +4,16 @@ on:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+'
 
+permissions:
+  contents: read
+
 jobs:
   validate_linux_rt:
     name: Validate Linux RT Feed Package Version
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      issues: write # Create an issue when the Linux RT feed needs updating.
     steps:
     - name: Checkout Repo
       uses: actions/checkout@v4
