@@ -11,7 +11,6 @@
 #include <iostream>
 #include <atomic>
 #include <vector>
-#include "custom/ivi_errors.h"
 #include <server/converters.h>
 
 namespace nirfsg_grpc {
@@ -1357,7 +1356,7 @@ namespace nirfsg_grpc {
       auto frequencies = const_cast<ViReal64*>(request->frequencies().data());
       auto frequencies_size_raw = request->frequencies().size();
       ViInt32 frequencies_size = nidevice_grpc::converters::convert_size<ViInt32>(frequencies_size_raw, "frequencies_size");
-      auto sparameter_table = convert_from_grpc<NIComplexNumber_struct>(request->sparameter_table());
+      auto sparameter_table = convert_from_grpc<NIComplexNumber>(request->sparameter_table());
       auto sparameter_table_size_raw = request->sparameter_table().size();
       ViInt32 sparameter_table_size = nidevice_grpc::converters::convert_size<ViInt32>(sparameter_table_size_raw, "sparameter_table_size");
       ViInt32 number_of_ports = request->number_of_ports();
@@ -1444,30 +1443,6 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->DeleteAllDeembeddingTables(vi);
-      if (!status_ok(status)) {
-        return ConvertApiErrorStatusForViSession(context, status, vi);
-      }
-      response->set_status(status);
-      return ::grpc::Status::OK;
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSGService::DisableCalibrationPlane(::grpc::ServerContext* context, const DisableCalibrationPlaneRequest* request, DisableCalibrationPlaneResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
-      auto channel_name = channel_name_mbcs.c_str();
-      auto status = library_->DisableCalibrationPlane(vi, channel_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1586,6 +1561,30 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto status = library_->DisableAllModulation(vi);
+      if (!status_ok(status)) {
+        return ConvertApiErrorStatusForViSession(context, status, vi);
+      }
+      response->set_status(status);
+      return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::DisableCalibrationPlane(::grpc::ServerContext* context, const DisableCalibrationPlaneRequest* request, DisableCalibrationPlaneResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto channel_name_mbcs = convert_from_grpc<std::string>(request->channel_name());
+      auto channel_name = channel_name_mbcs.c_str();
+      auto status = library_->DisableCalibrationPlane(vi, channel_name);
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
       }
@@ -1720,7 +1719,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViStatus error_code = request->error_code();
-      std::string error_message(1024 - 1, '\0');
+      std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorMessage(vi, error_code, (ViChar*)error_message.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1748,7 +1747,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt32 error_code {};
-      std::string error_message(1024 - 1, '\0');
+      std::string error_message(256 - 1, '\0');
       auto status = library_->ErrorQuery(vi, &error_code, (ViChar*)error_message.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -1925,51 +1924,6 @@ namespace nirfsg_grpc {
         convert_to_grpc(script_names, &script_names_utf8);
         response->set_script_names(script_names_utf8);
         nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_script_names()));
-        response->set_actual_buffer_size(actual_buffer_size);
-        return ::grpc::Status::OK;
-      }
-    }
-    catch (nidevice_grpc::NonDriverException& ex) {
-      return ex.GetStatus();
-    }
-  }
-
-  //---------------------------------------------------------------------
-  //---------------------------------------------------------------------
-  ::grpc::Status NiRFSGService::GetScript(::grpc::ServerContext* context, const GetScriptRequest* request, GetScriptResponse* response)
-  {
-    if (context->IsCancelled()) {
-      return ::grpc::Status::CANCELLED;
-    }
-    try {
-      auto vi_grpc_session = request->vi();
-      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      auto script_name_mbcs = convert_from_grpc<std::string>(request->script_name());
-      auto script_name = script_name_mbcs.c_str();
-      ViInt32 actual_buffer_size {};
-      while (true) {
-        auto status = library_->GetScript(vi, script_name, nullptr, 0, &actual_buffer_size);
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        std::string script;
-        if (actual_buffer_size > 0) {
-            script.resize(actual_buffer_size - 1);
-        }
-        auto buffer_size = actual_buffer_size;
-        status = library_->GetScript(vi, script_name, (ViChar*)script.data(), buffer_size, &actual_buffer_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
-          // buffer is now too small, try again
-          continue;
-        }
-        if (!status_ok(status)) {
-          return ConvertApiErrorStatusForViSession(context, status, vi);
-        }
-        response->set_status(status);
-        std::string script_utf8;
-        convert_to_grpc(script, &script_utf8);
-        response->set_script(script_utf8);
-        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_script()));
         response->set_actual_buffer_size(actual_buffer_size);
         return ::grpc::Status::OK;
       }
@@ -2215,17 +2169,19 @@ namespace nirfsg_grpc {
     try {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
-      ViInt32 number_of_sparameters {};
-      ViInt32 number_of_ports {};
+
       while (true) {
-        auto status = library_->GetDeembeddingSparameters(vi, nullptr, 0, &number_of_sparameters, &number_of_ports);
+        auto status = library_->GetDeembeddingSparameters(vi, nullptr, 0, nullptr, nullptr);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
-        std::vector<NIComplexNumber_struct> sparameters(number_of_sparameters, NIComplexNumber_struct());
-        auto sparameters_array_size = number_of_sparameters;
+        ViInt32 sparameters_array_size = status;
+
+        std::vector<NIComplexNumber> sparameters(sparameters_array_size, NIComplexNumber());
+        ViInt32 number_of_sparameters {};
+        ViInt32 number_of_ports {};
         status = library_->GetDeembeddingSparameters(vi, sparameters.data(), sparameters_array_size, &number_of_sparameters, &number_of_ports);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(sparameters_array_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2234,13 +2190,6 @@ namespace nirfsg_grpc {
         }
         response->set_status(status);
         convert_to_grpc(sparameters, response->mutable_sparameters());
-        {
-          auto shrunk_size = number_of_sparameters;
-          auto current_size = response->mutable_sparameters()->size();
-          if (shrunk_size != current_size) {
-            response->mutable_sparameters()->DeleteSubrange(shrunk_size, current_size - shrunk_size);
-          }
-        }
         response->set_number_of_sparameters(number_of_sparameters);
         response->set_number_of_ports(number_of_ports);
         return ::grpc::Status::OK;
@@ -2348,6 +2297,51 @@ namespace nirfsg_grpc {
       response->set_status(status);
       response->set_value(value);
       return ::grpc::Status::OK;
+    }
+    catch (nidevice_grpc::NonDriverException& ex) {
+      return ex.GetStatus();
+    }
+  }
+
+  //---------------------------------------------------------------------
+  //---------------------------------------------------------------------
+  ::grpc::Status NiRFSGService::GetScript(::grpc::ServerContext* context, const GetScriptRequest* request, GetScriptResponse* response)
+  {
+    if (context->IsCancelled()) {
+      return ::grpc::Status::CANCELLED;
+    }
+    try {
+      auto vi_grpc_session = request->vi();
+      ViSession vi = session_repository_->access_session(vi_grpc_session.name());
+      auto script_name_mbcs = convert_from_grpc<std::string>(request->script_name());
+      auto script_name = script_name_mbcs.c_str();
+      ViInt32 actual_buffer_size {};
+      while (true) {
+        auto status = library_->GetScript(vi, script_name, nullptr, 0, &actual_buffer_size);
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        std::string script;
+        if (actual_buffer_size > 0) {
+            script.resize(actual_buffer_size - 1);
+        }
+        auto buffer_size = actual_buffer_size;
+        status = library_->GetScript(vi, script_name, (ViChar*)script.data(), buffer_size, &actual_buffer_size);
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+          // buffer is now too small, try again
+          continue;
+        }
+        if (!status_ok(status)) {
+          return ConvertApiErrorStatusForViSession(context, status, vi);
+        }
+        response->set_status(status);
+        std::string script_utf8;
+        convert_to_grpc(script, &script_utf8);
+        response->set_script(script_utf8);
+        nidevice_grpc::converters::trim_trailing_nulls(*(response->mutable_script()));
+        response->set_actual_buffer_size(actual_buffer_size);
+        return ::grpc::Status::OK;
+      }
     }
     catch (nidevice_grpc::NonDriverException& ex) {
       return ex.GetStatus();
@@ -2537,16 +2531,18 @@ namespace nirfsg_grpc {
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       auto identifier_mbcs = convert_from_grpc<std::string>(request->identifier());
       auto identifier = identifier_mbcs.c_str();
-      ViInt32 actual_data_size {};
+
       while (true) {
-        auto status = library_->GetUserData(vi, identifier, 0, nullptr, &actual_data_size);
+        auto status = library_->GetUserData(vi, identifier, 0, nullptr, nullptr);
         if (!status_ok(status)) {
           return ConvertApiErrorStatusForViSession(context, status, vi);
         }
-        std::string data(actual_data_size, '\0');
-        auto buffer_size = actual_data_size;
+        ViInt32 buffer_size = status;
+
+        std::string data(buffer_size, '\0');
+        ViInt32 actual_data_size {};
         status = library_->GetUserData(vi, identifier, buffer_size, (ViInt8*)data.data(), &actual_data_size);
-        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer) {
+        if (status == kErrorReadBufferTooSmall || status == kWarningCAPIStringTruncatedToFitBuffer || status > static_cast<decltype(status)>(buffer_size)) {
           // buffer is now too small, try again
           continue;
         }
@@ -2555,7 +2551,6 @@ namespace nirfsg_grpc {
         }
         response->set_status(status);
         response->set_data(data);
-        response->mutable_data()->resize(actual_data_size);
         response->set_actual_data_size(actual_data_size);
         return ::grpc::Status::OK;
       }
@@ -3220,7 +3215,7 @@ namespace nirfsg_grpc {
       auto vi_grpc_session = request->vi();
       ViSession vi = session_repository_->access_session(vi_grpc_session.name());
       ViInt16 self_test_result {};
-      std::string self_test_message(2048 - 1, '\0');
+      std::string self_test_message(256 - 1, '\0');
       auto status = library_->SelfTest(vi, &self_test_result, (ViChar*)self_test_message.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3731,7 +3726,7 @@ namespace nirfsg_grpc {
       auto waveform_name = waveform_name_mbcs.c_str();
       auto number_of_samples_raw = request->wfm_data().size();
       ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
-      auto wfm_data = convert_from_grpc<NIComplexNumberF32_struct>(request->wfm_data());
+      auto wfm_data = convert_from_grpc<NIComplexNumberF32>(request->wfm_data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformComplexF32(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
       if (!status_ok(status)) {
@@ -3759,7 +3754,7 @@ namespace nirfsg_grpc {
       auto waveform_name = waveform_name_mbcs.c_str();
       auto number_of_samples_raw = request->wfm_data().size();
       ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
-      auto wfm_data = convert_from_grpc<NIComplexNumber_struct>(request->wfm_data());
+      auto wfm_data = convert_from_grpc<NIComplexNumber>(request->wfm_data());
       ViBoolean more_data_pending = request->more_data_pending();
       auto status = library_->WriteArbWaveformComplexF64(vi, waveform_name, number_of_samples, wfm_data.data(), more_data_pending);
       if (!status_ok(status)) {
@@ -3787,7 +3782,7 @@ namespace nirfsg_grpc {
       auto waveform_name = waveform_name_mbcs.c_str();
       auto number_of_samples_raw = request->wfm_data().size();
       ViInt32 number_of_samples = nidevice_grpc::converters::convert_size<ViInt32>(number_of_samples_raw, "number_of_samples");
-      auto wfm_data = convert_from_grpc<NIComplexI16_struct>(request->wfm_data());
+      auto wfm_data = convert_from_grpc<NIComplexI16>(request->wfm_data());
       auto status = library_->WriteArbWaveformComplexI16(vi, waveform_name, number_of_samples, wfm_data.data());
       if (!status_ok(status)) {
         return ConvertApiErrorStatusForViSession(context, status, vi);
@@ -3871,4 +3866,9 @@ namespace nirfsg_grpc {
   {
   }
 } // namespace nirfsg_grpc
+
+namespace nidevice_grpc {
+namespace converters {
+} // converters
+} // nidevice_grpc
 
