@@ -10,6 +10,9 @@ on:
       - 'releases/**'
   workflow_dispatch:
 
+permissions:
+  contents: read
+
 jobs:
   trigger_azdo_ci:
     name: Trigger Main CI
